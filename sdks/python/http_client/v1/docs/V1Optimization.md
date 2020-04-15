@@ -1,5 +1,6 @@
 # V1Optimization
 
+- maximize: Minimize a metric  - minimize: Minimize a metric
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

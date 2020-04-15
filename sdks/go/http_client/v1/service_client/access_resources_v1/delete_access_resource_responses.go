@@ -83,13 +83,23 @@ func NewDeleteAccessResourceOK() *DeleteAccessResourceOK {
 A successful response.
 */
 type DeleteAccessResourceOK struct {
+	Payload interface{}
 }
 
 func (o *DeleteAccessResourceOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/access_resources/{uuid}][%d] deleteAccessResourceOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/access_resources/{uuid}][%d] deleteAccessResourceOK  %+v", 200, o.Payload)
+}
+
+func (o *DeleteAccessResourceOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *DeleteAccessResourceOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

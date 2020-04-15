@@ -1,4 +1,5 @@
 # TeamsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -28,29 +29,38 @@ Create organization
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-V1Team body = new V1Team(); // V1Team | Team body
-try {
-    V1Team result = apiInstance.createTeam(owner, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#createTeam");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    V1Team body = new V1Team(); // V1Team | Team body
+    try {
+      V1Team result = apiInstance.createTeam(owner, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#createTeam");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -74,6 +84,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="createTeamMember"></a>
 # **createTeamMember**
 > V1TeamMember createTeamMember(owner, team, body)
@@ -83,30 +102,39 @@ Create organization member
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team
-V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
-try {
-    V1TeamMember result = apiInstance.createTeamMember(owner, team, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#createTeamMember");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String team = "team_example"; // String | Team
+    V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
+    try {
+      V1TeamMember result = apiInstance.createTeamMember(owner, team, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#createTeamMember");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -131,37 +159,56 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="deleteTeam"></a>
 # **deleteTeam**
-> deleteTeam(owner, team)
+> Object deleteTeam(owner, team)
 
 Delete organization
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team under namesapce
-try {
-    apiInstance.deleteTeam(owner, team);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#deleteTeam");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String team = "team_example"; // String | Team under namesapce
+    try {
+      Object result = apiInstance.deleteTeam(owner, team);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#deleteTeam");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -174,7 +221,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -182,41 +229,60 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="deleteTeamMember"></a>
 # **deleteTeamMember**
-> deleteTeamMember(owner, team, user)
+> Object deleteTeamMember(owner, team, user)
 
 Delete organization member details
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team under namesapce
-String user = "user_example"; // String | Member under team
-try {
-    apiInstance.deleteTeamMember(owner, team, user);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#deleteTeamMember");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String team = "team_example"; // String | Team under namesapce
+    String user = "user_example"; // String | Member under team
+    try {
+      Object result = apiInstance.deleteTeamMember(owner, team, user);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#deleteTeamMember");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -230,7 +296,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -238,8 +304,17 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getTeam"></a>
 # **getTeam**
@@ -250,29 +325,38 @@ Get organization
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team under namesapce
-try {
-    V1Team result = apiInstance.getTeam(owner, team);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#getTeam");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String team = "team_example"; // String | Team under namesapce
+    try {
+      V1Team result = apiInstance.getTeam(owner, team);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#getTeam");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -293,8 +377,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getTeamMember"></a>
 # **getTeamMember**
@@ -305,30 +398,39 @@ Get organization member details
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team under namesapce
-String user = "user_example"; // String | Member under team
-try {
-    V1TeamMember result = apiInstance.getTeamMember(owner, team, user);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#getTeamMember");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String team = "team_example"; // String | Team under namesapce
+    String user = "user_example"; // String | Member under team
+    try {
+      V1TeamMember result = apiInstance.getTeamMember(owner, team, user);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#getTeamMember");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -350,8 +452,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listTeamMembers"></a>
 # **listTeamMembers**
@@ -362,33 +473,42 @@ Get organization members
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team under namesapce
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListTeamMembersResponse result = apiInstance.listTeamMembers(owner, team, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#listTeamMembers");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String team = "team_example"; // String | Team under namesapce
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListTeamMembersResponse result = apiInstance.listTeamMembers(owner, team, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#listTeamMembers");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -413,8 +533,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listTeamNames"></a>
 # **listTeamNames**
@@ -425,32 +554,41 @@ List organizations names
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListTeamsResponse result = apiInstance.listTeamNames(owner, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#listTeamNames");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListTeamsResponse result = apiInstance.listTeamNames(owner, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#listTeamNames");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -474,8 +612,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listTeams"></a>
 # **listTeams**
@@ -486,32 +633,41 @@ List organizations
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListTeamsResponse result = apiInstance.listTeams(owner, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#listTeams");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListTeamsResponse result = apiInstance.listTeams(owner, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#listTeams");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -535,8 +691,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="patchTeam"></a>
 # **patchTeam**
@@ -547,30 +712,39 @@ Patch organization
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String teamName = "teamName_example"; // String | Name
-V1Team body = new V1Team(); // V1Team | Team body
-try {
-    V1Team result = apiInstance.patchTeam(owner, teamName, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#patchTeam");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String teamName = "teamName_example"; // String | Name
+    V1Team body = new V1Team(); // V1Team | Team body
+    try {
+      V1Team result = apiInstance.patchTeam(owner, teamName, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#patchTeam");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -594,6 +768,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="patchTeamMember"></a>
 # **patchTeamMember**
@@ -604,31 +787,40 @@ Patch organization member
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team
-String memberUser = "memberUser_example"; // String | User
-V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
-try {
-    V1TeamMember result = apiInstance.patchTeamMember(owner, team, memberUser, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#patchTeamMember");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String team = "team_example"; // String | Team
+    String memberUser = "memberUser_example"; // String | User
+    V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
+    try {
+      V1TeamMember result = apiInstance.patchTeamMember(owner, team, memberUser, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#patchTeamMember");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -654,6 +846,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="updateTeam"></a>
 # **updateTeam**
 > V1Team updateTeam(owner, teamName, body)
@@ -663,30 +864,39 @@ Update organization
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String teamName = "teamName_example"; // String | Name
-V1Team body = new V1Team(); // V1Team | Team body
-try {
-    V1Team result = apiInstance.updateTeam(owner, teamName, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#updateTeam");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String teamName = "teamName_example"; // String | Name
+    V1Team body = new V1Team(); // V1Team | Team body
+    try {
+      V1Team result = apiInstance.updateTeam(owner, teamName, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#updateTeam");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -711,6 +921,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="updateTeamMember"></a>
 # **updateTeamMember**
 > V1TeamMember updateTeamMember(owner, team, memberUser, body)
@@ -720,31 +939,40 @@ Update organization member
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.TeamsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TeamsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-TeamsV1Api apiInstance = new TeamsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team
-String memberUser = "memberUser_example"; // String | User
-V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
-try {
-    V1TeamMember result = apiInstance.updateTeamMember(owner, team, memberUser, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#updateTeamMember");
-    e.printStackTrace();
+    TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String team = "team_example"; // String | Team
+    String memberUser = "memberUser_example"; // String | User
+    V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
+    try {
+      V1TeamMember result = apiInstance.updateTeamMember(owner, team, memberUser, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TeamsV1Api#updateTeamMember");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -769,4 +997,13 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 

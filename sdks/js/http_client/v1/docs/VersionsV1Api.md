@@ -1,5 +1,7 @@
 # PolyaxonSdk.VersionsV1Api
 
+Polyaxon&#39;s typescript client
+
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
@@ -8,36 +10,36 @@ Method | HTTP request | Description
 [**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get current user
 
 
-<a name="getLogHandler"></a>
-# **getLogHandler**
+
+## getLogHandler
+
 > V1LogHandler getLogHandler()
 
 
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.VersionsV1Api();
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.VersionsV1Api();
+apiInstance.getLogHandler((error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getLogHandler(callback);
+});
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -50,39 +52,39 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getVersions"></a>
-# **getVersions**
+
+## getVersions
+
 > V1Versions getVersions()
 
 Get current user
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.VersionsV1Api();
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.VersionsV1Api();
+apiInstance.getVersions((error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getVersions(callback);
+});
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -95,6 +97,6 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 

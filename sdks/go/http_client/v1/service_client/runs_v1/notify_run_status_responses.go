@@ -83,13 +83,23 @@ func NewNotifyRunStatusOK() *NotifyRunStatusOK {
 A successful response.
 */
 type NotifyRunStatusOK struct {
+	Payload interface{}
 }
 
 func (o *NotifyRunStatusOK) Error() string {
-	return fmt.Sprintf("[POST /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify][%d] notifyRunStatusOK ", 200)
+	return fmt.Sprintf("[POST /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify][%d] notifyRunStatusOK  %+v", 200, o.Payload)
+}
+
+func (o *NotifyRunStatusOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *NotifyRunStatusOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

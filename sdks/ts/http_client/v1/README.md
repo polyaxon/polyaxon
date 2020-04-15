@@ -1,4 +1,4 @@
-## @polyaxon/sdk@1.0.77
+## @polyaxon/sdk@1.0.79
 
 This generator creates TypeScript/JavaScript client that utilizes [Fetch API](https://fetch.spec.whatwg.org/). The generated Node module can be used in the following environments:
 
@@ -19,7 +19,7 @@ It can be used in both TypeScript and JavaScript. In TypeScript, the definition 
 
 ### Building
 
-To build an compile the typescript sources to javascript use:
+To build and compile the typescript sources to javascript use:
 ```
 npm install
 npm run build
@@ -36,7 +36,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @polyaxon/sdk@1.0.77 --save
+npm install @polyaxon/sdk@1.0.79 --save
 ```
 
 _unPublished (not recommended):_

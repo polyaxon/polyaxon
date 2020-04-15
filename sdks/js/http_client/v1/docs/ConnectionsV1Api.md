@@ -1,5 +1,7 @@
 # PolyaxonSdk.ConnectionsV1Api
 
+Polyaxon&#39;s typescript client
+
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
@@ -13,41 +15,38 @@ Method | HTTP request | Description
 [**updateConnection**](ConnectionsV1Api.md#updateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
 
 
-<a name="createConnection"></a>
-# **createConnection**
+
+## createConnection
+
 > V1ConnectionResponse createConnection(owner, body)
 
 Create connection
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ConnectionsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
+apiInstance.createConnection(owner, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createConnection(owner, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -64,44 +63,41 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="deleteConnection"></a>
-# **deleteConnection**
-> deleteConnection(owner, uuid)
+
+## deleteConnection
+
+> Object deleteConnection(owner, uuid)
 
 Delete connection
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ConnectionsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.deleteConnection(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteConnection(owner, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -110,7 +106,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -118,44 +114,41 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getConnection"></a>
-# **getConnection**
+
+## getConnection
+
 > V1ConnectionResponse getConnection(owner, uuid)
 
 Get connection
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ConnectionsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getConnection(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getConnection(owner, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -172,48 +165,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listConnectionNames"></a>
-# **listConnectionNames**
+
+## listConnectionNames
+
 > V1ListConnectionsResponse listConnectionNames(owner, opts)
 
 List connections names
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.ConnectionsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listConnectionNames(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listConnectionNames(owner, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -233,48 +224,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listConnections"></a>
-# **listConnections**
+
+## listConnections
+
 > V1ListConnectionsResponse listConnections(owner, opts)
 
 List connections
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.ConnectionsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listConnections(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listConnections(owner, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -294,46 +283,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="patchConnection"></a>
-# **patchConnection**
+
+## patchConnection
+
 > V1ConnectionResponse patchConnection(owner, connection_uuid, body)
 
 Patch connection
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var connection_uuid = "connection_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ConnectionsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let connection_uuid = "connection_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
+apiInstance.patchConnection(owner, connection_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.patchConnection(owner, connection_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -351,46 +336,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="updateConnection"></a>
-# **updateConnection**
+
+## updateConnection
+
 > V1ConnectionResponse updateConnection(owner, connection_uuid, body)
 
 Update connection
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var connection_uuid = "connection_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ConnectionsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let connection_uuid = "connection_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
+apiInstance.updateConnection(owner, connection_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.updateConnection(owner, connection_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -408,6 +389,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 

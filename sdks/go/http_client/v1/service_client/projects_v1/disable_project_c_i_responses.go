@@ -83,13 +83,23 @@ func NewDisableProjectCIOK() *DisableProjectCIOK {
 A successful response.
 */
 type DisableProjectCIOK struct {
+	Payload interface{}
 }
 
 func (o *DisableProjectCIOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCIOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCIOK  %+v", 200, o.Payload)
+}
+
+func (o *DisableProjectCIOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *DisableProjectCIOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

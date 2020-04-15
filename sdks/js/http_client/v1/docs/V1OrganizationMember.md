@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1OrganizationMember
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **user** | **String** |  | [optional] 

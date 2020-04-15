@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1CompiledOperation
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **version** | **Number** |  | [optional] 
@@ -12,8 +13,8 @@ Name | Type | Description | Notes
 **profile** | **String** |  | [optional] 
 **queue** | **String** |  | [optional] 
 **cache** | [**V1Cache**](V1Cache.md) |  | [optional] 
-**schedule** | **Object** |  | [optional] 
-**parallel** | **Object** |  | [optional] 
+**schedule** | [**Object**](.md) |  | [optional] 
+**parallel** | [**Object**](.md) |  | [optional] 
 **dependencies** | **[String]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 
 **conditions** | **[Object]** |  | [optional] 
@@ -22,6 +23,6 @@ Name | Type | Description | Notes
 **plugins** | [**V1Plugins**](V1Plugins.md) |  | [optional] 
 **inputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
-**run** | **Object** |  | [optional] 
+**run** | [**Object**](.md) |  | [optional] 
 
 

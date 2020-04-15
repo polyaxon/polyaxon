@@ -1,7 +1,9 @@
 
+
 # V1Agent
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **String** |  |  [optional]
@@ -11,7 +13,7 @@ Name | Type | Description | Notes
 **disabled** | **Boolean** |  |  [optional]
 **deleted** | **Boolean** |  |  [optional]
 **namespace** | **String** |  |  [optional]
-**versionApi** | **Object** |  |  [optional]
+**versionApi** | [**Object**](.md) |  |  [optional]
 **content** | **String** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]

@@ -1,4 +1,5 @@
 # HubModelsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -22,29 +23,38 @@ Create dashboard
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.HubModelsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.HubModelsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-HubModelsV1Api apiInstance = new HubModelsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-V1HubModel body = new V1HubModel(); // V1HubModel | Model body
-try {
-    V1HubModel result = apiInstance.createHubModel(owner, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#createHubModel");
-    e.printStackTrace();
+    HubModelsV1Api apiInstance = new HubModelsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    V1HubModel body = new V1HubModel(); // V1HubModel | Model body
+    try {
+      V1HubModel result = apiInstance.createHubModel(owner, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling HubModelsV1Api#createHubModel");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -68,37 +78,56 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="deleteHubModel"></a>
 # **deleteHubModel**
-> deleteHubModel(owner, uuid)
+> Object deleteHubModel(owner, uuid)
 
 Delete dashboard
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.HubModelsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.HubModelsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-HubModelsV1Api apiInstance = new HubModelsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.deleteHubModel(owner, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#deleteHubModel");
-    e.printStackTrace();
+    HubModelsV1Api apiInstance = new HubModelsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.deleteHubModel(owner, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling HubModelsV1Api#deleteHubModel");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -111,7 +140,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -119,8 +148,17 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getHubModel"></a>
 # **getHubModel**
@@ -131,29 +169,38 @@ Get dashboard
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.HubModelsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.HubModelsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-HubModelsV1Api apiInstance = new HubModelsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    V1HubModel result = apiInstance.getHubModel(owner, uuid);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#getHubModel");
-    e.printStackTrace();
+    HubModelsV1Api apiInstance = new HubModelsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      V1HubModel result = apiInstance.getHubModel(owner, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling HubModelsV1Api#getHubModel");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -174,8 +221,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listHubModelNames"></a>
 # **listHubModelNames**
@@ -186,32 +242,41 @@ List dashboard names
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.HubModelsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.HubModelsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-HubModelsV1Api apiInstance = new HubModelsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListHubModelsResponse result = apiInstance.listHubModelNames(owner, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#listHubModelNames");
-    e.printStackTrace();
+    HubModelsV1Api apiInstance = new HubModelsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListHubModelsResponse result = apiInstance.listHubModelNames(owner, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling HubModelsV1Api#listHubModelNames");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -235,8 +300,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listHubModels"></a>
 # **listHubModels**
@@ -247,32 +321,41 @@ List dashboards
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.HubModelsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.HubModelsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-HubModelsV1Api apiInstance = new HubModelsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListHubModelsResponse result = apiInstance.listHubModels(owner, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#listHubModels");
-    e.printStackTrace();
+    HubModelsV1Api apiInstance = new HubModelsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListHubModelsResponse result = apiInstance.listHubModels(owner, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling HubModelsV1Api#listHubModels");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -296,8 +379,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="patchHubModel"></a>
 # **patchHubModel**
@@ -308,30 +400,39 @@ Patch dashboard
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.HubModelsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.HubModelsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-HubModelsV1Api apiInstance = new HubModelsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String modelUuid = "modelUuid_example"; // String | UUID
-V1HubModel body = new V1HubModel(); // V1HubModel | Model body
-try {
-    V1HubModel result = apiInstance.patchHubModel(owner, modelUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#patchHubModel");
-    e.printStackTrace();
+    HubModelsV1Api apiInstance = new HubModelsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String modelUuid = "modelUuid_example"; // String | UUID
+    V1HubModel body = new V1HubModel(); // V1HubModel | Model body
+    try {
+      V1HubModel result = apiInstance.patchHubModel(owner, modelUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling HubModelsV1Api#patchHubModel");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -355,6 +456,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="updateHubModel"></a>
 # **updateHubModel**
@@ -365,30 +475,39 @@ Update dashboard
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.HubModelsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.HubModelsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-HubModelsV1Api apiInstance = new HubModelsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String modelUuid = "modelUuid_example"; // String | UUID
-V1HubModel body = new V1HubModel(); // V1HubModel | Model body
-try {
-    V1HubModel result = apiInstance.updateHubModel(owner, modelUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#updateHubModel");
-    e.printStackTrace();
+    HubModelsV1Api apiInstance = new HubModelsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String modelUuid = "modelUuid_example"; // String | UUID
+    V1HubModel body = new V1HubModel(); // V1HubModel | Model body
+    try {
+      V1HubModel result = apiInstance.updateHubModel(owner, modelUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling HubModelsV1Api#updateHubModel");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -412,4 +531,13 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 

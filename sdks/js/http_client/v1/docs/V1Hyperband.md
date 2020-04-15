@@ -1,9 +1,10 @@
 # PolyaxonSdk.V1Hyperband
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **String** |  | [optional] [default to 'hyperband']
+**kind** | **String** |  | [optional] [default to &#39;hyperband&#39;]
 **params** | **{String: Object}** |  | [optional] 
 **max_iterations** | **Number** |  | [optional] 
 **eta** | **Number** |  | [optional] 

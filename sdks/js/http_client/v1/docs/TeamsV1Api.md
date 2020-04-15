@@ -1,5 +1,7 @@
 # PolyaxonSdk.TeamsV1Api
 
+Polyaxon&#39;s typescript client
+
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
@@ -19,41 +21,38 @@ Method | HTTP request | Description
 [**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
 
 
-<a name="createTeam"></a>
-# **createTeam**
+
+## createTeam
+
 > V1Team createTeam(owner, body)
 
 Create organization
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var body = new PolyaxonSdk.V1Team(); // V1Team | Team body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let body = new PolyaxonSdk.V1Team(); // V1Team | Team body
+apiInstance.createTeam(owner, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createTeam(owner, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -70,46 +69,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="createTeamMember"></a>
-# **createTeamMember**
+
+## createTeamMember
+
 > V1TeamMember createTeamMember(owner, team, body)
 
 Create organization member
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team = "team_example"; // String | Team
-
-var body = new PolyaxonSdk.V1TeamMember(); // V1TeamMember | Team body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team = "team_example"; // String | Team
+let body = new PolyaxonSdk.V1TeamMember(); // V1TeamMember | Team body
+apiInstance.createTeamMember(owner, team, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createTeamMember(owner, team, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -127,44 +122,41 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="deleteTeam"></a>
-# **deleteTeam**
-> deleteTeam(owner, team)
+
+## deleteTeam
+
+> Object deleteTeam(owner, team)
 
 Delete organization
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team = "team_example"; // String | Team under namesapce
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team = "team_example"; // String | Team under namesapce
+apiInstance.deleteTeam(owner, team, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteTeam(owner, team, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -173,7 +165,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -181,46 +173,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="deleteTeamMember"></a>
-# **deleteTeamMember**
-> deleteTeamMember(owner, team, user)
+
+## deleteTeamMember
+
+> Object deleteTeamMember(owner, team, user)
 
 Delete organization member details
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team = "team_example"; // String | Team under namesapce
-
-var user = "user_example"; // String | Member under team
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team = "team_example"; // String | Team under namesapce
+let user = "user_example"; // String | Member under team
+apiInstance.deleteTeamMember(owner, team, user, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteTeamMember(owner, team, user, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -230,7 +218,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -238,44 +226,41 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getTeam"></a>
-# **getTeam**
+
+## getTeam
+
 > V1Team getTeam(owner, team)
 
 Get organization
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team = "team_example"; // String | Team under namesapce
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team = "team_example"; // String | Team under namesapce
+apiInstance.getTeam(owner, team, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getTeam(owner, team, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -292,46 +277,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getTeamMember"></a>
-# **getTeamMember**
+
+## getTeamMember
+
 > V1TeamMember getTeamMember(owner, team, user)
 
 Get organization member details
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team = "team_example"; // String | Team under namesapce
-
-var user = "user_example"; // String | Member under team
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team = "team_example"; // String | Team under namesapce
+let user = "user_example"; // String | Member under team
+apiInstance.getTeamMember(owner, team, user, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getTeamMember(owner, team, user, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -349,50 +330,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listTeamMembers"></a>
-# **listTeamMembers**
+
+## listTeamMembers
+
 > V1ListTeamMembersResponse listTeamMembers(owner, team, opts)
 
 Get organization members
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team = "team_example"; // String | Team under namesapce
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team = "team_example"; // String | Team under namesapce
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listTeamMembers(owner, team, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listTeamMembers(owner, team, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -413,48 +391,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listTeamNames"></a>
-# **listTeamNames**
+
+## listTeamNames
+
 > V1ListTeamsResponse listTeamNames(owner, opts)
 
 List organizations names
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listTeamNames(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listTeamNames(owner, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -474,48 +450,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listTeams"></a>
-# **listTeams**
+
+## listTeams
+
 > V1ListTeamsResponse listTeams(owner, opts)
 
 List organizations
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listTeams(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listTeams(owner, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -535,46 +509,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="patchTeam"></a>
-# **patchTeam**
+
+## patchTeam
+
 > V1Team patchTeam(owner, team_name, body)
 
 Patch organization
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team_name = "team_name_example"; // String | Name
-
-var body = new PolyaxonSdk.V1Team(); // V1Team | Team body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team_name = "team_name_example"; // String | Name
+let body = new PolyaxonSdk.V1Team(); // V1Team | Team body
+apiInstance.patchTeam(owner, team_name, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.patchTeam(owner, team_name, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -592,48 +562,43 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="patchTeamMember"></a>
-# **patchTeamMember**
+
+## patchTeamMember
+
 > V1TeamMember patchTeamMember(owner, team, member_user, body)
 
 Patch organization member
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team = "team_example"; // String | Team
-
-var member_user = "member_user_example"; // String | User
-
-var body = new PolyaxonSdk.V1TeamMember(); // V1TeamMember | Team body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team = "team_example"; // String | Team
+let member_user = "member_user_example"; // String | User
+let body = new PolyaxonSdk.V1TeamMember(); // V1TeamMember | Team body
+apiInstance.patchTeamMember(owner, team, member_user, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.patchTeamMember(owner, team, member_user, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -652,46 +617,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="updateTeam"></a>
-# **updateTeam**
+
+## updateTeam
+
 > V1Team updateTeam(owner, team_name, body)
 
 Update organization
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team_name = "team_name_example"; // String | Name
-
-var body = new PolyaxonSdk.V1Team(); // V1Team | Team body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team_name = "team_name_example"; // String | Name
+let body = new PolyaxonSdk.V1Team(); // V1Team | Team body
+apiInstance.updateTeam(owner, team_name, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.updateTeam(owner, team_name, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -709,48 +670,43 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="updateTeamMember"></a>
-# **updateTeamMember**
+
+## updateTeamMember
+
 > V1TeamMember updateTeamMember(owner, team, member_user, body)
 
 Update organization member
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.TeamsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var team = "team_example"; // String | Team
-
-var member_user = "member_user_example"; // String | User
-
-var body = new PolyaxonSdk.V1TeamMember(); // V1TeamMember | Team body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.TeamsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let team = "team_example"; // String | Team
+let member_user = "member_user_example"; // String | User
+let body = new PolyaxonSdk.V1TeamMember(); // V1TeamMember | Team body
+apiInstance.updateTeamMember(owner, team, member_user, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.updateTeamMember(owner, team, member_user, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -769,6 +725,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 

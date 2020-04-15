@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1ProjectSettings
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **artifacts_store** | **String** |  | [optional] 

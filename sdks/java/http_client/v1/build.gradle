@@ -1,11 +1,13 @@
 apply plugin: 'idea'
 apply plugin: 'eclipse'
+apply plugin: 'java'
 
-group = 'io.swagger'
-version = '1.0.0'
+group = 'org.openapitools'
+version = '1.0.79'
 
 buildscript {
     repositories {
+        maven { url "https://repo1.maven.org/maven2" }
         jcenter()
     }
     dependencies {
@@ -17,7 +19,9 @@ buildscript {
 repositories {
     jcenter()
 }
-
+sourceSets {
+    main.java.srcDirs = ['src/main/java']
+}
 
 if(hasProperty('target') && target == 'android') {
 
@@ -83,7 +87,7 @@ if(hasProperty('target') && target == 'android') {
 
     install {
         repositories.mavenInstaller {
-            pom.artifactId = 'swagger-java-client'
+            pom.artifactId = 'openapi-java-client'
         }
     }
 
@@ -94,11 +98,17 @@ if(hasProperty('target') && target == 'android') {
 }
 
 dependencies {
-    compile 'io.swagger:swagger-annotations:1.5.17'
-    compile 'com.squareup.okhttp:okhttp:2.7.5'
-    compile 'com.squareup.okhttp:logging-interceptor:2.7.5'
-    compile 'com.google.code.gson:gson:2.8.1'
-    compile 'io.gsonfire:gson-fire:1.8.0'
-    compile 'org.threeten:threetenbp:1.3.5'
-    testCompile 'junit:junit:4.12'
+    compile 'io.swagger:swagger-annotations:1.5.22'
+    compile "com.google.code.findbugs:jsr305:3.0.2"
+    compile 'com.squareup.okhttp3:okhttp:3.14.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.14.2'
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'io.gsonfire:gson-fire:1.8.3'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    compile 'org.threeten:threetenbp:1.4.0'
+    testCompile 'junit:junit:4.13'
+}
+
+javadoc {
+    options.tags = [ "http.response.details:a:Http Response Details" ]
 }

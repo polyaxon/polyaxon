@@ -1,9 +1,10 @@
 # PolyaxonSdk.V1IntervalSchedule
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **String** |  | [optional] [default to 'interval']
+**kind** | **String** |  | [optional] [default to &#39;interval&#39;]
 **start_at** | **Date** |  | [optional] 
 **end_at** | **Date** |  | [optional] 
 **frequency** | **Number** |  | [optional] 

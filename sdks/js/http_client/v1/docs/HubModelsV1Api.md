@@ -1,5 +1,7 @@
 # PolyaxonSdk.HubModelsV1Api
 
+Polyaxon&#39;s typescript client
+
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
@@ -13,41 +15,38 @@ Method | HTTP request | Description
 [**updateHubModel**](HubModelsV1Api.md#updateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
 
 
-<a name="createHubModel"></a>
-# **createHubModel**
+
+## createHubModel
+
 > V1HubModel createHubModel(owner, body)
 
 Create dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.HubModelsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var body = new PolyaxonSdk.V1HubModel(); // V1HubModel | Model body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.HubModelsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let body = new PolyaxonSdk.V1HubModel(); // V1HubModel | Model body
+apiInstance.createHubModel(owner, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createHubModel(owner, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -64,44 +63,41 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="deleteHubModel"></a>
-# **deleteHubModel**
-> deleteHubModel(owner, uuid)
+
+## deleteHubModel
+
+> Object deleteHubModel(owner, uuid)
 
 Delete dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.HubModelsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.HubModelsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.deleteHubModel(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteHubModel(owner, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -110,7 +106,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -118,44 +114,41 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getHubModel"></a>
-# **getHubModel**
+
+## getHubModel
+
 > V1HubModel getHubModel(owner, uuid)
 
 Get dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.HubModelsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.HubModelsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getHubModel(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getHubModel(owner, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -172,48 +165,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listHubModelNames"></a>
-# **listHubModelNames**
+
+## listHubModelNames
+
 > V1ListHubModelsResponse listHubModelNames(owner, opts)
 
 List dashboard names
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.HubModelsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.HubModelsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listHubModelNames(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listHubModelNames(owner, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -233,48 +224,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listHubModels"></a>
-# **listHubModels**
+
+## listHubModels
+
 > V1ListHubModelsResponse listHubModels(owner, opts)
 
 List dashboards
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.HubModelsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.HubModelsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listHubModels(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listHubModels(owner, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -294,46 +283,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="patchHubModel"></a>
-# **patchHubModel**
+
+## patchHubModel
+
 > V1HubModel patchHubModel(owner, model_uuid, body)
 
 Patch dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.HubModelsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var model_uuid = "model_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1HubModel(); // V1HubModel | Model body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.HubModelsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let model_uuid = "model_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1HubModel(); // V1HubModel | Model body
+apiInstance.patchHubModel(owner, model_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.patchHubModel(owner, model_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -351,46 +336,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="updateHubModel"></a>
-# **updateHubModel**
+
+## updateHubModel
+
 > V1HubModel updateHubModel(owner, model_uuid, body)
 
 Update dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.HubModelsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var model_uuid = "model_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1HubModel(); // V1HubModel | Model body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.HubModelsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let model_uuid = "model_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1HubModel(); // V1HubModel | Model body
+apiInstance.updateHubModel(owner, model_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.updateHubModel(owner, model_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -408,6 +389,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 

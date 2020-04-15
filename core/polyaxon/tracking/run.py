@@ -81,7 +81,6 @@ class Run(RunClient):
             self.set_run_event_logger()
             if get_collect_resources():
                 self.set_run_resource_logger()
-            self._register_wait()
 
         self._run = polyaxon_sdk.V1Run()
         if settings.CLIENT_CONFIG.is_offline:
@@ -93,6 +92,8 @@ class Run(RunClient):
         # Track run env
         if settings.CLIENT_CONFIG.is_managed and self.track_env:
             self.log_run_env()
+
+        self._register_wait()
 
     @property
     def artifacts_path(self):

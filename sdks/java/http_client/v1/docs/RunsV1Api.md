@@ -1,4 +1,5 @@
 # RunsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -55,36 +56,46 @@ Method | HTTP request | Description
 
 <a name="archiveRun"></a>
 # **archiveRun**
-> archiveRun(owner, project, uuid)
+> Object archiveRun(owner, project, uuid)
 
 Archive run
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.archiveRun(owner, project, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#archiveRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.archiveRun(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#archiveRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -98,7 +109,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -106,41 +117,60 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="bookmarkRun"></a>
 # **bookmarkRun**
-> bookmarkRun(owner, project, uuid)
+> Object bookmarkRun(owner, project, uuid)
 
 Bookmark run
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.bookmarkRun(owner, project, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#bookmarkRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.bookmarkRun(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#bookmarkRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -154,7 +184,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -162,41 +192,60 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="bookmarkRuns"></a>
 # **bookmarkRuns**
-> bookmarkRuns(owner, project, body)
+> Object bookmarkRuns(owner, project, body)
 
 Bookmark runs
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
-try {
-    apiInstance.bookmarkRuns(owner, project, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#bookmarkRuns");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
+    try {
+      Object result = apiInstance.bookmarkRuns(owner, project, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#bookmarkRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -210,7 +259,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -221,39 +270,58 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="collectRunLogs"></a>
 # **collectRunLogs**
-> collectRunLogs(namespace, owner, project, uuid)
+> Object collectRunLogs(namespace, owner, project, uuid)
 
 Collect run logs
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | 
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.collectRunLogs(namespace, owner, project, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#collectRunLogs");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | 
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.collectRunLogs(namespace, owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#collectRunLogs");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -268,7 +336,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -276,8 +344,17 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="copyRun"></a>
 # **copyRun**
@@ -288,31 +365,40 @@ Restart run with copy
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-String entityProject = "entityProject_example"; // String | Project
-String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
-V1Run body = new V1Run(); // V1Run | Run object
-try {
-    V1Run result = apiInstance.copyRun(entityOwner, entityProject, entityUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#copyRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String entityOwner = "entityOwner_example"; // String | Owner of the namespace
+    String entityProject = "entityProject_example"; // String | Project
+    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
+    V1Run body = new V1Run(); // V1Run | Run object
+    try {
+      V1Run result = apiInstance.copyRun(entityOwner, entityProject, entityUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#copyRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -338,6 +424,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="createRun"></a>
 # **createRun**
 > V1Run createRun(owner, project, body)
@@ -347,30 +442,39 @@ Create new run
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-V1OperationBody body = new V1OperationBody(); // V1OperationBody | operation object
-try {
-    V1Run result = apiInstance.createRun(owner, project, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#createRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    V1OperationBody body = new V1OperationBody(); // V1OperationBody | operation object
+    try {
+      V1Run result = apiInstance.createRun(owner, project, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#createRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -395,39 +499,58 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="createRunArtifactsLineage"></a>
 # **createRunArtifactsLineage**
-> createRunArtifactsLineage(owner, project, uuid, body)
+> Object createRunArtifactsLineage(owner, project, uuid, body)
 
 Create bulk run run artifacts lineage
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-V1RunArtifacts body = new V1RunArtifacts(); // V1RunArtifacts | Run Artifacts
-try {
-    apiInstance.createRunArtifactsLineage(owner, project, uuid, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#createRunArtifactsLineage");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    V1RunArtifacts body = new V1RunArtifacts(); // V1RunArtifacts | Run Artifacts
+    try {
+      Object result = apiInstance.createRunArtifactsLineage(owner, project, uuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#createRunArtifactsLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -442,7 +565,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -453,6 +576,15 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="createRunStatus"></a>
 # **createRunStatus**
 > V1Status createRunStatus(owner, project, uuid, body)
@@ -462,31 +594,40 @@ Create new run status
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-V1EntityStatusBodyRequest body = new V1EntityStatusBodyRequest(); // V1EntityStatusBodyRequest | 
-try {
-    V1Status result = apiInstance.createRunStatus(owner, project, uuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#createRunStatus");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    V1EntityStatusBodyRequest body = new V1EntityStatusBodyRequest(); // V1EntityStatusBodyRequest | 
+    try {
+      V1Status result = apiInstance.createRunStatus(owner, project, uuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#createRunStatus");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -512,38 +653,57 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="deleteRun"></a>
 # **deleteRun**
-> deleteRun(owner, project, uuid)
+> Object deleteRun(owner, project, uuid)
 
 Delete run
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.deleteRun(owner, project, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#deleteRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.deleteRun(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#deleteRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -557,7 +717,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -565,43 +725,62 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="deleteRunArtifactLineage"></a>
 # **deleteRunArtifactLineage**
-> deleteRunArtifactLineage(owner, project, uuid, name, namespace)
+> Object deleteRunArtifactLineage(owner, project, uuid, name, namespace)
 
 Delete run artifact lineage
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-String name = "name_example"; // String | Artifact name
-String namespace = "namespace_example"; // String | namespace.
-try {
-    apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, namespace);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#deleteRunArtifactLineage");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String name = "name_example"; // String | Artifact name
+    String namespace = "namespace_example"; // String | namespace.
+    try {
+      Object result = apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, namespace);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#deleteRunArtifactLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -617,7 +796,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -625,41 +804,60 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="deleteRuns"></a>
 # **deleteRuns**
-> deleteRuns(owner, project, body)
+> Object deleteRuns(owner, project, body)
 
 Delete runs
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
-try {
-    apiInstance.deleteRuns(owner, project, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#deleteRuns");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
+    try {
+      Object result = apiInstance.deleteRuns(owner, project, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#deleteRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -673,7 +871,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -684,6 +882,15 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="getMultiRunEvents"></a>
 # **getMultiRunEvents**
 > V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, names, runs, orient)
@@ -693,34 +900,43 @@ Get multi runs events
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | namespace
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String kind = "kind_example"; // String | The artifact kind
-String names = "names_example"; // String | Names query param.
-String runs = "runs_example"; // String | Runs query param.
-String orient = "orient_example"; // String | Orient query param.
-try {
-    V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getMultiRunEvents");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | namespace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String kind = "kind_example"; // String | The artifact kind
+    String names = "names_example"; // String | Names query param.
+    String runs = "runs_example"; // String | Runs query param.
+    String orient = "orient_example"; // String | Orient query param.
+    try {
+      V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getMultiRunEvents");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -746,8 +962,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRun"></a>
 # **getRun**
@@ -758,30 +983,39 @@ Get run
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    V1Run result = apiInstance.getRun(owner, project, uuid);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      V1Run result = apiInstance.getRun(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -803,8 +1037,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunArtifact"></a>
 # **getRunArtifact**
@@ -815,33 +1058,42 @@ Get run artifact
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | namespace
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-String path = "path_example"; // String | Artifact filepath.
-Boolean stream = true; // Boolean | Whether to stream the file.
-try {
-    String result = apiInstance.getRunArtifact(namespace, owner, project, uuid, path, stream);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunArtifact");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | namespace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the experiement will be assigned
+    String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+    String path = "path_example"; // String | Artifact filepath.
+    Boolean stream = true; // Boolean | Whether to stream the file.
+    try {
+      String result = apiInstance.getRunArtifact(namespace, owner, project, uuid, path, stream);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunArtifact");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -866,8 +1118,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 
 <a name="getRunArtifactLineage"></a>
 # **getRunArtifactLineage**
@@ -878,32 +1138,41 @@ Get run artifacts lineage
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-String name = "name_example"; // String | Artifact name
-String namespace = "namespace_example"; // String | namespace.
-try {
-    V1RunArtifact result = apiInstance.getRunArtifactLineage(owner, project, uuid, name, namespace);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunArtifactLineage");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String name = "name_example"; // String | Artifact name
+    String namespace = "namespace_example"; // String | namespace.
+    try {
+      V1RunArtifact result = apiInstance.getRunArtifactLineage(owner, project, uuid, name, namespace);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunArtifactLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -927,8 +1196,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunArtifacts"></a>
 # **getRunArtifacts**
@@ -939,32 +1217,41 @@ Get run artifacts
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | namespace
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-String path = "path_example"; // String | Artifact filepath.
-try {
-    String result = apiInstance.getRunArtifacts(namespace, owner, project, uuid, path);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunArtifacts");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | namespace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the experiement will be assigned
+    String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+    String path = "path_example"; // String | Artifact filepath.
+    try {
+      String result = apiInstance.getRunArtifacts(namespace, owner, project, uuid, path);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunArtifacts");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -988,8 +1275,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 
 <a name="getRunArtifactsLineage"></a>
 # **getRunArtifactsLineage**
@@ -1000,34 +1295,43 @@ Get run artifacts lineage
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-String uuid = "uuid_example"; // String | Entity uuid
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineage(owner, project, uuid, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineage");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    String uuid = "uuid_example"; // String | Entity uuid
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineage(owner, project, uuid, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1053,8 +1357,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunArtifactsLineageNames"></a>
 # **getRunArtifactsLineageNames**
@@ -1065,34 +1378,43 @@ Get run artifacts lineage names
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-String uuid = "uuid_example"; // String | Entity uuid
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineageNames(owner, project, uuid, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineageNames");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    String uuid = "uuid_example"; // String | Entity uuid
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineageNames(owner, project, uuid, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineageNames");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1118,8 +1440,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunArtifactsTree"></a>
 # **getRunArtifactsTree**
@@ -1130,32 +1461,41 @@ Get run artifacts tree
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | namespace
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-String path = "path_example"; // String | Path query param.
-try {
-    V1ArtifactTree result = apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, path);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunArtifactsTree");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | namespace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String path = "path_example"; // String | Path query param.
+    try {
+      V1ArtifactTree result = apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, path);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunArtifactsTree");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1179,8 +1519,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunEvents"></a>
 # **getRunEvents**
@@ -1191,34 +1540,43 @@ Get run events
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | namespace
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-String kind = "kind_example"; // String | The artifact kind
-String names = "names_example"; // String | Names query param.
-String orient = "orient_example"; // String | Orient query param.
-try {
-    V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, names, orient);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunEvents");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | namespace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String kind = "kind_example"; // String | The artifact kind
+    String names = "names_example"; // String | Names query param.
+    String orient = "orient_example"; // String | Orient query param.
+    try {
+      V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, names, orient);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunEvents");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1244,8 +1602,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunLogs"></a>
 # **getRunLogs**
@@ -1256,33 +1623,42 @@ Get run logs
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | 
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-OffsetDateTime lastTime = OffsetDateTime.now(); // OffsetDateTime | last time.
-String lastFile = "lastFile_example"; // String | last file.
-try {
-    V1Logs result = apiInstance.getRunLogs(namespace, owner, project, uuid, lastTime, lastFile);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunLogs");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | 
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    OffsetDateTime lastTime = new OffsetDateTime(); // OffsetDateTime | last time.
+    String lastFile = "lastFile_example"; // String | last file.
+    try {
+      V1Logs result = apiInstance.getRunLogs(namespace, owner, project, uuid, lastTime, lastFile);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunLogs");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1307,8 +1683,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunNamespace"></a>
 # **getRunNamespace**
@@ -1319,30 +1704,39 @@ Get Run namespace
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    V1RunSettings result = apiInstance.getRunNamespace(owner, project, uuid);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunNamespace");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      V1RunSettings result = apiInstance.getRunNamespace(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunNamespace");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1364,8 +1758,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunResources"></a>
 # **getRunResources**
@@ -1376,33 +1779,42 @@ Get run resources events
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | namespace
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-String names = "names_example"; // String | Names query param.
-Boolean tail = true; // Boolean | Query param flag to tail the values.
-try {
-    V1EventsResponse result = apiInstance.getRunResources(namespace, owner, project, uuid, names, tail);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunResources");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | namespace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String names = "names_example"; // String | Names query param.
+    Boolean tail = true; // Boolean | Query param flag to tail the values.
+    try {
+      V1EventsResponse result = apiInstance.getRunResources(namespace, owner, project, uuid, names, tail);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunResources");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1427,8 +1839,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunSettings"></a>
 # **getRunSettings**
@@ -1439,30 +1860,39 @@ Get Run settings
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    V1RunSettings result = apiInstance.getRunSettings(owner, project, uuid);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunSettings");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      V1RunSettings result = apiInstance.getRunSettings(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunSettings");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1484,8 +1914,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunStatuses"></a>
 # **getRunStatuses**
@@ -1496,30 +1935,39 @@ Get run status
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    V1Status result = apiInstance.getRunStatuses(owner, project, uuid);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunStatuses");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      V1Status result = apiInstance.getRunStatuses(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunStatuses");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1541,8 +1989,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getRunsArtifactsLineage"></a>
 # **getRunsArtifactsLineage**
@@ -1553,33 +2010,42 @@ Get runs artifacts lineage
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, project, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunsArtifactsLineage");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, project, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunsArtifactsLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1604,8 +2070,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="impersonateToken"></a>
 # **impersonateToken**
@@ -1616,30 +2091,39 @@ Impersonate run token
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    V1Auth result = apiInstance.impersonateToken(owner, project, uuid);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#impersonateToken");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      V1Auth result = apiInstance.impersonateToken(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#impersonateToken");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1661,42 +2145,61 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="invalidateRun"></a>
 # **invalidateRun**
-> invalidateRun(owner, project, uuid, body)
+> Object invalidateRun(owner, project, uuid, body)
 
 Invalidate run
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
-try {
-    apiInstance.invalidateRun(owner, project, uuid, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#invalidateRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
+    try {
+      Object result = apiInstance.invalidateRun(owner, project, uuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#invalidateRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1711,7 +2214,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -1722,38 +2225,57 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="invalidateRuns"></a>
 # **invalidateRuns**
-> invalidateRuns(owner, project, body)
+> Object invalidateRuns(owner, project, body)
 
 Invalidate runs
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
-try {
-    apiInstance.invalidateRuns(owner, project, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#invalidateRuns");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
+    try {
+      Object result = apiInstance.invalidateRuns(owner, project, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#invalidateRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1767,7 +2289,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -1777,6 +2299,15 @@ null (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listArchivedRuns"></a>
 # **listArchivedRuns**
@@ -1787,32 +2318,41 @@ List archived runs for user
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String user = "user_example"; // String | User
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListRunsResponse result = apiInstance.listArchivedRuns(user, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#listArchivedRuns");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String user = "user_example"; // String | User
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListRunsResponse result = apiInstance.listArchivedRuns(user, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#listArchivedRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1836,8 +2376,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listBookmarkedRuns"></a>
 # **listBookmarkedRuns**
@@ -1848,32 +2397,41 @@ List bookmarked runs for user
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String user = "user_example"; // String | User
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListRunsResponse result = apiInstance.listBookmarkedRuns(user, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#listBookmarkedRuns");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String user = "user_example"; // String | User
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListRunsResponse result = apiInstance.listBookmarkedRuns(user, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#listBookmarkedRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1897,8 +2455,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listRuns"></a>
 # **listRuns**
@@ -1909,33 +2476,42 @@ List runs
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListRunsResponse result = apiInstance.listRuns(owner, project, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#listRuns");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListRunsResponse result = apiInstance.listRuns(owner, project, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#listRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -1960,8 +2536,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listRunsIo"></a>
 # **listRunsIo**
@@ -1972,33 +2557,42 @@ List runs io
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListRunsResponse result = apiInstance.listRunsIo(owner, project, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#listRunsIo");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListRunsResponse result = apiInstance.listRunsIo(owner, project, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#listRunsIo");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2023,43 +2617,62 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="notifyRunStatus"></a>
 # **notifyRunStatus**
-> notifyRunStatus(namespace, owner, project, uuid, body)
+> Object notifyRunStatus(namespace, owner, project, uuid, body)
 
 Notify run status
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String namespace = "namespace_example"; // String | Na,espace
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-V1EntityNotificationBody body = new V1EntityNotificationBody(); // V1EntityNotificationBody | 
-try {
-    apiInstance.notifyRunStatus(namespace, owner, project, uuid, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#notifyRunStatus");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | Na,espace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    V1EntityNotificationBody body = new V1EntityNotificationBody(); // V1EntityNotificationBody | 
+    try {
+      Object result = apiInstance.notifyRunStatus(namespace, owner, project, uuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#notifyRunStatus");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2075,7 +2688,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2086,6 +2699,15 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="patchRun"></a>
 # **patchRun**
 > V1Run patchRun(owner, project, runUuid, body)
@@ -2095,31 +2717,40 @@ Patch run
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String runUuid = "runUuid_example"; // String | UUID
-V1Run body = new V1Run(); // V1Run | Run object
-try {
-    V1Run result = apiInstance.patchRun(owner, project, runUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#patchRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String runUuid = "runUuid_example"; // String | UUID
+    V1Run body = new V1Run(); // V1Run | Run object
+    try {
+      V1Run result = apiInstance.patchRun(owner, project, runUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#patchRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2145,6 +2776,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="restartRun"></a>
 # **restartRun**
 > V1Run restartRun(entityOwner, entityProject, entityUuid, body)
@@ -2154,31 +2794,40 @@ Restart run
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-String entityProject = "entityProject_example"; // String | Project
-String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
-V1Run body = new V1Run(); // V1Run | Run object
-try {
-    V1Run result = apiInstance.restartRun(entityOwner, entityProject, entityUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#restartRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String entityOwner = "entityOwner_example"; // String | Owner of the namespace
+    String entityProject = "entityProject_example"; // String | Project
+    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
+    V1Run body = new V1Run(); // V1Run | Run object
+    try {
+      V1Run result = apiInstance.restartRun(entityOwner, entityProject, entityUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#restartRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2204,38 +2853,57 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="restoreRun"></a>
 # **restoreRun**
-> restoreRun(owner, project, uuid)
+> Object restoreRun(owner, project, uuid)
 
 Restore run
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.restoreRun(owner, project, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#restoreRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.restoreRun(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#restoreRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2249,7 +2917,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2257,8 +2925,17 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="resumeRun"></a>
 # **resumeRun**
@@ -2269,31 +2946,40 @@ Resume run
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-String entityProject = "entityProject_example"; // String | Project
-String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
-V1Run body = new V1Run(); // V1Run | Run object
-try {
-    V1Run result = apiInstance.resumeRun(entityOwner, entityProject, entityUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#resumeRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String entityOwner = "entityOwner_example"; // String | Owner of the namespace
+    String entityProject = "entityProject_example"; // String | Project
+    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
+    V1Run body = new V1Run(); // V1Run | Run object
+    try {
+      V1Run result = apiInstance.resumeRun(entityOwner, entityProject, entityUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#resumeRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2319,39 +3005,58 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="startRunTensorboard"></a>
 # **startRunTensorboard**
-> startRunTensorboard(owner, project, uuid, body)
+> Object startRunTensorboard(owner, project, uuid, body)
 
 Start run tensorboard
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
-try {
-    apiInstance.startRunTensorboard(owner, project, uuid, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#startRunTensorboard");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
+    try {
+      Object result = apiInstance.startRunTensorboard(owner, project, uuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#startRunTensorboard");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2366,7 +3071,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2377,38 +3082,57 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="stopRun"></a>
 # **stopRun**
-> stopRun(owner, project, uuid)
+> Object stopRun(owner, project, uuid)
 
 Stop run
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.stopRun(owner, project, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#stopRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.stopRun(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#stopRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2422,7 +3146,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2430,41 +3154,60 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="stopRunTensorboard"></a>
 # **stopRunTensorboard**
-> stopRunTensorboard(owner, project, uuid)
+> Object stopRunTensorboard(owner, project, uuid)
 
 Stop run tensorboard
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.stopRunTensorboard(owner, project, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#stopRunTensorboard");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.stopRunTensorboard(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#stopRunTensorboard");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2478,7 +3221,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2486,41 +3229,60 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="stopRuns"></a>
 # **stopRuns**
-> stopRuns(owner, project, body)
+> Object stopRuns(owner, project, body)
 
 Stop runs
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
-try {
-    apiInstance.stopRuns(owner, project, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#stopRuns");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
+    try {
+      Object result = apiInstance.stopRuns(owner, project, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#stopRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2534,7 +3296,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2545,38 +3307,57 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="tagRuns"></a>
 # **tagRuns**
-> tagRuns(owner, project, body)
+> Object tagRuns(owner, project, body)
 
 Tag runs
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-V1EntitiesTags body = new V1EntitiesTags(); // V1EntitiesTags | Data
-try {
-    apiInstance.tagRuns(owner, project, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#tagRuns");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project under namesapce
+    V1EntitiesTags body = new V1EntitiesTags(); // V1EntitiesTags | Data
+    try {
+      Object result = apiInstance.tagRuns(owner, project, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#tagRuns");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2590,7 +3371,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2601,38 +3382,57 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="unbookmarkRun"></a>
 # **unbookmarkRun**
-> unbookmarkRun(owner, project, uuid)
+> Object unbookmarkRun(owner, project, uuid)
 
 Unbookmark run
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.unbookmarkRun(owner, project, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#unbookmarkRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.unbookmarkRun(owner, project, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#unbookmarkRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2646,7 +3446,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2654,8 +3454,17 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="updateRun"></a>
 # **updateRun**
@@ -2666,31 +3475,40 @@ Update run
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String runUuid = "runUuid_example"; // String | UUID
-V1Run body = new V1Run(); // V1Run | Run object
-try {
-    V1Run result = apiInstance.updateRun(owner, project, runUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#updateRun");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String runUuid = "runUuid_example"; // String | UUID
+    V1Run body = new V1Run(); // V1Run | Run object
+    try {
+      V1Run result = apiInstance.updateRun(owner, project, runUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#updateRun");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2716,6 +3534,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="uploadRunArtifact"></a>
 # **uploadRunArtifact**
 > uploadRunArtifact(owner, project, uuid, uploadfile, path, overwrite)
@@ -2725,32 +3552,41 @@ Upload an artifact file to a store via run access
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project having access to the store
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-File uploadfile = new File("/path/to/file.txt"); // File | The file to upload.
-String path = "path_example"; // String | File path query params.
-Boolean overwrite = true; // Boolean | File path query params.
-try {
-    apiInstance.uploadRunArtifact(owner, project, uuid, uploadfile, path, overwrite);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#uploadRunArtifact");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project having access to the store
+    String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+    File uploadfile = new File("/path/to/file"); // File | The file to upload.
+    String path = "path_example"; // String | File path query params.
+    Boolean overwrite = true; // Boolean | File path query params.
+    try {
+      apiInstance.uploadRunArtifact(owner, project, uuid, uploadfile, path, overwrite);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#uploadRunArtifact");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2777,6 +3613,14 @@ null (empty response body)
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 
 <a name="uploadRunLogs"></a>
 # **uploadRunLogs**
@@ -2787,32 +3631,41 @@ Upload a logs file to a store via run access
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project having access to the store
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-File uploadfile = new File("/path/to/file.txt"); // File | The file to upload.
-String path = "path_example"; // String | File path query params.
-Boolean overwrite = true; // Boolean | File path query params.
-try {
-    apiInstance.uploadRunLogs(owner, project, uuid, uploadfile, path, overwrite);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#uploadRunLogs");
-    e.printStackTrace();
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project having access to the store
+    String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+    File uploadfile = new File("/path/to/file"); // File | The file to upload.
+    String path = "path_example"; // String | File path query params.
+    Boolean overwrite = true; // Boolean | File path query params.
+    try {
+      apiInstance.uploadRunLogs(owner, project, uuid, uploadfile, path, overwrite);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#uploadRunLogs");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -2839,4 +3692,12 @@ null (empty response body)
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 

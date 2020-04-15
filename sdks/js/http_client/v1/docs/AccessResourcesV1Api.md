@@ -1,5 +1,7 @@
 # PolyaxonSdk.AccessResourcesV1Api
 
+Polyaxon&#39;s typescript client
+
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
@@ -13,41 +15,38 @@ Method | HTTP request | Description
 [**updateAccessResource**](AccessResourcesV1Api.md#updateAccessResource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
 
 
-<a name="createAccessResource"></a>
-# **createAccessResource**
+
+## createAccessResource
+
 > V1AccessResource createAccessResource(owner, body)
 
 Create access resource
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var body = new PolyaxonSdk.V1AccessResource(); // V1AccessResource | Artifact store body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let body = new PolyaxonSdk.V1AccessResource(); // V1AccessResource | Artifact store body
+apiInstance.createAccessResource(owner, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createAccessResource(owner, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -64,44 +63,41 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="deleteAccessResource"></a>
-# **deleteAccessResource**
-> deleteAccessResource(owner, uuid)
+
+## deleteAccessResource
+
+> Object deleteAccessResource(owner, uuid)
 
 Delete access resource
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.deleteAccessResource(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteAccessResource(owner, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -110,7 +106,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -118,44 +114,41 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getAccessResource"></a>
-# **getAccessResource**
+
+## getAccessResource
+
 > V1AccessResource getAccessResource(owner, uuid)
 
 Get access resource
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getAccessResource(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getAccessResource(owner, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -172,48 +165,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listAccessResourceNames"></a>
-# **listAccessResourceNames**
+
+## listAccessResourceNames
+
 > V1ListAccessResourcesResponse listAccessResourceNames(owner, opts)
 
 List access resource names
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listAccessResourceNames(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listAccessResourceNames(owner, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -233,48 +224,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listAccessResources"></a>
-# **listAccessResources**
+
+## listAccessResources
+
 > V1ListAccessResourcesResponse listAccessResources(owner, opts)
 
 List access resources
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listAccessResources(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listAccessResources(owner, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -294,46 +283,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="patchAccessResource"></a>
-# **patchAccessResource**
+
+## patchAccessResource
+
 > V1AccessResource patchAccessResource(owner, access_resource_uuid, body)
 
 Patch access resource
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var access_resource_uuid = "access_resource_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1AccessResource(); // V1AccessResource | Artifact store body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let access_resource_uuid = "access_resource_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1AccessResource(); // V1AccessResource | Artifact store body
+apiInstance.patchAccessResource(owner, access_resource_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.patchAccessResource(owner, access_resource_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -351,46 +336,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="updateAccessResource"></a>
-# **updateAccessResource**
+
+## updateAccessResource
+
 > V1AccessResource updateAccessResource(owner, access_resource_uuid, body)
 
 Update access resource
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var access_resource_uuid = "access_resource_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1AccessResource(); // V1AccessResource | Artifact store body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.AccessResourcesV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let access_resource_uuid = "access_resource_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1AccessResource(); // V1AccessResource | Artifact store body
+apiInstance.updateAccessResource(owner, access_resource_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.updateAccessResource(owner, access_resource_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -408,6 +389,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 

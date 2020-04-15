@@ -1,4 +1,5 @@
 # DashboardsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -22,29 +23,38 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.DashboardsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DashboardsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-DashboardsV1Api apiInstance = new DashboardsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
-try {
-    V1Dashboard result = apiInstance.createDashboard(owner, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#createDashboard");
-    e.printStackTrace();
+    DashboardsV1Api apiInstance = new DashboardsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
+    try {
+      V1Dashboard result = apiInstance.createDashboard(owner, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DashboardsV1Api#createDashboard");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -68,37 +78,56 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="deleteDashboard"></a>
 # **deleteDashboard**
-> deleteDashboard(owner, uuid)
+> Object deleteDashboard(owner, uuid)
 
 
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.DashboardsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DashboardsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-DashboardsV1Api apiInstance = new DashboardsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    apiInstance.deleteDashboard(owner, uuid);
-} catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#deleteDashboard");
-    e.printStackTrace();
+    DashboardsV1Api apiInstance = new DashboardsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      Object result = apiInstance.deleteDashboard(owner, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DashboardsV1Api#deleteDashboard");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -111,7 +140,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -119,8 +148,17 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="getDashboard"></a>
 # **getDashboard**
@@ -131,29 +169,38 @@ null (empty response body)
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.DashboardsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DashboardsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-DashboardsV1Api apiInstance = new DashboardsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
-try {
-    V1Dashboard result = apiInstance.getDashboard(owner, uuid);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#getDashboard");
-    e.printStackTrace();
+    DashboardsV1Api apiInstance = new DashboardsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    try {
+      V1Dashboard result = apiInstance.getDashboard(owner, uuid);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DashboardsV1Api#getDashboard");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -174,8 +221,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listDashboardNames"></a>
 # **listDashboardNames**
@@ -186,32 +242,41 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.DashboardsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DashboardsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-DashboardsV1Api apiInstance = new DashboardsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListDashboardsResponse result = apiInstance.listDashboardNames(owner, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#listDashboardNames");
-    e.printStackTrace();
+    DashboardsV1Api apiInstance = new DashboardsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListDashboardsResponse result = apiInstance.listDashboardNames(owner, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DashboardsV1Api#listDashboardNames");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -235,8 +300,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="listDashboards"></a>
 # **listDashboards**
@@ -247,32 +321,41 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.DashboardsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DashboardsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-DashboardsV1Api apiInstance = new DashboardsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-Integer offset = 56; // Integer | Pagination offset.
-Integer limit = 56; // Integer | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListDashboardsResponse result = apiInstance.listDashboards(owner, offset, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#listDashboards");
-    e.printStackTrace();
+    DashboardsV1Api apiInstance = new DashboardsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListDashboardsResponse result = apiInstance.listDashboards(owner, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DashboardsV1Api#listDashboards");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -296,8 +379,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="patchDashboard"></a>
 # **patchDashboard**
@@ -308,30 +400,39 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.DashboardsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DashboardsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-DashboardsV1Api apiInstance = new DashboardsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String dashboardUuid = "dashboardUuid_example"; // String | UUID
-V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
-try {
-    V1Dashboard result = apiInstance.patchDashboard(owner, dashboardUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#patchDashboard");
-    e.printStackTrace();
+    DashboardsV1Api apiInstance = new DashboardsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String dashboardUuid = "dashboardUuid_example"; // String | UUID
+    V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
+    try {
+      V1Dashboard result = apiInstance.patchDashboard(owner, dashboardUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DashboardsV1Api#patchDashboard");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -355,6 +456,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 <a name="updateDashboard"></a>
 # **updateDashboard**
@@ -365,30 +475,39 @@ Name | Type | Description  | Notes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.DashboardsV1Api;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DashboardsV1Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
 
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-DashboardsV1Api apiInstance = new DashboardsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String dashboardUuid = "dashboardUuid_example"; // String | UUID
-V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
-try {
-    V1Dashboard result = apiInstance.updateDashboard(owner, dashboardUuid, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#updateDashboard");
-    e.printStackTrace();
+    DashboardsV1Api apiInstance = new DashboardsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String dashboardUuid = "dashboardUuid_example"; // String | UUID
+    V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
+    try {
+      V1Dashboard result = apiInstance.updateDashboard(owner, dashboardUuid, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DashboardsV1Api#updateDashboard");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -412,4 +531,13 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 

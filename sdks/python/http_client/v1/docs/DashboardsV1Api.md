@@ -1,4 +1,5 @@
 # polyaxon_sdk.DashboardsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -19,29 +20,35 @@ Method | HTTP request | Description
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.DashboardsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
-try:
-    api_response = api_instance.create_dashboard(owner, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DashboardsV1Api->create_dashboard: %s\n" % e)
+    try:
+        api_response = api_instance.create_dashboard(owner, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DashboardsV1Api->create_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -64,36 +71,52 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_dashboard**
-> delete_dashboard(owner, uuid)
+> object delete_dashboard(owner, uuid)
 
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.DashboardsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    api_instance.delete_dashboard(owner, uuid)
-except ApiException as e:
-    print("Exception when calling DashboardsV1Api->delete_dashboard: %s\n" % e)
+    try:
+        api_response = api_instance.delete_dashboard(owner, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DashboardsV1Api->delete_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -105,7 +128,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -113,8 +136,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -124,29 +156,35 @@ void (empty response body)
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.DashboardsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    api_response = api_instance.get_dashboard(owner, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DashboardsV1Api->get_dashboard: %s\n" % e)
+    try:
+        api_response = api_instance.get_dashboard(owner, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DashboardsV1Api->get_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -166,8 +204,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -177,32 +224,38 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.DashboardsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    api_response = api_instance.list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DashboardsV1Api->list_dashboard_names: %s\n" % e)
+    try:
+        api_response = api_instance.list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DashboardsV1Api->list_dashboard_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -225,8 +278,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -236,32 +298,38 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.DashboardsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    api_response = api_instance.list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DashboardsV1Api->list_dashboards: %s\n" % e)
+    try:
+        api_response = api_instance.list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DashboardsV1Api->list_dashboards: %s\n" % e)
 ```
 
 ### Parameters
@@ -284,8 +352,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -295,30 +372,36 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.DashboardsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
-try:
-    api_response = api_instance.patch_dashboard(owner, dashboard_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DashboardsV1Api->patch_dashboard: %s\n" % e)
+    try:
+        api_response = api_instance.patch_dashboard(owner, dashboard_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DashboardsV1Api->patch_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -341,6 +424,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -350,30 +442,36 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.DashboardsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
-try:
-    api_response = api_instance.update_dashboard(owner, dashboard_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling DashboardsV1Api->update_dashboard: %s\n" % e)
+    try:
+        api_response = api_instance.update_dashboard(owner, dashboard_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling DashboardsV1Api->update_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -396,6 +494,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

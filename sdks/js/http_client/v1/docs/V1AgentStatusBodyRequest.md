@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1AgentStatusBodyRequest
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **owner** | **String** |  | [optional] 

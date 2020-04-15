@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | **object** |  | [optional] 
+**value** | [**object**](.md) |  | [optional] 
 **ref** | **str** |  | [optional] 
 **search** | [**V1ParamSearch**](V1ParamSearch.md) |  | [optional] 
 

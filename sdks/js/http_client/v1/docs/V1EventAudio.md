@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1EventAudio
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **sample_rate** | **Number** | Sample rate of the audio in Hz. | [optional] 

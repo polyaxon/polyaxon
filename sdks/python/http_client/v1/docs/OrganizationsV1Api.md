@@ -1,4 +1,5 @@
 # polyaxon_sdk.OrganizationsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -25,28 +26,34 @@ Method | HTTP request | Description
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-body = polyaxon_sdk.V1Organization() # V1Organization | 
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
 
-try:
-    api_response = api_instance.create_organization(body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->create_organization: %s\n" % e)
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    body = polyaxon_sdk.V1Organization() # V1Organization | 
+
+    try:
+        api_response = api_instance.create_organization(body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->create_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -68,6 +75,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_organization_member**
@@ -76,29 +92,35 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
-try:
-    api_response = api_instance.create_organization_member(owner, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->create_organization_member: %s\n" % e)
+    try:
+        api_response = api_instance.create_organization_member(owner, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->create_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -121,35 +143,51 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization**
-> delete_organization(owner)
+> object delete_organization(owner)
 
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
 
-try:
-    api_instance.delete_organization(owner)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->delete_organization: %s\n" % e)
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
+
+    try:
+        api_response = api_instance.delete_organization(owner)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->delete_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -160,7 +198,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -168,39 +206,55 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization_member**
-> delete_organization_member(owner, user)
+> object delete_organization_member(owner, user)
 
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 user = 'user_example' # str | Memeber under namesapce
 
-try:
-    api_instance.delete_organization_member(owner, user)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->delete_organization_member: %s\n" % e)
+    try:
+        api_response = api_instance.delete_organization_member(owner, user)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->delete_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -212,7 +266,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -220,8 +274,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -231,28 +294,34 @@ void (empty response body)
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
 
-try:
-    api_response = api_instance.get_organization(owner)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->get_organization: %s\n" % e)
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
+
+    try:
+        api_response = api_instance.get_organization(owner)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->get_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -271,8 +340,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -282,29 +360,35 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 user = 'user_example' # str | Memeber under namesapce
 
-try:
-    api_response = api_instance.get_organization_member(owner, user)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->get_organization_member: %s\n" % e)
+    try:
+        api_response = api_instance.get_organization_member(owner, user)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->get_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -324,8 +408,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -335,32 +428,38 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    api_response = api_instance.list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->list_organization_members: %s\n" % e)
+    try:
+        api_response = api_instance.list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->list_organization_members: %s\n" % e)
 ```
 
 ### Parameters
@@ -383,8 +482,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -394,28 +502,34 @@ Name | Type | Description  | Notes
 Get versions
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
 
-try:
-    # Get versions
-    api_response = api_instance.list_organization_names()
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->list_organization_names: %s\n" % e)
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    
+    try:
+        # Get versions
+        api_response = api_instance.list_organization_names()
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->list_organization_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -431,8 +545,17 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -442,28 +565,34 @@ This endpoint does not need any parameter.
 Get log handler
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
 
-try:
-    # Get log handler
-    api_response = api_instance.list_organizations()
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->list_organizations: %s\n" % e)
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    
+    try:
+        # Get log handler
+        api_response = api_instance.list_organizations()
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->list_organizations: %s\n" % e)
 ```
 
 ### Parameters
@@ -479,8 +608,17 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -490,29 +628,35 @@ This endpoint does not need any parameter.
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Organization() # V1Organization | Organization body
 
-try:
-    api_response = api_instance.patch_organization(owner, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->patch_organization: %s\n" % e)
+    try:
+        api_response = api_instance.patch_organization(owner, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->patch_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -534,6 +678,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -543,30 +696,36 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 member_user = 'member_user_example' # str | User
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
-try:
-    api_response = api_instance.patch_organization_member(owner, member_user, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->patch_organization_member: %s\n" % e)
+    try:
+        api_response = api_instance.patch_organization_member(owner, member_user, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->patch_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -590,6 +749,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_organization**
@@ -598,29 +766,35 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Organization() # V1Organization | Organization body
 
-try:
-    api_response = api_instance.update_organization(owner, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->update_organization: %s\n" % e)
+    try:
+        api_response = api_instance.update_organization(owner, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->update_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -643,6 +817,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_organization_member**
@@ -651,30 +834,36 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 member_user = 'member_user_example' # str | User
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
-try:
-    api_response = api_instance.update_organization_member(owner, member_user, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->update_organization_member: %s\n" % e)
+    try:
+        api_response = api_instance.update_organization_member(owner, member_user, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->update_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -697,6 +886,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

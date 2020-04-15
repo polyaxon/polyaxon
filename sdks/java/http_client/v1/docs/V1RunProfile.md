@@ -1,7 +1,9 @@
 
+
 # V1RunProfile
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **String** |  |  [optional]
@@ -15,8 +17,8 @@ Name | Type | Description | Notes
 **agent** | **String** |  |  [optional]
 **queue** | **String** |  |  [optional]
 **namespace** | **String** |  |  [optional]
-**termination** | **Object** |  |  [optional]
-**environment** | **Object** |  |  [optional]
+**termination** | [**Object**](.md) |  |  [optional]
+**environment** | [**Object**](.md) |  |  [optional]
 
 
 

@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1Dashboard
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **String** |  | [optional] 
@@ -10,7 +11,7 @@ Name | Type | Description | Notes
 **disabled** | **Boolean** |  | [optional] 
 **deleted** | **Boolean** |  | [optional] 
 **run_view** | **Boolean** |  | [optional] 
-**spec** | **Object** |  | [optional] 
+**spec** | [**Object**](.md) |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 

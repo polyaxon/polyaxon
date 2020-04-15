@@ -1,7 +1,9 @@
 
+
 # V1EventAudio
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **sampleRate** | **Float** | Sample rate of the audio in Hz. |  [optional]

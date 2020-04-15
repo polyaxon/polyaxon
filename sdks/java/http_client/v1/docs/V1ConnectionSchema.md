@@ -1,7 +1,9 @@
 
+
 # V1ConnectionSchema
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **bucketConnection** | [**V1BucketConnection**](V1BucketConnection.md) |  |  [optional]

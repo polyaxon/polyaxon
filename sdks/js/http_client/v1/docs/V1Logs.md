@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1Logs
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **logs** | [**[V1Log]**](V1Log.md) |  | [optional] 

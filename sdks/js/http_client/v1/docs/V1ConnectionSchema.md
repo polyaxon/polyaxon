@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1ConnectionSchema
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **bucket_connection** | [**V1BucketConnection**](V1BucketConnection.md) |  | [optional] 

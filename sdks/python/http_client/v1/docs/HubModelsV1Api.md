@@ -1,4 +1,5 @@
 # polyaxon_sdk.HubModelsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -19,30 +20,36 @@ Method | HTTP request | Description
 Create dashboard
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.HubModelsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.HubModelsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
-try:
-    # Create dashboard
-    api_response = api_instance.create_hub_model(owner, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling HubModelsV1Api->create_hub_model: %s\n" % e)
+    try:
+        # Create dashboard
+        api_response = api_instance.create_hub_model(owner, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling HubModelsV1Api->create_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -65,37 +72,53 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_hub_model**
-> delete_hub_model(owner, uuid)
+> object delete_hub_model(owner, uuid)
 
 Delete dashboard
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.HubModelsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.HubModelsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Delete dashboard
-    api_instance.delete_hub_model(owner, uuid)
-except ApiException as e:
-    print("Exception when calling HubModelsV1Api->delete_hub_model: %s\n" % e)
+    try:
+        # Delete dashboard
+        api_response = api_instance.delete_hub_model(owner, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling HubModelsV1Api->delete_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -107,7 +130,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -115,8 +138,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -126,30 +158,36 @@ void (empty response body)
 Get dashboard
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.HubModelsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.HubModelsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Get dashboard
-    api_response = api_instance.get_hub_model(owner, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling HubModelsV1Api->get_hub_model: %s\n" % e)
+    try:
+        # Get dashboard
+        api_response = api_instance.get_hub_model(owner, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling HubModelsV1Api->get_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -169,8 +207,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -180,33 +227,39 @@ Name | Type | Description  | Notes
 List dashboard names
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.HubModelsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.HubModelsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # List dashboard names
-    api_response = api_instance.list_hub_model_names(owner, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling HubModelsV1Api->list_hub_model_names: %s\n" % e)
+    try:
+        # List dashboard names
+        api_response = api_instance.list_hub_model_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling HubModelsV1Api->list_hub_model_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -229,8 +282,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -240,33 +302,39 @@ Name | Type | Description  | Notes
 List dashboards
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.HubModelsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.HubModelsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # List dashboards
-    api_response = api_instance.list_hub_models(owner, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling HubModelsV1Api->list_hub_models: %s\n" % e)
+    try:
+        # List dashboards
+        api_response = api_instance.list_hub_models(owner, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling HubModelsV1Api->list_hub_models: %s\n" % e)
 ```
 
 ### Parameters
@@ -289,8 +357,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -300,31 +377,37 @@ Name | Type | Description  | Notes
 Patch dashboard
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.HubModelsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.HubModelsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 model_uuid = 'model_uuid_example' # str | UUID
 body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
-try:
-    # Patch dashboard
-    api_response = api_instance.patch_hub_model(owner, model_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling HubModelsV1Api->patch_hub_model: %s\n" % e)
+    try:
+        # Patch dashboard
+        api_response = api_instance.patch_hub_model(owner, model_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling HubModelsV1Api->patch_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -347,6 +430,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -356,31 +448,37 @@ Name | Type | Description  | Notes
 Update dashboard
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.HubModelsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.HubModelsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 model_uuid = 'model_uuid_example' # str | UUID
 body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
-try:
-    # Update dashboard
-    api_response = api_instance.update_hub_model(owner, model_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling HubModelsV1Api->update_hub_model: %s\n" % e)
+    try:
+        # Update dashboard
+        api_response = api_instance.update_hub_model(owner, model_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling HubModelsV1Api->update_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -403,6 +501,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

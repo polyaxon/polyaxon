@@ -1,7 +1,9 @@
 
+
 # V1StatusCondition
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | [**V1Statuses**](V1Statuses.md) |  |  [optional]

@@ -1,7 +1,9 @@
 
+
 # V1PolyaxonSidecarContainer
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **image** | **String** |  |  [optional]
@@ -9,7 +11,7 @@ Name | Type | Description | Notes
 **imagePullPolicy** | **String** |  |  [optional]
 **sleepInterval** | **Integer** |  |  [optional]
 **syncInterval** | **Integer** |  |  [optional]
-**resources** | [**V1ResourceRequirements**](V1ResourceRequirements.md) |  |  [optional]
+**resources** | [**Object**](.md) |  |  [optional]
 
 
 

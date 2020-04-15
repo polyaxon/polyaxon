@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1Component
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **version** | **Number** |  | [optional] 
@@ -16,6 +17,6 @@ Name | Type | Description | Notes
 **plugins** | [**V1Plugins**](V1Plugins.md) |  | [optional] 
 **inputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
-**run** | **Object** |  | [optional] 
+**run** | [**Object**](.md) |  | [optional] 
 
 

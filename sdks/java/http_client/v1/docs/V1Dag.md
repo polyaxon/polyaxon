@@ -1,7 +1,9 @@
 
+
 # V1Dag
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
@@ -11,7 +13,7 @@ Name | Type | Description | Notes
 **earlyStopping** | **List&lt;Object&gt;** |  |  [optional]
 **environment** | [**V1Environment**](V1Environment.md) |  |  [optional]
 **connections** | **List&lt;String&gt;** |  |  [optional]
-**volumes** | [**List&lt;V1Volume&gt;**](V1Volume.md) | Volumes is a list of volumes that can be mounted. |  [optional]
+**volumes** | **List&lt;Object&gt;** | Volumes is a list of volumes that can be mounted. |  [optional]
 
 
 

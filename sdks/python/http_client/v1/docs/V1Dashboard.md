@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **disabled** | **bool** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
 **run_view** | **bool** |  | [optional] 
-**spec** | **object** |  | [optional] 
+**spec** | [**object**](.md) |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

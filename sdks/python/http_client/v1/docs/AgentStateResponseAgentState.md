@@ -3,13 +3,13 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schedules** | **object** |  | [optional] 
-**notifier** | **object** |  | [optional] 
-**watchdogs** | **object** |  | [optional] 
-**tuners** | **object** |  | [optional] 
-**queued** | **object** |  | [optional] 
-**stopping** | **object** |  | [optional] 
-**apply** | **object** |  | [optional] 
+**schedules** | [**object**](.md) |  | [optional] 
+**notifier** | [**object**](.md) |  | [optional] 
+**watchdogs** | [**object**](.md) |  | [optional] 
+**tuners** | [**object**](.md) |  | [optional] 
+**queued** | [**object**](.md) |  | [optional] 
+**stopping** | [**object**](.md) |  | [optional] 
+**apply** | [**object**](.md) |  | [optional] 
 **full** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

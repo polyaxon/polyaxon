@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1EventVideo
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **height** | **Number** | Height of the video. | [optional] 

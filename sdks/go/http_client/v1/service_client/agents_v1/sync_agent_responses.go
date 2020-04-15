@@ -83,13 +83,23 @@ func NewSyncAgentOK() *SyncAgentOK {
 A successful response.
 */
 type SyncAgentOK struct {
+	Payload interface{}
 }
 
 func (o *SyncAgentOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}/sync][%d] syncAgentOK ", 200)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}/sync][%d] syncAgentOK  %+v", 200, o.Payload)
+}
+
+func (o *SyncAgentOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *SyncAgentOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

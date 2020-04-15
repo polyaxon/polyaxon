@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **agent** | **str** |  | [optional] 
 **queue** | **str** |  | [optional] 
 **namespace** | **str** |  | [optional] 
-**termination** | **object** |  | [optional] 
-**environment** | **object** |  | [optional] 
+**termination** | [**object**](.md) |  | [optional] 
+**environment** | [**object**](.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

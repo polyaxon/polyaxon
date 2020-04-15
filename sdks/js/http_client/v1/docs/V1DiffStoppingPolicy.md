@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1DiffStoppingPolicy
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  | [optional] 

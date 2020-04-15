@@ -1,4 +1,5 @@
 # polyaxon_sdk.RunsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -54,35 +55,42 @@ Method | HTTP request | Description
 
 
 # **archive_run**
-> archive_run(owner, project, uuid)
+> object archive_run(owner, project, uuid)
 
 Archive run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Archive run
-    api_instance.archive_run(owner, project, uuid)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->archive_run: %s\n" % e)
+    try:
+        # Archive run
+        api_response = api_instance.archive_run(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->archive_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -95,7 +103,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -103,41 +111,57 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **bookmark_run**
-> bookmark_run(owner, project, uuid)
+> object bookmark_run(owner, project, uuid)
 
 Bookmark run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Bookmark run
-    api_instance.bookmark_run(owner, project, uuid)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->bookmark_run: %s\n" % e)
+    try:
+        # Bookmark run
+        api_response = api_instance.bookmark_run(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->bookmark_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -150,7 +174,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -158,41 +182,57 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **bookmark_runs**
-> bookmark_runs(owner, project, body)
+> object bookmark_runs(owner, project, body)
 
 Bookmark runs
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
-try:
-    # Bookmark runs
-    api_instance.bookmark_runs(owner, project, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->bookmark_runs: %s\n" % e)
+    try:
+        # Bookmark runs
+        api_response = api_instance.bookmark_runs(owner, project, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->bookmark_runs: %s\n" % e)
 ```
 
 ### Parameters
@@ -205,7 +245,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -216,39 +256,55 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **collect_run_logs**
-> collect_run_logs(namespace, owner, project, uuid)
+> object collect_run_logs(namespace, owner, project, uuid)
 
 Collect run logs
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | 
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | 
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Collect run logs
-    api_instance.collect_run_logs(namespace, owner, project, uuid)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->collect_run_logs: %s\n" % e)
+    try:
+        # Collect run logs
+        api_response = api_instance.collect_run_logs(namespace, owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->collect_run_logs: %s\n" % e)
 ```
 
 ### Parameters
@@ -262,7 +318,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -270,8 +326,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -281,32 +346,38 @@ void (empty response body)
 Restart run with copy
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-entity_owner = 'entity_owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    entity_owner = 'entity_owner_example' # str | Owner of the namespace
 entity_project = 'entity_project_example' # str | Project
 entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
-try:
-    # Restart run with copy
-    api_response = api_instance.copy_run(entity_owner, entity_project, entity_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->copy_run: %s\n" % e)
+    try:
+        # Restart run with copy
+        api_response = api_instance.copy_run(entity_owner, entity_project, entity_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->copy_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -331,6 +402,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_run**
@@ -339,31 +419,37 @@ Name | Type | Description  | Notes
 Create new run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 body = polyaxon_sdk.V1OperationBody() # V1OperationBody | operation object
 
-try:
-    # Create new run
-    api_response = api_instance.create_run(owner, project, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->create_run: %s\n" % e)
+    try:
+        # Create new run
+        api_response = api_instance.create_run(owner, project, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->create_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -387,39 +473,55 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_run_artifacts_lineage**
-> create_run_artifacts_lineage(owner, project, uuid, body)
+> object create_run_artifacts_lineage(owner, project, uuid, body)
 
 Create bulk run run artifacts lineage
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1RunArtifacts() # V1RunArtifacts | Run Artifacts
 
-try:
-    # Create bulk run run artifacts lineage
-    api_instance.create_run_artifacts_lineage(owner, project, uuid, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->create_run_artifacts_lineage: %s\n" % e)
+    try:
+        # Create bulk run run artifacts lineage
+        api_response = api_instance.create_run_artifacts_lineage(owner, project, uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->create_run_artifacts_lineage: %s\n" % e)
 ```
 
 ### Parameters
@@ -433,7 +535,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -444,6 +546,15 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_run_status**
@@ -452,32 +563,38 @@ void (empty response body)
 Create new run status
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1EntityStatusBodyRequest() # V1EntityStatusBodyRequest | 
 
-try:
-    # Create new run status
-    api_response = api_instance.create_run_status(owner, project, uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->create_run_status: %s\n" % e)
+    try:
+        # Create new run status
+        api_response = api_instance.create_run_status(owner, project, uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->create_run_status: %s\n" % e)
 ```
 
 ### Parameters
@@ -502,38 +619,54 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_run**
-> delete_run(owner, project, uuid)
+> object delete_run(owner, project, uuid)
 
 Delete run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Delete run
-    api_instance.delete_run(owner, project, uuid)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->delete_run: %s\n" % e)
+    try:
+        # Delete run
+        api_response = api_instance.delete_run(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->delete_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -546,7 +679,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -554,43 +687,59 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_run_artifact_lineage**
-> delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
+> object delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
 
 Delete run artifact lineage
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 name = 'name_example' # str | Artifact name
 namespace = 'namespace_example' # str | namespace. (optional)
 
-try:
-    # Delete run artifact lineage
-    api_instance.delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->delete_run_artifact_lineage: %s\n" % e)
+    try:
+        # Delete run artifact lineage
+        api_response = api_instance.delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->delete_run_artifact_lineage: %s\n" % e)
 ```
 
 ### Parameters
@@ -605,7 +754,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -613,41 +762,57 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_runs**
-> delete_runs(owner, project, body)
+> object delete_runs(owner, project, body)
 
 Delete runs
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
-try:
-    # Delete runs
-    api_instance.delete_runs(owner, project, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->delete_runs: %s\n" % e)
+    try:
+        # Delete runs
+        api_response = api_instance.delete_runs(owner, project, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->delete_runs: %s\n" % e)
 ```
 
 ### Parameters
@@ -660,7 +825,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -671,6 +836,15 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_multi_run_events**
@@ -679,22 +853,28 @@ void (empty response body)
 Get multi runs events
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | namespace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 kind = 'kind_example' # str | The artifact kind
@@ -702,12 +882,12 @@ names = 'names_example' # str | Names query param. (optional)
 runs = 'runs_example' # str | Runs query param. (optional)
 orient = 'orient_example' # str | Orient query param. (optional)
 
-try:
-    # Get multi runs events
-    api_response = api_instance.get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_multi_run_events: %s\n" % e)
+    try:
+        # Get multi runs events
+        api_response = api_instance.get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_multi_run_events: %s\n" % e)
 ```
 
 ### Parameters
@@ -732,8 +912,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -743,31 +932,37 @@ Name | Type | Description  | Notes
 Get run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Get run
-    api_response = api_instance.get_run(owner, project, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run: %s\n" % e)
+    try:
+        # Get run
+        api_response = api_instance.get_run(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -788,8 +983,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -799,34 +1003,40 @@ Name | Type | Description  | Notes
 Get run artifact
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | namespace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
 path = 'path_example' # str | Artifact filepath. (optional)
-stream = true # bool | Whether to stream the file. (optional)
+stream = True # bool | Whether to stream the file. (optional)
 
-try:
-    # Get run artifact
-    api_response = api_instance.get_run_artifact(namespace, owner, project, uuid, path=path, stream=stream)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_artifact: %s\n" % e)
+    try:
+        # Get run artifact
+        api_response = api_instance.get_run_artifact(namespace, owner, project, uuid, path=path, stream=stream)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_artifact: %s\n" % e)
 ```
 
 ### Parameters
@@ -850,8 +1060,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -861,33 +1079,39 @@ Name | Type | Description  | Notes
 Get run artifacts lineage
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 name = 'name_example' # str | Artifact name
 namespace = 'namespace_example' # str | namespace. (optional)
 
-try:
-    # Get run artifacts lineage
-    api_response = api_instance.get_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_artifact_lineage: %s\n" % e)
+    try:
+        # Get run artifacts lineage
+        api_response = api_instance.get_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_artifact_lineage: %s\n" % e)
 ```
 
 ### Parameters
@@ -910,8 +1134,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -921,33 +1154,39 @@ Name | Type | Description  | Notes
 Get run artifacts
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | namespace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
 path = 'path_example' # str | Artifact filepath. (optional)
 
-try:
-    # Get run artifacts
-    api_response = api_instance.get_run_artifacts(namespace, owner, project, uuid, path=path)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_artifacts: %s\n" % e)
+    try:
+        # Get run artifacts
+        api_response = api_instance.get_run_artifacts(namespace, owner, project, uuid, path=path)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_artifacts: %s\n" % e)
 ```
 
 ### Parameters
@@ -970,8 +1209,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -981,22 +1228,28 @@ Name | Type | Description  | Notes
 Get run artifacts lineage
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 uuid = 'uuid_example' # str | Entity uuid
 offset = 56 # int | Pagination offset. (optional)
@@ -1004,12 +1257,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # Get run artifacts lineage
-    api_response = api_instance.get_run_artifacts_lineage(owner, project, uuid, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_artifacts_lineage: %s\n" % e)
+    try:
+        # Get run artifacts lineage
+        api_response = api_instance.get_run_artifacts_lineage(owner, project, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_artifacts_lineage: %s\n" % e)
 ```
 
 ### Parameters
@@ -1034,8 +1287,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1045,22 +1307,28 @@ Name | Type | Description  | Notes
 Get run artifacts lineage names
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 uuid = 'uuid_example' # str | Entity uuid
 offset = 56 # int | Pagination offset. (optional)
@@ -1068,12 +1336,12 @@ limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # Get run artifacts lineage names
-    api_response = api_instance.get_run_artifacts_lineage_names(owner, project, uuid, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_artifacts_lineage_names: %s\n" % e)
+    try:
+        # Get run artifacts lineage names
+        api_response = api_instance.get_run_artifacts_lineage_names(owner, project, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_artifacts_lineage_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -1098,8 +1366,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1109,33 +1386,39 @@ Name | Type | Description  | Notes
 Get run artifacts tree
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | namespace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 path = 'path_example' # str | Path query param. (optional)
 
-try:
-    # Get run artifacts tree
-    api_response = api_instance.get_run_artifacts_tree(namespace, owner, project, uuid, path=path)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_artifacts_tree: %s\n" % e)
+    try:
+        # Get run artifacts tree
+        api_response = api_instance.get_run_artifacts_tree(namespace, owner, project, uuid, path=path)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_artifacts_tree: %s\n" % e)
 ```
 
 ### Parameters
@@ -1158,8 +1441,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1169,22 +1461,28 @@ Name | Type | Description  | Notes
 Get run events
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | namespace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
@@ -1192,12 +1490,12 @@ kind = 'kind_example' # str | The artifact kind
 names = 'names_example' # str | Names query param. (optional)
 orient = 'orient_example' # str | Orient query param. (optional)
 
-try:
-    # Get run events
-    api_response = api_instance.get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_events: %s\n" % e)
+    try:
+        # Get run events
+        api_response = api_instance.get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_events: %s\n" % e)
 ```
 
 ### Parameters
@@ -1222,8 +1520,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1233,34 +1540,40 @@ Name | Type | Description  | Notes
 Get run logs
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | 
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | 
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 last_time = '2013-10-20T19:20:30+01:00' # datetime | last time. (optional)
 last_file = 'last_file_example' # str | last file. (optional)
 
-try:
-    # Get run logs
-    api_response = api_instance.get_run_logs(namespace, owner, project, uuid, last_time=last_time, last_file=last_file)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_logs: %s\n" % e)
+    try:
+        # Get run logs
+        api_response = api_instance.get_run_logs(namespace, owner, project, uuid, last_time=last_time, last_file=last_file)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_logs: %s\n" % e)
 ```
 
 ### Parameters
@@ -1284,8 +1597,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1295,31 +1617,37 @@ Name | Type | Description  | Notes
 Get Run namespace
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Get Run namespace
-    api_response = api_instance.get_run_namespace(owner, project, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_namespace: %s\n" % e)
+    try:
+        # Get Run namespace
+        api_response = api_instance.get_run_namespace(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_namespace: %s\n" % e)
 ```
 
 ### Parameters
@@ -1340,8 +1668,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1351,34 +1688,40 @@ Name | Type | Description  | Notes
 Get run resources events
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | namespace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 names = 'names_example' # str | Names query param. (optional)
-tail = true # bool | Query param flag to tail the values. (optional)
+tail = True # bool | Query param flag to tail the values. (optional)
 
-try:
-    # Get run resources events
-    api_response = api_instance.get_run_resources(namespace, owner, project, uuid, names=names, tail=tail)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_resources: %s\n" % e)
+    try:
+        # Get run resources events
+        api_response = api_instance.get_run_resources(namespace, owner, project, uuid, names=names, tail=tail)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_resources: %s\n" % e)
 ```
 
 ### Parameters
@@ -1402,8 +1745,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1413,31 +1765,37 @@ Name | Type | Description  | Notes
 Get Run settings
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Get Run settings
-    api_response = api_instance.get_run_settings(owner, project, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_settings: %s\n" % e)
+    try:
+        # Get Run settings
+        api_response = api_instance.get_run_settings(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_settings: %s\n" % e)
 ```
 
 ### Parameters
@@ -1458,8 +1816,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1469,31 +1836,37 @@ Name | Type | Description  | Notes
 Get run status
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Get run status
-    api_response = api_instance.get_run_statuses(owner, project, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_statuses: %s\n" % e)
+    try:
+        # Get run status
+        api_response = api_instance.get_run_statuses(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_statuses: %s\n" % e)
 ```
 
 ### Parameters
@@ -1514,8 +1887,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1525,34 +1907,40 @@ Name | Type | Description  | Notes
 Get runs artifacts lineage
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # Get runs artifacts lineage
-    api_response = api_instance.get_runs_artifacts_lineage(owner, project, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_runs_artifacts_lineage: %s\n" % e)
+    try:
+        # Get runs artifacts lineage
+        api_response = api_instance.get_runs_artifacts_lineage(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_runs_artifacts_lineage: %s\n" % e)
 ```
 
 ### Parameters
@@ -1576,8 +1964,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1587,31 +1984,37 @@ Name | Type | Description  | Notes
 Impersonate run token
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Impersonate run token
-    api_response = api_instance.impersonate_token(owner, project, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->impersonate_token: %s\n" % e)
+    try:
+        # Impersonate run token
+        api_response = api_instance.impersonate_token(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->impersonate_token: %s\n" % e)
 ```
 
 ### Parameters
@@ -1632,42 +2035,58 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **invalidate_run**
-> invalidate_run(owner, project, uuid, body)
+> object invalidate_run(owner, project, uuid, body)
 
 Invalidate run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1ProjectEntityResourceRequest() # V1ProjectEntityResourceRequest | 
 
-try:
-    # Invalidate run
-    api_instance.invalidate_run(owner, project, uuid, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->invalidate_run: %s\n" % e)
+    try:
+        # Invalidate run
+        api_response = api_instance.invalidate_run(owner, project, uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->invalidate_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -1681,7 +2100,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -1692,38 +2111,54 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **invalidate_runs**
-> invalidate_runs(owner, project, body)
+> object invalidate_runs(owner, project, body)
 
 Invalidate runs
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
-try:
-    # Invalidate runs
-    api_instance.invalidate_runs(owner, project, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->invalidate_runs: %s\n" % e)
+    try:
+        # Invalidate runs
+        api_response = api_instance.invalidate_runs(owner, project, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->invalidate_runs: %s\n" % e)
 ```
 
 ### Parameters
@@ -1736,7 +2171,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -1746,6 +2181,15 @@ void (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1755,33 +2199,39 @@ void (empty response body)
 List archived runs for user
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-user = 'user_example' # str | User
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    user = 'user_example' # str | User
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # List archived runs for user
-    api_response = api_instance.list_archived_runs(user, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->list_archived_runs: %s\n" % e)
+    try:
+        # List archived runs for user
+        api_response = api_instance.list_archived_runs(user, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->list_archived_runs: %s\n" % e)
 ```
 
 ### Parameters
@@ -1804,8 +2254,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1815,33 +2274,39 @@ Name | Type | Description  | Notes
 List bookmarked runs for user
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-user = 'user_example' # str | User
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    user = 'user_example' # str | User
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # List bookmarked runs for user
-    api_response = api_instance.list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->list_bookmarked_runs: %s\n" % e)
+    try:
+        # List bookmarked runs for user
+        api_response = api_instance.list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->list_bookmarked_runs: %s\n" % e)
 ```
 
 ### Parameters
@@ -1864,8 +2329,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1875,34 +2349,40 @@ Name | Type | Description  | Notes
 List runs
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # List runs
-    api_response = api_instance.list_runs(owner, project, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->list_runs: %s\n" % e)
+    try:
+        # List runs
+        api_response = api_instance.list_runs(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->list_runs: %s\n" % e)
 ```
 
 ### Parameters
@@ -1926,8 +2406,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1937,34 +2426,40 @@ Name | Type | Description  | Notes
 List runs io
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # List runs io
-    api_response = api_instance.list_runs_io(owner, project, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->list_runs_io: %s\n" % e)
+    try:
+        # List runs io
+        api_response = api_instance.list_runs_io(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->list_runs_io: %s\n" % e)
 ```
 
 ### Parameters
@@ -1988,43 +2483,59 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **notify_run_status**
-> notify_run_status(namespace, owner, project, uuid, body)
+> object notify_run_status(namespace, owner, project, uuid, body)
 
 Notify run status
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-namespace = 'namespace_example' # str | Na,espace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    namespace = 'namespace_example' # str | Na,espace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1EntityNotificationBody() # V1EntityNotificationBody | 
 
-try:
-    # Notify run status
-    api_instance.notify_run_status(namespace, owner, project, uuid, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->notify_run_status: %s\n" % e)
+    try:
+        # Notify run status
+        api_response = api_instance.notify_run_status(namespace, owner, project, uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->notify_run_status: %s\n" % e)
 ```
 
 ### Parameters
@@ -2039,7 +2550,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2050,6 +2561,15 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_run**
@@ -2058,32 +2578,38 @@ void (empty response body)
 Patch run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 run_uuid = 'run_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
-try:
-    # Patch run
-    api_response = api_instance.patch_run(owner, project, run_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->patch_run: %s\n" % e)
+    try:
+        # Patch run
+        api_response = api_instance.patch_run(owner, project, run_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->patch_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -2108,6 +2634,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **restart_run**
@@ -2116,32 +2651,38 @@ Name | Type | Description  | Notes
 Restart run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-entity_owner = 'entity_owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    entity_owner = 'entity_owner_example' # str | Owner of the namespace
 entity_project = 'entity_project_example' # str | Project
 entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
-try:
-    # Restart run
-    api_response = api_instance.restart_run(entity_owner, entity_project, entity_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->restart_run: %s\n" % e)
+    try:
+        # Restart run
+        api_response = api_instance.restart_run(entity_owner, entity_project, entity_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->restart_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -2166,38 +2707,54 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **restore_run**
-> restore_run(owner, project, uuid)
+> object restore_run(owner, project, uuid)
 
 Restore run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Restore run
-    api_instance.restore_run(owner, project, uuid)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->restore_run: %s\n" % e)
+    try:
+        # Restore run
+        api_response = api_instance.restore_run(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->restore_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -2210,7 +2767,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2218,8 +2775,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2229,32 +2795,38 @@ void (empty response body)
 Resume run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-entity_owner = 'entity_owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    entity_owner = 'entity_owner_example' # str | Owner of the namespace
 entity_project = 'entity_project_example' # str | Project
 entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
-try:
-    # Resume run
-    api_response = api_instance.resume_run(entity_owner, entity_project, entity_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->resume_run: %s\n" % e)
+    try:
+        # Resume run
+        api_response = api_instance.resume_run(entity_owner, entity_project, entity_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->resume_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -2279,39 +2851,55 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **start_run_tensorboard**
-> start_run_tensorboard(owner, project, uuid, body)
+> object start_run_tensorboard(owner, project, uuid, body)
 
 Start run tensorboard
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1ProjectEntityResourceRequest() # V1ProjectEntityResourceRequest | 
 
-try:
-    # Start run tensorboard
-    api_instance.start_run_tensorboard(owner, project, uuid, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->start_run_tensorboard: %s\n" % e)
+    try:
+        # Start run tensorboard
+        api_response = api_instance.start_run_tensorboard(owner, project, uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->start_run_tensorboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -2325,7 +2913,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2335,39 +2923,55 @@ void (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_run**
-> stop_run(owner, project, uuid)
+> object stop_run(owner, project, uuid)
 
 Stop run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Stop run
-    api_instance.stop_run(owner, project, uuid)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->stop_run: %s\n" % e)
+    try:
+        # Stop run
+        api_response = api_instance.stop_run(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->stop_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -2380,7 +2984,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2388,41 +2992,57 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_run_tensorboard**
-> stop_run_tensorboard(owner, project, uuid)
+> object stop_run_tensorboard(owner, project, uuid)
 
 Stop run tensorboard
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Stop run tensorboard
-    api_instance.stop_run_tensorboard(owner, project, uuid)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->stop_run_tensorboard: %s\n" % e)
+    try:
+        # Stop run tensorboard
+        api_response = api_instance.stop_run_tensorboard(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->stop_run_tensorboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -2435,7 +3055,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2443,41 +3063,57 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_runs**
-> stop_runs(owner, project, body)
+> object stop_runs(owner, project, body)
 
 Stop runs
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
-try:
-    # Stop runs
-    api_instance.stop_runs(owner, project, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->stop_runs: %s\n" % e)
+    try:
+        # Stop runs
+        api_response = api_instance.stop_runs(owner, project, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->stop_runs: %s\n" % e)
 ```
 
 ### Parameters
@@ -2490,7 +3126,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2501,38 +3137,54 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **tag_runs**
-> tag_runs(owner, project, body)
+> object tag_runs(owner, project, body)
 
 Tag runs
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 body = polyaxon_sdk.V1EntitiesTags() # V1EntitiesTags | Data
 
-try:
-    # Tag runs
-    api_instance.tag_runs(owner, project, body)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->tag_runs: %s\n" % e)
+    try:
+        # Tag runs
+        api_response = api_instance.tag_runs(owner, project, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->tag_runs: %s\n" % e)
 ```
 
 ### Parameters
@@ -2545,7 +3197,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2556,38 +3208,54 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **unbookmark_run**
-> unbookmark_run(owner, project, uuid)
+> object unbookmark_run(owner, project, uuid)
 
 Unbookmark run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Unbookmark run
-    api_instance.unbookmark_run(owner, project, uuid)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->unbookmark_run: %s\n" % e)
+    try:
+        # Unbookmark run
+        api_response = api_instance.unbookmark_run(owner, project, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->unbookmark_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -2600,7 +3268,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2608,8 +3276,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2619,32 +3296,38 @@ void (empty response body)
 Update run
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 run_uuid = 'run_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
-try:
-    # Update run
-    api_response = api_instance.update_run(owner, project, run_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->update_run: %s\n" % e)
+    try:
+        # Update run
+        api_response = api_instance.update_run(owner, project, run_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->update_run: %s\n" % e)
 ```
 
 ### Parameters
@@ -2669,6 +3352,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **upload_run_artifact**
@@ -2677,33 +3369,39 @@ Name | Type | Description  | Notes
 Upload an artifact file to a store via run access
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project having access to the store
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-uploadfile = '/path/to/file.txt' # file | The file to upload.
+uploadfile = '/path/to/file' # file | The file to upload.
 path = 'path_example' # str | File path query params. (optional)
-overwrite = true # bool | File path query params. (optional)
+overwrite = True # bool | File path query params. (optional)
 
-try:
-    # Upload an artifact file to a store via run access
-    api_instance.upload_run_artifact(owner, project, uuid, uploadfile, path=path, overwrite=overwrite)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->upload_run_artifact: %s\n" % e)
+    try:
+        # Upload an artifact file to a store via run access
+        api_instance.upload_run_artifact(owner, project, uuid, uploadfile, path=path, overwrite=overwrite)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->upload_run_artifact: %s\n" % e)
 ```
 
 ### Parameters
@@ -2729,6 +3427,14 @@ void (empty response body)
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2738,33 +3444,39 @@ void (empty response body)
 Upload a logs file to a store via run access
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project having access to the store
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-uploadfile = '/path/to/file.txt' # file | The file to upload.
+uploadfile = '/path/to/file' # file | The file to upload.
 path = 'path_example' # str | File path query params. (optional)
-overwrite = true # bool | File path query params. (optional)
+overwrite = True # bool | File path query params. (optional)
 
-try:
-    # Upload a logs file to a store via run access
-    api_instance.upload_run_logs(owner, project, uuid, uploadfile, path=path, overwrite=overwrite)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->upload_run_logs: %s\n" % e)
+    try:
+        # Upload a logs file to a store via run access
+        api_instance.upload_run_logs(owner, project, uuid, uploadfile, path=path, overwrite=overwrite)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->upload_run_logs: %s\n" % e)
 ```
 
 ### Parameters
@@ -2790,6 +3502,14 @@ void (empty response body)
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

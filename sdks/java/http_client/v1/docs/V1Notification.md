@@ -1,7 +1,9 @@
 
+
 # V1Notification
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **connection** | **String** |  |  [optional]

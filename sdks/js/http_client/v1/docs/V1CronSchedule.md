@@ -1,9 +1,10 @@
 # PolyaxonSdk.V1CronSchedule
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **String** |  | [optional] [default to 'cron']
+**kind** | **String** |  | [optional] [default to &#39;cron&#39;]
 **start_at** | **Date** |  | [optional] 
 **end_at** | **Date** |  | [optional] 
 **cron** | **String** |  | [optional] 

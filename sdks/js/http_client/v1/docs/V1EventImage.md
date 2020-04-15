@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1EventImage
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **height** | **Number** | Height of the image. | [optional] 

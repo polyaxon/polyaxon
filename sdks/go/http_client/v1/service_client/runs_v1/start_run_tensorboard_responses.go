@@ -83,13 +83,23 @@ func NewStartRunTensorboardOK() *StartRunTensorboardOK {
 A successful response.
 */
 type StartRunTensorboardOK struct {
+	Payload interface{}
 }
 
 func (o *StartRunTensorboardOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardOK  %+v", 200, o.Payload)
+}
+
+func (o *StartRunTensorboardOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *StartRunTensorboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

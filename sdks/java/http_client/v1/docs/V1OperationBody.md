@@ -1,10 +1,12 @@
 
+
 # V1OperationBody
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**content** | [**V1Operation**](V1Operation.md) |  |  [optional]
+**content** | **String** |  |  [optional]
 **isManaged** | **Boolean** |  |  [optional]
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]

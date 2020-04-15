@@ -1,5 +1,7 @@
 # PolyaxonSdk.RunsV1Api
 
+Polyaxon&#39;s typescript client
+
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
@@ -53,43 +55,39 @@ Method | HTTP request | Description
 [**uploadRunLogs**](RunsV1Api.md#uploadRunLogs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
 
 
-<a name="archiveRun"></a>
-# **archiveRun**
-> archiveRun(owner, project, uuid)
+
+## archiveRun
+
+> Object archiveRun(owner, project, uuid)
 
 Archive run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.archiveRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.archiveRun(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -99,7 +97,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -107,46 +105,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="bookmarkRun"></a>
-# **bookmarkRun**
-> bookmarkRun(owner, project, uuid)
+
+## bookmarkRun
+
+> Object bookmarkRun(owner, project, uuid)
 
 Bookmark run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.bookmarkRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.bookmarkRun(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -156,7 +150,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -164,46 +158,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="bookmarkRuns"></a>
-# **bookmarkRuns**
-> bookmarkRuns(owner, project, body)
+
+## bookmarkRuns
+
+> Object bookmarkRuns(owner, project, body)
 
 Bookmark runs
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
+apiInstance.bookmarkRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.bookmarkRuns(owner, project, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -213,7 +203,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -221,48 +211,43 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="collectRunLogs"></a>
-# **collectRunLogs**
-> collectRunLogs(namespace, owner, project, uuid)
+
+## collectRunLogs
+
+> Object collectRunLogs(namespace, owner, project, uuid)
 
 Collect run logs
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | 
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | 
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.collectRunLogs(namespace, owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.collectRunLogs(namespace, owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -273,7 +258,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -281,48 +266,43 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="copyRun"></a>
-# **copyRun**
+
+## copyRun
+
 > V1Run copyRun(entity_owner, entity_project, entity_uuid, body)
 
 Restart run with copy
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var entity_owner = "entity_owner_example"; // String | Owner of the namespace
-
-var entity_project = "entity_project_example"; // String | Project
-
-var entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
-
-var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let entity_owner = "entity_owner_example"; // String | Owner of the namespace
+let entity_project = "entity_project_example"; // String | Project
+let entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
+let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
+apiInstance.copyRun(entity_owner, entity_project, entity_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.copyRun(entity_owner, entity_project, entity_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -341,46 +321,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="createRun"></a>
-# **createRun**
+
+## createRun
+
 > V1Run createRun(owner, project, body)
 
 Create new run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var body = new PolyaxonSdk.V1OperationBody(); // V1OperationBody | operation object
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let body = new PolyaxonSdk.V1OperationBody(); // V1OperationBody | operation object
+apiInstance.createRun(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createRun(owner, project, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -398,48 +374,43 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="createRunArtifactsLineage"></a>
-# **createRunArtifactsLineage**
-> createRunArtifactsLineage(owner, project, uuid, body)
+
+## createRunArtifactsLineage
+
+> Object createRunArtifactsLineage(owner, project, uuid, body)
 
 Create bulk run run artifacts lineage
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var body = new PolyaxonSdk.V1RunArtifacts(); // V1RunArtifacts | Run Artifacts
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let body = new PolyaxonSdk.V1RunArtifacts(); // V1RunArtifacts | Run Artifacts
+apiInstance.createRunArtifactsLineage(owner, project, uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createRunArtifactsLineage(owner, project, uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -450,7 +421,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -458,48 +429,43 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="createRunStatus"></a>
-# **createRunStatus**
+
+## createRunStatus
+
 > V1Status createRunStatus(owner, project, uuid, body)
 
 Create new run status
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var body = new PolyaxonSdk.V1EntityStatusBodyRequest(); // V1EntityStatusBodyRequest | 
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let body = new PolyaxonSdk.V1EntityStatusBodyRequest(); // V1EntityStatusBodyRequest | 
+apiInstance.createRunStatus(owner, project, uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createRunStatus(owner, project, uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -518,46 +484,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="deleteRun"></a>
-# **deleteRun**
-> deleteRun(owner, project, uuid)
+
+## deleteRun
+
+> Object deleteRun(owner, project, uuid)
 
 Delete run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.deleteRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteRun(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -567,7 +529,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -575,51 +537,46 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="deleteRunArtifactLineage"></a>
-# **deleteRunArtifactLineage**
-> deleteRunArtifactLineage(owner, project, uuid, name, opts)
+
+## deleteRunArtifactLineage
+
+> Object deleteRunArtifactLineage(owner, project, uuid, name, opts)
 
 Delete run artifact lineage
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var name = "name_example"; // String | Artifact name
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let name = "name_example"; // String | Artifact name
+let opts = {
   'namespace': "namespace_example" // String | namespace.
 };
-
-var callback = function(error, data, response) {
+apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -631,7 +588,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -639,46 +596,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="deleteRuns"></a>
-# **deleteRuns**
-> deleteRuns(owner, project, body)
+
+## deleteRuns
+
+> Object deleteRuns(owner, project, body)
 
 Delete runs
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
+apiInstance.deleteRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteRuns(owner, project, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -688,7 +641,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -696,53 +649,48 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="getMultiRunEvents"></a>
-# **getMultiRunEvents**
+
+## getMultiRunEvents
+
 > V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, opts)
 
 Get multi runs events
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | namespace
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var kind = "kind_example"; // String | The artifact kind
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | namespace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let kind = "kind_example"; // String | The artifact kind
+let opts = {
   'names': "names_example", // String | Names query param.
   'runs': "runs_example", // String | Runs query param.
   'orient': "orient_example" // String | Orient query param.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getMultiRunEvents(namespace, owner, project, kind, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getMultiRunEvents(namespace, owner, project, kind, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -764,46 +712,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRun"></a>
-# **getRun**
+
+## getRun
+
 > V1Run getRun(owner, project, uuid)
 
 Get run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRun(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -821,52 +765,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunArtifact"></a>
-# **getRunArtifact**
-> 'String' getRunArtifact(namespace, owner, project, uuid, opts)
+
+## getRunArtifact
+
+> String getRunArtifact(namespace, owner, project, uuid, opts)
 
 Get run artifact
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | namespace
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the experiement will be assigned
-
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | namespace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the experiement will be assigned
+let uuid = "uuid_example"; // String | Unique integer identifier of the entity
+let opts = {
   'path': "path_example", // String | Artifact filepath.
   'stream': true // Boolean | Whether to stream the file.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunArtifact(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunArtifact(namespace, owner, project, uuid, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -879,7 +818,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**'String'**
+**String**
 
 ### Authorization
 
@@ -887,51 +826,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunArtifactLineage"></a>
-# **getRunArtifactLineage**
+
+## getRunArtifactLineage
+
 > V1RunArtifact getRunArtifactLineage(owner, project, uuid, name, opts)
 
 Get run artifacts lineage
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var name = "name_example"; // String | Artifact name
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let name = "name_example"; // String | Artifact name
+let opts = {
   'namespace': "namespace_example" // String | namespace.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunArtifactLineage(owner, project, uuid, name, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunArtifactLineage(owner, project, uuid, name, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -951,51 +885,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunArtifacts"></a>
-# **getRunArtifacts**
-> 'String' getRunArtifacts(namespace, owner, project, uuid, opts)
+
+## getRunArtifacts
+
+> String getRunArtifacts(namespace, owner, project, uuid, opts)
 
 Get run artifacts
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | namespace
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the experiement will be assigned
-
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | namespace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the experiement will be assigned
+let uuid = "uuid_example"; // String | Unique integer identifier of the entity
+let opts = {
   'path': "path_example" // String | Artifact filepath.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunArtifacts(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunArtifacts(namespace, owner, project, uuid, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1007,7 +936,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**'String'**
+**String**
 
 ### Authorization
 
@@ -1015,52 +944,48 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunArtifactsLineage"></a>
-# **getRunArtifactsLineage**
+
+## getRunArtifactsLineage
+
 > V1ListRunArtifactsResponse getRunArtifactsLineage(owner, project, uuid, opts)
 
 Get run artifacts lineage
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var uuid = "uuid_example"; // String | Entity uuid
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let uuid = "uuid_example"; // String | Entity uuid
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunArtifactsLineage(owner, project, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunArtifactsLineage(owner, project, uuid, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1082,52 +1007,48 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunArtifactsLineageNames"></a>
-# **getRunArtifactsLineageNames**
+
+## getRunArtifactsLineageNames
+
 > V1ListRunArtifactsResponse getRunArtifactsLineageNames(owner, project, uuid, opts)
 
 Get run artifacts lineage names
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var uuid = "uuid_example"; // String | Entity uuid
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let uuid = "uuid_example"; // String | Entity uuid
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunArtifactsLineageNames(owner, project, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunArtifactsLineageNames(owner, project, uuid, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1149,51 +1070,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunArtifactsTree"></a>
-# **getRunArtifactsTree**
+
+## getRunArtifactsTree
+
 > V1ArtifactTree getRunArtifactsTree(namespace, owner, project, uuid, opts)
 
 Get run artifacts tree
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | namespace
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | namespace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let opts = {
   'path': "path_example" // String | Path query param.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1213,54 +1129,48 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunEvents"></a>
-# **getRunEvents**
+
+## getRunEvents
+
 > V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, opts)
 
 Get run events
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | namespace
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var kind = "kind_example"; // String | The artifact kind
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | namespace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let kind = "kind_example"; // String | The artifact kind
+let opts = {
   'names': "names_example", // String | Names query param.
   'orient': "orient_example" // String | Orient query param.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunEvents(namespace, owner, project, uuid, kind, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunEvents(namespace, owner, project, uuid, kind, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1282,52 +1192,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunLogs"></a>
-# **getRunLogs**
+
+## getRunLogs
+
 > V1Logs getRunLogs(namespace, owner, project, uuid, opts)
 
 Get run logs
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | 
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | 
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let opts = {
   'last_time': new Date("2013-10-20T19:20:30+01:00"), // Date | last time.
   'last_file': "last_file_example" // String | last file.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunLogs(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunLogs(namespace, owner, project, uuid, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1348,46 +1253,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunNamespace"></a>
-# **getRunNamespace**
+
+## getRunNamespace
+
 > V1RunSettings getRunNamespace(owner, project, uuid)
 
 Get Run namespace
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getRunNamespace(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunNamespace(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1405,52 +1306,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunResources"></a>
-# **getRunResources**
+
+## getRunResources
+
 > V1EventsResponse getRunResources(namespace, owner, project, uuid, opts)
 
 Get run resources events
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | namespace
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | namespace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let opts = {
   'names': "names_example", // String | Names query param.
   'tail': true // Boolean | Query param flag to tail the values.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunResources(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunResources(namespace, owner, project, uuid, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1471,46 +1367,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunSettings"></a>
-# **getRunSettings**
+
+## getRunSettings
+
 > V1RunSettings getRunSettings(owner, project, uuid)
 
 Get Run settings
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getRunSettings(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunSettings(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1528,46 +1420,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunStatuses"></a>
-# **getRunStatuses**
+
+## getRunStatuses
+
 > V1Status getRunStatuses(owner, project, uuid)
 
 Get run status
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getRunStatuses(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunStatuses(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1585,50 +1473,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getRunsArtifactsLineage"></a>
-# **getRunsArtifactsLineage**
+
+## getRunsArtifactsLineage
+
 > V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, project, opts)
 
 Get runs artifacts lineage
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.getRunsArtifactsLineage(owner, project, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getRunsArtifactsLineage(owner, project, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1649,46 +1534,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="impersonateToken"></a>
-# **impersonateToken**
+
+## impersonateToken
+
 > V1Auth impersonateToken(owner, project, uuid)
 
 Impersonate run token
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.impersonateToken(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.impersonateToken(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1706,48 +1587,43 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="invalidateRun"></a>
-# **invalidateRun**
-> invalidateRun(owner, project, uuid, body)
+
+## invalidateRun
+
+> Object invalidateRun(owner, project, uuid, body)
 
 Invalidate run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
+apiInstance.invalidateRun(owner, project, uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.invalidateRun(owner, project, uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1758,7 +1634,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -1766,46 +1642,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="invalidateRuns"></a>
-# **invalidateRuns**
-> invalidateRuns(owner, project, body)
+
+## invalidateRuns
+
+> Object invalidateRuns(owner, project, body)
 
 Invalidate runs
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
+apiInstance.invalidateRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.invalidateRuns(owner, project, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1815,7 +1687,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -1823,48 +1695,46 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="listArchivedRuns"></a>
-# **listArchivedRuns**
+
+## listArchivedRuns
+
 > V1ListRunsResponse listArchivedRuns(user, opts)
 
 List archived runs for user
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var user = "user_example"; // String | User
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let user = "user_example"; // String | User
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listArchivedRuns(user, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listArchivedRuns(user, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1884,48 +1754,46 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listBookmarkedRuns"></a>
-# **listBookmarkedRuns**
+
+## listBookmarkedRuns
+
 > V1ListRunsResponse listBookmarkedRuns(user, opts)
 
 List bookmarked runs for user
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var user = "user_example"; // String | User
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let user = "user_example"; // String | User
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listBookmarkedRuns(user, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listBookmarkedRuns(user, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -1945,50 +1813,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listRuns"></a>
-# **listRuns**
+
+## listRuns
+
 > V1ListRunsResponse listRuns(owner, project, opts)
 
 List runs
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listRuns(owner, project, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listRuns(owner, project, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2009,50 +1874,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listRunsIo"></a>
-# **listRunsIo**
+
+## listRunsIo
+
 > V1ListRunsResponse listRunsIo(owner, project, opts)
 
 List runs io
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listRunsIo(owner, project, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listRunsIo(owner, project, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2073,50 +1935,44 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="notifyRunStatus"></a>
-# **notifyRunStatus**
-> notifyRunStatus(namespace, owner, project, uuid, body)
+
+## notifyRunStatus
+
+> Object notifyRunStatus(namespace, owner, project, uuid, body)
 
 Notify run status
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var namespace = "namespace_example"; // String | Na,espace
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var body = new PolyaxonSdk.V1EntityNotificationBody(); // V1EntityNotificationBody | 
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | Na,espace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let body = new PolyaxonSdk.V1EntityNotificationBody(); // V1EntityNotificationBody | 
+apiInstance.notifyRunStatus(namespace, owner, project, uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.notifyRunStatus(namespace, owner, project, uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2128,7 +1984,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2136,48 +1992,43 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="patchRun"></a>
-# **patchRun**
+
+## patchRun
+
 > V1Run patchRun(owner, project, run_uuid, body)
 
 Patch run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var run_uuid = "run_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let run_uuid = "run_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
+apiInstance.patchRun(owner, project, run_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.patchRun(owner, project, run_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2196,48 +2047,43 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="restartRun"></a>
-# **restartRun**
+
+## restartRun
+
 > V1Run restartRun(entity_owner, entity_project, entity_uuid, body)
 
 Restart run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var entity_owner = "entity_owner_example"; // String | Owner of the namespace
-
-var entity_project = "entity_project_example"; // String | Project
-
-var entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
-
-var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let entity_owner = "entity_owner_example"; // String | Owner of the namespace
+let entity_project = "entity_project_example"; // String | Project
+let entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
+let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
+apiInstance.restartRun(entity_owner, entity_project, entity_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.restartRun(entity_owner, entity_project, entity_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2256,46 +2102,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="restoreRun"></a>
-# **restoreRun**
-> restoreRun(owner, project, uuid)
+
+## restoreRun
+
+> Object restoreRun(owner, project, uuid)
 
 Restore run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.restoreRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.restoreRun(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2305,7 +2147,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2313,48 +2155,43 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="resumeRun"></a>
-# **resumeRun**
+
+## resumeRun
+
 > V1Run resumeRun(entity_owner, entity_project, entity_uuid, body)
 
 Resume run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var entity_owner = "entity_owner_example"; // String | Owner of the namespace
-
-var entity_project = "entity_project_example"; // String | Project
-
-var entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
-
-var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let entity_owner = "entity_owner_example"; // String | Owner of the namespace
+let entity_project = "entity_project_example"; // String | Project
+let entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
+let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
+apiInstance.resumeRun(entity_owner, entity_project, entity_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.resumeRun(entity_owner, entity_project, entity_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2373,48 +2210,43 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="startRunTensorboard"></a>
-# **startRunTensorboard**
-> startRunTensorboard(owner, project, uuid, body)
+
+## startRunTensorboard
+
+> Object startRunTensorboard(owner, project, uuid, body)
 
 Start run tensorboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-var body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
+apiInstance.startRunTensorboard(owner, project, uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.startRunTensorboard(owner, project, uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2425,7 +2257,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2433,46 +2265,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="stopRun"></a>
-# **stopRun**
-> stopRun(owner, project, uuid)
+
+## stopRun
+
+> Object stopRun(owner, project, uuid)
 
 Stop run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.stopRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.stopRun(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2482,7 +2310,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2490,46 +2318,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="stopRunTensorboard"></a>
-# **stopRunTensorboard**
-> stopRunTensorboard(owner, project, uuid)
+
+## stopRunTensorboard
+
+> Object stopRunTensorboard(owner, project, uuid)
 
 Stop run tensorboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.stopRunTensorboard(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.stopRunTensorboard(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2539,7 +2363,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2547,46 +2371,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="stopRuns"></a>
-# **stopRuns**
-> stopRuns(owner, project, body)
+
+## stopRuns
+
+> Object stopRuns(owner, project, body)
 
 Stop runs
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
+apiInstance.stopRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.stopRuns(owner, project, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2596,7 +2416,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2604,46 +2424,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="tagRuns"></a>
-# **tagRuns**
-> tagRuns(owner, project, body)
+
+## tagRuns
+
+> Object tagRuns(owner, project, body)
 
 Tag runs
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var body = new PolyaxonSdk.V1EntitiesTags(); // V1EntitiesTags | Data
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let body = new PolyaxonSdk.V1EntitiesTags(); // V1EntitiesTags | Data
+apiInstance.tagRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.tagRuns(owner, project, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2653,7 +2469,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2661,46 +2477,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="unbookmarkRun"></a>
-# **unbookmarkRun**
-> unbookmarkRun(owner, project, uuid)
+
+## unbookmarkRun
+
+> Object unbookmarkRun(owner, project, uuid)
 
 Unbookmark run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.unbookmarkRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.unbookmarkRun(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2710,7 +2522,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -2718,48 +2530,43 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="updateRun"></a>
-# **updateRun**
+
+## updateRun
+
 > V1Run updateRun(owner, project, run_uuid, body)
 
 Update run
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the run will be assigned
-
-var run_uuid = "run_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let run_uuid = "run_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1Run(); // V1Run | Run object
+apiInstance.updateRun(owner, project, run_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.updateRun(owner, project, run_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2778,52 +2585,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="uploadRunArtifact"></a>
-# **uploadRunArtifact**
+
+## uploadRunArtifact
+
 > uploadRunArtifact(owner, project, uuid, uploadfile, opts)
 
 Upload an artifact file to a store via run access
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project having access to the store
-
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
-
-var uploadfile = "/path/to/file.txt"; // File | The file to upload.
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project having access to the store
+let uuid = "uuid_example"; // String | Unique integer identifier of the entity
+let uploadfile = "/path/to/file"; // File | The file to upload.
+let opts = {
   'path': "path_example", // String | File path query params.
   'overwrite': true // Boolean | File path query params.
 };
-
-var callback = function(error, data, response) {
+apiInstance.uploadRunArtifact(owner, project, uuid, uploadfile, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully.');
   }
-};
-apiInstance.uploadRunArtifact(owner, project, uuid, uploadfile, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2844,52 +2646,47 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json
 
-<a name="uploadRunLogs"></a>
-# **uploadRunLogs**
+
+## uploadRunLogs
+
 > uploadRunLogs(owner, project, uuid, uploadfile, opts)
 
 Upload a logs file to a store via run access
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project having access to the store
-
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
-
-var uploadfile = "/path/to/file.txt"; // File | The file to upload.
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project having access to the store
+let uuid = "uuid_example"; // String | Unique integer identifier of the entity
+let uploadfile = "/path/to/file"; // File | The file to upload.
+let opts = {
   'path': "path_example", // String | File path query params.
   'overwrite': true // Boolean | File path query params.
 };
-
-var callback = function(error, data, response) {
+apiInstance.uploadRunLogs(owner, project, uuid, uploadfile, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully.');
   }
-};
-apiInstance.uploadRunLogs(owner, project, uuid, uploadfile, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -2910,6 +2707,6 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json
 

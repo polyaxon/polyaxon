@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.77",
+    "version": "1.0.79",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -511,7 +511,10 @@
         "operationId": "DeleteOrganization",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -1018,7 +1021,10 @@
         "operationId": "DeleteAccessResource",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -1382,7 +1388,10 @@
         "operationId": "SyncAgent",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -1715,7 +1724,10 @@
         "operationId": "DeleteQueue",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -1951,7 +1963,10 @@
         "operationId": "DeleteAgent",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -2521,7 +2536,10 @@
         "operationId": "DeleteHubComponent",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -2935,7 +2953,10 @@
         "operationId": "DeleteConnection",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -3342,7 +3363,10 @@
         "operationId": "DeleteDashboard",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -3676,7 +3700,10 @@
         "operationId": "DeleteOrganizationMember",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -4090,7 +4117,10 @@
         "operationId": "DeleteHubModel",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -4652,7 +4682,10 @@
         "operationId": "DeleteRunProfile",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -5066,7 +5099,10 @@
         "operationId": "DeleteSearch",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -5480,7 +5516,10 @@
         "operationId": "DeleteTeam",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -5855,7 +5894,10 @@
         "operationId": "DeleteTeamMember",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -6594,7 +6636,10 @@
         "operationId": "DeleteProject",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -6642,7 +6687,10 @@
         "operationId": "ArchiveProject",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -6690,7 +6738,10 @@
         "operationId": "BookmarkProject",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -6738,7 +6789,10 @@
         "operationId": "DisableProjectCI",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -6784,7 +6838,10 @@
         "operationId": "EnableProjectCI",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -7298,7 +7355,10 @@
         "operationId": "DeleteProjectDashboard",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -7353,7 +7413,10 @@
         "operationId": "RestoreProject",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -7621,7 +7684,10 @@
         "operationId": "BookmarkRuns",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -7678,7 +7744,10 @@
         "operationId": "DeleteRuns",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -7735,7 +7804,10 @@
         "operationId": "InvalidateRuns",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -7873,7 +7945,10 @@
         "operationId": "StopRuns",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -7930,7 +8005,10 @@
         "operationId": "TagRuns",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -8175,7 +8253,10 @@
         "operationId": "DeleteRun",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -8230,7 +8311,10 @@
         "operationId": "ArchiveRun",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -8371,7 +8455,10 @@
         "operationId": "CreateRunArtifactsLineage",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -8593,7 +8680,10 @@
         "operationId": "DeleteRunArtifactLineage",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -8662,7 +8752,10 @@
         "operationId": "BookmarkRun",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -8775,7 +8868,10 @@
         "operationId": "InvalidateRun",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -8896,7 +8992,10 @@
         "operationId": "RestoreRun",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -9131,7 +9230,10 @@
         "operationId": "StopRun",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -9186,7 +9288,10 @@
         "operationId": "StartRunTensorboard",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -9249,7 +9354,10 @@
         "operationId": "StopRunTensorboard",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -9304,7 +9412,10 @@
         "operationId": "UnbookmarkRun",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -9767,7 +9878,10 @@
         "operationId": "DeleteProjectSearch",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -9822,7 +9936,10 @@
         "operationId": "PromoteProjectSearch",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -10211,7 +10328,10 @@
         "operationId": "UnbookmarkProject",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -10294,7 +10414,10 @@
         "operationId": "CollectRunLogs",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -10728,7 +10851,10 @@
         "operationId": "NotifyRunStatus",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
           },
           "204": {
             "description": "No content.",
@@ -14639,8 +14765,8 @@
       "type": "object",
       "properties": {
         "content": {
-          "$ref": "#/definitions/v1Operation",
-          "title": "The Operation body content"
+          "type": "string",
+          "title": "The Operation body content as dump string"
         },
         "is_managed": {
           "type": "boolean",

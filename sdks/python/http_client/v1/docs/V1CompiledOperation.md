@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **profile** | **str** |  | [optional] 
 **queue** | **str** |  | [optional] 
 **cache** | [**V1Cache**](V1Cache.md) |  | [optional] 
-**schedule** | **object** |  | [optional] 
-**parallel** | **object** |  | [optional] 
+**schedule** | [**object**](.md) |  | [optional] 
+**parallel** | [**object**](.md) |  | [optional] 
 **dependencies** | **list[str]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 
 **conditions** | **list[object]** |  | [optional] 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **plugins** | [**V1Plugins**](V1Plugins.md) |  | [optional] 
 **inputs** | [**list[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**list[V1IO]**](V1IO.md) |  | [optional] 
-**run** | **object** |  | [optional] 
+**run** | [**object**](.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -1,7 +1,9 @@
 
+
 # V1Component
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **version** | **Float** |  |  [optional]
@@ -17,7 +19,7 @@ Name | Type | Description | Notes
 **plugins** | [**V1Plugins**](V1Plugins.md) |  |  [optional]
 **inputs** | [**List&lt;V1IO&gt;**](V1IO.md) |  |  [optional]
 **outputs** | [**List&lt;V1IO&gt;**](V1IO.md) |  |  [optional]
-**run** | **Object** |  |  [optional]
+**run** | [**Object**](.md) |  |  [optional]
 
 
 

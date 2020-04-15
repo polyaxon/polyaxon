@@ -1,7 +1,9 @@
 
+
 # V1Run
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **String** |  |  [optional]
@@ -21,13 +23,13 @@ Name | Type | Description | Notes
 **content** | **String** |  |  [optional]
 **status** | [**V1Statuses**](V1Statuses.md) |  |  [optional]
 **bookmarked** | **Boolean** |  |  [optional]
-**metaInfo** | **Object** |  |  [optional]
+**metaInfo** | [**Object**](.md) |  |  [optional]
 **isHelper** | **Boolean** |  |  [optional]
 **kind** | [**V1RunKind**](V1RunKind.md) |  |  [optional]
 **metaKind** | [**V1RunKind**](V1RunKind.md) |  |  [optional]
 **hub** | **String** |  |  [optional]
-**inputs** | **Object** |  |  [optional]
-**outputs** | **Object** |  |  [optional]
+**inputs** | [**Object**](.md) |  |  [optional]
+**outputs** | [**Object**](.md) |  |  [optional]
 **original** | [**V1Cloning**](V1Cloning.md) |  |  [optional]
 **pipeline** | [**V1Pipeline**](V1Pipeline.md) |  |  [optional]
 **statusConditions** | [**List&lt;V1StatusCondition&gt;**](V1StatusCondition.md) |  |  [optional]

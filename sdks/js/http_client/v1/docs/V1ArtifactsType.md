@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1ArtifactsType
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **connection** | **String** |  | [optional] 

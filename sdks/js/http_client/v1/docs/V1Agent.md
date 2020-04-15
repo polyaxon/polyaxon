@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1Agent
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **String** |  | [optional] 
@@ -10,7 +11,7 @@ Name | Type | Description | Notes
 **disabled** | **Boolean** |  | [optional] 
 **deleted** | **Boolean** |  | [optional] 
 **namespace** | **String** |  | [optional] 
-**version_api** | **Object** |  | [optional] 
+**version_api** | [**Object**](.md) |  | [optional] 
 **content** | **String** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
 **created_at** | **Date** |  | [optional] 

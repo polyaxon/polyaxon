@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**content** | [**V1Operation**](V1Operation.md) |  | [optional] 
+**content** | **str** |  | [optional] 
 **is_managed** | **bool** |  | [optional] 
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 

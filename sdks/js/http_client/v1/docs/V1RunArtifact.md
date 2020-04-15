@@ -1,6 +1,7 @@
 # PolyaxonSdk.V1RunArtifact
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | [optional] 
@@ -8,7 +9,7 @@ Name | Type | Description | Notes
 **kind** | [**V1ArtifactKind**](V1ArtifactKind.md) |  | [optional] 
 **path** | **String** |  | [optional] 
 **connection** | **String** |  | [optional] 
-**summary** | **Object** |  | [optional] 
+**summary** | [**Object**](.md) |  | [optional] 
 **is_input** | **Boolean** |  | [optional] 
 
 

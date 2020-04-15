@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **disabled** | **bool** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
 **namespace** | **str** |  | [optional] 
-**version_api** | **object** |  | [optional] 
+**version_api** | [**object**](.md) |  | [optional] 
 **content** | **str** |  | [optional] 
 **concurrency** | **int** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 

@@ -20,7 +20,6 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -30,8 +29,8 @@ import (
 // swagger:model v1OperationBody
 type V1OperationBody struct {
 
-	// The Operation body content
-	Content *V1Operation `json:"content,omitempty"`
+	// The Operation body content as dump string
+	Content string `json:"content,omitempty"`
 
 	// Optional, only useful if is_managed is false
 	Description string `json:"description,omitempty"`
@@ -48,33 +47,6 @@ type V1OperationBody struct {
 
 // Validate validates this v1 operation body
 func (m *V1OperationBody) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateContent(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *V1OperationBody) validateContent(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Content) { // not required
-		return nil
-	}
-
-	if m.Content != nil {
-		if err := m.Content.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("content")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

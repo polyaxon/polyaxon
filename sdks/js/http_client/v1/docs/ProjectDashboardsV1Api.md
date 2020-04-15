@@ -1,5 +1,7 @@
 # PolyaxonSdk.ProjectDashboardsV1Api
 
+Polyaxon&#39;s typescript client
+
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
@@ -14,43 +16,39 @@ Method | HTTP request | Description
 [**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
-<a name="createProjectDashboard"></a>
-# **createProjectDashboard**
+
+## createProjectDashboard
+
 > V1Dashboard createProjectDashboard(owner, project, body)
 
 Create project dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var body = new PolyaxonSdk.V1Dashboard(); // V1Dashboard | Dashboard body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let body = new PolyaxonSdk.V1Dashboard(); // V1Dashboard | Dashboard body
+apiInstance.createProjectDashboard(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.createProjectDashboard(owner, project, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -68,46 +66,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="deleteProjectDashboard"></a>
-# **deleteProjectDashboard**
-> deleteProjectDashboard(owner, project, uuid)
+
+## deleteProjectDashboard
+
+> Object deleteProjectDashboard(owner, project, uuid)
 
 Delete project dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.deleteProjectDashboard(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.deleteProjectDashboard(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -117,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -125,46 +119,42 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="getProjectDashboard"></a>
-# **getProjectDashboard**
+
+## getProjectDashboard
+
 > V1Dashboard getProjectDashboard(owner, project, uuid)
 
 Get project dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project
-
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getProjectDashboard(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.getProjectDashboard(owner, project, uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -182,50 +172,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listProjectDashboardNames"></a>
-# **listProjectDashboardNames**
+
+## listProjectDashboardNames
+
 > V1ListDashboardsResponse listProjectDashboardNames(owner, project, opts)
 
 List project dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listProjectDashboardNames(owner, project, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listProjectDashboardNames(owner, project, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -246,50 +233,47 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="listProjectDashboards"></a>
-# **listProjectDashboards**
+
+## listProjectDashboards
+
 > V1ListDashboardsResponse listProjectDashboards(owner, project, opts)
 
 List project dashboards
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var opts = { 
+let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-
-var callback = function(error, data, response) {
+apiInstance.listProjectDashboards(owner, project, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.listProjectDashboards(owner, project, opts, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -310,48 +294,43 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="patchProjectDashboard"></a>
-# **patchProjectDashboard**
+
+## patchProjectDashboard
+
 > V1Dashboard patchProjectDashboard(owner, project, dashboard_uuid, body)
 
 Patch project dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var dashboard_uuid = "dashboard_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1Dashboard(); // V1Dashboard | Dashboard body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let dashboard_uuid = "dashboard_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1Dashboard(); // V1Dashboard | Dashboard body
+apiInstance.patchProjectDashboard(owner, project, dashboard_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.patchProjectDashboard(owner, project, dashboard_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -370,46 +349,42 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-<a name="promoteProjectDashboard"></a>
-# **promoteProjectDashboard**
+
+## promoteProjectDashboard
+
 > V1Dashboard promoteProjectDashboard(owner, project, dashboard_uuid)
 
 Promote project dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var dashboard_uuid = "dashboard_uuid_example"; // String | UUID
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let dashboard_uuid = "dashboard_uuid_example"; // String | UUID
+apiInstance.promoteProjectDashboard(owner, project, dashboard_uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.promoteProjectDashboard(owner, project, dashboard_uuid, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -427,48 +402,43 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-<a name="updateProjectDashboard"></a>
-# **updateProjectDashboard**
+
+## updateProjectDashboard
+
 > V1Dashboard updateProjectDashboard(owner, project, dashboard_uuid, body)
 
 Update project dashboard
 
 ### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
 
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
 // Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
+let ApiKey = defaultClient.authentications['ApiKey'];
 ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project under namesapce
-
-var dashboard_uuid = "dashboard_uuid_example"; // String | UUID
-
-var body = new PolyaxonSdk.V1Dashboard(); // V1Dashboard | Dashboard body
-
-
-var callback = function(error, data, response) {
+let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project under namesapce
+let dashboard_uuid = "dashboard_uuid_example"; // String | UUID
+let body = new PolyaxonSdk.V1Dashboard(); // V1Dashboard | Dashboard body
+apiInstance.updateProjectDashboard(owner, project, dashboard_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
     console.log('API called successfully. Returned data: ' + data);
   }
-};
-apiInstance.updateProjectDashboard(owner, project, dashboard_uuid, body, callback);
+});
 ```
 
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -487,6 +457,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 

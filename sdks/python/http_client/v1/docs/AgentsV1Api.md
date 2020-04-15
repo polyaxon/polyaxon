@@ -1,4 +1,5 @@
 # polyaxon_sdk.AgentsV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -23,30 +24,36 @@ Method | HTTP request | Description
 Create run profile
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
-try:
-    # Create run profile
-    api_response = api_instance.create_agent(owner, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->create_agent: %s\n" % e)
+    try:
+        # Create run profile
+        api_response = api_instance.create_agent(owner, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->create_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -69,6 +76,15 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_agent_status**
@@ -77,30 +93,36 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1AgentStatusBodyRequest() # V1AgentStatusBodyRequest | 
 
-try:
-    api_response = api_instance.create_agent_status(owner, uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->create_agent_status: %s\n" % e)
+    try:
+        api_response = api_instance.create_agent_status(owner, uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->create_agent_status: %s\n" % e)
 ```
 
 ### Parameters
@@ -124,37 +146,53 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_agent**
-> delete_agent(owner, uuid)
+> object delete_agent(owner, uuid)
 
 Delete run profile
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Delete run profile
-    api_instance.delete_agent(owner, uuid)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->delete_agent: %s\n" % e)
+    try:
+        # Delete run profile
+        api_response = api_instance.delete_agent(owner, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->delete_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -166,7 +204,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -174,8 +212,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -185,30 +232,36 @@ void (empty response body)
 Get run profile
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    # Get run profile
-    api_response = api_instance.get_agent(owner, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->get_agent: %s\n" % e)
+    try:
+        # Get run profile
+        api_response = api_instance.get_agent(owner, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->get_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -228,8 +281,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -239,29 +301,35 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    api_response = api_instance.get_agent_state(owner, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->get_agent_state: %s\n" % e)
+    try:
+        api_response = api_instance.get_agent_state(owner, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->get_agent_state: %s\n" % e)
 ```
 
 ### Parameters
@@ -281,8 +349,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -292,29 +369,35 @@ Name | Type | Description  | Notes
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
-try:
-    api_response = api_instance.get_agent_statuses(owner, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->get_agent_statuses: %s\n" % e)
+    try:
+        api_response = api_instance.get_agent_statuses(owner, uuid)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->get_agent_statuses: %s\n" % e)
 ```
 
 ### Parameters
@@ -334,8 +417,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -345,33 +437,39 @@ Name | Type | Description  | Notes
 List run profiles names
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # List run profiles names
-    api_response = api_instance.list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->list_agent_names: %s\n" % e)
+    try:
+        # List run profiles names
+        api_response = api_instance.list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->list_agent_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -394,8 +492,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -405,33 +512,39 @@ Name | Type | Description  | Notes
 List run profiles
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
-try:
-    # List run profiles
-    api_response = api_instance.list_agents(owner, offset=offset, limit=limit, sort=sort, query=query)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->list_agents: %s\n" % e)
+    try:
+        # List run profiles
+        api_response = api_instance.list_agents(owner, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->list_agents: %s\n" % e)
 ```
 
 ### Parameters
@@ -454,8 +567,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -465,31 +587,37 @@ Name | Type | Description  | Notes
 Patch run profile
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 agent_uuid = 'agent_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
-try:
-    # Patch run profile
-    api_response = api_instance.patch_agent(owner, agent_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->patch_agent: %s\n" % e)
+    try:
+        # Patch run profile
+        api_response = api_instance.patch_agent(owner, agent_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->patch_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -513,37 +641,53 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **sync_agent**
-> sync_agent(owner, agent_uuid, body)
+> object sync_agent(owner, agent_uuid, body)
 
 
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 agent_uuid = 'agent_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
-try:
-    api_instance.sync_agent(owner, agent_uuid, body)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->sync_agent: %s\n" % e)
+    try:
+        api_response = api_instance.sync_agent(owner, agent_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->sync_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -556,7 +700,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -566,6 +710,15 @@ void (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -575,31 +728,37 @@ void (empty response body)
 Update run profile
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.AgentsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
 agent_uuid = 'agent_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
-try:
-    # Update run profile
-    api_response = api_instance.update_agent(owner, agent_uuid, body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AgentsV1Api->update_agent: %s\n" % e)
+    try:
+        # Update run profile
+        api_response = api_instance.update_agent(owner, agent_uuid, body)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling AgentsV1Api->update_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -622,6 +781,15 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -1,4 +1,5 @@
 # polyaxon_sdk.ArtifactsStoresV1Api
+Polyaxon&#39;s typescript client
 
 All URIs are relative to *http://localhost*
 
@@ -13,32 +14,38 @@ Method | HTTP request | Description
 Upload artifact to a store
 
 ### Example
+
+* Api Key Authentication (ApiKey):
 ```python
 from __future__ import print_function
 import time
 import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
-
-# Configure API key authorization: ApiKey
 configuration = polyaxon_sdk.Configuration()
+# Configure API key authorization: ApiKey
 configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
-# create an instance of the API class
-api_instance = polyaxon_sdk.ArtifactsStoresV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
-uploadfile = '/path/to/file.txt' # file | The file to upload.
-path = 'path_example' # str | File path query params. (optional)
-overwrite = true # bool | File path query params. (optional)
+# Defining host is optional and default to http://localhost
+configuration.host = "http://localhost"
 
-try:
-    # Upload artifact to a store
-    api_instance.upload_artifact(owner, uuid, uploadfile, path=path, overwrite=overwrite)
-except ApiException as e:
-    print("Exception when calling ArtifactsStoresV1Api->upload_artifact: %s\n" % e)
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.ArtifactsStoresV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
+uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uploadfile = '/path/to/file' # file | The file to upload.
+path = 'path_example' # str | File path query params. (optional)
+overwrite = True # bool | File path query params. (optional)
+
+    try:
+        # Upload artifact to a store
+        api_instance.upload_artifact(owner, uuid, uploadfile, path=path, overwrite=overwrite)
+    except ApiException as e:
+        print("Exception when calling ArtifactsStoresV1Api->upload_artifact: %s\n" % e)
 ```
 
 ### Parameters
@@ -63,6 +70,14 @@ void (empty response body)
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

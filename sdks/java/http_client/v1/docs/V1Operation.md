@@ -1,7 +1,9 @@
 
+
 # V1Operation
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **version** | **Float** |  |  [optional]
@@ -13,8 +15,8 @@ Name | Type | Description | Notes
 **profile** | **String** |  |  [optional]
 **queue** | **String** |  |  [optional]
 **cache** | [**V1Cache**](V1Cache.md) |  |  [optional]
-**schedule** | **Object** |  |  [optional]
-**parallel** | **Object** |  |  [optional]
+**schedule** | [**Object**](.md) |  |  [optional]
+**parallel** | [**Object**](.md) |  |  [optional]
 **dependencies** | **List&lt;String&gt;** |  |  [optional]
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  |  [optional]
 **conditions** | **List&lt;Object&gt;** |  |  [optional]
@@ -22,7 +24,7 @@ Name | Type | Description | Notes
 **termination** | [**V1Termination**](V1Termination.md) |  |  [optional]
 **plugins** | [**V1Plugins**](V1Plugins.md) |  |  [optional]
 **params** | [**Map&lt;String, V1Param&gt;**](V1Param.md) |  |  [optional]
-**runPatch** | **Object** |  |  [optional]
+**runPatch** | [**Object**](.md) |  |  [optional]
 **dagRef** | **String** |  |  [optional]
 **urlRef** | **String** |  |  [optional]
 **pathRef** | **String** |  |  [optional]
