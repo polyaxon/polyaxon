@@ -41,6 +41,13 @@ def init(
     )
 
 
+def log_data_ref(name, value):
+    global TRACKING_RUN
+    TRACKING_RUN.log_data_ref(
+        name=name, value=value,
+    )
+
+
 def log_metric(name, value, step=None, timestamp=None):
     global TRACKING_RUN
     TRACKING_RUN.log_metric(

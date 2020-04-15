@@ -28,7 +28,7 @@ from polyaxon.exceptions import (
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )
-from polyaxon.tracking.utils.hashing import hash_value
+from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.formatting import Printer
 
 

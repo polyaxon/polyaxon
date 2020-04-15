@@ -43,6 +43,7 @@ from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.validation import validate_tags
+from polyaxon.utils.hashing import hash_value
 
 
 class RunClient:
@@ -422,6 +423,18 @@ class RunClient:
                 name=code_ref.get("commit"),
                 kind=V1ArtifactKind.CODEREF,
                 summary=code_ref,
+                is_input=True,
+            )
+            self.log_artifact_lineage(body=artifact_run)
+
+    @check_no_op
+    @check_offline
+    def log_data_ref(self, name: str, data):
+        if name:
+            artifact_run = V1RunArtifact(
+                name=name,
+                kind=V1ArtifactKind.DATA,
+                summary={"hash": hash_value(data)},
                 is_input=True,
             )
             self.log_artifact_lineage(body=artifact_run)
