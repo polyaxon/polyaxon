@@ -13,8 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from collections import Mapping
 
-from polyaxon.config_reader import reader
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.polyaxonfile.specs import kinds as spec_kinds
 from polyaxon.polyaxonfile.specs.base import BaseSpecification
 from polyaxon.polyaxonfile.specs.compiled_operation import (
@@ -31,6 +32,7 @@ SPECIFICATION_BY_KIND = {
 
 
 def get_specification(data):
-    data = reader.read(data)
+    if not isinstance(data, Mapping):
+        data = ConfigSpec.read_from(data)
     kind = BaseSpecification.get_kind(data=data)
     return SPECIFICATION_BY_KIND[kind].read(data)

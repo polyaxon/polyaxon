@@ -18,7 +18,7 @@ import copy
 
 from marshmallow import ValidationError
 
-from polyaxon.config_reader import reader
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.pkg import SCHEMA_VERSION
 from polyaxon.polyaxonfile.specs import kinds
@@ -112,7 +112,7 @@ class BaseSpecification(Sections):
             return values
 
         values = to_list(values)
-        data = reader.read([{"kind": cls._SPEC_KIND}] + values)
+        data = ConfigSpec.read_from([{"kind": cls._SPEC_KIND}] + values)
         try:
             config = cls.CONFIG.from_dict(copy.deepcopy(data))
         except TypeError as e:

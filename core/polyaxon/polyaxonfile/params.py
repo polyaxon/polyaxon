@@ -14,25 +14,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
+from collections import Mapping
 
+from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.utils.formatting import Printer
 
 
-def parse_params(params):
+def parse_params(params, is_cli: bool = True):
+    if isinstance(params, Mapping):
+        return params
+
     parsed_params = {}
     for param in params:
         index = param.find("=")
         if index == -1:
-            Printer.print_error(
+            message = (
                 "Invalid format for -P parameter: '%s'. Use -P name=value." % param
             )
-            sys.exit(1)
+            if is_cli:
+                Printer.print_error(message, sys_exit=True)
+            else:
+                raise PolyaxonfileError(message)
         name = param[:index]
         value = param[index + 1 :]
         if name in parsed_params:
-            Printer.print_error("Repeated parameter: '%s'" % name)
-            sys.exit(1)
+            message = "Repeated parameter: '%s'" % name
+            if is_cli:
+                Printer.print_error(message, sys_exit=True)
+            else:
+                raise PolyaxonfileError(message)
         parsed_params[name] = {"value": value}
 
     return parsed_params

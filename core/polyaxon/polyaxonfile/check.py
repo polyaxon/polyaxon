@@ -15,71 +15,94 @@
 # limitations under the License.
 
 import os
-import sys
 
 from collections import OrderedDict
 
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
-from polyaxon.polyaxonfile.manager import PolyaxonFile
+from polyaxon.exceptions import PolyaxonfileError
+from polyaxon.polyaxonfile.manager import check_default_path, get_op_specification
 from polyaxon.polyaxonfile.params import parse_params
-from polyaxon.utils import constants
+from polyaxon.polyaxonfile.specs import get_specification
 from polyaxon.utils.formatting import Printer, dict_tabulate
 from polyaxon.utils.list_utils import to_list
 
 
 def check_polyaxonfile(
-    polyaxonfile=None,
-    python_module=None,
+    polyaxonfile: str = None,
+    python_module: str = None,
+    url: str = None,
+    hub: str = None,
     params=None,
     profile=None,
     queue=None,
     nocache=None,
     log=True,
+    is_cli: bool = True,
+    to_op: bool = True,
 ):
-    if not any([polyaxonfile, python_module]):
-        polyaxonfile = PolyaxonFile.check_default_path(path=".")
-    if not any([polyaxonfile, python_module]):
+    if not any([polyaxonfile, python_module, url, hub]):
+        polyaxonfile = check_default_path(path=".")
+    if not any([polyaxonfile, python_module, url, hub]):
         polyaxonfile = ""
 
     polyaxonfile = to_list(polyaxonfile)
-    exists = [os.path.isfile(f) for f in polyaxonfile]
 
     parsed_params = None
     if params:
-        parsed_params = parse_params(params)
+        parsed_params = parse_params(params, is_cli=is_cli)
 
-    if not any(exists) and not python_module:
-        Printer.print_error(
-            "Polyaxonfile is not present, "
-            "please run {}".format(constants.INIT_COMMAND)
+    if not any([os.path.isfile(f) for f in polyaxonfile]) and not any(
+        [python_module, url, hub]
+    ):
+        message = (
+            "Please pass a valid polyaxonfile, a python module, url, or component name"
         )
-        sys.exit(1)
-
-    if python_module:
-        config = ConfigSpec.get_from(python_module)
-        return config.read()
+        if is_cli:
+            Printer.print_error(message, sys_exit=True)
+        else:
+            raise PolyaxonfileError(message)
 
     try:
-        plx_file = PolyaxonFile(polyaxonfile)
-        plx_file = plx_file.get_op_specification(
-            params=parsed_params, profile=profile, queue=queue, nocache=nocache
-        )
-        if log:
+        if python_module:
+            plx_file = ConfigSpec.get_from(python_module, config_type=".py")
+
+        elif url:
+            plx_file = ConfigSpec.get_from(url, "url")
+
+        elif hub:
+            plx_file = ConfigSpec.get_from(hub, "hub")
+
+        else:
+            plx_file = ConfigSpec.read_from(polyaxonfile)
+
+        plx_file = get_specification(data=plx_file)
+        if to_op:
+            plx_file = get_op_specification(
+                config=plx_file,
+                params=parsed_params,
+                profile=profile,
+                queue=queue,
+                nocache=nocache,
+            )
+        if log and not is_cli:
             Printer.print_success("Polyaxonfile valid")
         return plx_file
     except Exception as e:
-        handle_cli_error(e, message="Polyaxonfile is not valid.")
-        sys.exit(1)
+        message = "Polyaxonfile is not valid."
+        if is_cli:
+            handle_cli_error(e, message=message, sys_exit=True)
+        else:
+            raise PolyaxonfileError(message)
 
 
 def check_polyaxonfile_kind(specification, kind):
     if specification.kind != kind:
         Printer.print_error(
             "Your polyaxonfile must be of kind: `{}`, "
-            "received: `{}`.".format(kind, specification.kind)
+            "received: `{}`.".format(kind, specification.kind),
+            sys_exit=True,
         )
-        sys.exit(-1)
 
 
 def get_parallel_info(kind, concurrency, early_stopping=False, **kwargs):
