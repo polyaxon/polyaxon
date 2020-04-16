@@ -24,6 +24,8 @@ except ImportError:
 def sanitize_np_types(value):
     if isinstance(value, (int, float, complex, type(None))):
         return value
+    if np.isnan(value):
+        return None
     if np and isinstance(value, np.integer):
         return int(value)
     if np and isinstance(value, np.floating):
