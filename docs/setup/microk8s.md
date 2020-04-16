@@ -93,7 +93,7 @@ helm repo update
 You can validate that your deployment `config.yml` file is compatible with the version you are trying to deploy:
 
 ```bash
-polyaxon deploy -f config.yml --check
+polyaxon admin deploy -f config.yml --check
 ```
 
 ### Deploy
@@ -103,19 +103,19 @@ Now you can install Polyaxon with your `config.yml` file
 You can use Polyaxon CLI to manage the deployment
 
 ```bash
-polyaxon deploy -f config.yml
+polyaxon admin deploy -f config.yml
 ```
 
 Or you can use Helm to do the same:
 
 ```bash
 helm install polyaxon/polyaxon \
-    --name=<RELEASE_NAME> \
+    <RELEASE_NAME> \
     --namespace=<NAMESPACE> \
     -f config.yml
 ```
 
-`--name` is an identifier used by helm to refer to this deployment.
+`<RELEASE_NAME>` is an identifier used by helm to refer to this deployment.
 You need it when you are changing the configuration of this install or deleting it.
 We recommend using `RELEASE_NAME = polyaxon` or `RELEASE_NAME = plx`.
 
