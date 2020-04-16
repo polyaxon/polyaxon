@@ -16,7 +16,7 @@
 import sys
 import time
 
-from typing import Dict, Iterator, List, Tuple, Union
+from typing import Dict, Iterator, List, Sequence, Tuple, Union
 
 import click
 import polyaxon_sdk
@@ -36,14 +36,15 @@ from polyaxon.env_vars.getters import (
 )
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.lifecycle import LifeCycle, V1StatusCondition
+from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.logging.handler import get_logs_handler
 from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.formatting import Printer
+from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.validation import validate_tags
-from polyaxon.utils.hashing import hash_value
 
 
 class RunClient:
@@ -129,18 +130,131 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def update(self, data: Union[Dict, polyaxon_sdk.V1Run]):
-        return self._update(data=data, async_req=False)
-
-    @check_no_op
-    @check_offline
     def _update(self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = True):
-        self.client.runs_v1.patch_run(
+        self._run_data = self.client.runs_v1.patch_run(
             owner=self.owner,
             project=self.project,
             run_uuid=self.run_uuid,
             body=data,
             async_req=async_req,
+        )
+        return self._run_data
+
+    @check_no_op
+    @check_offline
+    def update(self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = False):
+        return self._update(data=data, async_req=async_req)
+
+    @check_no_op
+    @check_offline
+    def _create(
+        self, data: Union[Dict, polyaxon_sdk.V1OperationBody], async_req: bool = False
+    ):
+        self._run_data = self.client.runs_v1.create_run(
+            owner=self.owner, project=self.project, body=data, async_req=async_req,
+        )
+        self._run_uuid = self._run_data.uuid
+        return self._run_data
+
+    @check_no_op
+    def _post_create(self):
+        pass
+
+    @check_no_op
+    @check_offline
+    def create(
+        self,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, Sequence[str]] = None,
+        content: Union[str, polyaxon_sdk.V1Operation] = None,
+    ):
+        is_managed = True
+        if not isinstance(content, (str, polyaxon_sdk.V1Operation)):
+            is_managed = False
+        data = polyaxon_sdk.V1OperationBody(
+            name=name,
+            description=description,
+            tags=tags,
+            content=content if isinstance(content, str) else content.to_dict(dump=True),
+            is_managed=is_managed,
+        )
+        self._create(data=data, async_req=False)
+        self._post_create()
+
+    @check_no_op
+    @check_offline
+    def create_from_polyaxonfile(
+        self,
+        polyaxonfile: str,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, Sequence[str]] = None,
+        params: Dict = None,
+        profile: str = None,
+        queue: str = None,
+        nocache: bool = True,
+    ):
+        op_spec = check_polyaxonfile(
+            polyaxonfile=polyaxonfile,
+            params=params,
+            profile=profile,
+            queue=queue,
+            nocache=nocache,
+            log=False,
+        )
+        return self.create(
+            name=name, description=description, tags=tags, content=op_spec
+        )
+
+    @check_no_op
+    @check_offline
+    def create_from_url(
+        self,
+        url: str,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, Sequence[str]] = None,
+        params: Dict = None,
+        profile: str = None,
+        queue: str = None,
+        nocache: bool = True,
+    ):
+        op_spec = check_polyaxonfile(
+            url=url,
+            params=params,
+            profile=profile,
+            queue=queue,
+            nocache=nocache,
+            log=False,
+        )
+        return self.create(
+            name=name, description=description, tags=tags, content=op_spec
+        )
+
+    @check_no_op
+    @check_offline
+    def create_from_hub(
+        self,
+        component: str,
+        name: str = None,
+        description: str = None,
+        tags: Union[str, Sequence[str]] = None,
+        params: Dict = None,
+        profile: str = None,
+        queue: str = None,
+        nocache: bool = True,
+    ):
+        op_spec = check_polyaxonfile(
+            hub=component,
+            params=params,
+            profile=profile,
+            queue=queue,
+            nocache=nocache,
+            log=False,
+        )
+        return self.create(
+            name=name, description=description, tags=tags, content=op_spec
         )
 
     @check_no_op
@@ -376,7 +490,7 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def log_tags(self, tags, reset=False, async_req=True):
+    def log_tags(self, tags: Union[str, Sequence[str]], reset=False, async_req=True):
         patch_dict = {"tags": validate_tags(tags)}
         if reset is False:
             patch_dict["merge"] = True

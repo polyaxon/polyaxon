@@ -21,9 +21,6 @@ import time
 
 import polyaxon_sdk
 
-from polyaxon_sdk.rest import ApiException
-from urllib3.exceptions import HTTPError
-
 from polyaxon import settings
 from polyaxon.client import RunClient
 from polyaxon.client.decorators import can_log_events, check_no_op, check_offline
@@ -37,8 +34,6 @@ from polyaxon.env_vars.getters import (
     get_collect_resources,
     get_log_level,
 )
-from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import LoggedEventSpec, V1Event, get_asset_path
 from polyaxon.tracking.events import EventFileWriter, events_processors
@@ -57,7 +52,7 @@ class Run(RunClient):
         client=None,
         track_code=True,
         track_env=False,
-        refresh_data=True,
+        refresh_data=False,
     ):
         super().__init__(
             owner=owner, project=project, run_uuid=run_uuid, client=client,
@@ -86,7 +81,7 @@ class Run(RunClient):
         if settings.CLIENT_CONFIG.is_offline:
             return
 
-        if self._run_uuid and refresh_data:
+        if self._run_uuid and (refresh_data or settings.CLIENT_CONFIG.is_managed):
             self.refresh_data()
 
         # Track run env
@@ -94,6 +89,13 @@ class Run(RunClient):
             self.log_run_env()
 
         self._register_wait()
+
+    @property
+    def is_service(self):
+        if settings.CLIENT_CONFIG.no_op:
+            return None
+
+        return settings.CLIENT_CONFIG.is_managed and settings.CLIENT_CONFIG.is_service
 
     @property
     def artifacts_path(self):
@@ -117,44 +119,7 @@ class Run(RunClient):
         self._resource_logger = ResourceFileWriter(run_path=self.artifacts_path)
 
     @check_no_op
-    def create(self, name=None, tags=None, description=None, content=None):
-        operation = polyaxon_sdk.V1OperationBody()
-        if name:
-            operation.name = name
-        if tags:
-            operation.tags = tags
-        if description:
-            operation.description = description
-        if content:
-            try:
-                specification = OperationSpecification.read(content)
-            except Exception as e:
-                raise PolyaxonClientException("Client error: %s" % e) from e
-            operation.content = specification.to_dict(dump=True)
-        else:
-            operation.is_managed = False
-
-        if self.client:
-            try:
-                run = self.client.runs_v1.create_run(
-                    owner=self.owner, project=self.project, body=operation
-                )
-            except (ApiException, HTTPError) as e:
-                raise PolyaxonClientException("Client error: %s" % e) from e
-            if not run:
-                raise PolyaxonClientException("Could not create a run.")
-        else:
-            run = polyaxon_sdk.V1Run(
-                name=operation.name,
-                tags=operation.tags,
-                description=operation.description,
-                content=operation.content,
-                is_managed=operation.is_managed,
-            )
-
-        self._run = run
-        self._run_uuid = run.uuid
-
+    def _post_create(self):
         if self.artifacts_path:
             self.set_run_event_logger()
 
@@ -167,15 +132,6 @@ class Run(RunClient):
             self._start()
         else:
             self._register_wait()
-
-        return self
-
-    @property
-    def is_service(self):
-        if settings.CLIENT_CONFIG.no_op:
-            return None
-
-        return settings.CLIENT_CONFIG.is_managed and settings.CLIENT_CONFIG.is_service
 
     @check_no_op
     @check_offline
@@ -630,7 +586,7 @@ class Run(RunClient):
             self._resource_logger.close()
         if self._results:
             self.log_outputs(**self._results)
-        time.sleep(1)
+        time.sleep(settings.CLIENT_CONFIG.tracking_timeout)
 
     @check_no_op
     @check_offline
