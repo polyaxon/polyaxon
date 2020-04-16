@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.config_reader import reader
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.parser import parser
 from polyaxon.parser.constants import NO_VALUE_FOUND
 from polyaxon.schemas.types import V1AuthType, V1UriType
@@ -29,7 +29,9 @@ class ConfigManager:
 
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
-        config = reader.read(config_values)  # pylint:disable=redefined-outer-name
+        config = ConfigSpec.read_from(
+            config_values
+        )  # pylint:disable=redefined-outer-name
         return cls(**config) if config else None
 
     def keys_startswith(self, term):

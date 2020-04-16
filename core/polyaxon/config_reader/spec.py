@@ -23,7 +23,9 @@ from collections import Mapping
 from yaml.parser import ParserError  # noqa
 from yaml.scanner import ScannerError  # noqa
 
+from polyaxon.config_reader.utils import deep_update
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.utils.list_utils import to_list
 
 
 class ConfigSpec(object):
@@ -33,7 +35,7 @@ class ConfigSpec(object):
         self.check_if_exists = check_if_exists
 
     @classmethod
-    def get_from(cls, value, config_type=None):
+    def get_from(cls, value: object, config_type: object = None) -> "ConfigSpec":
         if isinstance(value, cls):
             return value
 
@@ -51,24 +53,71 @@ class ConfigSpec(object):
 
     def read(self):
         if isinstance(self.value, Mapping):
-            config_results = self.value
-        elif os.path.isfile(self.value):
-            config_results = _read_from_file(self.value, self.config_type)
-        else:
-            # try a python file
-            if isinstance(self.value, str) and ".py" in self.value:
-                _f_path, _f_module = _get_python_file_def(self.value)
-                if _f_path and _f_module:
-                    return _read_from_python(_f_path, _f_module)
+            return self.value
 
-            # try reading a stream of yaml or json
+        if os.path.isfile(self.value):
+            return _read_from_file(self.value, self.config_type)
+
+        # try a python file
+        if isinstance(self.value, str) and (
+            self.config_type == "py" or ".py" in self.value
+        ):
+            _f_path, _f_module = _get_python_file_def(self.value)
+            if _f_path and _f_module:
+                return _read_from_python(_f_path, _f_module)
+
+        # try reading a stream of yaml or json
+        if not self.config_type or self.config_type in (".json", ".yml", ".yaml"):
             try:
-                config_results = _read_from_stream(self.value)
+                return _read_from_stream(self.value)
             except (ScannerError, ParserError):
                 raise PolyaxonSchemaError(
                     "Received an invalid yaml stream: `{}`".format(self.value)
                 )
-        return config_results
+
+        if self.config_type == "url":
+            return _read_from_url(self.value)
+
+        raise PolyaxonSchemaError(
+            "Received an invalid configuration: `{}`".format(self.value)
+        )
+
+    @classmethod
+    def read_from(cls, config_values, config_type=None):
+        """
+        Reads an ordered list of configuration values and
+        deep merge the values in reverse order.
+        """
+        if not config_values:
+            raise PolyaxonSchemaError(
+                "Cannot read config_value: `{}`".format(config_values)
+            )
+
+        config_values = to_list(config_values, check_none=True)
+
+        config = {}
+        for config_value in config_values:
+            config_value = ConfigSpec.get_from(
+                value=config_value, config_type=config_type
+            )
+            config_value.check_type()
+            config_results = config_value.read()
+            if config_results and isinstance(config_results, Mapping):
+                config = deep_update(config, config_results)
+            elif config_value.check_if_exists:
+                raise PolyaxonSchemaError(
+                    "Cannot read config_value: `{}`".format(config_value)
+                )
+
+        return config
+
+
+def _read_from_url(url: str):
+    from polyaxon.utils.http import safe_request
+
+    resp = safe_request(url)
+    resp.raise_for_status()
+    return _read_from_stream(resp.content)
 
 
 def _read_from_stream(stream):
@@ -79,7 +128,13 @@ def _read_from_stream(stream):
 
 
 def _get_python_file_def(f_path):
+    if isinstance(f_path, str) and ".py" in f_path:
+        return None, None
     results = f_path.split(":")
+
+    if len(results) == 1:  # Default case
+        return f_path, "main"
+
     if len(results) != 2 or not results[1]:
         return None, None
 
@@ -128,8 +183,12 @@ def _read_from_file(f_path, file_type):
         return _read_from_yml(f_path)
     elif ext == ".json" or file_type == ".json":
         return _read_from_json(f_path)
+    elif ext == ".py" or file_type == ".py":
+        _f_path, _f_module = _get_python_file_def(f_path)
+        if _f_path and _f_module:
+            return _read_from_python(_f_path, _f_module)
     raise PolyaxonSchemaError(
-        "Expects a file with extension: `.yml`, `.yaml`, or `json`, "
+        "Expects a file with extension: `.yml`, `.yaml`, `.py`, or `json`, "
         "received instead `{}`".format(ext)
     )
 
