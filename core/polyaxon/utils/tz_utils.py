@@ -25,13 +25,11 @@ try:
 except ImportError:
     dj_now = None
 
-dj_now = None
-
 
 def get_timezone(tz=None):
     from polyaxon import settings
 
-    tz = tz or settings.CLIENT_CONFIG.timezone
+    tz = tz or settings.CLIENT_CONFIG.timezone or "UTC"
     if tz:
         return pytz.timezone(tz)
     return tzlocal()
