@@ -28,7 +28,7 @@ from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.ignore import IgnoreManager
 from polyaxon.managers.project import ProjectManager
-from polyaxon.polyaxonfile import PolyaxonFile
+from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.utils import constants, indentation
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.path_utils import create_debug_file, create_init_file
@@ -37,7 +37,7 @@ from polyaxon.utils.path_utils import create_debug_file, create_init_file
 def create_polyaxonfile():
     if os.path.isfile(constants.INIT_FILE_PATH):
         try:
-            _ = PolyaxonFile(constants.INIT_FILE_PATH).specification  # noqa
+            _ = check_polyaxonfile(constants.INIT_FILE_PATH)  # noqa
             Printer.print_success("A valid polyaxonfile.yaml was found in the project.")
         except Exception as e:
             handle_cli_error(e, message="A Polyaxonfile was found but it is not valid.")

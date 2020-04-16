@@ -25,7 +25,7 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.upload import upload
 from polyaxon.client import RunClient
 from polyaxon.client.run import get_run_logs
-from polyaxon.config_reader import reader
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.logger import clean_outputs
@@ -439,7 +439,7 @@ def restart(ctx, copy, polyaxonfile, u):
     """
     content = None
     if polyaxonfile:
-        content = "{}".format(reader.read(polyaxonfile))
+        content = "{}".format(ConfigSpec.read_from(polyaxonfile))
 
     # Check if we need to upload
     if u:
@@ -491,7 +491,7 @@ def resume(ctx, polyaxonfile, u):
     """
     content = None
     if polyaxonfile:
-        content = "{}".format(reader.read(polyaxonfile))
+        content = "{}".format(ConfigSpec.read_from(polyaxonfile))
 
     # Check if we need to upload
     if u:

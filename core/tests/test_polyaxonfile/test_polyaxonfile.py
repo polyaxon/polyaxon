@@ -22,7 +22,7 @@ from marshmallow import ValidationError
 from tests.utils import BaseTestCase
 
 from polyaxon.exceptions import PolyaxonfileError
-from polyaxon.polyaxonfile import PolyaxonFile
+from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
     OperationSpecification,
@@ -43,20 +43,38 @@ from polyaxon.polyflow.termination import V1Termination
 @pytest.mark.polyaxonfile_mark
 class TestPolyaxonfiles(BaseTestCase):
     def test_missing_version_raises(self):
-        with self.assertRaises(ValidationError):
-            PolyaxonFile(os.path.abspath("tests/fixtures/plain/missing_version.yml"))
+        with self.assertRaises(PolyaxonfileError):
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath(
+                    "tests/fixtures/plain/missing_version.yml"
+                ),
+                is_cli=False,
+            )
 
     def test_non_supported_version_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath("tests/fixtures/plain/non_supported_file.yml"))
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath(
+                    "tests/fixtures/plain/non_supported_file.yml"
+                ),
+                is_cli=False,
+            )
 
     def test_non_existing_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath("tests/fixtures/plain/non_existing_file.yml"))
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath(
+                    "tests/fixtures/plain/non_existing_file.yml"
+                ),
+                is_cli=False,
+            )
 
     def test_missing_kind_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath("tests/fixtures/plain/missing_kind.yml"))
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath("tests/fixtures/plain/missing_kind.yml"),
+                is_cli=False,
+            )
 
     def test_simple_file_passes(self):
         run_config = CompiledOperationSpecification.read(
@@ -85,12 +103,11 @@ class TestPolyaxonfiles(BaseTestCase):
         ]
 
     def test_passing_params_to_no_io_overrides_polyaxonfiles_raises(self):
-        polyaxonfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/simple_job.yml")
-        )
-        with self.assertRaises(ValidationError):
-            polyaxonfile.get_op_specification(
-                params={"flag": True, "loss": "some-loss"}
+        with self.assertRaises(PolyaxonfileError):
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath("tests/fixtures/plain/simple_job.yml"),
+                params={"flag": True, "loss": "some-loss"},
+                is_cli=False,
             )
 
     def test_passing_params_overrides_polyaxonfiles(self):
@@ -123,10 +140,11 @@ class TestPolyaxonfiles(BaseTestCase):
 
     def test_passing_wrong_params_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            polyaxonfile = PolyaxonFile(
-                os.path.abspath("tests/fixtures/plain/simple_job.yml")
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath("tests/fixtures/plain/simple_job.yml"),
+                params="foo",
+                is_cli=False,
             )
-            polyaxonfile.get_op_specification(params="foo")
 
     def test_job_file_with_init_passes(self):
         run_config = CompiledOperationSpecification.read(
@@ -206,10 +224,11 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.plugins.log_level == "DEBUG"
 
     def test_matrix_file_passes(self):
-        plx_file = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/matrix_job_file.yml")
+        plx_file = check_polyaxonfile(
+            polyaxonfile=os.path.abspath("tests/fixtures/plain/matrix_job_file.yml"),
+            is_cli=False,
         )
-        run_config = OperationSpecification.compile_operation(plx_file.config)
+        run_config = OperationSpecification.compile_operation(plx_file)
         run_config = CompiledOperationSpecification.apply_context(run_config)
         assert run_config.version == 1.05
         assert isinstance(run_config.parallel, V1Hyperband)
@@ -245,13 +264,14 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.parallel.early_stopping is None
 
     def test_matrix_file_passes_int_float_types(self):
-        plx_file = PolyaxonFile(
-            os.path.abspath(
+        plx_file = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
                 "tests/fixtures/plain/matrix_job_file_with_int_float_types.yml"
-            )
+            ),
+            is_cli=False,
         )
         # Get compiled_operation data
-        run_config = OperationSpecification.compile_operation(plx_file.config)
+        run_config = OperationSpecification.compile_operation(plx_file)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
         assert run_config.version == 1.05
@@ -272,11 +292,15 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.parallel.early_stopping is None
 
     def test_matrix_early_stopping_file_passes(self):
-        plx_file = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/matrix_job_file_early_stopping.yml")
+        plx_file = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
+                "tests/fixtures/plain/matrix_job_file_early_stopping.yml"
+            ),
+            is_cli=False,
+            to_op=False,
         )
         # Get compiled_operation data
-        run_config = OperationSpecification.compile_operation(plx_file.config)
+        run_config = OperationSpecification.compile_operation(plx_file)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
         assert run_config.version == 1.05
@@ -299,11 +323,15 @@ class TestPolyaxonfiles(BaseTestCase):
         assert isinstance(run_config.parallel.early_stopping[0], V1MetricEarlyStopping)
 
     def test_mapping_early_stopping_file_passes(self):
-        plx_file = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/mapping_job_file_early_stopping.yml")
+        plx_file = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
+                "tests/fixtures/plain/mapping_job_file_early_stopping.yml"
+            ),
+            is_cli=False,
+            to_op=False,
         )
         # Get compiled_operation data
-        config_run = OperationSpecification.compile_operation(plx_file.config)
+        config_run = OperationSpecification.compile_operation(plx_file)
 
         config_run = CompiledOperationSpecification.apply_context(config_run)
         assert config_run.version == 1.05

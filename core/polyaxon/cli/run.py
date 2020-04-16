@@ -45,7 +45,18 @@ from polyaxon.utils.validation import validate_tags
     help="The polyaxonfiles to run.",
 )
 @click.option(
-    "-pm", "--python-module", type=str, help="The python module to run.",
+    "-pm",
+    "--python-module",
+    type=str,
+    help="The python module containing the polyaxonfile to run.",
+)
+@click.option(
+    "--url", type=str, help="The url containing the polyaxonfile to run.",
+)
+@click.option(
+    "--hub",
+    type=str,
+    help="The component hub name containing the polyaxonfile to run.",
 )
 @click.option(
     "--name",
@@ -104,6 +115,8 @@ def run(
     project,
     polyaxonfile,
     python_module,
+    url,
+    hub,
     name,
     tags,
     description,
@@ -163,6 +176,8 @@ def run(
     op_spec = check_polyaxonfile(
         polyaxonfile=polyaxonfile,
         python_module=python_module,
+        url=url,
+        hub=hub,
         params=params,
         profile=profile,
         queue=queue,

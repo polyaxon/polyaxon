@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-def hash_value(value, hash_length=12):
+def hash_value(value, hash_length: int = 12) -> str:
     import hashlib
 
     return hashlib.md5(str(value).encode("utf-8")).hexdigest()[:hash_length]

@@ -22,7 +22,7 @@ import ujson
 from marshmallow import RAISE, Schema, ValidationError, post_dump, post_load
 from marshmallow.utils import EXCLUDE
 
-from polyaxon.config_reader import reader
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.utils import to_camel_case
 from polyaxon.utils.humanize import humanize_timesince
@@ -151,7 +151,7 @@ class BaseConfig(object):
 
     @classmethod
     def read(cls, values, unknown=None, config_type=None):
-        values = reader.read(values, config_type=config_type)
+        values = ConfigSpec.read_from(values, config_type=config_type)
         return cls.from_dict(values, unknown=unknown)
 
     @classmethod

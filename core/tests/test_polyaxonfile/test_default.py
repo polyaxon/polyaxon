@@ -23,7 +23,7 @@ from tests.utils import BaseTestCase
 from polyaxon.polyaxonfile import (
     DEFAULT_POLYAXON_FILE_EXTENSION,
     DEFAULT_POLYAXON_FILE_NAME,
-    PolyaxonFile,
+    check_default_path,
 )
 
 
@@ -31,7 +31,7 @@ from polyaxon.polyaxonfile import (
 class TestDefaultFile(BaseTestCase):
     def test_default_not_found(self):
         path = tempfile.mkdtemp()
-        assert PolyaxonFile.check_default_path(path=path) is None
+        assert check_default_path(path=path) is None
 
     def test_polyaxon_found(self):
         def create_file(path, filename, ext):
@@ -42,4 +42,4 @@ class TestDefaultFile(BaseTestCase):
             for ext in DEFAULT_POLYAXON_FILE_EXTENSION:
                 path = tempfile.mkdtemp()
                 create_file(path, filename, ext)
-                assert PolyaxonFile.check_default_path(path=path)
+                assert check_default_path(path=path)

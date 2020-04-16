@@ -22,7 +22,7 @@ from marshmallow import ValidationError
 from polyaxon.builds.generator import DockerFileGenerator
 from polyaxon.cli.check import check_polyaxonfile
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.config_reader import reader
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonBuildException, PolyaxonSchemaError
 from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile.specs import CompiledOperationSpecification
@@ -81,7 +81,9 @@ def generate(
 
     if build_context:
         try:
-            build_context = [V1DockerfileType.from_dict(reader.read(build_context))]
+            build_context = [
+                V1DockerfileType.from_dict(ConfigSpec.read_from(build_context))
+            ]
         except (PolyaxonSchemaError, ValidationError) as e:
             Printer.print_error("received a non valid build context.")
             Printer.print_error("Error message: {}.".format(e))

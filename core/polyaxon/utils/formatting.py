@@ -121,8 +121,10 @@ class Printer(object):
         click.secho(text, fg="green")
 
     @staticmethod
-    def print_error(text):
+    def print_error(text, sys_exit: bool = False):
         click.secho(text, fg="red")
+        if sys_exit:
+            sys.exit(1)
 
     @staticmethod
     def add_color(value, color):

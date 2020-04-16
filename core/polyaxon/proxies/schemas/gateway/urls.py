@@ -14,12 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.api import POLYAXON_CLOUD
+from polyaxon.api import POLYAXON_CLOUD, POLYAXON_CLOUD_HOST
 
 
 def get_service_url(host, port):
     if host == POLYAXON_CLOUD:
-        return "https://{}".format(POLYAXON_CLOUD)
+        return POLYAXON_CLOUD_HOST
     if port in {80, 443}:
         return "http://{}".format(host)
     return "http://{}:{}".format(host, port)

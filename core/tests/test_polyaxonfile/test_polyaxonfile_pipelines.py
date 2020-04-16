@@ -20,9 +20,8 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.config_reader import reader
 from polyaxon.exceptions import PolyaxonSchemaError
-from polyaxon.polyaxonfile import PolyaxonFile
+from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
     OperationSpecification,
@@ -42,9 +41,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_pipeline_with_no_ops_raises(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/pipelines/pipeline_with_no_ops.yml")
-                ),
+                os.path.abspath("tests/fixtures/pipelines/pipeline_with_no_ops.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -54,10 +51,8 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_pipeline_with_no_components_raises(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath(
-                        "tests/fixtures/pipelines/pipeline_with_no_components.yml"
-                    )
+                os.path.abspath(
+                    "tests/fixtures/pipelines/pipeline_with_no_components.yml"
                 ),
                 {"kind": "compiled_operation"},
             ]
@@ -68,10 +63,8 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_pipeline_ops_not_corresponding_to_components(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath(
-                        "tests/fixtures/pipelines/pipeline_ops_not_corresponding_to_components.yml"
-                    )
+                os.path.abspath(
+                    "tests/fixtures/pipelines/pipeline_ops_not_corresponding_to_components.yml"
                 ),
                 {"kind": "compiled_operation"},
             ]
@@ -82,9 +75,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_cyclic_pipeline_raises(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/pipelines/cyclic_pipeline.yml")
-                ),
+                os.path.abspath("tests/fixtures/pipelines/cyclic_pipeline.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -94,11 +85,15 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             CompiledOperationSpecification.apply_context(run_config)
 
     def test_cron_pipeline(self):
-        plx_file = PolyaxonFile(
-            os.path.abspath("tests/fixtures/pipelines/simple_cron_pipeline.yml")
+        plx_file = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
+                "tests/fixtures/pipelines/simple_cron_pipeline.yml"
+            ),
+            is_cli=False,
+            to_op=False,
         )
         # Get compiled_operation data
-        run_config = OperationSpecification.compile_operation(plx_file.config)
+        run_config = OperationSpecification.compile_operation(plx_file)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
         assert run_config.run is not None
@@ -109,11 +104,15 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         assert run_config.schedule.cron == "0 0 * * *"
 
     def test_interval_pipeline(self):
-        plx_file = PolyaxonFile(
-            os.path.abspath("tests/fixtures/pipelines/simple_recurrent_pipeline.yml")
+        plx_file = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
+                "tests/fixtures/pipelines/simple_recurrent_pipeline.yml"
+            ),
+            is_cli=False,
+            to_op=False,
         )
         # Get compiled_operation data
-        run_config = OperationSpecification.compile_operation(plx_file.config)
+        run_config = OperationSpecification.compile_operation(plx_file)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
         assert run_config.run is not None
@@ -129,10 +128,8 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_sequential_pipeline(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath(
-                        "tests/fixtures/pipelines/simple_sequential_pipeline.yml"
-                    )
+                os.path.abspath(
+                    "tests/fixtures/pipelines/simple_sequential_pipeline.yml"
                 ),
                 {"kind": "compiled_operation"},
             ]
@@ -160,10 +157,8 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_parallel_pipeline(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath(
-                        "tests/fixtures/pipelines/simple_parallel_pipeline.yml"
-                    )
+                os.path.abspath(
+                    "tests/fixtures/pipelines/simple_parallel_pipeline.yml"
                 ),
                 {"kind": "compiled_operation"},
             ]
@@ -192,9 +187,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_dag_pipeline(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/pipelines/simple_dag_pipeline.yml")
-                ),
+                os.path.abspath("tests/fixtures/pipelines/simple_dag_pipeline.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -225,9 +218,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_build_run_pipeline(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/pipelines/build_run_pipeline.yml")
-                ),
+                os.path.abspath("tests/fixtures/pipelines/build_run_pipeline.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -293,10 +284,8 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_matrix_early_stopping_file_passes(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath(
-                        "tests/fixtures/pipelines/matrix_file_early_stopping.yml"
-                    )
+                os.path.abspath(
+                    "tests/fixtures/pipelines/matrix_file_early_stopping.yml"
                 ),
                 {"kind": "compiled_operation"},
             ]
@@ -336,9 +325,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_matrix_file_passess(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/pipelines/matrix_file.yml")
-                ),
+                os.path.abspath("tests/fixtures/pipelines/matrix_file.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -386,10 +373,8 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
     def test_matrix_file_passes_int_float_types(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath(
-                        "tests/fixtures/pipelines/matrix_file_with_int_float_types.yml"
-                    )
+                os.path.abspath(
+                    "tests/fixtures/pipelines/matrix_file_with_int_float_types.yml"
                 ),
                 {"kind": "compiled_operation"},
             ]

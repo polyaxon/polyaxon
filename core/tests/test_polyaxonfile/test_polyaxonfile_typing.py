@@ -21,9 +21,9 @@ import pytest
 from marshmallow import ValidationError
 from tests.utils import BaseTestCase
 
-from polyaxon.config_reader import reader
+from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.k8s import k8s_schemas
-from polyaxon.polyaxonfile import PolyaxonFile
+from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
     OperationSpecification,
@@ -38,16 +38,19 @@ from polyaxon.polyflow.parallel.matrix import V1HpChoice
 @pytest.mark.polyaxonfile_mark
 class TestPolyaxonfileWithTypes(BaseTestCase):
     def test_using_untyped_params_raises(self):
-        with self.assertRaises(ValidationError):
-            PolyaxonFile(os.path.abspath("tests/fixtures/typing/untyped_params.yml"))
+        with self.assertRaises(PolyaxonfileError):
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath(
+                    "tests/fixtures/typing/untyped_params.yml"
+                ),
+                is_cli=False,
+            )
 
     def test_no_params_for_required_inputs_outputs_raises(self):
         # Get compiled_operation data
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/typing/required_inputs.yml")
-                ),
+                os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -58,9 +61,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
 
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/typing/required_outputs.yml")
-                ),
+                os.path.abspath("tests/fixtures/typing/required_outputs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -71,9 +72,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         # Get compiled_operation data
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/typing/required_inputs.yml")
-                ),
+                os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -83,9 +82,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
 
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/typing/required_outputs.yml")
-                ),
+                os.path.abspath("tests/fixtures/typing/required_outputs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -95,9 +92,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
     def test_required_inputs_with_params(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/typing/required_inputs.yml")
-                ),
+                os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -122,9 +117,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
 
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/typing/required_inputs.yml")
-                ),
+                os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -155,12 +148,13 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
                     "value": {"value": 1.1},
                 }
             )
-        with self.assertRaises(ValidationError):
-            polyaxonfile = PolyaxonFile(
-                os.path.abspath("tests/fixtures/typing/required_inputs.yml")
-            )
-            polyaxonfile.get_op_specification(
+        with self.assertRaises(PolyaxonfileError):
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath(
+                    "tests/fixtures/typing/required_inputs.yml"
+                ),
                 params={"loss": {"value": "bar"}, "value": {"value": 1.1}},
+                is_cli=False,
             )
 
         # Adding non valid params raises
@@ -168,13 +162,15 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
             run_config.validate_params(params={"value": {"value": 1.1}})
 
     def test_matrix_file_passes_int_float_types(self):
-        plxfile = PolyaxonFile(
-            os.path.abspath(
+        plxfile = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
                 "tests/fixtures/typing/matrix_file_with_int_float_types.yml"
-            )
+            ),
+            is_cli=False,
+            to_op=False,
         )
         # Get compiled_operation data
-        run_config = OperationSpecification.compile_operation(plxfile.config)
+        run_config = OperationSpecification.compile_operation(plxfile)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
         assert run_config.version == 1.05
@@ -196,14 +192,15 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         assert run_config.parallel.early_stopping is None
 
     def test_matrix_job_file_passes_int_float_types(self):
-        plxfile = PolyaxonFile(
-            os.path.abspath(
+        plxfile = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
                 "tests/fixtures/typing/matrix_job_file_with_int_float_types.yml"
-            )
+            ),
+            is_cli=False,
+            to_op=False,
         )
-        op_config = plxfile.config
         # Get compiled_operation data
-        run_config = OperationSpecification.compile_operation(op_config)
+        run_config = OperationSpecification.compile_operation(plxfile)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
         assert run_config.version == 1.05
@@ -225,9 +222,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
     def test_run_simple_file_passes(self):
         run_config = V1CompiledOperation.read(
             [
-                reader.read(
-                    os.path.abspath("tests/fixtures/typing/run_cmd_simple_file.yml")
-                ),
+                os.path.abspath("tests/fixtures/typing/run_cmd_simple_file.yml"),
                 {"kind": "compiled_operation"},
             ]
         )
@@ -280,7 +275,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         # Get compiled_operation data
         run_config = V1CompiledOperation.read(
             [
-                reader.read(os.path.abspath("tests/fixtures/typing/run_with_refs.yml")),
+                os.path.abspath("tests/fixtures/typing/run_with_refs.yml"),
                 {"kind": "compiled_operation"},
             ]
         )

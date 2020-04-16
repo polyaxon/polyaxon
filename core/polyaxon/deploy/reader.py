@@ -14,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.config_reader import reader
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.deploy.schemas.deployment import DeploymentConfig
 
 
 def read(filepaths):
-    data = reader.read(filepaths)
+    data = ConfigSpec.read_from(filepaths)
     return DeploymentConfig.from_dict(data)

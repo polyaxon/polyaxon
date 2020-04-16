@@ -54,7 +54,7 @@ def run(
             name=name,
             description=description,
             tags=tags,
-            content=op_spec.to_dict(dump=True)
+            content=op_spec.to_dict(dump=True),
         )
         try:
             polyaxon_client = PolyaxonClient()
