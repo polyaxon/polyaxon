@@ -22,7 +22,6 @@ from unittest import TestCase
 
 import ujson
 
-from polyaxon import settings
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 from polyaxon.schemas.cli.agent_config import AgentConfig
 from polyaxon.schemas.cli.client_config import ClientConfig
@@ -89,6 +88,8 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         super().setUp()
+        from polyaxon import settings
+
         settings.AUTH_CONFIG = None
         if self.SET_AUTH_SETTINGS:
             settings.AUTH_CONFIG = AccessTokenConfig()
@@ -107,6 +108,7 @@ class BaseTestCase(TestCase):
 
         fpath = tempfile.mkdtemp()
         settings.CLIENT_CONFIG.agent_path = fpath
+        settings.CLIENT_CONFIG.tracking_timeout = 0
 
 
 class TestEnvVarsCase(BaseTestCase):
