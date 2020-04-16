@@ -21,8 +21,6 @@ package v1;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-import "v1/polyflow/component.proto";
-
 // Hub model specification
 message HubModel {
     // UUID
@@ -93,8 +91,8 @@ message HubComponent {
     // Optional component tag version
     string tag = 3;
 
-     // The Component body content
-     Component content = 4;
+    // The Component body content
+    string content = 4;
 
     // Optional description
     string description = 5;
