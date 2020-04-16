@@ -31,12 +31,12 @@ def get_project_full_name(owner: str = None, project: str = None) -> str:
 def get_project_info(project):
     parts = project.replace(".", "/").split("/")
     if len(parts) == 2:
-        user, project_name = parts
+        owner, project_name = parts
     else:
-        user = AuthConfigManager.get_value("username")
+        owner = AuthConfigManager.get_value("username")
         project_name = project
 
-    return user, project_name
+    return owner, project_name
 
 
 def get_project_or_local(project=None, is_cli: bool = False):

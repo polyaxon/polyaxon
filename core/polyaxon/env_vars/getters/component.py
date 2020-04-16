@@ -13,22 +13,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from polyaxon.env_vars.getters.agent import get_agent_info
-from polyaxon.env_vars.getters.component import (
-    get_component_full_name,
-    get_component_info,
-)
-from polyaxon.env_vars.getters.project import (
-    get_project_full_name,
-    get_project_info,
-    get_project_or_local,
-)
-from polyaxon.env_vars.getters.run import (
-    get_collect_artifact,
-    get_collect_resources,
-    get_log_level,
-    get_project_run_or_local,
-    get_run_info,
-    get_run_or_local,
-)
-from polyaxon.env_vars.getters.user import get_username_or_local
+from typing import Tuple
+
+
+def get_component_full_name(component: str, owner: str = None, tag: str = None) -> str:
+    if tag:
+        component = "{}:{}".format(component, tag)
+    if owner:
+        component = "{}/{}".format(owner, component)
+
+    return component
+
+
+def get_component_info(component: str) -> Tuple[str, str, str]:
+    parts = component.replace(".", "/").split("/")
+    owner = "polyaxon"
+    tag = None
+    if len(parts) == 2:
+        owner, component = parts
+    parts = component.split(":")
+    if len(parts) == 2:
+        component, tag = parts
+    return owner, component, tag
