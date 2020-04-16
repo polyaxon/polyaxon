@@ -34,6 +34,8 @@ microk8s.enable \
   prometheus \
   registry \
   storage
+
+microk8s.kubectl config view --raw > ~/.kube/config
 ```
 
 ## Polyaxon configuration
