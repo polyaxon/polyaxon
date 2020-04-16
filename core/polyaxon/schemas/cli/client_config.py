@@ -18,7 +18,7 @@ import polyaxon_sdk
 
 from marshmallow import EXCLUDE, fields
 
-from polyaxon.api import POLYAXON_CLOUD
+from polyaxon.api import POLYAXON_CLOUD_HOST
 from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_PATH,
@@ -49,6 +49,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_SSL_CA_CERT,
     POLYAXON_KEYS_TIME_ZONE,
     POLYAXON_KEYS_TIMEOUT,
+    POLYAXON_KEYS_TRACKING_TIMEOUT,
     POLYAXON_KEYS_UPLOAD_SIZE_MAX,
     POLYAXON_KEYS_UPLOAD_SIZE_WARN,
     POLYAXON_KEYS_VERIFY_SSL,
@@ -78,6 +79,9 @@ class ClientSchema(BaseSchema):
     in_cluster = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_K8S_IN_CLUSTER)
     no_op = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_NO_OP)
     timeout = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_TIMEOUT)
+    tracking_timeout = fields.Float(
+        allow_none=True, data_key=POLYAXON_KEYS_TRACKING_TIMEOUT
+    )
     timezone = fields.Str(
         allow_none=True, data_key=POLYAXON_KEYS_TIME_ZONE, default="UTC"
     )
@@ -154,6 +158,7 @@ class ClientConfig(BaseConfig):
         POLYAXON_KEYS_SET_AGENT,
         POLYAXON_KEYS_SSL_CA_CERT,
         POLYAXON_KEYS_TIMEOUT,
+        POLYAXON_KEYS_TRACKING_TIMEOUT,
         POLYAXON_KEYS_VERIFY_SSL,
         POLYAXON_KEYS_WATCH_INTERVAL,
     ]
@@ -174,6 +179,7 @@ class ClientConfig(BaseConfig):
         in_cluster=None,
         no_op=None,
         timeout=None,
+        tracking_timeout=None,
         timezone=None,
         watch_interval=None,
         interval=None,
@@ -196,7 +202,7 @@ class ClientConfig(BaseConfig):
         **kwargs
     ):
 
-        self.host = host or "https://{}".format(POLYAXON_CLOUD)
+        self.host = host or POLYAXON_CLOUD_HOST
         self.token = token
         self.debug = self._get_bool(debug, False)
         self.log_level = log_level
@@ -220,6 +226,7 @@ class ClientConfig(BaseConfig):
         self.header = header
         self.header_service = header_service
         self.timeout = timeout or 20
+        self.tracking_timeout = tracking_timeout or 1
         self.timezone = timezone
         self.interval = interval or 5
         self.watch_interval = watch_interval or 5
