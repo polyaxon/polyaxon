@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import math
 
 try:
     import numpy as np
@@ -22,9 +23,11 @@ except ImportError:
 
 
 def sanitize_np_types(value):
+    if math.isnan(value):
+        return None
     if isinstance(value, (int, float, complex, type(None))):
         return value
-    if np.isnan(value):
+    if np and np.isnan(value):
         return None
     if np and isinstance(value, np.integer):
         return int(value)
