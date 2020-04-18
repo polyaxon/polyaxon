@@ -27,7 +27,8 @@ class TestUserConfigs(BaseTestCase):
         config_dict = {
             "username": "username",
             "email": "user@domain.com",
-            "is_superuser": False,
+            "name": "foo bat",
+            "theme": 1,
         }
         config = UserConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

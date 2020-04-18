@@ -16,24 +16,27 @@
 
 from marshmallow import fields
 
+import polyaxon_sdk
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 
 class UserSchema(BaseSchema):
     username = fields.Str()
     email = fields.Email(allow_none=True)
-    is_superuser = fields.Bool(allow_none=True)
+    name = fields.Str(allow_none=True)
+    theme = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
         return UserConfig
 
 
-class UserConfig(BaseConfig):
+class UserConfig(BaseConfig, polyaxon_sdk.V1User):
     SCHEMA = UserSchema
     IDENTIFIER = "user"
 
-    def __init__(self, username, email, is_superuser=False):
+    def __init__(self, username, email, name=None, theme=None):  # TODO: Remove
         self.username = username
         self.email = email
-        self.is_superuser = is_superuser
+        self.name = name
+        self.theme = theme
