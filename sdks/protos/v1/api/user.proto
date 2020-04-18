@@ -29,6 +29,9 @@ message User {
     // Email
     string email = 2;
 
-    // Role
-    string role = 3;
+    // Name
+    string name = 3;
+
+    // Theme
+    number theme = 4;
 }
