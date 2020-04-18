@@ -40,6 +40,8 @@ message Organization {
     // Optional last time the entity was updated
     google.protobuf.Timestamp updated_at = 6;
 
+    // Current user's role in this org
+    string role = 7;
 }
 
  // Request data to update organizations

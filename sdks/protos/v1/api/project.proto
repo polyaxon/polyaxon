@@ -68,6 +68,9 @@ message Project {
 
     // Optional teams assigned to a project
     repeated string teams = 15;
+
+    // Current user's role in this (org/teams)/project
+    string role = 16;
 }
 
  // Request data to create/update project

@@ -168,6 +168,9 @@ message Run {
 
     // Optional settings
     RunSettings settings = 28;
+
+    // Current user's role in this (org/teams)/project/runs
+    string role = 29;
 }
 
 // Operation creation
