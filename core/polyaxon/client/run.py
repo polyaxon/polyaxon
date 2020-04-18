@@ -39,6 +39,7 @@ from polyaxon.lifecycle import LifeCycle, V1StatusCondition
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.logging.handler import get_logs_handler
+from polyaxon.polyflow import V1Operation
 from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.formatting import Printer
@@ -131,14 +132,16 @@ class RunClient:
     @check_no_op
     @check_offline
     def _update(self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = True):
-        self._run_data = self.client.runs_v1.patch_run(
+        response = self.client.runs_v1.patch_run(
             owner=self.owner,
             project=self.project,
             run_uuid=self.run_uuid,
             body=data,
             async_req=async_req,
         )
-        return self._run_data
+        if not async_req:
+            self._run_data = response
+        return response
 
     @check_no_op
     @check_offline
@@ -150,11 +153,13 @@ class RunClient:
     def _create(
         self, data: Union[Dict, polyaxon_sdk.V1OperationBody], async_req: bool = False
     ):
-        self._run_data = self.client.runs_v1.create_run(
+        response = self.client.runs_v1.create_run(
             owner=self.owner, project=self.project, body=data, async_req=async_req,
         )
-        self._run_uuid = self._run_data.uuid
-        return self._run_data
+        if not async_req:
+            self._run_data = response
+            self._run_uuid = self._run_data.uuid
+        return response
 
     @check_no_op
     def _post_create(self):
@@ -167,16 +172,20 @@ class RunClient:
         name: str = None,
         description: str = None,
         tags: Union[str, Sequence[str]] = None,
-        content: Union[str, polyaxon_sdk.V1Operation] = None,
+        content: Union[str, V1Operation] = None,
     ):
         is_managed = True
-        if not isinstance(content, (str, polyaxon_sdk.V1Operation)):
+        if not content:
             is_managed = False
+        elif not isinstance(content, (str, V1Operation)):
+            raise PolyaxonClientException("Received an invalid content: {}".format(content))
+        if content:
+            content = content if isinstance(content, str) else content.to_dict(dump=True)
         data = polyaxon_sdk.V1OperationBody(
             name=name,
             description=description,
             tags=tags,
-            content=content if isinstance(content, str) else content.to_dict(dump=True),
+            content=content,
             is_managed=is_managed,
         )
         self._create(data=data, async_req=False)
