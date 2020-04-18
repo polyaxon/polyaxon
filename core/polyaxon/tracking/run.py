@@ -88,7 +88,8 @@ class Run(RunClient):
         if settings.CLIENT_CONFIG.is_managed and self.track_env:
             self.log_run_env()
 
-        self._register_wait()
+        if settings.CLIENT_CONFIG.is_managed:
+            self._register_wait()
 
     @property
     def is_service(self):
@@ -96,6 +97,13 @@ class Run(RunClient):
             return None
 
         return settings.CLIENT_CONFIG.is_managed and settings.CLIENT_CONFIG.is_service
+
+    def set_artifacts_path(self, artifacts_path: str):
+        self._artifacts_path = artifacts_path
+        self._outputs_path = "{}/outputs".format(artifacts_path)
+
+    def set_outputs_path(self, outputs_path: str):
+        self._outputs_path = outputs_path
 
     @property
     def artifacts_path(self):
@@ -561,8 +569,8 @@ class Run(RunClient):
     @check_no_op
     @check_offline
     def _start(self):
-        atexit.register(self._end)
         self.start()
+        atexit.register(self._end)
 
         def excepthook(exception, value, tb):
             self.log_failed(message="Type: {}, Value: {}".format(exception, value))
