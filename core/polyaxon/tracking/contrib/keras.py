@@ -48,22 +48,23 @@ class PolyaxonKerasCallback(Callback):
         else:
             metrics = logs  # Log all metrics
 
-        self.run.log_metrics(**metrics)
+        self.run.log_metrics(step=epoch, **metrics)
 
 
 class PolyaxonKerasModelCheckpoint(ModelCheckpoint):
     """Save model checkpoint with polyaxon."""
 
     def __init__(self, run, filepath, **kwargs):
-        super().__init__(filepath, **kwargs)
         self.run = run
         if settings.CLIENT_CONFIG.is_managed:
             self.run = self.run or Run()
+        super().__init__(filepath, **kwargs)
 
     def on_epoch_end(self, epoch, logs=None):
         super().on_epoch_end(epoch, logs=logs)
 
         if not self.run:
             return
+        filepath = self.filepath.format(epoch=epoch + 1, **logs)
         # log model
-        self.run.log_model(path=self.filepath)
+        self.run.log_model(step=epoch, path=filepath, framework='keras')
