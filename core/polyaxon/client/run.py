@@ -22,6 +22,7 @@ from typing import Dict, Iterator, List, Sequence, Tuple, Union
 
 import click
 import polyaxon_sdk
+from polyaxon.utils.hashing import hash_value
 
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -553,10 +554,12 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def log_data_ref(self, name: str, hash: str = None, path: str = None):
+    def log_data_ref(self, name: str, hash: str = None, path: str = None, content=None):
         summary = {}
         if hash:
             summary["hash"] = hash
+        elif content:
+            summary["hash"] = hash_value(content)
         if path:
             summary["path"] = path
         if name:
@@ -570,13 +573,18 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def log_file_ref(self, path: str):
+    def log_file_ref(self, path: str, hash: str = None, content=None):
+        summary = {"path": path}
+        if hash:
+            summary["hash"] = hash
+        elif content:
+            summary["hash"] = hash_value(content)
         name = os.path.basename(path)
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
                 kind=V1ArtifactKind.FILE,
-                summary={"path": path},
+                summary=summary,
                 is_input=True,
             )
             self.log_artifact_lineage(body=artifact_run)

@@ -270,17 +270,19 @@ def log_code_ref():
     TRACKING_RUN.log_code_ref()
 
 
-def log_data_ref(name: str, hash: str = None, path: str = None):
+def log_data_ref(name: str, hash: str = None, path: str = None, content=None):
     global TRACKING_RUN
     TRACKING_RUN.log_data_ref(
-        name=name, hash=hash, path=path
+        name=name, content=content, hash=hash, path=path
     )
 
 
-def log_file_ref(path: str):
+def log_file_ref(path: str, hash: str = None, content=None):
     global TRACKING_RUN
     TRACKING_RUN.log_file_ref(
-        path=path
+        path=path,
+        hash=hash,
+        content=content,
     )
 
 

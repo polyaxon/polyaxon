@@ -18,6 +18,7 @@ import polyaxon_sdk
 
 
 class V1ArtifactKind(polyaxon_sdk.V1ArtifactKind):
+    polyaxon_sdk.V1ArtifactKind.TESORBOARD = ''
     CHOICES = (
         (polyaxon_sdk.V1ArtifactKind.MODEL, polyaxon_sdk.V1ArtifactKind.MODEL),
         (polyaxon_sdk.V1ArtifactKind.AUDIO, polyaxon_sdk.V1ArtifactKind.AUDIO),
