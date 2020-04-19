@@ -18,7 +18,7 @@ import os
 
 from collections import namedtuple
 from io import StringIO
-from typing import Dict, Mapping, Union
+from typing import Dict, Mapping, Union, Optional
 
 import polyaxon_sdk
 
@@ -416,18 +416,37 @@ class V1Events:
         event["timestamp"] = event["timestamp"].isoformat()
         return V1Event.from_dict(event)
 
-    def get_summary(self) -> Dict:
-        summary = {
-            "step": {
-                "count": sanitize_np_types(self.df.step.count()),
-                "min": sanitize_np_types(self.df.step.iloc[0]),
-                "max": sanitize_np_types(self.df.step.iloc[-1]),
-            },
-            "timestamp": {
-                "min": self.df.timestamp.iloc[0].isoformat(),
-                "max": self.df.timestamp.iloc[-1].isoformat(),
-            },
+    def _get_step_summary(self) -> Optional[Dict]:
+        _count = self.df.step.count()
+        if _count == 0:
+            return None
+
+        return {
+            "count": sanitize_np_types(_count),
+            "min": sanitize_np_types(self.df.step.iloc[0]),
+            "max": sanitize_np_types(self.df.step.iloc[-1]),
         }
+
+    def _get_ts_summary(self) -> Optional[Dict]:
+        _count = self.df.timestamp.count()
+        if _count == 0:
+            return None
+
+        return {
+            "min": self.df.timestamp.iloc[0].isoformat(),
+            "max": self.df.timestamp.iloc[-1].isoformat(),
+        }
+
+    def get_summary(self) -> Dict:
+        summary = {}
+        step_summary = self._get_step_summary()
+        if step_summary:
+            summary["step"] = step_summary
+
+        ts_summary = self._get_ts_summary()
+        if step_summary:
+            summary["timestamp"] = ts_summary
+
         if self.kind == V1ArtifactKind.METRIC:
             summary[self.kind] = {
                 k: sanitize_np_types(v)
