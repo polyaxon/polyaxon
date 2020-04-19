@@ -46,13 +46,14 @@ class Run(RunClient):
     @check_no_op
     def __init__(
         self,
-        owner=None,
-        project=None,
-        run_uuid=None,
-        client=None,
-        track_code=True,
-        track_env=False,
-        refresh_data=False,
+        owner: str = None,
+        project: str = None,
+        run_uuid: str = None,
+        client: RunClient = None,
+        track_code: bool = True,
+        track_env: bool = False,
+        refresh_data: bool = False,
+        artifacts_path: str = None
     ):
         super().__init__(
             owner=owner, project=project, run_uuid=run_uuid, client=client,
@@ -66,8 +67,8 @@ class Run(RunClient):
         self._resource_logger = None
         self._results = {}
 
-        if settings.CLIENT_CONFIG.is_managed and self.run_uuid:
-            self.set_run_event_path()
+        if (settings.CLIENT_CONFIG.is_managed and self.run_uuid) or artifacts_path:
+            self.set_artifacts_path(artifacts_path)
 
         if (
             self.artifacts_path
@@ -117,17 +118,15 @@ class Run(RunClient):
             self._has_tensorboard = True
         return path
 
-    def set_artifacts_path(self, artifacts_path: str):
-        self._artifacts_path = artifacts_path
-        self._outputs_path = "{}/outputs".format(artifacts_path)
-
-    def set_outputs_path(self, outputs_path: str):
-        self._outputs_path = outputs_path
-
     @check_no_op
-    def set_run_event_path(self):
-        self._artifacts_path = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid)
-        self._outputs_path = CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(self.run_uuid)
+    def set_artifacts_path(self, artifacts_path: str = None):
+        _artifacts_path = artifacts_path or CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid)
+        if artifacts_path:
+            _outputs_path = "{}/outputs".format(artifacts_path)
+        else:
+            _outputs_path = CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(self.run_uuid)
+        self._artifacts_path = _artifacts_path
+        self._outputs_path = _outputs_path
 
     @check_no_op
     def set_run_event_logger(self):

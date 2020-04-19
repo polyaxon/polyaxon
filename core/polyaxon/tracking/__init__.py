@@ -13,21 +13,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
+from typing import List, Union, Sequence
 
+from polyaxon.client import RunClient
 from polyaxon.polyboard.artifacts import V1RunArtifact
 from polyaxon.tracking.run import Run
+from polyaxon_sdk import V1Operation
 
 TRACKING_RUN = None
 
 
 def init(
-    owner=None,
-    project=None,
-    run_uuid=None,
-    client=None,
-    track_code=True,
-    track_env=False,
+    owner: str = None,
+    project: str = None,
+    run_uuid: str = None,
+    client: RunClient = None,
+    track_code: bool = True,
+    track_env: bool = False,
+    refresh_data: bool = False,
+    artifacts_path: str = None
 ):
     global TRACKING_RUN
 
@@ -37,7 +41,24 @@ def init(
         run_uuid=run_uuid,
         client=client,
         track_code=track_code,
+        refresh_data=refresh_data,
         track_env=track_env,
+        artifacts_path=artifacts_path,
+    )
+
+
+def create(
+    name: str = None,
+    description: str = None,
+    tags: Union[str, Sequence[str]] = None,
+    content: Union[str, V1Operation] = None,
+):
+    global TRACKING_RUN
+    TRACKING_RUN.create(
+        name=name,
+        description=description,
+        tags=tags,
+        content=content,
     )
 
 
@@ -296,3 +317,8 @@ def log_dir_ref(path: str):
 def log_artifact_lineage(body: List[V1RunArtifact]):
     global TRACKING_RUN
     TRACKING_RUN.log_artifact_lineage(body)
+
+
+def set_artifacts_path(artifacts_path: str):
+    global TRACKING_RUN
+    TRACKING_RUN.set_artifacts_path(artifacts_path)

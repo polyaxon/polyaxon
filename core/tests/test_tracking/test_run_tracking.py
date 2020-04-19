@@ -175,7 +175,7 @@ class TestRunTracking(TestEnvVarsCase):
         assert run.outputs_path is None
         assert run._event_logger is None
 
-        run.set_run_event_path()
+        run.set_artifacts_path()
         assert run.artifacts_path == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uuid")
         assert run.outputs_path == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uuid")
 
