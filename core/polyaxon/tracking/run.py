@@ -23,7 +23,7 @@ import polyaxon_sdk
 
 from polyaxon import settings
 from polyaxon.client import RunClient
-from polyaxon.client.decorators import can_log_events, check_no_op, check_offline
+from polyaxon.client.decorators import can_log_events, can_log_outputs, check_no_op, check_offline
 from polyaxon.constants import UNKNOWN
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
@@ -59,6 +59,7 @@ class Run(RunClient):
         )
         self.track_code = track_code
         self.track_env = track_env
+        self._has_tensorboard = False
         self._artifacts_path = None
         self._outputs_path = None
         self._event_logger = None
@@ -86,7 +87,7 @@ class Run(RunClient):
 
         # Track run env
         if settings.CLIENT_CONFIG.is_managed and self.track_env:
-            self.log_run_env()
+            self.log_env()
 
         if settings.CLIENT_CONFIG.is_managed:
             self._register_wait()
@@ -98,13 +99,6 @@ class Run(RunClient):
 
         return settings.CLIENT_CONFIG.is_managed and settings.CLIENT_CONFIG.is_service
 
-    def set_artifacts_path(self, artifacts_path: str):
-        self._artifacts_path = artifacts_path
-        self._outputs_path = "{}/outputs".format(artifacts_path)
-
-    def set_outputs_path(self, outputs_path: str):
-        self._outputs_path = outputs_path
-
     @property
     def artifacts_path(self):
         return self._artifacts_path
@@ -112,6 +106,23 @@ class Run(RunClient):
     @property
     def outputs_path(self):
         return self._outputs_path
+
+    @check_no_op
+    @check_offline
+    @can_log_outputs
+    def get_tensorboard_path(self):
+        path = os.path.join(self._outputs_path, "tensorboard")
+        if not self._has_tensorboard:
+            self.log_tensorboard_ref(path)
+            self._has_tensorboard = True
+        return path
+
+    def set_artifacts_path(self, artifacts_path: str):
+        self._artifacts_path = artifacts_path
+        self._outputs_path = "{}/outputs".format(artifacts_path)
+
+    def set_outputs_path(self, outputs_path: str):
+        self._outputs_path = outputs_path
 
     @check_no_op
     def set_run_event_path(self):
@@ -134,7 +145,7 @@ class Run(RunClient):
         if self.track_code:
             self.log_code_ref()
         if self.track_env:
-            self.log_run_env()
+            self.log_env()
 
         if not settings.CLIENT_CONFIG.is_managed:
             self._start()
@@ -598,7 +609,8 @@ class Run(RunClient):
 
     @check_no_op
     @check_offline
-    @can_log_events
-    def log_run_env(self):
-        # TODO: log to file
-        return get_run_env()
+    @can_log_outputs
+    def log_env(self):
+        env_data = get_run_env()
+        with open(os.path.join(self.outputs_path, ".polyaxon"), "w") as env_file:
+            env_file.write(env_data)

@@ -41,11 +41,19 @@ def init(
     )
 
 
-def log_data_ref(name, value):
+def get_tensorboard_path():
     global TRACKING_RUN
-    TRACKING_RUN.log_data_ref(
-        name=name, value=value,
-    )
+    return TRACKING_RUN.get_tensorboard_path()
+
+
+def get_outputs_path():
+    global TRACKING_RUN
+    return TRACKING_RUN.outputs_path
+
+
+def get_artifacts_path():
+    global TRACKING_RUN
+    return TRACKING_RUN.artifacts_path
 
 
 def log_metric(name, value, step=None, timestamp=None):
@@ -260,6 +268,27 @@ def log_failed(message=None, traceback=None):
 def log_code_ref():
     global TRACKING_RUN
     TRACKING_RUN.log_code_ref()
+
+
+def log_data_ref(name: str, hash: str = None, path: str = None):
+    global TRACKING_RUN
+    TRACKING_RUN.log_data_ref(
+        name=name, hash=hash, path=path
+    )
+
+
+def log_file_ref(path: str):
+    global TRACKING_RUN
+    TRACKING_RUN.log_file_ref(
+        path=path
+    )
+
+
+def log_dir_ref(path: str):
+    global TRACKING_RUN
+    TRACKING_RUN.log_dir_ref(
+        path=path
+    )
 
 
 def log_artifact_lineage(body: List[V1RunArtifact]):

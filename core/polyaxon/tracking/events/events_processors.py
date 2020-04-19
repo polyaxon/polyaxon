@@ -52,11 +52,20 @@ PLOTLY_ERROR_MESSAGE = "plotly is required for this tracking operation!"
 BOKEH_ERROR_MESSAGE = "bokeh is required for this tracking operation!"
 
 
+def copy_file_path(from_path: str, asset_path: str):
+    check_or_create_path(asset_path, is_dir=False)
+    shutil.copy(from_path, asset_path)
+
+
+def copy_dir_path(from_path: str, asset_path: str):
+    check_or_create_path(asset_path, is_dir=False)
+    shutil.copytree(from_path, asset_path)
+
+
 def dataframe_path(
     from_path: str, asset_path: str, content_type: str = None
 ) -> V1EventDataframe:
-    check_or_create_path(asset_path, is_dir=False)
-    shutil.copy(from_path, asset_path)
+    copy_file_path(from_path, asset_path)
     return V1EventDataframe(path=asset_path, content_type=content_type)
 
 
@@ -72,26 +81,22 @@ def model_path(
 
 
 def artifact_path(from_path: str, asset_path: str, kind: str) -> V1EventArtifact:
-    check_or_create_path(asset_path, is_dir=False)
-    shutil.copy(from_path, asset_path)
+    copy_file_path(from_path, asset_path)
     return V1EventArtifact(kind=kind, path=asset_path)
 
 
 def image_path(from_path: str, asset_path: str) -> V1EventImage:
-    check_or_create_path(asset_path, is_dir=False)
-    shutil.copy(from_path, asset_path)
+    copy_file_path(from_path, asset_path)
     return V1EventImage(path=asset_path)
 
 
 def video_path(from_path: str, asset_path: str, content_type=None) -> V1EventVideo:
-    check_or_create_path(asset_path, is_dir=False)
-    shutil.copy(from_path, asset_path)
+    copy_file_path(from_path, asset_path)
     return V1EventVideo(path=asset_path, content_type=content_type)
 
 
 def audio_path(from_path: str, asset_path: str, content_type=None) -> V1EventAudio:
-    check_or_create_path(asset_path, is_dir=False)
-    shutil.copy(from_path, asset_path)
+    copy_file_path(from_path, asset_path)
     return V1EventAudio(path=asset_path, content_type=content_type)
 
 

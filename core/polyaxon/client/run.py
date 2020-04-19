@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+import os
 import sys
 import time
 
@@ -43,7 +45,6 @@ from polyaxon.polyflow import V1Operation
 from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.formatting import Printer
-from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.validation import validate_tags
 
@@ -552,15 +553,58 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def log_data_ref(self, name: str, data):
+    def log_data_ref(self, name: str, hash: str = None, path: str = None):
+        summary = {}
+        if hash:
+            summary["hash"] = hash
+        if path:
+            summary["path"] = path
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
                 kind=V1ArtifactKind.DATA,
-                summary={"hash": hash_value(data)},
+                summary=summary,
                 is_input=True,
             )
             self.log_artifact_lineage(body=artifact_run)
+
+    @check_no_op
+    @check_offline
+    def log_file_ref(self, path: str):
+        name = os.path.basename(path)
+        if name:
+            artifact_run = V1RunArtifact(
+                name=name,
+                kind=V1ArtifactKind.FILE,
+                summary={"path": path},
+                is_input=True,
+            )
+            self.log_artifact_lineage(body=artifact_run)
+
+    @check_no_op
+    @check_offline
+    def log_dir_ref(self, path: str):
+        name = os.path.basename(path)
+        if name:
+            artifact_run = V1RunArtifact(
+                name=name,
+                kind=V1ArtifactKind.DIR,
+                summary={"path": path},
+                is_input=True,
+            )
+            self.log_artifact_lineage(body=artifact_run)
+
+    @check_no_op
+    @check_offline
+    def log_tensorboard_ref(self, path: str):
+        artifact_run = V1RunArtifact(
+            name="tensorboard",
+            kind=V1ArtifactKind.TENSORBOARD,
+            summary={"path": path},
+            is_input=True,
+        )
+        self.log_artifact_lineage(body=artifact_run)
+        self.update({"meta_info": {"tensorboard": True}, "merge": True})
 
     @check_no_op
     @check_offline
