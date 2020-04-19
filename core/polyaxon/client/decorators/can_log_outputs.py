@@ -17,14 +17,14 @@
 from polyaxon.logger import logger
 
 
-def can_log_events(f):
+def can_log_outputs(f):
     """
-    The `can_log_events` is a decorator to check if there's an event logger instance on the object.
+    The `can_log_outputs` is a decorator to check if there's an outputs path set on the run.
 
     This decorator only works with run instances.
 
     usage example with class method:
-        @can_log_events
+        @can_log_outputs
         def my_func(self, *args, **kwargs):
             ...
             return ...
@@ -35,10 +35,10 @@ def can_log_events(f):
         if args:
             self_arg = args[0]
             if (  # pylint:disable=protected-access
-                not hasattr(self_arg, "_event_logger") or self_arg._event_logger is None
+                not hasattr(self_arg, "_outputs_path") or self_arg._outputs_path is None
             ):
                 logger.warning(
-                    "You should set an event logger before calling: {}".format(repr(f))
+                    "You should set an an outputs path before calling: {}".format(repr(f))
                 )
         return f(*args, **kwargs)
 
