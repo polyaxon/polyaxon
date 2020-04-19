@@ -126,6 +126,11 @@ def get_code_reference(path=".", url: str = None):
         return None
 
     url = url or get_remote(path)
+    if "git@" in url:
+        url = url.split("git@")[1]
+        url = url.split(".git")[0]
+        url = url.replace(":", "/")
+        url = "https://" + url
     return {"commit": get_commit(path), "branch": get_branch_name(path), "url": url}
 
 
