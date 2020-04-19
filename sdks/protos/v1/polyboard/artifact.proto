@@ -90,6 +90,9 @@ enum ArtifactKind {
 
     // table
     table = 22;
+
+    // tensorboard
+    tensorboard = 23;
 }
 
 // Run Artifact spec definition
