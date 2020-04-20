@@ -50,6 +50,7 @@ MOVIEPY_ERROR_MESSAGE = "moviepy is required for this tracking operation!"
 MATPLOTLIB_ERROR_MESSAGE = "matplotlib is required for this tracking operation!"
 PLOTLY_ERROR_MESSAGE = "plotly is required for this tracking operation!"
 BOKEH_ERROR_MESSAGE = "bokeh is required for this tracking operation!"
+SKLEARN_ERROR_MESSAGE = "sklearn is required for this tracking operation!"
 
 
 def copy_file_path(from_path: str, asset_path: str):
@@ -434,42 +435,48 @@ def audio(asset_path: str, tensor, sample_rate=44100, asset_rel_path: str = None
     )
 
 
-# https://github.com/tensorflow/tensorboard/blob/master/tensorboard/plugins/pr_curve/summary.py
-def compute_curve(labels, predictions, num_thresholds=None, weights=None):
-    if not np:
-        logger.warning(NUMPY_ERROR_MESSAGE)
-        return UNKNOWN
+def roc_auc(y_preds, y_targets):
+    try:
+        from sklearn.metrics import roc_auc_score
+    except ImportError:
+        logger.warning(SKLEARN_ERROR_MESSAGE)
 
-    _MINIMUM_COUNT = 1e-7
+    y_true = y_targets.numpy()
+    y_pred = y_preds.numpy()
+    return roc_auc_score(y_true, y_pred)
 
-    if weights is None:
-        weights = 1.0
 
-    # Compute bins of true positives and false positives.
-    bucket_indices = np.int32(np.floor(predictions * (num_thresholds - 1)))
-    float_labels = labels.astype(np.float)
-    histogram_range = (0, num_thresholds - 1)
-    tp_buckets, _ = np.histogram(
-        bucket_indices,
-        bins=num_thresholds,
-        range=histogram_range,
-        weights=float_labels * weights,
-    )
-    fp_buckets, _ = np.histogram(
-        bucket_indices,
-        bins=num_thresholds,
-        range=histogram_range,
-        weights=(1.0 - float_labels) * weights,
-    )
+def roc_auc_curve(y_preds, y_targets):
+    try:
+        from sklearn.metrics import roc_curve
+    except ImportError:
+        logger.warning(SKLEARN_ERROR_MESSAGE)
 
-    # Obtain the reverse cumulative sum.
-    tp = np.cumsum(tp_buckets[::-1])[::-1]
-    fp = np.cumsum(fp_buckets[::-1])[::-1]
-    tn = fp[0] - fp
-    fn = tp[0] - tp
-    precision = tp / np.maximum(_MINIMUM_COUNT, tp + fp)
-    recall = tp / np.maximum(_MINIMUM_COUNT, tp + fn)
-    return np.stack((tp, fp, tn, fn, precision, recall))
+    y_true = y_targets.numpy()
+    y_pred = y_preds.numpy()
+    return roc_curve(y_true, y_pred)
+
+
+def pr_curve(y_preds, y_targets):
+    try:
+        from sklearn.metrics import precision_recall_curve
+    except ImportError:
+        logger.warning(SKLEARN_ERROR_MESSAGE)
+
+    y_true = y_targets.numpy()
+    y_pred = y_preds.numpy()
+    return precision_recall_curve(y_true, y_pred)
+
+
+def average_precision(y_preds, y_targets):
+    try:
+        from sklearn.metrics import average_precision_score
+    except ImportError:
+        logger.warning(SKLEARN_ERROR_MESSAGE)
+
+    y_true = y_targets.numpy()
+    y_pred = y_preds.numpy()
+    return average_precision_score(y_true, y_pred)
 
 
 def figure_to_image(figure, close=True):
@@ -480,7 +487,6 @@ def figure_to_image(figure, close=True):
     """
     if not np:
         logger.warning(NUMPY_ERROR_MESSAGE)
-        return UNKNOWN
 
     try:
         import matplotlib.pyplot as plt
