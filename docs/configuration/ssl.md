@@ -76,5 +76,5 @@ you need to mount an ssl certificate and ssl certificate key to `/etc/ssl`, and 
 If you are serving Polyaxon on HTTPS, you should be aware that CLI need to have a different config:
 
 ```bash
-polyaxon config set --host=IP/Host --port=443v--use_https=true [--verify_ssl]
+polyaxon config set --host=IP/Host --port=443 --use_https=true [--verify_ssl]
 ```
