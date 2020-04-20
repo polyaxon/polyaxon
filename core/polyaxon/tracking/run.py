@@ -23,7 +23,12 @@ import polyaxon_sdk
 
 from polyaxon import settings
 from polyaxon.client import RunClient
-from polyaxon.client.decorators import can_log_events, can_log_outputs, check_no_op, check_offline
+from polyaxon.client.decorators import (
+    can_log_events,
+    can_log_outputs,
+    check_no_op,
+    check_offline,
+)
 from polyaxon.constants import UNKNOWN
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
@@ -53,7 +58,7 @@ class Run(RunClient):
         track_code: bool = True,
         track_env: bool = False,
         refresh_data: bool = False,
-        artifacts_path: str = None
+        artifacts_path: str = None,
     ):
         super().__init__(
             owner=owner, project=project, run_uuid=run_uuid, client=client,
@@ -120,7 +125,9 @@ class Run(RunClient):
 
     @check_no_op
     def set_artifacts_path(self, artifacts_path: str = None):
-        _artifacts_path = artifacts_path or CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid)
+        _artifacts_path = artifacts_path or CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(
+            self.run_uuid
+        )
         if artifacts_path:
             _outputs_path = "{}/outputs".format(artifacts_path)
         else:
@@ -212,13 +219,14 @@ class Run(RunClient):
             step=step,
             ext=ext,
         )
+        asset_rel_path = os.path.relpath(asset_path, self.artifacts_path)
         if is_file:
             event_value = events_processors.image_path(
                 from_path=data, asset_path=asset_path
             )
         elif hasattr(data, "encoded_image_string"):
             event_value = events_processors.encoded_image(
-                asset_path=asset_path, data=data
+                asset_path=asset_path, data=data, asset_rel_path=asset_rel_path,
             )
         else:
             event_value = events_processors.image(
@@ -226,6 +234,7 @@ class Run(RunClient):
                 data=data,
                 rescale=rescale,
                 dataformats=dataformats,
+                asset_rel_path=asset_rel_path,
             )
 
         if event_value == UNKNOWN:
@@ -258,12 +267,14 @@ class Run(RunClient):
             name=name,
             step=step,
         )
+        asset_rel_path = os.path.relpath(asset_path, self.artifacts_path)
         event_value = events_processors.image_boxes(
             asset_path=asset_path,
             tensor_image=tensor_image,
             tensor_boxes=tensor_boxes,
             rescale=rescale,
             dataformats=dataformats,
+            asset_rel_path=asset_rel_path,
         )
         if event_value == UNKNOWN:
             return
@@ -325,13 +336,21 @@ class Run(RunClient):
             step=step,
             ext=content_type,
         )
+        asset_rel_path = os.path.relpath(asset_path, self.artifacts_path)
         if is_file:
             event_value = events_processors.video_path(
-                from_path=data, asset_path=asset_path, content_type=content_type
+                from_path=data,
+                asset_path=asset_path,
+                content_type=content_type,
+                asset_rel_path=asset_rel_path,
             )
         else:
             event_value = events_processors.video(
-                asset_path=asset_path, tensor=data, fps=fps, content_type=content_type
+                asset_path=asset_path,
+                tensor=data,
+                fps=fps,
+                content_type=content_type,
+                asset_rel_path=asset_rel_path,
             )
 
         if event_value == UNKNOWN:
@@ -371,14 +390,21 @@ class Run(RunClient):
             step=step,
             ext=ext,
         )
+        asset_rel_path = os.path.relpath(asset_path, self.artifacts_path)
 
         if is_file:
             event_value = events_processors.audio_path(
-                from_path=data, asset_path=asset_path, content_type=content_type
+                from_path=data,
+                asset_path=asset_path,
+                content_type=content_type,
+                asset_rel_path=asset_rel_path,
             )
         else:
             event_value = events_processors.audio(
-                asset_path=asset_path, tensor=data, sample_rate=sample_rate
+                asset_path=asset_path,
+                tensor=data,
+                sample_rate=sample_rate,
+                asset_rel_path=asset_rel_path,
             )
 
         if event_value == UNKNOWN:
@@ -467,8 +493,13 @@ class Run(RunClient):
             step=step,
             ext=ext,
         )
+        asset_rel_path = os.path.relpath(asset_path, self.artifacts_path)
         model = events_processors.model_path(
-            from_path=path, asset_path=asset_path, framework=framework, spec=spec
+            from_path=path,
+            asset_path=asset_path,
+            framework=framework,
+            spec=spec,
+            asset_rel_path=asset_rel_path,
         )
         logged_event = LoggedEventSpec(
             name=name,
@@ -493,8 +524,12 @@ class Run(RunClient):
             step=step,
             ext=ext,
         )
+        asset_rel_path = os.path.relpath(asset_path, self.artifacts_path)
         df = events_processors.dataframe_path(
-            from_path=path, asset_path=asset_path, content_type=content_type
+            from_path=path,
+            asset_path=asset_path,
+            content_type=content_type,
+            asset_rel_path=asset_rel_path,
         )
         logged_event = LoggedEventSpec(
             name=name,
@@ -520,9 +555,13 @@ class Run(RunClient):
             step=step,
             ext=ext,
         )
+        asset_rel_path = os.path.relpath(asset_path, self.artifacts_path)
 
         artifact = events_processors.artifact_path(
-            from_path=path, asset_path=asset_path, kind=artifact_kind
+            from_path=path,
+            asset_path=asset_path,
+            kind=artifact_kind,
+            asset_rel_path=asset_rel_path,
         )
         logged_event = LoggedEventSpec(
             name=name,

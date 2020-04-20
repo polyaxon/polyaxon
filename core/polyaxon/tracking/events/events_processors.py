@@ -63,26 +63,39 @@ def copy_dir_path(from_path: str, asset_path: str):
 
 
 def dataframe_path(
-    from_path: str, asset_path: str, content_type: str = None
+    from_path: str,
+    asset_path: str,
+    content_type: str = None,
+    asset_rel_path: str = None,
 ) -> V1EventDataframe:
     copy_file_path(from_path, asset_path)
-    return V1EventDataframe(path=asset_path, content_type=content_type)
+    return V1EventDataframe(
+        path=asset_rel_path or asset_path, content_type=content_type
+    )
 
 
 def model_path(
-    from_path: str, asset_path: str, framework: str = None, spec: Dict = None
+    from_path: str,
+    asset_path: str,
+    framework: str = None,
+    spec: Dict = None,
+    asset_rel_path: str = None,
 ) -> V1EventModel:
     check_or_create_path(asset_path, is_dir=False)
     if os.path.isfile(from_path):
         shutil.copy(from_path, asset_path)
     else:
         shutil.copytree(from_path, asset_path)
-    return V1EventModel(path=asset_path, framework=framework, spec=spec)
+    return V1EventModel(
+        path=asset_rel_path or asset_path, framework=framework, spec=spec
+    )
 
 
-def artifact_path(from_path: str, asset_path: str, kind: str) -> V1EventArtifact:
+def artifact_path(
+    from_path: str, asset_path: str, kind: str, asset_rel_path: str = None
+) -> V1EventArtifact:
     copy_file_path(from_path, asset_path)
-    return V1EventArtifact(kind=kind, path=asset_path)
+    return V1EventArtifact(kind=kind, path=asset_rel_path or asset_path)
 
 
 def image_path(from_path: str, asset_path: str) -> V1EventImage:
@@ -90,14 +103,18 @@ def image_path(from_path: str, asset_path: str) -> V1EventImage:
     return V1EventImage(path=asset_path)
 
 
-def video_path(from_path: str, asset_path: str, content_type=None) -> V1EventVideo:
+def video_path(
+    from_path: str, asset_path: str, content_type=None, asset_rel_path: str = None
+) -> V1EventVideo:
     copy_file_path(from_path, asset_path)
-    return V1EventVideo(path=asset_path, content_type=content_type)
+    return V1EventVideo(path=asset_rel_path or asset_path, content_type=content_type)
 
 
-def audio_path(from_path: str, asset_path: str, content_type=None) -> V1EventAudio:
+def audio_path(
+    from_path: str, asset_path: str, content_type=None, asset_rel_path: str = None
+) -> V1EventAudio:
     copy_file_path(from_path, asset_path)
-    return V1EventAudio(path=asset_path, content_type=content_type)
+    return V1EventAudio(path=asset_rel_path or asset_path, content_type=content_type)
 
 
 def _draw_single_box(
@@ -198,7 +215,7 @@ def np_histogram(values, counts):
     return V1EventHistogram(values=values, counts=counts)
 
 
-def encoded_image(asset_path, data):
+def encoded_image(asset_path: str, data, asset_rel_path: str = None):
     try:
         from PIL import Image
     except ImportError:
@@ -207,7 +224,7 @@ def encoded_image(asset_path, data):
 
     image_data = Image.open(io.BytesIO(data.encoded_image_string))
     return save_image(
-        asset_path=asset_path,
+        asset_path=asset_rel_path or asset_path,
         image_data=image_data,
         height=data.height,
         width=data.width,
@@ -215,7 +232,9 @@ def encoded_image(asset_path, data):
     )
 
 
-def image(asset_path, data, rescale=1, dataformats="CHW"):
+def image(
+    asset_path: str, data, rescale=1, dataformats="CHW", asset_rel_path: str = None
+):
     if not np:
         logger.warning(NUMPY_ERROR_MESSAGE)
         return UNKNOWN
@@ -226,10 +245,19 @@ def image(asset_path, data, rescale=1, dataformats="CHW"):
     scale_factor = calculate_scale_factor(tensor)
     tensor = tensor.astype(np.float32)
     tensor = (tensor * scale_factor).astype(np.uint8)
-    return make_image(asset_path, tensor, rescale=rescale)
+    return make_image(
+        asset_path, tensor, rescale=rescale, asset_rel_path=asset_rel_path
+    )
 
 
-def image_boxes(asset_path, tensor_image, tensor_boxes, rescale=1, dataformats="CHW"):
+def image_boxes(
+    asset_path: str,
+    tensor_image,
+    tensor_boxes,
+    rescale=1,
+    dataformats="CHW",
+    asset_rel_path: str = None,
+):
     if not np:
         logger.warning(NUMPY_ERROR_MESSAGE)
         return UNKNOWN
@@ -241,7 +269,11 @@ def image_boxes(asset_path, tensor_image, tensor_boxes, rescale=1, dataformats="
         tensor_image
     )
     return make_image(
-        asset_path, tensor_image.astype(np.uint8), rescale=rescale, rois=tensor_boxes
+        asset_path,
+        tensor_image.astype(np.uint8),
+        rescale=rescale,
+        rois=tensor_boxes,
+        asset_rel_path=asset_rel_path,
     )
 
 
@@ -262,7 +294,9 @@ def draw_boxes(disp_image, boxes):
     return disp_image
 
 
-def make_image(asset_path, tensor, rescale=1, rois=None):
+def make_image(
+    asset_path: str, tensor, rescale=1, rois=None, asset_rel_path: str = None
+):
     try:
         from PIL import Image
     except ImportError:
@@ -283,18 +317,26 @@ def make_image(asset_path, tensor, rescale=1, rois=None):
         height=height,
         width=width,
         colorspace=colorspace,
+        asset_rel_path=asset_rel_path,
     )
 
 
-def save_image(asset_path, image_data, height, width, colorspace):
+def save_image(
+    asset_path: str, image_data, height, width, colorspace, asset_rel_path: str = None
+):
     check_or_create_path(asset_path, is_dir=False)
     image_data.save(asset_path, format="PNG")
     return V1EventImage(
-        height=height, width=width, colorspace=colorspace, path=asset_path
+        height=height,
+        width=width,
+        colorspace=colorspace,
+        path=asset_rel_path or asset_path,
     )
 
 
-def video(asset_path, tensor, fps=4, content_type="gif"):
+def video(
+    asset_path: str, tensor, fps=4, content_type="gif", asset_rel_path: str = None
+):
     if not np:
         logger.warning(NUMPY_ERROR_MESSAGE)
         return UNKNOWN
@@ -305,10 +347,14 @@ def video(asset_path, tensor, fps=4, content_type="gif"):
     scale_factor = calculate_scale_factor(tensor)
     tensor = tensor.astype(np.float32)
     tensor = (tensor * scale_factor).astype(np.uint8)
-    return make_video(asset_path, tensor, fps, content_type)
+    return make_video(
+        asset_path, tensor, fps, content_type, asset_rel_path=asset_rel_path
+    )
 
 
-def make_video(asset_path, tensor, fps, content_type="gif"):
+def make_video(
+    asset_path: str, tensor, fps, content_type="gif", asset_rel_path: str = None
+):
     try:
         import moviepy  # noqa: F401
     except ImportError:
@@ -342,11 +388,15 @@ def make_video(asset_path, tensor, fps, content_type="gif"):
             clip.write_videofile(asset_path, verbose=False)
 
     return V1EventVideo(
-        height=h, width=w, colorspace=c, path=asset_path, content_type=content_type
+        height=h,
+        width=w,
+        colorspace=c,
+        path=asset_rel_path or asset_path,
+        content_type=content_type,
     )
 
 
-def audio(asset_path, tensor, sample_rate=44100):
+def audio(asset_path: str, tensor, sample_rate=44100, asset_rel_path: str = None):
     if not np:
         logger.warning(NUMPY_ERROR_MESSAGE)
         return UNKNOWN
@@ -379,7 +429,7 @@ def audio(asset_path, tensor, sample_rate=44100):
         sample_rate=sample_rate,
         num_channels=1,
         length_frames=len(tensor_list),
-        path=asset_path,
+        path=asset_rel_path or asset_path,
         content_type="audio/wav",
     )
 
