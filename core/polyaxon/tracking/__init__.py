@@ -31,7 +31,7 @@ def init(
     track_code: bool = True,
     track_env: bool = False,
     refresh_data: bool = False,
-    artifacts_path: str = None
+    artifacts_path: str = None,
 ):
     global TRACKING_RUN
 
@@ -55,10 +55,7 @@ def create(
 ):
     global TRACKING_RUN
     TRACKING_RUN.create(
-        name=name,
-        description=description,
-        tags=tags,
-        content=content,
+        name=name, description=description, tags=tags, content=content,
     )
 
 
@@ -293,25 +290,19 @@ def log_code_ref():
 
 def log_data_ref(name: str, hash: str = None, path: str = None, content=None):
     global TRACKING_RUN
-    TRACKING_RUN.log_data_ref(
-        name=name, content=content, hash=hash, path=path
-    )
+    TRACKING_RUN.log_data_ref(name=name, content=content, hash=hash, path=path)
 
 
 def log_file_ref(path: str, hash: str = None, content=None):
     global TRACKING_RUN
     TRACKING_RUN.log_file_ref(
-        path=path,
-        hash=hash,
-        content=content,
+        path=path, hash=hash, content=content,
     )
 
 
 def log_dir_ref(path: str):
     global TRACKING_RUN
-    TRACKING_RUN.log_dir_ref(
-        path=path
-    )
+    TRACKING_RUN.log_dir_ref(path=path)
 
 
 def log_artifact_lineage(body: List[V1RunArtifact]):

@@ -18,7 +18,7 @@ import polyaxon_sdk
 
 
 class V1ArtifactKind(polyaxon_sdk.V1ArtifactKind):
-    polyaxon_sdk.V1ArtifactKind.TESORBOARD = ''
+    polyaxon_sdk.V1ArtifactKind.TESORBOARD = ""
     CHOICES = (
         (polyaxon_sdk.V1ArtifactKind.MODEL, polyaxon_sdk.V1ArtifactKind.MODEL),
         (polyaxon_sdk.V1ArtifactKind.AUDIO, polyaxon_sdk.V1ArtifactKind.AUDIO),
@@ -38,7 +38,10 @@ class V1ArtifactKind(polyaxon_sdk.V1ArtifactKind):
         (polyaxon_sdk.V1ArtifactKind.TEXT, polyaxon_sdk.V1ArtifactKind.TEXT),
         (polyaxon_sdk.V1ArtifactKind.FILE, polyaxon_sdk.V1ArtifactKind.FILE),
         (polyaxon_sdk.V1ArtifactKind.DIR, polyaxon_sdk.V1ArtifactKind.DIR),
-        (polyaxon_sdk.V1ArtifactKind.TESORBOARD, polyaxon_sdk.V1ArtifactKind.TESORBOARD),
+        (
+            polyaxon_sdk.V1ArtifactKind.TESORBOARD,
+            polyaxon_sdk.V1ArtifactKind.TESORBOARD,
+        ),
         (
             polyaxon_sdk.V1ArtifactKind.DOCKERFILE,
             polyaxon_sdk.V1ArtifactKind.DOCKERFILE,

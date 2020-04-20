@@ -18,7 +18,7 @@ import os
 
 from collections import namedtuple
 from io import StringIO
-from typing import Dict, Mapping, Union, Optional
+from typing import Dict, Mapping, Optional, Union
 
 import polyaxon_sdk
 

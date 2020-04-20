@@ -13,11 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# pylint:disable=protected-access
 from tests.test_notifiers.test_webhook_notification import TestWebHookNotification
 
 from polyaxon.connections.kinds import V1ConnectionKind
-
-# pylint:disable=protected-access
 from polyaxon.exceptions import PolyaxonNotificationException
 from polyaxon.notifiers.hipchat_webhook import HipChatWebHookNotifier
 

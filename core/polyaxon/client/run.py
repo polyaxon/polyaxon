@@ -22,7 +22,6 @@ from typing import Dict, Iterator, List, Sequence, Tuple, Union
 
 import click
 import polyaxon_sdk
-from polyaxon.utils.hashing import hash_value
 
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -46,6 +45,7 @@ from polyaxon.polyflow import V1Operation
 from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.formatting import Printer
+from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.validation import validate_tags
 
@@ -180,9 +180,13 @@ class RunClient:
         if not content:
             is_managed = False
         elif not isinstance(content, (str, V1Operation)):
-            raise PolyaxonClientException("Received an invalid content: {}".format(content))
+            raise PolyaxonClientException(
+                "Received an invalid content: {}".format(content)
+            )
         if content:
-            content = content if isinstance(content, str) else content.to_dict(dump=True)
+            content = (
+                content if isinstance(content, str) else content.to_dict(dump=True)
+            )
         data = polyaxon_sdk.V1OperationBody(
             name=name,
             description=description,
@@ -564,10 +568,7 @@ class RunClient:
             summary["path"] = path
         if name:
             artifact_run = V1RunArtifact(
-                name=name,
-                kind=V1ArtifactKind.DATA,
-                summary=summary,
-                is_input=True,
+                name=name, kind=V1ArtifactKind.DATA, summary=summary, is_input=True,
             )
             self.log_artifact_lineage(body=artifact_run)
 
@@ -582,10 +583,7 @@ class RunClient:
         name = os.path.basename(path)
         if name:
             artifact_run = V1RunArtifact(
-                name=name,
-                kind=V1ArtifactKind.FILE,
-                summary=summary,
-                is_input=True,
+                name=name, kind=V1ArtifactKind.FILE, summary=summary, is_input=True,
             )
             self.log_artifact_lineage(body=artifact_run)
 

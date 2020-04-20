@@ -67,4 +67,4 @@ class PolyaxonKerasModelCheckpoint(ModelCheckpoint):
             return
         filepath = self.filepath.format(epoch=epoch + 1, **logs)
         # log model
-        self.run.log_model(step=epoch, path=filepath, framework='keras')
+        self.run.log_model(step=epoch, path=filepath, framework="keras")

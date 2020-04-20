@@ -38,7 +38,9 @@ def can_log_outputs(f):
                 not hasattr(self_arg, "_outputs_path") or self_arg._outputs_path is None
             ):
                 logger.warning(
-                    "You should set an an outputs path before calling: {}".format(repr(f))
+                    "You should set an an outputs path before calling: {}".format(
+                        repr(f)
+                    )
                 )
         return f(*args, **kwargs)
 
