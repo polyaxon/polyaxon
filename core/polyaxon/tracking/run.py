@@ -201,6 +201,76 @@ class Run(RunClient):
     @check_no_op
     @check_offline
     @can_log_events
+    def log_roc_auc_curve(self, name, fpr, tpr, auc=None, step=None, timestamp=None):
+        event_value = events_processors.roc_auc_curve(fpr=fpr, tpr=tpr, auc=auc, )
+        logged_event = LoggedEventSpec(
+            name=name,
+            kind=V1ArtifactKind.CURVE,
+            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+        )
+        self._event_logger.add_event(logged_event)
+
+    @check_no_op
+    @check_offline
+    @can_log_events
+    def log_sklearn_roc_auc_curve(
+        self, name, y_preds, y_targets, step=None, timestamp=None
+    ):
+        event_value = events_processors.sklearn_roc_auc_curve(
+            y_preds=y_preds, y_targets=y_targets,
+        )
+        logged_event = LoggedEventSpec(
+            name=name,
+            kind=V1ArtifactKind.CURVE,
+            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+        )
+        self._event_logger.add_event(logged_event)
+
+    @check_no_op
+    @check_offline
+    @can_log_events
+    def log_pr_curve(
+        self, name, precision, recall, average_precision=None, step=None, timestamp=None
+    ):
+        event_value = events_processors.pr_curve(
+            precision=precision, recall=recall, average_precision=average_precision,
+        )
+        logged_event = LoggedEventSpec(
+            name=name,
+            kind=V1ArtifactKind.CURVE,
+            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+        )
+        self._event_logger.add_event(logged_event)
+
+    @check_no_op
+    @check_offline
+    @can_log_events
+    def log_sklearn_pr_curve(self, name, y_preds, y_targets, step=None, timestamp=None):
+        event_value = events_processors.sklearn_pr_curve(
+            y_preds=y_preds, y_targets=y_targets,
+        )
+        logged_event = LoggedEventSpec(
+            name=name,
+            kind=V1ArtifactKind.CURVE,
+            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+        )
+        self._event_logger.add_event(logged_event)
+
+    @check_no_op
+    @check_offline
+    @can_log_events
+    def log_curve(self, name, x, y, annotation=None, step=None, timestamp=None):
+        event_value = events_processors.curve(x=x, y=y, annotation=annotation, )
+        logged_event = LoggedEventSpec(
+            name=name,
+            kind=V1ArtifactKind.CURVE,
+            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+        )
+        self._event_logger.add_event(logged_event)
+
+    @check_no_op
+    @check_offline
+    @can_log_events
     def log_image(
         self, data, name=None, step=None, timestamp=None, rescale=1, dataformats="CHW"
     ):

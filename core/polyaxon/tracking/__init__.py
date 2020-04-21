@@ -215,6 +215,48 @@ def log_artifact(path, name=None, artifact_kind=None, step=None, timestamp=None)
     )
 
 
+def log_roc_auc_curve(name, fpr, tpr, auc=None, step=None, timestamp=None):
+    global TRACKING_RUN
+    TRACKING_RUN.log_roc_auc_curve(
+        name=name, fpr=fpr, tpr=tpr, auc=auc, step=step, timestamp=timestamp,
+    )
+
+
+def log_sklearn_roc_auc_curve(name, y_preds, y_targets, step=None, timestamp=None):
+    global TRACKING_RUN
+    TRACKING_RUN.log_sklearn_roc_auc_curve(
+        name=name, y_preds=y_preds, y_targets=y_targets, step=step, timestamp=timestamp,
+    )
+
+
+def log_pr_curve(
+    name, precision, recall, average_precision=None, step=None, timestamp=None
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_pr_curve(
+        name=name,
+        precision=precision,
+        recall=recall,
+        average_precision=average_precision,
+        step=step,
+        timestamp=timestamp,
+    )
+
+
+def log_sklearn_pr_curve(name, y_preds, y_targets, step=None, timestamp=None):
+    global TRACKING_RUN
+    TRACKING_RUN.log_sklearn_pr_curve(
+        name=name, y_preds=y_preds, y_targets=y_targets, step=step, timestamp=timestamp,
+    )
+
+
+def log_curve(name, x, y, annotation=None, step=None, timestamp=None):
+    global TRACKING_RUN
+    TRACKING_RUN.log_sklearn_pr_curve(
+        name=name, x=x, y=y, annotation=annotation, step=step, timestamp=timestamp,
+    )
+
+
 def log_plotly_chart(name, figure, step=None, timestamp=None):
     global TRACKING_RUN
     TRACKING_RUN.log_plotly_chart(

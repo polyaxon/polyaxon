@@ -35,6 +35,7 @@ from polyaxon.polyboard.events import (
     V1EventModel,
     V1EventVideo,
 )
+from polyaxon.polyboard.events.schemas import V1EventCurve, V1EventCurveKind
 from polyaxon.utils.np_utils import calculate_scale_factor, to_np
 from polyaxon.utils.path_utils import check_or_create_path, module_type
 
@@ -435,48 +436,58 @@ def audio(asset_path: str, tensor, sample_rate=44100, asset_rel_path: str = None
     )
 
 
-def roc_auc(y_preds, y_targets):
+def roc_auc_curve(fpr, tpr, auc=None):
+    return V1EventCurve(
+        kind=V1EventCurveKind.ROC, x=fpr, y=tpr, annotation=str(auc) if auc else None,
+    )
+
+
+def sklearn_roc_auc_curve(y_preds, y_targets):
     try:
+        from sklearn.metrics import roc_curve
         from sklearn.metrics import roc_auc_score
     except ImportError:
         logger.warning(SKLEARN_ERROR_MESSAGE)
 
     y_true = y_targets.numpy()
     y_pred = y_preds.numpy()
-    return roc_auc_score(y_true, y_pred)
+    fpr, tpr, _ = roc_curve(y_true, y_pred)
+    auc = roc_auc_score(y_true, y_pred)
+    return V1EventCurve(kind=V1EventCurveKind.ROC, x=fpr, y=tpr, annotation=str(auc), )
 
 
-def roc_auc_curve(y_preds, y_targets):
-    try:
-        from sklearn.metrics import roc_curve
-    except ImportError:
-        logger.warning(SKLEARN_ERROR_MESSAGE)
-
-    y_true = y_targets.numpy()
-    y_pred = y_preds.numpy()
-    return roc_curve(y_true, y_pred)
+def pr_curve(precision, recall, average_precision=None):
+    return V1EventCurve(
+        kind=V1EventCurveKind.PR,
+        x=precision,
+        y=recall,
+        annotation=str(average_precision) if average_precision else None,
+    )
 
 
-def pr_curve(y_preds, y_targets):
+def sklearn_pr_curve(y_preds, y_targets):
     try:
         from sklearn.metrics import precision_recall_curve
-    except ImportError:
-        logger.warning(SKLEARN_ERROR_MESSAGE)
-
-    y_true = y_targets.numpy()
-    y_pred = y_preds.numpy()
-    return precision_recall_curve(y_true, y_pred)
-
-
-def average_precision(y_preds, y_targets):
-    try:
         from sklearn.metrics import average_precision_score
     except ImportError:
         logger.warning(SKLEARN_ERROR_MESSAGE)
 
     y_true = y_targets.numpy()
     y_pred = y_preds.numpy()
-    return average_precision_score(y_true, y_pred)
+    precision, recall, _ = precision_recall_curve(y_true, y_pred)
+    ap = average_precision_score(y_true, y_pred)
+    return V1EventCurve(
+        kind=V1EventCurveKind.PR, x=precision, y=recall, annotation=str(ap),
+    )
+
+
+def curve(x, y, annotation=None):
+    return V1EventCurve(
+        kind=V1EventCurveKind.CUSTOM,
+        x=x,
+        y=y,
+        annotation=str(annotation) if annotation else None,
+    )
 
 
 def figure_to_image(figure, close=True):
