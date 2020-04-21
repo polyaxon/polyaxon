@@ -40,6 +40,9 @@ type V1Event struct {
 	// chart
 	Chart *V1EventChart `json:"chart,omitempty"`
 
+	// curve
+	Curve *V1EventCurve `json:"curve,omitempty"`
+
 	// dataframe
 	Dataframe *V1EventDataframe `json:"dataframe,omitempty"`
 
@@ -85,6 +88,10 @@ func (m *V1Event) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateChart(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateCurve(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -164,6 +171,24 @@ func (m *V1Event) validateChart(formats strfmt.Registry) error {
 		if err := m.Chart.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("chart")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) validateCurve(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Curve) { // not required
+		return nil
+	}
+
+	if m.Curve != nil {
+		if err := m.Curve.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("curve")
 			}
 			return err
 		}

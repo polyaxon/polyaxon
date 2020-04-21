@@ -1,8 +1,8 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.0.79
-  - Build date: 2020-04-15T17:06:22.074+02:00[Europe/Berlin]
+- API version: 1.0.81
+  - Build date: 2020-04-21T01:41:47.175+02:00[Europe/Berlin]
 
 Polyaxon SDKs and REST API specification.
 
@@ -41,7 +41,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.0.79</version>
+  <version>1.0.81</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -51,7 +51,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.0.79"
+compile "org.openapitools:openapi-java-client:1.0.81"
 ```
 
 ### Others
@@ -64,7 +64,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.0.79.jar`
+* `target/openapi-java-client-1.0.81.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -354,6 +354,8 @@ Class | Method | HTTP request | Description
  - [V1EventAudio](docs/V1EventAudio.md)
  - [V1EventChart](docs/V1EventChart.md)
  - [V1EventChartKind](docs/V1EventChartKind.md)
+ - [V1EventCurve](docs/V1EventCurve.md)
+ - [V1EventCurveKind](docs/V1EventCurveKind.md)
  - [V1EventDataframe](docs/V1EventDataframe.md)
  - [V1EventHistogram](docs/V1EventHistogram.md)
  - [V1EventImage](docs/V1EventImage.md)

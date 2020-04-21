@@ -19,5 +19,6 @@ Name | Type | Description | Notes
 **readme** | **String** |  | [optional] 
 **settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  | [optional] 
 **teams** | **[String]** |  | [optional] 
+**role** | **String** |  | [optional] 
 
 

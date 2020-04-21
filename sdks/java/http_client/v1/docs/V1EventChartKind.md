@@ -11,11 +11,5 @@
 
 * `VEGA` (value: `"vega"`)
 
-* `ROC` (value: `"roc"`)
-
-* `AUC` (value: `"auc"`)
-
-* `CONFUSION` (value: `"confusion"`)
-
 
 

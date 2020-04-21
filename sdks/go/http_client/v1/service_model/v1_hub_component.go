@@ -32,7 +32,7 @@ import (
 type V1HubComponent struct {
 
 	// The Component body content
-	Content *V1Component `json:"content,omitempty"`
+	Content string `json:"content,omitempty"`
 
 	// Optional time when the entity was created
 	// Format: date-time
@@ -68,10 +68,6 @@ type V1HubComponent struct {
 func (m *V1HubComponent) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateContent(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateCreatedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -83,24 +79,6 @@ func (m *V1HubComponent) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1HubComponent) validateContent(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Content) { // not required
-		return nil
-	}
-
-	if m.Content != nil {
-		if err := m.Content.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("content")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

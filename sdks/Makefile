@@ -143,10 +143,13 @@ swagger-generate: generate-go-swagger \
 swagger-concat:
 	./concat.sh
 
-all: clean \
+prepare: clean \
 	docker-build \
 	compile-swagger \
 	swagger-concat
 
+all: prepare \
+	swagger-generate
+
 compile-pb: compile-go \
-	compile-python \
+	compile-python

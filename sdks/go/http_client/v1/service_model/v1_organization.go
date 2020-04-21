@@ -41,6 +41,9 @@ type V1Organization struct {
 	// Name
 	Name string `json:"name,omitempty"`
 
+	// Current user's role in this org
+	Role string `json:"role,omitempty"`
+
 	// Optional last time the entity was updated
 	// Format: date-time
 	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`

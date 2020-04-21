@@ -32,9 +32,6 @@ import (
 // - plotly: Plotly chart
 //  - bokeh: Bokeh chart
 //  - vega: Vega chart
-//  - roc: ROC chart
-//  - auc: AUC chart
-//  - confusion: Confusion chart
 //
 // swagger:model v1EventChartKind
 type V1EventChartKind string
@@ -49,15 +46,6 @@ const (
 
 	// V1EventChartKindVega captures enum value "vega"
 	V1EventChartKindVega V1EventChartKind = "vega"
-
-	// V1EventChartKindRoc captures enum value "roc"
-	V1EventChartKindRoc V1EventChartKind = "roc"
-
-	// V1EventChartKindAuc captures enum value "auc"
-	V1EventChartKindAuc V1EventChartKind = "auc"
-
-	// V1EventChartKindConfusion captures enum value "confusion"
-	V1EventChartKindConfusion V1EventChartKind = "confusion"
 )
 
 // for schema
@@ -65,7 +53,7 @@ var v1EventChartKindEnum []interface{}
 
 func init() {
 	var res []V1EventChartKind
-	if err := json.Unmarshal([]byte(`["plotly","bokeh","vega","roc","auc","confusion"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["plotly","bokeh","vega"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

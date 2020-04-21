@@ -10,7 +10,7 @@
     <h1>Polyaxon SDKs and REST API specification.</h1>
     <p class="sw-info">
         
-        Version: <span class="sw-info-version">1.0.79</span>
+        Version: <span class="sw-info-version">1.0.81</span>
     </p>
     <p><p>Polyaxon SDKs and REST API specification.</p>
     </p>
@@ -36584,6 +36584,10 @@
                                                         <span class="json-property-enum-item">coderef</span>
                                                     ,
                                                         <span class="json-property-enum-item">table</span>
+                                                    ,
+                                                        <span class="json-property-enum-item">tensorboard</span>
+                                                    ,
+                                                        <span class="json-property-enum-item">curve</span>
                                                     
                                                 }
                                                 </span>
@@ -37551,6 +37555,10 @@
                                                         <span class="json-property-enum-item">coderef</span>
                                                     ,
                                                         <span class="json-property-enum-item">table</span>
+                                                    ,
+                                                        <span class="json-property-enum-item">tensorboard</span>
+                                                    ,
+                                                        <span class="json-property-enum-item">curve</span>
                                                     
                                                 }
                                                 </span>
@@ -39320,6 +39328,10 @@
                                 <span class="json-property-enum-item">coderef</span>
                             ,
                                 <span class="json-property-enum-item">table</span>
+                            ,
+                                <span class="json-property-enum-item">tensorboard</span>
+                            ,
+                                <span class="json-property-enum-item">curve</span>
                             
                         }
                         </span>
@@ -39338,7 +39350,7 @@
                             <li>image: image</li>
                             <li>tensor: tensor</li>
                             <li>dataframe: dataframe</li>
-                            <li>chart: plotly/bokeh chart</li>
+                            <li>chart: plotly/bokeh/vega chart</li>
                             <li>csv: Comma</li>
                             <li>tsv: Tab</li>
                             <li>psv: Pipe</li>
@@ -39354,6 +39366,8 @@
                             <li>data: data</li>
                             <li>coderef: coderef</li>
                             <li>table: table</li>
+                            <li>tensorboard: tensorboard</li>
+                            <li>curve: curve</li>
                             </ul>
                             </li>
                             </ul>
@@ -42962,6 +42976,20 @@
                                                         
                                                     </div>
                                                 </dd>
+                                                <dt data-property-name="curve">
+                                                    <span class="json-property-name">curve:</span>
+                                                    
+                                                    <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/v1EventCurve">v1EventCurve</a>
+                                                    </span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
                                         </dl>
                                     </section>
                     </div>
@@ -43153,12 +43181,6 @@
                                 <span class="json-property-enum-item">bokeh</span>
                             ,
                                 <span class="json-property-enum-item">vega</span>
-                            ,
-                                <span class="json-property-enum-item">roc</span>
-                            ,
-                                <span class="json-property-enum-item">auc</span>
-                            ,
-                                <span class="json-property-enum-item">confusion</span>
                             
                         }
                         </span>
@@ -43173,9 +43195,126 @@
                             <li>plotly: Plotly chart<ul>
                             <li>bokeh: Bokeh chart</li>
                             <li>vega: Vega chart</li>
-                            <li>roc: ROC chart</li>
-                            <li>auc: AUC chart</li>
-                            <li>confusion: Confusion chart</li>
+                            </ul>
+                            </li>
+                            </ul>
+                            
+                                </section>
+                            
+                    </div>
+                </div>        
+                <div id="definition-v1EventCurve" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/v1EventCurve"></a>v1EventCurve:
+                                    <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                    <section class="json-schema-properties">
+                                        <dl>
+                                                <dt data-property-name="kind">
+                                                    <span class="json-property-name">kind:</span>
+                                                    
+                                                    <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/v1EventCurveKind">v1EventCurveKind</a>
+                                                    </span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="x">
+                                                    <span class="json-property-name">x:</span>
+                                                    
+                                                    <span class="json-property-type">number[]</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                                        <section class="json-schema-array-items">
+                                                                            
+                                                                            <span class="json-property-type">number</span>    <span class="json-property-format">(float)</span>
+                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                            
+                                                                            <div class="json-inner-schema">
+                                                                                
+                                                                            </div>
+                                                                        </section>                </div>
+                                                </dd>
+                                                <dt data-property-name="y">
+                                                    <span class="json-property-name">y:</span>
+                                                    
+                                                    <span class="json-property-type">number[]</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                                        <section class="json-schema-array-items">
+                                                                            
+                                                                            <span class="json-property-type">number</span>    <span class="json-property-format">(float)</span>
+                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                            
+                                                                            <div class="json-inner-schema">
+                                                                                
+                                                                            </div>
+                                                                        </section>                </div>
+                                                </dd>
+                                                <dt data-property-name="annotation">
+                                                    <span class="json-property-name">annotation:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                        </dl>
+                                    </section>
+                    </div>
+                </div>        
+                <div id="definition-v1EventCurveKind" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/v1EventCurveKind"></a>v1EventCurveKind:
+                                    <span class="json-property-type">
+                <span class="json-property-type">string</span>    <span class="json-property-enum" title="Possible values">, x &isin; {
+                                <span class="json-property-enum-item">roc</span>
+                                (default)
+                            ,
+                                <span class="json-property-enum-item">pr</span>
+                            ,
+                                <span class="json-property-enum-item">custom</span>
+                            
+                        }
+                        </span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                                <section class="json-schema-description">
+                                    <ul>
+                            <li>roc: ROC curve<ul>
+                            <li>pr: Precision Recall curve</li>
+                            <li>custom: Custom curve</li>
                             </ul>
                             </li>
                             </ul>
@@ -44816,8 +44955,7 @@
                                                 <dt data-property-name="content">
                                                     <span class="json-property-name">content:</span>
                                                     
-                                                    <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/v1Component">v1Component</a>
-                                                    </span>
+                                                    <span class="json-property-type">string</span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     
                                                 </dt>
@@ -49636,6 +49774,19 @@
                                                         
                                                     </div>
                                                 </dd>
+                                                <dt data-property-name="role">
+                                                    <span class="json-property-name">role:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
                                         </dl>
                                     </section>
                     </div>
@@ -50656,6 +50807,19 @@
                                                                                 
                                                                             </div>
                                                                         </section>                </div>
+                                                </dd>
+                                                <dt data-property-name="role">
+                                                    <span class="json-property-name">role:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
                                                 </dd>
                                         </dl>
                                     </section>
@@ -51751,6 +51915,19 @@
                                                     
                                                     <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/v1RunSettings">v1RunSettings</a>
                                                     </span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="role">
+                                                    <span class="json-property-name">role:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     
                                                 </dt>
@@ -54680,10 +54857,23 @@
                                                         
                                                     </div>
                                                 </dd>
-                                                <dt data-property-name="role">
-                                                    <span class="json-property-name">role:</span>
+                                                <dt data-property-name="name">
+                                                    <span class="json-property-name">name:</span>
                                                     
                                                     <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="theme">
+                                                    <span class="json-property-name">theme:</span>
+                                                    
+                                                    <span class="json-property-type">integer</span>    <span class="json-property-format">(int32)</span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     
                                                 </dt>

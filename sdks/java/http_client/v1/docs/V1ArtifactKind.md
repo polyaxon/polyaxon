@@ -51,5 +51,9 @@
 
 * `TABLE` (value: `"table"`)
 
+* `TENSORBOARD` (value: `"tensorboard"`)
+
+* `CURVE` (value: `"curve"`)
+
 
 

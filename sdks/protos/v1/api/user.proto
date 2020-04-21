@@ -33,5 +33,5 @@ message User {
     string name = 3;
 
     // Theme
-    number theme = 4;
+    int32 theme = 4;
 }

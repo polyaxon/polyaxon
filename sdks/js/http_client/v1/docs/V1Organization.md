@@ -10,5 +10,6 @@ Name | Type | Description | Notes
 **is_public** | **Boolean** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
+**role** | **String** |  | [optional] 
 
 

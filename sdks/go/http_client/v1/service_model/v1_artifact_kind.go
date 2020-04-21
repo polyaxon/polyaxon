@@ -36,7 +36,7 @@ import (
 //  - image: image
 //  - tensor: tensor
 //  - dataframe: dataframe
-//  - chart: plotly/bokeh chart
+//  - chart: plotly/bokeh/vega chart
 //  - csv: Comma
 //  - tsv: Tab
 //  - psv: Pipe
@@ -52,6 +52,8 @@ import (
 //  - data: data
 //  - coderef: coderef
 //  - table: table
+//  - tensorboard: tensorboard
+//  - curve: curve
 //
 // swagger:model v1ArtifactKind
 type V1ArtifactKind string
@@ -126,6 +128,12 @@ const (
 
 	// V1ArtifactKindTable captures enum value "table"
 	V1ArtifactKindTable V1ArtifactKind = "table"
+
+	// V1ArtifactKindTensorboard captures enum value "tensorboard"
+	V1ArtifactKindTensorboard V1ArtifactKind = "tensorboard"
+
+	// V1ArtifactKindCurve captures enum value "curve"
+	V1ArtifactKindCurve V1ArtifactKind = "curve"
 )
 
 // for schema
@@ -133,7 +141,7 @@ var v1ArtifactKindEnum []interface{}
 
 func init() {
 	var res []V1ArtifactKind
-	if err := json.Unmarshal([]byte(`["model","audio","video","histogram","image","tensor","dataframe","chart","csv","tsv","psv","ssv","metric","env","html","text","file","dir","dockerfile","docker_image","data","coderef","table"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["model","audio","video","histogram","image","tensor","dataframe","chart","csv","tsv","psv","ssv","metric","env","html","text","file","dir","dockerfile","docker_image","data","coderef","table","tensorboard","curve"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

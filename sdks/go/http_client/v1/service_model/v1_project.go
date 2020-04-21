@@ -56,6 +56,9 @@ type V1Project struct {
 	// Optional a readme text describing this entity
 	Readme string `json:"readme,omitempty"`
 
+	// Current user's role in this (org/teams)/project
+	Role string `json:"role,omitempty"`
+
 	// Optional project settings
 	Settings *V1ProjectSettings `json:"settings,omitempty"`
 

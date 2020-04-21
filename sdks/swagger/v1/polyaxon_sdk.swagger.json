@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.79",
+    "version": "1.0.81",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -10553,7 +10553,9 @@
               "docker_image",
               "data",
               "coderef",
-              "table"
+              "table",
+              "tensorboard",
+              "curve"
             ]
           },
           {
@@ -10743,7 +10745,9 @@
               "docker_image",
               "data",
               "coderef",
-              "table"
+              "table",
+              "tensorboard",
+              "curve"
             ]
           },
           {
@@ -11717,10 +11721,12 @@
         "docker_image",
         "data",
         "coderef",
-        "table"
+        "table",
+        "tensorboard",
+        "curve"
       ],
       "default": "model",
-      "description": "- model: model\n - audio: audio\n - video: vidio\n - histogram: histogram\n - image: image\n - tensor: tensor\n - dataframe: dataframe\n - chart: plotly/bokeh chart\n - csv: Comma\n - tsv: Tab\n - psv: Pipe\n - ssv: Space\n - metric: Metric\n - env: Env\n - html: HTML\n - text: Text\n - file: File\n - dir: Dir\n - dockerfile: Dockerfile\n - docker_image: docker image\n - data: data\n - coderef: coderef\n - table: table",
+      "description": "- model: model\n - audio: audio\n - video: vidio\n - histogram: histogram\n - image: image\n - tensor: tensor\n - dataframe: dataframe\n - chart: plotly/bokeh/vega chart\n - csv: Comma\n - tsv: Tab\n - psv: Pipe\n - ssv: Space\n - metric: Metric\n - env: Env\n - html: HTML\n - text: Text\n - file: File\n - dir: Dir\n - dockerfile: Dockerfile\n - docker_image: docker image\n - data: data\n - coderef: coderef\n - table: table\n - tensorboard: tensorboard\n - curve: curve",
       "title": "Artifact kind"
     },
     "v1ArtifactTree": {
@@ -12863,6 +12869,9 @@
         },
         "dataframe": {
           "$ref": "#/definitions/v1EventDataframe"
+        },
+        "curve": {
+          "$ref": "#/definitions/v1EventCurve"
         }
       },
       "title": "Event spec definition"
@@ -12929,14 +12938,52 @@
       "enum": [
         "plotly",
         "bokeh",
-        "vega",
-        "roc",
-        "auc",
-        "confusion"
+        "vega"
       ],
       "default": "plotly",
-      "description": "- plotly: Plotly chart\n - bokeh: Bokeh chart\n - vega: Vega chart\n - roc: ROC chart\n - auc: AUC chart\n - confusion: Confusion chart",
+      "description": "- plotly: Plotly chart\n - bokeh: Bokeh chart\n - vega: Vega chart",
       "title": "Chart kind"
+    },
+    "v1EventCurve": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/definitions/v1EventCurveKind",
+          "title": "Curve kind"
+        },
+        "x": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "format": "float"
+          },
+          "title": "X"
+        },
+        "y": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "format": "float"
+          },
+          "title": "Y"
+        },
+        "annotation": {
+          "type": "string",
+          "title": "Annotation"
+        }
+      },
+      "title": "Custom Curve spec definition"
+    },
+    "v1EventCurveKind": {
+      "type": "string",
+      "enum": [
+        "roc",
+        "pr",
+        "custom"
+      ],
+      "default": "roc",
+      "description": "- roc: ROC curve\n - pr: Precision Recall curve\n - custom: Custom curve",
+      "title": "Curve kind"
     },
     "v1EventDataframe": {
       "type": "object",
@@ -13468,7 +13515,7 @@
           "title": "Optional component tag version"
         },
         "content": {
-          "$ref": "#/definitions/v1Component",
+          "type": "string",
           "title": "The Component body content"
         },
         "description": {
@@ -14869,6 +14916,10 @@
           "type": "string",
           "format": "date-time",
           "title": "Optional last time the entity was updated"
+        },
+        "role": {
+          "type": "string",
+          "title": "Current user's role in this org"
         }
       },
       "title": "Organization specification"
@@ -15184,6 +15235,10 @@
             "type": "string"
           },
           "title": "Optional teams assigned to a project"
+        },
+        "role": {
+          "type": "string",
+          "title": "Current user's role in this (org/teams)/project"
         }
       },
       "title": "Project specification"
@@ -15543,6 +15598,10 @@
         "settings": {
           "$ref": "#/definitions/v1RunSettings",
           "title": "Optional settings"
+        },
+        "role": {
+          "type": "string",
+          "title": "Current user's role in this (org/teams)/project/runs"
         }
       },
       "title": "Run specification"
@@ -16444,9 +16503,14 @@
           "type": "string",
           "title": "Email"
         },
-        "role": {
+        "name": {
           "type": "string",
-          "title": "Role"
+          "title": "Name"
+        },
+        "theme": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Theme"
         }
       },
       "title": "Auth specification"

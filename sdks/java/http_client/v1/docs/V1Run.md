@@ -34,6 +34,7 @@ Name | Type | Description | Notes
 **pipeline** | [**V1Pipeline**](V1Pipeline.md) |  |  [optional]
 **statusConditions** | [**List&lt;V1StatusCondition&gt;**](V1StatusCondition.md) |  |  [optional]
 **settings** | [**V1RunSettings**](V1RunSettings.md) |  |  [optional]
+**role** | **String** |  |  [optional]
 
 
 

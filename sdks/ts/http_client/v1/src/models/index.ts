@@ -60,6 +60,8 @@ export * from './V1EventArtifact';
 export * from './V1EventAudio';
 export * from './V1EventChart';
 export * from './V1EventChartKind';
+export * from './V1EventCurve';
+export * from './V1EventCurveKind';
 export * from './V1EventDataframe';
 export * from './V1EventHistogram';
 export * from './V1EventImage';

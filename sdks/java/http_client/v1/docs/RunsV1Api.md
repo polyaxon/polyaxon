@@ -947,7 +947,7 @@ Name | Type | Description  | Notes
  **namespace** | **String**| namespace |
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
- **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
+ **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve]
  **names** | **String**| Names query param. | [optional]
  **runs** | **String**| Runs query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
@@ -1588,7 +1588,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
  **uuid** | **String**| Uuid identifier of the entity |
- **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
+ **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve]
  **names** | **String**| Names query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
 

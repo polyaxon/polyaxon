@@ -5,18 +5,18 @@
 #
 language: java
 jdk:
-- openjdk12
-- openjdk11
-- openjdk10
-- openjdk9
-- openjdk8
+  - openjdk12
+  - openjdk11
+  - openjdk10
+  - openjdk9
+  - openjdk8
 before_install:
   # ensure gradlew has proper permission
   - chmod a+x ./gradlew
 script:
   # test using maven
-#- mvn test
-# test using gradle
-- gradle test
-# test using sbt
+  #- mvn test
+  # test using gradle
+  - gradle test
+  # test using sbt 
   # - sbt test

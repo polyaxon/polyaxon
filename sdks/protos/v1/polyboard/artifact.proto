@@ -43,7 +43,7 @@ enum ArtifactKind {
     // dataframe
     dataframe = 6;
 
-    // plotly/bokeh chart
+    // plotly/bokeh/vega chart
     chart = 7;
 
     // Comma
@@ -93,6 +93,9 @@ enum ArtifactKind {
 
     // tensorboard
     tensorboard = 23;
+
+    // curve
+    curve = 24;
 }
 
 // Run Artifact spec definition

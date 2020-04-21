@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **uuid** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **tag** | **str** |  | [optional] 
-**content** | [**V1Component**](V1Component.md) |  | [optional] 
+**content** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
 **disabled** | **bool** |  | [optional] 

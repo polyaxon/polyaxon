@@ -92,6 +92,9 @@ type V1Run struct {
 	// Required project name
 	Project string `json:"project,omitempty"`
 
+	// Current user's role in this (org/teams)/project/runs
+	Role string `json:"role,omitempty"`
+
 	// Optional run time of the entity
 	RunTime int32 `json:"run_time,omitempty"`
 

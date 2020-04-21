@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **isPublic** | **Boolean** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**role** | **String** |  |  [optional]
 
 
 

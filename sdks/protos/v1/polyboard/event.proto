@@ -35,15 +35,6 @@ message EventChart {
 
         // Vega chart
         vega = 2;
-
-        // ROC chart
-        roc = 3;
-
-        // AUC chart
-        auc = 4;
-
-        // Confusion chart
-        confusion = 5;
     }
 
     // Chart kind
@@ -51,6 +42,33 @@ message EventChart {
 
     // Figure json object
     google.protobuf.Struct figure = 2;
+}
+
+// Custom Curve spec definition
+message EventCurve {
+    // Curve kind
+    enum Kind {
+        // ROC curve
+        roc = 0;
+
+        // Precision Recall curve
+        pr = 1;
+
+        // Custom curve
+        custom = 2;
+    }
+
+    // Curve kind
+    Kind kind = 1;
+
+    // X
+    repeated float x = 2;
+
+    // Y
+    repeated float y = 3;
+
+    // Annotation
+    string annotation = 4;
 }
 
 // Histogram spec definition
@@ -173,6 +191,7 @@ message Event {
         EventModel model = 11;
         EventArtifact artifact = 12;
         EventDataframe dataframe = 13;
+        EventCurve curve = 14;
     }
 }
 

@@ -32,8 +32,11 @@ type V1User struct {
 	// Email
 	Email string `json:"email,omitempty"`
 
-	// Role
-	Role string `json:"role,omitempty"`
+	// Name
+	Name string `json:"name,omitempty"`
+
+	// Theme
+	Theme int32 `json:"theme,omitempty"`
 
 	// Username
 	Username string `json:"username,omitempty"`

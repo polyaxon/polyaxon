@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **model** | [**V1EventModel**](V1EventModel.md) |  |  [optional]
 **artifact** | [**V1EventArtifact**](V1EventArtifact.md) |  |  [optional]
 **dataframe** | [**V1EventDataframe**](V1EventDataframe.md) |  |  [optional]
+**curve** | [**V1EventCurve**](V1EventCurve.md) |  |  [optional]
 
 
 

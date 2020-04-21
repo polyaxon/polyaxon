@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **uuid** | **String** |  | [optional] 
 **name** | **String** |  | [optional] 
 **tag** | **String** |  | [optional] 
-**content** | [**V1Component**](V1Component.md) |  | [optional] 
+**content** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
 **disabled** | **Boolean** |  | [optional] 

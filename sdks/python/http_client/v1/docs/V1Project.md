@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **readme** | **str** |  | [optional] 
 **settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  | [optional] 
 **teams** | **list[str]** |  | [optional] 
+**role** | **str** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
