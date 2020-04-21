@@ -216,6 +216,33 @@ class TestEventsSummaries(BaseTestCase):
         ]
         assert last_values == {}
 
+    def test_curves_summaries(self):
+        summaries, last_values = sync_events_summaries(
+            events_path="tests/fixtures/polyboard",
+            events_kind="curve",
+            last_check=None,
+        )
+        events = V1Events.read(
+            name="curve_events",
+            kind="curve",
+            data=os.path.abspath("tests/fixtures/polyboard/curve/curve_events.plx"),
+        )
+        assert events.name == "curve_events"
+        assert summaries == [
+            V1RunArtifact(
+                name="curve_events",
+                kind="curve",
+                connection=None,
+                summary=events.get_summary(),
+                path=os.path.relpath(
+                    "tests/fixtures/polyboard/curve/curve_events.plx",
+                    CONTEXT_MOUNT_ARTIFACTS,
+                ),
+                is_input=False,
+            )
+        ]
+        assert last_values == {}
+
     def test_artifacts_summaries(self):
         summaries, last_values = sync_events_summaries(
             events_path="tests/fixtures/polyboard",

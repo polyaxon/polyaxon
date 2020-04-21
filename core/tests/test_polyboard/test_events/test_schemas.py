@@ -32,6 +32,7 @@ from polyaxon.polyboard.events import (
 )
 from polyaxon.polyboard.events.schemas import (
     LoggedEventListSpec,
+    V1EventCurve,
     V1EventDataframe,
     V1EventVideo,
 )
@@ -409,7 +410,7 @@ class TestEventsV1(BaseTestCase):
                 ),
                 V1Event(
                     timestamp=dt_parser.parse("2018-12-11 11:24:57"),
-                    chart=V1EventChart(kind="plotly", figure={"foo": "bar"}),
+                    chart=V1EventChart(kind="vega", figure={"foo": "bar"}),
                     step=13,
                 ),
                 V1Event(
@@ -431,7 +432,7 @@ class TestEventsV1(BaseTestCase):
             ),
             V1Event(
                 timestamp=dt_parser.parse("2018-12-11 10:25:57"),
-                chart=V1EventChart(kind="roc", figure={"foo2": "bar2"}),
+                chart=V1EventChart(kind="vega", figure={"foo2": "bar2"}),
                 step=13,
             ),
             V1Event(
@@ -444,6 +445,83 @@ class TestEventsV1(BaseTestCase):
             name="foo",
             kind="chart",
             data=os.path.abspath("tests/fixtures/polyboard/chart/chart_events.plx"),
+        )
+        assert events.name == "foo"
+        assert len(events.df.values) == 3
+        for i in range(3):
+            assert events.get_event_at(i).to_dict() == values[i].to_dict()
+
+    def test_curve(self):
+        events = LoggedEventListSpec(
+            name="foo",
+            kind="curve",
+            events=[
+                V1Event(
+                    timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                    curve=V1EventCurve(
+                        kind="roc",
+                        x=[1.1, 3.1, 5.1],
+                        y=[0.1, 0.3, 0.4],
+                        annotation="0.1",
+                    ),
+                    step=12,
+                ),
+                V1Event(
+                    timestamp=dt_parser.parse("2018-12-11 11:24:57"),
+                    curve=V1EventCurve(
+                        kind="pr",
+                        x=[1.1, 3.1, 5.1],
+                        y=[0.1, 0.3, 0.4],
+                        annotation="0.21",
+                    ),
+                    step=13,
+                ),
+                V1Event(
+                    timestamp=dt_parser.parse("2018-12-11 12:24:57"),
+                    curve=V1EventCurve(
+                        kind="custom",
+                        x=[1.1, 3.1, 5.1],
+                        y=[0.1, 0.3, 0.4],
+                        annotation="0.1",
+                    ),
+                    step=14,
+                ),
+            ],
+        )
+        events_dict = events.to_dict()
+        assert events_dict == events.from_dict(events_dict).to_dict()
+
+    def test_curves_read_yaml(self):
+        values = [
+            V1Event(
+                timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+                curve=V1EventCurve(
+                    kind="roc", x=[1.1, 3.1, 5.1], y=[0.1, 0.3, 0.4], annotation="0.1"
+                ),
+                step=12,
+            ),
+            V1Event(
+                timestamp=dt_parser.parse("2018-12-11 10:25:57"),
+                curve=V1EventCurve(
+                    kind="pr", x=[1.1, 3.1, 5.1], y=[0.1, 0.3, 0.4], annotation="0.21"
+                ),
+                step=13,
+            ),
+            V1Event(
+                timestamp=dt_parser.parse("2018-12-11 10:26:57"),
+                curve=V1EventCurve(
+                    kind="custom",
+                    x=[1.1, 3.1, 5.1],
+                    y=[0.1, 0.3, 0.4],
+                    annotation="0.1",
+                ),
+                step=14,
+            ),
+        ]
+        events = V1Events.read(
+            name="foo",
+            kind="curve",
+            data=os.path.abspath("tests/fixtures/polyboard/curve/curve_events.plx"),
         )
         assert events.name == "foo"
         assert len(events.df.values) == 3

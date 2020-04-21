@@ -122,18 +122,13 @@ class V1EventAudio(BaseConfig, polyaxon_sdk.V1EventAudio):
 
 
 class V1EventChartKind(polyaxon_sdk.V1EventChartKind):
-    VALUES = {
-        polyaxon_sdk.V1EventChartKind.PLOTLY,
-        polyaxon_sdk.V1EventChartKind.BOKEH,
-        polyaxon_sdk.V1EventChartKind.VEGA,
-        polyaxon_sdk.V1EventChartKind.ROC,
-        polyaxon_sdk.V1EventChartKind.AUC,
-        polyaxon_sdk.V1EventChartKind.CONFUSION,
-    }
+    pass
 
 
 class EventChartSchema(BaseSchema):
-    kind = fields.Str(allow_none=True, validate=validate.OneOf(V1EventChartKind.VALUES))
+    kind = fields.Str(
+        allow_none=True, validate=validate.OneOf(V1EventChartKind.allowable_values)
+    )
     figure = fields.Dict(allow_none=True)
 
     @staticmethod
@@ -158,8 +153,33 @@ class V1EventChart(BaseConfig, polyaxon_sdk.V1EventChart):
         return super().to_dict(humanize_values, unknown, dump)
 
 
+class V1EventCurveKind(polyaxon_sdk.V1EventCurveKind):
+    pass
+
+
+class EventCurveSchema(BaseSchema):
+    kind = fields.Str(
+        allow_none=True, validate=validate.OneOf(V1EventCurveKind.allowable_values)
+    )
+    x = fields.List(fields.Float(), allow_none=True)
+    y = fields.List(fields.Float(), allow_none=True)
+    annotation = fields.Str(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return V1EventCurve
+
+
+class V1EventCurve(BaseConfig, polyaxon_sdk.V1EventCurve):
+    IDENTIFIER = "curve"
+    SCHEMA = EventCurveSchema
+    REDUCED_ATTRIBUTES = ["kind", "x", "y", "annotation"]
+
+
 class EventArtifactSchema(BaseSchema):
-    kind = fields.Str(allow_none=True, validate=validate.OneOf(V1ArtifactKind.VALUES))
+    kind = fields.Str(
+        allow_none=True, validate=validate.OneOf(V1ArtifactKind.allowable_values)
+    )
     path = fields.Str(allow_none=True)
 
     @staticmethod
@@ -200,6 +220,7 @@ class EventSchema(BaseSchema):
     html = fields.Str(allow_none=True)
     text = fields.Str(allow_none=True)
     chart = fields.Nested(EventChartSchema, allow_none=True)
+    curve = fields.Nested(EventCurveSchema, allow_none=True)
     artifact = fields.Nested(EventArtifactSchema, allow_none=True)
     model = fields.Nested(EventModelSchema, allow_none=True)
     dataframe = fields.Nested(EventDataframeSchema, allow_none=True)
@@ -222,6 +243,8 @@ class EventSchema(BaseSchema):
             data["video"] = parser.get_dict(key="video", value=data["video"],)
         if data.get("chart") is not None:
             data["chart"] = parser.get_dict(key="chart", value=data["chart"],)
+        if data.get("curve") is not None:
+            data["curve"] = parser.get_dict(key="curve", value=data["curve"], )
         if data.get("artifact") is not None:
             data["artifact"] = parser.get_dict(key="artifact", value=data["artifact"],)
         if data.get("model") is not None:
@@ -263,6 +286,8 @@ class EventSchema(BaseSchema):
             count = increment(count)
         if values.get("chart") is not None:
             count = increment(count)
+        if values.get("curve") is not None:
+            count = increment(count)
         if values.get("artifact") is not None:
             count = increment(count)
         if values.get("model") is not None:
@@ -291,6 +316,7 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
         "html",
         "text",
         "chart",
+        "curve",
         "artifact",
         "model",
         "dataframe",
@@ -309,6 +335,7 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
         html: str = None,
         text: str = None,
         chart: V1EventChart = None,
+        curve: V1EventCurve = None,
         artifact: V1EventArtifact = None,
         model: V1EventModel = None,
         dataframe: V1EventDataframe = None,
@@ -330,6 +357,7 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
             html=html,
             text=text,
             chart=chart,
+            curve=curve,
             artifact=artifact,
             model=model,
             dataframe=dataframe,
@@ -352,6 +380,8 @@ class V1Event(BaseConfig, polyaxon_sdk.V1Event):
             return self.text
         if self.chart is not None:
             return self.chart.to_dict(dump=dump) if dump else self.chart
+        if self.curve is not None:
+            return self.curve.to_dict(dump=dump) if dump else self.curve
         if self.artifact is not None:
             return self.artifact.to_dict(dump=dump) if dump else self.artifact
         if self.model is not None:
