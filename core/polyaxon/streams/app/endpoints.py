@@ -129,7 +129,7 @@ async def collect_logs(request):
 
 async def get_multi_runs_events(request):
     event_kind = request.path_params["event_kind"]
-    if event_kind not in V1ArtifactKind.VALUES:
+    if event_kind not in V1ArtifactKind.allowable_values:
         raise HTTPException(
             detail="received an unrecognisable event {}.".format(event_kind),
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -152,7 +152,7 @@ async def get_multi_runs_events(request):
 async def get_run_events(request):
     run_uuid = request.path_params["run_uuid"]
     event_kind = request.path_params["event_kind"]
-    if event_kind not in V1ArtifactKind.VALUES:
+    if event_kind not in V1ArtifactKind.allowable_values:
         raise HTTPException(
             detail="received an unrecognisable event {}.".format(event_kind),
             status_code=status.HTTP_400_BAD_REQUEST,

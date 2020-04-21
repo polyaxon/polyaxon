@@ -26,30 +26,23 @@ from polyaxon.schemas.fields.swagger import SwaggerField
 
 
 class V1SparkType(polyaxon_sdk.V1SparkType):
-    VALUES = {
-        polyaxon_sdk.V1SparkType.JAVA,
-        polyaxon_sdk.V1SparkType.SCALA,
-        polyaxon_sdk.V1SparkType.PYTHON,
-        polyaxon_sdk.V1SparkType.R,
-    }
+    pass
 
 
 class V1SparkDeploy(polyaxon_sdk.SparkDeployMode):
-    VALUES = {
-        polyaxon_sdk.SparkDeployMode.CLUSTER,
-        polyaxon_sdk.SparkDeployMode.CLIENT,
-        polyaxon_sdk.SparkDeployMode.IN_CLUSTER_CLIENT,
-    }
+    pass
 
 
 class SparkSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.SPARK))
     connections = fields.List(fields.Str(), allow_none=True)
     volumes = fields.List(SwaggerField(cls=k8s_schemas.V1Volume), allow_none=True)
-    type = fields.Str(allow_none=True, validate=validate.OneOf(V1SparkType.VALUES))
+    type = fields.Str(
+        allow_none=True, validate=validate.OneOf(V1SparkType.allowable_values)
+    )
     sparkVersion = fields.Str(allow_none=True)
     pythonVersion = fields.Str(
-        allow_none=True, validate=validate.OneOf(V1SparkDeploy.VALUES)
+        allow_none=True, validate=validate.OneOf(V1SparkDeploy.allowable_values)
     )
     deployMode = fields.Str(allow_none=True)
     main_class = fields.Str(allow_none=True)

@@ -18,11 +18,6 @@ import polyaxon_sdk
 
 
 class V1CleanPodPolicy(polyaxon_sdk.V1CleanPodPolicy):
-    VALUES = {
-        polyaxon_sdk.V1CleanPodPolicy.ALL,
-        polyaxon_sdk.V1CleanPodPolicy.RUNNING,
-        polyaxon_sdk.V1CleanPodPolicy.NONE,
-        polyaxon_sdk.V1CleanPodPolicy.ALL.lower(),
-        polyaxon_sdk.V1CleanPodPolicy.RUNNING.lower(),
-        polyaxon_sdk.V1CleanPodPolicy.NONE.lower(),
-    }
+    allowable_values = polyaxon_sdk.V1CleanPodPolicy.allowable_values + [
+        i.lower() for i in polyaxon_sdk.V1CleanPodPolicy.allowable_values
+    ]

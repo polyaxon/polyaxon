@@ -121,7 +121,7 @@ class V1GitConnection(BaseConfig, polyaxon_sdk.V1GitConnection):
 
 
 def validate_connection(kind, definition):
-    if kind not in V1ConnectionKind.VALUES:
+    if kind not in V1ConnectionKind.allowable_values:
         raise ValidationError("Connection with kind {} is not supported.".format(kind))
 
     if kind in V1ConnectionKind.BLOB_VALUES:

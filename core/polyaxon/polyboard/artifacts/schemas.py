@@ -25,7 +25,9 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 class RunArtifactSchema(BaseSchema):
     name = fields.Str(allow_none=True)
-    kind = fields.Str(allow_none=True, validate=validate.OneOf(V1ArtifactKind.VALUES))
+    kind = fields.Str(
+        allow_none=True, validate=validate.OneOf(V1ArtifactKind.allowable_values)
+    )
     path = fields.Str(allow_none=True)
     state = fields.Str(allow_none=True)
     summary = fields.Dict(allow_none=True)

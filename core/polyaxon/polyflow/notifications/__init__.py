@@ -22,18 +22,13 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
 class V1NotificationTrigger(polyaxon_sdk.NotificationTrigger):
-    VALUES = {
-        polyaxon_sdk.NotificationTrigger.SUCCEEDED,
-        polyaxon_sdk.NotificationTrigger.FAILED,
-        polyaxon_sdk.NotificationTrigger.STOPPED,
-        polyaxon_sdk.NotificationTrigger.DONE,
-    }
+    pass
 
 
 class NotificationSchema(BaseCamelSchema):
     connection = fields.Str(required=True)
     trigger = fields.Str(
-        allow_none=True, validate=validate.OneOf(V1NotificationTrigger.VALUES)
+        allow_none=True, validate=validate.OneOf(V1NotificationTrigger.allowable_values)
     )
 
     @staticmethod

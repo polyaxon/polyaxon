@@ -18,11 +18,4 @@ import polyaxon_sdk
 
 
 class V1TriggerPolicy(polyaxon_sdk.V1TriggerPolicy):
-    VALUES = {
-        polyaxon_sdk.V1TriggerPolicy.ALL_SUCCEEDED,
-        polyaxon_sdk.V1TriggerPolicy.ALL_FAILED,
-        polyaxon_sdk.V1TriggerPolicy.ALL_DONE,
-        polyaxon_sdk.V1TriggerPolicy.ONE_SUCCEEDED,
-        polyaxon_sdk.V1TriggerPolicy.ONE_FAILED,
-        polyaxon_sdk.V1TriggerPolicy.ONE_DONE,
-    }
+    pass

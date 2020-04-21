@@ -35,9 +35,3 @@ class UserSchema(BaseSchema):
 class UserConfig(BaseConfig, polyaxon_sdk.V1User):
     SCHEMA = UserSchema
     IDENTIFIER = "user"
-
-    def __init__(self, username, email, name=None, theme=None):  # TODO: Remove
-        self.username = username
-        self.email = email
-        self.name = name
-        self.theme = theme

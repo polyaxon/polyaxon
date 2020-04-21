@@ -19,7 +19,7 @@ class AuthenticationError(Exception):
     pass
 
 
-class AuthenticationTypes(object):
+class AuthenticationTypes:
     TOKEN = "Token"
     INTERNAL_TOKEN = "Internaltoken"
     EPHEMERAL_TOKEN = "EphemeralToken"

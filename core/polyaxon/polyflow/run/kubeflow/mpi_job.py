@@ -27,7 +27,7 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 class MPIJobSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.MPIJOB))
     clean_pod_policy = fields.Str(
-        allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.VALUES)
+        allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.allowable_values)
     )
     slots_per_worker = fields.Int(allow_none=True)
     launcher = fields.Nested(KFReplicaSchema, allow_none=True)

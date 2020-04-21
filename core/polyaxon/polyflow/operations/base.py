@@ -28,7 +28,7 @@ class BaseOpSchema(BaseComponentSchema):
     parallel = fields.Nested(ParallelSchema, allow_none=True)
     dependencies = fields.List(fields.Str(), allow_none=True)
     trigger = fields.Str(
-        allow_none=True, validate=validate.OneOf(V1TriggerPolicy.VALUES)
+        allow_none=True, validate=validate.OneOf(V1TriggerPolicy.allowable_values)
     )
     conditions = fields.Nested(ConditionSchema, allow_none=True)
     skip_on_upstream_skip = fields.Bool(allow_none=True)

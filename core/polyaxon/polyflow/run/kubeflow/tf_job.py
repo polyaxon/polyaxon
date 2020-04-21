@@ -27,7 +27,7 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 class TFJobSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.TFJOB))
     clean_pod_policy = fields.Str(
-        allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.VALUES)
+        allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.allowable_values)
     )
     chief = fields.Nested(KFReplicaSchema, allow_none=True)
     ps = fields.Nested(KFReplicaSchema, allow_none=True)

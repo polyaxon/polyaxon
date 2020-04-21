@@ -35,7 +35,9 @@ from polyaxon.schemas.types.k8s_resources import V1K8sResourceType
 
 class ConnectionTypeSchema(BaseCamelSchema):
     name = fields.Str(required=True)
-    kind = fields.Str(required=True, validate=validate.OneOf(V1ConnectionKind.VALUES))
+    kind = fields.Str(
+        required=True, validate=validate.OneOf(V1ConnectionKind.allowable_values)
+    )
     schema = fields.Nested(ConnectionSchema, allow_none=True)
     secret = fields.Nested(K8sResourceSchema, allow_none=True)
     config_map = fields.Nested(K8sResourceSchema, allow_none=True)

@@ -27,7 +27,7 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 class PytorchJobSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.PYTORCHJOB))
     clean_pod_policy = fields.Str(
-        allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.VALUES)
+        allow_none=True, validate=validate.OneOf(V1CleanPodPolicy.allowable_values)
     )
     master = fields.Nested(KFReplicaSchema, allow_none=True)
     worker = fields.Nested(KFReplicaSchema, allow_none=True)
