@@ -65,6 +65,7 @@ class Run(RunClient):
         )
         self.track_code = track_code
         self.track_env = track_env
+        self._has_model = False
         self._has_dashboard = False
         self._has_tensorboard = False
         self._artifacts_path = None
@@ -162,6 +163,11 @@ class Run(RunClient):
         if not self._has_dashboard:
             self._has_dashboard = True
             self._log_meta(has_dashboard=True)
+
+    def _log_model(self):
+        if not self._has_model:
+            self._has_model = True
+            self._log_meta(has_model=True)
 
     @check_no_op
     @check_offline
@@ -382,8 +388,6 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_mpl_image(self, data, name=None, close=True, step=None, timestamp=None):
-        self._log_dashboard()
-
         name = name or "figure"
         if isinstance(data, list):
             event_value = events_processors.figures_to_images(figures=data, close=close)
@@ -586,7 +590,7 @@ class Run(RunClient):
     def log_model(
         self, path, name=None, framework=None, spec=None, step=None, timestamp=None
     ):
-        self._log_dashboard()
+        self._log_model()
 
         name = name or os.path.basename(path)
         ext = None
