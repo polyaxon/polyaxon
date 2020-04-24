@@ -65,6 +65,7 @@ class Run(RunClient):
         )
         self.track_code = track_code
         self.track_env = track_env
+        self._has_dashboard = False
         self._has_tensorboard = False
         self._artifacts_path = None
         self._outputs_path = None
@@ -143,7 +144,6 @@ class Run(RunClient):
     def set_run_resource_logger(self):
         self._resource_logger = ResourceFileWriter(run_path=self.artifacts_path)
 
-    @check_no_op
     def _post_create(self):
         if self.artifacts_path:
             self.set_run_event_logger()
@@ -158,10 +158,17 @@ class Run(RunClient):
         else:
             self._register_wait()
 
+    def _log_dashboard(self):
+        if not self._has_dashboard:
+            self._has_dashboard = True
+            self._log_meta(has_dashboard=True)
+
     @check_no_op
     @check_offline
     @can_log_events
     def log_metric(self, name, value, step=None, timestamp=None):
+        self._log_dashboard()
+
         events = []
         event_value = events_processors.metric(value)
         if event_value == UNKNOWN:
@@ -181,6 +188,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_metrics(self, step=None, timestamp=None, **metrics):
+        self._log_dashboard()
+
         events = []
         for metric in metrics:
             event_value = events_processors.metric(metrics[metric])
@@ -202,6 +211,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_roc_auc_curve(self, name, fpr, tpr, auc=None, step=None, timestamp=None):
+        self._log_dashboard()
+
         event_value = events_processors.roc_auc_curve(fpr=fpr, tpr=tpr, auc=auc, )
         logged_event = LoggedEventSpec(
             name=name,
@@ -216,6 +227,8 @@ class Run(RunClient):
     def log_sklearn_roc_auc_curve(
         self, name, y_preds, y_targets, step=None, timestamp=None
     ):
+        self._log_dashboard()
+
         event_value = events_processors.sklearn_roc_auc_curve(
             y_preds=y_preds, y_targets=y_targets,
         )
@@ -232,6 +245,8 @@ class Run(RunClient):
     def log_pr_curve(
         self, name, precision, recall, average_precision=None, step=None, timestamp=None
     ):
+        self._log_dashboard()
+
         event_value = events_processors.pr_curve(
             precision=precision, recall=recall, average_precision=average_precision,
         )
@@ -246,6 +261,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_sklearn_pr_curve(self, name, y_preds, y_targets, step=None, timestamp=None):
+        self._log_dashboard()
+
         event_value = events_processors.sklearn_pr_curve(
             y_preds=y_preds, y_targets=y_targets,
         )
@@ -260,6 +277,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_curve(self, name, x, y, annotation=None, step=None, timestamp=None):
+        self._log_dashboard()
+
         event_value = events_processors.curve(x=x, y=y, annotation=annotation, )
         logged_event = LoggedEventSpec(
             name=name,
@@ -274,6 +293,8 @@ class Run(RunClient):
     def log_image(
         self, data, name=None, step=None, timestamp=None, rescale=1, dataformats="CHW"
     ):
+        self._log_dashboard()
+
         is_file = isinstance(data, str) and os.path.exists(data)
         ext = "png"
         if is_file:
@@ -330,6 +351,8 @@ class Run(RunClient):
         rescale=1,
         dataformats="CHW",
     ):
+        self._log_dashboard()
+
         name = name or "figure"
         asset_path = get_asset_path(
             run_path=self.artifacts_path,
@@ -359,6 +382,7 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_mpl_image(self, data, name=None, close=True, step=None, timestamp=None):
+        self._log_dashboard()
 
         name = name or "figure"
         if isinstance(data, list):
@@ -390,6 +414,7 @@ class Run(RunClient):
     def log_video(
         self, data, name=None, fps=4, step=None, timestamp=None, content_type=None
     ):
+        self._log_dashboard()
 
         is_file = isinstance(data, str) and os.path.exists(data)
         content_type = content_type or "gif"
@@ -445,6 +470,8 @@ class Run(RunClient):
         timestamp=None,
         content_type=None,
     ):
+        self._log_dashboard()
+
         is_file = isinstance(data, str) and os.path.exists(data)
         ext = content_type or "wav"
         if is_file:
@@ -491,6 +518,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_text(self, name, text, step=None, timestamp=None):
+        self._log_dashboard()
+
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.TEXT,
@@ -502,6 +531,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_html(self, name, html, step=None, timestamp=None):
+        self._log_dashboard()
+
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.HTML,
@@ -513,6 +544,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_np_histogram(self, name, values, counts, step=None, timestamp=None):
+        self._log_dashboard()
+
         event_value = events_processors.np_histogram(values=values, counts=counts)
 
         if event_value == UNKNOWN:
@@ -531,6 +564,8 @@ class Run(RunClient):
     def log_histogram(
         self, name, values, bins, max_bins=None, step=None, timestamp=None
     ):
+        self._log_dashboard()
+
         event_value = events_processors.histogram(
             values=values, bins=bins, max_bins=max_bins
         )
@@ -551,6 +586,8 @@ class Run(RunClient):
     def log_model(
         self, path, name=None, framework=None, spec=None, step=None, timestamp=None
     ):
+        self._log_dashboard()
+
         name = name or os.path.basename(path)
         ext = None
         if os.path.isfile(path):
@@ -584,6 +621,8 @@ class Run(RunClient):
     def log_dataframe(
         self, path, name=None, content_type=None, step=None, timestamp=None
     ):
+        self._log_dashboard()
+
         name = name or os.path.basename(path)
         ext = get_path_extension(filepath=path)
 
@@ -614,6 +653,8 @@ class Run(RunClient):
     def log_artifact(
         self, path, name=None, artifact_kind=None, step=None, timestamp=None
     ):
+        self._log_dashboard()
+
         name = name or os.path.basename(name)
         ext = get_path_extension(filepath=path)
         artifact_kind = artifact_kind or V1ArtifactKind.FILE
@@ -644,6 +685,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_plotly_chart(self, name, figure, step=None, timestamp=None):
+        self._log_dashboard()
+
         chart = events_processors.plotly_chart(figure=figure)
         logged_event = LoggedEventSpec(
             name=name,
@@ -656,6 +699,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_bokeh_chart(self, name, figure, step=None, timestamp=None):
+        self._log_dashboard()
+
         chart = events_processors.bokeh_chart(figure=figure)
         logged_event = LoggedEventSpec(
             name=name,
@@ -668,6 +713,8 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_mpl_plotly_chart(self, name, figure, step=None, timestamp=None):
+        self._log_dashboard()
+
         chart = events_processors.mpl_plotly_chart(figure=figure)
         logged_event = LoggedEventSpec(
             name=name,

@@ -131,8 +131,6 @@ class RunClient:
             self.owner, self.project, self.run_uuid
         )
 
-    @check_no_op
-    @check_offline
     def _update(self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = True):
         response = self.client.runs_v1.patch_run(
             owner=self.owner,
@@ -163,7 +161,6 @@ class RunClient:
             self._run_uuid = self._run_data.uuid
         return response
 
-    @check_no_op
     def _post_create(self):
         pass
 
@@ -487,9 +484,10 @@ class RunClient:
         patch_dict = {"inputs": inputs}
         if reset is False:
             patch_dict["merge"] = True
-            self._run_data.inputs = inputs
-        else:
+            self._run_data.inputs = self._run_data.inputs or {}
             self._run_data.inputs.update(inputs)
+        else:
+            self._run_data.inputs = inputs
         self._update(patch_dict, async_req=async_req)
 
     @check_no_op
@@ -498,9 +496,20 @@ class RunClient:
         patch_dict = {"outputs": outputs}
         if reset is False:
             patch_dict["merge"] = True
-            self._run_data.outputs = outputs
+            self._run_data.outputs = self._run_data.outputs or {}
+            self._run_data.outputs.update(outputs)
         else:
-            self._run_data.inputs.update(outputs)
+            self._run_data.outputs = outputs
+        self._update(patch_dict, async_req=async_req)
+
+    def _log_meta(self, reset=False, async_req=True, **meta):
+        patch_dict = {"meta_info": meta}
+        if reset is False:
+            patch_dict["merge"] = True
+            self._run_data.meta_info = self._run_data.meta_info or {}
+            self._run_data.meta_info.update(meta)
+        else:
+            self._run_data.meta_info = meta
         self._update(patch_dict, async_req=async_req)
 
     @check_no_op
@@ -610,7 +619,7 @@ class RunClient:
             is_input=True,
         )
         self.log_artifact_lineage(body=artifact_run)
-        self.update({"meta_info": {"tensorboard": True}, "merge": True})
+        self._log_meta(has_tensorboard=True)
 
     @check_no_op
     @check_offline
