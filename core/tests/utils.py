@@ -96,7 +96,7 @@ class BaseTestCase(TestCase):
 
         settings.CLIENT_CONFIG = None
         if self.SET_CLIENT_SETTINGS:
-            settings.CLIENT_CONFIG = ClientConfig()
+            settings.CLIENT_CONFIG = ClientConfig(host="1.2.3.4")
 
         settings.AGENT_CONFIG = None
         if self.SET_AGENT_SETTINGS:
