@@ -217,7 +217,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,
-            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -235,7 +235,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,
-            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -253,7 +253,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,
-            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -269,7 +269,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,
-            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -283,7 +283,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,
-            event=V1Event(timestamp=timestamp, step=step, curve=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -334,7 +334,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.IMAGE,
-            event=V1Event(timestamp=timestamp, step=step, image=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, image=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -374,7 +374,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.IMAGE,
-            event=V1Event(timestamp=timestamp, step=step, image=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, image=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -454,7 +454,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.VIDEO,
-            event=V1Event(timestamp=timestamp, step=step, video=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, video=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -510,7 +510,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.AUDIO,
-            event=V1Event(timestamp=timestamp, step=step, audio=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, audio=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -523,7 +523,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.TEXT,
-            event=V1Event(timestamp=timestamp, step=step, text=text),
+            event=V1Event.make(timestamp=timestamp, step=step, text=text),
         )
         self._event_logger.add_event(logged_event)
 
@@ -536,7 +536,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.HTML,
-            event=V1Event(timestamp=timestamp, step=step, html=html),
+            event=V1Event.make(timestamp=timestamp, step=step, html=html),
         )
         self._event_logger.add_event(logged_event)
 
@@ -554,7 +554,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.HISTOGRAM,
-            event=V1Event(timestamp=timestamp, step=step, histogram=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, histogram=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -576,7 +576,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.HISTOGRAM,
-            event=V1Event(timestamp=timestamp, step=step, histogram=event_value),
+            event=V1Event.make(timestamp=timestamp, step=step, histogram=event_value),
         )
         self._event_logger.add_event(logged_event)
 
@@ -611,7 +611,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.MODEL,
-            event=V1Event(timestamp=timestamp, step=step, model=model),
+            event=V1Event.make(timestamp=timestamp, step=step, model=model),
         )
         self._event_logger.add_event(logged_event)
 
@@ -643,7 +643,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.DATAFRAME,
-            event=V1Event(timestamp=timestamp, step=step, dataframe=df),
+            event=V1Event.make(timestamp=timestamp, step=step, dataframe=df),
         )
         self._event_logger.add_event(logged_event)
 
@@ -677,7 +677,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=artifact_kind,
-            event=V1Event(timestamp=timestamp, step=step, artifact=artifact),
+            event=V1Event.make(timestamp=timestamp, step=step, artifact=artifact),
         )
         self._event_logger.add_event(logged_event)
 
@@ -691,7 +691,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CHART,
-            event=V1Event(timestamp=timestamp, step=step, chart=chart),
+            event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
         )
         self._event_logger.add_event(logged_event)
 
@@ -705,7 +705,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CHART,
-            event=V1Event(timestamp=timestamp, step=step, chart=chart),
+            event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
         )
         self._event_logger.add_event(logged_event)
 
@@ -719,7 +719,7 @@ class Run(RunClient):
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CHART,
-            event=V1Event(timestamp=timestamp, step=step, chart=chart),
+            event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
         )
         self._event_logger.add_event(logged_event)
 
