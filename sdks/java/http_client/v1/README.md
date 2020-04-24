@@ -1,8 +1,8 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.0.81
-  - Build date: 2020-04-21T01:41:47.175+02:00[Europe/Berlin]
+- API version: 1.0.82
+  - Build date: 2020-04-24T20:53:44.256+02:00[Europe/Berlin]
 
 Polyaxon SDKs and REST API specification.
 
@@ -41,7 +41,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.0.81</version>
+  <version>1.0.82</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -51,7 +51,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.0.81"
+compile "org.openapitools:openapi-java-client:1.0.82"
 ```
 
 ### Others
@@ -64,7 +64,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.0.81.jar`
+* `target/openapi-java-client-1.0.82.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -300,7 +300,9 @@ Class | Method | HTTP request | Description
 *TeamsV1Api* | [**updateTeam**](docs/TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
 *TeamsV1Api* | [**updateTeamMember**](docs/TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
 *UsersV1Api* | [**getUser**](docs/UsersV1Api.md#getUser) | **GET** /api/v1/users | Login
-*VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | 
+*UsersV1Api* | [**patchUser**](docs/UsersV1Api.md#patchUser) | **PATCH** /api/v1/users | 
+*UsersV1Api* | [**updateUser**](docs/UsersV1Api.md#updateUser) | **PUT** /api/v1/users | 
+*VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | Update current user
 *VersionsV1Api* | [**getVersions**](docs/VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get current user
 
 
@@ -336,7 +338,7 @@ Class | Method | HTTP request | Description
  - [V1ConnectionResponse](docs/V1ConnectionResponse.md)
  - [V1ConnectionSchema](docs/V1ConnectionSchema.md)
  - [V1ConnectionType](docs/V1ConnectionType.md)
- - [V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
+ - [V1Credentials](docs/V1Credentials.md)
  - [V1CronSchedule](docs/V1CronSchedule.md)
  - [V1Dag](docs/V1Dag.md)
  - [V1DagReference](docs/V1DagReference.md)

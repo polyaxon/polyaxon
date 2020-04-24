@@ -16,6 +16,7 @@
 
 from marshmallow import EXCLUDE, fields
 
+import polyaxon_sdk
 from polyaxon.env_vars.keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
@@ -55,10 +56,10 @@ class CredentialsSchema(BaseSchema):
 
     @staticmethod
     def schema_config():
-        return CredentialsConfig
+        return V1Credentials
 
 
-class CredentialsConfig(BaseConfig):
+class V1Credentials(BaseConfig, polyaxon_sdk.V1Credentials):
     """
     Credentials config.
 

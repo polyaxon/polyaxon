@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | 
+[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | Update current user
 [**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get current user
 
 
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 # **getLogHandler**
 > V1LogHandler getLogHandler()
 
-
+Update current user
 
 ### Example
 ```java

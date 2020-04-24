@@ -1,6 +1,6 @@
 
 
-# V1CredsBodyRequest
+# V1Credentials
 
 ## Properties
 

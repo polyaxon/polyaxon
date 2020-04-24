@@ -28,7 +28,7 @@ message Auth {
 }
 
 // Login
-message CredsBodyRequest{
+message Credentials{
     // User username or email
     string username = 1;
 

@@ -1,4 +1,4 @@
-# V1CredsBodyRequest
+# V1Credentials
 
 ## Properties
 Name | Type | Description | Notes

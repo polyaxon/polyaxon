@@ -35,7 +35,7 @@ configuration.host = "http://localhost"
 with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.AuthV1Api(api_client)
-    body = polyaxon_sdk.V1CredsBodyRequest() # V1CredsBodyRequest | 
+    body = polyaxon_sdk.V1Credentials() # V1Credentials | 
 
     try:
         # List organization level queues names
@@ -49,7 +49,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**V1CredsBodyRequest**](V1CredsBodyRequest.md)|  | 
+ **body** | [**V1Credentials**](V1Credentials.md)|  | 
 
 ### Return type
 

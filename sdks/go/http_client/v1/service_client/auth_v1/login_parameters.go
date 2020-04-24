@@ -77,7 +77,7 @@ for the login operation typically these are written to a http.Request
 type LoginParams struct {
 
 	/*Body*/
-	Body *service_model.V1CredsBodyRequest
+	Body *service_model.V1Credentials
 
 	timeout    time.Duration
 	Context    context.Context
@@ -118,13 +118,13 @@ func (o *LoginParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the login params
-func (o *LoginParams) WithBody(body *service_model.V1CredsBodyRequest) *LoginParams {
+func (o *LoginParams) WithBody(body *service_model.V1Credentials) *LoginParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the login params
-func (o *LoginParams) SetBody(body *service_model.V1CredsBodyRequest) {
+func (o *LoginParams) SetBody(body *service_model.V1Credentials) {
 	o.Body = body
 }
 

@@ -47,7 +47,7 @@ type ClientService interface {
 }
 
 /*
-  GetLogHandler get log handler API
+  GetLogHandler updates current user
 */
 func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error) {
 	// TODO: Validate the params before sending

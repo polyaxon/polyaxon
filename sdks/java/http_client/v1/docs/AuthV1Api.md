@@ -36,7 +36,7 @@ public class Example {
     //ApiKey.setApiKeyPrefix("Token");
 
     AuthV1Api apiInstance = new AuthV1Api(defaultClient);
-    V1CredsBodyRequest body = new V1CredsBodyRequest(); // V1CredsBodyRequest | 
+    V1Credentials body = new V1Credentials(); // V1Credentials | 
     try {
       V1Auth result = apiInstance.login(body);
       System.out.println(result);
@@ -55,7 +55,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**V1CredsBodyRequest**](V1CredsBodyRequest.md)|  |
+ **body** | [**V1Credentials**](V1Credentials.md)|  |
 
 ### Return type
 

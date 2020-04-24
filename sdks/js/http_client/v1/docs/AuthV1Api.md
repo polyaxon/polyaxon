@@ -28,7 +28,7 @@ ApiKey.apiKey = 'YOUR API KEY';
 //ApiKey.apiKeyPrefix = 'Token';
 
 let apiInstance = new PolyaxonSdk.AuthV1Api();
-let body = new PolyaxonSdk.V1CredsBodyRequest(); // V1CredsBodyRequest | 
+let body = new PolyaxonSdk.V1Credentials(); // V1Credentials | 
 apiInstance.login(body, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -43,7 +43,7 @@ apiInstance.login(body, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**V1CredsBodyRequest**](V1CredsBodyRequest.md)|  | 
+ **body** | [**V1Credentials**](V1Credentials.md)|  | 
 
 ### Return type
 

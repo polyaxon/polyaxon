@@ -1,4 +1,4 @@
-# PolyaxonSdk.V1CredsBodyRequest
+# PolyaxonSdk.V1Credentials
 
 ## Properties
 

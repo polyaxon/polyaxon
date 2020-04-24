@@ -19,7 +19,7 @@ import pytest
 from tests.utils import BaseTestCase
 
 from polyaxon.env_vars.keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
-from polyaxon.schemas.api.authentication import AccessTokenConfig, CredentialsConfig
+from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
 
 
 @pytest.mark.api_mark
@@ -34,5 +34,5 @@ class TestAccessConfigs(BaseTestCase):
 
     def test_credentials_config(self):
         config_dict = {"username": "username", "password": "super-secret"}
-        config = CredentialsConfig.from_dict(config_dict)
+        config = V1Credentials.from_dict(config_dict)
         assert config.to_dict() == config_dict

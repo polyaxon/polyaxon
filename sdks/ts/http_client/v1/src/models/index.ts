@@ -42,7 +42,7 @@ export * from './V1ConnectionKind';
 export * from './V1ConnectionResponse';
 export * from './V1ConnectionSchema';
 export * from './V1ConnectionType';
-export * from './V1CredsBodyRequest';
+export * from './V1Credentials';
 export * from './V1CronSchedule';
 export * from './V1Dag';
 export * from './V1DagReference';
