@@ -39,9 +39,7 @@ class OperationSpecification(BaseSpecification):
     @classmethod
     def generate_run_data(cls, config: V1Operation, override=None, override_post=True):
         op_config = config.to_light_dict()
-        # Remove tag is is set
         component_config = op_config.pop("component", {})
-        component_config.pop("componentTag", None)
         values = [
             {"version": config.version},
             component_config,
@@ -63,6 +61,7 @@ class OperationSpecification(BaseSpecification):
             cls.TRIGGER,
             cls.CONDITIONS,
             cls.SKIP_ON_UPSTREAM_SKIP,
+            cls.HUB_REF,
         ]:
             override_field = op_config.get(field)
             if override_field:
