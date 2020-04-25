@@ -952,7 +952,9 @@ class TestRunLogging(TestEnvVarsCase):
         )
         values, counts = np.histogram(np.random.randint(255, size=(1000,)))
         with patch("polyaxon.tracking.run.Run._log_dashboard") as log_dashboard:
-            self.run.log_np_histogram(name="histo", values=values, counts=counts, step=1)
+            self.run.log_np_histogram(
+                name="histo", values=values, counts=counts, step=1
+            )
         assert log_dashboard.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1058,7 +1060,9 @@ class TestRunLogging(TestEnvVarsCase):
         model_file = tempfile.mkdtemp() + "/df.pkl"
         self.touch(model_file)
         with patch("polyaxon.tracking.run.Run._log_dashboard") as log_dashboard:
-            self.run.log_dataframe(name="dataframe", path=model_file, content_type="pickel")
+            self.run.log_dataframe(
+                name="dataframe", path=model_file, content_type="pickel"
+            )
         assert log_dashboard.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1254,7 +1258,9 @@ class TestRunLogging(TestEnvVarsCase):
 
         with patch("polyaxon.tracking.run.Run._log_dashboard") as log_dashboard:
             self.run.log_roc_auc_curve(name="roc_test", fpr=x, tpr=y, auc=0.6, step=1)
-            self.run.log_pr_curve(name="pr_test", precision=x, recall=y, average_precision=0.6, step=1)
+            self.run.log_pr_curve(
+                name="pr_test", precision=x, recall=y, average_precision=0.6, step=1
+            )
             self.run.log_curve(name="curve_test", x=x, y=y, annotation=0.6, step=1)
         assert log_dashboard.call_count == 3
         self.event_logger.flush()

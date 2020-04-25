@@ -171,6 +171,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
         return dags.sort_topologically(dag or self.dag, flatten=flatten)
 
     def process_components(self, inputs=None):
+        from polyaxon.polyaxonfile.check import collect_references
+
         inputs = inputs or []
         for _input in inputs:
             self._context["dag.inputs.{}".format(_input.name)] = _input
@@ -194,11 +196,23 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
         for op in self.operations:
             op_name = op.name
+            if op.has_url_reference or op.has_path_reference:
+                try:
+                    op = collect_references(op)
+                except Exception as e:
+                    raise PolyaxonSchemaError(
+                        "Pipeline op with name `{}` requires a component with ref `{}`, "
+                        "the reference could not be resolved. Error: {}".format(
+                            op_name, op.hub_ref or op.url_ref or op.path_ref, e
+                        )
+                    )
+            elif op.has_hub_reference:
+                continue
             if op.has_component_reference:
-                outputs = op.template.outputs
-                inputs = op.template.inputs
+                outputs = op.component.outputs
+                inputs = op.component.inputs
             elif op.has_dag_reference:
-                component_ref_name = op.template.name
+                component_ref_name = op.dag_ref
                 if op_name in self._op_component_mapping:
                     raise PolyaxonSchemaError(
                         "Pipeline has multiple ops with the same name `{}`".format(
@@ -215,12 +229,6 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 self._op_component_mapping[op_name] = component_ref_name
                 outputs = self._components_by_names[component_ref_name].outputs
                 inputs = self._components_by_names[component_ref_name].inputs
-            elif op.has_hub_reference:
-                continue
-            elif op.has_url_reference:
-                continue
-            elif op.has_path_reference:
-                continue
             else:
                 raise PolyaxonSchemaError(
                     "Pipeline op has no template field `{}`".format(op_name)
@@ -265,19 +273,12 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             )
 
         for op in self.operations:
-            if op.has_component_reference:
+            if op.has_hub_reference:
+                continue
+            elif op.has_component_reference:
                 component_ref = op.template.name
                 outputs = op.template.outputs
                 inputs = op.template.inputs
-            elif op.has_hub_reference:
-                component_ref = op.template.name
-                continue
-            elif op.has_url_reference:
-                component_ref = op.template.url
-                continue
-            elif op.has_path_reference:
-                component_ref = op.template.path
-                continue
             elif op.has_dag_reference:
                 component_ref = op.template.name
                 outputs = self._components_by_names[component_ref].outputs

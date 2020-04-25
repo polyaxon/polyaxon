@@ -19,6 +19,8 @@ import os
 import pytest
 
 from marshmallow import ValidationError
+
+from polyaxon import pkg
 from tests.utils import BaseTestCase
 
 from polyaxon.exceptions import PolyaxonfileError
@@ -75,6 +77,33 @@ class TestPolyaxonfiles(BaseTestCase):
                 polyaxonfile=os.path.abspath("tests/fixtures/plain/missing_kind.yml"),
                 is_cli=False,
             )
+
+    def test_multi_option_call(self):
+        with self.assertRaises(PolyaxonfileError):
+            check_polyaxonfile(
+                hub="component:12",
+                url="http://foo.bar",
+                is_cli=False,
+                to_op=False
+            )
+
+    def test_wong_hub_call(self):
+        with self.assertRaises(PolyaxonfileError):
+            check_polyaxonfile(
+                hub="component:12",
+                is_cli=False,
+                to_op=False
+            )
+
+    def test_from_hub(self):
+        operation = check_polyaxonfile(
+            hub="component:12",
+            is_cli=False,
+            to_op=True
+        )
+        assert operation.version == pkg.SCHEMA_VERSION
+        assert operation.kind == "operation"
+        assert operation.hub_ref == "component:12"
 
     def test_simple_file_passes(self):
         run_config = CompiledOperationSpecification.read(

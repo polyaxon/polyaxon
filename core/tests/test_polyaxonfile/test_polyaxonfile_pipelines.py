@@ -17,7 +17,9 @@
 import os
 
 import pytest
+from mock import patch
 
+from polyaxon.k8s.k8s_schemas import V1Container
 from tests.utils import BaseTestCase
 
 from polyaxon.exceptions import PolyaxonSchemaError
@@ -26,7 +28,7 @@ from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
     OperationSpecification,
 )
-from polyaxon.polyflow import V1CompiledOperation, V1RunKind
+from polyaxon.polyflow import V1CompiledOperation, V1RunKind, V1Component, V1IO, V1Job
 from polyaxon.polyflow.early_stopping import (
     V1FailureEarlyStopping,
     V1MetricEarlyStopping,
@@ -102,6 +104,26 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         assert run_config.schedule is not None
         assert run_config.schedule.kind == "cron"
         assert run_config.schedule.cron == "0 0 * * *"
+
+    def test_refs_pipeline(self):
+        run_config = V1CompiledOperation.read(
+            [
+                os.path.abspath("tests/fixtures/pipelines/ref_pipeline.yml"),
+                {"kind": "compiled_operation"},
+            ]
+        )
+        with patch("polyaxon.config_reader.spec.ConfigSpec.read") as config_read:
+            config_read.return_value = V1Component(
+                kind="component",
+                version="1.05",
+                inputs=[V1IO(name="str-input", iotype="str")],
+                run=V1Job(container=V1Container(name="test"))
+            ).to_dict()
+            compiled_op = CompiledOperationSpecification.apply_context(run_config)
+        assert compiled_op.run is not None
+        assert len(compiled_op.run.operations) == 2
+        assert compiled_op.run.operations[0].name == "ref-path-op"
+        assert compiled_op.run.operations[1].name == "ref-url-op"
 
     def test_interval_pipeline(self):
         plx_file = check_polyaxonfile(

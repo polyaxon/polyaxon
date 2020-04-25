@@ -23,9 +23,25 @@ from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile.manager import check_default_path, get_op_specification
 from polyaxon.polyaxonfile.params import parse_params
-from polyaxon.polyaxonfile.specs import get_specification
+from polyaxon.polyaxonfile.specs import get_specification, kinds
+from polyaxon.polyflow import V1Operation
 from polyaxon.utils.formatting import Printer, dict_tabulate
 from polyaxon.utils.list_utils import to_list
+
+
+def collect_references(config: V1Operation):
+    if config.has_component_reference or config.has_hub_reference:
+        return config
+    elif config.has_url_reference:
+        component = ConfigSpec.get_from(config.url_ref, "url").read()
+    elif config.has_path_reference:
+        component = ConfigSpec.get_from(config.path_ref).read()
+    else:
+        raise PolyaxonfileError("Operation found without component")
+
+    component = get_specification(data=component)
+    config.component = component
+    return config
 
 
 def check_polyaxonfile(
@@ -41,12 +57,27 @@ def check_polyaxonfile(
     is_cli: bool = True,
     to_op: bool = True,
 ):
+    if sum([1 for i in [polyaxonfile, python_module, url, hub] if i]) > 1:
+        message = (
+            "You can only use one and only one option: "
+            "hub, url, module, or path ro polyaxonfile.".format(hub)
+        )
+        if is_cli:
+            Printer.print_error(message, sys_exit=True)
+        else:
+            raise PolyaxonfileError(message)
     if not any([polyaxonfile, python_module, url, hub]):
         polyaxonfile = check_default_path(path=".")
     if not any([polyaxonfile, python_module, url, hub]):
         polyaxonfile = ""
+    if hub and not to_op:
+        message = "Something went wrong, calling hub component `{}` without operation.".format(hub)
+        if is_cli:
+            Printer.print_error(message, sys_exit=True)
+        else:
+            raise PolyaxonfileError(message)
 
-    polyaxonfile = to_list(polyaxonfile)
+    polyaxonfile = to_list(polyaxonfile, check_none=True)
 
     parsed_params = None
     if params:
@@ -64,21 +95,24 @@ def check_polyaxonfile(
             raise PolyaxonfileError(message)
 
     try:
-        if python_module:
-            plx_file = ConfigSpec.get_from(python_module, config_type=".py")
+        plx_file = None
+        if not hub:
+            if python_module:
+                plx_file = ConfigSpec.get_from(python_module, config_type=".py").read()
 
-        elif url:
-            plx_file = ConfigSpec.get_from(url, "url")
+            elif url:
+                plx_file = ConfigSpec.get_from(url, "url").read()
 
-        elif hub:
-            plx_file = ConfigSpec.get_from(hub, "hub")
+            else:
+                plx_file = ConfigSpec.read_from(polyaxonfile)
 
-        else:
-            plx_file = ConfigSpec.read_from(polyaxonfile)
+            plx_file = get_specification(data=plx_file)
+            if plx_file.kind == kinds.OPERATION:
+                plx_file = collect_references(plx_file)
 
-        plx_file = get_specification(data=plx_file)
-        if to_op:
+        if to_op or hub:
             plx_file = get_op_specification(
+                hub=hub,
                 config=plx_file,
                 params=parsed_params,
                 profile=profile,

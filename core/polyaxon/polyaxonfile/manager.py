@@ -19,6 +19,7 @@ import os
 from collections import Mapping
 from typing import Union
 
+from polyaxon import pkg
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
@@ -49,13 +50,14 @@ def check_default_path(path):
 
 
 def get_op_specification(
-    config: Union[V1Component, V1Operation],
+    config: Union[V1Component, V1Operation] = None,
+    hub=None,
     params=None,
     profile=None,
     queue=None,
     nocache=None,
 ) -> V1Operation:
-    job_data = {"version": config.version, "kind": kinds.OPERATION}
+    job_data = {"version": config.version if config else pkg.SCHEMA_VERSION, "kind": kinds.OPERATION}
     if params:
         if not isinstance(params, Mapping):
             raise PolyaxonfileError(
@@ -69,15 +71,19 @@ def get_op_specification(
     if nocache is not None:
         job_data["cache"] = {"disable": nocache}
 
-    if config.kind == kinds.OPERATION:
+    if hub:
+        job_data["hubRef"] = hub
+        config = get_specification(data=[job_data])
+    elif config.kind == kinds.OPERATION:
         config = get_specification(data=[config.to_dict(), job_data])
     else:
         job_data["component"] = config.to_dict()
         config = get_specification(data=[job_data])
     params = copy.deepcopy(config.params)
-    # Sanity check if params were passed
-    run_config = OperationSpecification.compile_operation(config)
-    run_config.validate_params(params=params, is_template=False)
-    if run_config.is_dag_run:
-        CompiledOperationSpecification.apply_context(run_config)
+    # Sanity check if params were passed and we are not dealing with a hub component
+    if not hub:
+        run_config = OperationSpecification.compile_operation(config)
+        run_config.validate_params(params=params, is_template=False)
+        if run_config.is_dag_run:
+            CompiledOperationSpecification.apply_context(run_config)
     return config

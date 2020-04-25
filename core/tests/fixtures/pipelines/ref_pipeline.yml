@@ -1,0 +1,24 @@
+---
+version: 1.05
+
+kind: component
+
+name: test-refs
+
+tags: [native]
+
+run:
+  kind: dag
+  operations:
+    - name: ref-path-op
+      pathRef: path/to/component
+      params:
+        str-input:
+          value: some-value
+    - name: ref-url-op
+      pathRef: https://foo.bar
+      dependencies: [ref-path-op]
+      params:
+        str-input:
+          ref: ops.ref-path-op
+          value: inputs.str-input
