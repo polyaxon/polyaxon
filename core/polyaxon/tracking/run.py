@@ -219,7 +219,7 @@ class Run(RunClient):
     def log_roc_auc_curve(self, name, fpr, tpr, auc=None, step=None, timestamp=None):
         self._log_dashboard()
 
-        event_value = events_processors.roc_auc_curve(fpr=fpr, tpr=tpr, auc=auc, )
+        event_value = events_processors.roc_auc_curve(fpr=fpr, tpr=tpr, auc=auc,)
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,
@@ -285,7 +285,7 @@ class Run(RunClient):
     def log_curve(self, name, x, y, annotation=None, step=None, timestamp=None):
         self._log_dashboard()
 
-        event_value = events_processors.curve(x=x, y=y, annotation=annotation, )
+        event_value = events_processors.curve(x=x, y=y, annotation=annotation,)
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,

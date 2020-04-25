@@ -50,20 +50,27 @@ class V1PolyaxonInitContainer(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'image': 'str',
-        'image_tag': 'str',
-        'image_pull_policy': 'str',
-        'resources': 'object'
+        "image": "str",
+        "image_tag": "str",
+        "image_pull_policy": "str",
+        "resources": "object",
     }
 
     attribute_map = {
-        'image': 'image',
-        'image_tag': 'image_tag',
-        'image_pull_policy': 'image_pull_policy',
-        'resources': 'resources'
+        "image": "image",
+        "image_tag": "image_tag",
+        "image_pull_policy": "image_pull_policy",
+        "resources": "resources",
     }
 
-    def __init__(self, image=None, image_tag=None, image_pull_policy=None, resources=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        image=None,
+        image_tag=None,
+        image_pull_policy=None,
+        resources=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1PolyaxonInitContainer - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -175,18 +182,20 @@ class V1PolyaxonInitContainer(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

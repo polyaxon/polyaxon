@@ -50,22 +50,30 @@ class V1EventVideo(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'height': 'int',
-        'width': 'int',
-        'colorspace': 'int',
-        'path': 'str',
-        'content_type': 'str'
+        "height": "int",
+        "width": "int",
+        "colorspace": "int",
+        "path": "str",
+        "content_type": "str",
     }
 
     attribute_map = {
-        'height': 'height',
-        'width': 'width',
-        'colorspace': 'colorspace',
-        'path': 'path',
-        'content_type': 'content_type'
+        "height": "height",
+        "width": "width",
+        "colorspace": "colorspace",
+        "path": "path",
+        "content_type": "content_type",
     }
 
-    def __init__(self, height=None, width=None, colorspace=None, path=None, content_type=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        height=None,
+        width=None,
+        colorspace=None,
+        path=None,
+        content_type=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1EventVideo - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -205,18 +213,20 @@ class V1EventVideo(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

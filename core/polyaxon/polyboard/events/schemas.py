@@ -244,7 +244,7 @@ class EventSchema(BaseSchema):
         if data.get("chart") is not None:
             data["chart"] = parser.get_dict(key="chart", value=data["chart"],)
         if data.get("curve") is not None:
-            data["curve"] = parser.get_dict(key="curve", value=data["curve"], )
+            data["curve"] = parser.get_dict(key="curve", value=data["curve"],)
         if data.get("artifact") is not None:
             data["artifact"] = parser.get_dict(key="artifact", value=data["artifact"],)
         if data.get("model") is not None:

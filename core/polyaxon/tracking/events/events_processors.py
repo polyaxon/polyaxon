@@ -453,7 +453,7 @@ def sklearn_roc_auc_curve(y_preds, y_targets):
     y_pred = y_preds.numpy()
     fpr, tpr, _ = roc_curve(y_true, y_pred)
     auc = roc_auc_score(y_true, y_pred)
-    return V1EventCurve(kind=V1EventCurveKind.ROC, x=fpr, y=tpr, annotation=str(auc), )
+    return V1EventCurve(kind=V1EventCurveKind.ROC, x=fpr, y=tpr, annotation=str(auc),)
 
 
 def pr_curve(precision, recall, average_precision=None):
