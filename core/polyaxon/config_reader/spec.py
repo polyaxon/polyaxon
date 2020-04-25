@@ -106,7 +106,7 @@ class ConfigSpec(object):
                 config = deep_update(config, config_results)
             elif config_value.check_if_exists:
                 raise PolyaxonSchemaError(
-                    "Cannot read config_value: `{}`".format(config_value)
+                    "Cannot read config_value: `{}`".format(config_value.value)
                 )
 
         return config
