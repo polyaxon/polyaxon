@@ -94,18 +94,6 @@ class BaseSpecification(Sections):
         cls.check_kind(data=data)
         return data[cls.KIND]
 
-    @staticmethod
-    def check_kind_operation(kind):
-        return kind == kinds.OPERATION
-
-    @staticmethod
-    def check_kind_compiled_operation(kind):
-        return kind == kinds.COMPILED_OPERATION
-
-    @staticmethod
-    def check_kind_component(kind):
-        return kind == kinds.COMPONENT
-
     @classmethod
     def read(cls, values):
         if isinstance(values, cls.CONFIG):
