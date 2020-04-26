@@ -127,7 +127,7 @@ def check_polyaxonfile(
         if is_cli:
             handle_cli_error(e, message=message, sys_exit=True)
         else:
-            raise PolyaxonfileError(message)
+            raise PolyaxonfileError(message) from e
 
 
 def check_polyaxonfile_kind(specification, kind):
