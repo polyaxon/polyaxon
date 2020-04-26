@@ -32,7 +32,7 @@ from polyaxon.client import PolyaxonClient
 from polyaxon.logger import clean_outputs, logger
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
-from polyaxon.schemas.api.authentication import AccessTokenConfig
+from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
 from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 
 
@@ -59,9 +59,7 @@ def login(token, username, password):
                 sys.exit(1)
 
         try:
-            body = polyaxon_sdk.models.V1CredsBodyRequest(
-                username=username, password=password
-            )
+            body = V1Credentials(username=username, password=password)
             access_auth = polyaxon_client.auth_v1.login(body=body)
         except (ApiException, HTTPError) as e:
             AuthConfigManager.purge()
