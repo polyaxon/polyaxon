@@ -571,9 +571,9 @@ class RunClient:
         summary = {}
         if hash:
             summary["hash"] = hash
-        elif content:
+        elif content is not None:
             summary["hash"] = hash_value(content)
-        if path:
+        if path is not None:
             summary["path"] = path
         if name:
             artifact_run = V1RunArtifact(
@@ -587,7 +587,7 @@ class RunClient:
         summary = {"path": path}
         if hash:
             summary["hash"] = hash
-        elif content:
+        elif content is not None:
             summary["hash"] = hash_value(content)
         name = os.path.basename(path)
         if name:
