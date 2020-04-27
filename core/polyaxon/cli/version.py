@@ -135,7 +135,7 @@ def check_cli_version():
             indentation.puts("pip install -U polyaxon-cli")
     elif LooseVersion(current_version) > LooseVersion(cli_config.latest_version):
         indentation.puts(
-            "You version of CLI ({}) is ahead of the latest version "
+            "Your version of CLI ({}) is ahead of the latest version "
             "supported by Polyaxon Platform ({}) on your cluster, "
             "and might be incompatible.".format(
                 current_version, cli_config.latest_version
