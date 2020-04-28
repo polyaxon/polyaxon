@@ -1,5 +1,5 @@
 # polyaxon_sdk.DashboardsV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -83,7 +83,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_dashboard**
-> object delete_dashboard(owner, uuid)
+> delete_dashboard(owner, uuid)
 
 
 
@@ -113,8 +113,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
-        api_response = api_instance.delete_dashboard(owner, uuid)
-        pprint(api_response)
+        api_instance.delete_dashboard(owner, uuid)
     except ApiException as e:
         print("Exception when calling DashboardsV1Api->delete_dashboard: %s\n" % e)
 ```
@@ -128,7 +127,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

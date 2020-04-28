@@ -1,5 +1,5 @@
 # UsersV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 

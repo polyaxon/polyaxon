@@ -1,5 +1,5 @@
 # ProjectDashboardsV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteProjectDashboard"></a>
 # **deleteProjectDashboard**
-> Object deleteProjectDashboard(owner, project, uuid)
+> deleteProjectDashboard(owner, project, uuid)
 
 Delete project dashboard
 
@@ -122,8 +122,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.deleteProjectDashboard(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.deleteProjectDashboard(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#deleteProjectDashboard");
       System.err.println("Status code: " + e.getCode());
@@ -145,7 +144,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

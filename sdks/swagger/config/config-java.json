@@ -2,9 +2,9 @@
   "modelPropertyNaming": "original",
   "packageName": "polyaxon_sdk",
   "projectName": "polyaxon-sdk",
-  "packageVersion": "1.0.82",
+  "packageVersion": "1.0.83",
   "author": "Polyaxon",
-  "description": "Polyaxon's typescript client",
+  "description": "Polyaxon sdk",
   "contact": {
     "name": "Polyaxon",
     "url": "https://www.polyaxon.com/",
@@ -15,9 +15,8 @@
     "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
   },
   "npmName": "@polyaxon/sdk",
-  "npmVersion": "1.0.82",
   "snapshot": false,
-  "supportsES6": true,
+  "hideGenerationTimestamp": true,
   "importMappings": {
     "V1Affinity": "io.kubernetes.client.openapi.models.V1Affinity",
     "V1Container": "io.kubernetes.client.openapi.models.V1Container",

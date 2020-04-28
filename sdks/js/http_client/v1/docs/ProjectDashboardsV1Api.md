@@ -1,6 +1,6 @@
 # PolyaxonSdk.ProjectDashboardsV1Api
 
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 ## deleteProjectDashboard
 
-> Object deleteProjectDashboard(owner, project, uuid)
+> deleteProjectDashboard(owner, project, uuid)
 
 Delete project dashboard
 
@@ -95,7 +95,7 @@ apiInstance.deleteProjectDashboard(owner, project, uuid, (error, data, response)
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -111,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

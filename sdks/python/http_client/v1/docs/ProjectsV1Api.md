@@ -1,5 +1,5 @@
 # polyaxon_sdk.ProjectsV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -30,7 +30,7 @@ Method | HTTP request | Description
 
 
 # **archive_project**
-> object archive_project(owner, project)
+> archive_project(owner, project)
 
 Archive project
 
@@ -61,8 +61,7 @@ project = 'project_example' # str | Project under namesapce
 
     try:
         # Archive project
-        api_response = api_instance.archive_project(owner, project)
-        pprint(api_response)
+        api_instance.archive_project(owner, project)
     except ApiException as e:
         print("Exception when calling ProjectsV1Api->archive_project: %s\n" % e)
 ```
@@ -76,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -99,7 +98,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **bookmark_project**
-> object bookmark_project(owner, project)
+> bookmark_project(owner, project)
 
 Bookmark project
 
@@ -130,8 +129,7 @@ project = 'project_example' # str | Project under namesapce
 
     try:
         # Bookmark project
-        api_response = api_instance.bookmark_project(owner, project)
-        pprint(api_response)
+        api_instance.bookmark_project(owner, project)
     except ApiException as e:
         print("Exception when calling ProjectsV1Api->bookmark_project: %s\n" % e)
 ```
@@ -145,7 +143,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -237,7 +235,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_project**
-> object delete_project(owner, project)
+> delete_project(owner, project)
 
 Delete project
 
@@ -268,8 +266,7 @@ project = 'project_example' # str | Project under namesapce
 
     try:
         # Delete project
-        api_response = api_instance.delete_project(owner, project)
-        pprint(api_response)
+        api_instance.delete_project(owner, project)
     except ApiException as e:
         print("Exception when calling ProjectsV1Api->delete_project: %s\n" % e)
 ```
@@ -283,7 +280,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -306,7 +303,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **disable_project_ci**
-> object disable_project_ci(owner, project)
+> disable_project_ci(owner, project)
 
 Disbale project CI
 
@@ -337,8 +334,7 @@ project = 'project_example' # str | Project under namesapce
 
     try:
         # Disbale project CI
-        api_response = api_instance.disable_project_ci(owner, project)
-        pprint(api_response)
+        api_instance.disable_project_ci(owner, project)
     except ApiException as e:
         print("Exception when calling ProjectsV1Api->disable_project_ci: %s\n" % e)
 ```
@@ -352,7 +348,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -375,7 +371,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **enable_project_ci**
-> object enable_project_ci(owner, project)
+> enable_project_ci(owner, project)
 
 Enable project CI
 
@@ -406,8 +402,7 @@ project = 'project_example' # str | Project under namesapce
 
     try:
         # Enable project CI
-        api_response = api_instance.enable_project_ci(owner, project)
-        pprint(api_response)
+        api_instance.enable_project_ci(owner, project)
     except ApiException as e:
         print("Exception when calling ProjectsV1Api->enable_project_ci: %s\n" % e)
 ```
@@ -421,7 +416,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -1164,7 +1159,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **restore_project**
-> object restore_project(owner, project)
+> restore_project(owner, project)
 
 Restore project
 
@@ -1195,8 +1190,7 @@ project = 'project_example' # str | Project under namesapce
 
     try:
         # Restore project
-        api_response = api_instance.restore_project(owner, project)
-        pprint(api_response)
+        api_instance.restore_project(owner, project)
     except ApiException as e:
         print("Exception when calling ProjectsV1Api->restore_project: %s\n" % e)
 ```
@@ -1210,7 +1204,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -1233,7 +1227,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **unbookmark_project**
-> object unbookmark_project(owner, project)
+> unbookmark_project(owner, project)
 
 Unbookmark project
 
@@ -1264,8 +1258,7 @@ project = 'project_example' # str | Project under namesapce
 
     try:
         # Unbookmark project
-        api_response = api_instance.unbookmark_project(owner, project)
-        pprint(api_response)
+        api_instance.unbookmark_project(owner, project)
     except ApiException as e:
         print("Exception when calling ProjectsV1Api->unbookmark_project: %s\n" % e)
 ```
@@ -1279,7 +1272,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

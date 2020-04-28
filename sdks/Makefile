@@ -107,7 +107,7 @@ generate-ts-swagger:
 	$(DOCKER_RUN) find ./ -name "*.ts" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-java-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -g java -o java/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-java.json -D hideGenerationTimestamp=true
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -g java -o java/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-java.json
 	$(DOCKER_RUN) find ./ -name "*.java" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-py-swagger:
@@ -148,8 +148,7 @@ prepare: clean \
 	compile-swagger \
 	swagger-concat
 
-all: prepare \
-	swagger-generate
+all: prepare
 
 compile-pb: compile-go \
 	compile-python

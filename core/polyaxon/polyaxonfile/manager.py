@@ -57,7 +57,10 @@ def get_op_specification(
     queue=None,
     nocache=None,
 ) -> V1Operation:
-    job_data = {"version": config.version if config else pkg.SCHEMA_VERSION, "kind": kinds.OPERATION}
+    job_data = {
+        "version": config.version if config else pkg.SCHEMA_VERSION,
+        "kind": kinds.OPERATION,
+    }
     if params:
         if not isinstance(params, Mapping):
             raise PolyaxonfileError(

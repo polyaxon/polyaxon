@@ -1,5 +1,5 @@
 # polyaxon_sdk.OrganizationsV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -155,7 +155,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization**
-> object delete_organization(owner)
+> delete_organization(owner)
 
 
 
@@ -184,8 +184,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     owner = 'owner_example' # str | Owner of the namespace
 
     try:
-        api_response = api_instance.delete_organization(owner)
-        pprint(api_response)
+        api_instance.delete_organization(owner)
     except ApiException as e:
         print("Exception when calling OrganizationsV1Api->delete_organization: %s\n" % e)
 ```
@@ -198,7 +197,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -221,7 +220,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization_member**
-> object delete_organization_member(owner, user)
+> delete_organization_member(owner, user)
 
 
 
@@ -251,8 +250,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 user = 'user_example' # str | Memeber under namesapce
 
     try:
-        api_response = api_instance.delete_organization_member(owner, user)
-        pprint(api_response)
+        api_instance.delete_organization_member(owner, user)
     except ApiException as e:
         print("Exception when calling OrganizationsV1Api->delete_organization_member: %s\n" % e)
 ```
@@ -266,7 +264,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

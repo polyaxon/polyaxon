@@ -1,5 +1,5 @@
 # polyaxon_sdk.AccessResourcesV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -84,7 +84,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_access_resource**
-> object delete_access_resource(owner, uuid)
+> delete_access_resource(owner, uuid)
 
 Delete access resource
 
@@ -115,8 +115,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete access resource
-        api_response = api_instance.delete_access_resource(owner, uuid)
-        pprint(api_response)
+        api_instance.delete_access_resource(owner, uuid)
     except ApiException as e:
         print("Exception when calling AccessResourcesV1Api->delete_access_resource: %s\n" % e)
 ```
@@ -130,7 +129,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

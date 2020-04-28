@@ -1,5 +1,5 @@
 # HubComponentsV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteHubComponent"></a>
 # **deleteHubComponent**
-> Object deleteHubComponent(owner, uuid)
+> deleteHubComponent(owner, uuid)
 
 Delete hub model
 
@@ -118,8 +118,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.deleteHubComponent(owner, uuid);
-      System.out.println(result);
+      apiInstance.deleteHubComponent(owner, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling HubComponentsV1Api#deleteHubComponent");
       System.err.println("Status code: " + e.getCode());
@@ -140,7 +139,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

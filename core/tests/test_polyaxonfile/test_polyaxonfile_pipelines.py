@@ -17,18 +17,18 @@
 import os
 
 import pytest
-from mock import patch
 
-from polyaxon.k8s.k8s_schemas import V1Container
+from mock import patch
 from tests.utils import BaseTestCase
 
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.k8s.k8s_schemas import V1Container
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
     OperationSpecification,
 )
-from polyaxon.polyflow import V1CompiledOperation, V1RunKind, V1Component, V1IO, V1Job
+from polyaxon.polyflow import V1IO, V1CompiledOperation, V1Component, V1Job, V1RunKind
 from polyaxon.polyflow.early_stopping import (
     V1FailureEarlyStopping,
     V1MetricEarlyStopping,
@@ -117,7 +117,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
                 kind="component",
                 version="1.05",
                 inputs=[V1IO(name="str-input", iotype="str")],
-                run=V1Job(container=V1Container(name="test"))
+                run=V1Job(container=V1Container(name="test")),
             ).to_dict()
             compiled_op = CompiledOperationSpecification.apply_context(run_config)
         assert compiled_op.run is not None

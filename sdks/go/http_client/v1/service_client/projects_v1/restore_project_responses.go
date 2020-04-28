@@ -83,23 +83,13 @@ func NewRestoreProjectOK() *RestoreProjectOK {
 A successful response.
 */
 type RestoreProjectOK struct {
-	Payload interface{}
 }
 
 func (o *RestoreProjectOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/restore][%d] restoreProjectOK  %+v", 200, o.Payload)
-}
-
-func (o *RestoreProjectOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/restore][%d] restoreProjectOK ", 200)
 }
 
 func (o *RestoreProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

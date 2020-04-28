@@ -71,7 +71,9 @@ def check_polyaxonfile(
     if not any([polyaxonfile, python_module, url, hub]):
         polyaxonfile = ""
     if hub and not to_op:
-        message = "Something went wrong, calling hub component `{}` without operation.".format(hub)
+        message = "Something went wrong, calling hub component `{}` without operation.".format(
+            hub
+        )
         if is_cli:
             Printer.print_error(message, sys_exit=True)
         else:

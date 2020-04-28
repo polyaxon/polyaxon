@@ -83,23 +83,13 @@ func NewDeleteTeamMemberOK() *DeleteTeamMemberOK {
 A successful response.
 */
 type DeleteTeamMemberOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteTeamMemberOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] deleteTeamMemberOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteTeamMemberOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] deleteTeamMemberOK ", 200)
 }
 
 func (o *DeleteTeamMemberOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

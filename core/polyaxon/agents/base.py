@@ -238,11 +238,12 @@ class BaseAgent:
                 )
                 self.apply_run(run_data=run_data)
             else:
-                logger.info(
-                    "Run submission error."
-                )
+                logger.info("Run submission error.")
                 self.log_run_failed(
-                    run_owner=run_owner, run_project=run_project, run_uuid=run_uuid, exc=e
+                    run_owner=run_owner,
+                    run_project=run_project,
+                    run_uuid=run_uuid,
+                    exc=e,
                 )
         except Exception as e:
             self.log_run_failed(

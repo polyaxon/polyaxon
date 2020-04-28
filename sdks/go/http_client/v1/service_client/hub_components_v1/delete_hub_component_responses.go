@@ -83,23 +83,13 @@ func NewDeleteHubComponentOK() *DeleteHubComponentOK {
 A successful response.
 */
 type DeleteHubComponentOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteHubComponentOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/components/{uuid}][%d] deleteHubComponentOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteHubComponentOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/components/{uuid}][%d] deleteHubComponentOK ", 200)
 }
 
 func (o *DeleteHubComponentOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

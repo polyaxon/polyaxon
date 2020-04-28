@@ -23,6 +23,8 @@ def handle_cli_error(e, message=None, sys_exit: bool = False):
         Printer.print_error(message)
     if hasattr(e, "status"):
         Printer.print_error("Error message: {}.".format(e))
-        Printer.print_error(HTTP_ERROR_MESSAGES_MAPPING.get(e.status), sys_exit=sys_exit)
+        Printer.print_error(
+            HTTP_ERROR_MESSAGES_MAPPING.get(e.status), sys_exit=sys_exit
+        )
     else:
         Printer.print_error("Error message: {}.".format(e), sys_exit=sys_exit)

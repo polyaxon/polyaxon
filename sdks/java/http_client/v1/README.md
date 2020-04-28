@@ -1,8 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.0.82
-  - Build date: 2020-04-24T20:53:44.256+02:00[Europe/Berlin]
+- API version: 1.0.83
 
 Polyaxon SDKs and REST API specification.
 
@@ -41,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.0.82</version>
+  <version>1.0.83</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -51,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.0.82"
+compile "org.openapitools:openapi-java-client:1.0.83"
 ```
 
 ### Others
@@ -64,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.0.82.jar`
+* `target/openapi-java-client-1.0.83.jar`
 * `target/lib/*.jar`
 
 ## Getting Started

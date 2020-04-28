@@ -1,5 +1,5 @@
 # OrganizationsV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteOrganization"></a>
 # **deleteOrganization**
-> Object deleteOrganization(owner)
+> deleteOrganization(owner)
 
 
 
@@ -194,8 +194,7 @@ public class Example {
     OrganizationsV1Api apiInstance = new OrganizationsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
     try {
-      Object result = apiInstance.deleteOrganization(owner);
-      System.out.println(result);
+      apiInstance.deleteOrganization(owner);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganization");
       System.err.println("Status code: " + e.getCode());
@@ -215,7 +214,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -237,7 +236,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteOrganizationMember"></a>
 # **deleteOrganizationMember**
-> Object deleteOrganizationMember(owner, user)
+> deleteOrganizationMember(owner, user)
 
 
 
@@ -266,8 +265,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String user = "user_example"; // String | Memeber under namesapce
     try {
-      Object result = apiInstance.deleteOrganizationMember(owner, user);
-      System.out.println(result);
+      apiInstance.deleteOrganizationMember(owner, user);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganizationMember");
       System.err.println("Status code: " + e.getCode());
@@ -288,7 +286,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

@@ -1,5 +1,5 @@
 # AccessResourcesV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteAccessResource"></a>
 # **deleteAccessResource**
-> Object deleteAccessResource(owner, uuid)
+> deleteAccessResource(owner, uuid)
 
 Delete access resource
 
@@ -118,8 +118,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.deleteAccessResource(owner, uuid);
-      System.out.println(result);
+      apiInstance.deleteAccessResource(owner, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling AccessResourcesV1Api#deleteAccessResource");
       System.err.println("Status code: " + e.getCode());
@@ -140,7 +139,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

@@ -1,5 +1,5 @@
 # polyaxon_sdk.ConnectionsV1Api
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -84,7 +84,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_connection**
-> object delete_connection(owner, uuid)
+> delete_connection(owner, uuid)
 
 Delete connection
 
@@ -115,8 +115,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete connection
-        api_response = api_instance.delete_connection(owner, uuid)
-        pprint(api_response)
+        api_instance.delete_connection(owner, uuid)
     except ApiException as e:
         print("Exception when calling ConnectionsV1Api->delete_connection: %s\n" % e)
 ```
@@ -130,7 +129,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

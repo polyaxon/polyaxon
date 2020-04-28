@@ -83,23 +83,13 @@ func NewStopRunOK() *StopRunOK {
 A successful response.
 */
 type StopRunOK struct {
-	Payload interface{}
 }
 
 func (o *StopRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunOK  %+v", 200, o.Payload)
-}
-
-func (o *StopRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunOK ", 200)
 }
 
 func (o *StopRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

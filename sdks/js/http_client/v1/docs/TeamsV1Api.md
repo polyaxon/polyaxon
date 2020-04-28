@@ -1,6 +1,6 @@
 # PolyaxonSdk.TeamsV1Api
 
-Polyaxon&#39;s typescript client
+Polyaxon sdk
 
 All URIs are relative to *http://localhost*
 
@@ -128,7 +128,7 @@ Name | Type | Description  | Notes
 
 ## deleteTeam
 
-> Object deleteTeam(owner, team)
+> deleteTeam(owner, team)
 
 Delete organization
 
@@ -150,7 +150,7 @@ apiInstance.deleteTeam(owner, team, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 
 ## deleteTeamMember
 
-> Object deleteTeamMember(owner, team, user)
+> deleteTeamMember(owner, team, user)
 
 Delete organization member details
 
@@ -202,7 +202,7 @@ apiInstance.deleteTeamMember(owner, team, user, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -218,7 +218,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

@@ -83,23 +83,13 @@ func NewCollectRunLogsOK() *CollectRunLogsOK {
 A successful response.
 */
 type CollectRunLogsOK struct {
-	Payload interface{}
 }
 
 func (o *CollectRunLogsOK) Error() string {
-	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs][%d] collectRunLogsOK  %+v", 200, o.Payload)
-}
-
-func (o *CollectRunLogsOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs][%d] collectRunLogsOK ", 200)
 }
 
 func (o *CollectRunLogsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }
