@@ -19,23 +19,6 @@ rules:
 - apiGroups:
   - ""
   resources:
-  - configmaps
-  - serviceaccounts
-  verbs:
-  - create
-  - list
-  - watch
-# This is needed for the launcher Role.
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - get
-# This is needed for the launcher Role.
-- apiGroups:
-  - ""
-  resources:
   - pods/exec
   verbs:
   - create

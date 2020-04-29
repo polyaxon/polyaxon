@@ -39,7 +39,7 @@ spec:
           "-alsologtostderr",
           "--kubectl-delivery-image",
           "{{ .Values.kubectlDelivery.image }}:{{ .Values.kubectlDelivery.imageTag }}",
-          "--namespace",
+          "--lock-namespace",
           "{{ .Release.Namespace }}"
         ]
         env:
