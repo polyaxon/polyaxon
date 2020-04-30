@@ -66,4 +66,5 @@ message Schemas {
     ImageType image = 25;
     EventType event_type = 26;
     Event event = 28;
+    ParallelKind parallel_kind = 27;
 }

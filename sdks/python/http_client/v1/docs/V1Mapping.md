@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **str** |  | [optional] [default to 'mapping']
-**values** | **str** |  | [optional] 
+**values** | **list[object]** |  | [optional] 
 **concurrency** | **int** |  | [optional] 
 **early_stopping** | **list[object]** |  | [optional] 
 

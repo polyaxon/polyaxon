@@ -81,6 +81,9 @@ type V1Schemas struct {
 	// parallel
 	Parallel *V1Parallel `json:"parallel,omitempty"`
 
+	// parallel kind
+	ParallelKind V1ParallelKind `json:"parallel_kind,omitempty"`
+
 	// polyaxon init container
 	PolyaxonInitContainer *V1PolyaxonInitContainer `json:"polyaxon_init_container,omitempty"`
 
@@ -175,6 +178,10 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateParallel(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateParallelKind(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -517,6 +524,22 @@ func (m *V1Schemas) validateParallel(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateParallelKind(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ParallelKind) { // not required
+		return nil
+	}
+
+	if err := m.ParallelKind.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("parallel_kind")
+		}
+		return err
 	}
 
 	return nil

@@ -10,7 +10,7 @@
     <h1>Polyaxon SDKs and REST API specification.</h1>
     <p class="sw-info">
         
-        Version: <span class="sw-info-version">1.0.83</span>
+        Version: <span class="sw-info-version">1.0.84</span>
     </p>
     <p><p>Polyaxon SDKs and REST API specification.</p>
     </p>
@@ -48009,7 +48009,7 @@
                                                 <dt data-property-name="values">
                                                     <span class="json-property-name">values:</span>
                                                     
-                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-type">object[]</span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     
                                                 </dt>
@@ -48017,7 +48017,15 @@
                                                     
                                                     <div class="json-inner-schema">
                                                         
-                                                    </div>
+                                                                        <section class="json-schema-array-items">
+                                                                            
+                                                                            <span class="json-property-type">object</span>
+                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                            
+                                                                            <div class="json-inner-schema">
+                                                                                
+                                                                            </div>
+                                                                        </section>                </div>
                                                 </dd>
                                                 <dt data-property-name="concurrency">
                                                     <span class="json-property-name">concurrency:</span>
@@ -49966,6 +49974,37 @@
                                                 </dd>
                                         </dl>
                                     </section>
+                    </div>
+                </div>        
+                <div id="definition-v1ParallelKind" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/v1ParallelKind"></a>v1ParallelKind:
+                                    <span class="json-property-type">
+                <span class="json-property-type">string</span>    <span class="json-property-enum" title="Possible values">, x &isin; {
+                                <span class="json-property-enum-item">random</span>
+                                (default)
+                            ,
+                                <span class="json-property-enum-item">grid</span>
+                            ,
+                                <span class="json-property-enum-item">hyperband</span>
+                            ,
+                                <span class="json-property-enum-item">bayes</span>
+                            ,
+                                <span class="json-property-enum-item">hyperopt</span>
+                            ,
+                                <span class="json-property-enum-item">iterative</span>
+                            ,
+                                <span class="json-property-enum-item">mapping</span>
+                            
+                        }
+                        </span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
                     </div>
                 </div>        
                 <div id="definition-v1Param" class="panel panel-definition">
@@ -53067,6 +53106,20 @@
                                                     <span class="json-property-name">event:</span>
                                                     
                                                     <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/v1Event">v1Event</a>
+                                                    </span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="parallel_kind">
+                                                    <span class="json-property-name">parallel_kind:</span>
+                                                    
+                                                    <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/v1ParallelKind">v1ParallelKind</a>
                                                     </span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     

@@ -29,5 +29,6 @@ Name | Type | Description | Notes
 **image** | [**V1ImageType**](V1ImageType.md) |  | [optional] 
 **event_type** | [**V1EventType**](V1EventType.md) |  | [optional] 
 **event** | [**V1Event**](V1Event.md) |  | [optional] 
+**parallel_kind** | [**V1ParallelKind**](V1ParallelKind.md) |  | [optional] 
 
 

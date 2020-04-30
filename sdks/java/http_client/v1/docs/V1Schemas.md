@@ -31,6 +31,7 @@ Name | Type | Description | Notes
 **image** | [**V1ImageType**](V1ImageType.md) |  |  [optional]
 **eventType** | [**V1EventType**](V1EventType.md) |  |  [optional]
 **event** | [**V1Event**](V1Event.md) |  |  [optional]
+**parallelKind** | [**V1ParallelKind**](V1ParallelKind.md) |  |  [optional]
 
 
 

@@ -35,11 +35,11 @@ type V1Mapping struct {
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
-	// Kind of parallel, should be equal to "iterative"
+	// Kind of parallel, should be equal to "mapping"
 	Kind *string `json:"kind,omitempty"`
 
 	// The mapping values
-	Values string `json:"values,omitempty"`
+	Values []interface{} `json:"values"`
 }
 
 // Validate validates this v1 mapping

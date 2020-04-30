@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.83",
+    "version": "1.0.84",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -14519,11 +14519,14 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"iterative\"",
+          "title": "Kind of parallel, should be equal to \"mapping\"",
           "default": "mapping"
         },
         "values": {
-          "type": "string",
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
           "title": "The mapping values"
         },
         "concurrency": {
@@ -14941,6 +14944,19 @@
         }
       },
       "title": "All Schemas message"
+    },
+    "v1ParallelKind": {
+      "type": "string",
+      "enum": [
+        "random",
+        "grid",
+        "hyperband",
+        "bayes",
+        "hyperopt",
+        "iterative",
+        "mapping"
+      ],
+      "default": "random"
     },
     "v1Param": {
       "type": "object",
@@ -15887,6 +15903,9 @@
         },
         "event": {
           "$ref": "#/definitions/v1Event"
+        },
+        "parallel_kind": {
+          "$ref": "#/definitions/v1ParallelKind"
         }
       }
     },

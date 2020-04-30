@@ -23,6 +23,15 @@ import "google/protobuf/struct.proto";
 import "v1/polyflow/optimization.proto";
 import "v1/polyflow/k8s.proto";
 
+enum ParallelKind {
+    random = 0;
+    grid = 1;
+    hyperband = 2;
+    bayes = 3;
+    hyperopt = 4;
+    iterative = 5;
+    mapping = 6;
+}
 
 // Parallelism based on randomly generated search space
 message RandomSearch {
@@ -196,11 +205,11 @@ message Iterative {
 
 // Parallelism based on map/array either specified manually by the user or passed from another step
 message Mapping {
-    // Kind of parallel, should be equal to "iterative"
+    // Kind of parallel, should be equal to "mapping"
     string kind = 1;
 
     // The mapping values
-    string values = 2;
+    repeated google.protobuf.Struct values = 2;
 
     // Number of concurrent runs
     int32 concurrency = 6;
