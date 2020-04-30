@@ -13,7 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Union
 
+from polyaxon.polyflow.parallel.kinds import V1ParallelKind
 from polyaxon.polyflow.parallel.bayes import (
     AcquisitionFunctions,
     BayesSchema,
@@ -21,6 +23,38 @@ from polyaxon.polyflow.parallel.bayes import (
     GaussianProcessesKernels,
     UtilityFunctionConfig,
     V1Bayes,
+)
+from polyaxon.polyflow.parallel.matrix import (
+    V1HpChoice,
+    HpChoiceSchema,
+    V1HpPChoice,
+    HpPChoiceSchema,
+    V1HpRange,
+    HpRangeSchema,
+    V1HpLinSpace,
+    HpLinSpaceSchema,
+    V1HpLogSpace,
+    HpLogSpaceSchema,
+    V1HpGeomSpace,
+    HpGeomSpaceSchema,
+    V1HpUniform,
+    HpUniformSchema,
+    V1HpQUniform,
+    HpQUniformSchema,
+    V1HpLogUniform,
+    HpLogUniformSchema,
+    V1HpQLogUniform,
+    HpQLogUniformSchema,
+    V1HpNormal,
+    HpNormalSchema,
+    V1HpQNormal,
+    HpQNormalSchema,
+    V1HpLogNormal,
+    HpLogNormalSchema,
+    V1HpQLogNormal,
+    HpQLogNormalSchema,
+    MatrixSchema,
+    V1HpParam,
 )
 from polyaxon.polyflow.parallel.grid_search import GridSearchSchema, V1GridSearch
 from polyaxon.polyflow.parallel.hyperband import HyperbandSchema, V1Hyperband
@@ -35,14 +69,25 @@ class ParallelSchema(BaseOneOfSchema):
     TYPE_FIELD = "kind"
     TYPE_FIELD_REMOVE = False
     SCHEMAS = {
-        V1Mapping.IDENTIFIER: MappingSchema,
-        V1GridSearch.IDENTIFIER: GridSearchSchema,
-        V1RandomSearch.IDENTIFIER: RandomSearchSchema,
-        V1Hyperband.IDENTIFIER: HyperbandSchema,
-        V1Bayes.IDENTIFIER: BayesSchema,
-        V1Hyperopt.IDENTIFIER: HyperoptSchema,
-        V1Iterative.IDENTIFIER: IterativeSchema,
+        V1ParallelKind.MAPPING: MappingSchema,
+        V1ParallelKind.GRID: GridSearchSchema,
+        V1ParallelKind.RANDOM: RandomSearchSchema,
+        V1ParallelKind.HYPERBAND: HyperbandSchema,
+        V1ParallelKind.BAYES: BayesSchema,
+        V1ParallelKind.HYPEROPT: HyperoptSchema,
+        V1ParallelKind.ITERATIVE: IterativeSchema,
     }
+
+
+V1Parallel = Union[
+    V1Mapping,
+    V1GridSearch,
+    V1RandomSearch,
+    V1Hyperband,
+    V1Bayes,
+    V1Hyperopt,
+    V1Iterative,
+]
 
 
 class ParallelMixin(object):

@@ -28,7 +28,7 @@ from polyaxon.polyflow import dags
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.environment import EnvironmentSchema
 from polyaxon.polyflow.io import V1IO
-from polyaxon.polyflow.io import params as ops_params
+from polyaxon.polyflow.params import ops_params
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.swagger import SwaggerField
@@ -119,7 +119,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
         for param in op.params:
             param_spec = op.params[param].get_spec(
-                name=param, iotype=None, is_flag=None
+                name=param, iotype=None, is_flag=None, is_list=None
             )
             if param_spec.param.is_ops_ref:
                 upstream.add(param_spec.param.entity_ref)
@@ -292,6 +292,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 inputs=inputs,
                 outputs=outputs,
                 context=self._context,
+                parallel=None,
                 is_template=False,
                 check_runs=False,
                 extra_info="<op {}>.<component {}>".format(op.name, component_ref),

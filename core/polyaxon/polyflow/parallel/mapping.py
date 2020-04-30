@@ -19,12 +19,13 @@ import polyaxon_sdk
 from marshmallow import fields, validate
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.parallel.kinds import V1ParallelKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
 class MappingSchema(BaseCamelSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("mapping"))
+    kind = fields.Str(allow_none=True, validate=validate.Equal(V1ParallelKind.MAPPING))
     values = RefOrObject(fields.List(fields.Dict(), required=True), required=True)
     concurrency = fields.Int(allow_none=True)
     early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
@@ -36,5 +37,8 @@ class MappingSchema(BaseCamelSchema):
 
 class V1Mapping(BaseConfig, polyaxon_sdk.V1Mapping):
     SCHEMA = MappingSchema
-    IDENTIFIER = "mapping"
+    IDENTIFIER = V1ParallelKind.MAPPING
     REDUCED_ATTRIBUTES = ["concurrency", "earlyStopping"]
+
+    def has_key(self, key: str):
+        return self.values and key in set(self.values[0].keys())

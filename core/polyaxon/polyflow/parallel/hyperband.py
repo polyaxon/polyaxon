@@ -23,13 +23,16 @@ from polyaxon.polyflow.optimization import (
     OptimizationMetricSchema,
     OptimizationResourceSchema,
 )
+from polyaxon.polyflow.parallel.kinds import V1ParallelKind
 from polyaxon.polyflow.parallel.matrix import MatrixSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
 class HyperbandSchema(BaseCamelSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("hyperband"))
+    kind = fields.Str(
+        allow_none=True, validate=validate.Equal(V1ParallelKind.HYPERBAND)
+    )
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), allow_none=True
     )
@@ -49,5 +52,5 @@ class HyperbandSchema(BaseCamelSchema):
 
 class V1Hyperband(BaseConfig, polyaxon_sdk.V1Hyperband):
     SCHEMA = HyperbandSchema
-    IDENTIFIER = "hyperband"
+    IDENTIFIER = V1ParallelKind.HYPERBAND
     REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping"]

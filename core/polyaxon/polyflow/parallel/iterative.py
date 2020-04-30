@@ -21,6 +21,7 @@ from marshmallow import fields, validate
 from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.parallel.kinds import V1ParallelKind
 from polyaxon.polyflow.parallel.matrix import MatrixSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -28,7 +29,9 @@ from polyaxon.schemas.fields.swagger import SwaggerField
 
 
 class IterativeSchema(BaseCamelSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("iterative"))
+    kind = fields.Str(
+        allow_none=True, validate=validate.Equal(V1ParallelKind.ITERATIVE)
+    )
     num_iterations = RefOrObject(
         fields.Int(required=True, validate=validate.Range(min=1)), required=True
     )
@@ -50,6 +53,6 @@ class IterativeSchema(BaseCamelSchema):
 
 
 class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
-    IDENTIFIER = "iterative"
+    IDENTIFIER = V1ParallelKind.ITERATIVE
     SCHEMA = IterativeSchema
     REDUCED_ATTRIBUTES = ["params", "seed", "container", "earlyStopping", "concurrency"]

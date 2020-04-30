@@ -19,8 +19,8 @@ import polyaxon_sdk
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.polyflow.component.component import ComponentSchema
-from polyaxon.polyflow.io.params import ParamSchema
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
+from polyaxon.polyflow.params import ParamSchema
 from polyaxon.polyflow.references import (
     V1DagReference,
     V1HubReference,

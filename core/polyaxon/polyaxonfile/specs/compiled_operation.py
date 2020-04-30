@@ -49,7 +49,11 @@ class CompiledOperationSpecification(BaseSpecification):
         contexts = contexts or {}
         contexts = {
             k: ParamSpec(
-                name=k, param=V1Param(value=v), iotype=types.ANY, is_flag=False,
+                name=k,
+                param=V1Param(value=v),
+                iotype=types.ANY,
+                is_flag=False,
+                is_list=None,
             )
             for k, v in contexts.items()
         }

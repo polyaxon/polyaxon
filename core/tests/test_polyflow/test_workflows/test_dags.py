@@ -23,9 +23,8 @@ from polyaxon import types
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyflow import V1RunKind, dags
 from polyaxon.polyflow.io import V1IO
-from polyaxon.polyflow.io import params as ops_params
-from polyaxon.polyflow.io.params import V1Param
 from polyaxon.polyflow.operations import V1Operation
+from polyaxon.polyflow.params import V1Param, ops_params
 from polyaxon.polyflow.run import V1Dag
 
 
@@ -2221,12 +2220,14 @@ class TestWorkflowV1Dags(BaseTestCase):
                 iotype=None,
                 param=V1Param(ref="ops.B", value="outputs.output1"),
                 is_flag=None,
+                is_list=None,
             )
             assert op_upstream_by_names["B"][1] == ops_params.ParamSpec(
                 name="input2",
                 iotype=None,
                 param=V1Param(ref="ops.B", value="outputs.output2"),
                 is_flag=None,
+                is_list=None,
             )
 
         else:
@@ -2235,12 +2236,14 @@ class TestWorkflowV1Dags(BaseTestCase):
                 iotype=None,
                 param=V1Param(ref="ops.B", value="outputs.output1"),
                 is_flag=None,
+                is_list=None,
             )
             assert op_upstream_by_names["B"][0] == ops_params.ParamSpec(
                 name="input2",
                 iotype=None,
                 param=V1Param(ref="ops.B", value="outputs.output2"),
                 is_flag=None,
+                is_list=None,
             )
 
         # run upstreams
@@ -2259,6 +2262,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                     ref="runs.64332180bfce46eba80a65caf73c5396", value="outputs.foo"
                 ),
                 is_flag=None,
+                is_list=None,
             )
         ]
         run_upstream_by_names = ops_params.get_upstream_run_params_by_names(
@@ -2399,12 +2403,14 @@ class TestWorkflowV1Dags(BaseTestCase):
                 iotype=None,
                 param=V1Param(ref="ops.A", value="inputs.input4"),
                 is_flag=None,
+                is_list=None,
             )
             assert op_upstream_by_names["A"][1] == ops_params.ParamSpec(
                 name="input2",
                 iotype=None,
                 param=V1Param(ref="ops.A", value="outputs.output1"),
                 is_flag=None,
+                is_list=None,
             )
 
         else:
@@ -2413,12 +2419,14 @@ class TestWorkflowV1Dags(BaseTestCase):
                 iotype=None,
                 param=V1Param(ref="ops.A", value="inputs.input4"),
                 is_flag=None,
+                is_list=None,
             )
             assert op_upstream_by_names["A"][0] == ops_params.ParamSpec(
                 name="input2",
                 iotype=None,
                 param=V1Param(ref="ops.A", value="outputs.output1"),
                 is_flag=None,
+                is_list=None,
             )
         op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
             params=config.dag["C"].op.params
@@ -2430,6 +2438,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                     iotype=None,
                     param=V1Param(ref="ops.A", value="status"),
                     is_flag=None,
+                    is_list=None,
                 )
             ],
             "B": [
@@ -2438,12 +2447,14 @@ class TestWorkflowV1Dags(BaseTestCase):
                     iotype=None,
                     param=V1Param(ref="ops.B", value="outputs.output1"),
                     is_flag=None,
+                    is_list=None,
                 ),
                 ops_params.ParamSpec(
                     name="input4",
                     iotype=None,
                     param=V1Param(ref="ops.B", value="inputs"),
                     is_flag=None,
+                    is_list=None,
                 ),
             ],
         }
@@ -2460,6 +2471,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                     ref="runs.64332180bfce46eba80a65caf73c5396", value="outputs.foo"
                 ),
                 is_flag=None,
+                is_list=None,
             )
         ]
         run_upstream_by_names = ops_params.get_upstream_run_params_by_names(
@@ -2489,5 +2501,6 @@ class TestWorkflowV1Dags(BaseTestCase):
                 iotype=None,
                 param=V1Param(ref="dag", value="inputs.input_pipe"),
                 is_flag=None,
+                is_list=None,
             )
         ]

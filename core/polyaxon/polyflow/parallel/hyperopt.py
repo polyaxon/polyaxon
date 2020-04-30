@@ -19,13 +19,14 @@ import polyaxon_sdk
 from marshmallow import fields, validate
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.parallel.kinds import V1ParallelKind
 from polyaxon.polyflow.parallel.matrix import MatrixSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
 class HyperoptSchema(BaseCamelSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("hyperopt"))
+    kind = fields.Str(allow_none=True, validate=validate.Equal(V1ParallelKind.HYPEROPT))
     algorithm = fields.Str(
         allow_none=True, validate=validate.OneOf(["tpe", "rand", "anneal"])
     )
@@ -46,5 +47,5 @@ class HyperoptSchema(BaseCamelSchema):
 
 class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
     SCHEMA = HyperoptSchema
-    IDENTIFIER = "hyperopt"
+    IDENTIFIER = V1ParallelKind.HYPEROPT
     REDUCED_ATTRIBUTES = ["numRuns", "seed", "concurrency", "earlyStopping"]

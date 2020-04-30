@@ -19,13 +19,14 @@ import polyaxon_sdk
 from marshmallow import fields, validate
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.parallel.kinds import V1ParallelKind
 from polyaxon.polyflow.parallel.matrix import MatrixSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
 class RandomSearchSchema(BaseCamelSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("random"))
+    kind = fields.Str(allow_none=True, validate=validate.Equal(V1ParallelKind.RANDOM))
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), required=True
     )
@@ -43,5 +44,5 @@ class RandomSearchSchema(BaseCamelSchema):
 
 class V1RandomSearch(BaseConfig, polyaxon_sdk.V1RandomSearch):
     SCHEMA = RandomSearchSchema
-    IDENTIFIER = "random"
+    IDENTIFIER = V1ParallelKind.RANDOM
     REDUCED_ATTRIBUTES = ["numRuns", "seed", "concurrency", "earlyStopping"]

@@ -28,11 +28,11 @@ from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
     OperationSpecification,
 )
-from polyaxon.polyflow import V1CompiledOperation
+from polyaxon.polyflow import V1CompiledOperation, V1Hyperband
 from polyaxon.polyflow.io import V1IO
-from polyaxon.polyflow.io.params import V1Param
 from polyaxon.polyflow.parallel import V1GridSearch
-from polyaxon.polyflow.parallel.matrix import V1HpChoice
+from polyaxon.polyflow.parallel.matrix import V1HpChoice, V1HpLinSpace
+from polyaxon.polyflow.params import V1Param
 
 
 @pytest.mark.polyaxonfile_mark
@@ -217,6 +217,41 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         assert isinstance(run_config.parallel, V1GridSearch)
         assert run_config.parallel.concurrency == 2
         assert run_config.parallel.kind == V1GridSearch.IDENTIFIER
+        assert run_config.parallel.early_stopping is None
+
+    def test_matrix_file_with_required_inputs_and_wrong_matrix_type_fails(self):
+        with self.assertRaises(PolyaxonfileError):
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath(
+                    "tests/fixtures/typing/matrix_job_required_inputs_file_wrong_matrix_type.yml"
+                ),
+                is_cli=False,
+            )
+
+    def test_matrix_file_with_required_inputs_passes(self):
+        plx_file = check_polyaxonfile(
+            polyaxonfile=os.path.abspath(
+                "tests/fixtures/typing/matrix_job_required_inputs_file.yml"
+            ),
+            is_cli=False,
+        )
+        run_config = OperationSpecification.compile_operation(plx_file)
+        run_config = CompiledOperationSpecification.apply_context(run_config)
+        assert run_config.version == 1.05
+        assert isinstance(run_config.parallel, V1Hyperband)
+        assert isinstance(run_config.parallel.params["lr"], V1HpLinSpace)
+        assert isinstance(run_config.parallel.params["loss"], V1HpChoice)
+        assert run_config.parallel.params["lr"].to_dict() == {
+            "kind": "linspace",
+            "value": {"start": 0.01, "stop": 0.1, "num": 5},
+        }
+        assert run_config.parallel.params["loss"].to_dict() == {
+            "kind": "choice",
+            "value": ["MeanSquaredError", "AbsoluteDifference"],
+        }
+        assert run_config.parallel.concurrency == 2
+        assert isinstance(run_config.parallel, V1Hyperband)
+        assert run_config.parallel.kind == V1Hyperband.IDENTIFIER
         assert run_config.parallel.early_stopping is None
 
     def test_run_simple_file_passes(self):

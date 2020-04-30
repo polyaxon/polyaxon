@@ -19,6 +19,7 @@ import polyaxon_sdk
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.parallel.kinds import V1ParallelKind
 from polyaxon.polyflow.parallel.matrix import MatrixSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -39,7 +40,7 @@ def validate_matrix(matrix):
 
 
 class GridSearchSchema(BaseCamelSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("grid"))
+    kind = fields.Str(allow_none=True, validate=validate.Equal(V1ParallelKind.GRID))
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), required=True
     )
@@ -59,5 +60,5 @@ class GridSearchSchema(BaseCamelSchema):
 
 class V1GridSearch(BaseConfig, polyaxon_sdk.V1GridSearch):
     SCHEMA = GridSearchSchema
-    IDENTIFIER = "grid"
+    IDENTIFIER = V1ParallelKind.GRID
     REDUCED_ATTRIBUTES = ["numRuns", "concurrency", "earlyStopping"]

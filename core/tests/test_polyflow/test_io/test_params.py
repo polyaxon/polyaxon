@@ -19,7 +19,7 @@ import pytest
 from marshmallow import ValidationError
 from tests.utils import BaseTestCase, assert_equal_dict
 
-from polyaxon.polyflow.io.params import V1Param
+from polyaxon.polyflow.params import V1Param
 
 
 @pytest.mark.polyflow_mark

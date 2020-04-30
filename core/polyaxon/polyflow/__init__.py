@@ -41,13 +41,6 @@ from polyaxon.polyflow.early_stopping import (
 from polyaxon.polyflow.environment import EnvironmentSchema, V1Environment
 from polyaxon.polyflow.init import InitSchema, V1Init
 from polyaxon.polyflow.io import V1IO, IOSchema
-from polyaxon.polyflow.io.params import (
-    DAG_ENTITY_REF,
-    ParamSpec,
-    V1Param,
-    V1ParamSearch,
-    validate_params,
-)
 from polyaxon.polyflow.mounts import ArtifactsMountSchema, V1ArtifactsMount
 from polyaxon.polyflow.notifications import (
     NotificationSchema,
@@ -90,8 +83,7 @@ from polyaxon.polyflow.parallel import (
     V1Iterative,
     V1Mapping,
     V1RandomSearch,
-)
-from polyaxon.polyflow.parallel.matrix import (
+    V1ParallelKind,
     V1HpChoice,
     V1HpGeomSpace,
     V1HpLinSpace,
@@ -106,6 +98,13 @@ from polyaxon.polyflow.parallel.matrix import (
     V1HpQUniform,
     V1HpRange,
     V1HpUniform,
+)
+from polyaxon.polyflow.params import (
+    ops_params,
+    DAG_ENTITY_REF,
+    ParamSpec,
+    V1Param,
+    V1ParamSearch,
 )
 from polyaxon.polyflow.plugins import PluginsSchema, V1Plugins
 from polyaxon.polyflow.references import (

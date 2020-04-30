@@ -20,8 +20,8 @@ import polyaxon_sdk
 from marshmallow import fields, validate
 
 from polyaxon.polyflow.io import IOSchema
-from polyaxon.polyflow.io.params import ParamSpec, validate_params
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
+from polyaxon.polyflow.params import ParamSpec, ops_params
 from polyaxon.polyflow.run import RunMixin, RunSchema
 
 
@@ -47,10 +47,11 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
     def validate_params(
         self, params=None, context=None, is_template=True, check_runs=False
     ) -> List[ParamSpec]:
-        return validate_params(
+        return ops_params.validate_params(
             inputs=self.inputs,
             outputs=self.outputs,
             params=params,
+            parallel=self.parallel,
             context=context,
             is_template=is_template,
             check_runs=check_runs,

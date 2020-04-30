@@ -20,6 +20,7 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.optimization import OptimizationMetricSchema
+from polyaxon.polyflow.parallel.kinds import V1ParallelKind
 from polyaxon.polyflow.parallel.matrix import MatrixSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -180,7 +181,7 @@ def validate_matrix(matrix):
 
 
 class BayesSchema(BaseCamelSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("bayes"))
+    kind = fields.Str(allow_none=True, validate=validate.Equal(V1ParallelKind.BAYES))
     utility_function = fields.Nested(UtilityFunctionSchema, allow_none=True)
     num_initial_runs = RefOrObject(fields.Int(), required=True)
     num_iterations = RefOrObject(fields.Int(), required=True)
@@ -204,5 +205,5 @@ class BayesSchema(BaseCamelSchema):
 
 class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
     SCHEMA = BayesSchema
-    IDENTIFIER = "bayes"
+    IDENTIFIER = V1ParallelKind.BAYES
     REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping"]

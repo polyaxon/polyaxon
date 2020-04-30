@@ -17,12 +17,14 @@
 import ast
 
 from collections import Mapping
+from typing import Union
 
 import polyaxon_sdk
 
 from marshmallow import fields, validate, validates_schema
 from marshmallow.exceptions import ValidationError
 
+from polyaxon import types
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig, BaseOneOfSchema
 
 try:
@@ -230,6 +232,9 @@ class V1HpChoice(BaseConfig, polyaxon_sdk.V1HpChoice):
     SCHEMA = HpChoiceSchema
     IDENTIFIER = "choice"
 
+    def validate_io(self, io: "V1IO"):
+        return True
+
     @property
     def is_distribution(self):
         return False
@@ -279,6 +284,9 @@ class V1HpPChoice(BaseConfig, polyaxon_sdk.V1HpPChoice):
     SCHEMA = HpPChoiceSchema
     IDENTIFIER = "pchoice"
 
+    def validate_io(self, io: "V1IO"):
+        return True
+
     @property
     def is_distribution(self):
         return True
@@ -304,6 +312,18 @@ class V1HpPChoice(BaseConfig, polyaxon_sdk.V1HpPChoice):
         return False
 
 
+class BaseHParamConfig(BaseConfig):
+    def validate_io(self, io: "V1IO"):
+        if io.iotype not in [types.INT, types.FLOAT]:
+            raise ValidationError(
+                "Param `{}` has a an input type `{}` "
+                "and it does not correspond to hyper-param type `int or float`.".format(
+                    io.name, io.iotype,
+                )
+            )
+        return True
+
+
 class HpRangeSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("range"))
     value = Range(allow_none=True)
@@ -313,7 +333,7 @@ class HpRangeSchema(BaseCamelSchema):
         return V1HpRange
 
 
-class V1HpRange(BaseConfig, polyaxon_sdk.V1HpRange):
+class V1HpRange(BaseHParamConfig, polyaxon_sdk.V1HpRange):
     SCHEMA = HpRangeSchema
     IDENTIFIER = "range"
 
@@ -351,7 +371,7 @@ class HpLinSpaceSchema(BaseCamelSchema):
         return V1HpLinSpace
 
 
-class V1HpLinSpace(BaseConfig, polyaxon_sdk.V1HpLinSpace):
+class V1HpLinSpace(BaseHParamConfig, polyaxon_sdk.V1HpLinSpace):
     SCHEMA = HpLinSpaceSchema
     IDENTIFIER = "linspace"
 
@@ -389,7 +409,7 @@ class HpLogSpaceSchema(BaseCamelSchema):
         return V1HpLogSpace
 
 
-class V1HpLogSpace(BaseConfig, polyaxon_sdk.V1HpLogSpace):
+class V1HpLogSpace(BaseHParamConfig, polyaxon_sdk.V1HpLogSpace):
     SCHEMA = HpLogSpaceSchema
     IDENTIFIER = "logspace"
 
@@ -427,7 +447,7 @@ class HpGeomSpaceSchema(BaseCamelSchema):
         return V1HpGeomSpace
 
 
-class V1HpGeomSpace(BaseConfig, polyaxon_sdk.V1HpGeomSpace):
+class V1HpGeomSpace(BaseHParamConfig, polyaxon_sdk.V1HpGeomSpace):
     SCHEMA = HpGeomSpaceSchema
     IDENTIFIER = "geomspace"
 
@@ -465,7 +485,7 @@ class HpUniformSchema(BaseCamelSchema):
         return V1HpUniform
 
 
-class V1HpUniform(BaseConfig, polyaxon_sdk.V1HpUniform):
+class V1HpUniform(BaseHParamConfig, polyaxon_sdk.V1HpUniform):
     SCHEMA = HpUniformSchema
     IDENTIFIER = "uniform"
 
@@ -503,7 +523,7 @@ class HpQUniformSchema(BaseCamelSchema):
         return V1HpQUniform
 
 
-class V1HpQUniform(BaseConfig, polyaxon_sdk.V1HpQUniform):
+class V1HpQUniform(BaseHParamConfig, polyaxon_sdk.V1HpQUniform):
     SCHEMA = HpQUniformSchema
     IDENTIFIER = "quniform"
 
@@ -541,7 +561,7 @@ class HpLogUniformSchema(BaseCamelSchema):
         return V1HpLogUniform
 
 
-class V1HpLogUniform(BaseConfig, polyaxon_sdk.V1HpLogUniform):
+class V1HpLogUniform(BaseHParamConfig, polyaxon_sdk.V1HpLogUniform):
     SCHEMA = HpLogUniformSchema
     IDENTIFIER = "loguniform"
 
@@ -579,7 +599,7 @@ class HpQLogUniformSchema(BaseCamelSchema):
         return V1HpQLogUniform
 
 
-class V1HpQLogUniform(BaseConfig, polyaxon_sdk.V1HpQLogUniform):
+class V1HpQLogUniform(BaseHParamConfig, polyaxon_sdk.V1HpQLogUniform):
     SCHEMA = HpQLogUniformSchema
     IDENTIFIER = "qloguniform"
 
@@ -621,7 +641,7 @@ class HpNormalSchema(BaseCamelSchema):
         return V1HpNormal
 
 
-class V1HpNormal(BaseConfig, polyaxon_sdk.V1HpNormal):
+class V1HpNormal(BaseHParamConfig, polyaxon_sdk.V1HpNormal):
     SCHEMA = HpNormalSchema
     IDENTIFIER = "normal"
 
@@ -659,7 +679,7 @@ class HpQNormalSchema(BaseCamelSchema):
         return V1HpQNormal
 
 
-class V1HpQNormal(BaseConfig, polyaxon_sdk.V1HpQNormal):
+class V1HpQNormal(BaseHParamConfig, polyaxon_sdk.V1HpQNormal):
     SCHEMA = HpQNormalSchema
     IDENTIFIER = "qnormal"
 
@@ -697,7 +717,7 @@ class HpLogNormalSchema(BaseCamelSchema):
         return V1HpLogNormal
 
 
-class V1HpLogNormal(BaseConfig, polyaxon_sdk.V1HpLogNormal):
+class V1HpLogNormal(BaseHParamConfig, polyaxon_sdk.V1HpLogNormal):
     SCHEMA = HpLogNormalSchema
     IDENTIFIER = "lognormal"
 
@@ -735,7 +755,7 @@ class HpQLogNormalSchema(BaseCamelSchema):
         return V1HpQLogNormal
 
 
-class V1HpQLogNormal(BaseConfig, polyaxon_sdk.V1HpQLogNormal):
+class V1HpQLogNormal(BaseHParamConfig, polyaxon_sdk.V1HpQLogNormal):
     SCHEMA = HpQLogNormalSchema
     IDENTIFIER = "qlognormal"
 
@@ -783,3 +803,21 @@ class MatrixSchema(BaseOneOfSchema):
         V1HpLogNormal.IDENTIFIER: HpLogNormalSchema,
         V1HpQLogNormal.IDENTIFIER: HpQLogNormalSchema,
     }
+
+
+V1HpParam = Union[
+    V1HpChoice,
+    V1HpPChoice,
+    V1HpRange,
+    V1HpLinSpace,
+    V1HpLogSpace,
+    V1HpGeomSpace,
+    V1HpUniform,
+    V1HpQUniform,
+    V1HpLogUniform,
+    V1HpQLogUniform,
+    V1HpNormal,
+    V1HpQNormal,
+    V1HpLogNormal,
+    V1HpQLogNormal,
+]
