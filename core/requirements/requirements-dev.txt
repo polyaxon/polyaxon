@@ -23,7 +23,7 @@ uvicorn==0.11.5
 
 Pillow==7.1.2
 matplotlib==3.2.1
-moviepy==1.0.1
+moviepy==1.0.2
 plotly==4.5.0
 bokeh==1.4.0
 pandas==1.0.1
