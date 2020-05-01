@@ -66,24 +66,6 @@ class LifeCycle:
         (V1Statuses.RETRYING, V1Statuses.RETRYING),
         (V1Statuses.UNKNOWN, V1Statuses.UNKNOWN),
     )
-    VALUES = {
-        V1Statuses.CREATED,
-        V1Statuses.RESUMING,
-        V1Statuses.WARNING,
-        V1Statuses.UNSCHEDULABLE,
-        V1Statuses.QUEUED,
-        V1Statuses.SCHEDULED,
-        V1Statuses.STARTING,
-        V1Statuses.RUNNING,
-        V1Statuses.SUCCEEDED,
-        V1Statuses.FAILED,
-        V1Statuses.UPSTREAM_FAILED,
-        V1Statuses.STOPPING,
-        V1Statuses.STOPPED,
-        V1Statuses.SKIPPED,
-        V1Statuses.RETRYING,
-        V1Statuses.UNKNOWN,
-    }
     WARNING_VALUES = {V1Statuses.UNSCHEDULABLE, V1Statuses.WARNING}
     PENDING_VALUES = {
         V1Statuses.CREATED,

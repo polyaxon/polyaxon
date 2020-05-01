@@ -35,23 +35,6 @@ class V1RunKind(polyaxon_sdk.V1RunKind):
         (polyaxon_sdk.V1RunKind.WATCHDOG, polyaxon_sdk.V1RunKind.WATCHDOG),
         (polyaxon_sdk.V1RunKind.NOTIFIER, polyaxon_sdk.V1RunKind.NOTIFIER),
     )
-    VALUES = {
-        polyaxon_sdk.V1RunKind.JOB,
-        polyaxon_sdk.V1RunKind.SERVICE,
-        polyaxon_sdk.V1RunKind.DAG,
-        polyaxon_sdk.V1RunKind.PARALLEL,
-        polyaxon_sdk.V1RunKind.SPARK,
-        polyaxon_sdk.V1RunKind.DASK,
-        polyaxon_sdk.V1RunKind.FLINK,
-        polyaxon_sdk.V1RunKind.RAY,
-        polyaxon_sdk.V1RunKind.MPIJOB,
-        polyaxon_sdk.V1RunKind.TFJOB,
-        polyaxon_sdk.V1RunKind.PYTORCHJOB,
-        polyaxon_sdk.V1RunKind.SCHEDULER,
-        polyaxon_sdk.V1RunKind.TUNER,
-        polyaxon_sdk.V1RunKind.WATCHDOG,
-        polyaxon_sdk.V1RunKind.NOTIFIER,
-    }
 
 
 class V1CloningKind(polyaxon_sdk.V1CloningKind):
@@ -61,12 +44,6 @@ class V1CloningKind(polyaxon_sdk.V1CloningKind):
         (polyaxon_sdk.V1CloningKind.CACHE, polyaxon_sdk.V1CloningKind.CACHE,),
         (polyaxon_sdk.V1CloningKind.SCHEDULE, polyaxon_sdk.V1CloningKind.SCHEDULE,),
     )
-    VALUES = {
-        polyaxon_sdk.V1CloningKind.COPY,
-        polyaxon_sdk.V1CloningKind.RESTART,
-        polyaxon_sdk.V1CloningKind.CACHE,
-        polyaxon_sdk.V1CloningKind.SCHEDULE,
-    }
 
 
 class V1PipelineKind(polyaxon_sdk.V1PipelineKind):
@@ -74,7 +51,3 @@ class V1PipelineKind(polyaxon_sdk.V1PipelineKind):
         (polyaxon_sdk.V1PipelineKind.DAG, polyaxon_sdk.V1PipelineKind.DAG),
         (polyaxon_sdk.V1PipelineKind.PARALLEL, polyaxon_sdk.V1PipelineKind.PARALLEL,),
     )
-    VALUES = {
-        polyaxon_sdk.V1PipelineKind.DAG,
-        polyaxon_sdk.V1PipelineKind.PARALLEL,
-    }
