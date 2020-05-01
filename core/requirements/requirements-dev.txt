@@ -10,7 +10,7 @@ hyperopt==0.2.4
 azure-storage==0.36.0
 boto3==1.13.0
 botocore==1.16.0
-google-cloud-storage==1.10.0
+google-cloud-storage==1.28.0
 
 httpretty==0.8.14
 moto==1.3.4
