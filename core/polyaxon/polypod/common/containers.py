@@ -55,5 +55,10 @@ def patch_container(
     if not any([container.command, container.args]):
         container.command = command
         container.args = args
+    # Sanitize container command/args
+    if container.command:
+        container.command = [c for c in to_list(container.command, check_none=True) if c]
+    if container.args:
+        container.args = [c for c in to_list(container.args, check_none=True) if c]
 
     return container
