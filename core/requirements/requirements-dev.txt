@@ -17,7 +17,7 @@ moto==1.3.14
 google-compute-engine==2.8.13
 
 kubernetes-asyncio==11.2.0
-starlette==0.13.2
+starlette==0.13.4
 aiofiles==0.4.0
 uvicorn==0.11.3
 
