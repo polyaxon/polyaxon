@@ -176,6 +176,8 @@ def ls(ctx, io, query, sort, limit, offset):
                 "deleted",
                 "readme",
                 "kind",
+                "settings",
+                "meta_info",
             ],
         )
     else:
@@ -190,7 +192,8 @@ def ls(ctx, io, query, sort, limit, offset):
                 "readme",
                 "inputs",
                 "outputs",
-                "kind",
+                "settings",
+                "meta_info",
             ],
         )
     if objects:
