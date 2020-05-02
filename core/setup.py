@@ -86,7 +86,7 @@ setup(
     extras_require={
         "gcs": ["google-cloud-storage"],
         "s3": ["boto3", "botocore"],
-        "azure": ["azure-storage"],
+        "azure": ["azure-storage-blob>=12.3.1"],
         "docker": ["docker"],
         "git": ["git"],
         "polytune": ["scikit-learn==0.22.2", "hyperopt==0.2.4"],

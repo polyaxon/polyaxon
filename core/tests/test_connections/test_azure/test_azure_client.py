@@ -16,7 +16,9 @@
 
 import os
 
-from azure.storage.blob import BlockBlobService
+from azure.storage.blob import BlobServiceClient
+
+from polyaxon.exceptions import PolyaxonConnectionError
 from tests.utils import BaseTestCase
 
 from polyaxon.connections.azure.azure_blobstore import get_blob_service_connection
@@ -24,13 +26,13 @@ from polyaxon.connections.azure.azure_blobstore import get_blob_service_connecti
 
 class TestAzureClient(BaseTestCase):
     def test_get_blob_service_connection(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(PolyaxonConnectionError):
             get_blob_service_connection()
 
         service = get_blob_service_connection(account_name="foo", account_key="bar")
-        assert isinstance(service, BlockBlobService)
+        assert isinstance(service, BlobServiceClient)
 
         os.environ["AZURE_ACCOUNT_NAME"] = "foo"
         os.environ["AZURE_ACCOUNT_KEY"] = "bar"
         service = get_blob_service_connection()
-        assert isinstance(service, BlockBlobService)
+        assert isinstance(service, BlobServiceClient)

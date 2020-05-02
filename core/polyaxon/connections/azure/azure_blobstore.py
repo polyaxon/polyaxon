@@ -19,9 +19,9 @@ import os
 from concurrent import futures
 from typing import Optional
 
-from azure.common import AzureHttpError
-from azure.storage.blob import BlockBlobService
-from azure.storage.blob.models import BlobPrefix
+from azure.core.exceptions import HttpResponseError
+from azure.storage.blob import BlobServiceClient
+from azure.storage.blob._models import BlobPrefix
 
 from polyaxon.connections.azure.base import (
     AzureService,
@@ -34,7 +34,7 @@ from polyaxon.exceptions import (
     PolyaxonPathException,
     PolyaxonSchemaError,
     PolyaxonStoresException,
-)
+    PolyaxonConnectionError)
 from polyaxon.parser import parser
 from polyaxon.stores.base_store import StoreMixin
 from polyaxon.utils.date_utils import file_modified_since
@@ -56,10 +56,18 @@ def get_blob_service_connection(
     connection_string = connection_string or get_connection_string(
         context_path=context_path
     )
-    return BlockBlobService(
-        account_name=account_name,
-        account_key=account_key,
-        connection_string=connection_string,
+    if connection_string:
+        return BlobServiceClient.from_connection_string(
+            conn_str=connection_string,
+            credential=account_key,
+        )
+    if account_name:
+        return BlobServiceClient(
+            account_url="https://{account}.blob.core.windows.net".format(account=account_name),
+            credential=account_key,
+        )
+    raise PolyaxonConnectionError(
+        "Azure blob service connection requires an account name or a connection string"
     )
 
 
@@ -96,8 +104,11 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         request session.
 
         Returns:
-            BlockBlobService instance
+            BlobServiceClient instance
         """
+        if connection:
+            self._connection = connection
+            return
         connection_type = connection_type or self._connection_type
         connection_name = connection_type.name if connection_type else None
         context_path = get_connection_context_path(name=connection_name)
@@ -145,7 +156,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
             container_name, _, blob = self.parse_wasbs_url(blob)
         try:
             return self.connection.get_blob_properties(container_name, blob)
-        except AzureHttpError:
+        except HttpResponseError:
             return None
 
     def ls(self, path):
@@ -166,6 +177,8 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         if not container_name:
             container_name, _, key = self.parse_wasbs_url(key)
 
+        client = self.connection.get_container_client(container_name)
+
         if key and not key.endswith("/"):
             key += "/"
 
@@ -178,21 +191,14 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
         list_blobs = []
         list_prefixes = []
-        while True:
-            results = self.connection.list_blobs(
-                container_name, prefix=prefix, delimiter=delimiter, marker=marker
-            )
-            for r in results:
-                if isinstance(r, BlobPrefix):
-                    name = r.name[len(key) :]
-                    list_prefixes.append(name)
-                else:
-                    name = r.name[len(key) :]
-                    list_blobs.append((name, r.properties.content_length))
-            if results.next_marker:
-                marker = results.next_marker
+        results = client.walk_blobs(prefix=prefix, delimiter=delimiter)
+        for r in results:
+            if isinstance(r, BlobPrefix):
+                name = r.name[len(key) :]
+                list_prefixes.append(name)
             else:
-                break
+                name = r.name[len(key) :]
+                list_blobs.append((name, r.size))
         return {"blobs": list_blobs, "prefixes": list_prefixes}
 
     def upload_file(self, filename, blob, container_name=None, use_basename=True):
@@ -211,7 +217,9 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         if use_basename:
             blob = append_basename(blob, filename)
 
-        self.connection.create_blob_from_path(container_name, blob, filename)
+        client = self.connection.get_container_client(container_name)
+        with open(filename, "rb") as file:
+            client.upload_blob(blob, file)
 
     def upload_dir(
         self,
@@ -290,9 +298,11 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         except PolyaxonPathException as e:
             raise PolyaxonStoresException("Connection error: %s" % e) from e
 
+        client = self.connection.get_container_client(container_name)
         try:
-            self.connection.get_blob_to_path(container_name, blob, local_path)
-        except AzureHttpError as e:
+            with open(local_path, "wb") as file:
+                client.download_blob(blob).readinto(file)
+        except HttpResponseError as e:
             raise PolyaxonStoresException("Connection error: %s" % e) from e
 
     def download_dir(
@@ -402,6 +412,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
             container_name, _, blob = self.parse_wasbs_url(blob)
 
         try:
-            self.connection.delete_blob(container_name, blob)
-        except AzureHttpError:
+            client = self.connection.get_container_client(container_name)
+            client.delete_blob(blob)
+        except HttpResponseError:
             pass

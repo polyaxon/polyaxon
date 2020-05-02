@@ -7,7 +7,7 @@ numpy>=1.15.2
 scikit-learn==0.22.2
 hyperopt==0.2.4
 
-azure-storage==0.36.0
+azure-storage-blob==12.3.1
 boto3==1.13.0
 botocore==1.16.0
 google-cloud-storage==1.28.0
