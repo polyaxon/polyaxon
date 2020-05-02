@@ -5,28 +5,28 @@ gitpython
 
 numpy>=1.15.2
 scikit-learn==0.22.2
-hyperopt==0.2.2
+hyperopt==0.2.4
 
 azure-storage==0.36.0
-boto3==1.7.73
-botocore==1.10.84
-google-cloud-storage==1.10.0
+boto3==1.13.0
+botocore==1.16.0
+google-cloud-storage==1.28.0
 
-httpretty==0.8.14
-moto==1.3.4
-google-compute-engine==2.8.3
+httpretty==1.0.2
+moto==1.3.14
+google-compute-engine==2.8.13
 
-kubernetes-asyncio==10.0.1
-starlette==0.13.2
-aiofiles==0.4.0
-uvicorn==0.11.3
+kubernetes-asyncio==11.2.0
+starlette==0.13.4
+aiofiles==0.5.0
+uvicorn==0.11.5
 
-Pillow==7.0.0
-matplotlib==3.1.2
-moviepy==1.0.1
-plotly==4.5.0
-bokeh==1.4.0
-pandas==1.0.1
+Pillow==7.1.2
+matplotlib==3.2.1
+moviepy==1.0.2
+plotly==4.6.0
+bokeh==2.0.2
+pandas==1.0.3
 
 nvidia-ml-py3==7.352.0
 
