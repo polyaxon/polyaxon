@@ -23,6 +23,7 @@ from polyaxon.pql.parser import parse_field, tokenize_query
 
 class PQLManager(object):
     NAME = None
+    FIELDS_USE_UUID = None
     FIELDS_PROXY = {}
     FIELDS_TRANS = {}
     FIELDS_ORDERING = None
@@ -39,6 +40,8 @@ class PQLManager(object):
         field, suffix = parse_field(field)
         if field in cls.FIELDS_PROXY:
             field = cls.FIELDS_PROXY[field]
+        if cls.FIELDS_USE_UUID and not suffix and field in cls.FIELDS_USE_UUID:
+            suffix = "uuid"
         return "{}__{}".format(field, suffix) if suffix else field
 
     @classmethod
