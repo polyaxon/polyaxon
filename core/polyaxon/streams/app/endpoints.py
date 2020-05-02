@@ -182,6 +182,13 @@ async def get_run_resources(request):
     return UJSONResponse({"data": events})
 
 
+def inject_auth_header(request, headers):
+    auth = request.headers.get("Authorization")
+    if auth:
+        headers["Authorization"] = auth
+    return headers
+
+
 def redirect(archived_path):
     if not archived_path:
         return Response(

@@ -191,7 +191,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
         list_blobs = []
         list_prefixes = []
-        results = client.walk_blobs(prefix=prefix, delimiter=delimiter)
+        results = client.walk_blobs(name_starts_with=prefix, delimiter=delimiter)
         for r in results:
             if isinstance(r, BlobPrefix):
                 name = r.name[len(key) :]
