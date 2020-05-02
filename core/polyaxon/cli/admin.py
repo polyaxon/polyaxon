@@ -87,13 +87,13 @@ def deploy(config_file, manager_path, check, dry_run):
     )
     exception = None
     if check:
+        Printer.print_success("Polyaxon deployment file is valid.")
         try:
             manager.check()
         except Exception as e:
-            handle_cli_error(e, message="Polyaxon deployment file is not valid.")
+            handle_cli_error(e, message="Polyaxon deployment manager error.")
             sys.exit(1)
 
-        Printer.print_success("Polyaxon deployment file is valid.")
     else:
         try:
             manager.install()
@@ -141,12 +141,12 @@ def upgrade(config_file, manager_path, check, dry_run):
     )
     exception = None
     if check:
+        Printer.print_success("Polyaxon deployment file is valid.")
         try:
             manager.check()
         except Exception as e:
-            handle_cli_error(e, message="Polyaxon deployment file is not valid.")
+            handle_cli_error(e, message="Polyaxon deployment manager error.")
             sys.exit(1)
-        Printer.print_success("Polyaxon deployment file is valid.")
     else:
         try:
             manager.upgrade()
