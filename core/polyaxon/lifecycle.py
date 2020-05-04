@@ -78,6 +78,7 @@ class LifeCycle:
         V1Statuses.RETRYING,
     }
     RUNNING_VALUES = {V1Statuses.STARTING, V1Statuses.RUNNING}
+    ON_K8s_VALUES = RUNNING_VALUES | WARNING_VALUES | {V1Statuses.UNKNOWN}
     DONE_VALUES = {
         V1Statuses.FAILED,
         V1Statuses.UPSTREAM_FAILED,
@@ -88,7 +89,7 @@ class LifeCycle:
 
     @classmethod
     def can_check_heartbeat(cls, status: str) -> bool:
-        return status in LifeCycle.RUNNING_VALUES
+        return status in cls.RUNNING_VALUES
 
     @classmethod
     def is_unschedulable(cls, status: str) -> bool:
@@ -112,7 +113,7 @@ class LifeCycle:
 
     @classmethod
     def is_running(cls, status: str) -> bool:
-        return status in LifeCycle.RUNNING_VALUES
+        return status in cls.RUNNING_VALUES
 
     @classmethod
     def is_unknown(cls, status: str) -> bool:
@@ -120,12 +121,7 @@ class LifeCycle:
 
     @classmethod
     def is_k8s_stoppable(cls, status: str) -> bool:
-        return (
-            cls.is_running(status=status)
-            or cls.is_unschedulable(status=status)
-            or cls.is_warning(status=status)
-            or cls.is_unknown(status=status)
-        )
+        return status in cls.ON_K8s_VALUES
 
     @classmethod
     def is_stoppable(cls, status: str) -> bool:
