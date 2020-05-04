@@ -92,7 +92,9 @@ class TestAzureStore(BaseTestCase):
         blob_props.size = 42
         blob_props.name = base_path + "file"
 
-        client.get_container_client().walk_blobs.return_value = MockBlobList([dir_prefix, blob_props])
+        client.get_container_client().walk_blobs.return_value = MockBlobList(
+            [dir_prefix, blob_props]
+        )
 
         store = AzureBlobStoreService()
         store.set_connection(connection=client)
@@ -148,16 +150,12 @@ class TestAzureStore(BaseTestCase):
 
         # Test without basename
         store.download_file(key_path, fpath, use_basename=False)
-        client.get_container_client().download_blob.assert_called_with(
-            base_path
-        )
+        client.get_container_client().download_blob.assert_called_with(base_path)
         assert os.path.exists(fpath)
 
         # Test without basename
         store.download_file(key_path, dirname, use_basename=True)
-        client.get_container_client().download_blob.assert_called_with(
-            base_path
-        )
+        client.get_container_client().download_blob.assert_called_with(base_path)
         assert os.path.exists(fpath)
 
     @mock.patch(AZURE_MODULE.format("BlobServiceClient"))
@@ -220,7 +218,9 @@ class TestAzureStore(BaseTestCase):
                 assert call_arg2.name == fpath1
             elif call_arg1 == "{}{}/test2.txt".format(blob_path, rel_path1):
                 assert call_arg2.name == fpath2
-            elif call_arg1 == "{}{}/{}/test3.txt".format(blob_path, rel_path1, rel_path2):
+            elif call_arg1 == "{}{}/{}/test3.txt".format(
+                blob_path, rel_path1, rel_path2
+            ):
                 assert call_arg2.name == fpath3
             else:
                 assert False

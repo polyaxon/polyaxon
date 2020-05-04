@@ -31,10 +31,11 @@ from polyaxon.connections.azure.base import (
 )
 from polyaxon.connections.reader import get_connection_context_path
 from polyaxon.exceptions import (
+    PolyaxonConnectionError,
     PolyaxonPathException,
     PolyaxonSchemaError,
     PolyaxonStoresException,
-    PolyaxonConnectionError)
+)
 from polyaxon.parser import parser
 from polyaxon.stores.base_store import StoreMixin
 from polyaxon.utils.date_utils import file_modified_since
@@ -58,12 +59,13 @@ def get_blob_service_connection(
     )
     if connection_string:
         return BlobServiceClient.from_connection_string(
-            conn_str=connection_string,
-            credential=account_key,
+            conn_str=connection_string, credential=account_key,
         )
     if account_name:
         return BlobServiceClient(
-            account_url="https://{account}.blob.core.windows.net".format(account=account_name),
+            account_url="https://{account}.blob.core.windows.net".format(
+                account=account_name
+            ),
             credential=account_key,
         )
     raise PolyaxonConnectionError(
