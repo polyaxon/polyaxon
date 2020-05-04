@@ -53,6 +53,7 @@ class LifeCycle:
         (V1Statuses.RESUMING, V1Statuses.RESUMING),
         (V1Statuses.WARNING, V1Statuses.WARNING),
         (V1Statuses.UNSCHEDULABLE, V1Statuses.UNSCHEDULABLE),
+        (V1Statuses.COMPILED, V1Statuses.COMPILED),
         (V1Statuses.QUEUED, V1Statuses.QUEUED),
         (V1Statuses.SCHEDULED, V1Statuses.SCHEDULED),
         (V1Statuses.STARTING, V1Statuses.STARTING),
@@ -102,6 +103,10 @@ class LifeCycle:
     @classmethod
     def is_pending(cls, status: str) -> bool:
         return status in cls.PENDING_VALUES
+
+    @classmethod
+    def is_compiled(cls, status: str) -> bool:
+        return status == V1Statuses.COMPILED
 
     @classmethod
     def is_queued(cls, status: str) -> bool:

@@ -261,4 +261,10 @@ message RunSettings {
 
     // Connections
     repeated RunSettingsCatalog connections = 5;
+
+    // Concurreny
+    int32 concurrency = 6;
+
+    // Meta
+    google.protobuf.Struct meta_info = 7;
 }

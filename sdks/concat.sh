@@ -11,7 +11,7 @@ jq -s '
 	reduce .[] as $item ({}; . * $item) |
 	.info.title = "Polyaxon SDKs and REST API specification." |
 	.info.description = "Polyaxon SDKs and REST API specification." |
-	.info.version = "1.0.84" |
+	.info.version = "1.0.87" |
 	.info.contact = {"name": "Polyaxon sdk", "url": "https://github.com/polyaxon/polyaxon", "email": "contact@polyaxon.com"}
 	' swagger/v1/{polyaxon_sdk_apis,owner.artifact,project.artifact,run.artifact,conditions.default,connections.default,earlyStopping.default,matrix.default,parallel.default,reference.default,run.default,schedule.default}.swagger.json > "swagger/v1/polyaxon_sdk.swagger.json"
 

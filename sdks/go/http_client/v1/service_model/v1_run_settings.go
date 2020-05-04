@@ -38,8 +38,14 @@ type V1RunSettings struct {
 	// Artifacts Store
 	ArtifactsStore *V1RunSettingsCatalog `json:"artifacts_store,omitempty"`
 
+	// Concurreny
+	Concurrency int32 `json:"concurrency,omitempty"`
+
 	// Connections
 	Connections []*V1RunSettingsCatalog `json:"connections"`
+
+	// Meta
+	MetaInfo interface{} `json:"meta_info,omitempty"`
 
 	// Namespace
 	Namespace string `json:"namespace,omitempty"`

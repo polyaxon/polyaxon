@@ -10,7 +10,7 @@
     <h1>Polyaxon SDKs and REST API specification.</h1>
     <p class="sw-info">
         
-        Version: <span class="sw-info-version">1.0.84</span>
+        Version: <span class="sw-info-version">1.0.87</span>
     </p>
     <p><p>Polyaxon SDKs and REST API specification.</p>
     </p>
@@ -52586,6 +52586,32 @@
                                                                             </div>
                                                                         </section>                </div>
                                                 </dd>
+                                                <dt data-property-name="concurrency">
+                                                    <span class="json-property-name">concurrency:</span>
+                                                    
+                                                    <span class="json-property-type">integer</span>    <span class="json-property-format">(int32)</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="meta_info">
+                                                    <span class="json-property-name">meta_info:</span>
+                                                    
+                                                    <span class="json-property-type">object</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
                                         </dl>
                                     </section>
                     </div>
@@ -54199,6 +54225,8 @@
                                 <span class="json-property-enum-item">warning</span>
                             ,
                                 <span class="json-property-enum-item">unschedulable</span>
+                            ,
+                                <span class="json-property-enum-item">compiled</span>
                             ,
                                 <span class="json-property-enum-item">queued</span>
                             ,

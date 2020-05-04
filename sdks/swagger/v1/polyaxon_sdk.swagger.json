@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.84",
+    "version": "1.0.87",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -15776,6 +15776,15 @@
             "$ref": "#/definitions/v1RunSettingsCatalog"
           },
           "title": "Connections"
+        },
+        "concurrency": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Concurreny"
+        },
+        "meta_info": {
+          "type": "object",
+          "title": "Meta"
         }
       },
       "title": "Run Settings specification"
@@ -16253,6 +16262,7 @@
         "resuming",
         "warning",
         "unschedulable",
+        "compiled",
         "queued",
         "scheduled",
         "starting",

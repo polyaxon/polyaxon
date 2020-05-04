@@ -13,6 +13,8 @@
 
 * `UNSCHEDULABLE` (value: `"unschedulable"`)
 
+* `COMPILED` (value: `"compiled"`)
+
 * `QUEUED` (value: `"queued"`)
 
 * `SCHEDULED` (value: `"scheduled"`)

@@ -20,7 +20,7 @@ from polyaxon.lifecycle import LifeCycle, V1Statuses
 
 class TestStatusesTransition(BaseTestCase):
     def test_values(self):
-        assert len(V1Statuses.allowable_values) == 16
+        assert len(V1Statuses.allowable_values) == 17
 
     def test_warning_statuses(self):
         assert LifeCycle.WARNING_VALUES == {

@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **queue** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  |  [optional]
 **artifactsStore** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  |  [optional]
 **connections** | [**List&lt;V1RunSettingsCatalog&gt;**](V1RunSettingsCatalog.md) |  |  [optional]
+**concurrency** | **Integer** |  |  [optional]
+**metaInfo** | [**Object**](.md) |  |  [optional]
 
 
 

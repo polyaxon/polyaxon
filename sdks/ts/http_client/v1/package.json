@@ -1,6 +1,6 @@
 {
   "name": "@polyaxon/sdk",
-  "version": "1.0.84",
+  "version": "1.0.87",
   "description": "OpenAPI client for @polyaxon/sdk",
   "author": "OpenAPI-Generator",
   "main": "./dist/index.js",

@@ -25,18 +25,19 @@ enum Statuses {
     resuming = 1;
     warning = 2;
     unschedulable = 3;
-    queued = 4;
-    scheduled = 5;
-    starting = 6;
-    running = 7;
-    succeeded = 8;
-    failed = 9;
-    upstream_failed = 10;
-    stopping = 11;
-    stopped = 12;
-    skipped = 13;
-    retrying = 14;
-    unknown = 15;
+    compiled = 4;
+    queued = 5;
+    scheduled = 6;
+    starting = 7;
+    running = 8;
+    succeeded = 9;
+    failed = 10;
+    upstream_failed = 11;
+    stopping = 12;
+    stopped = 13;
+    skipped = 14;
+    retrying = 15;
+    unknown = 16;
 }
 
 // Status condition specification
