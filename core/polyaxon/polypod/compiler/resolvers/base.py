@@ -50,7 +50,6 @@ class BaseResolver:
         self.params = params or {}
         self.connection_by_names = {}
         self.namespace = None
-        self.profile = None
         self.artifacts_store = None
         self.secrets = None
         self.config_maps = None
