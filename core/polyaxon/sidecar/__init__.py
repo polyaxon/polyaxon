@@ -94,6 +94,7 @@ def start_sidecar(
             time.sleep(1 * retry)
             logger.info("Exception %s" % repr(e))
             logger.info("Sleeping ...")
+            continue
 
         logger.debug("Syncing ...")
         if is_running:
