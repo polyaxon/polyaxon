@@ -14,27 +14,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import itertools
+import copy
 
 from typing import Dict, List
 
-from polyaxon.polyflow import V1GridSearch
-from polyaxon.polytune.matrix.utils import to_numpy
+from polyaxon.polyflow import V1Mapping
 from polyaxon.polytune.search_managers.base import BaseManager
 
 
-class GridSearchManager(BaseManager):
-    """Grid search strategy manager for hyperparameter optimization."""
+class MappingManager(BaseManager):
+    """Mapping strategy manager for running parallel operations."""
 
-    CONFIG = V1GridSearch
+    CONFIG = V1Mapping
 
     def get_suggestions(self, params: Dict = None) -> List[Dict]:
         suggestions = []
-        keys = list(self.config.params.keys())
-        values = [to_numpy(v) for v in self.config.params.values()]
-        for v in itertools.product(*values):
-            suggestions.append(dict(zip(keys, v)))
-
-        if self.config.num_runs:
-            return suggestions[: self.config.num_runs]
+        params = params or {}
+        for v in self.config.values:
+            suggestion_params = copy.deepcopy(params)
+            suggestion_params.update(copy.deepcopy(v))
+            suggestions.append(suggestion_params)
         return suggestions

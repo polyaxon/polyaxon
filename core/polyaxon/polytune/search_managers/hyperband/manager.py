@@ -179,7 +179,7 @@ class HyperbandManager(BaseManager):
         bracket_iteration: int,
         configs: List[Dict] = None,
         metrics: List[float] = None,
-    ):
+    ) -> List[Dict]:
         """Return a list of suggestions/arms based on hyperband."""
         if configs:
             return self.get_bracket_suggestions(
@@ -203,7 +203,7 @@ class HyperbandManager(BaseManager):
             params=self.config.params, num_runs=num_runs, seed=self.config.seed
         )
         return RandomSearchManager(config=config).get_suggestions(
-            suggestion_params=suggestion_params
+            params=suggestion_params
         )
 
     def get_bracket_suggestions(

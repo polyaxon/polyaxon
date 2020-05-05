@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Dict, List
 
 from polyaxon.polyflow import V1Bayes, V1RandomSearch
 from polyaxon.polytune.search_managers.base import BaseManager
@@ -32,7 +33,7 @@ class BayesSearchManager(BaseManager):
         self.num_initial_runs = self.config.num_initial_runs
         self.num_iterations = self.config.num_iterations
 
-    def get_suggestions(self, configs=None, metrics=None):
+    def get_suggestions(self, configs: Dict = None, metrics: Dict = None) -> List[Dict]:
         if not configs or not metrics:
             config = V1RandomSearch(
                 params=self.config.params,

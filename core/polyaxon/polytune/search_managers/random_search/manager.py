@@ -18,6 +18,7 @@ import copy
 
 from functools import reduce
 from operator import mul
+from typing import Dict, List
 
 from polyaxon.polyflow import V1RandomSearch
 from polyaxon.polytune.matrix.utils import get_length, sample
@@ -31,11 +32,11 @@ class RandomSearchManager(BaseManager):
 
     CONFIG = V1RandomSearch
 
-    def get_suggestions(self, suggestion_params=None):
+    def get_suggestions(self, params: Dict = None) -> List[Dict]:
         if not self.config.num_runs:
             raise ValueError("This search strategy requires `num_runs`.")
         suggestions = []
-        suggestion_params = suggestion_params or {}
+        params = params or {}
         rand_generator = get_random_generator(seed=self.config.seed)
         # Validate number of suggestions and total space
         all_discrete = True
@@ -49,14 +50,14 @@ class RandomSearchManager(BaseManager):
             num_runs = self.config.num_runs if self.config.num_runs <= space else space
 
         while num_runs > 0:
-            params = copy.deepcopy(suggestion_params)
-            params.update(
+            suggestion_params = copy.deepcopy(params)
+            suggestion_params.update(
                 {
                     k: sample(v, rand_generator=rand_generator)
                     for k, v in self.config.params.items()
                 }
             )
-            suggestion = SuggestionSpec(params=params)
+            suggestion = SuggestionSpec(params=suggestion_params)
             if suggestion not in suggestions:
                 suggestions.append(suggestion)
                 num_runs -= 1

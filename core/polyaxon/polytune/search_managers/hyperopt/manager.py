@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Dict, List
 
 import hyperopt
 
@@ -127,7 +128,7 @@ class HyperoptManager(BaseManager):
         if self.config.algorithm == "anneal":
             return hyperopt.anneal.suggest
 
-    def get_suggestions(self, configs=None, metrics=None):
+    def get_suggestions(self, configs: Dict = None, metrics: Dict = None) -> List[Dict]:
         if not self.config.num_runs:
             raise ValueError("This search strategy requires `num_runs`.")
         suggestions = []
