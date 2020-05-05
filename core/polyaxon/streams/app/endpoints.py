@@ -93,6 +93,8 @@ async def get_logs(request):
         operation_logs, last_file = await get_archived_operation_logs(
             run_uuid=run_uuid, last_file=last_file
         )
+    if k8s_manager:
+        await k8s_manager.close()
     response = V1Logs(last_time=last_time, last_file=last_file, logs=operation_logs)
     return UJSONResponse(response.to_dict())
 
@@ -119,6 +121,8 @@ async def collect_logs(request):
     operation_logs, _ = await get_k8s_operation_logs(
         operation=operation, k8s_manager=k8s_manager, last_time=None
     )
+    if k8s_manager:
+        await k8s_manager.close()
     if not operation_logs:
         return Response()
 

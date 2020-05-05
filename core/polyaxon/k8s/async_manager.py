@@ -26,6 +26,7 @@ class AsyncK8SManager:
         self.namespace = namespace
         self.in_cluster = in_cluster
 
+        self.api_client = None
         self.k8s_api = None
         self.k8s_batch_api = None
         self.k8s_beta_api = None
@@ -38,15 +39,19 @@ class AsyncK8SManager:
                 config.load_incluster_config()
             else:
                 await config.load_kube_config()
-            api_client = None
+            self.api_client = client.api_client.ApiClient()
         else:
-            api_client = client.api_client.ApiClient(configuration=k8s_config)
+            self.api_client = client.api_client.ApiClient(configuration=k8s_config)
 
-        self.k8s_api = client.CoreV1Api(api_client)
-        self.k8s_batch_api = client.BatchV1Api(api_client)
-        self.k8s_beta_api = client.ExtensionsV1beta1Api(api_client)
-        self.k8s_custom_object_api = client.CustomObjectsApi()
-        self.k8s_version_api = client.VersionApi(api_client)
+        self.k8s_api = client.CoreV1Api(self.api_client)
+        self.k8s_batch_api = client.BatchV1Api(self.api_client)
+        self.k8s_beta_api = client.ExtensionsV1beta1Api(self.api_client)
+        self.k8s_custom_object_api = client.CustomObjectsApi(self.api_client)
+        self.k8s_version_api = client.VersionApi(self.api_client)
+
+    async def close(self):
+        if self.api_client:
+            await self.api_client.close()
 
     async def set_namespace(self, namespace):
         self.namespace = namespace
