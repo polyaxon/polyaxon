@@ -135,3 +135,29 @@ class MultiRunPlot(RunClient):
             self.run_uuids.add(r.uuid)
             self.runs[r.uuid] = r
         return self.runs
+
+    def get_run_io(
+        self, query: str = None, sort: str = None, limit: int = None, offset: int = None
+    ):
+        runs = self.get_runs(query=query, sort=sort, limit=limit, offset=offset)
+        data = []
+        for r in runs:
+            values = r.inputs or {}
+            values.update(r.outputs or {})
+            data.append({'uid': r.uuid, 'values': values})
+        return data
+
+    @check_no_op
+    def get_hiplot(
+        self, query: str = None, sort: str = None, limit: int = None, offset: int = None
+    ):
+        import hiplot
+
+        data = self.get_run_io(query=query, sort=sort, limit=limit, offset=offset)
+        exp = hiplot.Experiment()
+        for d in data:
+            dp = hiplot.Datapoint(
+                uid=d["uid"], values=d["values"],
+            )
+            exp.datapoints.append(dp)
+        return exp
