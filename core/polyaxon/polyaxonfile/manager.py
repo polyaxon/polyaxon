@@ -17,7 +17,7 @@ import copy
 import os
 
 from collections import Mapping
-from typing import Union, Dict
+from typing import Dict, Union
 
 from polyaxon import pkg
 from polyaxon.exceptions import PolyaxonfileError

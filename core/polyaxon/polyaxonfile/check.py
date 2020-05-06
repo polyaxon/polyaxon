@@ -37,21 +37,24 @@ def collect_references(config: V1Operation, path_context: str = None):
     elif config.has_path_reference:
         path_ref = config.path_ref
         if path_context:
-            path_ref = os.path.join(os.path.dirname(os.path.abspath(path_context)), path_ref)
+            path_ref = os.path.join(
+                os.path.dirname(os.path.abspath(path_context)), path_ref
+            )
         component = ConfigSpec.get_from(path_ref).read()
     else:
         raise PolyaxonfileError("Operation found without component")
 
     component = get_specification(data=component)
     if component.kind != kinds.COMPONENT:
-        ref_type = "Url ref" if config.has_url_reference else "Path ref"
-        ref = config.url_ref if config.has_url_reference else config.path_ref
+        if config.has_url_reference:
+            ref_type = "Url ref"
+            ref = config.url_ref
+        else:
+            ref_type = "Path ref"
+            ref = config.path_ref
         raise PolyaxonfileError(
             "the reference ({}) `{}` is of kind `{}`, it should be a `{}`".format(
-                ref,
-                ref_type,
-                component.kind,
-                kinds.COMPONENT
+                ref, ref_type, component.kind, kinds.COMPONENT
             )
         )
     config.component = component
