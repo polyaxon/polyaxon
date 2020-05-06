@@ -88,6 +88,11 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
         self._components_by_names = {}  # ComponentName -> Component
         self._op_component_mapping = {}  # OpName -> ComponentName
         self._context = {}  # Ops output names -> types
+        # This is only usable from cli, the full op must be resolved before it can be submitted
+        self._path_context = None
+
+    def set_path_context(self, path_context):
+        self._path_context = path_context
 
     @property
     def dag(self):
@@ -199,7 +204,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             op_name = op.name
             if op.has_url_reference or op.has_path_reference:
                 try:
-                    op = collect_references(op)
+                    op = collect_references(op, self._path_context)
                 except Exception as e:
                     raise PolyaxonSchemaError(
                         "Pipeline op with name `{}` requires a component with ref `{}`, "

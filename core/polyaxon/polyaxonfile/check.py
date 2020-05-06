@@ -29,17 +29,31 @@ from polyaxon.utils.formatting import Printer, dict_tabulate
 from polyaxon.utils.list_utils import to_list
 
 
-def collect_references(config: V1Operation):
+def collect_references(config: V1Operation, path_context: str = None):
     if config.has_component_reference or config.has_hub_reference:
         return config
     elif config.has_url_reference:
         component = ConfigSpec.get_from(config.url_ref, "url").read()
     elif config.has_path_reference:
-        component = ConfigSpec.get_from(config.path_ref).read()
+        path_ref = config.path_ref
+        if path_context:
+            path_ref = os.path.join(os.path.dirname(os.path.abspath(path_context)), path_ref)
+        component = ConfigSpec.get_from(path_ref).read()
     else:
         raise PolyaxonfileError("Operation found without component")
 
     component = get_specification(data=component)
+    if component.kind != kinds.COMPONENT:
+        ref_type = "Url ref" if config.has_url_reference else "Path ref"
+        ref = config.url_ref if config.has_url_reference else config.path_ref
+        raise PolyaxonfileError(
+            "the reference ({}) `{}` is of kind `{}`, it should be a `{}`".format(
+                ref,
+                ref_type,
+                component.kind,
+                kinds.COMPONENT
+            )
+        )
     config.component = component
     return config
 
@@ -98,19 +112,22 @@ def check_polyaxonfile(
 
     try:
         plx_file = None
+        path_context = None
         if not hub:
             if python_module:
+                path_context = python_module[0]
                 plx_file = ConfigSpec.get_from(python_module, config_type=".py").read()
 
             elif url:
                 plx_file = ConfigSpec.get_from(url, "url").read()
 
             else:
+                path_context = polyaxonfile[0]
                 plx_file = ConfigSpec.read_from(polyaxonfile)
 
             plx_file = get_specification(data=plx_file)
             if plx_file.kind == kinds.OPERATION:
-                plx_file = collect_references(plx_file)
+                plx_file = collect_references(plx_file, path_context)
 
         if to_op or hub:
             plx_file = get_op_specification(
@@ -120,6 +137,7 @@ def check_polyaxonfile(
                 profile=profile,
                 queue=queue,
                 nocache=nocache,
+                path_context=path_context,
             )
         if log and not is_cli:
             Printer.print_success("Polyaxonfile valid")

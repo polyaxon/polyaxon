@@ -17,7 +17,7 @@ import copy
 import os
 
 from collections import Mapping
-from typing import Union
+from typing import Union, Dict
 
 from polyaxon import pkg
 from polyaxon.exceptions import PolyaxonfileError
@@ -51,11 +51,12 @@ def check_default_path(path):
 
 def get_op_specification(
     config: Union[V1Component, V1Operation] = None,
-    hub=None,
-    params=None,
-    profile=None,
-    queue=None,
-    nocache=None,
+    hub: str = None,
+    params: Dict = None,
+    profile: str = None,
+    queue: str = None,
+    nocache: bool = None,
+    path_context: str = None,
 ) -> V1Operation:
     job_data = {
         "version": config.version if config else pkg.SCHEMA_VERSION,
@@ -88,5 +89,6 @@ def get_op_specification(
         run_config = OperationSpecification.compile_operation(config)
         run_config.validate_params(params=params, is_template=False)
         if run_config.is_dag_run:
+            run_config.run.set_path_context(path_context)
             CompiledOperationSpecification.apply_context(run_config)
     return config
