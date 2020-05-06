@@ -17,14 +17,12 @@ from typing import List
 
 import ujson
 
-from polyaxon import settings, types
+from polyaxon import settings
 from polyaxon.agents.spawners.async_spawner import AsyncSpawner
-from polyaxon.containers.containers import get_default_notification_container
 from polyaxon.lifecycle import V1StatusCondition
 from polyaxon.logger import logger
+from polyaxon.operations import get_notifier_operation
 from polyaxon.polyaxonfile import OperationSpecification
-from polyaxon.polyflow import V1IO, V1Component, V1Operation, V1Plugins, V1Termination
-from polyaxon.polyflow.run import V1Notifier
 from polyaxon.polypod import compiler
 
 
@@ -52,39 +50,14 @@ async def notify_run(
             )
             continue
 
-        operation = V1Operation(
-            params={
-                "kind": connection_type.kind,
-                "owner": owner,
-                "project": project,
-                "run_uuid": run_uuid,
-                "run_name": run_name,
-                "condition": ujson.dumps(condition.to_dict()),
-            },
-            termination=V1Termination(max_retries=3),
-            component=V1Component(
-                name="slack-notification",
-                plugins=V1Plugins(
-                    auth=False,
-                    collect_logs=False,
-                    collect_artifacts=False,
-                    collect_resources=False,
-                    sync_statuses=False,
-                ),
-                inputs=[
-                    V1IO(name="kind", iotype=types.STR, is_optional=False),
-                    V1IO(name="owner", iotype=types.STR, is_optional=False),
-                    V1IO(name="project", iotype=types.STR, is_optional=False),
-                    V1IO(name="run_uuid", iotype=types.STR, is_optional=False),
-                    V1IO(name="run_name", iotype=types.STR, is_optional=True),
-                    V1IO(name="condition", iotype=types.STR, is_optional=True),
-                    V1IO(name="connection", iotype=types.STR, is_optional=True),
-                ],
-                run=V1Notifier(
-                    connections=[connection],
-                    container=get_default_notification_container(),
-                ),
-            ),
+        operation = get_notifier_operation(
+            connection=connection,
+            kind=connection_type.kind,
+            owner=owner,
+            project=project,
+            run_uuid=run_uuid,
+            run_name=run_name,
+            condition=ujson.dumps(condition.to_dict()),
         )
         compiled_operation = OperationSpecification.compile_operation(operation)
         resource = compiler.make(

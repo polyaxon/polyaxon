@@ -275,6 +275,11 @@ async def download_artifacts(request):
     path = request.query_params.get("path", "")
     subpath = "{}/{}".format(run_uuid, path).rstrip("/")
     archived_path = await download_dir(subpath=subpath, to_tar=True)
+    if not archived_path:
+        return Response(
+            content="Artifact not found: filepath={}".format(archived_path),
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
     return redirect(archived_path)
 
 

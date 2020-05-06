@@ -66,6 +66,14 @@ class TestStatusesTransition(BaseTestCase):
             else:
                 assert LifeCycle.is_unschedulable(status) is False
 
+    def test_is_compilable(self):
+        assert LifeCycle.is_unschedulable(None) is False
+        for status in V1Statuses.allowable_values:
+            if status in LifeCycle.COMPILABLE_VALUES:
+                assert LifeCycle.is_compilable(status) is True
+            else:
+                assert LifeCycle.is_compilable(status) is False
+
     def test_is_warning(self):
         assert LifeCycle.is_warning(None) is False
         for status in V1Statuses.allowable_values:

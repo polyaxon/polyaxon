@@ -150,3 +150,20 @@ def get_default_notification_container():
             requests={"cpu": "0.1", "memory": "20Mi"},
         ),
     )
+
+
+def get_default_tuner_container(command):
+    return V1Container(
+        name=MAIN_JOB_CONTAINER,
+        image="polyaxon/polyaxon-hpsearch:{}".format("dev"),
+        image_pull_policy=PullPolicy.ALWAYS.value,
+        command=command,
+        args=[
+            "--parallel={{parallel}}",
+            "--configs={{configs}}",
+            "--metrics={{metrics}}",
+        ],
+        resources=k8s_schemas.V1ResourceRequirements(
+            requests={"cpu": "0.1", "memory": "180Mi"},
+        ),
+    )

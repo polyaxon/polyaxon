@@ -94,7 +94,8 @@ def validate_params(
             else:  # Plain value
                 inp.validate_value(param_value.value)
             validated_params.append(param_spec)
-            processed_params.append(inp.name)
+            if not param_spec.param.context_only:
+                processed_params.append(inp.name)
         elif parallel and validate_parallel(inp):
             pass
         elif not inp.is_optional and not is_template:
@@ -122,13 +123,13 @@ def validate_params(
                 is_flag=out.is_flag,
                 is_list=out.is_list,
             )
-            validated_params.append(param_spec)
             if param_spec.param.is_ref:
                 param_spec.validate_ref(None, is_template=False, check_runs=check_runs)
             else:  # Plain value
                 out.validate_value(param_value.value)
             validated_params.append(param_spec)
-            processed_params.append(out.name)
+            if not param_spec.param.context_only:
+                processed_params.append(out.name)
         # No validation for outputs we assume that the op might populate a context or send a metric
         else:
             validated_params.append(

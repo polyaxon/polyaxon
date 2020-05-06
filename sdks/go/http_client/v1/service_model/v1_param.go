@@ -30,6 +30,9 @@ import (
 // swagger:model v1Param
 type V1Param struct {
 
+	// A flag to signal to Polyaxon that this param should not be validated against io
+	ContextOnly bool `json:"context_only,omitempty"`
+
 	// Ref correspond to a reference of an object
 	Ref string `json:"ref,omitempty"`
 

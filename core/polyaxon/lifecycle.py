@@ -73,7 +73,7 @@ class LifeCycle:
         V1Statuses.RESUMING,
         V1Statuses.SCHEDULED,
     }
-    SCHEDULABLE_VALUES = {
+    COMPILABLE_VALUES = {
         V1Statuses.CREATED,
         V1Statuses.RESUMING,
         V1Statuses.RETRYING,
@@ -107,6 +107,10 @@ class LifeCycle:
     @classmethod
     def is_compiled(cls, status: str) -> bool:
         return status == V1Statuses.COMPILED
+
+    @classmethod
+    def is_compilable(cls, status: str) -> bool:
+        return status in cls.COMPILABLE_VALUES
 
     @classmethod
     def is_queued(cls, status: str) -> bool:

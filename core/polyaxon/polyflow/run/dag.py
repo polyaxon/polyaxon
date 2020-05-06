@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from collections import Mapping
+from typing import Set
 
 import polyaxon_sdk
 
@@ -103,7 +104,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             )
         self.sort_topologically(dag=dag)
 
-    def _get_op_upstream(self, op):
+    def _get_op_upstream(self, op) -> Set:
         upstream = set(op.dependencies) if op.dependencies else set([])
 
         if not op.params:
@@ -292,7 +293,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 inputs=inputs,
                 outputs=outputs,
                 context=self._context,
-                parallel=None,
+                parallel=op.parallel,
                 is_template=False,
                 check_runs=False,
                 extra_info="<op {}>.<component {}>".format(op.name, component_ref),

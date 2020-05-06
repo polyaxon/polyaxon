@@ -17,10 +17,12 @@
 import os
 
 from datetime import datetime
+from typing import Optional
 
 import aiofiles
 
 from polyaxon import settings
+from polyaxon.exceptions import PolyaxonException
 from polyaxon.stores import manager
 from polyaxon.utils.path_utils import check_or_create_path, get_path
 
@@ -53,7 +55,7 @@ async def upload_dir(
     )
 
 
-async def download_file(subpath: str, check_cache=True) -> str:
+async def download_file(subpath: str, check_cache=True) -> Optional[str]:
     path_from = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
 
@@ -62,26 +64,32 @@ async def download_file(subpath: str, check_cache=True) -> str:
         return path_to
 
     check_or_create_path(path_to, is_dir=False)
-    return manager.download_file_or_dir(
-        connection_type=settings.AGENT_CONFIG.artifacts_store,
-        path_from=path_from,
-        path_to=path_to,
-        is_file=True,
-    )
+    try:
+        return manager.download_file_or_dir(
+            connection_type=settings.AGENT_CONFIG.artifacts_store,
+            path_from=path_from,
+            path_to=path_to,
+            is_file=True,
+        )
+    except PolyaxonException:
+        return None
 
 
-async def download_dir(subpath: str, to_tar: bool = False) -> str:
+async def download_dir(subpath: str, to_tar: bool = False) -> Optional[str]:
     path_from = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
     check_or_create_path(path_to, is_dir=True)
-    return manager.download_file_or_dir(
-        connection_type=settings.AGENT_CONFIG.artifacts_store,
-        path_from=path_from,
-        path_to=path_to,
-        is_file=False,
-        workers=5,
-        to_tar=to_tar,
-    )
+    try:
+        return manager.download_file_or_dir(
+            connection_type=settings.AGENT_CONFIG.artifacts_store,
+            path_from=path_from,
+            path_to=path_to,
+            is_file=False,
+            workers=5,
+            to_tar=to_tar,
+        )
+    except PolyaxonException:
+        return None
 
 
 async def list_files(subpath: str, filepath) -> str:

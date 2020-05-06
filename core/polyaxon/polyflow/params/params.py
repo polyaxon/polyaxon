@@ -27,6 +27,7 @@ from polyaxon.schemas.fields.params import PARAM_REGEX
 
 INPUTS = "inputs"
 OUTPUTS = "outputs"
+INPUTS_OUTPUTS = "io"
 ARTIFACTS = "artifacts"
 EVENTS = "events"
 STATUS = "status"
@@ -38,6 +39,7 @@ ITERATION = "iteration"
 CONTEXTS = {
     INPUTS,
     OUTPUTS,
+    INPUTS_OUTPUTS,
     ARTIFACTS,
     EVENTS,
     STATUS,
@@ -99,6 +101,7 @@ class ParamSchema(BaseCamelSchema):
     value = fields.Raw(required=True)
     search = fields.Nested(ParamSearchSchema, allow_none=True)
     ref = fields.Str(allow_none=True)
+    context_only = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -119,6 +122,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     REDUCED_ATTRIBUTES = [
         "search",
         "ref",
+        "contextOnly",
     ]
 
     def validate(self):

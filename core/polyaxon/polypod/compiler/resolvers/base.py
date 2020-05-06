@@ -57,8 +57,8 @@ class BaseResolver:
         self.polyaxon_init = None
         self.iteration = None
         self.agent_config = None
-        self.globals = {}
         self.contexts = {}
+        self.globals = {}
 
     def resolve_edges(self):
         pass
@@ -79,7 +79,11 @@ class BaseResolver:
         raise NotImplementedError
 
     def resolve_connections_params(self):
-        raise NotImplementedError
+        self.compiled_operation = CompiledOperationSpecification.apply_run_connections_params(
+            config=self.compiled_operation,
+            artifact_store=self.artifacts_store.name if self.artifacts_store else None,
+            contexts=self.globals,
+        )
 
     def resolve_profile(self):
         pass

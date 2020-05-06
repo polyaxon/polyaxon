@@ -72,4 +72,7 @@ message Param {
 
     // Search correspond to a valid search that can be resolved
     ParamSearch search = 4;
+
+    // A flag to signal to Polyaxon that this param should not be validated against io
+    bool context_only = 5;
 }

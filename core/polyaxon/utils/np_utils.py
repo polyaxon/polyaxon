@@ -23,6 +23,8 @@ except ImportError:
 
 
 def sanitize_np_types(value):
+    if isinstance(value, str):
+        return value
     if math.isnan(value):
         return None
     if isinstance(value, (int, float, complex, type(None))):

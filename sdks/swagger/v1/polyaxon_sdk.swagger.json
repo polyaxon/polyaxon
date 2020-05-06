@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.87",
+    "version": "1.0.89",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -14972,6 +14972,11 @@
         "search": {
           "$ref": "#/definitions/v1ParamSearch",
           "title": "Search correspond to a valid search that can be resolved"
+        },
+        "context_only": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to signal to Polyaxon that this param should not be validated against io"
         }
       },
       "title": "Param specification"

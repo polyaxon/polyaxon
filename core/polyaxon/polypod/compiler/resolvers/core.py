@@ -57,7 +57,5 @@ class CoreResolver(BaseResolver):
 
     def resolve_params(self):
         self.compiled_operation = CompiledOperationSpecification.apply_params(
-            config=self.compiled_operation,
-            params=self.params,
-            artifact_store=self.artifacts_store.name if self.artifacts_store else None,
+            config=self.compiled_operation, params=self.params, context=self.globals,
         )
