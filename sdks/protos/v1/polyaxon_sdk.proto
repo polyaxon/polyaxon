@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.0.89";
+        version: "1.0.88";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -863,13 +863,6 @@ service ProjectDashboardsV1 {
             post: "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote"
         };
     }
-}
-
-
-// Service to manage run dashboards
-service RunDashboardsV1 {
-
-    
 }
 
 
