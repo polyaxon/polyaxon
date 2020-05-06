@@ -136,9 +136,10 @@ class MultiRunPlot(RunClient):
             self.runs[r.uuid] = r
         return self.runs
 
-    def get_run_io(
+    def get_runs_io(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ):
+        # TODO: replace with runs io API
         runs = self.get_runs(query=query, sort=sort, limit=limit, offset=offset)
         data = []
         for r in runs:
@@ -153,7 +154,7 @@ class MultiRunPlot(RunClient):
     ):
         import hiplot
 
-        data = self.get_run_io(query=query, sort=sort, limit=limit, offset=offset)
+        data = self.get_runs_io(query=query, sort=sort, limit=limit, offset=offset)
         exp = hiplot.Experiment()
         for d in data:
             dp = hiplot.Datapoint(
