@@ -43,8 +43,7 @@ services:
       - "8000:8000"
       - "8001:8001"
       - "6006:6006"
-      - "8888:8888"
-      - "8000:80"
+      - "8080:80"
       - "9000:443"
     environment:
       DJANGO_SETTINGS_MODULE: polyaxon.settings
