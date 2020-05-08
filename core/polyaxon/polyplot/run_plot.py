@@ -149,7 +149,7 @@ class MultiRunPlot(RunClient):
         return data
 
     @check_no_op
-    def gey_hiplot(
+    def get_hiplot(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ):
         import hiplot
@@ -158,7 +158,7 @@ class MultiRunPlot(RunClient):
         exp = hiplot.Experiment()
         for d in data:
             dp = hiplot.Datapoint(
-                uid=data["uid"], values=data["values"],
+                uid=d["uid"], values=d["values"],
             )
             exp.datapoints.append(dp)
         return exp
