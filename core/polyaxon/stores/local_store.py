@@ -54,7 +54,7 @@ class LocalStore(StoreMixin):
         if not os.path.isdir(path):
             logger.warning("Invalid parent directory '%s'" % path)
             return []
-        matches = [x for x in os.listdir(path) if check(os.path.join(path, x))]
+        matches = sorted([x for x in os.listdir(path) if check(os.path.join(path, x))])
         return [os.path.join(path, m) for m in matches] if abs_path else matches
 
     def ls(self, path):
