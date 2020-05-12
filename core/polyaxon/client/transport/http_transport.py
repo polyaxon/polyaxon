@@ -153,7 +153,7 @@ class HttpTransportMixin(object):
                 "please make sure to add them to .polyaxonignore or "
                 "add them directly to your data volume, or upload them "
                 "separately using `polyaxon data` command and remove them from here.\n",
-                self.format_sizeof(settings.CLIENT_CONFIG.upload_size_warn),
+                self.format_sizeof(files_size),
                 self.format_sizeof(settings.CLIENT_CONFIG.upload_size_max),
             )
 
