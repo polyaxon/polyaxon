@@ -21,6 +21,36 @@ from polyaxon.client.transport import Transport
 
 
 class PolyaxonClient:
+    """PolyaxonClient class is the base client with logic
+    to pass config and token to other specific clients.
+
+    > N.B. PolyaxonClient requires python >= 3.5,
+    if you want to interact with Polyaxon using a client
+    compatible with python 2.7 please check polyaxon-sdk.
+
+    You can access specific clients:
+
+    ```python
+    client = PolyaxonClient()
+
+    client.projects_v1
+    client.runs_v1
+    client.auth_v1
+    client.users_v1
+    client.agents_v1
+    client.components_v1
+    client.models_v1
+    ```
+
+    Args:
+        config: Instance of a ClientConfig.
+        token: Optional token to use for authenticating the clients,
+               if the user is already logged in using the CLI, it will automatically use that token.
+               Use the client inside a job/service scheduled with Polyaxon will have access to the
+               token of the user who started the run.
+               N.B. The `auth` context must be enabled.
+    """
+
     def __init__(self, config=None, token=None):
 
         self._config = config or settings.CLIENT_CONFIG

@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import functools
 
 from polyaxon.logger import logger
 
@@ -31,6 +32,7 @@ def can_log_events(f):
 
     """
 
+    @functools.wraps(f)
     def wrapper(*args, **kwargs):
         if args:
             self_arg = args[0]

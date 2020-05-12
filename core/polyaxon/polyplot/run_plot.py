@@ -145,7 +145,7 @@ class MultiRunPlot(RunClient):
         for r in runs:
             values = r.inputs or {}
             values.update(r.outputs or {})
-            data.append({'uid': r.uuid, 'values': values})
+            data.append({"uid": r.uuid, "values": values})
         return data
 
     @check_no_op
@@ -157,8 +157,6 @@ class MultiRunPlot(RunClient):
         data = self.get_runs_io(query=query, sort=sort, limit=limit, offset=offset)
         exp = hiplot.Experiment()
         for d in data:
-            dp = hiplot.Datapoint(
-                uid=d["uid"], values=d["values"],
-            )
+            dp = hiplot.Datapoint(uid=d["uid"], values=d["values"])
             exp.datapoints.append(dp)
         return exp
