@@ -38,7 +38,7 @@ type V1Operation struct {
 	Component *V1Component `json:"component,omitempty"`
 
 	// An optional list of condition to check before starting the run, entities should be a valid Condition
-	Conditions []interface{} `json:"conditions"`
+	Conditions []string `json:"conditions"`
 
 	// dag ref
 	DagRef string `json:"dag_ref,omitempty"`
@@ -48,6 +48,9 @@ type V1Operation struct {
 
 	// Optional component description
 	Description string `json:"description,omitempty"`
+
+	// Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+	Events []interface{} `json:"events"`
 
 	// hub ref
 	HubRef string `json:"hub_ref,omitempty"`

@@ -31,16 +31,16 @@ import (
 type V1Reference struct {
 
 	// dag reference
-	DagReference *V1DagReference `json:"dag_reference,omitempty"`
+	DagReference *V1DagRef `json:"dag_reference,omitempty"`
 
 	// hub reference
-	HubReference *V1HubReference `json:"hub_reference,omitempty"`
+	HubReference *V1HubRef `json:"hub_reference,omitempty"`
 
 	// path reference
-	PathReference *V1PathReference `json:"path_reference,omitempty"`
+	PathReference *V1PathRef `json:"path_reference,omitempty"`
 
 	// url reference
-	URLReference *V1URLReference `json:"url_reference,omitempty"`
+	URLReference *V1URLRef `json:"url_reference,omitempty"`
 }
 
 // Validate validates this v1 reference

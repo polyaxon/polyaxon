@@ -5,19 +5,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_hub_model**](HubModelsV1Api.md#create_hub_model) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
-[**delete_hub_model**](HubModelsV1Api.md#delete_hub_model) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
-[**get_hub_model**](HubModelsV1Api.md#get_hub_model) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
-[**list_hub_model_names**](HubModelsV1Api.md#list_hub_model_names) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
-[**list_hub_models**](HubModelsV1Api.md#list_hub_models) | **GET** /api/v1/orgs/{owner}/models | List dashboards
-[**patch_hub_model**](HubModelsV1Api.md#patch_hub_model) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
-[**update_hub_model**](HubModelsV1Api.md#update_hub_model) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
+[**create_hub_model**](HubModelsV1Api.md#create_hub_model) | **POST** /api/v1/orgs/{owner}/models | Create hub model
+[**delete_hub_model**](HubModelsV1Api.md#delete_hub_model) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete hub model
+[**get_hub_model**](HubModelsV1Api.md#get_hub_model) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get hub model
+[**list_hub_model_names**](HubModelsV1Api.md#list_hub_model_names) | **GET** /api/v1/orgs/{owner}/models/names | List hub model names
+[**list_hub_models**](HubModelsV1Api.md#list_hub_models) | **GET** /api/v1/orgs/{owner}/models | List hub models
+[**patch_hub_model**](HubModelsV1Api.md#patch_hub_model) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch hub model
+[**update_hub_model**](HubModelsV1Api.md#update_hub_model) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update hub model
 
 
 # **create_hub_model**
 > V1HubModel create_hub_model(owner, body)
 
-Create dashboard
+Create hub model
 
 ### Example
 
@@ -45,7 +45,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
     try:
-        # Create dashboard
+        # Create hub model
         api_response = api_instance.create_hub_model(owner, body)
         pprint(api_response)
     except ApiException as e:
@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 # **delete_hub_model**
 > delete_hub_model(owner, uuid)
 
-Delete dashboard
+Delete hub model
 
 ### Example
 
@@ -114,7 +114,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
-        # Delete dashboard
+        # Delete hub model
         api_instance.delete_hub_model(owner, uuid)
     except ApiException as e:
         print("Exception when calling HubModelsV1Api->delete_hub_model: %s\n" % e)
@@ -154,7 +154,7 @@ void (empty response body)
 # **get_hub_model**
 > V1HubModel get_hub_model(owner, uuid)
 
-Get dashboard
+Get hub model
 
 ### Example
 
@@ -182,7 +182,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
-        # Get dashboard
+        # Get hub model
         api_response = api_instance.get_hub_model(owner, uuid)
         pprint(api_response)
     except ApiException as e:
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 # **list_hub_model_names**
 > V1ListHubModelsResponse list_hub_model_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List dashboard names
+List hub model names
 
 ### Example
 
@@ -254,7 +254,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
-        # List dashboard names
+        # List hub model names
         api_response = api_instance.list_hub_model_names(owner, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
@@ -298,7 +298,7 @@ Name | Type | Description  | Notes
 # **list_hub_models**
 > V1ListHubModelsResponse list_hub_models(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List dashboards
+List hub models
 
 ### Example
 
@@ -329,7 +329,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
-        # List dashboards
+        # List hub models
         api_response = api_instance.list_hub_models(owner, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
@@ -373,7 +373,7 @@ Name | Type | Description  | Notes
 # **patch_hub_model**
 > V1HubModel patch_hub_model(owner, model_uuid, body)
 
-Patch dashboard
+Patch hub model
 
 ### Example
 
@@ -402,7 +402,7 @@ model_uuid = 'model_uuid_example' # str | UUID
 body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
     try:
-        # Patch dashboard
+        # Patch hub model
         api_response = api_instance.patch_hub_model(owner, model_uuid, body)
         pprint(api_response)
     except ApiException as e:
@@ -444,7 +444,7 @@ Name | Type | Description  | Notes
 # **update_hub_model**
 > V1HubModel update_hub_model(owner, model_uuid, body)
 
-Update dashboard
+Update hub model
 
 ### Example
 
@@ -473,7 +473,7 @@ model_uuid = 'model_uuid_example' # str | UUID
 body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
     try:
-        # Update dashboard
+        # Update hub model
         api_response = api_instance.update_hub_model(owner, model_uuid, body)
         pprint(api_response)
     except ApiException as e:

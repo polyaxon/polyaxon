@@ -37,10 +37,10 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import org.openapitools.client.model.V1DagReference;
-import org.openapitools.client.model.V1HubReference;
-import org.openapitools.client.model.V1PathReference;
-import org.openapitools.client.model.V1UrlReference;
+import org.openapitools.client.model.V1DagRef;
+import org.openapitools.client.model.V1HubRef;
+import org.openapitools.client.model.V1PathRef;
+import org.openapitools.client.model.V1UrlRef;
 
 /**
  * V1Reference
@@ -49,22 +49,22 @@ import org.openapitools.client.model.V1UrlReference;
 public class V1Reference {
   public static final String SERIALIZED_NAME_HUB_REFERENCE = "hub_reference";
   @SerializedName(SERIALIZED_NAME_HUB_REFERENCE)
-  private V1HubReference hubReference;
+  private V1HubRef hubReference;
 
   public static final String SERIALIZED_NAME_DAG_REFERENCE = "dag_reference";
   @SerializedName(SERIALIZED_NAME_DAG_REFERENCE)
-  private V1DagReference dagReference;
+  private V1DagRef dagReference;
 
   public static final String SERIALIZED_NAME_URL_REFERENCE = "url_reference";
   @SerializedName(SERIALIZED_NAME_URL_REFERENCE)
-  private V1UrlReference urlReference;
+  private V1UrlRef urlReference;
 
   public static final String SERIALIZED_NAME_PATH_REFERENCE = "path_reference";
   @SerializedName(SERIALIZED_NAME_PATH_REFERENCE)
-  private V1PathReference pathReference;
+  private V1PathRef pathReference;
 
 
-  public V1Reference hubReference(V1HubReference hubReference) {
+  public V1Reference hubReference(V1HubRef hubReference) {
     
     this.hubReference = hubReference;
     return this;
@@ -77,17 +77,17 @@ public class V1Reference {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1HubReference getHubReference() {
+  public V1HubRef getHubReference() {
     return hubReference;
   }
 
 
-  public void setHubReference(V1HubReference hubReference) {
+  public void setHubReference(V1HubRef hubReference) {
     this.hubReference = hubReference;
   }
 
 
-  public V1Reference dagReference(V1DagReference dagReference) {
+  public V1Reference dagReference(V1DagRef dagReference) {
     
     this.dagReference = dagReference;
     return this;
@@ -100,17 +100,17 @@ public class V1Reference {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1DagReference getDagReference() {
+  public V1DagRef getDagReference() {
     return dagReference;
   }
 
 
-  public void setDagReference(V1DagReference dagReference) {
+  public void setDagReference(V1DagRef dagReference) {
     this.dagReference = dagReference;
   }
 
 
-  public V1Reference urlReference(V1UrlReference urlReference) {
+  public V1Reference urlReference(V1UrlRef urlReference) {
     
     this.urlReference = urlReference;
     return this;
@@ -123,17 +123,17 @@ public class V1Reference {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1UrlReference getUrlReference() {
+  public V1UrlRef getUrlReference() {
     return urlReference;
   }
 
 
-  public void setUrlReference(V1UrlReference urlReference) {
+  public void setUrlReference(V1UrlRef urlReference) {
     this.urlReference = urlReference;
   }
 
 
-  public V1Reference pathReference(V1PathReference pathReference) {
+  public V1Reference pathReference(V1PathRef pathReference) {
     
     this.pathReference = pathReference;
     return this;
@@ -146,12 +146,12 @@ public class V1Reference {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1PathReference getPathReference() {
+  public V1PathRef getPathReference() {
     return pathReference;
   }
 
 
-  public void setPathReference(V1PathReference pathReference) {
+  public void setPathReference(V1PathRef pathReference) {
     this.pathReference = pathReference;
   }
 

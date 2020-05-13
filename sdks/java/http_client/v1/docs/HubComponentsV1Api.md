@@ -5,20 +5,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createHubComponent**](HubComponentsV1Api.md#createHubComponent) | **POST** /api/v1/orgs/{owner}/components | Create hub model
-[**deleteHubComponent**](HubComponentsV1Api.md#deleteHubComponent) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
-[**getHubComponent**](HubComponentsV1Api.md#getHubComponent) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
-[**listHubComponebtNames**](HubComponentsV1Api.md#listHubComponebtNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
-[**listHubComponents**](HubComponentsV1Api.md#listHubComponents) | **GET** /api/v1/orgs/{owner}/components | List hub models
-[**patchHubComponent**](HubComponentsV1Api.md#patchHubComponent) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
-[**updateHubComponent**](HubComponentsV1Api.md#updateHubComponent) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
+[**createHubComponent**](HubComponentsV1Api.md#createHubComponent) | **POST** /api/v1/orgs/{owner}/components | Create hub component
+[**deleteHubComponent**](HubComponentsV1Api.md#deleteHubComponent) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
+[**getHubComponent**](HubComponentsV1Api.md#getHubComponent) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub component
+[**listHubComponebtNames**](HubComponentsV1Api.md#listHubComponebtNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub component names
+[**listHubComponents**](HubComponentsV1Api.md#listHubComponents) | **GET** /api/v1/orgs/{owner}/components | List hub components
+[**patchHubComponent**](HubComponentsV1Api.md#patchHubComponent) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub component
+[**updateHubComponent**](HubComponentsV1Api.md#updateHubComponent) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub component
 
 
 <a name="createHubComponent"></a>
 # **createHubComponent**
 > V1HubComponent createHubComponent(owner, body)
 
-Create hub model
+Create hub component
 
 ### Example
 ```java
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 # **deleteHubComponent**
 > deleteHubComponent(owner, uuid)
 
-Delete hub model
+Delete hub component
 
 ### Example
 ```java
@@ -163,7 +163,7 @@ null (empty response body)
 # **getHubComponent**
 > V1HubComponent getHubComponent(owner, uuid)
 
-Get hub model
+Get hub component
 
 ### Example
 ```java
@@ -236,7 +236,7 @@ Name | Type | Description  | Notes
 # **listHubComponebtNames**
 > V1ListHubComponentsResponse listHubComponebtNames(owner, offset, limit, sort, query)
 
-List hub model names
+List hub component names
 
 ### Example
 ```java
@@ -315,7 +315,7 @@ Name | Type | Description  | Notes
 # **listHubComponents**
 > V1ListHubComponentsResponse listHubComponents(owner, offset, limit, sort, query)
 
-List hub models
+List hub components
 
 ### Example
 ```java
@@ -394,7 +394,7 @@ Name | Type | Description  | Notes
 # **patchHubComponent**
 > V1HubComponent patchHubComponent(owner, componentUuid, body)
 
-Patch hub model
+Patch hub component
 
 ### Example
 ```java
@@ -469,7 +469,7 @@ Name | Type | Description  | Notes
 # **updateHubComponent**
 > V1HubComponent updateHubComponent(owner, componentUuid, body)
 
-Update hub model
+Update hub component
 
 ### Example
 ```java

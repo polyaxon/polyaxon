@@ -69,7 +69,7 @@ type ClientService interface {
 }
 
 /*
-  CreateOrganization create organization API
+  CreateOrganization creates organization
 */
 func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationOK, *CreateOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -105,7 +105,7 @@ func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo r
 }
 
 /*
-  CreateOrganizationMember create organization member API
+  CreateOrganizationMember creates organization member
 */
 func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -141,7 +141,7 @@ func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams
 }
 
 /*
-  DeleteOrganization delete organization API
+  DeleteOrganization deletes organization
 */
 func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -177,7 +177,7 @@ func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo r
 }
 
 /*
-  DeleteOrganizationMember delete organization member API
+  DeleteOrganizationMember deletes organization member details
 */
 func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -213,7 +213,7 @@ func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams
 }
 
 /*
-  GetOrganization get organization API
+  GetOrganization gets organization
 */
 func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationOK, *GetOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -249,7 +249,7 @@ func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime
 }
 
 /*
-  GetOrganizationMember get organization member API
+  GetOrganizationMember gets organization member details
 */
 func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -285,7 +285,7 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 }
 
 /*
-  ListOrganizationMembers list organization members API
+  ListOrganizationMembers gets organization members
 */
 func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error) {
 	// TODO: Validate the params before sending
@@ -321,7 +321,7 @@ func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, 
 }
 
 /*
-  ListOrganizationNames gets versions
+  ListOrganizationNames lists organizations names
 */
 func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -357,7 +357,7 @@ func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, auth
 }
 
 /*
-  ListOrganizations gets log handler
+  ListOrganizations lists organizations
 */
 func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationsOK, *ListOrganizationsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -393,7 +393,7 @@ func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo run
 }
 
 /*
-  PatchOrganization patch organization API
+  PatchOrganization patches organization
 */
 func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationOK, *PatchOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -429,7 +429,7 @@ func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo run
 }
 
 /*
-  PatchOrganizationMember patch organization member API
+  PatchOrganizationMember patches organization member
 */
 func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -465,7 +465,7 @@ func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, 
 }
 
 /*
-  UpdateOrganization update organization API
+  UpdateOrganization updates organization
 */
 func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -501,7 +501,7 @@ func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo r
 }
 
 /*
-  UpdateOrganizationMember update organization member API
+  UpdateOrganizationMember updates organization member
 */
 func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending

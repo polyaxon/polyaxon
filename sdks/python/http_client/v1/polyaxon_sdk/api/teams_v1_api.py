@@ -51,7 +51,7 @@ class TeamsV1Api(object):
         self.api_client = api_client
 
     def create_team(self, owner, body, **kwargs):  # noqa: E501
-        """Create organization  # noqa: E501
+        """Create team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -76,7 +76,7 @@ class TeamsV1Api(object):
         return self.create_team_with_http_info(owner, body, **kwargs)  # noqa: E501
 
     def create_team_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """Create organization  # noqa: E501
+        """Create team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -189,7 +189,7 @@ class TeamsV1Api(object):
         )
 
     def create_team_member(self, owner, team, body, **kwargs):  # noqa: E501
-        """Create organization member  # noqa: E501
+        """Create team member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -219,7 +219,7 @@ class TeamsV1Api(object):
     def create_team_member_with_http_info(
         self, owner, team, body, **kwargs
     ):  # noqa: E501
-        """Create organization member  # noqa: E501
+        """Create team member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -343,7 +343,7 @@ class TeamsV1Api(object):
         )
 
     def delete_team(self, owner, team, **kwargs):  # noqa: E501
-        """Delete organization  # noqa: E501
+        """Delete team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -368,7 +368,7 @@ class TeamsV1Api(object):
         return self.delete_team_with_http_info(owner, team, **kwargs)  # noqa: E501
 
     def delete_team_with_http_info(self, owner, team, **kwargs):  # noqa: E501
-        """Delete organization  # noqa: E501
+        """Delete team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -474,7 +474,7 @@ class TeamsV1Api(object):
         )
 
     def delete_team_member(self, owner, team, user, **kwargs):  # noqa: E501
-        """Delete organization member details  # noqa: E501
+        """Delete team member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -504,7 +504,7 @@ class TeamsV1Api(object):
     def delete_team_member_with_http_info(
         self, owner, team, user, **kwargs
     ):  # noqa: E501
-        """Delete organization member details  # noqa: E501
+        """Delete team member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -621,7 +621,7 @@ class TeamsV1Api(object):
         )
 
     def get_team(self, owner, team, **kwargs):  # noqa: E501
-        """Get organization  # noqa: E501
+        """Get team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -646,7 +646,7 @@ class TeamsV1Api(object):
         return self.get_team_with_http_info(owner, team, **kwargs)  # noqa: E501
 
     def get_team_with_http_info(self, owner, team, **kwargs):  # noqa: E501
-        """Get organization  # noqa: E501
+        """Get team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -752,7 +752,7 @@ class TeamsV1Api(object):
         )
 
     def get_team_member(self, owner, team, user, **kwargs):  # noqa: E501
-        """Get organization member details  # noqa: E501
+        """Get team member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -780,7 +780,7 @@ class TeamsV1Api(object):
         )  # noqa: E501
 
     def get_team_member_with_http_info(self, owner, team, user, **kwargs):  # noqa: E501
-        """Get organization member details  # noqa: E501
+        """Get team member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -897,7 +897,7 @@ class TeamsV1Api(object):
         )
 
     def list_team_members(self, owner, team, **kwargs):  # noqa: E501
-        """Get organization members  # noqa: E501
+        """Get team members  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -928,7 +928,7 @@ class TeamsV1Api(object):
         )  # noqa: E501
 
     def list_team_members_with_http_info(self, owner, team, **kwargs):  # noqa: E501
-        """Get organization members  # noqa: E501
+        """Get team members  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1054,7 +1054,7 @@ class TeamsV1Api(object):
         )
 
     def list_team_names(self, owner, **kwargs):  # noqa: E501
-        """List organizations names  # noqa: E501
+        """List teams names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1082,7 +1082,7 @@ class TeamsV1Api(object):
         return self.list_team_names_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_team_names_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List organizations names  # noqa: E501
+        """List teams names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1197,7 +1197,7 @@ class TeamsV1Api(object):
         )
 
     def list_teams(self, owner, **kwargs):  # noqa: E501
-        """List organizations  # noqa: E501
+        """List teams  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1225,7 +1225,7 @@ class TeamsV1Api(object):
         return self.list_teams_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_teams_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List organizations  # noqa: E501
+        """List teams  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1340,7 +1340,7 @@ class TeamsV1Api(object):
         )
 
     def patch_team(self, owner, team_name, body, **kwargs):  # noqa: E501
-        """Patch organization  # noqa: E501
+        """Patch team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1368,7 +1368,7 @@ class TeamsV1Api(object):
         )  # noqa: E501
 
     def patch_team_with_http_info(self, owner, team_name, body, **kwargs):  # noqa: E501
-        """Patch organization  # noqa: E501
+        """Patch team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1492,7 +1492,7 @@ class TeamsV1Api(object):
         )
 
     def patch_team_member(self, owner, team, member_user, body, **kwargs):  # noqa: E501
-        """Patch organization member  # noqa: E501
+        """Patch tram member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1523,7 +1523,7 @@ class TeamsV1Api(object):
     def patch_team_member_with_http_info(
         self, owner, team, member_user, body, **kwargs
     ):  # noqa: E501
-        """Patch organization member  # noqa: E501
+        """Patch tram member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1658,7 +1658,7 @@ class TeamsV1Api(object):
         )
 
     def update_team(self, owner, team_name, body, **kwargs):  # noqa: E501
-        """Update organization  # noqa: E501
+        """Update team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1688,7 +1688,7 @@ class TeamsV1Api(object):
     def update_team_with_http_info(
         self, owner, team_name, body, **kwargs
     ):  # noqa: E501
-        """Update organization  # noqa: E501
+        """Update team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1814,7 +1814,7 @@ class TeamsV1Api(object):
     def update_team_member(
         self, owner, team, member_user, body, **kwargs
     ):  # noqa: E501
-        """Update organization member  # noqa: E501
+        """Update team member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1845,7 +1845,7 @@ class TeamsV1Api(object):
     def update_team_member_with_http_info(
         self, owner, team, member_user, body, **kwargs
     ):  # noqa: E501
-        """Update organization member  # noqa: E501
+        """Update team member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

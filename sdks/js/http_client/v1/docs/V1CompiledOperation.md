@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **queue** | **String** |  | [optional] 
 **cache** | [**V1Cache**](V1Cache.md) |  | [optional] 
 **schedule** | [**Object**](.md) |  | [optional] 
+**events** | **[Object]** |  | [optional] 
 **parallel** | [**Object**](.md) |  | [optional] 
 **dependencies** | **[String]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 

@@ -123,7 +123,7 @@ public class SchemasV1Api {
     }
 
     /**
-     * List teams names
+     * Get random
      * 
      * @return V1Schemas
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -143,7 +143,7 @@ public class SchemasV1Api {
     }
 
     /**
-     * List teams names
+     * Get random
      * 
      * @return ApiResponse&lt;V1Schemas&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -164,7 +164,7 @@ public class SchemasV1Api {
     }
 
     /**
-     * List teams names (asynchronously)
+     * Get random (asynchronously)
      * 
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

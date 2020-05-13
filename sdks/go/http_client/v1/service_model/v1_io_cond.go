@@ -30,7 +30,7 @@ import (
 type V1IoCond struct {
 
 	// Kind of condition, should be equal to "io"
-	Kind *string `json:"kind,omitempty"`
+	Kind string `json:"kind,omitempty"`
 
 	// Param to condition on: e.g. builds.outputs.param1
 	Param string `json:"param,omitempty"`

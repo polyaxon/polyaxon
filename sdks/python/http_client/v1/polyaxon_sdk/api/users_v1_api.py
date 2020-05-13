@@ -51,7 +51,7 @@ class UsersV1Api(object):
         self.api_client = api_client
 
     def get_user(self, **kwargs):  # noqa: E501
-        """Login  # noqa: E501
+        """Get current user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -74,7 +74,7 @@ class UsersV1Api(object):
         return self.get_user_with_http_info(**kwargs)  # noqa: E501
 
     def get_user_with_http_info(self, **kwargs):  # noqa: E501
-        """Login  # noqa: E501
+        """Get current user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -158,7 +158,7 @@ class UsersV1Api(object):
         )
 
     def patch_user(self, body, **kwargs):  # noqa: E501
-        """patch_user  # noqa: E501
+        """Patch current user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -182,7 +182,7 @@ class UsersV1Api(object):
         return self.patch_user_with_http_info(body, **kwargs)  # noqa: E501
 
     def patch_user_with_http_info(self, body, **kwargs):  # noqa: E501
-        """patch_user  # noqa: E501
+        """Patch current user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -284,7 +284,7 @@ class UsersV1Api(object):
         )
 
     def update_user(self, body, **kwargs):  # noqa: E501
-        """update_user  # noqa: E501
+        """Update current user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -308,7 +308,7 @@ class UsersV1Api(object):
         return self.update_user_with_http_info(body, **kwargs)  # noqa: E501
 
     def update_user_with_http_info(self, body, **kwargs):  # noqa: E501
-        """update_user  # noqa: E501
+        """Update current user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

@@ -89,6 +89,7 @@ export interface UpdateDashboardRequest {
 export class DashboardsV1Api extends runtime.BaseAPI {
 
     /**
+     * Create dashboard
      */
     async createDashboardRaw(requestParameters: CreateDashboardRequest): Promise<runtime.ApiResponse<V1Dashboard>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -121,6 +122,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Create dashboard
      */
     async createDashboard(requestParameters: CreateDashboardRequest): Promise<V1Dashboard> {
         const response = await this.createDashboardRaw(requestParameters);
@@ -128,6 +130,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Delete dashboard
      */
     async deleteDashboardRaw(requestParameters: DeleteDashboardRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -157,12 +160,14 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Delete dashboard
      */
     async deleteDashboard(requestParameters: DeleteDashboardRequest): Promise<void> {
         await this.deleteDashboardRaw(requestParameters);
     }
 
     /**
+     * Get dashboard
      */
     async getDashboardRaw(requestParameters: GetDashboardRequest): Promise<runtime.ApiResponse<V1Dashboard>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -192,6 +197,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get dashboard
      */
     async getDashboard(requestParameters: GetDashboardRequest): Promise<V1Dashboard> {
         const response = await this.getDashboardRaw(requestParameters);
@@ -199,6 +205,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * List dashboard names
      */
     async listDashboardNamesRaw(requestParameters: ListDashboardNamesRequest): Promise<runtime.ApiResponse<V1ListDashboardsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -240,6 +247,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * List dashboard names
      */
     async listDashboardNames(requestParameters: ListDashboardNamesRequest): Promise<V1ListDashboardsResponse> {
         const response = await this.listDashboardNamesRaw(requestParameters);
@@ -247,6 +255,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * List dashboards
      */
     async listDashboardsRaw(requestParameters: ListDashboardsRequest): Promise<runtime.ApiResponse<V1ListDashboardsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -288,6 +297,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * List dashboards
      */
     async listDashboards(requestParameters: ListDashboardsRequest): Promise<V1ListDashboardsResponse> {
         const response = await this.listDashboardsRaw(requestParameters);
@@ -295,6 +305,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Patch dashboard
      */
     async patchDashboardRaw(requestParameters: PatchDashboardRequest): Promise<runtime.ApiResponse<V1Dashboard>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -331,6 +342,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Patch dashboard
      */
     async patchDashboard(requestParameters: PatchDashboardRequest): Promise<V1Dashboard> {
         const response = await this.patchDashboardRaw(requestParameters);
@@ -338,6 +350,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Update dashboard
      */
     async updateDashboardRaw(requestParameters: UpdateDashboardRequest): Promise<runtime.ApiResponse<V1Dashboard>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -374,6 +387,7 @@ export class DashboardsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Update dashboard
      */
     async updateDashboard(requestParameters: UpdateDashboardRequest): Promise<V1Dashboard> {
         const response = await this.updateDashboardRaw(requestParameters);

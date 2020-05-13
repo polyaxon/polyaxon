@@ -49,7 +49,7 @@ public class HubModelsV1ApiTest {
 
     
     /**
-     * Create dashboard
+     * Create hub model
      *
      * 
      *
@@ -66,7 +66,7 @@ public class HubModelsV1ApiTest {
     }
     
     /**
-     * Delete dashboard
+     * Delete hub model
      *
      * 
      *
@@ -83,7 +83,7 @@ public class HubModelsV1ApiTest {
     }
     
     /**
-     * Get dashboard
+     * Get hub model
      *
      * 
      *
@@ -100,7 +100,7 @@ public class HubModelsV1ApiTest {
     }
     
     /**
-     * List dashboard names
+     * List hub model names
      *
      * 
      *
@@ -120,7 +120,7 @@ public class HubModelsV1ApiTest {
     }
     
     /**
-     * List dashboards
+     * List hub models
      *
      * 
      *
@@ -140,7 +140,7 @@ public class HubModelsV1ApiTest {
     }
     
     /**
-     * Patch dashboard
+     * Patch hub model
      *
      * 
      *
@@ -158,7 +158,7 @@ public class HubModelsV1ApiTest {
     }
     
     /**
-     * Update dashboard
+     * Update hub model
      *
      * 
      *

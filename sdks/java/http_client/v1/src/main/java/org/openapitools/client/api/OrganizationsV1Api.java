@@ -132,7 +132,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Create organization
      * 
      * @param body  (required)
      * @return V1Organization
@@ -153,7 +153,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Create organization
      * 
      * @param body  (required)
      * @return ApiResponse&lt;V1Organization&gt;
@@ -175,7 +175,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Create organization (asynchronously)
      * 
      * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -265,7 +265,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Create organization member
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -287,7 +287,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Create organization member
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -310,7 +310,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Create organization member (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -395,7 +395,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Delete organization
      * 
      * @param owner Owner of the namespace (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -414,7 +414,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Delete organization
      * 
      * @param owner Owner of the namespace (required)
      * @return ApiResponse&lt;Void&gt;
@@ -435,7 +435,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Delete organization (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -525,7 +525,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Delete organization member details
      * 
      * @param owner Owner of the namespace (required)
      * @param user Memeber under namesapce (required)
@@ -545,7 +545,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Delete organization member details
      * 
      * @param owner Owner of the namespace (required)
      * @param user Memeber under namesapce (required)
@@ -567,7 +567,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Delete organization member details (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param user Memeber under namesapce (required)
@@ -651,7 +651,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Get organization
      * 
      * @param owner Owner of the namespace (required)
      * @return V1Organization
@@ -672,7 +672,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Get organization
      * 
      * @param owner Owner of the namespace (required)
      * @return ApiResponse&lt;V1Organization&gt;
@@ -694,7 +694,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Get organization (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -785,7 +785,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Get organization member details
      * 
      * @param owner Owner of the namespace (required)
      * @param user Memeber under namesapce (required)
@@ -807,7 +807,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Get organization member details
      * 
      * @param owner Owner of the namespace (required)
      * @param user Memeber under namesapce (required)
@@ -830,7 +830,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Get organization member details (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param user Memeber under namesapce (required)
@@ -935,7 +935,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Get organization members
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -960,7 +960,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Get organization members
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -986,7 +986,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Get organization members (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1067,7 +1067,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * Get versions
+     * List organizations names
      * 
      * @return V1ListOrganizationsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1087,7 +1087,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * Get versions
+     * List organizations names
      * 
      * @return ApiResponse&lt;V1ListOrganizationsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1108,7 +1108,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * Get versions (asynchronously)
+     * List organizations names (asynchronously)
      * 
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1184,7 +1184,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * Get log handler
+     * List organizations
      * 
      * @return V1ListOrganizationsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1204,7 +1204,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * Get log handler
+     * List organizations
      * 
      * @return ApiResponse&lt;V1ListOrganizationsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1225,7 +1225,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * Get log handler (asynchronously)
+     * List organizations (asynchronously)
      * 
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1314,7 +1314,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Patch organization
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -1336,7 +1336,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Patch organization
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -1359,7 +1359,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Patch organization (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -1457,7 +1457,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Patch organization member
      * 
      * @param owner Owner of the namespace (required)
      * @param memberUser User (required)
@@ -1480,7 +1480,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Patch organization member
      * 
      * @param owner Owner of the namespace (required)
      * @param memberUser User (required)
@@ -1504,7 +1504,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Patch organization member (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param memberUser User (required)
@@ -1596,7 +1596,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Update organization
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -1618,7 +1618,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Update organization
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -1641,7 +1641,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Update organization (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
@@ -1739,7 +1739,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Update organization member
      * 
      * @param owner Owner of the namespace (required)
      * @param memberUser User (required)
@@ -1762,7 +1762,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * 
+     * Update organization member
      * 
      * @param owner Owner of the namespace (required)
      * @param memberUser User (required)
@@ -1786,7 +1786,7 @@ public class OrganizationsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Update organization member (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param memberUser User (required)

@@ -51,7 +51,7 @@ class HubComponentsV1Api(object):
         self.api_client = api_client
 
     def create_hub_component(self, owner, body, **kwargs):  # noqa: E501
-        """Create hub model  # noqa: E501
+        """Create hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -78,7 +78,7 @@ class HubComponentsV1Api(object):
         )  # noqa: E501
 
     def create_hub_component_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """Create hub model  # noqa: E501
+        """Create hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -191,7 +191,7 @@ class HubComponentsV1Api(object):
         )
 
     def delete_hub_component(self, owner, uuid, **kwargs):  # noqa: E501
-        """Delete hub model  # noqa: E501
+        """Delete hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -218,7 +218,7 @@ class HubComponentsV1Api(object):
         )  # noqa: E501
 
     def delete_hub_component_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """Delete hub model  # noqa: E501
+        """Delete hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -324,7 +324,7 @@ class HubComponentsV1Api(object):
         )
 
     def get_hub_component(self, owner, uuid, **kwargs):  # noqa: E501
-        """Get hub model  # noqa: E501
+        """Get hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -351,7 +351,7 @@ class HubComponentsV1Api(object):
         )  # noqa: E501
 
     def get_hub_component_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """Get hub model  # noqa: E501
+        """Get hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -457,7 +457,7 @@ class HubComponentsV1Api(object):
         )
 
     def list_hub_componebt_names(self, owner, **kwargs):  # noqa: E501
-        """List hub model names  # noqa: E501
+        """List hub component names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -487,7 +487,7 @@ class HubComponentsV1Api(object):
         )  # noqa: E501
 
     def list_hub_componebt_names_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List hub model names  # noqa: E501
+        """List hub component names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -602,7 +602,7 @@ class HubComponentsV1Api(object):
         )
 
     def list_hub_components(self, owner, **kwargs):  # noqa: E501
-        """List hub models  # noqa: E501
+        """List hub components  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -630,7 +630,7 @@ class HubComponentsV1Api(object):
         return self.list_hub_components_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_hub_components_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List hub models  # noqa: E501
+        """List hub components  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -745,7 +745,7 @@ class HubComponentsV1Api(object):
         )
 
     def patch_hub_component(self, owner, component_uuid, body, **kwargs):  # noqa: E501
-        """Patch hub model  # noqa: E501
+        """Patch hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -775,7 +775,7 @@ class HubComponentsV1Api(object):
     def patch_hub_component_with_http_info(
         self, owner, component_uuid, body, **kwargs
     ):  # noqa: E501
-        """Patch hub model  # noqa: E501
+        """Patch hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -901,7 +901,7 @@ class HubComponentsV1Api(object):
         )
 
     def update_hub_component(self, owner, component_uuid, body, **kwargs):  # noqa: E501
-        """Update hub model  # noqa: E501
+        """Update hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -931,7 +931,7 @@ class HubComponentsV1Api(object):
     def update_hub_component_with_http_info(
         self, owner, component_uuid, body, **kwargs
     ):  # noqa: E501
-        """Update hub model  # noqa: E501
+        """Update hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

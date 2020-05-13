@@ -137,8 +137,8 @@ swagger-generate: generate-go-swagger \
 	generate-js-swagger \
 	generate-ts-swagger \
 	generate-java-swagger \
-	generate-py-swagger \
-	generate-html-openapi
+	generate-py-swagger
+	# generate-html-openapi
 
 swagger-concat:
 	./concat.sh

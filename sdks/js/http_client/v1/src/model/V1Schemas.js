@@ -41,6 +41,7 @@ import V1GitType from './V1GitType';
 import V1ImageType from './V1ImageType';
 import V1K8sResourceType from './V1K8sResourceType';
 import V1Matrix from './V1Matrix';
+import V1Operation from './V1Operation';
 import V1OperationCond from './V1OperationCond';
 import V1Parallel from './V1Parallel';
 import V1ParallelKind from './V1ParallelKind';
@@ -99,6 +100,9 @@ class V1Schemas {
             if (data.hasOwnProperty('run')) {
                 obj['run'] = V1RunSchema.constructFromObject(data['run']);
             }
+            if (data.hasOwnProperty('operation')) {
+                obj['operation'] = V1Operation.constructFromObject(data['operation']);
+            }
             if (data.hasOwnProperty('compiled_operation')) {
                 obj['compiled_operation'] = V1CompiledOperation.constructFromObject(data['compiled_operation']);
             }
@@ -111,8 +115,8 @@ class V1Schemas {
             if (data.hasOwnProperty('matrix')) {
                 obj['matrix'] = V1Matrix.constructFromObject(data['matrix']);
             }
-            if (data.hasOwnProperty('refrence')) {
-                obj['refrence'] = V1Reference.constructFromObject(data['refrence']);
+            if (data.hasOwnProperty('reference')) {
+                obj['reference'] = V1Reference.constructFromObject(data['reference']);
             }
             if (data.hasOwnProperty('artifacts_mount')) {
                 obj['artifacts_mount'] = V1ArtifactsMount.constructFromObject(data['artifacts_mount']);
@@ -193,6 +197,11 @@ V1Schemas.prototype['parallel'] = undefined;
 V1Schemas.prototype['run'] = undefined;
 
 /**
+ * @member {module:model/V1Operation} operation
+ */
+V1Schemas.prototype['operation'] = undefined;
+
+/**
  * @member {module:model/V1CompiledOperation} compiled_operation
  */
 V1Schemas.prototype['compiled_operation'] = undefined;
@@ -213,9 +222,9 @@ V1Schemas.prototype['connection_schema'] = undefined;
 V1Schemas.prototype['matrix'] = undefined;
 
 /**
- * @member {module:model/V1Reference} refrence
+ * @member {module:model/V1Reference} reference
  */
-V1Schemas.prototype['refrence'] = undefined;
+V1Schemas.prototype['reference'] = undefined;
 
 /**
  * @member {module:model/V1ArtifactsMount} artifacts_mount

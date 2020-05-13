@@ -22,17 +22,17 @@ from polyaxon.polyflow.references.mixin import RefMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
-class UrlReferenceSchema(BaseCamelSchema):
+class UrlRefSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("url_ref"))
     url = fields.Str(required=True)
 
     @staticmethod
     def schema_config():
-        return V1UrlReference
+        return V1UrlRef
 
 
-class V1UrlReference(BaseConfig, RefMixin, polyaxon_sdk.V1UrlReference):
-    SCHEMA = UrlReferenceSchema
+class V1UrlRef(BaseConfig, RefMixin, polyaxon_sdk.V1UrlRef):
+    SCHEMA = UrlRefSchema
     IDENTIFIER = "url_ref"
 
     def get_kind_value(self):

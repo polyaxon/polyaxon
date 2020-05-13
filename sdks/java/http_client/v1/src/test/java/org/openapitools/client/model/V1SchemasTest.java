@@ -50,6 +50,7 @@ import org.openapitools.client.model.V1GitType;
 import org.openapitools.client.model.V1ImageType;
 import org.openapitools.client.model.V1K8sResourceType;
 import org.openapitools.client.model.V1Matrix;
+import org.openapitools.client.model.V1Operation;
 import org.openapitools.client.model.V1OperationCond;
 import org.openapitools.client.model.V1Parallel;
 import org.openapitools.client.model.V1ParallelKind;
@@ -113,6 +114,14 @@ public class V1SchemasTest {
     }
 
     /**
+     * Test the property 'operation'
+     */
+    @Test
+    public void operationTest() {
+        // TODO: test operation
+    }
+
+    /**
      * Test the property 'compiledOperation'
      */
     @Test
@@ -145,11 +154,11 @@ public class V1SchemasTest {
     }
 
     /**
-     * Test the property 'refrence'
+     * Test the property 'reference'
      */
     @Test
-    public void refrenceTest() {
-        // TODO: test refrence
+    public void referenceTest() {
+        // TODO: test reference
     }
 
     /**

@@ -90,6 +90,10 @@ public class V1CompiledOperation {
   @SerializedName(SERIALIZED_NAME_SCHEDULE)
   private Object schedule;
 
+  public static final String SERIALIZED_NAME_EVENTS = "events";
+  @SerializedName(SERIALIZED_NAME_EVENTS)
+  private List<Object> events = null;
+
   public static final String SERIALIZED_NAME_PARALLEL = "parallel";
   @SerializedName(SERIALIZED_NAME_PARALLEL)
   private Object parallel;
@@ -366,6 +370,37 @@ public class V1CompiledOperation {
 
   public void setSchedule(Object schedule) {
     this.schedule = schedule;
+  }
+
+
+  public V1CompiledOperation events(List<Object> events) {
+    
+    this.events = events;
+    return this;
+  }
+
+  public V1CompiledOperation addEventsItem(Object eventsItem) {
+    if (this.events == null) {
+      this.events = new ArrayList<Object>();
+    }
+    this.events.add(eventsItem);
+    return this;
+  }
+
+   /**
+   * Get events
+   * @return events
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<Object> getEvents() {
+    return events;
+  }
+
+
+  public void setEvents(List<Object> events) {
+    this.events = events;
   }
 
 
@@ -650,6 +685,7 @@ public class V1CompiledOperation {
         Objects.equals(this.queue, v1CompiledOperation.queue) &&
         Objects.equals(this.cache, v1CompiledOperation.cache) &&
         Objects.equals(this.schedule, v1CompiledOperation.schedule) &&
+        Objects.equals(this.events, v1CompiledOperation.events) &&
         Objects.equals(this.parallel, v1CompiledOperation.parallel) &&
         Objects.equals(this.dependencies, v1CompiledOperation.dependencies) &&
         Objects.equals(this.trigger, v1CompiledOperation.trigger) &&
@@ -664,7 +700,7 @@ public class V1CompiledOperation {
 
   @Override
   public int hashCode() {
-    return Objects.hash(version, kind, name, tag, description, tags, profile, queue, cache, schedule, parallel, dependencies, trigger, conditions, skipOnUpstreamSkip, termination, plugins, inputs, outputs, run);
+    return Objects.hash(version, kind, name, tag, description, tags, profile, queue, cache, schedule, events, parallel, dependencies, trigger, conditions, skipOnUpstreamSkip, termination, plugins, inputs, outputs, run);
   }
 
 
@@ -682,6 +718,7 @@ public class V1CompiledOperation {
     sb.append("    queue: ").append(toIndentedString(queue)).append("\n");
     sb.append("    cache: ").append(toIndentedString(cache)).append("\n");
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
+    sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("    parallel: ").append(toIndentedString(parallel)).append("\n");
     sb.append("    dependencies: ").append(toIndentedString(dependencies)).append("\n");
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");

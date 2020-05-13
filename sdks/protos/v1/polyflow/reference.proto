@@ -19,7 +19,7 @@ syntax = "proto3";
 package v1;
 
 // Hub reference specification
-message HubReference {
+message HubRef {
     // Kind of reference, should be equal to "hub_ref"
     string kind = 1;
 
@@ -28,7 +28,7 @@ message HubReference {
 }
 
 // Dag reference specification
-message DagReference {
+message DagRef {
     // Kind of reference, should be equal to "dag_ref"
     string kind = 1;
 
@@ -37,7 +37,7 @@ message DagReference {
 }
 
 // Url reference specification
-message UrlReference {
+message UrlRef {
     // Kind of reference, should be equal to "url_ref"
     string kind = 1;
 
@@ -46,7 +46,7 @@ message UrlReference {
 }
 
 // Path reference specification
-message PathReference {
+message PathRef {
     // Kind of reference, should be equal to "path_ref"
     string kind = 1;
 
@@ -57,9 +57,9 @@ message PathReference {
 // Reference specification
 message Reference {
     oneof reference {
-        HubReference hub_reference = 1;
-        DagReference dag_reference = 2;
-        UrlReference url_reference = 3;
-        PathReference path_reference = 4;
+        HubRef hub_reference = 1;
+        DagRef dag_reference = 2;
+        UrlRef url_reference = 3;
+        PathRef path_reference = 4;
     }
 }

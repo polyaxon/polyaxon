@@ -55,7 +55,7 @@ message ConnectionResponse {
     ConnectionKind kind = 11;
 }
 
- // Request data to create/update sonnexion
+ // Request data to create/update connection
  message ConnectionBodyRequest {
     // Owner of the namespace
     string owner = 1;

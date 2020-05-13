@@ -60,7 +60,7 @@ export default class RunProfilesV1Api {
      */
 
     /**
-     * Create hub component
+     * Create run profile
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1RunProfile} body Artifact store body
      * @param {module:api/RunProfilesV1Api~createRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
@@ -107,7 +107,7 @@ export default class RunProfilesV1Api {
      */
 
     /**
-     * Delete hub component
+     * Delete run profile
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/RunProfilesV1Api~deleteRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
@@ -154,7 +154,7 @@ export default class RunProfilesV1Api {
      */
 
     /**
-     * Get hub component
+     * Get run profile
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/RunProfilesV1Api~getRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
@@ -202,7 +202,7 @@ export default class RunProfilesV1Api {
      */
 
     /**
-     * List hub component names
+     * List run profiles names
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -254,7 +254,7 @@ export default class RunProfilesV1Api {
      */
 
     /**
-     * List hub components
+     * List run profiles
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -306,7 +306,7 @@ export default class RunProfilesV1Api {
      */
 
     /**
-     * Patch hub component
+     * Patch run profile
      * @param {String} owner Owner of the namespace
      * @param {String} run_profile_uuid UUID
      * @param {module:model/V1RunProfile} body Artifact store body
@@ -359,7 +359,7 @@ export default class RunProfilesV1Api {
      */
 
     /**
-     * Update hub component
+     * Update run profile
      * @param {String} owner Owner of the namespace
      * @param {String} run_profile_uuid UUID
      * @param {module:model/V1RunProfile} body Artifact store body

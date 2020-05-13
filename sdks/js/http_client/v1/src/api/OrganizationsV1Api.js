@@ -62,6 +62,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Create organization
      * @param {module:model/V1Organization} body 
      * @param {module:api/OrganizationsV1Api~createOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Organization}
@@ -102,6 +103,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Create organization member
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1OrganizationMember} body Organization body
      * @param {module:api/OrganizationsV1Api~createOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
@@ -148,6 +150,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Delete organization
      * @param {String} owner Owner of the namespace
      * @param {module:api/OrganizationsV1Api~deleteOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
      */
@@ -188,6 +191,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Delete organization member details
      * @param {String} owner Owner of the namespace
      * @param {String} user Memeber under namesapce
      * @param {module:api/OrganizationsV1Api~deleteOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
@@ -234,6 +238,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Get organization
      * @param {String} owner Owner of the namespace
      * @param {module:api/OrganizationsV1Api~getOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Organization}
@@ -275,6 +280,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Get organization member details
      * @param {String} owner Owner of the namespace
      * @param {String} user Memeber under namesapce
      * @param {module:api/OrganizationsV1Api~getOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
@@ -322,6 +328,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Get organization members
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -373,7 +380,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
-     * Get versions
+     * List organizations names
      * @param {module:api/OrganizationsV1Api~listOrganizationNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListOrganizationsResponse}
      */
@@ -409,7 +416,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
-     * Get log handler
+     * List organizations
      * @param {module:api/OrganizationsV1Api~listOrganizationsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListOrganizationsResponse}
      */
@@ -445,6 +452,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Patch organization
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Organization} body Organization body
      * @param {module:api/OrganizationsV1Api~patchOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
@@ -491,6 +499,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Patch organization member
      * @param {String} owner Owner of the namespace
      * @param {String} member_user User
      * @param {module:model/V1OrganizationMember} body Organization body
@@ -543,6 +552,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Update organization
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Organization} body Organization body
      * @param {module:api/OrganizationsV1Api~updateOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
@@ -589,6 +599,7 @@ export default class OrganizationsV1Api {
      */
 
     /**
+     * Update organization member
      * @param {String} owner Owner of the namespace
      * @param {String} member_user User
      * @param {module:model/V1OrganizationMember} body Organization body

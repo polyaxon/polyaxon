@@ -5,13 +5,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List organization level queues names
+[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | Login
 
 
 # **login**
 > V1Auth login(body)
 
-List organization level queues names
+Login
 
 ### Example
 
@@ -38,7 +38,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     body = polyaxon_sdk.V1Credentials() # V1Credentials | 
 
     try:
-        # List organization level queues names
+        # Login
         api_response = api_instance.login(body)
         pprint(api_response)
     except ApiException as e:

@@ -75,6 +75,9 @@ type V1Schemas struct {
 	// matrix
 	Matrix *V1Matrix `json:"matrix,omitempty"`
 
+	// operation
+	Operation *V1Operation `json:"operation,omitempty"`
+
 	// operation cond
 	OperationCond *V1OperationCond `json:"operation_cond,omitempty"`
 
@@ -90,8 +93,8 @@ type V1Schemas struct {
 	// polyaxon sidecar container
 	PolyaxonSidecarContainer *V1PolyaxonSidecarContainer `json:"polyaxon_sidecar_container,omitempty"`
 
-	// refrence
-	Refrence *V1Reference `json:"refrence,omitempty"`
+	// reference
+	Reference *V1Reference `json:"reference,omitempty"`
 
 	// run
 	Run *V1RunSchema `json:"run,omitempty"`
@@ -173,6 +176,10 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateOperation(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOperationCond(formats); err != nil {
 		res = append(res, err)
 	}
@@ -193,7 +200,7 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateRefrence(formats); err != nil {
+	if err := m.validateReference(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -493,6 +500,24 @@ func (m *V1Schemas) validateMatrix(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Schemas) validateOperation(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Operation) { // not required
+		return nil
+	}
+
+	if m.Operation != nil {
+		if err := m.Operation.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("operation")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Schemas) validateOperationCond(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.OperationCond) { // not required
@@ -581,16 +606,16 @@ func (m *V1Schemas) validatePolyaxonSidecarContainer(formats strfmt.Registry) er
 	return nil
 }
 
-func (m *V1Schemas) validateRefrence(formats strfmt.Registry) error {
+func (m *V1Schemas) validateReference(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Refrence) { // not required
+	if swag.IsZero(m.Reference) { // not required
 		return nil
 	}
 
-	if m.Refrence != nil {
-		if err := m.Refrence.Validate(formats); err != nil {
+	if m.Reference != nil {
+		if err := m.Reference.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("refrence")
+				return ve.ValidateName("reference")
 			}
 			return err
 		}

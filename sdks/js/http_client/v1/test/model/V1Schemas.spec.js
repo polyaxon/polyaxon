@@ -92,6 +92,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property operation (base name: "operation")', function() {
+      // uncomment below and update the code to test the property operation
+      //var instane = new PolyaxonSdk.V1Schemas();
+      //expect(instance).to.be();
+    });
+
     it('should have the property compiled_operation (base name: "compiled_operation")', function() {
       // uncomment below and update the code to test the property compiled_operation
       //var instane = new PolyaxonSdk.V1Schemas();
@@ -116,8 +122,8 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property refrence (base name: "refrence")', function() {
-      // uncomment below and update the code to test the property refrence
+    it('should have the property reference (base name: "reference")', function() {
+      // uncomment below and update the code to test the property reference
       //var instane = new PolyaxonSdk.V1Schemas();
       //expect(instance).to.be();
     });

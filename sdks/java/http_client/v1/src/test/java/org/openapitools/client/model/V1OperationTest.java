@@ -145,6 +145,14 @@ public class V1OperationTest {
     }
 
     /**
+     * Test the property 'events'
+     */
+    @Test
+    public void eventsTest() {
+        // TODO: test events
+    }
+
+    /**
      * Test the property 'parallel'
      */
     @Test

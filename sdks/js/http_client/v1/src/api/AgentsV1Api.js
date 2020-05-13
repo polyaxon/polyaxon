@@ -63,7 +63,7 @@ export default class AgentsV1Api {
      */
 
     /**
-     * Create run profile
+     * Create agent
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Agent} body Agent body
      * @param {module:api/AgentsV1Api~createAgentCallback} callback The callback function, accepting three arguments: error, data, response
@@ -110,6 +110,7 @@ export default class AgentsV1Api {
      */
 
     /**
+     * Create new run status
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:model/V1AgentStatusBodyRequest} body 
@@ -162,7 +163,7 @@ export default class AgentsV1Api {
      */
 
     /**
-     * Delete run profile
+     * Delete agent
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/AgentsV1Api~deleteAgentCallback} callback The callback function, accepting three arguments: error, data, response
@@ -209,7 +210,7 @@ export default class AgentsV1Api {
      */
 
     /**
-     * Get run profile
+     * Get agent
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/AgentsV1Api~getAgentCallback} callback The callback function, accepting three arguments: error, data, response
@@ -257,6 +258,7 @@ export default class AgentsV1Api {
      */
 
     /**
+     * Get State (queues/runs)
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/AgentsV1Api~getAgentStateCallback} callback The callback function, accepting three arguments: error, data, response
@@ -304,6 +306,7 @@ export default class AgentsV1Api {
      */
 
     /**
+     * Get agent status
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/AgentsV1Api~getAgentStatusesCallback} callback The callback function, accepting three arguments: error, data, response
@@ -351,7 +354,7 @@ export default class AgentsV1Api {
      */
 
     /**
-     * List run profiles names
+     * List agents names
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -403,7 +406,7 @@ export default class AgentsV1Api {
      */
 
     /**
-     * List run profiles
+     * List agents
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -455,7 +458,7 @@ export default class AgentsV1Api {
      */
 
     /**
-     * Patch run profile
+     * Patch agent
      * @param {String} owner Owner of the namespace
      * @param {String} agent_uuid UUID
      * @param {module:model/V1Agent} body Agent body
@@ -508,6 +511,7 @@ export default class AgentsV1Api {
      */
 
     /**
+     * Sync agent
      * @param {String} owner Owner of the namespace
      * @param {String} agent_uuid UUID
      * @param {module:model/V1Agent} body Agent body
@@ -559,7 +563,7 @@ export default class AgentsV1Api {
      */
 
     /**
-     * Update run profile
+     * Update agent
      * @param {String} owner Owner of the namespace
      * @param {String} agent_uuid UUID
      * @param {module:model/V1Agent} body Agent body

@@ -49,7 +49,7 @@ public class VersionsV1ApiTest {
 
     
     /**
-     * Update current user
+     * Get log handler
      *
      * 
      *
@@ -64,7 +64,7 @@ public class VersionsV1ApiTest {
     }
     
     /**
-     * Get current user
+     * Get versions
      *
      * 
      *

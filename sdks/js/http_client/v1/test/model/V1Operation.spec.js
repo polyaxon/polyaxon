@@ -128,6 +128,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property events (base name: "events")', function() {
+      // uncomment below and update the code to test the property events
+      //var instane = new PolyaxonSdk.V1Operation();
+      //expect(instance).to.be();
+    });
+
     it('should have the property parallel (base name: "parallel")', function() {
       // uncomment below and update the code to test the property parallel
       //var instane = new PolyaxonSdk.V1Operation();

@@ -51,7 +51,7 @@ public class TeamsV1ApiTest {
 
     
     /**
-     * Create organization
+     * Create team
      *
      * 
      *
@@ -68,7 +68,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Create organization member
+     * Create team member
      *
      * 
      *
@@ -86,7 +86,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Delete organization
+     * Delete team
      *
      * 
      *
@@ -103,7 +103,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Delete organization member details
+     * Delete team member details
      *
      * 
      *
@@ -121,7 +121,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Get organization
+     * Get team
      *
      * 
      *
@@ -138,7 +138,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Get organization member details
+     * Get team member details
      *
      * 
      *
@@ -156,7 +156,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Get organization members
+     * Get team members
      *
      * 
      *
@@ -177,7 +177,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * List organizations names
+     * List teams names
      *
      * 
      *
@@ -197,7 +197,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * List organizations
+     * List teams
      *
      * 
      *
@@ -217,7 +217,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Patch organization
+     * Patch team
      *
      * 
      *
@@ -235,7 +235,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Patch organization member
+     * Patch tram member
      *
      * 
      *
@@ -254,7 +254,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Update organization
+     * Update team
      *
      * 
      *
@@ -272,7 +272,7 @@ public class TeamsV1ApiTest {
     }
     
     /**
-     * Update organization member
+     * Update team member
      *
      * 
      *

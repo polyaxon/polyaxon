@@ -51,7 +51,7 @@ class AgentsV1Api(object):
         self.api_client = api_client
 
     def create_agent(self, owner, body, **kwargs):  # noqa: E501
-        """Create run profile  # noqa: E501
+        """Create agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -76,7 +76,7 @@ class AgentsV1Api(object):
         return self.create_agent_with_http_info(owner, body, **kwargs)  # noqa: E501
 
     def create_agent_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """Create run profile  # noqa: E501
+        """Create agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -189,7 +189,7 @@ class AgentsV1Api(object):
         )
 
     def create_agent_status(self, owner, uuid, body, **kwargs):  # noqa: E501
-        """create_agent_status  # noqa: E501
+        """Create new run status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -219,7 +219,7 @@ class AgentsV1Api(object):
     def create_agent_status_with_http_info(
         self, owner, uuid, body, **kwargs
     ):  # noqa: E501
-        """create_agent_status  # noqa: E501
+        """Create new run status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -343,7 +343,7 @@ class AgentsV1Api(object):
         )
 
     def delete_agent(self, owner, uuid, **kwargs):  # noqa: E501
-        """Delete run profile  # noqa: E501
+        """Delete agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -368,7 +368,7 @@ class AgentsV1Api(object):
         return self.delete_agent_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def delete_agent_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """Delete run profile  # noqa: E501
+        """Delete agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -474,7 +474,7 @@ class AgentsV1Api(object):
         )
 
     def get_agent(self, owner, uuid, **kwargs):  # noqa: E501
-        """Get run profile  # noqa: E501
+        """Get agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -499,7 +499,7 @@ class AgentsV1Api(object):
         return self.get_agent_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def get_agent_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """Get run profile  # noqa: E501
+        """Get agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -605,7 +605,7 @@ class AgentsV1Api(object):
         )
 
     def get_agent_state(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_agent_state  # noqa: E501
+        """Get State (queues/runs)  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -630,7 +630,7 @@ class AgentsV1Api(object):
         return self.get_agent_state_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def get_agent_state_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_agent_state  # noqa: E501
+        """Get State (queues/runs)  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -736,7 +736,7 @@ class AgentsV1Api(object):
         )
 
     def get_agent_statuses(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_agent_statuses  # noqa: E501
+        """Get agent status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -763,7 +763,7 @@ class AgentsV1Api(object):
         )  # noqa: E501
 
     def get_agent_statuses_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_agent_statuses  # noqa: E501
+        """Get agent status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -869,7 +869,7 @@ class AgentsV1Api(object):
         )
 
     def list_agent_names(self, owner, **kwargs):  # noqa: E501
-        """List run profiles names  # noqa: E501
+        """List agents names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -897,7 +897,7 @@ class AgentsV1Api(object):
         return self.list_agent_names_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_agent_names_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List run profiles names  # noqa: E501
+        """List agents names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1012,7 +1012,7 @@ class AgentsV1Api(object):
         )
 
     def list_agents(self, owner, **kwargs):  # noqa: E501
-        """List run profiles  # noqa: E501
+        """List agents  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1040,7 +1040,7 @@ class AgentsV1Api(object):
         return self.list_agents_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_agents_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List run profiles  # noqa: E501
+        """List agents  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1155,7 +1155,7 @@ class AgentsV1Api(object):
         )
 
     def patch_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
-        """Patch run profile  # noqa: E501
+        """Patch agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1185,7 +1185,7 @@ class AgentsV1Api(object):
     def patch_agent_with_http_info(
         self, owner, agent_uuid, body, **kwargs
     ):  # noqa: E501
-        """Patch run profile  # noqa: E501
+        """Patch agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1309,7 +1309,7 @@ class AgentsV1Api(object):
         )
 
     def sync_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
-        """sync_agent  # noqa: E501
+        """Sync agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1339,7 +1339,7 @@ class AgentsV1Api(object):
     def sync_agent_with_http_info(
         self, owner, agent_uuid, body, **kwargs
     ):  # noqa: E501
-        """sync_agent  # noqa: E501
+        """Sync agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1463,7 +1463,7 @@ class AgentsV1Api(object):
         )
 
     def update_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
-        """Update run profile  # noqa: E501
+        """Update agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1493,7 +1493,7 @@ class AgentsV1Api(object):
     def update_agent_with_http_info(
         self, owner, agent_uuid, body, **kwargs
     ):  # noqa: E501
-        """Update run profile  # noqa: E501
+        """Update agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

@@ -5,19 +5,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_run_profile**](RunProfilesV1Api.md#create_run_profile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
-[**delete_run_profile**](RunProfilesV1Api.md#delete_run_profile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
-[**get_run_profile**](RunProfilesV1Api.md#get_run_profile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
-[**list_run_profile_names**](RunProfilesV1Api.md#list_run_profile_names) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
-[**list_run_profiles**](RunProfilesV1Api.md#list_run_profiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
-[**patch_run_profile**](RunProfilesV1Api.md#patch_run_profile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
-[**update_run_profile**](RunProfilesV1Api.md#update_run_profile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
+[**create_run_profile**](RunProfilesV1Api.md#create_run_profile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create run profile
+[**delete_run_profile**](RunProfilesV1Api.md#delete_run_profile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete run profile
+[**get_run_profile**](RunProfilesV1Api.md#get_run_profile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get run profile
+[**list_run_profile_names**](RunProfilesV1Api.md#list_run_profile_names) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List run profiles names
+[**list_run_profiles**](RunProfilesV1Api.md#list_run_profiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List run profiles
+[**patch_run_profile**](RunProfilesV1Api.md#patch_run_profile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch run profile
+[**update_run_profile**](RunProfilesV1Api.md#update_run_profile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update run profile
 
 
 # **create_run_profile**
 > V1RunProfile create_run_profile(owner, body)
 
-Create hub component
+Create run profile
 
 ### Example
 
@@ -45,7 +45,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 body = polyaxon_sdk.V1RunProfile() # V1RunProfile | Artifact store body
 
     try:
-        # Create hub component
+        # Create run profile
         api_response = api_instance.create_run_profile(owner, body)
         pprint(api_response)
     except ApiException as e:
@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 # **delete_run_profile**
 > delete_run_profile(owner, uuid)
 
-Delete hub component
+Delete run profile
 
 ### Example
 
@@ -114,7 +114,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
-        # Delete hub component
+        # Delete run profile
         api_instance.delete_run_profile(owner, uuid)
     except ApiException as e:
         print("Exception when calling RunProfilesV1Api->delete_run_profile: %s\n" % e)
@@ -154,7 +154,7 @@ void (empty response body)
 # **get_run_profile**
 > V1RunProfile get_run_profile(owner, uuid)
 
-Get hub component
+Get run profile
 
 ### Example
 
@@ -182,7 +182,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
-        # Get hub component
+        # Get run profile
         api_response = api_instance.get_run_profile(owner, uuid)
         pprint(api_response)
     except ApiException as e:
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 # **list_run_profile_names**
 > V1ListRunProfilesResponse list_run_profile_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List hub component names
+List run profiles names
 
 ### Example
 
@@ -254,7 +254,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
-        # List hub component names
+        # List run profiles names
         api_response = api_instance.list_run_profile_names(owner, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
@@ -298,7 +298,7 @@ Name | Type | Description  | Notes
 # **list_run_profiles**
 > V1ListRunProfilesResponse list_run_profiles(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List hub components
+List run profiles
 
 ### Example
 
@@ -329,7 +329,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
-        # List hub components
+        # List run profiles
         api_response = api_instance.list_run_profiles(owner, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
@@ -373,7 +373,7 @@ Name | Type | Description  | Notes
 # **patch_run_profile**
 > V1RunProfile patch_run_profile(owner, run_profile_uuid, body)
 
-Patch hub component
+Patch run profile
 
 ### Example
 
@@ -402,7 +402,7 @@ run_profile_uuid = 'run_profile_uuid_example' # str | UUID
 body = polyaxon_sdk.V1RunProfile() # V1RunProfile | Artifact store body
 
     try:
-        # Patch hub component
+        # Patch run profile
         api_response = api_instance.patch_run_profile(owner, run_profile_uuid, body)
         pprint(api_response)
     except ApiException as e:
@@ -444,7 +444,7 @@ Name | Type | Description  | Notes
 # **update_run_profile**
 > V1RunProfile update_run_profile(owner, run_profile_uuid, body)
 
-Update hub component
+Update run profile
 
 ### Example
 
@@ -473,7 +473,7 @@ run_profile_uuid = 'run_profile_uuid_example' # str | UUID
 body = polyaxon_sdk.V1RunProfile() # V1RunProfile | Artifact store body
 
     try:
-        # Update hub component
+        # Update run profile
         api_response = api_instance.update_run_profile(owner, run_profile_uuid, body)
         pprint(api_response)
     except ApiException as e:

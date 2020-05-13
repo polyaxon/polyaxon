@@ -50,7 +50,7 @@ public class QueuesV1ApiTest {
 
     
     /**
-     * Update agent
+     * Create queue
      *
      * 
      *
@@ -68,7 +68,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Sync agent
+     * Delete queue
      *
      * 
      *
@@ -86,7 +86,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Patch agent
+     * Get queue
      *
      * 
      *
@@ -104,7 +104,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * List agents names
+     * List organization level queues names
      *
      * 
      *
@@ -124,7 +124,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * List agents
+     * List organization level queues
      *
      * 
      *
@@ -144,7 +144,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Create agent
+     * List queues names
      *
      * 
      *
@@ -165,7 +165,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Get agent
+     * List queues
      *
      * 
      *
@@ -186,7 +186,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Get State (queues/runs)
+     * Patch queue
      *
      * 
      *
@@ -205,7 +205,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Delete agent
+     * Update queue
      *
      * 
      *

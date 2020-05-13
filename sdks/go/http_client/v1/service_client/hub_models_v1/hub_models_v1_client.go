@@ -57,7 +57,7 @@ type ClientService interface {
 }
 
 /*
-  CreateHubModel creates dashboard
+  CreateHubModel creates hub model
 */
 func (a *Client) CreateHubModel(params *CreateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*CreateHubModelOK, *CreateHubModelNoContent, error) {
 	// TODO: Validate the params before sending
@@ -93,7 +93,7 @@ func (a *Client) CreateHubModel(params *CreateHubModelParams, authInfo runtime.C
 }
 
 /*
-  DeleteHubModel deletes dashboard
+  DeleteHubModel deletes hub model
 */
 func (a *Client) DeleteHubModel(params *DeleteHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteHubModelOK, *DeleteHubModelNoContent, error) {
 	// TODO: Validate the params before sending
@@ -129,7 +129,7 @@ func (a *Client) DeleteHubModel(params *DeleteHubModelParams, authInfo runtime.C
 }
 
 /*
-  GetHubModel gets dashboard
+  GetHubModel gets hub model
 */
 func (a *Client) GetHubModel(params *GetHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*GetHubModelOK, *GetHubModelNoContent, error) {
 	// TODO: Validate the params before sending
@@ -165,7 +165,7 @@ func (a *Client) GetHubModel(params *GetHubModelParams, authInfo runtime.ClientA
 }
 
 /*
-  ListHubModelNames lists dashboard names
+  ListHubModelNames lists hub model names
 */
 func (a *Client) ListHubModelNames(params *ListHubModelNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubModelNamesOK, *ListHubModelNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -201,7 +201,7 @@ func (a *Client) ListHubModelNames(params *ListHubModelNamesParams, authInfo run
 }
 
 /*
-  ListHubModels lists dashboards
+  ListHubModels lists hub models
 */
 func (a *Client) ListHubModels(params *ListHubModelsParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubModelsOK, *ListHubModelsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -237,7 +237,7 @@ func (a *Client) ListHubModels(params *ListHubModelsParams, authInfo runtime.Cli
 }
 
 /*
-  PatchHubModel patches dashboard
+  PatchHubModel patches hub model
 */
 func (a *Client) PatchHubModel(params *PatchHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*PatchHubModelOK, *PatchHubModelNoContent, error) {
 	// TODO: Validate the params before sending
@@ -273,7 +273,7 @@ func (a *Client) PatchHubModel(params *PatchHubModelParams, authInfo runtime.Cli
 }
 
 /*
-  UpdateHubModel updates dashboard
+  UpdateHubModel updates hub model
 */
 func (a *Client) UpdateHubModel(params *UpdateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateHubModelOK, *UpdateHubModelNoContent, error) {
 	// TODO: Validate the params before sending

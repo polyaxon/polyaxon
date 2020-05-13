@@ -22,17 +22,17 @@ from polyaxon.polyflow.references.mixin import RefMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
-class PathReferenceSchema(BaseCamelSchema):
+class PathRefSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("path_ref"))
     path = fields.Str(required=True)
 
     @staticmethod
     def schema_config():
-        return V1PathReference
+        return V1PathRef
 
 
-class V1PathReference(BaseConfig, RefMixin, polyaxon_sdk.V1PathReference):
-    SCHEMA = PathReferenceSchema
+class V1PathRef(BaseConfig, RefMixin, polyaxon_sdk.V1PathRef):
+    SCHEMA = PathRefSchema
     IDENTIFIER = "path_ref"
 
     def get_kind_value(self):

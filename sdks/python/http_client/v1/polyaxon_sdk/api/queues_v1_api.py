@@ -51,7 +51,7 @@ class QueuesV1Api(object):
         self.api_client = api_client
 
     def create_queue(self, owner, agent, body, **kwargs):  # noqa: E501
-        """Update agent  # noqa: E501
+        """Create queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -79,7 +79,7 @@ class QueuesV1Api(object):
         )  # noqa: E501
 
     def create_queue_with_http_info(self, owner, agent, body, **kwargs):  # noqa: E501
-        """Update agent  # noqa: E501
+        """Create queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -203,7 +203,7 @@ class QueuesV1Api(object):
         )
 
     def delete_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
-        """Sync agent  # noqa: E501
+        """Delete queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -231,7 +231,7 @@ class QueuesV1Api(object):
         )  # noqa: E501
 
     def delete_queue_with_http_info(self, owner, agent, uuid, **kwargs):  # noqa: E501
-        """Sync agent  # noqa: E501
+        """Delete queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -348,7 +348,7 @@ class QueuesV1Api(object):
         )
 
     def get_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
-        """Patch agent  # noqa: E501
+        """Get queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -374,7 +374,7 @@ class QueuesV1Api(object):
         return self.get_queue_with_http_info(owner, agent, uuid, **kwargs)  # noqa: E501
 
     def get_queue_with_http_info(self, owner, agent, uuid, **kwargs):  # noqa: E501
-        """Patch agent  # noqa: E501
+        """Get queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -491,7 +491,7 @@ class QueuesV1Api(object):
         )
 
     def list_organization_queue_names(self, owner, **kwargs):  # noqa: E501
-        """List agents names  # noqa: E501
+        """List organization level queues names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -523,7 +523,7 @@ class QueuesV1Api(object):
     def list_organization_queue_names_with_http_info(
         self, owner, **kwargs
     ):  # noqa: E501
-        """List agents names  # noqa: E501
+        """List organization level queues names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -638,7 +638,7 @@ class QueuesV1Api(object):
         )
 
     def list_organization_queues(self, owner, **kwargs):  # noqa: E501
-        """List agents  # noqa: E501
+        """List organization level queues  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -668,7 +668,7 @@ class QueuesV1Api(object):
         )  # noqa: E501
 
     def list_organization_queues_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List agents  # noqa: E501
+        """List organization level queues  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -783,7 +783,7 @@ class QueuesV1Api(object):
         )
 
     def list_queue_names(self, owner, agent, **kwargs):  # noqa: E501
-        """Create agent  # noqa: E501
+        """List queues names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -814,7 +814,7 @@ class QueuesV1Api(object):
         )  # noqa: E501
 
     def list_queue_names_with_http_info(self, owner, agent, **kwargs):  # noqa: E501
-        """Create agent  # noqa: E501
+        """List queues names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -940,7 +940,7 @@ class QueuesV1Api(object):
         )
 
     def list_queues(self, owner, agent, **kwargs):  # noqa: E501
-        """Get agent  # noqa: E501
+        """List queues  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -969,7 +969,7 @@ class QueuesV1Api(object):
         return self.list_queues_with_http_info(owner, agent, **kwargs)  # noqa: E501
 
     def list_queues_with_http_info(self, owner, agent, **kwargs):  # noqa: E501
-        """Get agent  # noqa: E501
+        """List queues  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1095,7 +1095,7 @@ class QueuesV1Api(object):
         )
 
     def patch_queue(self, owner, queue_agent, queue_uuid, body, **kwargs):  # noqa: E501
-        """Get State (queues/runs)  # noqa: E501
+        """Patch queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1126,7 +1126,7 @@ class QueuesV1Api(object):
     def patch_queue_with_http_info(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
-        """Get State (queues/runs)  # noqa: E501
+        """Patch queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1263,7 +1263,7 @@ class QueuesV1Api(object):
     def update_queue(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
-        """Delete agent  # noqa: E501
+        """Update queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1294,7 +1294,7 @@ class QueuesV1Api(object):
     def update_queue_with_http_info(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
-        """Delete agent  # noqa: E501
+        """Update queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

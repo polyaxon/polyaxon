@@ -54,7 +54,7 @@ class V1IoCond(object):
     attribute_map = {"kind": "kind", "param": "param", "trigger": "trigger"}
 
     def __init__(
-        self, kind="io", param=None, trigger=None, local_vars_configuration=None
+        self, kind=None, param=None, trigger=None, local_vars_configuration=None
     ):  # noqa: E501
         """V1IoCond - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:

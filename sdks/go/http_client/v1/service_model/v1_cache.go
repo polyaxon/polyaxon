@@ -25,17 +25,19 @@ import (
 )
 
 // V1Cache Cache specification
+// Cache is calculated based on inputs state as well as component version if used
 //
 // swagger:model v1Cache
 type V1Cache struct {
 
-	// Optional flag to disable cache
+	// Optional flag to disable cache, Cache is enabled by default
 	Disable bool `json:"disable,omitempty"`
 
-	// Optional Input' names to consider for the cache
+	// Optional Inputs' names to consider for the cache
 	Inputs []string `json:"inputs"`
 
-	// Optional TTL for cache before it gets invalidated automatically
+	// Optional time to live for the cache before it gets invalidated automatically,
+	// the TTL is caclculated based on the time the run starts
 	TTL int32 `json:"ttl,omitempty"`
 }
 

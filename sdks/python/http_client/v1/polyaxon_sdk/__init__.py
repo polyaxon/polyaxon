@@ -100,7 +100,7 @@ from polyaxon_sdk.models.v1_connection_type import V1ConnectionType
 from polyaxon_sdk.models.v1_credentials import V1Credentials
 from polyaxon_sdk.models.v1_cron_schedule import V1CronSchedule
 from polyaxon_sdk.models.v1_dag import V1Dag
-from polyaxon_sdk.models.v1_dag_reference import V1DagReference
+from polyaxon_sdk.models.v1_dag_ref import V1DagRef
 from polyaxon_sdk.models.v1_dashboard import V1Dashboard
 from polyaxon_sdk.models.v1_dask import V1Dask
 from polyaxon_sdk.models.v1_diff_stopping_policy import V1DiffStoppingPolicy
@@ -149,7 +149,7 @@ from polyaxon_sdk.models.v1_hp_range import V1HpRange
 from polyaxon_sdk.models.v1_hp_uniform import V1HpUniform
 from polyaxon_sdk.models.v1_hub_component import V1HubComponent
 from polyaxon_sdk.models.v1_hub_model import V1HubModel
-from polyaxon_sdk.models.v1_hub_reference import V1HubReference
+from polyaxon_sdk.models.v1_hub_ref import V1HubRef
 from polyaxon_sdk.models.v1_hyperband import V1Hyperband
 from polyaxon_sdk.models.v1_hyperopt import V1Hyperopt
 from polyaxon_sdk.models.v1_hyperopt_algorithms import V1HyperoptAlgorithms
@@ -224,7 +224,7 @@ from polyaxon_sdk.models.v1_parallel import V1Parallel
 from polyaxon_sdk.models.v1_parallel_kind import V1ParallelKind
 from polyaxon_sdk.models.v1_param import V1Param
 from polyaxon_sdk.models.v1_param_search import V1ParamSearch
-from polyaxon_sdk.models.v1_path_reference import V1PathReference
+from polyaxon_sdk.models.v1_path_ref import V1PathRef
 from polyaxon_sdk.models.v1_pipeline import V1Pipeline
 from polyaxon_sdk.models.v1_pipeline_kind import V1PipelineKind
 from polyaxon_sdk.models.v1_plugins import V1Plugins
@@ -271,7 +271,7 @@ from polyaxon_sdk.models.v1_termination import V1Termination
 from polyaxon_sdk.models.v1_trigger_policy import V1TriggerPolicy
 from polyaxon_sdk.models.v1_truncation_stopping_policy import V1TruncationStoppingPolicy
 from polyaxon_sdk.models.v1_uri_type import V1UriType
-from polyaxon_sdk.models.v1_url_reference import V1UrlReference
+from polyaxon_sdk.models.v1_url_ref import V1UrlRef
 from polyaxon_sdk.models.v1_user import V1User
 from polyaxon_sdk.models.v1_uuids import V1Uuids
 from polyaxon_sdk.models.v1_version import V1Version

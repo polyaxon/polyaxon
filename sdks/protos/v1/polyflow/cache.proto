@@ -20,13 +20,15 @@ package v1;
 
 
 // Cache specification
+// Cache is calculated based on inputs state as well as component version if used
 message Cache {
-    // Optional flag to disable cache
+    // Optional flag to disable cache, Cache is enabled by default
     bool disable = 1;
 
-    // Optional TTL for cache before it gets invalidated automatically
+    // Optional time to live for the cache before it gets invalidated automatically, 
+    // the TTL is caclculated based on the time the run starts
     int32 ttl = 2;
 
-    // Optional Input' names to consider for the cache
+    // Optional Inputs' names to consider for the cache
     repeated string inputs = 3;
 }

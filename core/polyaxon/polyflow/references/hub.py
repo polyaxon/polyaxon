@@ -22,17 +22,17 @@ from polyaxon.polyflow.references.mixin import RefMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
-class HubReferenceSchema(BaseCamelSchema):
+class HubRefSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("hub_ref"))
     name = fields.Str(required=True)
 
     @staticmethod
     def schema_config():
-        return V1HubReference
+        return V1HubRef
 
 
-class V1HubReference(BaseConfig, RefMixin, polyaxon_sdk.V1HubReference):
-    SCHEMA = HubReferenceSchema
+class V1HubRef(BaseConfig, RefMixin, polyaxon_sdk.V1HubRef):
+    SCHEMA = HubRefSchema
     IDENTIFIER = "hub_ref"
 
     def get_kind_value(self):

@@ -49,7 +49,7 @@ public class HubComponentsV1ApiTest {
 
     
     /**
-     * Create hub model
+     * Create hub component
      *
      * 
      *
@@ -66,7 +66,7 @@ public class HubComponentsV1ApiTest {
     }
     
     /**
-     * Delete hub model
+     * Delete hub component
      *
      * 
      *
@@ -83,7 +83,7 @@ public class HubComponentsV1ApiTest {
     }
     
     /**
-     * Get hub model
+     * Get hub component
      *
      * 
      *
@@ -100,7 +100,7 @@ public class HubComponentsV1ApiTest {
     }
     
     /**
-     * List hub model names
+     * List hub component names
      *
      * 
      *
@@ -120,7 +120,7 @@ public class HubComponentsV1ApiTest {
     }
     
     /**
-     * List hub models
+     * List hub components
      *
      * 
      *
@@ -140,7 +140,7 @@ public class HubComponentsV1ApiTest {
     }
     
     /**
-     * Patch hub model
+     * Patch hub component
      *
      * 
      *
@@ -158,7 +158,7 @@ public class HubComponentsV1ApiTest {
     }
     
     /**
-     * Update hub model
+     * Update hub component
      *
      * 
      *

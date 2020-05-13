@@ -51,7 +51,7 @@ class DashboardsV1Api(object):
         self.api_client = api_client
 
     def create_dashboard(self, owner, body, **kwargs):  # noqa: E501
-        """create_dashboard  # noqa: E501
+        """Create dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -76,7 +76,7 @@ class DashboardsV1Api(object):
         return self.create_dashboard_with_http_info(owner, body, **kwargs)  # noqa: E501
 
     def create_dashboard_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """create_dashboard  # noqa: E501
+        """Create dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -189,7 +189,7 @@ class DashboardsV1Api(object):
         )
 
     def delete_dashboard(self, owner, uuid, **kwargs):  # noqa: E501
-        """delete_dashboard  # noqa: E501
+        """Delete dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -214,7 +214,7 @@ class DashboardsV1Api(object):
         return self.delete_dashboard_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def delete_dashboard_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """delete_dashboard  # noqa: E501
+        """Delete dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -320,7 +320,7 @@ class DashboardsV1Api(object):
         )
 
     def get_dashboard(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_dashboard  # noqa: E501
+        """Get dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -345,7 +345,7 @@ class DashboardsV1Api(object):
         return self.get_dashboard_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def get_dashboard_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_dashboard  # noqa: E501
+        """Get dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -451,7 +451,7 @@ class DashboardsV1Api(object):
         )
 
     def list_dashboard_names(self, owner, **kwargs):  # noqa: E501
-        """list_dashboard_names  # noqa: E501
+        """List dashboard names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -479,7 +479,7 @@ class DashboardsV1Api(object):
         return self.list_dashboard_names_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_dashboard_names_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """list_dashboard_names  # noqa: E501
+        """List dashboard names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -594,7 +594,7 @@ class DashboardsV1Api(object):
         )
 
     def list_dashboards(self, owner, **kwargs):  # noqa: E501
-        """list_dashboards  # noqa: E501
+        """List dashboards  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -622,7 +622,7 @@ class DashboardsV1Api(object):
         return self.list_dashboards_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_dashboards_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """list_dashboards  # noqa: E501
+        """List dashboards  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -737,7 +737,7 @@ class DashboardsV1Api(object):
         )
 
     def patch_dashboard(self, owner, dashboard_uuid, body, **kwargs):  # noqa: E501
-        """patch_dashboard  # noqa: E501
+        """Patch dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -767,7 +767,7 @@ class DashboardsV1Api(object):
     def patch_dashboard_with_http_info(
         self, owner, dashboard_uuid, body, **kwargs
     ):  # noqa: E501
-        """patch_dashboard  # noqa: E501
+        """Patch dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -893,7 +893,7 @@ class DashboardsV1Api(object):
         )
 
     def update_dashboard(self, owner, dashboard_uuid, body, **kwargs):  # noqa: E501
-        """update_dashboard  # noqa: E501
+        """Update dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -923,7 +923,7 @@ class DashboardsV1Api(object):
     def update_dashboard_with_http_info(
         self, owner, dashboard_uuid, body, **kwargs
     ):  # noqa: E501
-        """update_dashboard  # noqa: E501
+        """Update dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

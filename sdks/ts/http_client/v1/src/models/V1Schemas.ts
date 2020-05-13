@@ -88,6 +88,10 @@ import {
     V1MatrixFromJSON,
     V1MatrixFromJSONTyped,
     V1MatrixToJSON,
+    V1Operation,
+    V1OperationFromJSON,
+    V1OperationFromJSONTyped,
+    V1OperationToJSON,
     V1OperationCond,
     V1OperationCondFromJSON,
     V1OperationCondFromJSONTyped,
@@ -166,6 +170,12 @@ export interface V1Schemas {
     run?: V1RunSchema;
     /**
      * 
+     * @type {V1Operation}
+     * @memberof V1Schemas
+     */
+    operation?: V1Operation;
+    /**
+     * 
      * @type {V1CompiledOperation}
      * @memberof V1Schemas
      */
@@ -193,7 +203,7 @@ export interface V1Schemas {
      * @type {V1Reference}
      * @memberof V1Schemas
      */
-    refrence?: V1Reference;
+    reference?: V1Reference;
     /**
      * 
      * @type {V1ArtifactsMount}
@@ -312,11 +322,12 @@ export function V1SchemasFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'early_stopping': !exists(json, 'early_stopping') ? undefined : V1EarlyStoppingFromJSON(json['early_stopping']),
         'parallel': !exists(json, 'parallel') ? undefined : V1ParallelFromJSON(json['parallel']),
         'run': !exists(json, 'run') ? undefined : V1RunSchemaFromJSON(json['run']),
+        'operation': !exists(json, 'operation') ? undefined : V1OperationFromJSON(json['operation']),
         'compiled_operation': !exists(json, 'compiled_operation') ? undefined : V1CompiledOperationFromJSON(json['compiled_operation']),
         'schedule': !exists(json, 'schedule') ? undefined : V1ScheduleFromJSON(json['schedule']),
         'connection_schema': !exists(json, 'connection_schema') ? undefined : V1ConnectionSchemaFromJSON(json['connection_schema']),
         'matrix': !exists(json, 'matrix') ? undefined : V1MatrixFromJSON(json['matrix']),
-        'refrence': !exists(json, 'refrence') ? undefined : V1ReferenceFromJSON(json['refrence']),
+        'reference': !exists(json, 'reference') ? undefined : V1ReferenceFromJSON(json['reference']),
         'artifacts_mount': !exists(json, 'artifacts_mount') ? undefined : V1ArtifactsMountFromJSON(json['artifacts_mount']),
         'polyaxon_sidecar_container': !exists(json, 'polyaxon_sidecar_container') ? undefined : V1PolyaxonSidecarContainerFromJSON(json['polyaxon_sidecar_container']),
         'polyaxon_init_container': !exists(json, 'polyaxon_init_container') ? undefined : V1PolyaxonInitContainerFromJSON(json['polyaxon_init_container']),
@@ -350,11 +361,12 @@ export function V1SchemasToJSON(value?: V1Schemas | null): any {
         'early_stopping': V1EarlyStoppingToJSON(value.early_stopping),
         'parallel': V1ParallelToJSON(value.parallel),
         'run': V1RunSchemaToJSON(value.run),
+        'operation': V1OperationToJSON(value.operation),
         'compiled_operation': V1CompiledOperationToJSON(value.compiled_operation),
         'schedule': V1ScheduleToJSON(value.schedule),
         'connection_schema': V1ConnectionSchemaToJSON(value.connection_schema),
         'matrix': V1MatrixToJSON(value.matrix),
-        'refrence': V1ReferenceToJSON(value.refrence),
+        'reference': V1ReferenceToJSON(value.reference),
         'artifacts_mount': V1ArtifactsMountToJSON(value.artifacts_mount),
         'polyaxon_sidecar_container': V1PolyaxonSidecarContainerToJSON(value.polyaxon_sidecar_container),
         'polyaxon_init_container': V1PolyaxonInitContainerToJSON(value.polyaxon_init_container),

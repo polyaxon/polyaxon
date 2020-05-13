@@ -60,7 +60,7 @@ export default class AuthV1Api {
      */
 
     /**
-     * List organization level queues names
+     * Login
      * @param {module:model/V1Credentials} body 
      * @param {module:api/AuthV1Api~loginCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Auth}

@@ -16,13 +16,6 @@
 
 from polyaxon.polyflow.cache import CacheSchema, V1Cache
 from polyaxon.polyflow.component import ComponentSchema, V1Component
-from polyaxon.polyflow.conditions import (
-    ConditionSchema,
-    IoCondSchema,
-    StatusCondSchema,
-    V1IoCond,
-    V1StatusCond,
-)
 from polyaxon.polyflow.dags import DagOpSpec
 from polyaxon.polyflow.early_stopping import (
     DiffStoppingPolicySchema,
@@ -109,15 +102,15 @@ from polyaxon.polyflow.params import (
 )
 from polyaxon.polyflow.plugins import PluginsSchema, V1Plugins
 from polyaxon.polyflow.references import (
-    DagReferenceSchema,
-    HubReferenceSchema,
-    PathReferenceSchema,
+    DagRefSchema,
+    HubRefSchema,
+    PathRefSchema,
     RefMixin,
-    UrlReferenceSchema,
-    V1DagReference,
-    V1HubReference,
-    V1PathReference,
-    V1UrlReference,
+    UrlRefSchema,
+    V1DagRef,
+    V1HubRef,
+    V1PathRef,
+    V1UrlRef,
 )
 from polyaxon.polyflow.run import (
     DagSchema,

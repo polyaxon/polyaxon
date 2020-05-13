@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **str** |  | [optional] [default to 'status']
+**kind** | **str** |  | [optional] 
 **operation** | **str** |  | [optional] 
 **trigger** | **str** |  | [optional] 
 

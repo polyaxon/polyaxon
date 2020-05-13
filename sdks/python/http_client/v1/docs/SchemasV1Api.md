@@ -5,13 +5,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**no_op**](SchemasV1Api.md#no_op) | **GET** /schemas | List teams names
+[**no_op**](SchemasV1Api.md#no_op) | **GET** /schemas | Get random
 
 
 # **no_op**
 > V1Schemas no_op()
 
-List teams names
+Get random
 
 ### Example
 
@@ -37,7 +37,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     api_instance = polyaxon_sdk.SchemasV1Api(api_client)
     
     try:
-        # List teams names
+        # Get random
         api_response = api_instance.no_op()
         pprint(api_response)
     except ApiException as e:

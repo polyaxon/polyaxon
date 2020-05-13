@@ -60,6 +60,7 @@ export default class DashboardsV1Api {
      */
 
     /**
+     * Create dashboard
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Dashboard} body Dashboard body
      * @param {module:api/DashboardsV1Api~createDashboardCallback} callback The callback function, accepting three arguments: error, data, response
@@ -106,6 +107,7 @@ export default class DashboardsV1Api {
      */
 
     /**
+     * Delete dashboard
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/DashboardsV1Api~deleteDashboardCallback} callback The callback function, accepting three arguments: error, data, response
@@ -152,6 +154,7 @@ export default class DashboardsV1Api {
      */
 
     /**
+     * Get dashboard
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/DashboardsV1Api~getDashboardCallback} callback The callback function, accepting three arguments: error, data, response
@@ -199,6 +202,7 @@ export default class DashboardsV1Api {
      */
 
     /**
+     * List dashboard names
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -250,6 +254,7 @@ export default class DashboardsV1Api {
      */
 
     /**
+     * List dashboards
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -301,6 +306,7 @@ export default class DashboardsV1Api {
      */
 
     /**
+     * Patch dashboard
      * @param {String} owner Owner of the namespace
      * @param {String} dashboard_uuid UUID
      * @param {module:model/V1Dashboard} body Dashboard body
@@ -353,6 +359,7 @@ export default class DashboardsV1Api {
      */
 
     /**
+     * Update dashboard
      * @param {String} owner Owner of the namespace
      * @param {String} dashboard_uuid UUID
      * @param {module:model/V1Dashboard} body Dashboard body

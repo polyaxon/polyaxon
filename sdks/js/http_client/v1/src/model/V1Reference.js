@@ -26,10 +26,10 @@
  */
 
 import ApiClient from '../ApiClient';
-import V1DagReference from './V1DagReference';
-import V1HubReference from './V1HubReference';
-import V1PathReference from './V1PathReference';
-import V1UrlReference from './V1UrlReference';
+import V1DagRef from './V1DagRef';
+import V1HubRef from './V1HubRef';
+import V1PathRef from './V1PathRef';
+import V1UrlRef from './V1UrlRef';
 
 /**
  * The V1Reference model module.
@@ -66,16 +66,16 @@ class V1Reference {
             obj = obj || new V1Reference();
 
             if (data.hasOwnProperty('hub_reference')) {
-                obj['hub_reference'] = V1HubReference.constructFromObject(data['hub_reference']);
+                obj['hub_reference'] = V1HubRef.constructFromObject(data['hub_reference']);
             }
             if (data.hasOwnProperty('dag_reference')) {
-                obj['dag_reference'] = V1DagReference.constructFromObject(data['dag_reference']);
+                obj['dag_reference'] = V1DagRef.constructFromObject(data['dag_reference']);
             }
             if (data.hasOwnProperty('url_reference')) {
-                obj['url_reference'] = V1UrlReference.constructFromObject(data['url_reference']);
+                obj['url_reference'] = V1UrlRef.constructFromObject(data['url_reference']);
             }
             if (data.hasOwnProperty('path_reference')) {
-                obj['path_reference'] = V1PathReference.constructFromObject(data['path_reference']);
+                obj['path_reference'] = V1PathRef.constructFromObject(data['path_reference']);
             }
         }
         return obj;
@@ -85,22 +85,22 @@ class V1Reference {
 }
 
 /**
- * @member {module:model/V1HubReference} hub_reference
+ * @member {module:model/V1HubRef} hub_reference
  */
 V1Reference.prototype['hub_reference'] = undefined;
 
 /**
- * @member {module:model/V1DagReference} dag_reference
+ * @member {module:model/V1DagRef} dag_reference
  */
 V1Reference.prototype['dag_reference'] = undefined;
 
 /**
- * @member {module:model/V1UrlReference} url_reference
+ * @member {module:model/V1UrlRef} url_reference
  */
 V1Reference.prototype['url_reference'] = undefined;
 
 /**
- * @member {module:model/V1PathReference} path_reference
+ * @member {module:model/V1PathRef} path_reference
  */
 V1Reference.prototype['path_reference'] = undefined;
 

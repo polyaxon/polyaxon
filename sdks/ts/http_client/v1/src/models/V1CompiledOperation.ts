@@ -118,6 +118,12 @@ export interface V1CompiledOperation {
     schedule?: object;
     /**
      * 
+     * @type {Array<object>}
+     * @memberof V1CompiledOperation
+     */
+    events?: Array<object>;
+    /**
+     * 
      * @type {object}
      * @memberof V1CompiledOperation
      */
@@ -198,6 +204,7 @@ export function V1CompiledOperationFromJSONTyped(json: any, ignoreDiscriminator:
         'queue': !exists(json, 'queue') ? undefined : json['queue'],
         'cache': !exists(json, 'cache') ? undefined : V1CacheFromJSON(json['cache']),
         'schedule': !exists(json, 'schedule') ? undefined : json['schedule'],
+        'events': !exists(json, 'events') ? undefined : json['events'],
         'parallel': !exists(json, 'parallel') ? undefined : json['parallel'],
         'dependencies': !exists(json, 'dependencies') ? undefined : json['dependencies'],
         'trigger': !exists(json, 'trigger') ? undefined : V1TriggerPolicyFromJSON(json['trigger']),
@@ -230,6 +237,7 @@ export function V1CompiledOperationToJSON(value?: V1CompiledOperation | null): a
         'queue': value.queue,
         'cache': V1CacheToJSON(value.cache),
         'schedule': value.schedule,
+        'events': value.events,
         'parallel': value.parallel,
         'dependencies': value.dependencies,
         'trigger': V1TriggerPolicyToJSON(value.trigger),

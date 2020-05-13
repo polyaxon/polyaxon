@@ -1,27 +1,27 @@
 {
   "definitions": {
-    "v1HubReference": {
+    "v1HubRef": {
       "properties": {
         "kind": {
           "default": "hub_ref"
         }
       }
     },
-    "v1DagReference": {
+    "v1DagRef": {
       "properties": {
         "kind": {
           "default": "dag_ref"
         }
       }
     },
-    "v1UrlReference": {
+    "v1UrlRef": {
       "properties": {
         "kind": {
           "default": "url_ref"
         }
       }
     },
-    "v1PathReference": {
+    "v1PathRef": {
       "properties": {
         "kind": {
           "default": "path_ref"

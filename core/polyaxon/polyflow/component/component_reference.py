@@ -16,14 +16,14 @@
 
 from polyaxon.polyflow.component.component import ComponentSchema, V1Component
 from polyaxon.polyflow.references import (
-    DagReferenceSchema,
-    HubReferenceSchema,
-    PathReferenceSchema,
-    UrlReferenceSchema,
-    V1DagReference,
-    V1HubReference,
-    V1PathReference,
-    V1UrlReference,
+    DagRefSchema,
+    HubRefSchema,
+    PathRefSchema,
+    UrlRefSchema,
+    V1DagRef,
+    V1HubRef,
+    V1PathRef,
+    V1UrlRef,
 )
 from polyaxon.schemas.base import BaseOneOfSchema
 
@@ -33,8 +33,8 @@ class ComponentReferenceSchema(BaseOneOfSchema):
     TYPE_FIELD_REMOVE = False
     SCHEMAS = {
         V1Component.IDENTIFIER: ComponentSchema,
-        V1DagReference.IDENTIFIER: DagReferenceSchema,
-        V1HubReference.IDENTIFIER: HubReferenceSchema,
-        V1PathReference.IDENTIFIER: PathReferenceSchema,
-        V1UrlReference.IDENTIFIER: UrlReferenceSchema,
+        V1DagRef.IDENTIFIER: DagRefSchema,
+        V1HubRef.IDENTIFIER: HubRefSchema,
+        V1PathRef.IDENTIFIER: PathRefSchema,
+        V1UrlRef.IDENTIFIER: UrlRefSchema,
     }

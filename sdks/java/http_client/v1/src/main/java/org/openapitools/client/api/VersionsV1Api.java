@@ -124,7 +124,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * Update current user
+     * Get log handler
      * 
      * @return V1LogHandler
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -144,7 +144,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * Update current user
+     * Get log handler
      * 
      * @return ApiResponse&lt;V1LogHandler&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -165,7 +165,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * Update current user (asynchronously)
+     * Get log handler (asynchronously)
      * 
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -241,7 +241,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * Get current user
+     * Get versions
      * 
      * @return V1Versions
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -261,7 +261,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * Get current user
+     * Get versions
      * 
      * @return ApiResponse&lt;V1Versions&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -282,7 +282,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * Get current user (asynchronously)
+     * Get versions (asynchronously)
      * 
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

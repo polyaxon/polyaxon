@@ -51,7 +51,7 @@ class VersionsV1Api(object):
         self.api_client = api_client
 
     def get_log_handler(self, **kwargs):  # noqa: E501
-        """Update current user  # noqa: E501
+        """Get log handler  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -74,7 +74,7 @@ class VersionsV1Api(object):
         return self.get_log_handler_with_http_info(**kwargs)  # noqa: E501
 
     def get_log_handler_with_http_info(self, **kwargs):  # noqa: E501
-        """Update current user  # noqa: E501
+        """Get log handler  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -158,7 +158,7 @@ class VersionsV1Api(object):
         )
 
     def get_versions(self, **kwargs):  # noqa: E501
-        """Get current user  # noqa: E501
+        """Get versions  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -181,7 +181,7 @@ class VersionsV1Api(object):
         return self.get_versions_with_http_info(**kwargs)  # noqa: E501
 
     def get_versions_with_http_info(self, **kwargs):  # noqa: E501
-        """Get current user  # noqa: E501
+        """Get versions  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

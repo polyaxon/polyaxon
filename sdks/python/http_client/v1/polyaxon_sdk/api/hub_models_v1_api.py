@@ -51,7 +51,7 @@ class HubModelsV1Api(object):
         self.api_client = api_client
 
     def create_hub_model(self, owner, body, **kwargs):  # noqa: E501
-        """Create dashboard  # noqa: E501
+        """Create hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -76,7 +76,7 @@ class HubModelsV1Api(object):
         return self.create_hub_model_with_http_info(owner, body, **kwargs)  # noqa: E501
 
     def create_hub_model_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """Create dashboard  # noqa: E501
+        """Create hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -189,7 +189,7 @@ class HubModelsV1Api(object):
         )
 
     def delete_hub_model(self, owner, uuid, **kwargs):  # noqa: E501
-        """Delete dashboard  # noqa: E501
+        """Delete hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -214,7 +214,7 @@ class HubModelsV1Api(object):
         return self.delete_hub_model_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def delete_hub_model_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """Delete dashboard  # noqa: E501
+        """Delete hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -320,7 +320,7 @@ class HubModelsV1Api(object):
         )
 
     def get_hub_model(self, owner, uuid, **kwargs):  # noqa: E501
-        """Get dashboard  # noqa: E501
+        """Get hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -345,7 +345,7 @@ class HubModelsV1Api(object):
         return self.get_hub_model_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def get_hub_model_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """Get dashboard  # noqa: E501
+        """Get hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -451,7 +451,7 @@ class HubModelsV1Api(object):
         )
 
     def list_hub_model_names(self, owner, **kwargs):  # noqa: E501
-        """List dashboard names  # noqa: E501
+        """List hub model names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -479,7 +479,7 @@ class HubModelsV1Api(object):
         return self.list_hub_model_names_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_hub_model_names_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List dashboard names  # noqa: E501
+        """List hub model names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -594,7 +594,7 @@ class HubModelsV1Api(object):
         )
 
     def list_hub_models(self, owner, **kwargs):  # noqa: E501
-        """List dashboards  # noqa: E501
+        """List hub models  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -622,7 +622,7 @@ class HubModelsV1Api(object):
         return self.list_hub_models_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_hub_models_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List dashboards  # noqa: E501
+        """List hub models  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -737,7 +737,7 @@ class HubModelsV1Api(object):
         )
 
     def patch_hub_model(self, owner, model_uuid, body, **kwargs):  # noqa: E501
-        """Patch dashboard  # noqa: E501
+        """Patch hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -767,7 +767,7 @@ class HubModelsV1Api(object):
     def patch_hub_model_with_http_info(
         self, owner, model_uuid, body, **kwargs
     ):  # noqa: E501
-        """Patch dashboard  # noqa: E501
+        """Patch hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -891,7 +891,7 @@ class HubModelsV1Api(object):
         )
 
     def update_hub_model(self, owner, model_uuid, body, **kwargs):  # noqa: E501
-        """Update dashboard  # noqa: E501
+        """Update hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -921,7 +921,7 @@ class HubModelsV1Api(object):
     def update_hub_model_with_http_info(
         self, owner, model_uuid, body, **kwargs
     ):  # noqa: E501
-        """Update dashboard  # noqa: E501
+        """Update hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

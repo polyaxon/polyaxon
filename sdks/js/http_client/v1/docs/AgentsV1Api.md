@@ -6,17 +6,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createAgent**](AgentsV1Api.md#createAgent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
-[**createAgentStatus**](AgentsV1Api.md#createAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**deleteAgent**](AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
-[**getAgent**](AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
-[**getAgentState**](AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
-[**getAgentStatuses**](AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**listAgentNames**](AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
-[**listAgents**](AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
-[**patchAgent**](AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
-[**syncAgent**](AgentsV1Api.md#syncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
-[**updateAgent**](AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
+[**createAgent**](AgentsV1Api.md#createAgent) | **POST** /api/v1/orgs/{owner}/agents | Create agent
+[**createAgentStatus**](AgentsV1Api.md#createAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new run status
+[**deleteAgent**](AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete agent
+[**getAgent**](AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
+[**getAgentState**](AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
+[**getAgentStatuses**](AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
+[**listAgentNames**](AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
+[**listAgents**](AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List agents
+[**patchAgent**](AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch agent
+[**syncAgent**](AgentsV1Api.md#syncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | Sync agent
+[**updateAgent**](AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update agent
 
 
 
@@ -24,7 +24,7 @@ Method | HTTP request | Description
 
 > V1Agent createAgent(owner, body)
 
-Create run profile
+Create agent
 
 ### Example
 
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 
 > V1Status createAgentStatus(owner, uuid, body)
 
-
+Create new run status
 
 ### Example
 
@@ -128,7 +128,7 @@ Name | Type | Description  | Notes
 
 > deleteAgent(owner, uuid)
 
-Delete run profile
+Delete agent
 
 ### Example
 
@@ -179,7 +179,7 @@ null (empty response body)
 
 > V1Agent getAgent(owner, uuid)
 
-Get run profile
+Get agent
 
 ### Example
 
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 
 > V1AgentStateResponse getAgentState(owner, uuid)
 
-
+Get State (queues/runs)
 
 ### Example
 
@@ -281,7 +281,7 @@ Name | Type | Description  | Notes
 
 > V1Status getAgentStatuses(owner, uuid)
 
-
+Get agent status
 
 ### Example
 
@@ -332,7 +332,7 @@ Name | Type | Description  | Notes
 
 > V1ListAgentsResponse listAgentNames(owner, opts)
 
-List run profiles names
+List agents names
 
 ### Example
 
@@ -391,7 +391,7 @@ Name | Type | Description  | Notes
 
 > V1ListAgentsResponse listAgents(owner, opts)
 
-List run profiles
+List agents
 
 ### Example
 
@@ -450,7 +450,7 @@ Name | Type | Description  | Notes
 
 > V1Agent patchAgent(owner, agent_uuid, body)
 
-Patch run profile
+Patch agent
 
 ### Example
 
@@ -503,7 +503,7 @@ Name | Type | Description  | Notes
 
 > syncAgent(owner, agent_uuid, body)
 
-
+Sync agent
 
 ### Example
 
@@ -556,7 +556,7 @@ null (empty response body)
 
 > V1Agent updateAgent(owner, agent_uuid, body)
 
-Update run profile
+Update agent
 
 ### Example
 

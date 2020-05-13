@@ -79,9 +79,8 @@ class V1StatusCond {
 
 /**
  * @member {String} kind
- * @default 'status'
  */
-V1StatusCond.prototype['kind'] = 'status';
+V1StatusCond.prototype['kind'] = undefined;
 
 /**
  * @member {String} operation

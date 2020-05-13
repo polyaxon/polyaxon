@@ -46,7 +46,7 @@ import {
 export class VersionsV1Api extends runtime.BaseAPI {
 
     /**
-     * Update current user
+     * Get log handler
      */
     async getLogHandlerRaw(): Promise<runtime.ApiResponse<V1LogHandler>> {
         const queryParameters: runtime.HTTPQuery = {};
@@ -68,7 +68,7 @@ export class VersionsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update current user
+     * Get log handler
      */
     async getLogHandler(): Promise<V1LogHandler> {
         const response = await this.getLogHandlerRaw();
@@ -76,7 +76,7 @@ export class VersionsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get current user
+     * Get versions
      */
     async getVersionsRaw(): Promise<runtime.ApiResponse<V1Versions>> {
         const queryParameters: runtime.HTTPQuery = {};
@@ -98,7 +98,7 @@ export class VersionsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get current user
+     * Get versions
      */
     async getVersions(): Promise<V1Versions> {
         const response = await this.getVersionsRaw();

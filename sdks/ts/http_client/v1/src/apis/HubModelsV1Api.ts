@@ -89,7 +89,7 @@ export interface UpdateHubModelRequest {
 export class HubModelsV1Api extends runtime.BaseAPI {
 
     /**
-     * Create dashboard
+     * Create hub model
      */
     async createHubModelRaw(requestParameters: CreateHubModelRequest): Promise<runtime.ApiResponse<V1HubModel>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -122,7 +122,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create dashboard
+     * Create hub model
      */
     async createHubModel(requestParameters: CreateHubModelRequest): Promise<V1HubModel> {
         const response = await this.createHubModelRaw(requestParameters);
@@ -130,7 +130,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete dashboard
+     * Delete hub model
      */
     async deleteHubModelRaw(requestParameters: DeleteHubModelRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -160,14 +160,14 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete dashboard
+     * Delete hub model
      */
     async deleteHubModel(requestParameters: DeleteHubModelRequest): Promise<void> {
         await this.deleteHubModelRaw(requestParameters);
     }
 
     /**
-     * Get dashboard
+     * Get hub model
      */
     async getHubModelRaw(requestParameters: GetHubModelRequest): Promise<runtime.ApiResponse<V1HubModel>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -197,7 +197,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get dashboard
+     * Get hub model
      */
     async getHubModel(requestParameters: GetHubModelRequest): Promise<V1HubModel> {
         const response = await this.getHubModelRaw(requestParameters);
@@ -205,7 +205,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List dashboard names
+     * List hub model names
      */
     async listHubModelNamesRaw(requestParameters: ListHubModelNamesRequest): Promise<runtime.ApiResponse<V1ListHubModelsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -247,7 +247,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List dashboard names
+     * List hub model names
      */
     async listHubModelNames(requestParameters: ListHubModelNamesRequest): Promise<V1ListHubModelsResponse> {
         const response = await this.listHubModelNamesRaw(requestParameters);
@@ -255,7 +255,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List dashboards
+     * List hub models
      */
     async listHubModelsRaw(requestParameters: ListHubModelsRequest): Promise<runtime.ApiResponse<V1ListHubModelsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -297,7 +297,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List dashboards
+     * List hub models
      */
     async listHubModels(requestParameters: ListHubModelsRequest): Promise<V1ListHubModelsResponse> {
         const response = await this.listHubModelsRaw(requestParameters);
@@ -305,7 +305,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch dashboard
+     * Patch hub model
      */
     async patchHubModelRaw(requestParameters: PatchHubModelRequest): Promise<runtime.ApiResponse<V1HubModel>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -342,7 +342,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch dashboard
+     * Patch hub model
      */
     async patchHubModel(requestParameters: PatchHubModelRequest): Promise<V1HubModel> {
         const response = await this.patchHubModelRaw(requestParameters);
@@ -350,7 +350,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update dashboard
+     * Update hub model
      */
     async updateHubModelRaw(requestParameters: UpdateHubModelRequest): Promise<runtime.ApiResponse<V1HubModel>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -387,7 +387,7 @@ export class HubModelsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update dashboard
+     * Update hub model
      */
     async updateHubModel(requestParameters: UpdateHubModelRequest): Promise<V1HubModel> {
         const response = await this.updateHubModelRaw(requestParameters);

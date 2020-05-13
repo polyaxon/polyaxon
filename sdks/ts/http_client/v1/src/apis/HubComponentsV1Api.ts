@@ -89,7 +89,7 @@ export interface UpdateHubComponentRequest {
 export class HubComponentsV1Api extends runtime.BaseAPI {
 
     /**
-     * Create hub model
+     * Create hub component
      */
     async createHubComponentRaw(requestParameters: CreateHubComponentRequest): Promise<runtime.ApiResponse<V1HubComponent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -122,7 +122,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create hub model
+     * Create hub component
      */
     async createHubComponent(requestParameters: CreateHubComponentRequest): Promise<V1HubComponent> {
         const response = await this.createHubComponentRaw(requestParameters);
@@ -130,7 +130,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete hub model
+     * Delete hub component
      */
     async deleteHubComponentRaw(requestParameters: DeleteHubComponentRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -160,14 +160,14 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete hub model
+     * Delete hub component
      */
     async deleteHubComponent(requestParameters: DeleteHubComponentRequest): Promise<void> {
         await this.deleteHubComponentRaw(requestParameters);
     }
 
     /**
-     * Get hub model
+     * Get hub component
      */
     async getHubComponentRaw(requestParameters: GetHubComponentRequest): Promise<runtime.ApiResponse<V1HubComponent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -197,7 +197,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get hub model
+     * Get hub component
      */
     async getHubComponent(requestParameters: GetHubComponentRequest): Promise<V1HubComponent> {
         const response = await this.getHubComponentRaw(requestParameters);
@@ -205,7 +205,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List hub model names
+     * List hub component names
      */
     async listHubComponebtNamesRaw(requestParameters: ListHubComponebtNamesRequest): Promise<runtime.ApiResponse<V1ListHubComponentsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -247,7 +247,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List hub model names
+     * List hub component names
      */
     async listHubComponebtNames(requestParameters: ListHubComponebtNamesRequest): Promise<V1ListHubComponentsResponse> {
         const response = await this.listHubComponebtNamesRaw(requestParameters);
@@ -255,7 +255,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List hub models
+     * List hub components
      */
     async listHubComponentsRaw(requestParameters: ListHubComponentsRequest): Promise<runtime.ApiResponse<V1ListHubComponentsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -297,7 +297,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List hub models
+     * List hub components
      */
     async listHubComponents(requestParameters: ListHubComponentsRequest): Promise<V1ListHubComponentsResponse> {
         const response = await this.listHubComponentsRaw(requestParameters);
@@ -305,7 +305,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch hub model
+     * Patch hub component
      */
     async patchHubComponentRaw(requestParameters: PatchHubComponentRequest): Promise<runtime.ApiResponse<V1HubComponent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -342,7 +342,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch hub model
+     * Patch hub component
      */
     async patchHubComponent(requestParameters: PatchHubComponentRequest): Promise<V1HubComponent> {
         const response = await this.patchHubComponentRaw(requestParameters);
@@ -350,7 +350,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update hub model
+     * Update hub component
      */
     async updateHubComponentRaw(requestParameters: UpdateHubComponentRequest): Promise<runtime.ApiResponse<V1HubComponent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -387,7 +387,7 @@ export class HubComponentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update hub model
+     * Update hub component
      */
     async updateHubComponent(requestParameters: UpdateHubComponentRequest): Promise<V1HubComponent> {
         const response = await this.updateHubComponentRaw(requestParameters);

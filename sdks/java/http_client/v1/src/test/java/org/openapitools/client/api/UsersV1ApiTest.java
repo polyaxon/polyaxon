@@ -48,7 +48,7 @@ public class UsersV1ApiTest {
 
     
     /**
-     * Login
+     * Get current user
      *
      * 
      *
@@ -63,7 +63,7 @@ public class UsersV1ApiTest {
     }
     
     /**
-     * 
+     * Patch current user
      *
      * 
      *
@@ -79,7 +79,7 @@ public class UsersV1ApiTest {
     }
     
     /**
-     * 
+     * Update current user
      *
      * 
      *

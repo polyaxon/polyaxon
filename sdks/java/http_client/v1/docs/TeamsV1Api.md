@@ -5,26 +5,26 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create organization
-[**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
-[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
-[**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
-[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
-[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
-[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
-[**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
-[**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
-[**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
-[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
-[**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
-[**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
+[**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create team
+[**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create team member
+[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete team
+[**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete team member details
+[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get team
+[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get team member details
+[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get team members
+[**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
+[**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List teams
+[**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
+[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch tram member
+[**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update team
+[**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update team member
 
 
 <a name="createTeam"></a>
 # **createTeam**
 > V1Team createTeam(owner, body)
 
-Create organization
+Create team
 
 ### Example
 ```java
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 # **createTeamMember**
 > V1TeamMember createTeamMember(owner, team, body)
 
-Create organization member
+Create team member
 
 ### Example
 ```java
@@ -172,7 +172,7 @@ Name | Type | Description  | Notes
 # **deleteTeam**
 > deleteTeam(owner, team)
 
-Delete organization
+Delete team
 
 ### Example
 ```java
@@ -244,7 +244,7 @@ null (empty response body)
 # **deleteTeamMember**
 > deleteTeamMember(owner, team, user)
 
-Delete organization member details
+Delete team member details
 
 ### Example
 ```java
@@ -318,7 +318,7 @@ null (empty response body)
 # **getTeam**
 > V1Team getTeam(owner, team)
 
-Get organization
+Get team
 
 ### Example
 ```java
@@ -391,7 +391,7 @@ Name | Type | Description  | Notes
 # **getTeamMember**
 > V1TeamMember getTeamMember(owner, team, user)
 
-Get organization member details
+Get team member details
 
 ### Example
 ```java
@@ -466,7 +466,7 @@ Name | Type | Description  | Notes
 # **listTeamMembers**
 > V1ListTeamMembersResponse listTeamMembers(owner, team, offset, limit, sort, query)
 
-Get organization members
+Get team members
 
 ### Example
 ```java
@@ -547,7 +547,7 @@ Name | Type | Description  | Notes
 # **listTeamNames**
 > V1ListTeamsResponse listTeamNames(owner, offset, limit, sort, query)
 
-List organizations names
+List teams names
 
 ### Example
 ```java
@@ -626,7 +626,7 @@ Name | Type | Description  | Notes
 # **listTeams**
 > V1ListTeamsResponse listTeams(owner, offset, limit, sort, query)
 
-List organizations
+List teams
 
 ### Example
 ```java
@@ -705,7 +705,7 @@ Name | Type | Description  | Notes
 # **patchTeam**
 > V1Team patchTeam(owner, teamName, body)
 
-Patch organization
+Patch team
 
 ### Example
 ```java
@@ -780,7 +780,7 @@ Name | Type | Description  | Notes
 # **patchTeamMember**
 > V1TeamMember patchTeamMember(owner, team, memberUser, body)
 
-Patch organization member
+Patch tram member
 
 ### Example
 ```java
@@ -857,7 +857,7 @@ Name | Type | Description  | Notes
 # **updateTeam**
 > V1Team updateTeam(owner, teamName, body)
 
-Update organization
+Update team
 
 ### Example
 ```java
@@ -932,7 +932,7 @@ Name | Type | Description  | Notes
 # **updateTeamMember**
 > V1TeamMember updateTeamMember(owner, team, memberUser, body)
 
-Update organization member
+Update team member
 
 ### Example
 ```java

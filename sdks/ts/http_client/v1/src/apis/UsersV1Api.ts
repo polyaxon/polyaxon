@@ -51,7 +51,7 @@ export interface UpdateUserRequest {
 export class UsersV1Api extends runtime.BaseAPI {
 
     /**
-     * Login
+     * Get current user
      */
     async getUserRaw(): Promise<runtime.ApiResponse<V1User>> {
         const queryParameters: runtime.HTTPQuery = {};
@@ -73,7 +73,7 @@ export class UsersV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Login
+     * Get current user
      */
     async getUser(): Promise<V1User> {
         const response = await this.getUserRaw();
@@ -81,6 +81,7 @@ export class UsersV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Patch current user
      */
     async patchUserRaw(requestParameters: PatchUserRequest): Promise<runtime.ApiResponse<V1User>> {
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -109,6 +110,7 @@ export class UsersV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Patch current user
      */
     async patchUser(requestParameters: PatchUserRequest): Promise<V1User> {
         const response = await this.patchUserRaw(requestParameters);
@@ -116,6 +118,7 @@ export class UsersV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Update current user
      */
     async updateUserRaw(requestParameters: UpdateUserRequest): Promise<runtime.ApiResponse<V1User>> {
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -144,6 +147,7 @@ export class UsersV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Update current user
      */
     async updateUser(requestParameters: UpdateUserRequest): Promise<V1User> {
         const response = await this.updateUserRaw(requestParameters);

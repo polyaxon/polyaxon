@@ -52,6 +52,7 @@ import org.openapitools.client.model.V1GitType;
 import org.openapitools.client.model.V1ImageType;
 import org.openapitools.client.model.V1K8sResourceType;
 import org.openapitools.client.model.V1Matrix;
+import org.openapitools.client.model.V1Operation;
 import org.openapitools.client.model.V1OperationCond;
 import org.openapitools.client.model.V1Parallel;
 import org.openapitools.client.model.V1ParallelKind;
@@ -85,6 +86,10 @@ public class V1Schemas {
   @SerializedName(SERIALIZED_NAME_RUN)
   private V1RunSchema run;
 
+  public static final String SERIALIZED_NAME_OPERATION = "operation";
+  @SerializedName(SERIALIZED_NAME_OPERATION)
+  private V1Operation operation;
+
   public static final String SERIALIZED_NAME_COMPILED_OPERATION = "compiled_operation";
   @SerializedName(SERIALIZED_NAME_COMPILED_OPERATION)
   private V1CompiledOperation compiledOperation;
@@ -101,9 +106,9 @@ public class V1Schemas {
   @SerializedName(SERIALIZED_NAME_MATRIX)
   private V1Matrix matrix;
 
-  public static final String SERIALIZED_NAME_REFRENCE = "refrence";
-  @SerializedName(SERIALIZED_NAME_REFRENCE)
-  private V1Reference refrence;
+  public static final String SERIALIZED_NAME_REFERENCE = "reference";
+  @SerializedName(SERIALIZED_NAME_REFERENCE)
+  private V1Reference reference;
 
   public static final String SERIALIZED_NAME_ARTIFACTS_MOUNT = "artifacts_mount";
   @SerializedName(SERIALIZED_NAME_ARTIFACTS_MOUNT)
@@ -266,6 +271,29 @@ public class V1Schemas {
   }
 
 
+  public V1Schemas operation(V1Operation operation) {
+    
+    this.operation = operation;
+    return this;
+  }
+
+   /**
+   * Get operation
+   * @return operation
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public V1Operation getOperation() {
+    return operation;
+  }
+
+
+  public void setOperation(V1Operation operation) {
+    this.operation = operation;
+  }
+
+
   public V1Schemas compiledOperation(V1CompiledOperation compiledOperation) {
     
     this.compiledOperation = compiledOperation;
@@ -358,26 +386,26 @@ public class V1Schemas {
   }
 
 
-  public V1Schemas refrence(V1Reference refrence) {
+  public V1Schemas reference(V1Reference reference) {
     
-    this.refrence = refrence;
+    this.reference = reference;
     return this;
   }
 
    /**
-   * Get refrence
-   * @return refrence
+   * Get reference
+   * @return reference
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Reference getRefrence() {
-    return refrence;
+  public V1Reference getReference() {
+    return reference;
   }
 
 
-  public void setRefrence(V1Reference refrence) {
-    this.refrence = refrence;
+  public void setReference(V1Reference reference) {
+    this.reference = reference;
   }
 
 
@@ -785,11 +813,12 @@ public class V1Schemas {
         Objects.equals(this.earlyStopping, v1Schemas.earlyStopping) &&
         Objects.equals(this.parallel, v1Schemas.parallel) &&
         Objects.equals(this.run, v1Schemas.run) &&
+        Objects.equals(this.operation, v1Schemas.operation) &&
         Objects.equals(this.compiledOperation, v1Schemas.compiledOperation) &&
         Objects.equals(this.schedule, v1Schemas.schedule) &&
         Objects.equals(this.connectionSchema, v1Schemas.connectionSchema) &&
         Objects.equals(this.matrix, v1Schemas.matrix) &&
-        Objects.equals(this.refrence, v1Schemas.refrence) &&
+        Objects.equals(this.reference, v1Schemas.reference) &&
         Objects.equals(this.artifactsMount, v1Schemas.artifactsMount) &&
         Objects.equals(this.polyaxonSidecarContainer, v1Schemas.polyaxonSidecarContainer) &&
         Objects.equals(this.polyaxonInitContainer, v1Schemas.polyaxonInitContainer) &&
@@ -811,7 +840,7 @@ public class V1Schemas {
 
   @Override
   public int hashCode() {
-    return Objects.hash(operationCond, earlyStopping, parallel, run, compiledOperation, schedule, connectionSchema, matrix, refrence, artifactsMount, polyaxonSidecarContainer, polyaxonInitContainer, artifacs, wasb, gcs, s3, autg, dockerfile, git, uri, k8sResource, connection, image, eventType, event, parallelKind);
+    return Objects.hash(operationCond, earlyStopping, parallel, run, operation, compiledOperation, schedule, connectionSchema, matrix, reference, artifactsMount, polyaxonSidecarContainer, polyaxonInitContainer, artifacs, wasb, gcs, s3, autg, dockerfile, git, uri, k8sResource, connection, image, eventType, event, parallelKind);
   }
 
 
@@ -823,11 +852,12 @@ public class V1Schemas {
     sb.append("    earlyStopping: ").append(toIndentedString(earlyStopping)).append("\n");
     sb.append("    parallel: ").append(toIndentedString(parallel)).append("\n");
     sb.append("    run: ").append(toIndentedString(run)).append("\n");
+    sb.append("    operation: ").append(toIndentedString(operation)).append("\n");
     sb.append("    compiledOperation: ").append(toIndentedString(compiledOperation)).append("\n");
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
     sb.append("    connectionSchema: ").append(toIndentedString(connectionSchema)).append("\n");
     sb.append("    matrix: ").append(toIndentedString(matrix)).append("\n");
-    sb.append("    refrence: ").append(toIndentedString(refrence)).append("\n");
+    sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
     sb.append("    artifactsMount: ").append(toIndentedString(artifactsMount)).append("\n");
     sb.append("    polyaxonSidecarContainer: ").append(toIndentedString(polyaxonSidecarContainer)).append("\n");
     sb.append("    polyaxonInitContainer: ").append(toIndentedString(polyaxonInitContainer)).append("\n");

@@ -93,6 +93,10 @@ public class V1Operation {
   @SerializedName(SERIALIZED_NAME_SCHEDULE)
   private Object schedule;
 
+  public static final String SERIALIZED_NAME_EVENTS = "events";
+  @SerializedName(SERIALIZED_NAME_EVENTS)
+  private List<Object> events = null;
+
   public static final String SERIALIZED_NAME_PARALLEL = "parallel";
   @SerializedName(SERIALIZED_NAME_PARALLEL)
   private Object parallel;
@@ -107,7 +111,7 @@ public class V1Operation {
 
   public static final String SERIALIZED_NAME_CONDITIONS = "conditions";
   @SerializedName(SERIALIZED_NAME_CONDITIONS)
-  private List<Object> conditions = null;
+  private List<String> conditions = null;
 
   public static final String SERIALIZED_NAME_SKIP_ON_UPSTREAM_SKIP = "skip_on_upstream_skip";
   @SerializedName(SERIALIZED_NAME_SKIP_ON_UPSTREAM_SKIP)
@@ -388,6 +392,37 @@ public class V1Operation {
   }
 
 
+  public V1Operation events(List<Object> events) {
+    
+    this.events = events;
+    return this;
+  }
+
+  public V1Operation addEventsItem(Object eventsItem) {
+    if (this.events == null) {
+      this.events = new ArrayList<Object>();
+    }
+    this.events.add(eventsItem);
+    return this;
+  }
+
+   /**
+   * Get events
+   * @return events
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<Object> getEvents() {
+    return events;
+  }
+
+
+  public void setEvents(List<Object> events) {
+    this.events = events;
+  }
+
+
   public V1Operation parallel(Object parallel) {
     
     this.parallel = parallel;
@@ -465,15 +500,15 @@ public class V1Operation {
   }
 
 
-  public V1Operation conditions(List<Object> conditions) {
+  public V1Operation conditions(List<String> conditions) {
     
     this.conditions = conditions;
     return this;
   }
 
-  public V1Operation addConditionsItem(Object conditionsItem) {
+  public V1Operation addConditionsItem(String conditionsItem) {
     if (this.conditions == null) {
-      this.conditions = new ArrayList<Object>();
+      this.conditions = new ArrayList<String>();
     }
     this.conditions.add(conditionsItem);
     return this;
@@ -486,12 +521,12 @@ public class V1Operation {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public List<Object> getConditions() {
+  public List<String> getConditions() {
     return conditions;
   }
 
 
-  public void setConditions(List<Object> conditions) {
+  public void setConditions(List<String> conditions) {
     this.conditions = conditions;
   }
 
@@ -753,6 +788,7 @@ public class V1Operation {
         Objects.equals(this.queue, v1Operation.queue) &&
         Objects.equals(this.cache, v1Operation.cache) &&
         Objects.equals(this.schedule, v1Operation.schedule) &&
+        Objects.equals(this.events, v1Operation.events) &&
         Objects.equals(this.parallel, v1Operation.parallel) &&
         Objects.equals(this.dependencies, v1Operation.dependencies) &&
         Objects.equals(this.trigger, v1Operation.trigger) &&
@@ -771,7 +807,7 @@ public class V1Operation {
 
   @Override
   public int hashCode() {
-    return Objects.hash(version, kind, name, tag, description, tags, profile, queue, cache, schedule, parallel, dependencies, trigger, conditions, skipOnUpstreamSkip, termination, plugins, params, runPatch, dagRef, urlRef, pathRef, hubRef, component);
+    return Objects.hash(version, kind, name, tag, description, tags, profile, queue, cache, schedule, events, parallel, dependencies, trigger, conditions, skipOnUpstreamSkip, termination, plugins, params, runPatch, dagRef, urlRef, pathRef, hubRef, component);
   }
 
 
@@ -789,6 +825,7 @@ public class V1Operation {
     sb.append("    queue: ").append(toIndentedString(queue)).append("\n");
     sb.append("    cache: ").append(toIndentedString(cache)).append("\n");
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
+    sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("    parallel: ").append(toIndentedString(parallel)).append("\n");
     sb.append("    dependencies: ").append(toIndentedString(dependencies)).append("\n");
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");

@@ -6,8 +6,8 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | Update current user
-[**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get current user
+[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | Get log handler
+[**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get versions
 
 
 
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 > V1LogHandler getLogHandler()
 
-Update current user
+Get log handler
 
 ### Example
 
@@ -60,7 +60,7 @@ This endpoint does not need any parameter.
 
 > V1Versions getVersions()
 
-Get current user
+Get versions
 
 ### Example
 

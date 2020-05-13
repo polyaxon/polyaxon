@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **str** |  | [optional] [default to 'io']
+**kind** | **str** |  | [optional] 
 **param** | **str** |  | [optional] 
 **trigger** | **str** |  | [optional] 
 

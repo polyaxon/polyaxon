@@ -58,33 +58,36 @@ message CompiledOperation {
     // Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
     google.protobuf.Struct schedule = 10;
 
+    // Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+    repeated google.protobuf.Struct events = 11;
+
     // Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-    google.protobuf.Struct parallel = 11;
+    google.protobuf.Struct parallel = 12;
 
     // Optional graph dependencies of this op
-    repeated string dependencies = 12;
+    repeated string dependencies = 13;
 
     // Optional trigger policy
-    TriggerPolicy trigger = 13;
+    TriggerPolicy trigger = 14;
 
     // An optional list of condition to check before starting the run, entities should be a valid Condition
-    repeated google.protobuf.Struct conditions = 14;
+    repeated google.protobuf.Struct conditions = 15;
 
     // Optional flag to skip this run if upstream was skipped
-    bool skip_on_upstream_skip = 15;
+    bool skip_on_upstream_skip = 16;
 
     // optional termination section
-    Termination termination = 16;
+    Termination termination = 17;
 
     // Optional plugins to enable
-    Plugins plugins = 17;
+    Plugins plugins = 19;
 
     // Optional inputs definition
-    repeated IO inputs = 18;
+    repeated IO inputs = 20;
 
     // Optional outputs definition
-    repeated IO outputs = 19;
+    repeated IO outputs = 21;
 
     // Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 20;
+    google.protobuf.Struct run = 22;
 }

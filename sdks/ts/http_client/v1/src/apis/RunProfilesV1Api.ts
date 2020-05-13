@@ -89,7 +89,7 @@ export interface UpdateRunProfileRequest {
 export class RunProfilesV1Api extends runtime.BaseAPI {
 
     /**
-     * Create hub component
+     * Create run profile
      */
     async createRunProfileRaw(requestParameters: CreateRunProfileRequest): Promise<runtime.ApiResponse<V1RunProfile>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -122,7 +122,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create hub component
+     * Create run profile
      */
     async createRunProfile(requestParameters: CreateRunProfileRequest): Promise<V1RunProfile> {
         const response = await this.createRunProfileRaw(requestParameters);
@@ -130,7 +130,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete hub component
+     * Delete run profile
      */
     async deleteRunProfileRaw(requestParameters: DeleteRunProfileRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -160,14 +160,14 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete hub component
+     * Delete run profile
      */
     async deleteRunProfile(requestParameters: DeleteRunProfileRequest): Promise<void> {
         await this.deleteRunProfileRaw(requestParameters);
     }
 
     /**
-     * Get hub component
+     * Get run profile
      */
     async getRunProfileRaw(requestParameters: GetRunProfileRequest): Promise<runtime.ApiResponse<V1RunProfile>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -197,7 +197,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get hub component
+     * Get run profile
      */
     async getRunProfile(requestParameters: GetRunProfileRequest): Promise<V1RunProfile> {
         const response = await this.getRunProfileRaw(requestParameters);
@@ -205,7 +205,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List hub component names
+     * List run profiles names
      */
     async listRunProfileNamesRaw(requestParameters: ListRunProfileNamesRequest): Promise<runtime.ApiResponse<V1ListRunProfilesResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -247,7 +247,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List hub component names
+     * List run profiles names
      */
     async listRunProfileNames(requestParameters: ListRunProfileNamesRequest): Promise<V1ListRunProfilesResponse> {
         const response = await this.listRunProfileNamesRaw(requestParameters);
@@ -255,7 +255,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List hub components
+     * List run profiles
      */
     async listRunProfilesRaw(requestParameters: ListRunProfilesRequest): Promise<runtime.ApiResponse<V1ListRunProfilesResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -297,7 +297,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List hub components
+     * List run profiles
      */
     async listRunProfiles(requestParameters: ListRunProfilesRequest): Promise<V1ListRunProfilesResponse> {
         const response = await this.listRunProfilesRaw(requestParameters);
@@ -305,7 +305,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch hub component
+     * Patch run profile
      */
     async patchRunProfileRaw(requestParameters: PatchRunProfileRequest): Promise<runtime.ApiResponse<V1RunProfile>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -342,7 +342,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch hub component
+     * Patch run profile
      */
     async patchRunProfile(requestParameters: PatchRunProfileRequest): Promise<V1RunProfile> {
         const response = await this.patchRunProfileRaw(requestParameters);
@@ -350,7 +350,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update hub component
+     * Update run profile
      */
     async updateRunProfileRaw(requestParameters: UpdateRunProfileRequest): Promise<runtime.ApiResponse<V1RunProfile>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -387,7 +387,7 @@ export class RunProfilesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update hub component
+     * Update run profile
      */
     async updateRunProfile(requestParameters: UpdateRunProfileRequest): Promise<V1RunProfile> {
         const response = await this.updateRunProfileRaw(requestParameters);

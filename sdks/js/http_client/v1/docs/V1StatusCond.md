@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **String** |  | [optional] [default to &#39;status&#39;]
+**kind** | **String** |  | [optional] 
 **operation** | **String** |  | [optional] 
 **trigger** | **String** |  | [optional] 
 

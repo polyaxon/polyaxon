@@ -79,9 +79,8 @@ class V1IoCond {
 
 /**
  * @member {String} kind
- * @default 'io'
  */
-V1IoCond.prototype['kind'] = 'io';
+V1IoCond.prototype['kind'] = undefined;
 
 /**
  * @member {String} param

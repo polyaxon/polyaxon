@@ -115,7 +115,7 @@ export interface UpdateQueueRequest {
 export class QueuesV1Api extends runtime.BaseAPI {
 
     /**
-     * Update agent
+     * Create queue
      */
     async createQueueRaw(requestParameters: CreateQueueRequest): Promise<runtime.ApiResponse<V1Agent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -152,7 +152,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update agent
+     * Create queue
      */
     async createQueue(requestParameters: CreateQueueRequest): Promise<V1Agent> {
         const response = await this.createQueueRaw(requestParameters);
@@ -160,7 +160,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Sync agent
+     * Delete queue
      */
     async deleteQueueRaw(requestParameters: DeleteQueueRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -194,14 +194,14 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Sync agent
+     * Delete queue
      */
     async deleteQueue(requestParameters: DeleteQueueRequest): Promise<void> {
         await this.deleteQueueRaw(requestParameters);
     }
 
     /**
-     * Patch agent
+     * Get queue
      */
     async getQueueRaw(requestParameters: GetQueueRequest): Promise<runtime.ApiResponse<V1Queue>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -235,7 +235,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch agent
+     * Get queue
      */
     async getQueue(requestParameters: GetQueueRequest): Promise<V1Queue> {
         const response = await this.getQueueRaw(requestParameters);
@@ -243,7 +243,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List agents names
+     * List organization level queues names
      */
     async listOrganizationQueueNamesRaw(requestParameters: ListOrganizationQueueNamesRequest): Promise<runtime.ApiResponse<V1ListQueuesResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -285,7 +285,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List agents names
+     * List organization level queues names
      */
     async listOrganizationQueueNames(requestParameters: ListOrganizationQueueNamesRequest): Promise<V1ListQueuesResponse> {
         const response = await this.listOrganizationQueueNamesRaw(requestParameters);
@@ -293,7 +293,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List agents
+     * List organization level queues
      */
     async listOrganizationQueuesRaw(requestParameters: ListOrganizationQueuesRequest): Promise<runtime.ApiResponse<V1ListQueuesResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -335,7 +335,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List agents
+     * List organization level queues
      */
     async listOrganizationQueues(requestParameters: ListOrganizationQueuesRequest): Promise<V1ListQueuesResponse> {
         const response = await this.listOrganizationQueuesRaw(requestParameters);
@@ -343,7 +343,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create agent
+     * List queues names
      */
     async listQueueNamesRaw(requestParameters: ListQueueNamesRequest): Promise<runtime.ApiResponse<V1ListQueuesResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -389,7 +389,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create agent
+     * List queues names
      */
     async listQueueNames(requestParameters: ListQueueNamesRequest): Promise<V1ListQueuesResponse> {
         const response = await this.listQueueNamesRaw(requestParameters);
@@ -397,7 +397,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get agent
+     * List queues
      */
     async listQueuesRaw(requestParameters: ListQueuesRequest): Promise<runtime.ApiResponse<V1ListQueuesResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -443,7 +443,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get agent
+     * List queues
      */
     async listQueues(requestParameters: ListQueuesRequest): Promise<V1ListQueuesResponse> {
         const response = await this.listQueuesRaw(requestParameters);
@@ -451,7 +451,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get State (queues/runs)
+     * Patch queue
      */
     async patchQueueRaw(requestParameters: PatchQueueRequest): Promise<runtime.ApiResponse<V1Queue>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -492,7 +492,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get State (queues/runs)
+     * Patch queue
      */
     async patchQueue(requestParameters: PatchQueueRequest): Promise<V1Queue> {
         const response = await this.patchQueueRaw(requestParameters);
@@ -500,7 +500,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete agent
+     * Update queue
      */
     async updateQueueRaw(requestParameters: UpdateQueueRequest): Promise<runtime.ApiResponse<V1Queue>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -541,7 +541,7 @@ export class QueuesV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete agent
+     * Update queue
      */
     async updateQueue(requestParameters: UpdateQueueRequest): Promise<V1Queue> {
         const response = await this.updateQueueRaw(requestParameters);

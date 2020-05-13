@@ -44,6 +44,9 @@ type V1CompiledOperation struct {
 	// Optional component description
 	Description string `json:"description,omitempty"`
 
+	// Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+	Events []interface{} `json:"events"`
+
 	// Optional inputs definition
 	Inputs []*V1IO `json:"inputs"`
 

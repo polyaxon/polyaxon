@@ -140,7 +140,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Create run profile
+     * Create agent
      * 
      * @param owner Owner of the namespace (required)
      * @param body Agent body (required)
@@ -162,7 +162,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Create run profile
+     * Create agent
      * 
      * @param owner Owner of the namespace (required)
      * @param body Agent body (required)
@@ -185,7 +185,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Create run profile (asynchronously)
+     * Create agent (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Agent body (required)
@@ -283,7 +283,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * 
+     * Create new run status
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -306,7 +306,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * 
+     * Create new run status
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -330,7 +330,7 @@ public class AgentsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Create new run status (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -423,7 +423,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Delete run profile
+     * Delete agent
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -443,7 +443,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Delete run profile
+     * Delete agent
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -465,7 +465,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Delete run profile (asynchronously)
+     * Delete agent (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -556,7 +556,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Get run profile
+     * Get agent
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -578,7 +578,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Get run profile
+     * Get agent
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -601,7 +601,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Get run profile (asynchronously)
+     * Get agent (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -693,7 +693,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * 
+     * Get State (queues/runs)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -715,7 +715,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * 
+     * Get State (queues/runs)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -738,7 +738,7 @@ public class AgentsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Get State (queues/runs) (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -830,7 +830,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * 
+     * Get agent status
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -852,7 +852,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * 
+     * Get agent status
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -875,7 +875,7 @@ public class AgentsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Get agent status (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -980,7 +980,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * List run profiles names
+     * List agents names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1005,7 +1005,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * List run profiles names
+     * List agents names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1031,7 +1031,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * List run profiles names (asynchronously)
+     * List agents names (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1139,7 +1139,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * List run profiles
+     * List agents
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1164,7 +1164,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * List run profiles
+     * List agents
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1190,7 +1190,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * List run profiles (asynchronously)
+     * List agents (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1291,7 +1291,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Patch run profile
+     * Patch agent
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
@@ -1314,7 +1314,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Patch run profile
+     * Patch agent
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
@@ -1338,7 +1338,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Patch run profile (asynchronously)
+     * Patch agent (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
@@ -1437,7 +1437,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * 
+     * Sync agent
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
@@ -1458,7 +1458,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * 
+     * Sync agent
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
@@ -1481,7 +1481,7 @@ public class AgentsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Sync agent (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
@@ -1579,7 +1579,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Update run profile
+     * Update agent
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
@@ -1602,7 +1602,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Update run profile
+     * Update agent
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
@@ -1626,7 +1626,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Update run profile (asynchronously)
+     * Update agent (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)

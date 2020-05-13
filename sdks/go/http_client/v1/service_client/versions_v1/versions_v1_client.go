@@ -47,7 +47,7 @@ type ClientService interface {
 }
 
 /*
-  GetLogHandler updates current user
+  GetLogHandler gets log handler
 */
 func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -83,7 +83,7 @@ func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.Cli
 }
 
 /*
-  GetVersions gets current user
+  GetVersions gets versions
 */
 func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, *GetVersionsNoContent, error) {
 	// TODO: Validate the params before sending

@@ -61,7 +61,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * Update agent
+     * Create queue
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent that consumes the queue
      * @param {module:model/V1Queue} body Queue body
@@ -114,7 +114,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * Sync agent
+     * Delete queue
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent managing the resource
      * @param {String} uuid Uuid identifier of the entity
@@ -167,7 +167,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * Patch agent
+     * Get queue
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent managing the resource
      * @param {String} uuid Uuid identifier of the entity
@@ -221,7 +221,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * List agents names
+     * List organization level queues names
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -273,7 +273,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * List agents
+     * List organization level queues
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -325,7 +325,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * Create agent
+     * List queues names
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent man managing the resource
      * @param {Object} opts Optional parameters
@@ -383,7 +383,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * Get agent
+     * List queues
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent man managing the resource
      * @param {Object} opts Optional parameters
@@ -441,7 +441,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * Get State (queues/runs)
+     * Patch queue
      * @param {String} owner Owner of the namespace
      * @param {String} queue_agent Agent
      * @param {String} queue_uuid UUID
@@ -500,7 +500,7 @@ export default class QueuesV1Api {
      */
 
     /**
-     * Delete agent
+     * Update queue
      * @param {String} owner Owner of the namespace
      * @param {String} queue_agent Agent
      * @param {String} queue_uuid UUID

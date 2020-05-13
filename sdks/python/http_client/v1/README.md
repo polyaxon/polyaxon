@@ -92,19 +92,19 @@ Class | Method | HTTP request | Description
 *AccessResourcesV1Api* | [**list_access_resources**](docs/AccessResourcesV1Api.md#list_access_resources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
 *AccessResourcesV1Api* | [**patch_access_resource**](docs/AccessResourcesV1Api.md#patch_access_resource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
 *AccessResourcesV1Api* | [**update_access_resource**](docs/AccessResourcesV1Api.md#update_access_resource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
-*AgentsV1Api* | [**create_agent**](docs/AgentsV1Api.md#create_agent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
-*AgentsV1Api* | [**create_agent_status**](docs/AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-*AgentsV1Api* | [**delete_agent**](docs/AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
-*AgentsV1Api* | [**get_agent**](docs/AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
-*AgentsV1Api* | [**get_agent_state**](docs/AgentsV1Api.md#get_agent_state) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
-*AgentsV1Api* | [**get_agent_statuses**](docs/AgentsV1Api.md#get_agent_statuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-*AgentsV1Api* | [**list_agent_names**](docs/AgentsV1Api.md#list_agent_names) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
-*AgentsV1Api* | [**list_agents**](docs/AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
-*AgentsV1Api* | [**patch_agent**](docs/AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
-*AgentsV1Api* | [**sync_agent**](docs/AgentsV1Api.md#sync_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
-*AgentsV1Api* | [**update_agent**](docs/AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
+*AgentsV1Api* | [**create_agent**](docs/AgentsV1Api.md#create_agent) | **POST** /api/v1/orgs/{owner}/agents | Create agent
+*AgentsV1Api* | [**create_agent_status**](docs/AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new run status
+*AgentsV1Api* | [**delete_agent**](docs/AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete agent
+*AgentsV1Api* | [**get_agent**](docs/AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
+*AgentsV1Api* | [**get_agent_state**](docs/AgentsV1Api.md#get_agent_state) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
+*AgentsV1Api* | [**get_agent_statuses**](docs/AgentsV1Api.md#get_agent_statuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
+*AgentsV1Api* | [**list_agent_names**](docs/AgentsV1Api.md#list_agent_names) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
+*AgentsV1Api* | [**list_agents**](docs/AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List agents
+*AgentsV1Api* | [**patch_agent**](docs/AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch agent
+*AgentsV1Api* | [**sync_agent**](docs/AgentsV1Api.md#sync_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | Sync agent
+*AgentsV1Api* | [**update_agent**](docs/AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update agent
 *ArtifactsStoresV1Api* | [**upload_artifact**](docs/ArtifactsStoresV1Api.md#upload_artifact) | **POST** /api/v1/catalogs/{owner}/artifacts/{uuid}/upload | Upload artifact to a store
-*AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List organization level queues names
+*AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | Login
 *ConnectionsV1Api* | [**create_connection**](docs/ConnectionsV1Api.md#create_connection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
 *ConnectionsV1Api* | [**delete_connection**](docs/ConnectionsV1Api.md#delete_connection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
 *ConnectionsV1Api* | [**get_connection**](docs/ConnectionsV1Api.md#get_connection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
@@ -112,40 +112,40 @@ Class | Method | HTTP request | Description
 *ConnectionsV1Api* | [**list_connections**](docs/ConnectionsV1Api.md#list_connections) | **GET** /api/v1/orgs/{owner}/connections | List connections
 *ConnectionsV1Api* | [**patch_connection**](docs/ConnectionsV1Api.md#patch_connection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
 *ConnectionsV1Api* | [**update_connection**](docs/ConnectionsV1Api.md#update_connection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
-*DashboardsV1Api* | [**create_dashboard**](docs/DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
-*DashboardsV1Api* | [**delete_dashboard**](docs/DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-*DashboardsV1Api* | [**get_dashboard**](docs/DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-*DashboardsV1Api* | [**list_dashboard_names**](docs/DashboardsV1Api.md#list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
-*DashboardsV1Api* | [**list_dashboards**](docs/DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
-*DashboardsV1Api* | [**patch_dashboard**](docs/DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
-*DashboardsV1Api* | [**update_dashboard**](docs/DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
-*HubComponentsV1Api* | [**create_hub_component**](docs/HubComponentsV1Api.md#create_hub_component) | **POST** /api/v1/orgs/{owner}/components | Create hub model
-*HubComponentsV1Api* | [**delete_hub_component**](docs/HubComponentsV1Api.md#delete_hub_component) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
-*HubComponentsV1Api* | [**get_hub_component**](docs/HubComponentsV1Api.md#get_hub_component) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
-*HubComponentsV1Api* | [**list_hub_componebt_names**](docs/HubComponentsV1Api.md#list_hub_componebt_names) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
-*HubComponentsV1Api* | [**list_hub_components**](docs/HubComponentsV1Api.md#list_hub_components) | **GET** /api/v1/orgs/{owner}/components | List hub models
-*HubComponentsV1Api* | [**patch_hub_component**](docs/HubComponentsV1Api.md#patch_hub_component) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
-*HubComponentsV1Api* | [**update_hub_component**](docs/HubComponentsV1Api.md#update_hub_component) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
-*HubModelsV1Api* | [**create_hub_model**](docs/HubModelsV1Api.md#create_hub_model) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
-*HubModelsV1Api* | [**delete_hub_model**](docs/HubModelsV1Api.md#delete_hub_model) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
-*HubModelsV1Api* | [**get_hub_model**](docs/HubModelsV1Api.md#get_hub_model) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
-*HubModelsV1Api* | [**list_hub_model_names**](docs/HubModelsV1Api.md#list_hub_model_names) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
-*HubModelsV1Api* | [**list_hub_models**](docs/HubModelsV1Api.md#list_hub_models) | **GET** /api/v1/orgs/{owner}/models | List dashboards
-*HubModelsV1Api* | [**patch_hub_model**](docs/HubModelsV1Api.md#patch_hub_model) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
-*HubModelsV1Api* | [**update_hub_model**](docs/HubModelsV1Api.md#update_hub_model) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
-*OrganizationsV1Api* | [**create_organization**](docs/OrganizationsV1Api.md#create_organization) | **POST** /api/v1/orgs/create | 
-*OrganizationsV1Api* | [**create_organization_member**](docs/OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | 
-*OrganizationsV1Api* | [**delete_organization**](docs/OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | 
-*OrganizationsV1Api* | [**delete_organization_member**](docs/OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
-*OrganizationsV1Api* | [**get_organization**](docs/OrganizationsV1Api.md#get_organization) | **GET** /api/v1/orgs/{owner} | 
-*OrganizationsV1Api* | [**get_organization_member**](docs/OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | 
-*OrganizationsV1Api* | [**list_organization_members**](docs/OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | 
-*OrganizationsV1Api* | [**list_organization_names**](docs/OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/orgs/names | Get versions
-*OrganizationsV1Api* | [**list_organizations**](docs/OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/orgs/list | Get log handler
-*OrganizationsV1Api* | [**patch_organization**](docs/OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/orgs/{owner} | 
-*OrganizationsV1Api* | [**patch_organization_member**](docs/OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
-*OrganizationsV1Api* | [**update_organization**](docs/OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/orgs/{owner} | 
-*OrganizationsV1Api* | [**update_organization_member**](docs/OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
+*DashboardsV1Api* | [**create_dashboard**](docs/DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | Create dashboard
+*DashboardsV1Api* | [**delete_dashboard**](docs/DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Delete dashboard
+*DashboardsV1Api* | [**get_dashboard**](docs/DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Get dashboard
+*DashboardsV1Api* | [**list_dashboard_names**](docs/DashboardsV1Api.md#list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | List dashboard names
+*DashboardsV1Api* | [**list_dashboards**](docs/DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List dashboards
+*DashboardsV1Api* | [**patch_dashboard**](docs/DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Patch dashboard
+*DashboardsV1Api* | [**update_dashboard**](docs/DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update dashboard
+*HubComponentsV1Api* | [**create_hub_component**](docs/HubComponentsV1Api.md#create_hub_component) | **POST** /api/v1/orgs/{owner}/components | Create hub component
+*HubComponentsV1Api* | [**delete_hub_component**](docs/HubComponentsV1Api.md#delete_hub_component) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
+*HubComponentsV1Api* | [**get_hub_component**](docs/HubComponentsV1Api.md#get_hub_component) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub component
+*HubComponentsV1Api* | [**list_hub_componebt_names**](docs/HubComponentsV1Api.md#list_hub_componebt_names) | **GET** /api/v1/orgs/{owner}/components/names | List hub component names
+*HubComponentsV1Api* | [**list_hub_components**](docs/HubComponentsV1Api.md#list_hub_components) | **GET** /api/v1/orgs/{owner}/components | List hub components
+*HubComponentsV1Api* | [**patch_hub_component**](docs/HubComponentsV1Api.md#patch_hub_component) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub component
+*HubComponentsV1Api* | [**update_hub_component**](docs/HubComponentsV1Api.md#update_hub_component) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub component
+*HubModelsV1Api* | [**create_hub_model**](docs/HubModelsV1Api.md#create_hub_model) | **POST** /api/v1/orgs/{owner}/models | Create hub model
+*HubModelsV1Api* | [**delete_hub_model**](docs/HubModelsV1Api.md#delete_hub_model) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete hub model
+*HubModelsV1Api* | [**get_hub_model**](docs/HubModelsV1Api.md#get_hub_model) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get hub model
+*HubModelsV1Api* | [**list_hub_model_names**](docs/HubModelsV1Api.md#list_hub_model_names) | **GET** /api/v1/orgs/{owner}/models/names | List hub model names
+*HubModelsV1Api* | [**list_hub_models**](docs/HubModelsV1Api.md#list_hub_models) | **GET** /api/v1/orgs/{owner}/models | List hub models
+*HubModelsV1Api* | [**patch_hub_model**](docs/HubModelsV1Api.md#patch_hub_model) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch hub model
+*HubModelsV1Api* | [**update_hub_model**](docs/HubModelsV1Api.md#update_hub_model) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update hub model
+*OrganizationsV1Api* | [**create_organization**](docs/OrganizationsV1Api.md#create_organization) | **POST** /api/v1/orgs/create | Create organization
+*OrganizationsV1Api* | [**create_organization_member**](docs/OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | Create organization member
+*OrganizationsV1Api* | [**delete_organization**](docs/OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
+*OrganizationsV1Api* | [**delete_organization_member**](docs/OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
+*OrganizationsV1Api* | [**get_organization**](docs/OrganizationsV1Api.md#get_organization) | **GET** /api/v1/orgs/{owner} | Get organization
+*OrganizationsV1Api* | [**get_organization_member**](docs/OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
+*OrganizationsV1Api* | [**list_organization_members**](docs/OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | Get organization members
+*OrganizationsV1Api* | [**list_organization_names**](docs/OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/orgs/names | List organizations names
+*OrganizationsV1Api* | [**list_organizations**](docs/OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/orgs/list | List organizations
+*OrganizationsV1Api* | [**patch_organization**](docs/OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/orgs/{owner} | Patch organization
+*OrganizationsV1Api* | [**patch_organization_member**](docs/OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
+*OrganizationsV1Api* | [**update_organization**](docs/OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/orgs/{owner} | Update organization
+*OrganizationsV1Api* | [**update_organization_member**](docs/OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Update organization member
 *ProjectDashboardsV1Api* | [**create_project_dashboard**](docs/ProjectDashboardsV1Api.md#create_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
 *ProjectDashboardsV1Api* | [**delete_project_dashboard**](docs/ProjectDashboardsV1Api.md#delete_project_dashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
 *ProjectDashboardsV1Api* | [**get_project_dashboard**](docs/ProjectDashboardsV1Api.md#get_project_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
@@ -184,22 +184,22 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**update_project_settings**](docs/ProjectsV1Api.md#update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
 *ProjectsV1Api* | [**update_project_teams**](docs/ProjectsV1Api.md#update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
 *ProjectsV1Api* | [**upload_project_artifact**](docs/ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
-*QueuesV1Api* | [**create_queue**](docs/QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
-*QueuesV1Api* | [**delete_queue**](docs/QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
-*QueuesV1Api* | [**get_queue**](docs/QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
-*QueuesV1Api* | [**list_organization_queue_names**](docs/QueuesV1Api.md#list_organization_queue_names) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
-*QueuesV1Api* | [**list_organization_queues**](docs/QueuesV1Api.md#list_organization_queues) | **GET** /api/v1/orgs/{owner}/queues | List agents
-*QueuesV1Api* | [**list_queue_names**](docs/QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
-*QueuesV1Api* | [**list_queues**](docs/QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
-*QueuesV1Api* | [**patch_queue**](docs/QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
-*QueuesV1Api* | [**update_queue**](docs/QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
-*RunProfilesV1Api* | [**create_run_profile**](docs/RunProfilesV1Api.md#create_run_profile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
-*RunProfilesV1Api* | [**delete_run_profile**](docs/RunProfilesV1Api.md#delete_run_profile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
-*RunProfilesV1Api* | [**get_run_profile**](docs/RunProfilesV1Api.md#get_run_profile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
-*RunProfilesV1Api* | [**list_run_profile_names**](docs/RunProfilesV1Api.md#list_run_profile_names) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
-*RunProfilesV1Api* | [**list_run_profiles**](docs/RunProfilesV1Api.md#list_run_profiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
-*RunProfilesV1Api* | [**patch_run_profile**](docs/RunProfilesV1Api.md#patch_run_profile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
-*RunProfilesV1Api* | [**update_run_profile**](docs/RunProfilesV1Api.md#update_run_profile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
+*QueuesV1Api* | [**create_queue**](docs/QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Create queue
+*QueuesV1Api* | [**delete_queue**](docs/QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete queue
+*QueuesV1Api* | [**get_queue**](docs/QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Get queue
+*QueuesV1Api* | [**list_organization_queue_names**](docs/QueuesV1Api.md#list_organization_queue_names) | **GET** /api/v1/orgs/{owner}/queues/names | List organization level queues names
+*QueuesV1Api* | [**list_organization_queues**](docs/QueuesV1Api.md#list_organization_queues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
+*QueuesV1Api* | [**list_queue_names**](docs/QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
+*QueuesV1Api* | [**list_queues**](docs/QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
+*QueuesV1Api* | [**patch_queue**](docs/QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch queue
+*QueuesV1Api* | [**update_queue**](docs/QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update queue
+*RunProfilesV1Api* | [**create_run_profile**](docs/RunProfilesV1Api.md#create_run_profile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create run profile
+*RunProfilesV1Api* | [**delete_run_profile**](docs/RunProfilesV1Api.md#delete_run_profile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete run profile
+*RunProfilesV1Api* | [**get_run_profile**](docs/RunProfilesV1Api.md#get_run_profile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get run profile
+*RunProfilesV1Api* | [**list_run_profile_names**](docs/RunProfilesV1Api.md#list_run_profile_names) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List run profiles names
+*RunProfilesV1Api* | [**list_run_profiles**](docs/RunProfilesV1Api.md#list_run_profiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List run profiles
+*RunProfilesV1Api* | [**patch_run_profile**](docs/RunProfilesV1Api.md#patch_run_profile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch run profile
+*RunProfilesV1Api* | [**update_run_profile**](docs/RunProfilesV1Api.md#update_run_profile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update run profile
 *RunsV1Api* | [**archive_run**](docs/RunsV1Api.md#archive_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 *RunsV1Api* | [**bookmark_run**](docs/RunsV1Api.md#bookmark_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 *RunsV1Api* | [**bookmark_runs**](docs/RunsV1Api.md#bookmark_runs) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
@@ -247,7 +247,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**update_run**](docs/RunsV1Api.md#update_run) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *RunsV1Api* | [**upload_run_artifact**](docs/RunsV1Api.md#upload_run_artifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
 *RunsV1Api* | [**upload_run_logs**](docs/RunsV1Api.md#upload_run_logs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
-*SchemasV1Api* | [**no_op**](docs/SchemasV1Api.md#no_op) | **GET** /schemas | List teams names
+*SchemasV1Api* | [**no_op**](docs/SchemasV1Api.md#no_op) | **GET** /schemas | Get random
 *SearchesV1Api* | [**create_search**](docs/SearchesV1Api.md#create_search) | **POST** /api/v1/orgs/{owner}/searches | Create search
 *SearchesV1Api* | [**delete_search**](docs/SearchesV1Api.md#delete_search) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
 *SearchesV1Api* | [**get_search**](docs/SearchesV1Api.md#get_search) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
@@ -255,24 +255,24 @@ Class | Method | HTTP request | Description
 *SearchesV1Api* | [**list_searches**](docs/SearchesV1Api.md#list_searches) | **GET** /api/v1/orgs/{owner}/searches | List searches
 *SearchesV1Api* | [**patch_search**](docs/SearchesV1Api.md#patch_search) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
 *SearchesV1Api* | [**update_search**](docs/SearchesV1Api.md#update_search) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
-*TeamsV1Api* | [**create_team**](docs/TeamsV1Api.md#create_team) | **POST** /api/v1/orgs/{owner}/teams | Create organization
-*TeamsV1Api* | [**create_team_member**](docs/TeamsV1Api.md#create_team_member) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
-*TeamsV1Api* | [**delete_team**](docs/TeamsV1Api.md#delete_team) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
-*TeamsV1Api* | [**delete_team_member**](docs/TeamsV1Api.md#delete_team_member) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
-*TeamsV1Api* | [**get_team**](docs/TeamsV1Api.md#get_team) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
-*TeamsV1Api* | [**get_team_member**](docs/TeamsV1Api.md#get_team_member) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
-*TeamsV1Api* | [**list_team_members**](docs/TeamsV1Api.md#list_team_members) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
-*TeamsV1Api* | [**list_team_names**](docs/TeamsV1Api.md#list_team_names) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
-*TeamsV1Api* | [**list_teams**](docs/TeamsV1Api.md#list_teams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
-*TeamsV1Api* | [**patch_team**](docs/TeamsV1Api.md#patch_team) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
-*TeamsV1Api* | [**patch_team_member**](docs/TeamsV1Api.md#patch_team_member) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
-*TeamsV1Api* | [**update_team**](docs/TeamsV1Api.md#update_team) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
-*TeamsV1Api* | [**update_team_member**](docs/TeamsV1Api.md#update_team_member) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
-*UsersV1Api* | [**get_user**](docs/UsersV1Api.md#get_user) | **GET** /api/v1/users | Login
-*UsersV1Api* | [**patch_user**](docs/UsersV1Api.md#patch_user) | **PATCH** /api/v1/users | 
-*UsersV1Api* | [**update_user**](docs/UsersV1Api.md#update_user) | **PUT** /api/v1/users | 
-*VersionsV1Api* | [**get_log_handler**](docs/VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | Update current user
-*VersionsV1Api* | [**get_versions**](docs/VersionsV1Api.md#get_versions) | **GET** /api/v1/version | Get current user
+*TeamsV1Api* | [**create_team**](docs/TeamsV1Api.md#create_team) | **POST** /api/v1/orgs/{owner}/teams | Create team
+*TeamsV1Api* | [**create_team_member**](docs/TeamsV1Api.md#create_team_member) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create team member
+*TeamsV1Api* | [**delete_team**](docs/TeamsV1Api.md#delete_team) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete team
+*TeamsV1Api* | [**delete_team_member**](docs/TeamsV1Api.md#delete_team_member) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete team member details
+*TeamsV1Api* | [**get_team**](docs/TeamsV1Api.md#get_team) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get team
+*TeamsV1Api* | [**get_team_member**](docs/TeamsV1Api.md#get_team_member) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get team member details
+*TeamsV1Api* | [**list_team_members**](docs/TeamsV1Api.md#list_team_members) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get team members
+*TeamsV1Api* | [**list_team_names**](docs/TeamsV1Api.md#list_team_names) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
+*TeamsV1Api* | [**list_teams**](docs/TeamsV1Api.md#list_teams) | **GET** /api/v1/orgs/{owner}/teams | List teams
+*TeamsV1Api* | [**patch_team**](docs/TeamsV1Api.md#patch_team) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
+*TeamsV1Api* | [**patch_team_member**](docs/TeamsV1Api.md#patch_team_member) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch tram member
+*TeamsV1Api* | [**update_team**](docs/TeamsV1Api.md#update_team) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update team
+*TeamsV1Api* | [**update_team_member**](docs/TeamsV1Api.md#update_team_member) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update team member
+*UsersV1Api* | [**get_user**](docs/UsersV1Api.md#get_user) | **GET** /api/v1/users | Get current user
+*UsersV1Api* | [**patch_user**](docs/UsersV1Api.md#patch_user) | **PATCH** /api/v1/users | Patch current user
+*UsersV1Api* | [**update_user**](docs/UsersV1Api.md#update_user) | **PUT** /api/v1/users | Update current user
+*VersionsV1Api* | [**get_log_handler**](docs/VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | Get log handler
+*VersionsV1Api* | [**get_versions**](docs/VersionsV1Api.md#get_versions) | **GET** /api/v1/version | Get versions
 
 
 ## Documentation For Models
@@ -310,7 +310,7 @@ Class | Method | HTTP request | Description
  - [V1Credentials](docs/V1Credentials.md)
  - [V1CronSchedule](docs/V1CronSchedule.md)
  - [V1Dag](docs/V1Dag.md)
- - [V1DagReference](docs/V1DagReference.md)
+ - [V1DagRef](docs/V1DagRef.md)
  - [V1Dashboard](docs/V1Dashboard.md)
  - [V1Dask](docs/V1Dask.md)
  - [V1DiffStoppingPolicy](docs/V1DiffStoppingPolicy.md)
@@ -359,7 +359,7 @@ Class | Method | HTTP request | Description
  - [V1HpUniform](docs/V1HpUniform.md)
  - [V1HubComponent](docs/V1HubComponent.md)
  - [V1HubModel](docs/V1HubModel.md)
- - [V1HubReference](docs/V1HubReference.md)
+ - [V1HubRef](docs/V1HubRef.md)
  - [V1Hyperband](docs/V1Hyperband.md)
  - [V1Hyperopt](docs/V1Hyperopt.md)
  - [V1HyperoptAlgorithms](docs/V1HyperoptAlgorithms.md)
@@ -424,7 +424,7 @@ Class | Method | HTTP request | Description
  - [V1ParallelKind](docs/V1ParallelKind.md)
  - [V1Param](docs/V1Param.md)
  - [V1ParamSearch](docs/V1ParamSearch.md)
- - [V1PathReference](docs/V1PathReference.md)
+ - [V1PathRef](docs/V1PathRef.md)
  - [V1Pipeline](docs/V1Pipeline.md)
  - [V1PipelineKind](docs/V1PipelineKind.md)
  - [V1Plugins](docs/V1Plugins.md)
@@ -469,7 +469,7 @@ Class | Method | HTTP request | Description
  - [V1TriggerPolicy](docs/V1TriggerPolicy.md)
  - [V1TruncationStoppingPolicy](docs/V1TruncationStoppingPolicy.md)
  - [V1UriType](docs/V1UriType.md)
- - [V1UrlReference](docs/V1UrlReference.md)
+ - [V1UrlRef](docs/V1UrlRef.md)
  - [V1User](docs/V1User.md)
  - [V1Uuids](docs/V1Uuids.md)
  - [V1Version](docs/V1Version.md)

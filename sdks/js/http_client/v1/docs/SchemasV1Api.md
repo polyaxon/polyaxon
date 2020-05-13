@@ -6,7 +6,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | List teams names
+[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | Get random
 
 
 
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 > V1Schemas noOp()
 
-List teams names
+Get random
 
 ### Example
 

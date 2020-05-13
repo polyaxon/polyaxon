@@ -5,23 +5,23 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_agent**](AgentsV1Api.md#create_agent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
-[**create_agent_status**](AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**delete_agent**](AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
-[**get_agent**](AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
-[**get_agent_state**](AgentsV1Api.md#get_agent_state) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
-[**get_agent_statuses**](AgentsV1Api.md#get_agent_statuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**list_agent_names**](AgentsV1Api.md#list_agent_names) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
-[**list_agents**](AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
-[**patch_agent**](AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
-[**sync_agent**](AgentsV1Api.md#sync_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
-[**update_agent**](AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
+[**create_agent**](AgentsV1Api.md#create_agent) | **POST** /api/v1/orgs/{owner}/agents | Create agent
+[**create_agent_status**](AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new run status
+[**delete_agent**](AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete agent
+[**get_agent**](AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
+[**get_agent_state**](AgentsV1Api.md#get_agent_state) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
+[**get_agent_statuses**](AgentsV1Api.md#get_agent_statuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
+[**list_agent_names**](AgentsV1Api.md#list_agent_names) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
+[**list_agents**](AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List agents
+[**patch_agent**](AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch agent
+[**sync_agent**](AgentsV1Api.md#sync_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | Sync agent
+[**update_agent**](AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update agent
 
 
 # **create_agent**
 > V1Agent create_agent(owner, body)
 
-Create run profile
+Create agent
 
 ### Example
 
@@ -49,7 +49,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
     try:
-        # Create run profile
+        # Create agent
         api_response = api_instance.create_agent(owner, body)
         pprint(api_response)
     except ApiException as e:
@@ -90,7 +90,7 @@ Name | Type | Description  | Notes
 # **create_agent_status**
 > V1Status create_agent_status(owner, uuid, body)
 
-
+Create new run status
 
 ### Example
 
@@ -119,6 +119,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1AgentStatusBodyRequest() # V1AgentStatusBodyRequest | 
 
     try:
+        # Create new run status
         api_response = api_instance.create_agent_status(owner, uuid, body)
         pprint(api_response)
     except ApiException as e:
@@ -160,7 +161,7 @@ Name | Type | Description  | Notes
 # **delete_agent**
 > delete_agent(owner, uuid)
 
-Delete run profile
+Delete agent
 
 ### Example
 
@@ -188,7 +189,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
-        # Delete run profile
+        # Delete agent
         api_instance.delete_agent(owner, uuid)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->delete_agent: %s\n" % e)
@@ -228,7 +229,7 @@ void (empty response body)
 # **get_agent**
 > V1Agent get_agent(owner, uuid)
 
-Get run profile
+Get agent
 
 ### Example
 
@@ -256,7 +257,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
-        # Get run profile
+        # Get agent
         api_response = api_instance.get_agent(owner, uuid)
         pprint(api_response)
     except ApiException as e:
@@ -297,7 +298,7 @@ Name | Type | Description  | Notes
 # **get_agent_state**
 > V1AgentStateResponse get_agent_state(owner, uuid)
 
-
+Get State (queues/runs)
 
 ### Example
 
@@ -325,6 +326,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
+        # Get State (queues/runs)
         api_response = api_instance.get_agent_state(owner, uuid)
         pprint(api_response)
     except ApiException as e:
@@ -365,7 +367,7 @@ Name | Type | Description  | Notes
 # **get_agent_statuses**
 > V1Status get_agent_statuses(owner, uuid)
 
-
+Get agent status
 
 ### Example
 
@@ -393,6 +395,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
+        # Get agent status
         api_response = api_instance.get_agent_statuses(owner, uuid)
         pprint(api_response)
     except ApiException as e:
@@ -433,7 +436,7 @@ Name | Type | Description  | Notes
 # **list_agent_names**
 > V1ListAgentsResponse list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List run profiles names
+List agents names
 
 ### Example
 
@@ -464,7 +467,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
-        # List run profiles names
+        # List agents names
         api_response = api_instance.list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
@@ -508,7 +511,7 @@ Name | Type | Description  | Notes
 # **list_agents**
 > V1ListAgentsResponse list_agents(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List run profiles
+List agents
 
 ### Example
 
@@ -539,7 +542,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
-        # List run profiles
+        # List agents
         api_response = api_instance.list_agents(owner, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
@@ -583,7 +586,7 @@ Name | Type | Description  | Notes
 # **patch_agent**
 > V1Agent patch_agent(owner, agent_uuid, body)
 
-Patch run profile
+Patch agent
 
 ### Example
 
@@ -612,7 +615,7 @@ agent_uuid = 'agent_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
     try:
-        # Patch run profile
+        # Patch agent
         api_response = api_instance.patch_agent(owner, agent_uuid, body)
         pprint(api_response)
     except ApiException as e:
@@ -654,7 +657,7 @@ Name | Type | Description  | Notes
 # **sync_agent**
 > sync_agent(owner, agent_uuid, body)
 
-
+Sync agent
 
 ### Example
 
@@ -683,6 +686,7 @@ agent_uuid = 'agent_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
     try:
+        # Sync agent
         api_instance.sync_agent(owner, agent_uuid, body)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->sync_agent: %s\n" % e)
@@ -723,7 +727,7 @@ void (empty response body)
 # **update_agent**
 > V1Agent update_agent(owner, agent_uuid, body)
 
-Update run profile
+Update agent
 
 ### Example
 
@@ -752,7 +756,7 @@ agent_uuid = 'agent_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
     try:
-        # Update run profile
+        # Update agent
         api_response = api_instance.update_agent(owner, agent_uuid, body)
         pprint(api_response)
     except ApiException as e:

@@ -43,7 +43,7 @@ import {
 export class SchemasV1Api extends runtime.BaseAPI {
 
     /**
-     * List teams names
+     * Get random
      */
     async noOpRaw(): Promise<runtime.ApiResponse<V1Schemas>> {
         const queryParameters: runtime.HTTPQuery = {};
@@ -65,7 +65,7 @@ export class SchemasV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List teams names
+     * Get random
      */
     async noOp(): Promise<V1Schemas> {
         const response = await this.noOpRaw();

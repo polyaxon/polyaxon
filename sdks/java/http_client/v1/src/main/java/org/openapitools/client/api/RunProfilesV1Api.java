@@ -137,7 +137,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Create hub component
+     * Create run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param body Artifact store body (required)
@@ -159,7 +159,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Create hub component
+     * Create run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param body Artifact store body (required)
@@ -182,7 +182,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Create hub component (asynchronously)
+     * Create run profile (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Artifact store body (required)
@@ -274,7 +274,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Delete hub component
+     * Delete run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -294,7 +294,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Delete hub component
+     * Delete run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -316,7 +316,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Delete hub component (asynchronously)
+     * Delete run profile (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -407,7 +407,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Get hub component
+     * Get run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -429,7 +429,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Get hub component
+     * Get run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -452,7 +452,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Get hub component (asynchronously)
+     * Get run profile (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -557,7 +557,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * List hub component names
+     * List run profiles names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -582,7 +582,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * List hub component names
+     * List run profiles names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -608,7 +608,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * List hub component names (asynchronously)
+     * List run profiles names (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -716,7 +716,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * List hub components
+     * List run profiles
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -741,7 +741,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * List hub components
+     * List run profiles
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -767,7 +767,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * List hub components (asynchronously)
+     * List run profiles (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -868,7 +868,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Patch hub component
+     * Patch run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param runProfileUuid UUID (required)
@@ -891,7 +891,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Patch hub component
+     * Patch run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param runProfileUuid UUID (required)
@@ -915,7 +915,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Patch hub component (asynchronously)
+     * Patch run profile (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param runProfileUuid UUID (required)
@@ -1014,7 +1014,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Update hub component
+     * Update run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param runProfileUuid UUID (required)
@@ -1037,7 +1037,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Update hub component
+     * Update run profile
      * 
      * @param owner Owner of the namespace (required)
      * @param runProfileUuid UUID (required)
@@ -1061,7 +1061,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Update hub component (asynchronously)
+     * Update run profile (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param runProfileUuid UUID (required)

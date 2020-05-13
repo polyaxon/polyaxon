@@ -96,6 +96,9 @@ class V1CompiledOperation {
             if (data.hasOwnProperty('schedule')) {
                 obj['schedule'] = ApiClient.convertToType(data['schedule'], Object);
             }
+            if (data.hasOwnProperty('events')) {
+                obj['events'] = ApiClient.convertToType(data['events'], [Object]);
+            }
             if (data.hasOwnProperty('parallel')) {
                 obj['parallel'] = ApiClient.convertToType(data['parallel'], Object);
             }
@@ -182,6 +185,11 @@ V1CompiledOperation.prototype['cache'] = undefined;
  * @member {Object} schedule
  */
 V1CompiledOperation.prototype['schedule'] = undefined;
+
+/**
+ * @member {Array.<Object>} events
+ */
+V1CompiledOperation.prototype['events'] = undefined;
 
 /**
  * @member {Object} parallel

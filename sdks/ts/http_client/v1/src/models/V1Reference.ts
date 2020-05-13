@@ -28,22 +28,22 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    V1DagReference,
-    V1DagReferenceFromJSON,
-    V1DagReferenceFromJSONTyped,
-    V1DagReferenceToJSON,
-    V1HubReference,
-    V1HubReferenceFromJSON,
-    V1HubReferenceFromJSONTyped,
-    V1HubReferenceToJSON,
-    V1PathReference,
-    V1PathReferenceFromJSON,
-    V1PathReferenceFromJSONTyped,
-    V1PathReferenceToJSON,
-    V1UrlReference,
-    V1UrlReferenceFromJSON,
-    V1UrlReferenceFromJSONTyped,
-    V1UrlReferenceToJSON,
+    V1DagRef,
+    V1DagRefFromJSON,
+    V1DagRefFromJSONTyped,
+    V1DagRefToJSON,
+    V1HubRef,
+    V1HubRefFromJSON,
+    V1HubRefFromJSONTyped,
+    V1HubRefToJSON,
+    V1PathRef,
+    V1PathRefFromJSON,
+    V1PathRefFromJSONTyped,
+    V1PathRefToJSON,
+    V1UrlRef,
+    V1UrlRefFromJSON,
+    V1UrlRefFromJSONTyped,
+    V1UrlRefToJSON,
 } from './';
 
 /**
@@ -54,28 +54,28 @@ import {
 export interface V1Reference {
     /**
      * 
-     * @type {V1HubReference}
+     * @type {V1HubRef}
      * @memberof V1Reference
      */
-    hub_reference?: V1HubReference;
+    hub_reference?: V1HubRef;
     /**
      * 
-     * @type {V1DagReference}
+     * @type {V1DagRef}
      * @memberof V1Reference
      */
-    dag_reference?: V1DagReference;
+    dag_reference?: V1DagRef;
     /**
      * 
-     * @type {V1UrlReference}
+     * @type {V1UrlRef}
      * @memberof V1Reference
      */
-    url_reference?: V1UrlReference;
+    url_reference?: V1UrlRef;
     /**
      * 
-     * @type {V1PathReference}
+     * @type {V1PathRef}
      * @memberof V1Reference
      */
-    path_reference?: V1PathReference;
+    path_reference?: V1PathRef;
 }
 
 export function V1ReferenceFromJSON(json: any): V1Reference {
@@ -88,10 +88,10 @@ export function V1ReferenceFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'hub_reference': !exists(json, 'hub_reference') ? undefined : V1HubReferenceFromJSON(json['hub_reference']),
-        'dag_reference': !exists(json, 'dag_reference') ? undefined : V1DagReferenceFromJSON(json['dag_reference']),
-        'url_reference': !exists(json, 'url_reference') ? undefined : V1UrlReferenceFromJSON(json['url_reference']),
-        'path_reference': !exists(json, 'path_reference') ? undefined : V1PathReferenceFromJSON(json['path_reference']),
+        'hub_reference': !exists(json, 'hub_reference') ? undefined : V1HubRefFromJSON(json['hub_reference']),
+        'dag_reference': !exists(json, 'dag_reference') ? undefined : V1DagRefFromJSON(json['dag_reference']),
+        'url_reference': !exists(json, 'url_reference') ? undefined : V1UrlRefFromJSON(json['url_reference']),
+        'path_reference': !exists(json, 'path_reference') ? undefined : V1PathRefFromJSON(json['path_reference']),
     };
 }
 
@@ -104,10 +104,10 @@ export function V1ReferenceToJSON(value?: V1Reference | null): any {
     }
     return {
         
-        'hub_reference': V1HubReferenceToJSON(value.hub_reference),
-        'dag_reference': V1DagReferenceToJSON(value.dag_reference),
-        'url_reference': V1UrlReferenceToJSON(value.url_reference),
-        'path_reference': V1PathReferenceToJSON(value.path_reference),
+        'hub_reference': V1HubRefToJSON(value.hub_reference),
+        'dag_reference': V1DagRefToJSON(value.dag_reference),
+        'url_reference': V1UrlRefToJSON(value.url_reference),
+        'path_reference': V1PathRefToJSON(value.path_reference),
     };
 }
 

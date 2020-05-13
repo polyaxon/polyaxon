@@ -5,15 +5,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_user**](UsersV1Api.md#get_user) | **GET** /api/v1/users | Login
-[**patch_user**](UsersV1Api.md#patch_user) | **PATCH** /api/v1/users | 
-[**update_user**](UsersV1Api.md#update_user) | **PUT** /api/v1/users | 
+[**get_user**](UsersV1Api.md#get_user) | **GET** /api/v1/users | Get current user
+[**patch_user**](UsersV1Api.md#patch_user) | **PATCH** /api/v1/users | Patch current user
+[**update_user**](UsersV1Api.md#update_user) | **PUT** /api/v1/users | Update current user
 
 
 # **get_user**
 > V1User get_user()
 
-Login
+Get current user
 
 ### Example
 
@@ -39,7 +39,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     api_instance = polyaxon_sdk.UsersV1Api(api_client)
     
     try:
-        # Login
+        # Get current user
         api_response = api_instance.get_user()
         pprint(api_response)
     except ApiException as e:
@@ -76,7 +76,7 @@ This endpoint does not need any parameter.
 # **patch_user**
 > V1User patch_user(body)
 
-
+Patch current user
 
 ### Example
 
@@ -103,6 +103,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     body = polyaxon_sdk.V1User() # V1User | 
 
     try:
+        # Patch current user
         api_response = api_instance.patch_user(body)
         pprint(api_response)
     except ApiException as e:
@@ -142,7 +143,7 @@ Name | Type | Description  | Notes
 # **update_user**
 > V1User update_user(body)
 
-
+Update current user
 
 ### Example
 
@@ -169,6 +170,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     body = polyaxon_sdk.V1User() # V1User | 
 
     try:
+        # Update current user
         api_response = api_instance.update_user(body)
         pprint(api_response)
     except ApiException as e:

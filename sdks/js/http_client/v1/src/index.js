@@ -60,7 +60,7 @@ import V1ConnectionType from './model/V1ConnectionType';
 import V1Credentials from './model/V1Credentials';
 import V1CronSchedule from './model/V1CronSchedule';
 import V1Dag from './model/V1Dag';
-import V1DagReference from './model/V1DagReference';
+import V1DagRef from './model/V1DagRef';
 import V1Dashboard from './model/V1Dashboard';
 import V1Dask from './model/V1Dask';
 import V1DiffStoppingPolicy from './model/V1DiffStoppingPolicy';
@@ -109,7 +109,7 @@ import V1HpRange from './model/V1HpRange';
 import V1HpUniform from './model/V1HpUniform';
 import V1HubComponent from './model/V1HubComponent';
 import V1HubModel from './model/V1HubModel';
-import V1HubReference from './model/V1HubReference';
+import V1HubRef from './model/V1HubRef';
 import V1Hyperband from './model/V1Hyperband';
 import V1Hyperopt from './model/V1Hyperopt';
 import V1HyperoptAlgorithms from './model/V1HyperoptAlgorithms';
@@ -174,7 +174,7 @@ import V1Parallel from './model/V1Parallel';
 import V1ParallelKind from './model/V1ParallelKind';
 import V1Param from './model/V1Param';
 import V1ParamSearch from './model/V1ParamSearch';
-import V1PathReference from './model/V1PathReference';
+import V1PathRef from './model/V1PathRef';
 import V1Pipeline from './model/V1Pipeline';
 import V1PipelineKind from './model/V1PipelineKind';
 import V1Plugins from './model/V1Plugins';
@@ -219,7 +219,7 @@ import V1Termination from './model/V1Termination';
 import V1TriggerPolicy from './model/V1TriggerPolicy';
 import V1TruncationStoppingPolicy from './model/V1TruncationStoppingPolicy';
 import V1UriType from './model/V1UriType';
-import V1UrlReference from './model/V1UrlReference';
+import V1UrlRef from './model/V1UrlRef';
 import V1User from './model/V1User';
 import V1Uuids from './model/V1Uuids';
 import V1Version from './model/V1Version';
@@ -484,10 +484,10 @@ export {
     V1Dag,
 
     /**
-     * The V1DagReference model constructor.
-     * @property {module:model/V1DagReference}
+     * The V1DagRef model constructor.
+     * @property {module:model/V1DagRef}
      */
-    V1DagReference,
+    V1DagRef,
 
     /**
      * The V1Dashboard model constructor.
@@ -778,10 +778,10 @@ export {
     V1HubModel,
 
     /**
-     * The V1HubReference model constructor.
-     * @property {module:model/V1HubReference}
+     * The V1HubRef model constructor.
+     * @property {module:model/V1HubRef}
      */
-    V1HubReference,
+    V1HubRef,
 
     /**
      * The V1Hyperband model constructor.
@@ -1168,10 +1168,10 @@ export {
     V1ParamSearch,
 
     /**
-     * The V1PathReference model constructor.
-     * @property {module:model/V1PathReference}
+     * The V1PathRef model constructor.
+     * @property {module:model/V1PathRef}
      */
-    V1PathReference,
+    V1PathRef,
 
     /**
      * The V1Pipeline model constructor.
@@ -1438,10 +1438,10 @@ export {
     V1UriType,
 
     /**
-     * The V1UrlReference model constructor.
-     * @property {module:model/V1UrlReference}
+     * The V1UrlRef model constructor.
+     * @property {module:model/V1UrlRef}
      */
-    V1UrlReference,
+    V1UrlRef,
 
     /**
      * The V1User model constructor.

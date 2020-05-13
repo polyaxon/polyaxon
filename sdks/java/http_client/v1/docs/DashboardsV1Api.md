@@ -5,20 +5,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDashboard**](DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
-[**deleteDashboard**](DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-[**getDashboard**](DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-[**listDashboardNames**](DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
-[**listDashboards**](DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
-[**patchDashboard**](DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
-[**updateDashboard**](DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+[**createDashboard**](DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | Create dashboard
+[**deleteDashboard**](DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Delete dashboard
+[**getDashboard**](DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Get dashboard
+[**listDashboardNames**](DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | List dashboard names
+[**listDashboards**](DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List dashboards
+[**patchDashboard**](DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Patch dashboard
+[**updateDashboard**](DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update dashboard
 
 
 <a name="createDashboard"></a>
 # **createDashboard**
 > V1Dashboard createDashboard(owner, body)
 
-
+Create dashboard
 
 ### Example
 ```java
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 # **deleteDashboard**
 > deleteDashboard(owner, uuid)
 
-
+Delete dashboard
 
 ### Example
 ```java
@@ -163,7 +163,7 @@ null (empty response body)
 # **getDashboard**
 > V1Dashboard getDashboard(owner, uuid)
 
-
+Get dashboard
 
 ### Example
 ```java
@@ -236,7 +236,7 @@ Name | Type | Description  | Notes
 # **listDashboardNames**
 > V1ListDashboardsResponse listDashboardNames(owner, offset, limit, sort, query)
 
-
+List dashboard names
 
 ### Example
 ```java
@@ -315,7 +315,7 @@ Name | Type | Description  | Notes
 # **listDashboards**
 > V1ListDashboardsResponse listDashboards(owner, offset, limit, sort, query)
 
-
+List dashboards
 
 ### Example
 ```java
@@ -394,7 +394,7 @@ Name | Type | Description  | Notes
 # **patchDashboard**
 > V1Dashboard patchDashboard(owner, dashboardUuid, body)
 
-
+Patch dashboard
 
 ### Example
 ```java
@@ -469,7 +469,7 @@ Name | Type | Description  | Notes
 # **updateDashboard**
 > V1Dashboard updateDashboard(owner, dashboardUuid, body)
 
-
+Update dashboard
 
 ### Example
 ```java

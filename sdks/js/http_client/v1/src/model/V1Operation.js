@@ -97,6 +97,9 @@ class V1Operation {
             if (data.hasOwnProperty('schedule')) {
                 obj['schedule'] = ApiClient.convertToType(data['schedule'], Object);
             }
+            if (data.hasOwnProperty('events')) {
+                obj['events'] = ApiClient.convertToType(data['events'], [Object]);
+            }
             if (data.hasOwnProperty('parallel')) {
                 obj['parallel'] = ApiClient.convertToType(data['parallel'], Object);
             }
@@ -107,7 +110,7 @@ class V1Operation {
                 obj['trigger'] = V1TriggerPolicy.constructFromObject(data['trigger']);
             }
             if (data.hasOwnProperty('conditions')) {
-                obj['conditions'] = ApiClient.convertToType(data['conditions'], [Object]);
+                obj['conditions'] = ApiClient.convertToType(data['conditions'], ['String']);
             }
             if (data.hasOwnProperty('skip_on_upstream_skip')) {
                 obj['skip_on_upstream_skip'] = ApiClient.convertToType(data['skip_on_upstream_skip'], 'Boolean');
@@ -197,6 +200,11 @@ V1Operation.prototype['cache'] = undefined;
 V1Operation.prototype['schedule'] = undefined;
 
 /**
+ * @member {Array.<Object>} events
+ */
+V1Operation.prototype['events'] = undefined;
+
+/**
  * @member {Object} parallel
  */
 V1Operation.prototype['parallel'] = undefined;
@@ -212,7 +220,7 @@ V1Operation.prototype['dependencies'] = undefined;
 V1Operation.prototype['trigger'] = undefined;
 
 /**
- * @member {Array.<Object>} conditions
+ * @member {Array.<String>} conditions
  */
 V1Operation.prototype['conditions'] = undefined;
 

@@ -51,7 +51,7 @@ class OrganizationsV1Api(object):
         self.api_client = api_client
 
     def create_organization(self, body, **kwargs):  # noqa: E501
-        """create_organization  # noqa: E501
+        """Create organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -75,7 +75,7 @@ class OrganizationsV1Api(object):
         return self.create_organization_with_http_info(body, **kwargs)  # noqa: E501
 
     def create_organization_with_http_info(self, body, **kwargs):  # noqa: E501
-        """create_organization  # noqa: E501
+        """Create organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -177,7 +177,7 @@ class OrganizationsV1Api(object):
         )
 
     def create_organization_member(self, owner, body, **kwargs):  # noqa: E501
-        """create_organization_member  # noqa: E501
+        """Create organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -206,7 +206,7 @@ class OrganizationsV1Api(object):
     def create_organization_member_with_http_info(
         self, owner, body, **kwargs
     ):  # noqa: E501
-        """create_organization_member  # noqa: E501
+        """Create organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -319,7 +319,7 @@ class OrganizationsV1Api(object):
         )
 
     def delete_organization(self, owner, **kwargs):  # noqa: E501
-        """delete_organization  # noqa: E501
+        """Delete organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -343,7 +343,7 @@ class OrganizationsV1Api(object):
         return self.delete_organization_with_http_info(owner, **kwargs)  # noqa: E501
 
     def delete_organization_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """delete_organization  # noqa: E501
+        """Delete organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -438,7 +438,7 @@ class OrganizationsV1Api(object):
         )
 
     def delete_organization_member(self, owner, user, **kwargs):  # noqa: E501
-        """delete_organization_member  # noqa: E501
+        """Delete organization member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -467,7 +467,7 @@ class OrganizationsV1Api(object):
     def delete_organization_member_with_http_info(
         self, owner, user, **kwargs
     ):  # noqa: E501
-        """delete_organization_member  # noqa: E501
+        """Delete organization member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -573,7 +573,7 @@ class OrganizationsV1Api(object):
         )
 
     def get_organization(self, owner, **kwargs):  # noqa: E501
-        """get_organization  # noqa: E501
+        """Get organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -597,7 +597,7 @@ class OrganizationsV1Api(object):
         return self.get_organization_with_http_info(owner, **kwargs)  # noqa: E501
 
     def get_organization_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """get_organization  # noqa: E501
+        """Get organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -692,7 +692,7 @@ class OrganizationsV1Api(object):
         )
 
     def get_organization_member(self, owner, user, **kwargs):  # noqa: E501
-        """get_organization_member  # noqa: E501
+        """Get organization member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -721,7 +721,7 @@ class OrganizationsV1Api(object):
     def get_organization_member_with_http_info(
         self, owner, user, **kwargs
     ):  # noqa: E501
-        """get_organization_member  # noqa: E501
+        """Get organization member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -827,7 +827,7 @@ class OrganizationsV1Api(object):
         )
 
     def list_organization_members(self, owner, **kwargs):  # noqa: E501
-        """list_organization_members  # noqa: E501
+        """Get organization members  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -857,7 +857,7 @@ class OrganizationsV1Api(object):
         )  # noqa: E501
 
     def list_organization_members_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """list_organization_members  # noqa: E501
+        """Get organization members  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -972,7 +972,7 @@ class OrganizationsV1Api(object):
         )
 
     def list_organization_names(self, **kwargs):  # noqa: E501
-        """Get versions  # noqa: E501
+        """List organizations names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -995,7 +995,7 @@ class OrganizationsV1Api(object):
         return self.list_organization_names_with_http_info(**kwargs)  # noqa: E501
 
     def list_organization_names_with_http_info(self, **kwargs):  # noqa: E501
-        """Get versions  # noqa: E501
+        """List organizations names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1079,7 +1079,7 @@ class OrganizationsV1Api(object):
         )
 
     def list_organizations(self, **kwargs):  # noqa: E501
-        """Get log handler  # noqa: E501
+        """List organizations  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1102,7 +1102,7 @@ class OrganizationsV1Api(object):
         return self.list_organizations_with_http_info(**kwargs)  # noqa: E501
 
     def list_organizations_with_http_info(self, **kwargs):  # noqa: E501
-        """Get log handler  # noqa: E501
+        """List organizations  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1186,7 +1186,7 @@ class OrganizationsV1Api(object):
         )
 
     def patch_organization(self, owner, body, **kwargs):  # noqa: E501
-        """patch_organization  # noqa: E501
+        """Patch organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1213,7 +1213,7 @@ class OrganizationsV1Api(object):
         )  # noqa: E501
 
     def patch_organization_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """patch_organization  # noqa: E501
+        """Patch organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1328,7 +1328,7 @@ class OrganizationsV1Api(object):
     def patch_organization_member(
         self, owner, member_user, body, **kwargs
     ):  # noqa: E501
-        """patch_organization_member  # noqa: E501
+        """Patch organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1358,7 +1358,7 @@ class OrganizationsV1Api(object):
     def patch_organization_member_with_http_info(
         self, owner, member_user, body, **kwargs
     ):  # noqa: E501
-        """patch_organization_member  # noqa: E501
+        """Patch organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1482,7 +1482,7 @@ class OrganizationsV1Api(object):
         )
 
     def update_organization(self, owner, body, **kwargs):  # noqa: E501
-        """update_organization  # noqa: E501
+        """Update organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1509,7 +1509,7 @@ class OrganizationsV1Api(object):
         )  # noqa: E501
 
     def update_organization_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """update_organization  # noqa: E501
+        """Update organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1624,7 +1624,7 @@ class OrganizationsV1Api(object):
     def update_organization_member(
         self, owner, member_user, body, **kwargs
     ):  # noqa: E501
-        """update_organization_member  # noqa: E501
+        """Update organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1654,7 +1654,7 @@ class OrganizationsV1Api(object):
     def update_organization_member_with_http_info(
         self, owner, member_user, body, **kwargs
     ):  # noqa: E501
-        """update_organization_member  # noqa: E501
+        """Update organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

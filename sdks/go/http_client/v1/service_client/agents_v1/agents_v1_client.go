@@ -65,7 +65,7 @@ type ClientService interface {
 }
 
 /*
-  CreateAgent creates run profile
+  CreateAgent creates agent
 */
 func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentOK, *CreateAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -101,7 +101,7 @@ func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientA
 }
 
 /*
-  CreateAgentStatus create agent status API
+  CreateAgentStatus creates new run status
 */
 func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error) {
 	// TODO: Validate the params before sending
@@ -137,7 +137,7 @@ func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo run
 }
 
 /*
-  DeleteAgent deletes run profile
+  DeleteAgent deletes agent
 */
 func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAgentOK, *DeleteAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -173,7 +173,7 @@ func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientA
 }
 
 /*
-  GetAgent gets run profile
+  GetAgent gets agent
 */
 func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentOK, *GetAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -209,7 +209,7 @@ func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInf
 }
 
 /*
-  GetAgentState get agent state API
+  GetAgentState gets state queues runs
 */
 func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStateOK, *GetAgentStateNoContent, error) {
 	// TODO: Validate the params before sending
@@ -245,7 +245,7 @@ func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.Cli
 }
 
 /*
-  GetAgentStatuses get agent statuses API
+  GetAgentStatuses gets agent status
 */
 func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -281,7 +281,7 @@ func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runti
 }
 
 /*
-  ListAgentNames lists run profiles names
+  ListAgentNames lists agents names
 */
 func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -317,7 +317,7 @@ func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.C
 }
 
 /*
-  ListAgents lists run profiles
+  ListAgents lists agents
 */
 func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentsOK, *ListAgentsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -353,7 +353,7 @@ func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAut
 }
 
 /*
-  PatchAgent patches run profile
+  PatchAgent patches agent
 */
 func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentOK, *PatchAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -389,7 +389,7 @@ func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAut
 }
 
 /*
-  SyncAgent sync agent API
+  SyncAgent syncs agent
 */
 func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -425,7 +425,7 @@ func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthI
 }
 
 /*
-  UpdateAgent updates run profile
+  UpdateAgent updates agent
 */
 func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentOK, *UpdateAgentNoContent, error) {
 	// TODO: Validate the params before sending

@@ -30,7 +30,7 @@ import (
 type V1StatusCond struct {
 
 	// Kind of condition, should be equal to "status"
-	Kind *string `json:"kind,omitempty"`
+	Kind string `json:"kind,omitempty"`
 
 	// Operation to set the condition on
 	Operation string `json:"operation,omitempty"`

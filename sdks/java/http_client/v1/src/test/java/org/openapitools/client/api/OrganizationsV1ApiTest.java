@@ -51,7 +51,7 @@ public class OrganizationsV1ApiTest {
 
     
     /**
-     * 
+     * Create organization
      *
      * 
      *
@@ -67,7 +67,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Create organization member
      *
      * 
      *
@@ -84,7 +84,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Delete organization
      *
      * 
      *
@@ -100,7 +100,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Delete organization member details
      *
      * 
      *
@@ -117,7 +117,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Get organization
      *
      * 
      *
@@ -133,7 +133,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Get organization member details
      *
      * 
      *
@@ -150,7 +150,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Get organization members
      *
      * 
      *
@@ -170,7 +170,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * Get versions
+     * List organizations names
      *
      * 
      *
@@ -185,7 +185,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * Get log handler
+     * List organizations
      *
      * 
      *
@@ -200,7 +200,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Patch organization
      *
      * 
      *
@@ -217,7 +217,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Patch organization member
      *
      * 
      *
@@ -235,7 +235,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Update organization
      *
      * 
      *
@@ -252,7 +252,7 @@ public class OrganizationsV1ApiTest {
     }
     
     /**
-     * 
+     * Update organization member
      *
      * 
      *

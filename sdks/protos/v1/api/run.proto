@@ -25,7 +25,6 @@ import "protoc-gen-swagger/options/annotations.proto";
 
 import "v1/api/base.proto";
 import "v1/api/status.proto";
-import "v1/polyflow/operation.proto";
 
 // Run kind enum
 // Kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob

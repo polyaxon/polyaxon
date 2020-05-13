@@ -21,12 +21,7 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 from polyaxon.polyflow.component.component import ComponentSchema
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
 from polyaxon.polyflow.params import ParamSchema
-from polyaxon.polyflow.references import (
-    V1DagReference,
-    V1HubReference,
-    V1PathReference,
-    V1UrlReference,
-)
+from polyaxon.polyflow.references import V1DagRef, V1HubRef, V1PathRef, V1UrlRef
 from polyaxon.polyflow.run import RunSchema
 
 
@@ -110,26 +105,26 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
         if self.has_component_reference:
             return self.component
         if self.has_dag_reference:
-            return V1DagReference(name=self.dag_ref)
+            return V1DagRef(name=self.dag_ref)
         if self.has_hub_reference:
-            return V1HubReference(name=self.hub_ref)
+            return V1HubRef(name=self.hub_ref)
         if self.has_path_reference:
-            return V1PathReference(path=self.path_ref)
+            return V1PathRef(path=self.path_ref)
         if self.has_url_reference:
-            return V1UrlReference(url=self.url_ref)
+            return V1UrlRef(url=self.url_ref)
 
     @property
     def template(self):
         if self.has_component_reference:
             return self.component
         if self.has_dag_reference:
-            return V1DagReference(name=self.dag_ref)
+            return V1DagRef(name=self.dag_ref)
         if self.has_hub_reference:
-            return V1HubReference(name=self.hub_ref)
+            return V1HubRef(name=self.hub_ref)
         if self.has_path_reference:
-            return V1PathReference(path=self.path_ref)
+            return V1PathRef(path=self.path_ref)
         if self.has_url_reference:
-            return V1UrlReference(url=self.url_ref)
+            return V1UrlRef(url=self.url_ref)
 
     def set_template(self, value):
         self.component = value

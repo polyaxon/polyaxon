@@ -45,7 +45,7 @@ type ClientService interface {
 }
 
 /*
-  Login lists organization level queues names
+  Login logins
 */
 func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter) (*LoginOK, *LoginNoContent, error) {
 	// TODO: Validate the params before sending

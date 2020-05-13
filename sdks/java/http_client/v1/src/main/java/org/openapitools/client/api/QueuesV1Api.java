@@ -145,7 +145,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Update agent
+     * Create queue
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent that consumes the queue (required)
@@ -168,7 +168,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Update agent
+     * Create queue
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent that consumes the queue (required)
@@ -192,7 +192,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Update agent (asynchronously)
+     * Create queue (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent that consumes the queue (required)
@@ -292,7 +292,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Sync agent
+     * Delete queue
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -313,7 +313,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Sync agent
+     * Delete queue
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -336,7 +336,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Sync agent (asynchronously)
+     * Delete queue (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -435,7 +435,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Patch agent
+     * Get queue
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -458,7 +458,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Patch agent
+     * Get queue
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -482,7 +482,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Patch agent (asynchronously)
+     * Get queue (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -588,7 +588,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List agents names
+     * List organization level queues names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -613,7 +613,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List agents names
+     * List organization level queues names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -639,7 +639,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List agents names (asynchronously)
+     * List organization level queues names (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -747,7 +747,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List agents
+     * List organization level queues
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -772,7 +772,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List agents
+     * List organization level queues
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -798,7 +798,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List agents (asynchronously)
+     * List organization level queues (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -913,7 +913,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Create agent
+     * List queues names
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -939,7 +939,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Create agent
+     * List queues names
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -966,7 +966,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Create agent (asynchronously)
+     * List queues names (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -1082,7 +1082,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get agent
+     * List queues
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -1108,7 +1108,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get agent
+     * List queues
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -1135,7 +1135,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get agent (asynchronously)
+     * List queues (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -1244,7 +1244,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get State (queues/runs)
+     * Patch queue
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -1268,7 +1268,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get State (queues/runs)
+     * Patch queue
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -1293,7 +1293,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get State (queues/runs) (asynchronously)
+     * Patch queue (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -1400,7 +1400,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Delete agent
+     * Update queue
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -1424,7 +1424,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Delete agent
+     * Update queue
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -1449,7 +1449,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Delete agent (asynchronously)
+     * Update queue (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)

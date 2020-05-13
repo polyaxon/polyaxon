@@ -59,7 +59,7 @@ export default class SchemasV1Api {
      */
 
     /**
-     * List teams names
+     * Get random
      * @param {module:api/SchemasV1Api~noOpCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Schemas}
      */

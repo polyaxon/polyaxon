@@ -22,17 +22,17 @@ from polyaxon.polyflow.references.mixin import RefMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
-class DagReferenceSchema(BaseCamelSchema):
+class DagRefSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("dag_ref"))
     name = fields.Str(required=True)
 
     @staticmethod
     def schema_config():
-        return V1DagReference
+        return V1DagRef
 
 
-class V1DagReference(BaseConfig, RefMixin, polyaxon_sdk.V1DagReference):
-    SCHEMA = DagReferenceSchema
+class V1DagRef(BaseConfig, RefMixin, polyaxon_sdk.V1DagRef):
+    SCHEMA = DagRefSchema
     IDENTIFIER = "dag_ref"
 
     def get_kind_value(self):

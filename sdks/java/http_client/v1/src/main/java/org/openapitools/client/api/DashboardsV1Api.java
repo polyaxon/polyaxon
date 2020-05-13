@@ -137,7 +137,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Create dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param body Dashboard body (required)
@@ -159,7 +159,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Create dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param body Dashboard body (required)
@@ -182,7 +182,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Create dashboard (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Dashboard body (required)
@@ -274,7 +274,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Delete dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -294,7 +294,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Delete dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -316,7 +316,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Delete dashboard (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -407,7 +407,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Get dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -429,7 +429,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Get dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -452,7 +452,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Get dashboard (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -557,7 +557,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * List dashboard names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -582,7 +582,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * List dashboard names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -608,7 +608,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * List dashboard names (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -716,7 +716,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * List dashboards
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -741,7 +741,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * List dashboards
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -767,7 +767,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * List dashboards (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -868,7 +868,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Patch dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param dashboardUuid UUID (required)
@@ -891,7 +891,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Patch dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param dashboardUuid UUID (required)
@@ -915,7 +915,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Patch dashboard (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param dashboardUuid UUID (required)
@@ -1014,7 +1014,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Update dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param dashboardUuid UUID (required)
@@ -1037,7 +1037,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * 
+     * Update dashboard
      * 
      * @param owner Owner of the namespace (required)
      * @param dashboardUuid UUID (required)
@@ -1061,7 +1061,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Update dashboard (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param dashboardUuid UUID (required)

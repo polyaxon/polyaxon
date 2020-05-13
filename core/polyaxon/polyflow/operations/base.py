@@ -17,7 +17,6 @@
 from marshmallow import fields, validate
 
 from polyaxon.polyflow.component.base import BaseComponent, BaseComponentSchema
-from polyaxon.polyflow.conditions import ConditionSchema
 from polyaxon.polyflow.parallel import ParallelMixin, ParallelSchema
 from polyaxon.polyflow.schedule import ScheduleMixin, ScheduleSchema
 from polyaxon.polyflow.trigger_policies import V1TriggerPolicy
@@ -25,12 +24,13 @@ from polyaxon.polyflow.trigger_policies import V1TriggerPolicy
 
 class BaseOpSchema(BaseComponentSchema):
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
+    events = fields.List(fields.Raw(), allow_none=True)
     parallel = fields.Nested(ParallelSchema, allow_none=True)
     dependencies = fields.List(fields.Str(), allow_none=True)
     trigger = fields.Str(
         allow_none=True, validate=validate.OneOf(V1TriggerPolicy.allowable_values)
     )
-    conditions = fields.Nested(ConditionSchema, allow_none=True)
+    conditions = fields.Str(allow_none=True)
     skip_on_upstream_skip = fields.Bool(allow_none=True)
 
     @staticmethod
@@ -42,6 +42,7 @@ class BaseOp(BaseComponent, ParallelMixin, ScheduleMixin):
     SCHEMA = BaseOpSchema
     REDUCED_ATTRIBUTES = BaseComponent.REDUCED_ATTRIBUTES + [
         "schedule",
+        "events",
         "parallel",
         "dependencies",
         "trigger",

@@ -109,6 +109,7 @@ export interface UpdateOrganizationMemberRequest {
 export class OrganizationsV1Api extends runtime.BaseAPI {
 
     /**
+     * Create organization
      */
     async createOrganizationRaw(requestParameters: CreateOrganizationRequest): Promise<runtime.ApiResponse<V1Organization>> {
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -137,6 +138,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Create organization
      */
     async createOrganization(requestParameters: CreateOrganizationRequest): Promise<V1Organization> {
         const response = await this.createOrganizationRaw(requestParameters);
@@ -144,6 +146,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Create organization member
      */
     async createOrganizationMemberRaw(requestParameters: CreateOrganizationMemberRequest): Promise<runtime.ApiResponse<V1OrganizationMember>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -176,6 +179,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Create organization member
      */
     async createOrganizationMember(requestParameters: CreateOrganizationMemberRequest): Promise<V1OrganizationMember> {
         const response = await this.createOrganizationMemberRaw(requestParameters);
@@ -183,6 +187,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Delete organization
      */
     async deleteOrganizationRaw(requestParameters: DeleteOrganizationRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -208,12 +213,14 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Delete organization
      */
     async deleteOrganization(requestParameters: DeleteOrganizationRequest): Promise<void> {
         await this.deleteOrganizationRaw(requestParameters);
     }
 
     /**
+     * Delete organization member details
      */
     async deleteOrganizationMemberRaw(requestParameters: DeleteOrganizationMemberRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -243,12 +250,14 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Delete organization member details
      */
     async deleteOrganizationMember(requestParameters: DeleteOrganizationMemberRequest): Promise<void> {
         await this.deleteOrganizationMemberRaw(requestParameters);
     }
 
     /**
+     * Get organization
      */
     async getOrganizationRaw(requestParameters: GetOrganizationRequest): Promise<runtime.ApiResponse<V1Organization>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -274,6 +283,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get organization
      */
     async getOrganization(requestParameters: GetOrganizationRequest): Promise<V1Organization> {
         const response = await this.getOrganizationRaw(requestParameters);
@@ -281,6 +291,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get organization member details
      */
     async getOrganizationMemberRaw(requestParameters: GetOrganizationMemberRequest): Promise<runtime.ApiResponse<V1OrganizationMember>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -310,6 +321,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get organization member details
      */
     async getOrganizationMember(requestParameters: GetOrganizationMemberRequest): Promise<V1OrganizationMember> {
         const response = await this.getOrganizationMemberRaw(requestParameters);
@@ -317,6 +329,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get organization members
      */
     async listOrganizationMembersRaw(requestParameters: ListOrganizationMembersRequest): Promise<runtime.ApiResponse<V1ListOrganizationMembersResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -358,6 +371,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get organization members
      */
     async listOrganizationMembers(requestParameters: ListOrganizationMembersRequest): Promise<V1ListOrganizationMembersResponse> {
         const response = await this.listOrganizationMembersRaw(requestParameters);
@@ -365,7 +379,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get versions
+     * List organizations names
      */
     async listOrganizationNamesRaw(): Promise<runtime.ApiResponse<V1ListOrganizationsResponse>> {
         const queryParameters: runtime.HTTPQuery = {};
@@ -387,7 +401,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get versions
+     * List organizations names
      */
     async listOrganizationNames(): Promise<V1ListOrganizationsResponse> {
         const response = await this.listOrganizationNamesRaw();
@@ -395,7 +409,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get log handler
+     * List organizations
      */
     async listOrganizationsRaw(): Promise<runtime.ApiResponse<V1ListOrganizationsResponse>> {
         const queryParameters: runtime.HTTPQuery = {};
@@ -417,7 +431,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get log handler
+     * List organizations
      */
     async listOrganizations(): Promise<V1ListOrganizationsResponse> {
         const response = await this.listOrganizationsRaw();
@@ -425,6 +439,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Patch organization
      */
     async patchOrganizationRaw(requestParameters: PatchOrganizationRequest): Promise<runtime.ApiResponse<V1Organization>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -457,6 +472,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Patch organization
      */
     async patchOrganization(requestParameters: PatchOrganizationRequest): Promise<V1Organization> {
         const response = await this.patchOrganizationRaw(requestParameters);
@@ -464,6 +480,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Patch organization member
      */
     async patchOrganizationMemberRaw(requestParameters: PatchOrganizationMemberRequest): Promise<runtime.ApiResponse<V1OrganizationMember>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -500,6 +517,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Patch organization member
      */
     async patchOrganizationMember(requestParameters: PatchOrganizationMemberRequest): Promise<V1OrganizationMember> {
         const response = await this.patchOrganizationMemberRaw(requestParameters);
@@ -507,6 +525,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Update organization
      */
     async updateOrganizationRaw(requestParameters: UpdateOrganizationRequest): Promise<runtime.ApiResponse<V1Organization>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -539,6 +558,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Update organization
      */
     async updateOrganization(requestParameters: UpdateOrganizationRequest): Promise<V1Organization> {
         const response = await this.updateOrganizationRaw(requestParameters);
@@ -546,6 +566,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Update organization member
      */
     async updateOrganizationMemberRaw(requestParameters: UpdateOrganizationMemberRequest): Promise<runtime.ApiResponse<V1OrganizationMember>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -582,6 +603,7 @@ export class OrganizationsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Update organization member
      */
     async updateOrganizationMember(requestParameters: UpdateOrganizationMemberRequest): Promise<V1OrganizationMember> {
         const response = await this.updateOrganizationMemberRaw(requestParameters);

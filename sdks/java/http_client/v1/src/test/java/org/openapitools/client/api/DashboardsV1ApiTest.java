@@ -49,7 +49,7 @@ public class DashboardsV1ApiTest {
 
     
     /**
-     * 
+     * Create dashboard
      *
      * 
      *
@@ -66,7 +66,7 @@ public class DashboardsV1ApiTest {
     }
     
     /**
-     * 
+     * Delete dashboard
      *
      * 
      *
@@ -83,7 +83,7 @@ public class DashboardsV1ApiTest {
     }
     
     /**
-     * 
+     * Get dashboard
      *
      * 
      *
@@ -100,7 +100,7 @@ public class DashboardsV1ApiTest {
     }
     
     /**
-     * 
+     * List dashboard names
      *
      * 
      *
@@ -120,7 +120,7 @@ public class DashboardsV1ApiTest {
     }
     
     /**
-     * 
+     * List dashboards
      *
      * 
      *
@@ -140,7 +140,7 @@ public class DashboardsV1ApiTest {
     }
     
     /**
-     * 
+     * Patch dashboard
      *
      * 
      *
@@ -158,7 +158,7 @@ public class DashboardsV1ApiTest {
     }
     
     /**
-     * 
+     * Update dashboard
      *
      * 
      *

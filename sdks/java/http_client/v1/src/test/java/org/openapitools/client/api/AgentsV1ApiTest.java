@@ -52,7 +52,7 @@ public class AgentsV1ApiTest {
 
     
     /**
-     * Create run profile
+     * Create agent
      *
      * 
      *
@@ -69,7 +69,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * 
+     * Create new run status
      *
      * 
      *
@@ -87,7 +87,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * Delete run profile
+     * Delete agent
      *
      * 
      *
@@ -104,7 +104,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * Get run profile
+     * Get agent
      *
      * 
      *
@@ -121,7 +121,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * 
+     * Get State (queues/runs)
      *
      * 
      *
@@ -138,7 +138,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * 
+     * Get agent status
      *
      * 
      *
@@ -155,7 +155,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * List run profiles names
+     * List agents names
      *
      * 
      *
@@ -175,7 +175,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * List run profiles
+     * List agents
      *
      * 
      *
@@ -195,7 +195,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * Patch run profile
+     * Patch agent
      *
      * 
      *
@@ -213,7 +213,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * 
+     * Sync agent
      *
      * 
      *
@@ -231,7 +231,7 @@ public class AgentsV1ApiTest {
     }
     
     /**
-     * Update run profile
+     * Update agent
      *
      * 
      *

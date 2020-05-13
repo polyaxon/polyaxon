@@ -48,7 +48,7 @@ public class SchemasV1ApiTest {
 
     
     /**
-     * List teams names
+     * Get random
      *
      * 
      *

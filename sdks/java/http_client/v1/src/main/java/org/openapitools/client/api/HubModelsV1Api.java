@@ -137,7 +137,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Create dashboard
+     * Create hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param body Model body (required)
@@ -159,7 +159,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Create dashboard
+     * Create hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param body Model body (required)
@@ -182,7 +182,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Create dashboard (asynchronously)
+     * Create hub model (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Model body (required)
@@ -274,7 +274,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Delete dashboard
+     * Delete hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -294,7 +294,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Delete dashboard
+     * Delete hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -316,7 +316,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Delete dashboard (asynchronously)
+     * Delete hub model (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -407,7 +407,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Get dashboard
+     * Get hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -429,7 +429,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Get dashboard
+     * Get hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -452,7 +452,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Get dashboard (asynchronously)
+     * Get hub model (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -557,7 +557,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * List dashboard names
+     * List hub model names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -582,7 +582,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * List dashboard names
+     * List hub model names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -608,7 +608,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * List dashboard names (asynchronously)
+     * List hub model names (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -716,7 +716,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * List dashboards
+     * List hub models
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -741,7 +741,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * List dashboards
+     * List hub models
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -767,7 +767,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * List dashboards (asynchronously)
+     * List hub models (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -868,7 +868,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Patch dashboard
+     * Patch hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param modelUuid UUID (required)
@@ -891,7 +891,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Patch dashboard
+     * Patch hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param modelUuid UUID (required)
@@ -915,7 +915,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Patch dashboard (asynchronously)
+     * Patch hub model (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param modelUuid UUID (required)
@@ -1014,7 +1014,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Update dashboard
+     * Update hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param modelUuid UUID (required)
@@ -1037,7 +1037,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Update dashboard
+     * Update hub model
      * 
      * @param owner Owner of the namespace (required)
      * @param modelUuid UUID (required)
@@ -1061,7 +1061,7 @@ public class HubModelsV1Api {
     }
 
     /**
-     * Update dashboard (asynchronously)
+     * Update hub model (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param modelUuid UUID (required)

@@ -136,7 +136,7 @@ export interface UpdateTeamMemberRequest {
 export class TeamsV1Api extends runtime.BaseAPI {
 
     /**
-     * Create organization
+     * Create team
      */
     async createTeamRaw(requestParameters: CreateTeamRequest): Promise<runtime.ApiResponse<V1Team>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -169,7 +169,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create organization
+     * Create team
      */
     async createTeam(requestParameters: CreateTeamRequest): Promise<V1Team> {
         const response = await this.createTeamRaw(requestParameters);
@@ -177,7 +177,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create organization member
+     * Create team member
      */
     async createTeamMemberRaw(requestParameters: CreateTeamMemberRequest): Promise<runtime.ApiResponse<V1TeamMember>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -214,7 +214,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create organization member
+     * Create team member
      */
     async createTeamMember(requestParameters: CreateTeamMemberRequest): Promise<V1TeamMember> {
         const response = await this.createTeamMemberRaw(requestParameters);
@@ -222,7 +222,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete organization
+     * Delete team
      */
     async deleteTeamRaw(requestParameters: DeleteTeamRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -252,14 +252,14 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete organization
+     * Delete team
      */
     async deleteTeam(requestParameters: DeleteTeamRequest): Promise<void> {
         await this.deleteTeamRaw(requestParameters);
     }
 
     /**
-     * Delete organization member details
+     * Delete team member details
      */
     async deleteTeamMemberRaw(requestParameters: DeleteTeamMemberRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -293,14 +293,14 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete organization member details
+     * Delete team member details
      */
     async deleteTeamMember(requestParameters: DeleteTeamMemberRequest): Promise<void> {
         await this.deleteTeamMemberRaw(requestParameters);
     }
 
     /**
-     * Get organization
+     * Get team
      */
     async getTeamRaw(requestParameters: GetTeamRequest): Promise<runtime.ApiResponse<V1Team>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -330,7 +330,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get organization
+     * Get team
      */
     async getTeam(requestParameters: GetTeamRequest): Promise<V1Team> {
         const response = await this.getTeamRaw(requestParameters);
@@ -338,7 +338,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get organization member details
+     * Get team member details
      */
     async getTeamMemberRaw(requestParameters: GetTeamMemberRequest): Promise<runtime.ApiResponse<V1TeamMember>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -372,7 +372,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get organization member details
+     * Get team member details
      */
     async getTeamMember(requestParameters: GetTeamMemberRequest): Promise<V1TeamMember> {
         const response = await this.getTeamMemberRaw(requestParameters);
@@ -380,7 +380,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get organization members
+     * Get team members
      */
     async listTeamMembersRaw(requestParameters: ListTeamMembersRequest): Promise<runtime.ApiResponse<V1ListTeamMembersResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -426,7 +426,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get organization members
+     * Get team members
      */
     async listTeamMembers(requestParameters: ListTeamMembersRequest): Promise<V1ListTeamMembersResponse> {
         const response = await this.listTeamMembersRaw(requestParameters);
@@ -434,7 +434,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List organizations names
+     * List teams names
      */
     async listTeamNamesRaw(requestParameters: ListTeamNamesRequest): Promise<runtime.ApiResponse<V1ListTeamsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -476,7 +476,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List organizations names
+     * List teams names
      */
     async listTeamNames(requestParameters: ListTeamNamesRequest): Promise<V1ListTeamsResponse> {
         const response = await this.listTeamNamesRaw(requestParameters);
@@ -484,7 +484,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List organizations
+     * List teams
      */
     async listTeamsRaw(requestParameters: ListTeamsRequest): Promise<runtime.ApiResponse<V1ListTeamsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -526,7 +526,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List organizations
+     * List teams
      */
     async listTeams(requestParameters: ListTeamsRequest): Promise<V1ListTeamsResponse> {
         const response = await this.listTeamsRaw(requestParameters);
@@ -534,7 +534,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch organization
+     * Patch team
      */
     async patchTeamRaw(requestParameters: PatchTeamRequest): Promise<runtime.ApiResponse<V1Team>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -571,7 +571,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch organization
+     * Patch team
      */
     async patchTeam(requestParameters: PatchTeamRequest): Promise<V1Team> {
         const response = await this.patchTeamRaw(requestParameters);
@@ -579,7 +579,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch organization member
+     * Patch tram member
      */
     async patchTeamMemberRaw(requestParameters: PatchTeamMemberRequest): Promise<runtime.ApiResponse<V1TeamMember>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -620,7 +620,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch organization member
+     * Patch tram member
      */
     async patchTeamMember(requestParameters: PatchTeamMemberRequest): Promise<V1TeamMember> {
         const response = await this.patchTeamMemberRaw(requestParameters);
@@ -628,7 +628,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update organization
+     * Update team
      */
     async updateTeamRaw(requestParameters: UpdateTeamRequest): Promise<runtime.ApiResponse<V1Team>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -665,7 +665,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update organization
+     * Update team
      */
     async updateTeam(requestParameters: UpdateTeamRequest): Promise<V1Team> {
         const response = await this.updateTeamRaw(requestParameters);
@@ -673,7 +673,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update organization member
+     * Update team member
      */
     async updateTeamMemberRaw(requestParameters: UpdateTeamMemberRequest): Promise<runtime.ApiResponse<V1TeamMember>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -714,7 +714,7 @@ export class TeamsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update organization member
+     * Update team member
      */
     async updateTeamMember(requestParameters: UpdateTeamMemberRequest): Promise<V1TeamMember> {
         const response = await this.updateTeamMemberRaw(requestParameters);

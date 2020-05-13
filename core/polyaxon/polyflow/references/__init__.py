@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polyflow.references.dag import DagReferenceSchema, V1DagReference
-from polyaxon.polyflow.references.hub import HubReferenceSchema, V1HubReference
+from polyaxon.polyflow.references.dag import DagRefSchema, V1DagRef
+from polyaxon.polyflow.references.hub import HubRefSchema, V1HubRef
 from polyaxon.polyflow.references.mixin import RefMixin
-from polyaxon.polyflow.references.path import PathReferenceSchema, V1PathReference
-from polyaxon.polyflow.references.url import UrlReferenceSchema, V1UrlReference
+from polyaxon.polyflow.references.path import PathRefSchema, V1PathRef
+from polyaxon.polyflow.references.url import UrlRefSchema, V1UrlRef

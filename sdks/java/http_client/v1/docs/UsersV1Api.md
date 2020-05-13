@@ -5,16 +5,16 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getUser**](UsersV1Api.md#getUser) | **GET** /api/v1/users | Login
-[**patchUser**](UsersV1Api.md#patchUser) | **PATCH** /api/v1/users | 
-[**updateUser**](UsersV1Api.md#updateUser) | **PUT** /api/v1/users | 
+[**getUser**](UsersV1Api.md#getUser) | **GET** /api/v1/users | Get current user
+[**patchUser**](UsersV1Api.md#patchUser) | **PATCH** /api/v1/users | Patch current user
+[**updateUser**](UsersV1Api.md#updateUser) | **PUT** /api/v1/users | Update current user
 
 
 <a name="getUser"></a>
 # **getUser**
 > V1User getUser()
 
-Login
+Get current user
 
 ### Example
 ```java
@@ -81,7 +81,7 @@ This endpoint does not need any parameter.
 # **patchUser**
 > V1User patchUser(body)
 
-
+Patch current user
 
 ### Example
 ```java
@@ -152,7 +152,7 @@ Name | Type | Description  | Notes
 # **updateUser**
 > V1User updateUser(body)
 
-
+Update current user
 
 ### Example
 ```java

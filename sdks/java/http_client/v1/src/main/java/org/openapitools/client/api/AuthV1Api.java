@@ -130,7 +130,7 @@ public class AuthV1Api {
     }
 
     /**
-     * List organization level queues names
+     * Login
      * 
      * @param body  (required)
      * @return V1Auth
@@ -151,7 +151,7 @@ public class AuthV1Api {
     }
 
     /**
-     * List organization level queues names
+     * Login
      * 
      * @param body  (required)
      * @return ApiResponse&lt;V1Auth&gt;
@@ -173,7 +173,7 @@ public class AuthV1Api {
     }
 
     /**
-     * List organization level queues names (asynchronously)
+     * Login (asynchronously)
      * 
      * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes

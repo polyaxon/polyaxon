@@ -137,7 +137,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Create hub model
+     * Create hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param body Component body (required)
@@ -159,7 +159,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Create hub model
+     * Create hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param body Component body (required)
@@ -182,7 +182,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Create hub model (asynchronously)
+     * Create hub component (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Component body (required)
@@ -274,7 +274,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Delete hub model
+     * Delete hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -294,7 +294,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Delete hub model
+     * Delete hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -316,7 +316,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Delete hub model (asynchronously)
+     * Delete hub component (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -407,7 +407,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Get hub model
+     * Get hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -429,7 +429,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Get hub model
+     * Get hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -452,7 +452,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Get hub model (asynchronously)
+     * Get hub component (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -557,7 +557,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * List hub model names
+     * List hub component names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -582,7 +582,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * List hub model names
+     * List hub component names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -608,7 +608,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * List hub model names (asynchronously)
+     * List hub component names (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -716,7 +716,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * List hub models
+     * List hub components
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -741,7 +741,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * List hub models
+     * List hub components
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -767,7 +767,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * List hub models (asynchronously)
+     * List hub components (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -868,7 +868,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Patch hub model
+     * Patch hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param componentUuid UUID (required)
@@ -891,7 +891,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Patch hub model
+     * Patch hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param componentUuid UUID (required)
@@ -915,7 +915,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Patch hub model (asynchronously)
+     * Patch hub component (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param componentUuid UUID (required)
@@ -1014,7 +1014,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Update hub model
+     * Update hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param componentUuid UUID (required)
@@ -1037,7 +1037,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Update hub model
+     * Update hub component
      * 
      * @param owner Owner of the namespace (required)
      * @param componentUuid UUID (required)
@@ -1061,7 +1061,7 @@ public class HubComponentsV1Api {
     }
 
     /**
-     * Update hub model (asynchronously)
+     * Update hub component (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param componentUuid UUID (required)

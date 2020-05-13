@@ -50,10 +50,10 @@ class V1Reference(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        "hub_reference": "V1HubReference",
-        "dag_reference": "V1DagReference",
-        "url_reference": "V1UrlReference",
-        "path_reference": "V1PathReference",
+        "hub_reference": "V1HubRef",
+        "dag_reference": "V1DagRef",
+        "url_reference": "V1UrlRef",
+        "path_reference": "V1PathRef",
     }
 
     attribute_map = {
@@ -97,7 +97,7 @@ class V1Reference(object):
 
 
         :return: The hub_reference of this V1Reference.  # noqa: E501
-        :rtype: V1HubReference
+        :rtype: V1HubRef
         """
         return self._hub_reference
 
@@ -107,7 +107,7 @@ class V1Reference(object):
 
 
         :param hub_reference: The hub_reference of this V1Reference.  # noqa: E501
-        :type: V1HubReference
+        :type: V1HubRef
         """
 
         self._hub_reference = hub_reference
@@ -118,7 +118,7 @@ class V1Reference(object):
 
 
         :return: The dag_reference of this V1Reference.  # noqa: E501
-        :rtype: V1DagReference
+        :rtype: V1DagRef
         """
         return self._dag_reference
 
@@ -128,7 +128,7 @@ class V1Reference(object):
 
 
         :param dag_reference: The dag_reference of this V1Reference.  # noqa: E501
-        :type: V1DagReference
+        :type: V1DagRef
         """
 
         self._dag_reference = dag_reference
@@ -139,7 +139,7 @@ class V1Reference(object):
 
 
         :return: The url_reference of this V1Reference.  # noqa: E501
-        :rtype: V1UrlReference
+        :rtype: V1UrlRef
         """
         return self._url_reference
 
@@ -149,7 +149,7 @@ class V1Reference(object):
 
 
         :param url_reference: The url_reference of this V1Reference.  # noqa: E501
-        :type: V1UrlReference
+        :type: V1UrlRef
         """
 
         self._url_reference = url_reference
@@ -160,7 +160,7 @@ class V1Reference(object):
 
 
         :return: The path_reference of this V1Reference.  # noqa: E501
-        :rtype: V1PathReference
+        :rtype: V1PathRef
         """
         return self._path_reference
 
@@ -170,7 +170,7 @@ class V1Reference(object):
 
 
         :param path_reference: The path_reference of this V1Reference.  # noqa: E501
-        :type: V1PathReference
+        :type: V1PathRef
         """
 
         self._path_reference = path_reference

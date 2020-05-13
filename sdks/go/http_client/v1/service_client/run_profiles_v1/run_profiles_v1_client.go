@@ -57,7 +57,7 @@ type ClientService interface {
 }
 
 /*
-  CreateRunProfile creates hub component
+  CreateRunProfile creates run profile
 */
 func (a *Client) CreateRunProfile(params *CreateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunProfileOK, *CreateRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -93,7 +93,7 @@ func (a *Client) CreateRunProfile(params *CreateRunProfileParams, authInfo runti
 }
 
 /*
-  DeleteRunProfile deletes hub component
+  DeleteRunProfile deletes run profile
 */
 func (a *Client) DeleteRunProfile(params *DeleteRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunProfileOK, *DeleteRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -129,7 +129,7 @@ func (a *Client) DeleteRunProfile(params *DeleteRunProfileParams, authInfo runti
 }
 
 /*
-  GetRunProfile gets hub component
+  GetRunProfile gets run profile
 */
 func (a *Client) GetRunProfile(params *GetRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunProfileOK, *GetRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -165,7 +165,7 @@ func (a *Client) GetRunProfile(params *GetRunProfileParams, authInfo runtime.Cli
 }
 
 /*
-  ListRunProfileNames lists hub component names
+  ListRunProfileNames lists run profiles names
 */
 func (a *Client) ListRunProfileNames(params *ListRunProfileNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfileNamesOK, *ListRunProfileNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -201,7 +201,7 @@ func (a *Client) ListRunProfileNames(params *ListRunProfileNamesParams, authInfo
 }
 
 /*
-  ListRunProfiles lists hub components
+  ListRunProfiles lists run profiles
 */
 func (a *Client) ListRunProfiles(params *ListRunProfilesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfilesOK, *ListRunProfilesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -237,7 +237,7 @@ func (a *Client) ListRunProfiles(params *ListRunProfilesParams, authInfo runtime
 }
 
 /*
-  PatchRunProfile patches hub component
+  PatchRunProfile patches run profile
 */
 func (a *Client) PatchRunProfile(params *PatchRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunProfileOK, *PatchRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -273,7 +273,7 @@ func (a *Client) PatchRunProfile(params *PatchRunProfileParams, authInfo runtime
 }
 
 /*
-  UpdateRunProfile updates hub component
+  UpdateRunProfile updates run profile
 */
 func (a *Client) UpdateRunProfile(params *UpdateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunProfileOK, *UpdateRunProfileNoContent, error) {
 	// TODO: Validate the params before sending

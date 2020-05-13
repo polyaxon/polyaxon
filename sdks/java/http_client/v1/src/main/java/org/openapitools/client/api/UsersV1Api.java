@@ -123,7 +123,7 @@ public class UsersV1Api {
     }
 
     /**
-     * Login
+     * Get current user
      * 
      * @return V1User
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -143,7 +143,7 @@ public class UsersV1Api {
     }
 
     /**
-     * Login
+     * Get current user
      * 
      * @return ApiResponse&lt;V1User&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -164,7 +164,7 @@ public class UsersV1Api {
     }
 
     /**
-     * Login (asynchronously)
+     * Get current user (asynchronously)
      * 
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -246,7 +246,7 @@ public class UsersV1Api {
     }
 
     /**
-     * 
+     * Patch current user
      * 
      * @param body  (required)
      * @return V1User
@@ -267,7 +267,7 @@ public class UsersV1Api {
     }
 
     /**
-     * 
+     * Patch current user
      * 
      * @param body  (required)
      * @return ApiResponse&lt;V1User&gt;
@@ -289,7 +289,7 @@ public class UsersV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Patch current user (asynchronously)
      * 
      * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -372,7 +372,7 @@ public class UsersV1Api {
     }
 
     /**
-     * 
+     * Update current user
      * 
      * @param body  (required)
      * @return V1User
@@ -393,7 +393,7 @@ public class UsersV1Api {
     }
 
     /**
-     * 
+     * Update current user
      * 
      * @param body  (required)
      * @return ApiResponse&lt;V1User&gt;
@@ -415,7 +415,7 @@ public class UsersV1Api {
     }
 
     /**
-     *  (asynchronously)
+     * Update current user (asynchronously)
      * 
      * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes

@@ -6,10 +6,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**hubReference** | [**V1HubReference**](V1HubReference.md) |  |  [optional]
-**dagReference** | [**V1DagReference**](V1DagReference.md) |  |  [optional]
-**urlReference** | [**V1UrlReference**](V1UrlReference.md) |  |  [optional]
-**pathReference** | [**V1PathReference**](V1PathReference.md) |  |  [optional]
+**hubReference** | [**V1HubRef**](V1HubRef.md) |  |  [optional]
+**dagReference** | [**V1DagRef**](V1DagRef.md) |  |  [optional]
+**urlReference** | [**V1UrlRef**](V1UrlRef.md) |  |  [optional]
+**pathReference** | [**V1PathRef**](V1PathRef.md) |  |  [optional]
 
 
 

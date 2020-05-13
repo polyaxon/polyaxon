@@ -54,7 +54,7 @@ class V1StatusCond(object):
     attribute_map = {"kind": "kind", "operation": "operation", "trigger": "trigger"}
 
     def __init__(
-        self, kind="status", operation=None, trigger=None, local_vars_configuration=None
+        self, kind=None, operation=None, trigger=None, local_vars_configuration=None
     ):  # noqa: E501
         """V1StatusCond - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:

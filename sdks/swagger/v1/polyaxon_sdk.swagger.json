@@ -319,7 +319,7 @@
     },
     "/api/v1/log_handler": {
       "get": {
-        "summary": "Update current user",
+        "summary": "Get log handler",
         "operationId": "GetLogHandler",
         "responses": {
           "200": {
@@ -354,6 +354,7 @@
     },
     "/api/v1/orgs/create": {
       "post": {
+        "summary": "Create organization",
         "operationId": "CreateOrganization",
         "responses": {
           "200": {
@@ -398,7 +399,7 @@
     },
     "/api/v1/orgs/list": {
       "get": {
-        "summary": "Get log handler",
+        "summary": "List organizations",
         "operationId": "ListOrganizations",
         "responses": {
           "200": {
@@ -433,7 +434,7 @@
     },
     "/api/v1/orgs/names": {
       "get": {
-        "summary": "Get versions",
+        "summary": "List organizations names",
         "operationId": "ListOrganizationNames",
         "responses": {
           "200": {
@@ -468,6 +469,7 @@
     },
     "/api/v1/orgs/{owner}": {
       "get": {
+        "summary": "Get organization",
         "operationId": "GetOrganization",
         "responses": {
           "200": {
@@ -509,6 +511,7 @@
         ]
       },
       "delete": {
+        "summary": "Delete organization",
         "operationId": "DeleteOrganization",
         "responses": {
           "200": {
@@ -547,6 +550,7 @@
         ]
       },
       "put": {
+        "summary": "Update organization",
         "operationId": "UpdateOrganization",
         "responses": {
           "200": {
@@ -597,6 +601,7 @@
         ]
       },
       "patch": {
+        "summary": "Patch organization",
         "operationId": "PatchOrganization",
         "responses": {
           "200": {
@@ -1063,7 +1068,7 @@
     },
     "/api/v1/orgs/{owner}/agents": {
       "get": {
-        "summary": "List run profiles",
+        "summary": "List agents",
         "operationId": "ListAgents",
         "responses": {
           "200": {
@@ -1135,7 +1140,7 @@
         ]
       },
       "post": {
-        "summary": "Create run profile",
+        "summary": "Create agent",
         "operationId": "CreateAgent",
         "responses": {
           "200": {
@@ -1188,7 +1193,7 @@
     },
     "/api/v1/orgs/{owner}/agents/names": {
       "get": {
-        "summary": "List run profiles names",
+        "summary": "List agents names",
         "operationId": "ListAgentNames",
         "responses": {
           "200": {
@@ -1262,7 +1267,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent.uuid}": {
       "put": {
-        "summary": "Update run profile",
+        "summary": "Update agent",
         "operationId": "UpdateAgent",
         "responses": {
           "200": {
@@ -1320,7 +1325,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch run profile",
+        "summary": "Patch agent",
         "operationId": "PatchAgent",
         "responses": {
           "200": {
@@ -1380,6 +1385,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent.uuid}/sync": {
       "patch": {
+        "summary": "Sync agent",
         "operationId": "SyncAgent",
         "responses": {
           "200": {
@@ -1436,7 +1442,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues": {
       "get": {
-        "summary": "Get agent",
+        "summary": "List queues",
         "operationId": "ListQueues",
         "responses": {
           "200": {
@@ -1515,7 +1521,7 @@
         ]
       },
       "post": {
-        "summary": "Update agent",
+        "summary": "Create queue",
         "operationId": "CreateQueue",
         "responses": {
           "200": {
@@ -1575,7 +1581,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues/names": {
       "get": {
-        "summary": "Create agent",
+        "summary": "List queues names",
         "operationId": "ListQueueNames",
         "responses": {
           "200": {
@@ -1656,7 +1662,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}": {
       "get": {
-        "summary": "Patch agent",
+        "summary": "Get queue",
         "operationId": "GetQueue",
         "responses": {
           "200": {
@@ -1712,7 +1718,7 @@
         ]
       },
       "delete": {
-        "summary": "Sync agent",
+        "summary": "Delete queue",
         "operationId": "DeleteQueue",
         "responses": {
           "200": {
@@ -1767,7 +1773,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}": {
       "put": {
-        "summary": "Delete agent",
+        "summary": "Update queue",
         "operationId": "UpdateQueue",
         "responses": {
           "200": {
@@ -1832,7 +1838,7 @@
         ]
       },
       "patch": {
-        "summary": "Get State (queues/runs)",
+        "summary": "Patch queue",
         "operationId": "PatchQueue",
         "responses": {
           "200": {
@@ -1899,7 +1905,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}": {
       "get": {
-        "summary": "Get run profile",
+        "summary": "Get agent",
         "operationId": "GetAgent",
         "responses": {
           "200": {
@@ -1948,7 +1954,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete run profile",
+        "summary": "Delete agent",
         "operationId": "DeleteAgent",
         "responses": {
           "200": {
@@ -1996,6 +2002,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}/state": {
       "get": {
+        "summary": "Get State (queues/runs)",
         "operationId": "GetAgentState",
         "responses": {
           "200": {
@@ -2046,6 +2053,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}/statuses": {
       "get": {
+        "summary": "Get agent status",
         "operationId": "GetAgentStatuses",
         "responses": {
           "200": {
@@ -2094,6 +2102,7 @@
         ]
       },
       "post": {
+        "summary": "Create new run status",
         "operationId": "CreateAgentStatus",
         "responses": {
           "200": {
@@ -2152,7 +2161,7 @@
     },
     "/api/v1/orgs/{owner}/components": {
       "get": {
-        "summary": "List hub models",
+        "summary": "List hub components",
         "operationId": "ListHubComponents",
         "responses": {
           "200": {
@@ -2224,7 +2233,7 @@
         ]
       },
       "post": {
-        "summary": "Create hub model",
+        "summary": "Create hub component",
         "operationId": "CreateHubComponent",
         "responses": {
           "200": {
@@ -2277,7 +2286,7 @@
     },
     "/api/v1/orgs/{owner}/components/names": {
       "get": {
-        "summary": "List hub model names",
+        "summary": "List hub component names",
         "operationId": "ListHubComponebtNames",
         "responses": {
           "200": {
@@ -2351,7 +2360,7 @@
     },
     "/api/v1/orgs/{owner}/components/{component.uuid}": {
       "put": {
-        "summary": "Update hub model",
+        "summary": "Update hub component",
         "operationId": "UpdateHubComponent",
         "responses": {
           "200": {
@@ -2409,7 +2418,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch hub model",
+        "summary": "Patch hub component",
         "operationId": "PatchHubComponent",
         "responses": {
           "200": {
@@ -2469,7 +2478,7 @@
     },
     "/api/v1/orgs/{owner}/components/{uuid}": {
       "get": {
-        "summary": "Get hub model",
+        "summary": "Get hub component",
         "operationId": "GetHubComponent",
         "responses": {
           "200": {
@@ -2518,7 +2527,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete hub model",
+        "summary": "Delete hub component",
         "operationId": "DeleteHubComponent",
         "responses": {
           "200": {
@@ -2980,6 +2989,7 @@
     },
     "/api/v1/orgs/{owner}/dashboards": {
       "get": {
+        "summary": "List dashboards",
         "operationId": "ListDashboards",
         "responses": {
           "200": {
@@ -3051,6 +3061,7 @@
         ]
       },
       "post": {
+        "summary": "Create dashboard",
         "operationId": "CreateDashboard",
         "responses": {
           "200": {
@@ -3103,6 +3114,7 @@
     },
     "/api/v1/orgs/{owner}/dashboards/names": {
       "get": {
+        "summary": "List dashboard names",
         "operationId": "ListDashboardNames",
         "responses": {
           "200": {
@@ -3176,6 +3188,7 @@
     },
     "/api/v1/orgs/{owner}/dashboards/{dashboard.uuid}": {
       "put": {
+        "summary": "Update dashboard",
         "operationId": "UpdateDashboard",
         "responses": {
           "200": {
@@ -3233,6 +3246,7 @@
         ]
       },
       "patch": {
+        "summary": "Patch dashboard",
         "operationId": "PatchDashboard",
         "responses": {
           "200": {
@@ -3292,6 +3306,7 @@
     },
     "/api/v1/orgs/{owner}/dashboards/{uuid}": {
       "get": {
+        "summary": "Get dashboard",
         "operationId": "GetDashboard",
         "responses": {
           "200": {
@@ -3340,6 +3355,7 @@
         ]
       },
       "delete": {
+        "summary": "Delete dashboard",
         "operationId": "DeleteDashboard",
         "responses": {
           "200": {
@@ -3387,6 +3403,7 @@
     },
     "/api/v1/orgs/{owner}/members": {
       "get": {
+        "summary": "Get organization members",
         "operationId": "ListOrganizationMembers",
         "responses": {
           "200": {
@@ -3458,6 +3475,7 @@
         ]
       },
       "post": {
+        "summary": "Create organization member",
         "operationId": "CreateOrganizationMember",
         "responses": {
           "200": {
@@ -3510,6 +3528,7 @@
     },
     "/api/v1/orgs/{owner}/members/{member.user}": {
       "put": {
+        "summary": "Update organization member",
         "operationId": "UpdateOrganizationMember",
         "responses": {
           "200": {
@@ -3567,6 +3586,7 @@
         ]
       },
       "patch": {
+        "summary": "Patch organization member",
         "operationId": "PatchOrganizationMember",
         "responses": {
           "200": {
@@ -3626,6 +3646,7 @@
     },
     "/api/v1/orgs/{owner}/members/{user}": {
       "get": {
+        "summary": "Get organization member details",
         "operationId": "GetOrganizationMember",
         "responses": {
           "200": {
@@ -3674,6 +3695,7 @@
         ]
       },
       "delete": {
+        "summary": "Delete organization member details",
         "operationId": "DeleteOrganizationMember",
         "responses": {
           "200": {
@@ -3721,7 +3743,7 @@
     },
     "/api/v1/orgs/{owner}/models": {
       "get": {
-        "summary": "List dashboards",
+        "summary": "List hub models",
         "operationId": "ListHubModels",
         "responses": {
           "200": {
@@ -3793,7 +3815,7 @@
         ]
       },
       "post": {
-        "summary": "Create dashboard",
+        "summary": "Create hub model",
         "operationId": "CreateHubModel",
         "responses": {
           "200": {
@@ -3846,7 +3868,7 @@
     },
     "/api/v1/orgs/{owner}/models/names": {
       "get": {
-        "summary": "List dashboard names",
+        "summary": "List hub model names",
         "operationId": "ListHubModelNames",
         "responses": {
           "200": {
@@ -3920,7 +3942,7 @@
     },
     "/api/v1/orgs/{owner}/models/{model.uuid}": {
       "put": {
-        "summary": "Update dashboard",
+        "summary": "Update hub model",
         "operationId": "UpdateHubModel",
         "responses": {
           "200": {
@@ -3978,7 +4000,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch dashboard",
+        "summary": "Patch hub model",
         "operationId": "PatchHubModel",
         "responses": {
           "200": {
@@ -4038,7 +4060,7 @@
     },
     "/api/v1/orgs/{owner}/models/{uuid}": {
       "get": {
-        "summary": "Get dashboard",
+        "summary": "Get hub model",
         "operationId": "GetHubModel",
         "responses": {
           "200": {
@@ -4087,7 +4109,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete dashboard",
+        "summary": "Delete hub model",
         "operationId": "DeleteHubModel",
         "responses": {
           "200": {
@@ -4135,7 +4157,7 @@
     },
     "/api/v1/orgs/{owner}/queues": {
       "get": {
-        "summary": "List agents",
+        "summary": "List organization level queues",
         "operationId": "ListOrganizationQueues",
         "responses": {
           "200": {
@@ -4209,7 +4231,7 @@
     },
     "/api/v1/orgs/{owner}/queues/names": {
       "get": {
-        "summary": "List agents names",
+        "summary": "List organization level queues names",
         "operationId": "ListOrganizationQueueNames",
         "responses": {
           "200": {
@@ -4283,7 +4305,7 @@
     },
     "/api/v1/orgs/{owner}/run_profiles": {
       "get": {
-        "summary": "List hub components",
+        "summary": "List run profiles",
         "operationId": "ListRunProfiles",
         "responses": {
           "200": {
@@ -4355,7 +4377,7 @@
         ]
       },
       "post": {
-        "summary": "Create hub component",
+        "summary": "Create run profile",
         "operationId": "CreateRunProfile",
         "responses": {
           "200": {
@@ -4408,7 +4430,7 @@
     },
     "/api/v1/orgs/{owner}/run_profiles/names": {
       "get": {
-        "summary": "List hub component names",
+        "summary": "List run profiles names",
         "operationId": "ListRunProfileNames",
         "responses": {
           "200": {
@@ -4482,7 +4504,7 @@
     },
     "/api/v1/orgs/{owner}/run_profiles/{run_profile.uuid}": {
       "put": {
-        "summary": "Update hub component",
+        "summary": "Update run profile",
         "operationId": "UpdateRunProfile",
         "responses": {
           "200": {
@@ -4540,7 +4562,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch hub component",
+        "summary": "Patch run profile",
         "operationId": "PatchRunProfile",
         "responses": {
           "200": {
@@ -4600,7 +4622,7 @@
     },
     "/api/v1/orgs/{owner}/run_profiles/{uuid}": {
       "get": {
-        "summary": "Get hub component",
+        "summary": "Get run profile",
         "operationId": "GetRunProfile",
         "responses": {
           "200": {
@@ -4649,7 +4671,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete hub component",
+        "summary": "Delete run profile",
         "operationId": "DeleteRunProfile",
         "responses": {
           "200": {
@@ -5111,7 +5133,7 @@
     },
     "/api/v1/orgs/{owner}/teams": {
       "get": {
-        "summary": "List organizations",
+        "summary": "List teams",
         "operationId": "ListTeams",
         "responses": {
           "200": {
@@ -5183,7 +5205,7 @@
         ]
       },
       "post": {
-        "summary": "Create organization",
+        "summary": "Create team",
         "operationId": "CreateTeam",
         "responses": {
           "200": {
@@ -5236,7 +5258,7 @@
     },
     "/api/v1/orgs/{owner}/teams/names": {
       "get": {
-        "summary": "List organizations names",
+        "summary": "List teams names",
         "operationId": "ListTeamNames",
         "responses": {
           "200": {
@@ -5310,7 +5332,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team.name}": {
       "put": {
-        "summary": "Update organization",
+        "summary": "Update team",
         "operationId": "UpdateTeam",
         "responses": {
           "200": {
@@ -5368,7 +5390,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch organization",
+        "summary": "Patch team",
         "operationId": "PatchTeam",
         "responses": {
           "200": {
@@ -5428,7 +5450,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team}": {
       "get": {
-        "summary": "Get organization",
+        "summary": "Get team",
         "operationId": "GetTeam",
         "responses": {
           "200": {
@@ -5477,7 +5499,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete organization",
+        "summary": "Delete team",
         "operationId": "DeleteTeam",
         "responses": {
           "200": {
@@ -5525,7 +5547,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team}/members": {
       "get": {
-        "summary": "Get organization members",
+        "summary": "Get team members",
         "operationId": "ListTeamMembers",
         "responses": {
           "200": {
@@ -5604,7 +5626,7 @@
         ]
       },
       "post": {
-        "summary": "Create organization member",
+        "summary": "Create team member",
         "operationId": "CreateTeamMember",
         "responses": {
           "200": {
@@ -5664,7 +5686,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}": {
       "put": {
-        "summary": "Update organization member",
+        "summary": "Update team member",
         "operationId": "UpdateTeamMember",
         "responses": {
           "200": {
@@ -5729,7 +5751,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch organization member",
+        "summary": "Patch tram member",
         "operationId": "PatchTeamMember",
         "responses": {
           "200": {
@@ -5796,7 +5818,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team}/members/{user}": {
       "get": {
-        "summary": "Get organization member details",
+        "summary": "Get team member details",
         "operationId": "GetTeamMember",
         "responses": {
           "200": {
@@ -5852,7 +5874,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete organization member details",
+        "summary": "Delete team member details",
         "operationId": "DeleteTeamMember",
         "responses": {
           "200": {
@@ -5907,7 +5929,7 @@
     },
     "/api/v1/users": {
       "get": {
-        "summary": "Login",
+        "summary": "Get current user",
         "operationId": "GetUser",
         "responses": {
           "200": {
@@ -5940,6 +5962,7 @@
         ]
       },
       "put": {
+        "summary": "Update current user",
         "operationId": "UpdateUser",
         "responses": {
           "200": {
@@ -5982,6 +6005,7 @@
         ]
       },
       "patch": {
+        "summary": "Patch current user",
         "operationId": "PatchUser",
         "responses": {
           "200": {
@@ -6026,7 +6050,7 @@
     },
     "/api/v1/users/token": {
       "post": {
-        "summary": "List organization level queues names",
+        "summary": "Login",
         "operationId": "Login",
         "responses": {
           "200": {
@@ -6071,7 +6095,7 @@
     },
     "/api/v1/version": {
       "get": {
-        "summary": "Get current user",
+        "summary": "Get versions",
         "operationId": "GetVersions",
         "responses": {
           "200": {
@@ -10340,7 +10364,7 @@
     },
     "/schemas": {
       "get": {
-        "summary": "List teams names",
+        "summary": "Get random",
         "operationId": "NoOp",
         "responses": {
           "200": {
@@ -11855,22 +11879,22 @@
         "disable": {
           "type": "boolean",
           "format": "boolean",
-          "title": "Optional flag to disable cache"
+          "title": "Optional flag to disable cache, Cache is enabled by default"
         },
         "ttl": {
           "type": "integer",
           "format": "int32",
-          "title": "Optional TTL for cache before it gets invalidated automatically"
+          "title": "Optional time to live for the cache before it gets invalidated automatically, \nthe TTL is caclculated based on the time the run starts"
         },
         "inputs": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Optional Input' names to consider for the cache"
+          "title": "Optional Inputs' names to consider for the cache"
         }
       },
-      "title": "Cache specification"
+      "title": "Cache specification\nCache is calculated based on inputs state as well as component version if used"
     },
     "v1ClaimConnection": {
       "type": "object",
@@ -11977,6 +12001,13 @@
         "schedule": {
           "type": "object",
           "title": "Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
         },
         "parallel": {
           "type": "object",
@@ -12358,7 +12389,7 @@
       },
       "title": "Dag specificaiton"
     },
-    "v1DagReference": {
+    "v1DagRef": {
       "type": "object",
       "properties": {
         "kind": {
@@ -13564,7 +13595,7 @@
       },
       "title": "Hub model specification"
     },
-    "v1HubReference": {
+    "v1HubRef": {
       "type": "object",
       "properties": {
         "kind": {
@@ -13821,8 +13852,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of condition, should be equal to \"io\"",
-          "default": "io"
+          "title": "Kind of condition, should be equal to \"io\""
         },
         "param": {
           "type": "string",
@@ -14706,6 +14736,13 @@
           "type": "object",
           "title": "Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)"
         },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+        },
         "parallel": {
           "type": "object",
           "title": "Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
@@ -14724,7 +14761,7 @@
         "conditions": {
           "type": "array",
           "items": {
-            "type": "object"
+            "type": "string"
           },
           "title": "An optional list of condition to check before starting the run, entities should be a valid Condition"
         },
@@ -14999,7 +15036,7 @@
       },
       "title": "Param search specification"
     },
-    "v1PathReference": {
+    "v1PathRef": {
       "type": "object",
       "properties": {
         "kind": {
@@ -15401,16 +15438,16 @@
       "type": "object",
       "properties": {
         "hub_reference": {
-          "$ref": "#/definitions/v1HubReference"
+          "$ref": "#/definitions/v1HubRef"
         },
         "dag_reference": {
-          "$ref": "#/definitions/v1DagReference"
+          "$ref": "#/definitions/v1DagRef"
         },
         "url_reference": {
-          "$ref": "#/definitions/v1UrlReference"
+          "$ref": "#/definitions/v1UrlRef"
         },
         "path_reference": {
-          "$ref": "#/definitions/v1PathReference"
+          "$ref": "#/definitions/v1PathRef"
         }
       },
       "title": "Reference specification"
@@ -15855,6 +15892,9 @@
         "run": {
           "$ref": "#/definitions/v1RunSchema"
         },
+        "operation": {
+          "$ref": "#/definitions/v1Operation"
+        },
         "compiled_operation": {
           "$ref": "#/definitions/v1CompiledOperation"
         },
@@ -15867,7 +15907,7 @@
         "matrix": {
           "$ref": "#/definitions/v1Matrix"
         },
-        "refrence": {
+        "reference": {
           "$ref": "#/definitions/v1Reference"
         },
         "artifacts_mount": {
@@ -16214,8 +16254,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of condition, should be equal to \"status\"",
-          "default": "status"
+          "title": "Kind of condition, should be equal to \"status\""
         },
         "operation": {
           "type": "string",
@@ -16470,7 +16509,7 @@
       },
       "title": "Uri type specification"
     },
-    "v1UrlReference": {
+    "v1UrlRef": {
       "type": "object",
       "properties": {
         "kind": {

@@ -120,7 +120,7 @@ export interface UpdateAgentRequest {
 export class AgentsV1Api extends runtime.BaseAPI {
 
     /**
-     * Create run profile
+     * Create agent
      */
     async createAgentRaw(requestParameters: CreateAgentRequest): Promise<runtime.ApiResponse<V1Agent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -153,7 +153,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Create run profile
+     * Create agent
      */
     async createAgent(requestParameters: CreateAgentRequest): Promise<V1Agent> {
         const response = await this.createAgentRaw(requestParameters);
@@ -161,6 +161,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Create new run status
      */
     async createAgentStatusRaw(requestParameters: CreateAgentStatusRequest): Promise<runtime.ApiResponse<V1Status>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -197,6 +198,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Create new run status
      */
     async createAgentStatus(requestParameters: CreateAgentStatusRequest): Promise<V1Status> {
         const response = await this.createAgentStatusRaw(requestParameters);
@@ -204,7 +206,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete run profile
+     * Delete agent
      */
     async deleteAgentRaw(requestParameters: DeleteAgentRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -234,14 +236,14 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Delete run profile
+     * Delete agent
      */
     async deleteAgent(requestParameters: DeleteAgentRequest): Promise<void> {
         await this.deleteAgentRaw(requestParameters);
     }
 
     /**
-     * Get run profile
+     * Get agent
      */
     async getAgentRaw(requestParameters: GetAgentRequest): Promise<runtime.ApiResponse<V1Agent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -271,7 +273,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get run profile
+     * Get agent
      */
     async getAgent(requestParameters: GetAgentRequest): Promise<V1Agent> {
         const response = await this.getAgentRaw(requestParameters);
@@ -279,6 +281,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get State (queues/runs)
      */
     async getAgentStateRaw(requestParameters: GetAgentStateRequest): Promise<runtime.ApiResponse<V1AgentStateResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -308,6 +311,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get State (queues/runs)
      */
     async getAgentState(requestParameters: GetAgentStateRequest): Promise<V1AgentStateResponse> {
         const response = await this.getAgentStateRaw(requestParameters);
@@ -315,6 +319,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get agent status
      */
     async getAgentStatusesRaw(requestParameters: GetAgentStatusesRequest): Promise<runtime.ApiResponse<V1Status>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -344,6 +349,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Get agent status
      */
     async getAgentStatuses(requestParameters: GetAgentStatusesRequest): Promise<V1Status> {
         const response = await this.getAgentStatusesRaw(requestParameters);
@@ -351,7 +357,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List run profiles names
+     * List agents names
      */
     async listAgentNamesRaw(requestParameters: ListAgentNamesRequest): Promise<runtime.ApiResponse<V1ListAgentsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -393,7 +399,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List run profiles names
+     * List agents names
      */
     async listAgentNames(requestParameters: ListAgentNamesRequest): Promise<V1ListAgentsResponse> {
         const response = await this.listAgentNamesRaw(requestParameters);
@@ -401,7 +407,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List run profiles
+     * List agents
      */
     async listAgentsRaw(requestParameters: ListAgentsRequest): Promise<runtime.ApiResponse<V1ListAgentsResponse>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -443,7 +449,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List run profiles
+     * List agents
      */
     async listAgents(requestParameters: ListAgentsRequest): Promise<V1ListAgentsResponse> {
         const response = await this.listAgentsRaw(requestParameters);
@@ -451,7 +457,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch run profile
+     * Patch agent
      */
     async patchAgentRaw(requestParameters: PatchAgentRequest): Promise<runtime.ApiResponse<V1Agent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -488,7 +494,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Patch run profile
+     * Patch agent
      */
     async patchAgent(requestParameters: PatchAgentRequest): Promise<V1Agent> {
         const response = await this.patchAgentRaw(requestParameters);
@@ -496,6 +502,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Sync agent
      */
     async syncAgentRaw(requestParameters: SyncAgentRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -532,13 +539,14 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
+     * Sync agent
      */
     async syncAgent(requestParameters: SyncAgentRequest): Promise<void> {
         await this.syncAgentRaw(requestParameters);
     }
 
     /**
-     * Update run profile
+     * Update agent
      */
     async updateAgentRaw(requestParameters: UpdateAgentRequest): Promise<runtime.ApiResponse<V1Agent>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -575,7 +583,7 @@ export class AgentsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Update run profile
+     * Update agent
      */
     async updateAgent(requestParameters: UpdateAgentRequest): Promise<V1Agent> {
         const response = await this.updateAgentRaw(requestParameters);

@@ -54,11 +54,12 @@ class V1Schemas(object):
         "early_stopping": "V1EarlyStopping",
         "parallel": "V1Parallel",
         "run": "V1RunSchema",
+        "operation": "V1Operation",
         "compiled_operation": "V1CompiledOperation",
         "schedule": "V1Schedule",
         "connection_schema": "V1ConnectionSchema",
         "matrix": "V1Matrix",
-        "refrence": "V1Reference",
+        "reference": "V1Reference",
         "artifacts_mount": "V1ArtifactsMount",
         "polyaxon_sidecar_container": "V1PolyaxonSidecarContainer",
         "polyaxon_init_container": "V1PolyaxonInitContainer",
@@ -83,11 +84,12 @@ class V1Schemas(object):
         "early_stopping": "early_stopping",
         "parallel": "parallel",
         "run": "run",
+        "operation": "operation",
         "compiled_operation": "compiled_operation",
         "schedule": "schedule",
         "connection_schema": "connection_schema",
         "matrix": "matrix",
-        "refrence": "refrence",
+        "reference": "reference",
         "artifacts_mount": "artifacts_mount",
         "polyaxon_sidecar_container": "polyaxon_sidecar_container",
         "polyaxon_init_container": "polyaxon_init_container",
@@ -113,11 +115,12 @@ class V1Schemas(object):
         early_stopping=None,
         parallel=None,
         run=None,
+        operation=None,
         compiled_operation=None,
         schedule=None,
         connection_schema=None,
         matrix=None,
-        refrence=None,
+        reference=None,
         artifacts_mount=None,
         polyaxon_sidecar_container=None,
         polyaxon_init_container=None,
@@ -146,11 +149,12 @@ class V1Schemas(object):
         self._early_stopping = None
         self._parallel = None
         self._run = None
+        self._operation = None
         self._compiled_operation = None
         self._schedule = None
         self._connection_schema = None
         self._matrix = None
-        self._refrence = None
+        self._reference = None
         self._artifacts_mount = None
         self._polyaxon_sidecar_container = None
         self._polyaxon_init_container = None
@@ -178,6 +182,8 @@ class V1Schemas(object):
             self.parallel = parallel
         if run is not None:
             self.run = run
+        if operation is not None:
+            self.operation = operation
         if compiled_operation is not None:
             self.compiled_operation = compiled_operation
         if schedule is not None:
@@ -186,8 +192,8 @@ class V1Schemas(object):
             self.connection_schema = connection_schema
         if matrix is not None:
             self.matrix = matrix
-        if refrence is not None:
-            self.refrence = refrence
+        if reference is not None:
+            self.reference = reference
         if artifacts_mount is not None:
             self.artifacts_mount = artifacts_mount
         if polyaxon_sidecar_container is not None:
@@ -308,6 +314,27 @@ class V1Schemas(object):
         self._run = run
 
     @property
+    def operation(self):
+        """Gets the operation of this V1Schemas.  # noqa: E501
+
+
+        :return: The operation of this V1Schemas.  # noqa: E501
+        :rtype: V1Operation
+        """
+        return self._operation
+
+    @operation.setter
+    def operation(self, operation):
+        """Sets the operation of this V1Schemas.
+
+
+        :param operation: The operation of this V1Schemas.  # noqa: E501
+        :type: V1Operation
+        """
+
+        self._operation = operation
+
+    @property
     def compiled_operation(self):
         """Gets the compiled_operation of this V1Schemas.  # noqa: E501
 
@@ -392,25 +419,25 @@ class V1Schemas(object):
         self._matrix = matrix
 
     @property
-    def refrence(self):
-        """Gets the refrence of this V1Schemas.  # noqa: E501
+    def reference(self):
+        """Gets the reference of this V1Schemas.  # noqa: E501
 
 
-        :return: The refrence of this V1Schemas.  # noqa: E501
+        :return: The reference of this V1Schemas.  # noqa: E501
         :rtype: V1Reference
         """
-        return self._refrence
+        return self._reference
 
-    @refrence.setter
-    def refrence(self, refrence):
-        """Sets the refrence of this V1Schemas.
+    @reference.setter
+    def reference(self, reference):
+        """Sets the reference of this V1Schemas.
 
 
-        :param refrence: The refrence of this V1Schemas.  # noqa: E501
+        :param reference: The reference of this V1Schemas.  # noqa: E501
         :type: V1Reference
         """
 
-        self._refrence = refrence
+        self._reference = reference
 
     @property
     def artifacts_mount(self):

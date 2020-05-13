@@ -60,6 +60,7 @@ class V1CompiledOperation(object):
         "queue": "str",
         "cache": "V1Cache",
         "schedule": "object",
+        "events": "list[object]",
         "parallel": "object",
         "dependencies": "list[str]",
         "trigger": "V1TriggerPolicy",
@@ -83,6 +84,7 @@ class V1CompiledOperation(object):
         "queue": "queue",
         "cache": "cache",
         "schedule": "schedule",
+        "events": "events",
         "parallel": "parallel",
         "dependencies": "dependencies",
         "trigger": "trigger",
@@ -107,6 +109,7 @@ class V1CompiledOperation(object):
         queue=None,
         cache=None,
         schedule=None,
+        events=None,
         parallel=None,
         dependencies=None,
         trigger=None,
@@ -134,6 +137,7 @@ class V1CompiledOperation(object):
         self._queue = None
         self._cache = None
         self._schedule = None
+        self._events = None
         self._parallel = None
         self._dependencies = None
         self._trigger = None
@@ -166,6 +170,8 @@ class V1CompiledOperation(object):
             self.cache = cache
         if schedule is not None:
             self.schedule = schedule
+        if events is not None:
+            self.events = events
         if parallel is not None:
             self.parallel = parallel
         if dependencies is not None:
@@ -396,6 +402,27 @@ class V1CompiledOperation(object):
         """
 
         self._schedule = schedule
+
+    @property
+    def events(self):
+        """Gets the events of this V1CompiledOperation.  # noqa: E501
+
+
+        :return: The events of this V1CompiledOperation.  # noqa: E501
+        :rtype: list[object]
+        """
+        return self._events
+
+    @events.setter
+    def events(self, events):
+        """Sets the events of this V1CompiledOperation.
+
+
+        :param events: The events of this V1CompiledOperation.  # noqa: E501
+        :type: list[object]
+        """
+
+        self._events = events
 
     @property
     def parallel(self):

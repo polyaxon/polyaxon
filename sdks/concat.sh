@@ -13,7 +13,7 @@ jq -s '
 	.info.description = "Polyaxon SDKs and REST API specification." |
 	.info.version = "1.0.89" |
 	.info.contact = {"name": "Polyaxon sdk", "url": "https://github.com/polyaxon/polyaxon", "email": "contact@polyaxon.com"}
-	' swagger/v1/{polyaxon_sdk_apis,owner.artifact,project.artifact,run.artifact,conditions.default,connections.default,earlyStopping.default,matrix.default,parallel.default,reference.default,run.default,schedule.default}.swagger.json > "swagger/v1/polyaxon_sdk.swagger.json"
+	' swagger/v1/{polyaxon_sdk_apis,owner.artifact,project.artifact,run.artifact,connections.default,earlyStopping.default,matrix.default,parallel.default,reference.default,run.default,schedule.default}.swagger.json > "swagger/v1/polyaxon_sdk.swagger.json"
 
 # Delete copied swagger files
 rm swagger/v1/polyaxon_sdk_apis.swagger.json

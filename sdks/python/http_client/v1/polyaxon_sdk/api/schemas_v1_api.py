@@ -51,7 +51,7 @@ class SchemasV1Api(object):
         self.api_client = api_client
 
     def no_op(self, **kwargs):  # noqa: E501
-        """List teams names  # noqa: E501
+        """Get random  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -74,7 +74,7 @@ class SchemasV1Api(object):
         return self.no_op_with_http_info(**kwargs)  # noqa: E501
 
     def no_op_with_http_info(self, **kwargs):  # noqa: E501
-        """List teams names  # noqa: E501
+        """Get random  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

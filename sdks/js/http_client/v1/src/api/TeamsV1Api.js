@@ -62,7 +62,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Create organization
+     * Create team
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Team} body Team body
      * @param {module:api/TeamsV1Api~createTeamCallback} callback The callback function, accepting three arguments: error, data, response
@@ -109,7 +109,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Create organization member
+     * Create team member
      * @param {String} owner Owner of the namespace
      * @param {String} team Team
      * @param {module:model/V1TeamMember} body Team body
@@ -162,7 +162,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Delete organization
+     * Delete team
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
      * @param {module:api/TeamsV1Api~deleteTeamCallback} callback The callback function, accepting three arguments: error, data, response
@@ -209,7 +209,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Delete organization member details
+     * Delete team member details
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
      * @param {String} user Member under team
@@ -262,7 +262,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Get organization
+     * Get team
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
      * @param {module:api/TeamsV1Api~getTeamCallback} callback The callback function, accepting three arguments: error, data, response
@@ -310,7 +310,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Get organization member details
+     * Get team member details
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
      * @param {String} user Member under team
@@ -364,7 +364,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Get organization members
+     * Get team members
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
      * @param {Object} opts Optional parameters
@@ -422,7 +422,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * List organizations names
+     * List teams names
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -474,7 +474,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * List organizations
+     * List teams
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -526,7 +526,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Patch organization
+     * Patch team
      * @param {String} owner Owner of the namespace
      * @param {String} team_name Name
      * @param {module:model/V1Team} body Team body
@@ -579,7 +579,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Patch organization member
+     * Patch tram member
      * @param {String} owner Owner of the namespace
      * @param {String} team Team
      * @param {String} member_user User
@@ -638,7 +638,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Update organization
+     * Update team
      * @param {String} owner Owner of the namespace
      * @param {String} team_name Name
      * @param {module:model/V1Team} body Team body
@@ -691,7 +691,7 @@ export default class TeamsV1Api {
      */
 
     /**
-     * Update organization member
+     * Update team member
      * @param {String} owner Owner of the namespace
      * @param {String} team Team
      * @param {String} member_user User

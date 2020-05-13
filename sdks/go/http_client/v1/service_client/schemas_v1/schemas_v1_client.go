@@ -45,7 +45,7 @@ type ClientService interface {
 }
 
 /*
-  NoOp lists teams names
+  NoOp gets random
 */
 func (a *Client) NoOp(params *NoOpParams, authInfo runtime.ClientAuthInfoWriter) (*NoOpOK, *NoOpNoContent, error) {
 	// TODO: Validate the params before sending

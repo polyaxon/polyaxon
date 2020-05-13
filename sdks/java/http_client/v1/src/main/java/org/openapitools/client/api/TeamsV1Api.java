@@ -139,7 +139,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Create organization
+     * Create team
      * 
      * @param owner Owner of the namespace (required)
      * @param body Team body (required)
@@ -161,7 +161,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Create organization
+     * Create team
      * 
      * @param owner Owner of the namespace (required)
      * @param body Team body (required)
@@ -184,7 +184,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Create organization (asynchronously)
+     * Create team (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param body Team body (required)
@@ -282,7 +282,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Create organization member
+     * Create team member
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
@@ -305,7 +305,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Create organization member
+     * Create team member
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
@@ -329,7 +329,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Create organization member (asynchronously)
+     * Create team member (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
@@ -422,7 +422,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Delete organization
+     * Delete team
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -442,7 +442,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Delete organization
+     * Delete team
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -464,7 +464,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Delete organization (asynchronously)
+     * Delete team (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -562,7 +562,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Delete organization member details
+     * Delete team member details
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -583,7 +583,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Delete organization member details
+     * Delete team member details
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -606,7 +606,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Delete organization member details (asynchronously)
+     * Delete team member details (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -698,7 +698,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization
+     * Get team
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -720,7 +720,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization
+     * Get team
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -743,7 +743,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization (asynchronously)
+     * Get team (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -842,7 +842,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization member details
+     * Get team member details
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -865,7 +865,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization member details
+     * Get team member details
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -889,7 +889,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization member details (asynchronously)
+     * Get team member details (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -1002,7 +1002,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization members
+     * Get team members
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -1028,7 +1028,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization members
+     * Get team members
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -1055,7 +1055,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Get organization members (asynchronously)
+     * Get team members (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
@@ -1164,7 +1164,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * List organizations names
+     * List teams names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1189,7 +1189,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * List organizations names
+     * List teams names
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1215,7 +1215,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * List organizations names (asynchronously)
+     * List teams names (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1323,7 +1323,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * List organizations
+     * List teams
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1348,7 +1348,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * List organizations
+     * List teams
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1374,7 +1374,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * List organizations (asynchronously)
+     * List teams (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
@@ -1475,7 +1475,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Patch organization
+     * Patch team
      * 
      * @param owner Owner of the namespace (required)
      * @param teamName Name (required)
@@ -1498,7 +1498,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Patch organization
+     * Patch team
      * 
      * @param owner Owner of the namespace (required)
      * @param teamName Name (required)
@@ -1522,7 +1522,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Patch organization (asynchronously)
+     * Patch team (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param teamName Name (required)
@@ -1628,7 +1628,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Patch organization member
+     * Patch tram member
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
@@ -1652,7 +1652,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Patch organization member
+     * Patch tram member
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
@@ -1677,7 +1677,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Patch organization member (asynchronously)
+     * Patch tram member (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
@@ -1777,7 +1777,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Update organization
+     * Update team
      * 
      * @param owner Owner of the namespace (required)
      * @param teamName Name (required)
@@ -1800,7 +1800,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Update organization
+     * Update team
      * 
      * @param owner Owner of the namespace (required)
      * @param teamName Name (required)
@@ -1824,7 +1824,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Update organization (asynchronously)
+     * Update team (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param teamName Name (required)
@@ -1930,7 +1930,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Update organization member
+     * Update team member
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
@@ -1954,7 +1954,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Update organization member
+     * Update team member
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
@@ -1979,7 +1979,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Update organization member (asynchronously)
+     * Update team member (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team (required)

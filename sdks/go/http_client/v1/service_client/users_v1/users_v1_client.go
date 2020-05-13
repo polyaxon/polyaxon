@@ -49,7 +49,7 @@ type ClientService interface {
 }
 
 /*
-  GetUser logins
+  GetUser gets current user
 */
 func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, *GetUserNoContent, error) {
 	// TODO: Validate the params before sending
@@ -85,7 +85,7 @@ func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoW
 }
 
 /*
-  PatchUser patch user API
+  PatchUser patches current user
 */
 func (a *Client) PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthInfoWriter) (*PatchUserOK, *PatchUserNoContent, error) {
 	// TODO: Validate the params before sending
@@ -121,7 +121,7 @@ func (a *Client) PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthI
 }
 
 /*
-  UpdateUser update user API
+  UpdateUser updates current user
 */
 func (a *Client) UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateUserOK, *UpdateUserNoContent, error) {
 	// TODO: Validate the params before sending

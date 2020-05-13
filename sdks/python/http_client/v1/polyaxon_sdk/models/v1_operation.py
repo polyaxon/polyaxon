@@ -60,10 +60,11 @@ class V1Operation(object):
         "queue": "str",
         "cache": "V1Cache",
         "schedule": "object",
+        "events": "list[object]",
         "parallel": "object",
         "dependencies": "list[str]",
         "trigger": "V1TriggerPolicy",
-        "conditions": "list[object]",
+        "conditions": "list[str]",
         "skip_on_upstream_skip": "bool",
         "termination": "V1Termination",
         "plugins": "V1Plugins",
@@ -87,6 +88,7 @@ class V1Operation(object):
         "queue": "queue",
         "cache": "cache",
         "schedule": "schedule",
+        "events": "events",
         "parallel": "parallel",
         "dependencies": "dependencies",
         "trigger": "trigger",
@@ -115,6 +117,7 @@ class V1Operation(object):
         queue=None,
         cache=None,
         schedule=None,
+        events=None,
         parallel=None,
         dependencies=None,
         trigger=None,
@@ -146,6 +149,7 @@ class V1Operation(object):
         self._queue = None
         self._cache = None
         self._schedule = None
+        self._events = None
         self._parallel = None
         self._dependencies = None
         self._trigger = None
@@ -182,6 +186,8 @@ class V1Operation(object):
             self.cache = cache
         if schedule is not None:
             self.schedule = schedule
+        if events is not None:
+            self.events = events
         if parallel is not None:
             self.parallel = parallel
         if dependencies is not None:
@@ -422,6 +428,27 @@ class V1Operation(object):
         self._schedule = schedule
 
     @property
+    def events(self):
+        """Gets the events of this V1Operation.  # noqa: E501
+
+
+        :return: The events of this V1Operation.  # noqa: E501
+        :rtype: list[object]
+        """
+        return self._events
+
+    @events.setter
+    def events(self, events):
+        """Sets the events of this V1Operation.
+
+
+        :param events: The events of this V1Operation.  # noqa: E501
+        :type: list[object]
+        """
+
+        self._events = events
+
+    @property
     def parallel(self):
         """Gets the parallel of this V1Operation.  # noqa: E501
 
@@ -490,7 +517,7 @@ class V1Operation(object):
 
 
         :return: The conditions of this V1Operation.  # noqa: E501
-        :rtype: list[object]
+        :rtype: list[str]
         """
         return self._conditions
 
@@ -500,7 +527,7 @@ class V1Operation(object):
 
 
         :param conditions: The conditions of this V1Operation.  # noqa: E501
-        :type: list[object]
+        :type: list[str]
         """
 
         self._conditions = conditions

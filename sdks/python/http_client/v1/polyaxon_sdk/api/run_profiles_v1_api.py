@@ -51,7 +51,7 @@ class RunProfilesV1Api(object):
         self.api_client = api_client
 
     def create_run_profile(self, owner, body, **kwargs):  # noqa: E501
-        """Create hub component  # noqa: E501
+        """Create run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -78,7 +78,7 @@ class RunProfilesV1Api(object):
         )  # noqa: E501
 
     def create_run_profile_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """Create hub component  # noqa: E501
+        """Create run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -191,7 +191,7 @@ class RunProfilesV1Api(object):
         )
 
     def delete_run_profile(self, owner, uuid, **kwargs):  # noqa: E501
-        """Delete hub component  # noqa: E501
+        """Delete run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -218,7 +218,7 @@ class RunProfilesV1Api(object):
         )  # noqa: E501
 
     def delete_run_profile_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """Delete hub component  # noqa: E501
+        """Delete run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -324,7 +324,7 @@ class RunProfilesV1Api(object):
         )
 
     def get_run_profile(self, owner, uuid, **kwargs):  # noqa: E501
-        """Get hub component  # noqa: E501
+        """Get run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -349,7 +349,7 @@ class RunProfilesV1Api(object):
         return self.get_run_profile_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def get_run_profile_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """Get hub component  # noqa: E501
+        """Get run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -455,7 +455,7 @@ class RunProfilesV1Api(object):
         )
 
     def list_run_profile_names(self, owner, **kwargs):  # noqa: E501
-        """List hub component names  # noqa: E501
+        """List run profiles names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -483,7 +483,7 @@ class RunProfilesV1Api(object):
         return self.list_run_profile_names_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_run_profile_names_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List hub component names  # noqa: E501
+        """List run profiles names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -598,7 +598,7 @@ class RunProfilesV1Api(object):
         )
 
     def list_run_profiles(self, owner, **kwargs):  # noqa: E501
-        """List hub components  # noqa: E501
+        """List run profiles  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -626,7 +626,7 @@ class RunProfilesV1Api(object):
         return self.list_run_profiles_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_run_profiles_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List hub components  # noqa: E501
+        """List run profiles  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -741,7 +741,7 @@ class RunProfilesV1Api(object):
         )
 
     def patch_run_profile(self, owner, run_profile_uuid, body, **kwargs):  # noqa: E501
-        """Patch hub component  # noqa: E501
+        """Patch run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -771,7 +771,7 @@ class RunProfilesV1Api(object):
     def patch_run_profile_with_http_info(
         self, owner, run_profile_uuid, body, **kwargs
     ):  # noqa: E501
-        """Patch hub component  # noqa: E501
+        """Patch run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -897,7 +897,7 @@ class RunProfilesV1Api(object):
         )
 
     def update_run_profile(self, owner, run_profile_uuid, body, **kwargs):  # noqa: E501
-        """Update hub component  # noqa: E501
+        """Update run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -927,7 +927,7 @@ class RunProfilesV1Api(object):
     def update_run_profile_with_http_info(
         self, owner, run_profile_uuid, body, **kwargs
     ):  # noqa: E501
-        """Update hub component  # noqa: E501
+        """Update run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

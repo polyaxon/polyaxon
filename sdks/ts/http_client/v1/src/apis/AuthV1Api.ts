@@ -50,7 +50,7 @@ export interface LoginRequest {
 export class AuthV1Api extends runtime.BaseAPI {
 
     /**
-     * List organization level queues names
+     * Login
      */
     async loginRaw(requestParameters: LoginRequest): Promise<runtime.ApiResponse<V1Auth>> {
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -79,7 +79,7 @@ export class AuthV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * List organization level queues names
+     * Login
      */
     async login(requestParameters: LoginRequest): Promise<V1Auth> {
         const response = await this.loginRaw(requestParameters);

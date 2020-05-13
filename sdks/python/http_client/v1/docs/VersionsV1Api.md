@@ -5,14 +5,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_log_handler**](VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | Update current user
-[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/version | Get current user
+[**get_log_handler**](VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | Get log handler
+[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/version | Get versions
 
 
 # **get_log_handler**
 > V1LogHandler get_log_handler()
 
-Update current user
+Get log handler
 
 ### Example
 
@@ -38,7 +38,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     api_instance = polyaxon_sdk.VersionsV1Api(api_client)
     
     try:
-        # Update current user
+        # Get log handler
         api_response = api_instance.get_log_handler()
         pprint(api_response)
     except ApiException as e:
@@ -75,7 +75,7 @@ This endpoint does not need any parameter.
 # **get_versions**
 > V1Versions get_versions()
 
-Get current user
+Get versions
 
 ### Example
 
@@ -101,7 +101,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     api_instance = polyaxon_sdk.VersionsV1Api(api_client)
     
     try:
-        # Get current user
+        # Get versions
         api_response = api_instance.get_versions()
         pprint(api_response)
     except ApiException as e:

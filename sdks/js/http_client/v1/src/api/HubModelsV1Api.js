@@ -60,7 +60,7 @@ export default class HubModelsV1Api {
      */
 
     /**
-     * Create dashboard
+     * Create hub model
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1HubModel} body Model body
      * @param {module:api/HubModelsV1Api~createHubModelCallback} callback The callback function, accepting three arguments: error, data, response
@@ -107,7 +107,7 @@ export default class HubModelsV1Api {
      */
 
     /**
-     * Delete dashboard
+     * Delete hub model
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/HubModelsV1Api~deleteHubModelCallback} callback The callback function, accepting three arguments: error, data, response
@@ -154,7 +154,7 @@ export default class HubModelsV1Api {
      */
 
     /**
-     * Get dashboard
+     * Get hub model
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/HubModelsV1Api~getHubModelCallback} callback The callback function, accepting three arguments: error, data, response
@@ -202,7 +202,7 @@ export default class HubModelsV1Api {
      */
 
     /**
-     * List dashboard names
+     * List hub model names
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -254,7 +254,7 @@ export default class HubModelsV1Api {
      */
 
     /**
-     * List dashboards
+     * List hub models
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -306,7 +306,7 @@ export default class HubModelsV1Api {
      */
 
     /**
-     * Patch dashboard
+     * Patch hub model
      * @param {String} owner Owner of the namespace
      * @param {String} model_uuid UUID
      * @param {module:model/V1HubModel} body Model body
@@ -359,7 +359,7 @@ export default class HubModelsV1Api {
      */
 
     /**
-     * Update dashboard
+     * Update hub model
      * @param {String} owner Owner of the namespace
      * @param {String} model_uuid UUID
      * @param {module:model/V1HubModel} body Model body

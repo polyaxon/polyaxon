@@ -60,7 +60,7 @@ export default class HubComponentsV1Api {
      */
 
     /**
-     * Create hub model
+     * Create hub component
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1HubComponent} body Component body
      * @param {module:api/HubComponentsV1Api~createHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
@@ -107,7 +107,7 @@ export default class HubComponentsV1Api {
      */
 
     /**
-     * Delete hub model
+     * Delete hub component
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/HubComponentsV1Api~deleteHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
@@ -154,7 +154,7 @@ export default class HubComponentsV1Api {
      */
 
     /**
-     * Get hub model
+     * Get hub component
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:api/HubComponentsV1Api~getHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
@@ -202,7 +202,7 @@ export default class HubComponentsV1Api {
      */
 
     /**
-     * List hub model names
+     * List hub component names
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -254,7 +254,7 @@ export default class HubComponentsV1Api {
      */
 
     /**
-     * List hub models
+     * List hub components
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset Pagination offset.
@@ -306,7 +306,7 @@ export default class HubComponentsV1Api {
      */
 
     /**
-     * Patch hub model
+     * Patch hub component
      * @param {String} owner Owner of the namespace
      * @param {String} component_uuid UUID
      * @param {module:model/V1HubComponent} body Component body
@@ -359,7 +359,7 @@ export default class HubComponentsV1Api {
      */
 
     /**
-     * Update hub model
+     * Update hub component
      * @param {String} owner Owner of the namespace
      * @param {String} component_uuid UUID
      * @param {module:model/V1HubComponent} body Component body

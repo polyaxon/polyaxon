@@ -49,7 +49,7 @@ public class RunProfilesV1ApiTest {
 
     
     /**
-     * Create hub component
+     * Create run profile
      *
      * 
      *
@@ -66,7 +66,7 @@ public class RunProfilesV1ApiTest {
     }
     
     /**
-     * Delete hub component
+     * Delete run profile
      *
      * 
      *
@@ -83,7 +83,7 @@ public class RunProfilesV1ApiTest {
     }
     
     /**
-     * Get hub component
+     * Get run profile
      *
      * 
      *
@@ -100,7 +100,7 @@ public class RunProfilesV1ApiTest {
     }
     
     /**
-     * List hub component names
+     * List run profiles names
      *
      * 
      *
@@ -120,7 +120,7 @@ public class RunProfilesV1ApiTest {
     }
     
     /**
-     * List hub components
+     * List run profiles
      *
      * 
      *
@@ -140,7 +140,7 @@ public class RunProfilesV1ApiTest {
     }
     
     /**
-     * Patch hub component
+     * Patch run profile
      *
      * 
      *
@@ -158,7 +158,7 @@ public class RunProfilesV1ApiTest {
     }
     
     /**
-     * Update hub component
+     * Update run profile
      *
      * 
      *

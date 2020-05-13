@@ -60,7 +60,7 @@ export default class VersionsV1Api {
      */
 
     /**
-     * Update current user
+     * Get log handler
      * @param {module:api/VersionsV1Api~getLogHandlerCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1LogHandler}
      */
@@ -96,7 +96,7 @@ export default class VersionsV1Api {
      */
 
     /**
-     * Get current user
+     * Get versions
      * @param {module:api/VersionsV1Api~getVersionsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Versions}
      */

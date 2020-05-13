@@ -38,20 +38,22 @@ import "v1/types/uri.proto";
 import "v1/types/image.proto";
 import "v1/types/event.proto";
 import "v1/polyboard/event.proto";
+import "v1/polyflow/operation.proto";
 
 message Schemas {
     OperationCond operation_cond = 1;
     EarlyStopping early_stopping = 2;
     Parallel parallel = 3;
     RunSchema run = 4;
-    CompiledOperation compiled_operation = 5;
-    Schedule schedule = 6;
-    ConnectionSchema connection_schema = 9;
-    Matrix matrix = 10;
-    Reference refrence = 11;
-    ArtifactsMount artifacts_mount = 12;
-    PolyaxonSidecarContainer polyaxon_sidecar_container = 13;
-    PolyaxonInitContainer polyaxon_init_container = 14;
+    Operation operation = 5;
+    CompiledOperation compiled_operation = 6;
+    Schedule schedule = 7;
+    ConnectionSchema connection_schema = 8;
+    Matrix matrix = 9;
+    Reference reference = 10;
+    ArtifactsMount artifacts_mount = 11;
+    PolyaxonSidecarContainer polyaxon_sidecar_container = 12;
+    PolyaxonInitContainer polyaxon_init_container = 13;
 
     ArtifactsType artifacs = 15;
     WasbType wasb = 16;
