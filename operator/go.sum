@@ -193,8 +193,8 @@ github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v0.0.0-20151028094244-d8ed2627bdf0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/polyaxon/polyaxon/sdks v0.0.0-20200421010230-48f35e5e87af h1:t+K7PdK3E9MW3FFCLQUS1RdgV+47TEMUsFLLrxSnvLA=
-github.com/polyaxon/polyaxon/sdks v0.0.0-20200421010230-48f35e5e87af/go.mod h1:g2UuSryjMT3OItX1yK8EibOpNiFy2HlX8z6ckuieZ04=
+github.com/polyaxon/polyaxon/sdks v0.0.0-20200514214854-4835a54d5ede h1:FbYh3yvC1rmReagsqCmxJfngGdkWR5iqlQ7y+I3sFUg=
+github.com/polyaxon/polyaxon/sdks v0.0.0-20200514214854-4835a54d5ede/go.mod h1:g2UuSryjMT3OItX1yK8EibOpNiFy2HlX8z6ckuieZ04=
 github.com/pquerna/cachecontrol v0.0.0-20171018203845-0dec1b30a021/go.mod h1:prYjPmNq4d1NPVmpShWobRqXY3q7Vp+80DqgxxUrUIA=
 github.com/prometheus/client_golang v0.9.1/go.mod h1:7SWBe2y4D6OKWSNQJUaRYU/AaXPKyh/dDVn+NZz0KFw=
 github.com/prometheus/client_golang v0.9.2/go.mod h1:OsXs2jCmiKlQ1lTBmv21f2mNfw4xf/QclQDMrYNZzcM=
