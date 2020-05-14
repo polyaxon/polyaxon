@@ -30,7 +30,7 @@ class PluginsContextsSpec(
     def from_config(cls, config: V1Plugins) -> "PluginsContextsSpec":
         auth = True
         docker = False
-        shm = False
+        shm = True
         collect_logs = True
         collect_artifacts = True
         collect_resources = True

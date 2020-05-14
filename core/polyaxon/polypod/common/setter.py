@@ -56,7 +56,7 @@ def set_notify(custom_object: Dict, notifications: List[V1Notification]) -> Dict
     if notifications is None:
         notifications = []
 
-    custom_object["notifications"] = [n.to_operator_notation() for n in notifications]
+    custom_object["notifications"] = [n.to_dict() for n in notifications]
     return custom_object
 
 
