@@ -203,7 +203,7 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.termination.max_retries == 5
         assert run_config.termination.timeout == 500
         assert run_config.termination.ttl == 400
-        assert run_config.run.environment.restart_policy == "never"
+        assert run_config.run.environment.restart_policy == "Never"
 
     def test_job_file_with_environment_passes(self):
         run_config = CompiledOperationSpecification.read(

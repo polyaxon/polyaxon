@@ -81,6 +81,6 @@ class TestEnvironmentsConfigs(BaseTestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add restart_policy
-        config_dict["restartPolicy"] = "never"
+        config_dict["restartPolicy"] = "Never"
         config = V1Environment.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())

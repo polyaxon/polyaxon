@@ -57,9 +57,9 @@ class TestPluginsConfigs(BaseTestCase):
 
         # Add notifications
         config_dict["notifications"] = [
-            {"connection": "test1", "trigger": "succeeded"},
-            {"connection": "test2", "trigger": "failed"},
-            {"connection": "test3", "trigger": "done"},
+            {"connections": ["test1"], "trigger": "succeeded"},
+            {"connections": ["test2"], "trigger": "failed"},
+            {"connections": ["test3"], "trigger": "done"},
         ]
         config = V1Plugins.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())

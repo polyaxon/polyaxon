@@ -92,7 +92,7 @@ func (r *OperationReconciler) notify(instance *operationv1.Operation) error {
 	connections := []string{}
 	for _, notification := range instance.Notifications {
 		if notification.Trigger == operationv1.OperationDoneTrigger || operationv1.OperationConditionType(notification.Trigger) == lastCond.Type {
-			connections = append(connections, notification.Connection)
+			connections = append(connections, notification.Connections...)
 		}
 	}
 

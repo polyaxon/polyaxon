@@ -1679,11 +1679,10 @@ export default class RunsV1Api {
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:model/V1ProjectEntityResourceRequest} body 
      * @param {module:api/RunsV1Api~invalidateRunCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    invalidateRun(owner, project, uuid, body, callback) {
-      let postBody = body;
+    invalidateRun(owner, project, uuid, callback) {
+      let postBody = null;
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
         throw new Error("Missing the required parameter 'owner' when calling invalidateRun");
@@ -1695,10 +1694,6 @@ export default class RunsV1Api {
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
         throw new Error("Missing the required parameter 'uuid' when calling invalidateRun");
-      }
-      // verify the required parameter 'body' is set
-      if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling invalidateRun");
       }
 
       let pathParams = {
@@ -1714,7 +1709,7 @@ export default class RunsV1Api {
       };
 
       let authNames = ['ApiKey'];
-      let contentTypes = ['application/json'];
+      let contentTypes = [];
       let accepts = ['application/json'];
       let returnType = null;
       return this.apiClient.callApi(

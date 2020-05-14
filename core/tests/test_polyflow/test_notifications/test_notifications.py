@@ -32,7 +32,7 @@ class TestNotificationsConfigs(BaseTestCase):
             V1Notification.from_dict(config_dict)
 
         # Add connection
-        config_dict["connection"] = "test"
+        config_dict["connections"] = ["test"]
         config = V1Notification.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 

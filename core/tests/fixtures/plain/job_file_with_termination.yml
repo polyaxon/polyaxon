@@ -10,7 +10,7 @@ termination:
 run:
   kind: job
   environment:
-    restartPolicy: never
+    restartPolicy: Never
   container:
     image: my_image
     command: echo

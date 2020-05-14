@@ -20,8 +20,8 @@ package v1;
 
 // Notification message
 message Notification {
-    // Connection to use for notification
-    string connection = 1;
+    // Connections to use for notification
+    repeated string connections = 1;
 
     // NotificationTrigger enum
     enum Trigger {

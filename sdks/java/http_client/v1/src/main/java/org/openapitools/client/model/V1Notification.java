@@ -37,6 +37,8 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.openapitools.client.model.NotificationTrigger;
 
 /**
@@ -44,35 +46,43 @@ import org.openapitools.client.model.NotificationTrigger;
  */
 
 public class V1Notification {
-  public static final String SERIALIZED_NAME_CONNECTION = "connection";
-  @SerializedName(SERIALIZED_NAME_CONNECTION)
-  private String connection;
+  public static final String SERIALIZED_NAME_CONNECTIONS = "connections";
+  @SerializedName(SERIALIZED_NAME_CONNECTIONS)
+  private List<String> connections = null;
 
   public static final String SERIALIZED_NAME_TRIGGER = "trigger";
   @SerializedName(SERIALIZED_NAME_TRIGGER)
   private NotificationTrigger trigger = NotificationTrigger.SUCCEEDED;
 
 
-  public V1Notification connection(String connection) {
+  public V1Notification connections(List<String> connections) {
     
-    this.connection = connection;
+    this.connections = connections;
+    return this;
+  }
+
+  public V1Notification addConnectionsItem(String connectionsItem) {
+    if (this.connections == null) {
+      this.connections = new ArrayList<String>();
+    }
+    this.connections.add(connectionsItem);
     return this;
   }
 
    /**
-   * Get connection
-   * @return connection
+   * Get connections
+   * @return connections
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public String getConnection() {
-    return connection;
+  public List<String> getConnections() {
+    return connections;
   }
 
 
-  public void setConnection(String connection) {
-    this.connection = connection;
+  public void setConnections(List<String> connections) {
+    this.connections = connections;
   }
 
 
@@ -108,13 +118,13 @@ public class V1Notification {
       return false;
     }
     V1Notification v1Notification = (V1Notification) o;
-    return Objects.equals(this.connection, v1Notification.connection) &&
+    return Objects.equals(this.connections, v1Notification.connections) &&
         Objects.equals(this.trigger, v1Notification.trigger);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(connection, trigger);
+    return Objects.hash(connections, trigger);
   }
 
 
@@ -122,7 +132,7 @@ public class V1Notification {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1Notification {\n");
-    sb.append("    connection: ").append(toIndentedString(connection)).append("\n");
+    sb.append("    connections: ").append(toIndentedString(connections)).append("\n");
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
     sb.append("}");
     return sb.toString();

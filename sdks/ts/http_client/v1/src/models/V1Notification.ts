@@ -42,10 +42,10 @@ import {
 export interface V1Notification {
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof V1Notification
      */
-    connection?: string;
+    connections?: Array<string>;
     /**
      * 
      * @type {NotificationTrigger}
@@ -64,7 +64,7 @@ export function V1NotificationFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'connection': !exists(json, 'connection') ? undefined : json['connection'],
+        'connections': !exists(json, 'connections') ? undefined : json['connections'],
         'trigger': !exists(json, 'trigger') ? undefined : NotificationTriggerFromJSON(json['trigger']),
     };
 }
@@ -78,7 +78,7 @@ export function V1NotificationToJSON(value?: V1Notification | null): any {
     }
     return {
         
-        'connection': value.connection,
+        'connections': value.connections,
         'trigger': NotificationTriggerToJSON(value.trigger),
     };
 }

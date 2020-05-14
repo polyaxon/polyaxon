@@ -38,7 +38,7 @@ class TestJobCRD(BaseTestCase):
             restart_policy="never",
         )
         notifications = [
-            V1Notification(connection="test", trigger=V1NotificationTrigger.DONE)
+            V1Notification(connections=["test"], trigger=V1NotificationTrigger.DONE)
         ]
         metadata, pod_spec = get_pod_spec(
             namespace="default",
@@ -61,7 +61,7 @@ class TestJobCRD(BaseTestCase):
             },
             "collectLogs": True,
             "syncStatuses": True,
-            "notifications": [n.to_operator_notation() for n in notifications],
+            "notifications": [n.to_dict() for n in notifications],
         }
         expected_crd = get_custom_object(
             namespace="default",

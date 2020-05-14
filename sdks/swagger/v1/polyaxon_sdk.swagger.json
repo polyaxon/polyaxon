@@ -8926,14 +8926,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ProjectEntityResourceRequest"
-            }
           }
         ],
         "tags": [
@@ -14678,9 +14670,12 @@
     "v1Notification": {
       "type": "object",
       "properties": {
-        "connection": {
-          "type": "string",
-          "title": "Connection to use for notification"
+        "connections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Connections to use for notification"
         },
         "trigger": {
           "$ref": "#/definitions/NotificationTrigger",

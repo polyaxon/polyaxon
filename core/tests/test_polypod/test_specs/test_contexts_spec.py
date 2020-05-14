@@ -70,7 +70,7 @@ class TestPluginsContextsSpec(BaseTestCase):
         spec = PluginsContextsSpec.from_config(V1Plugins())
         assert spec.auth is True
         assert spec.docker is False
-        assert spec.shm is False
+        assert spec.shm is True
         assert spec.collect_artifacts is True
         assert spec.collect_logs is True
         assert spec.sync_statuses is True

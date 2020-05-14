@@ -604,8 +604,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1ProjectEntityResourceRequest body = null;
-        api.invalidateRun(owner, project, uuid, body);
+        api.invalidateRun(owner, project, uuid);
 
         // TODO: test validations
     }

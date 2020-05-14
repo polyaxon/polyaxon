@@ -4414,19 +4414,18 @@ class RunsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def invalidate_run(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def invalidate_run(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.invalidate_run(owner, project, uuid, body, async_req=True)
+        >>> thread = api.invalidate_run(owner, project, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
         :param str project: Project (required)
         :param str uuid: Uuid identifier of the entity (required)
-        :param V1ProjectEntityResourceRequest body: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -4440,24 +4439,23 @@ class RunsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         return self.invalidate_run_with_http_info(
-            owner, project, uuid, body, **kwargs
+            owner, project, uuid, **kwargs
         )  # noqa: E501
 
     def invalidate_run_with_http_info(
-        self, owner, project, uuid, body, **kwargs
+        self, owner, project, uuid, **kwargs
     ):  # noqa: E501
         """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.invalidate_run_with_http_info(owner, project, uuid, body, async_req=True)
+        >>> thread = api.invalidate_run_with_http_info(owner, project, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param str owner: Owner of the namespace (required)
         :param str project: Project (required)
         :param str uuid: Uuid identifier of the entity (required)
-        :param V1ProjectEntityResourceRequest body: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -4474,7 +4472,7 @@ class RunsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = ["owner", "project", "uuid", "body"]
+        all_params = ["owner", "project", "uuid"]
         all_params.extend(
             [
                 "async_req",
@@ -4516,14 +4514,6 @@ class RunsV1Api(object):
             raise ApiValueError(
                 "Missing the required parameter `uuid` when calling `invalidate_run`"
             )  # noqa: E501
-        # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and (
-            "body" not in local_var_params
-            or local_var_params["body"] is None  # noqa: E501
-        ):  # noqa: E501
-            raise ApiValueError(
-                "Missing the required parameter `body` when calling `invalidate_run`"
-            )  # noqa: E501
 
         collection_formats = {}
 
@@ -4543,17 +4533,8 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in local_var_params:
-            body_params = local_var_params["body"]
         # HTTP header `Accept`
         header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
             ["application/json"]
         )  # noqa: E501
 

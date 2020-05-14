@@ -1593,7 +1593,7 @@ Name | Type | Description  | Notes
 
 ## invalidateRun
 
-> invalidateRun(owner, project, uuid, body)
+> invalidateRun(owner, project, uuid)
 
 Invalidate run
 
@@ -1612,8 +1612,7 @@ let apiInstance = new PolyaxonSdk.RunsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
 let project = "project_example"; // String | Project
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-let body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
-apiInstance.invalidateRun(owner, project, uuid, body, (error, data, response) => {
+apiInstance.invalidateRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -1630,7 +1629,6 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project | 
  **uuid** | **String**| Uuid identifier of the entity | 
- **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  | 
 
 ### Return type
 
@@ -1642,7 +1640,7 @@ null (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 

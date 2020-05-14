@@ -62,8 +62,8 @@ class V1Notification {
         if (data) {
             obj = obj || new V1Notification();
 
-            if (data.hasOwnProperty('connection')) {
-                obj['connection'] = ApiClient.convertToType(data['connection'], 'String');
+            if (data.hasOwnProperty('connections')) {
+                obj['connections'] = ApiClient.convertToType(data['connections'], ['String']);
             }
             if (data.hasOwnProperty('trigger')) {
                 obj['trigger'] = NotificationTrigger.constructFromObject(data['trigger']);
@@ -76,9 +76,9 @@ class V1Notification {
 }
 
 /**
- * @member {String} connection
+ * @member {Array.<String>} connections
  */
-V1Notification.prototype['connection'] = undefined;
+V1Notification.prototype['connections'] = undefined;
 
 /**
  * @member {module:model/NotificationTrigger} trigger

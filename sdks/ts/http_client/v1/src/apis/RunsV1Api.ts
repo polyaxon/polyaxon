@@ -291,7 +291,6 @@ export interface InvalidateRunRequest {
     owner: string;
     project: string;
     uuid: string;
-    body: V1ProjectEntityResourceRequest;
 }
 
 export interface InvalidateRunsRequest {
@@ -1756,15 +1755,9 @@ export class RunsV1Api extends runtime.BaseAPI {
             throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling invalidateRun.');
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling invalidateRun.');
-        }
-
         const queryParameters: runtime.HTTPQuery = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKey authentication
@@ -1775,7 +1768,6 @@ export class RunsV1Api extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: V1ProjectEntityResourceRequestToJSON(requestParameters.body),
         });
 
         return new runtime.VoidApiResponse(response);

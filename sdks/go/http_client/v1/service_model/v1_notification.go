@@ -30,8 +30,8 @@ import (
 // swagger:model v1Notification
 type V1Notification struct {
 
-	// Connection to use for notification
-	Connection string `json:"connection,omitempty"`
+	// Connections to use for notification
+	Connections []string `json:"connections"`
 
 	// Optional trigger policy, default done
 	Trigger NotificationTrigger `json:"trigger,omitempty"`

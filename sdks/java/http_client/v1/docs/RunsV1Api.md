@@ -2151,7 +2151,7 @@ Name | Type | Description  | Notes
 
 <a name="invalidateRun"></a>
 # **invalidateRun**
-> invalidateRun(owner, project, uuid, body)
+> invalidateRun(owner, project, uuid)
 
 Invalidate run
 
@@ -2180,9 +2180,8 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
-    V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
     try {
-      apiInstance.invalidateRun(owner, project, uuid, body);
+      apiInstance.invalidateRun(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#invalidateRun");
       System.err.println("Status code: " + e.getCode());
@@ -2201,7 +2200,6 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project |
  **uuid** | **String**| Uuid identifier of the entity |
- **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  |
 
 ### Return type
 
@@ -2213,7 +2211,7 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details

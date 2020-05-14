@@ -68,10 +68,10 @@ type Operation struct {
 	Status OperationStatus `json:"status,omitempty" protobuf:"bytes,11,opt,name=status"`
 }
 
-// NotificationSpec is deinition of how to send notification for new status of this operation
+// NotificationSpec is definition of how to send notification for new status of this operation
 // +k8s:openapi-gen=true
 type NotificationSpec struct {
-	Connection string                           `json:"connection" protobuf:"bytes,1,opt,name=connection"`
+	Connections []string                           `json:"connections" protobuf:"bytes,1,opt,name=connections"`
 	Trigger    OperationTriggerNotificationType `json:"trigger" protobuf:"bytes,2,opt,name=trigger"`
 }
 

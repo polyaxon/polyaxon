@@ -68,8 +68,8 @@
       //expect(instance).to.be.a(PolyaxonSdk.V1Notification);
     });
 
-    it('should have the property connection (base name: "connection")', function() {
-      // uncomment below and update the code to test the property connection
+    it('should have the property connections (base name: "connections")', function() {
+      // uncomment below and update the code to test the property connections
       //var instane = new PolyaxonSdk.V1Notification();
       //expect(instance).to.be();
     });

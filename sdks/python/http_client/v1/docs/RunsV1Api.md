@@ -2042,7 +2042,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **invalidate_run**
-> invalidate_run(owner, project, uuid, body)
+> invalidate_run(owner, project, uuid)
 
 Invalidate run
 
@@ -2071,11 +2071,10 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
-body = polyaxon_sdk.V1ProjectEntityResourceRequest() # V1ProjectEntityResourceRequest | 
 
     try:
         # Invalidate run
-        api_instance.invalidate_run(owner, project, uuid, body)
+        api_instance.invalidate_run(owner, project, uuid)
     except ApiException as e:
         print("Exception when calling RunsV1Api->invalidate_run: %s\n" % e)
 ```
@@ -2087,7 +2086,6 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
- **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  | 
 
 ### Return type
 
@@ -2099,7 +2097,7 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details

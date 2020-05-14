@@ -4361,7 +4361,6 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
-     * @param body  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -4375,8 +4374,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call invalidateRunCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback _callback) throws ApiException {
-        Object localVarPostBody = body;
+    public okhttp3.Call invalidateRunCall(String owner, String project, String uuid, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/invalidate"
@@ -4398,7 +4397,7 @@ public class RunsV1Api {
         }
 
         final String[] localVarContentTypes = {
-            "application/json"
+            
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -4408,7 +4407,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call invalidateRunValidateBeforeCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call invalidateRunValidateBeforeCall(String owner, String project, String uuid, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -4425,13 +4424,8 @@ public class RunsV1Api {
             throw new ApiException("Missing the required parameter 'uuid' when calling invalidateRun(Async)");
         }
         
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling invalidateRun(Async)");
-        }
-        
 
-        okhttp3.Call localVarCall = invalidateRunCall(owner, project, uuid, body, _callback);
+        okhttp3.Call localVarCall = invalidateRunCall(owner, project, uuid, _callback);
         return localVarCall;
 
     }
@@ -4442,7 +4436,6 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
-     * @param body  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -4454,8 +4447,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response </td><td>  -  </td></tr>
      </table>
      */
-    public void invalidateRun(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
-        invalidateRunWithHttpInfo(owner, project, uuid, body);
+    public void invalidateRun(String owner, String project, String uuid) throws ApiException {
+        invalidateRunWithHttpInfo(owner, project, uuid);
     }
 
     /**
@@ -4464,7 +4457,6 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
-     * @param body  (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4477,8 +4469,8 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> invalidateRunWithHttpInfo(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
-        okhttp3.Call localVarCall = invalidateRunValidateBeforeCall(owner, project, uuid, body, null);
+    public ApiResponse<Void> invalidateRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        okhttp3.Call localVarCall = invalidateRunValidateBeforeCall(owner, project, uuid, null);
         return localVarApiClient.execute(localVarCall);
     }
 
@@ -4488,7 +4480,6 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
-     * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4502,9 +4493,9 @@ public class RunsV1Api {
         <tr><td> 0 </td><td> An unexpected error response </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call invalidateRunAsync(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call invalidateRunAsync(String owner, String project, String uuid, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = invalidateRunValidateBeforeCall(owner, project, uuid, body, _callback);
+        okhttp3.Call localVarCall = invalidateRunValidateBeforeCall(owner, project, uuid, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }

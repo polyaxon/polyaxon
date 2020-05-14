@@ -28,8 +28,6 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-
-	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // NewInvalidateRunParams creates a new InvalidateRunParams object
@@ -76,8 +74,6 @@ for the invalidate run operation typically these are written to a http.Request
 */
 type InvalidateRunParams struct {
 
-	/*Body*/
-	Body *service_model.V1ProjectEntityResourceRequest
 	/*Owner
 	  Owner of the namespace
 
@@ -132,17 +128,6 @@ func (o *InvalidateRunParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithBody adds the body to the invalidate run params
-func (o *InvalidateRunParams) WithBody(body *service_model.V1ProjectEntityResourceRequest) *InvalidateRunParams {
-	o.SetBody(body)
-	return o
-}
-
-// SetBody adds the body to the invalidate run params
-func (o *InvalidateRunParams) SetBody(body *service_model.V1ProjectEntityResourceRequest) {
-	o.Body = body
-}
-
 // WithOwner adds the owner to the invalidate run params
 func (o *InvalidateRunParams) WithOwner(owner string) *InvalidateRunParams {
 	o.SetOwner(owner)
@@ -183,12 +168,6 @@ func (o *InvalidateRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		return err
 	}
 	var res []error
-
-	if o.Body != nil {
-		if err := r.SetBodyParam(o.Body); err != nil {
-			return err
-		}
-	}
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {

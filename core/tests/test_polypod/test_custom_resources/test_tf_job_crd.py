@@ -81,7 +81,7 @@ class TestTFJobCRD(BaseKubeflowCRDTestCase):
             restart_policy="never",
         )
         notifications = [
-            V1Notification(connection="test", trigger=V1NotificationTrigger.DONE)
+            V1Notification(connections=["test"], trigger=V1NotificationTrigger.DONE)
         ]
         chief, chief_replica_template = self.get_replica(environment)
         worker, worker_replica_template = self.get_replica(environment)
@@ -99,7 +99,7 @@ class TestTFJobCRD(BaseKubeflowCRDTestCase):
             },
             "collectLogs": True,
             "syncStatuses": True,
-            "notifications": [n.to_operator_notation() for n in notifications],
+            "notifications": [n.to_dict() for n in notifications],
         }
 
         expected_crd = get_custom_object(

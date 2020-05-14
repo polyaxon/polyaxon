@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**connection** | **String** |  | [optional] 
+**connections** | **[String]** |  | [optional] 
 **trigger** | [**NotificationTrigger**](NotificationTrigger.md) |  | [optional] 
 
 

@@ -96,7 +96,7 @@ class TestServiceCRD(BaseTestCase):
             labels=None,
         )
         notifications = [
-            V1Notification(connection="test", trigger=V1NotificationTrigger.DONE)
+            V1Notification(connections=["test"], trigger=V1NotificationTrigger.DONE)
         ]
         custom_object = {
             "template": get_pod_template_spec(metadata=metadata, pod_spec=pod_spec),
@@ -112,7 +112,7 @@ class TestServiceCRD(BaseTestCase):
                 "serviceSpec": custom_object,
                 "collectLogs": False,
                 "syncStatuses": False,
-                "notifications": [n.to_operator_notation() for n in notifications],
+                "notifications": [n.to_dict() for n in notifications],
             },
         )
 

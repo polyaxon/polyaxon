@@ -6,7 +6,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**connection** | **String** |  |  [optional]
+**connections** | **List&lt;String&gt;** |  |  [optional]
 **trigger** | [**NotificationTrigger**](NotificationTrigger.md) |  |  [optional]
 
 

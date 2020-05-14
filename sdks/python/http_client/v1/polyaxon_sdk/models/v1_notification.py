@@ -49,47 +49,47 @@ class V1Notification(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    openapi_types = {"connection": "str", "trigger": "NotificationTrigger"}
+    openapi_types = {"connections": "list[str]", "trigger": "NotificationTrigger"}
 
-    attribute_map = {"connection": "connection", "trigger": "trigger"}
+    attribute_map = {"connections": "connections", "trigger": "trigger"}
 
     def __init__(
-        self, connection=None, trigger=None, local_vars_configuration=None
+        self, connections=None, trigger=None, local_vars_configuration=None
     ):  # noqa: E501
         """V1Notification - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
-        self._connection = None
+        self._connections = None
         self._trigger = None
         self.discriminator = None
 
-        if connection is not None:
-            self.connection = connection
+        if connections is not None:
+            self.connections = connections
         if trigger is not None:
             self.trigger = trigger
 
     @property
-    def connection(self):
-        """Gets the connection of this V1Notification.  # noqa: E501
+    def connections(self):
+        """Gets the connections of this V1Notification.  # noqa: E501
 
 
-        :return: The connection of this V1Notification.  # noqa: E501
-        :rtype: str
+        :return: The connections of this V1Notification.  # noqa: E501
+        :rtype: list[str]
         """
-        return self._connection
+        return self._connections
 
-    @connection.setter
-    def connection(self, connection):
-        """Sets the connection of this V1Notification.
+    @connections.setter
+    def connections(self, connections):
+        """Sets the connections of this V1Notification.
 
 
-        :param connection: The connection of this V1Notification.  # noqa: E501
-        :type: str
+        :param connections: The connections of this V1Notification.  # noqa: E501
+        :type: list[str]
         """
 
-        self._connection = connection
+        self._connections = connections
 
     @property
     def trigger(self):

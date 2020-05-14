@@ -196,7 +196,6 @@ service RunsV1 {
     rpc InvalidateRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/invalidate"
-            body: "*"
         };
     }
 
@@ -283,7 +282,7 @@ service RunsV1 {
         };
     }
 
-    // Get run status
+    // Get run statuses
     rpc GetRunStatuses(ProjectEntityResourceRequest) returns (Status) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/statuses"
