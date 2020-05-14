@@ -135,43 +135,32 @@ def run(
     Examples:
 
     \b
-    ```bash
     $ polyaxon run -f file -f file_override ...
-    ```
 
     Upload before running
 
     \b
-    ```bash
     $ polyaxon run -f file -u
-    ```
 
     Run and set description and tags for this run
 
     \b
-    ```bash
     $ polyaxon run -f file -u --description="Description of the current run" --tags="foo, bar, moo"
-    ```
+
     Run and set a unique name for this run
 
     \b
-    ```bash
     polyaxon run --name=foo
-    ```
 
     Run for a specific project
 
     \b
-    ```bash
     $ polyaxon run -p project1 -f file.yaml
-    ```
 
     Run with updated params
 
     \b
-    ```bash
     $ polyaxon run -p project1 -f file.yaml -P param1=234.2 -P param2=relu
-    ```
     """
     op_spec = check_polyaxonfile(
         polyaxonfile=polyaxonfile,

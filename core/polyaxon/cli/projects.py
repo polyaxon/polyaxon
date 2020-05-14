@@ -86,14 +86,12 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
 def create(ctx, name, owner, description, private, init):
     """Create a new project.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Example:
 
     \b
-    ```bash
     $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
-    ```
     """
     owner = owner or AuthConfigManager.get_value("username")
 
@@ -135,7 +133,7 @@ def create(ctx, name, owner, description, private, init):
 def ls(owner, limit, offset):
     """List projects.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
     """
     owner = owner or AuthConfigManager.get_value("username")
     if not owner:
@@ -176,23 +174,19 @@ def ls(owner, limit, offset):
 def get(ctx):
     """Get info for current project, by project_name, or user/project_name.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples:
 
     To get current project:
 
     \b
-    ```bash
     $ polyaxon project get
-    ```
 
     To get a project by name
 
     \b
-    ```bash
     $ polyaxon project get user/project
-    ```
     """
     owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
 
@@ -216,7 +210,7 @@ def get(ctx):
 def delete(ctx):
     """Delete project.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
     """
     owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
 
@@ -261,24 +255,18 @@ def delete(ctx):
 def update(ctx, name, description, private):
     """Update project.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Example:
 
     \b
-    ```bash
     $ polyaxon update foobar --description="Image Classification with DL using TensorFlow"
-    ```
 
     \b
-    ```bash
     $ polyaxon update mike1/foobar --description="Image Classification with DL using TensorFlow"
-    ```
 
     \b
-    ```bash
     $ polyaxon update --tags="foo, bar"
-    ```
     """
     owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
 

@@ -56,9 +56,7 @@ def get(keys):
     Example:
 
     \b
-    ```bash
     $ polyaxon config get host port
-    ```
     """
     _config = ClientConfigManager.get_config_or_default()
 
@@ -96,9 +94,7 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
     Example:
 
     \b
-    ```bash
     $ polyaxon config set --host=localhost
-    ```
     """
     try:
         _config = ClientConfigManager.get_config_or_default()

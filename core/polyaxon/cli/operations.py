@@ -108,34 +108,30 @@ def ops(ctx, project, uid):
 def ls(ctx, io, query, sort, limit, offset):
     """List runs for this project.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples:
 
     Get all runs:
 
     \b
-    ```bash
-    $ polyaxon project runs
-    ```
+    polyaxon project runs
+
 
     Get all runs with with status {created or running}, and
     creation date between 2018-01-01 and 2018-01-02, and params activation equal to sigmoid
     and metric loss less or equal to 0.2
 
     \b
-    ```bash
     $ polyaxon project runs \
       -q "status:created|running, started_at:2018-01-01..2018-01-02, \
           params.activation:sigmoid, metric.loss:<=0.2"
-    ```
+
 
     Get all runs sorted by update date
 
     \b
-    ```bash
     $ polyaxon project runs -s "-updated_at"
-    ```
     """
     owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
 
@@ -208,33 +204,25 @@ def ls(ctx, io, query, sort, limit, offset):
 def get(ctx):
     """Get run.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples for getting a run:
 
     \b
-    ```bash
-    $ polyaxon runs get  # if run is cached
-    ```
+    $ polyaxon ops get  # if run is cached
 
     \b
-    ```bash
-    $ polyaxon runs --uid=8aac02e3a62a4f0aaa257c59da5eab80 get  # project is cached
-    ```
+    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 get  # project is cached
 
     \b
-    ```bash
-    $ polyaxon runs --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 get
-    ```
+    $ polyaxon ops --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 get
 
     \b
-    ```bash
-    $ polyaxon runs -p alain/cats-vs-dogs --uid=8aac02e3a62a4f0aaa257c59da5eab80 get
-    ```
+    $ polyaxon ops -p alain/cats-vs-dogs --uid=8aac02e3a62a4f0aaa257c59da5eab80 get
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
 
     try:
@@ -259,27 +247,21 @@ def get(ctx):
 def delete(ctx):
     """Delete a run.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Example:
 
     \b
-    ```bash
-    $ polyaxon runs delete
-    ```
+    $ polyaxon ops delete
 
     \b
-    ```bash
-    $ polyaxon runs --uid=8aac02e3a62a4f0aaa257c59da5eab80 delete  # project is cached
-    ```
+    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 delete  # project is cached
 
     \b
-    ```bash
-    $ polyaxon runs --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 delete
-    ```
+    $ polyaxon ops --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 delete
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     if not click.confirm("Are sure you want to delete run `{}`".format(run_uuid)):
         click.echo("Existing without deleting the run.")
@@ -310,24 +292,20 @@ def delete(ctx):
 def update(ctx, name, description, tags):
     """Update run.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples:
 
     \b
-    ```bash
-    $ polyaxon runs --uid=8aac02e3a62a4f0aaa257c59da5eab80 update
+    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 update
     --description="new description for my runs"
-    ```
 
     \b
-    ```bash
-    $ polyaxon runs --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 update
+    $ polyaxon ops --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 update
     --tags="foo, bar" --name="unique-name"
-    ```
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     update_dict = {}
 
@@ -372,22 +350,18 @@ def update(ctx, name, description, tags):
 def stop(ctx, yes):
     """Stop run.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples:
 
     \b
-    ```bash
-    $ polyaxon runs stop
-    ```
+    $ polyaxon ops stop
 
     \b
-    ```bash
-    $ polyaxon runs --uid=8aac02e3a62a4f0aaa257c59da5eab80 stop
-    ```
+    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 stop
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     if not yes and not click.confirm(
         "Are sure you want to stop " "run `{}`".format(run_uuid)
@@ -431,14 +405,12 @@ def stop(ctx, yes):
 def restart(ctx, copy, polyaxonfile, u):
     """Restart run.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples:
 
     \b
-    ```bash
     $ polyaxon run --uid=8aac02e3a62a4f0aaa257c59da5eab80 restart
-    ```
     """
     content = None
     if polyaxonfile:
@@ -449,7 +421,7 @@ def restart(ctx, copy, polyaxonfile, u):
         ctx.invoke(upload, sync=False)
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -483,14 +455,12 @@ def restart(ctx, copy, polyaxonfile, u):
 def resume(ctx, polyaxonfile, u):
     """Resume run.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples:
 
     \b
-    ```bash
-    $ polyaxon runs --uid=8aac02e3a62a4f0aaa257c59da5eab80 resume
-    ```
+    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 resume
     """
     content = None
     if polyaxonfile:
@@ -501,7 +471,7 @@ def resume(ctx, polyaxonfile, u):
         ctx.invoke(upload, sync=False)
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -520,18 +490,16 @@ def resume(ctx, polyaxonfile, u):
 def invalidate_run(ctx):
     """Invalidate runs' cache inside this project.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples:
 
     \b
-    ```bash
-    $ polyaxon invalidate_builds
-    ```
+    $ polyaxon invalidate_run
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -551,19 +519,15 @@ def invalidate_run(ctx):
 def statuses(ctx, watch):
     """Get run or run job statuses.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples getting run statuses:
 
     \b
-    ```bash
-    $ polyaxon runs statuses
-    ```
+    $ polyaxon ops statuses
 
     \b
-    ```bash
-    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 statuses
-    ```
+    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 statuses
     """
 
     def _handle_run_statuses():
@@ -586,7 +550,7 @@ def statuses(ctx, watch):
             dict_tabulate(objects, is_list_dict=True)
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
 
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
@@ -617,21 +581,17 @@ def statuses(ctx, watch):
 # def resources(ctx, gpu):
 #     """Get run or run job resources.
 #
-#     Uses [Caching](/references/polyaxon-cli/#caching)
+#     Uses /docs/core/cli/#caching
 #
 #     Examples for getting run resources:
 #
 #     \b
-#     ```bash
-#     $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 resources
-#     ```
+#     $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 resources
 #
 #     For GPU resources
 #
 #     \b
-#     ```bash
-#     $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 resources --gpu
-#     ```
+#     $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 resources --gpu
 #     """
 #
 #     def get_run_resources():
@@ -647,7 +607,7 @@ def statuses(ctx, watch):
 #             sys.exit(1)
 #
 #     owner, project_name, run_uuid = get_project_run_or_local(
-#         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+#         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
 #     )
 #
 #     get_run_resources()
@@ -680,23 +640,19 @@ def statuses(ctx, watch):
 def logs(ctx, follow, hide_time, all_info):
     """Get run or run job logs.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples for getting run logs:
 
     \b
-    ```bash
     $ polyaxon run logs
-    ```
 
     \b
-    ```bash
-    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 -p mnist logs
-    ```
+    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 -p mnist logs
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
 
@@ -711,17 +667,15 @@ def logs(ctx, follow, hide_time, all_info):
 def artifacts(ctx):
     """Download outputs/artifacts for run.
 
-    Uses [Caching](/references/polyaxon-cli/#caching)
+    Uses /docs/core/cli/#caching
 
     Examples:
 
     \b
-    ```bash
-    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 artifacts
-    ```
+    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 artifacts
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
