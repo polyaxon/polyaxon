@@ -17,10 +17,42 @@ import polyaxon_sdk
 
 from polyaxon.utils.tz_utils import now
 
-V1Statuses = polyaxon_sdk.V1Statuses
+
+class V1Statuses(polyaxon_sdk.V1Statuses):
+    """The supported statuses by Polyaxon.
+
+    Enum:
+        created
+        resuming
+        warning
+        unschedulable
+        compiled
+        queued
+        scheduled
+        starting
+        running
+        succeeded
+        failed
+        upstream_failed
+        stopping
+        stopped
+        skipped
+        retrying
+        unknown
+    """
 
 
 class StatusColor:
+    """The statuses colors.
+
+    Enum:
+        GREEN = #1aaa55
+        RED = #aa310f
+        BLUE = #2e77aa
+        YELLOW = #aa9e4a
+        GREY = #485563
+    """
+
     GREEN = "#1aaa55"
     RED = "#aa310f"
     BLUE = "#2e77aa"
@@ -48,6 +80,8 @@ class StatusColor:
 
 
 class LifeCycle:
+    """The Run LifeCycle is stats machine for state transition."""
+
     CHOICES = (
         (V1Statuses.CREATED, V1Statuses.CREATED),
         (V1Statuses.RESUMING, V1Statuses.RESUMING),

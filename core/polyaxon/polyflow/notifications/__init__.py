@@ -26,7 +26,7 @@ class V1NotificationTrigger(polyaxon_sdk.NotificationTrigger):
 
 
 class NotificationSchema(BaseCamelSchema):
-    connection = fields.Str(required=True)
+    connections = fields.List(fields.Str(), required=True)
     trigger = fields.Str(
         allow_none=True, validate=validate.OneOf(V1NotificationTrigger.allowable_values)
     )
@@ -37,12 +37,64 @@ class NotificationSchema(BaseCamelSchema):
 
 
 class V1Notification(BaseConfig, polyaxon_sdk.V1Notification):
+    """You can configure Polyaxon to send notifications to users about event changes in the platform.
+
+    Polyaxon can send notifications when a runs reaches a final status:
+
+     * succeeded
+     * failed
+     * stopped
+     * done
+
+     Params:
+        connections: list[str]
+        trigger: str
+
+    ## Yaml usage
+
+    ```yaml
+    >>> notification:
+    >>>   connections: [slack-connection, discord-connection]
+    >>>   trigger: failed
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1Notification, V1NotificationTrigger
+    >>> notification = V1Notification(
+    >>>     connections=["slack-connection", "discord-connection"],
+    >>>     trigger=V1NotificationTrigger.FAILED,
+    >>> )
+    ```
+
+    ## Fields
+
+    ### connections
+
+    The connections to notify, these [connections](/docs/setup/connections/)
+    must be configured at deployment time.
+
+    ```yaml
+    >>> notification:
+    >>>   connections: [slack-connection, discord-connection]
+    ```
+
+    ### trigger
+
+    The trigger represents the status condition to send or not the notification.
+
+    ```yaml
+    >>> notification:
+    >>>   trigger: succeeded
+    ```
+
+    This notification will be sent if the run succeeds.
+    """
+
     IDENTIFIER = "notification"
     SCHEMA = NotificationSchema
     REDUCED_ATTRIBUTES = [
-        "connection",
+        "connections",
         "trigger",
     ]
-
-    def to_operator_notation(self):
-        return {"connection": self.connection, "trigger": self.trigger.capitalize()}

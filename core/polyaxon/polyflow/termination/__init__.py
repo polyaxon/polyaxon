@@ -32,6 +32,91 @@ class TerminationSchema(BaseCamelSchema):
 
 
 class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
+    """The termination section allows users to define and control when
+    to stop an operation and how long to keep it's resources on the cluster.
+
+    Args:
+        max_retries: int, optional
+        ttl: int, optional
+        timeout: int, optional
+
+    ## Yaml usage
+
+    ```yaml
+    >>> termination:
+    >>>   maxRetries:
+    >>>   ttl:
+    >>>   timeout:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1Termination
+    >>> termination = V1Termination(
+    >>>     max_retries=1,
+    >>>     ttl=1000,
+    >>>     timeout=50
+    >>> )
+    ```
+
+    ## Fields
+
+    ### maxRetries
+
+    Maximum number of retries when an operation fails.
+
+    This field can be used with
+    [restartPolicy](/docs/core/specification/environment/#restartpolicy)
+    from the environment section.
+
+    This field is the equivalent of the
+    [backoffLimit](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
+    Polyaxon how to manage and inject this value into the underlying primitive,
+    i.e. Job, service, TFJob CRD, Spark Application CRD, to expose a uniform specification
+
+    ```yaml
+    >>> termination:
+    >>>   maxRetries: 3
+    ```
+
+    ### ttl
+
+    Polyaxon will automatically clean all resources on the cluster just after they finish and after
+    the various helpers finish collecting and archiving information from the cluster,
+    such as logs, outputs, ... This ensures that your cluster(s) are kept clean and no resources
+    are actively putting pressure on the API server.
+
+    That being said, sometimes user might want to keep the resources after
+    they finish for sanity check or debugging.
+
+    The ttl field allows you to leverage the TTL controller provided by some primitives,
+    for example the
+    [ttlSecondsAfterFinished](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically), # noqa
+    from the Job controller.
+    Polyaxon has helpers for resources that don't have a built-in TTL mechanism, such as services,
+    so that you can have a uniform definition for all of your operations.
+
+    ```yaml
+    >>> termination:
+    >>>   ttl: 1000
+    ```
+
+
+    ### timeout
+
+    Sometime you might to stop an operation after a certain time, timeout let's you define how
+    long before Polyaxon decides to stop that operation, this is the equivalent of Kubernetes Jobs
+    [activeDeadlineSeconds](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#job-termination-and-cleanup)  # noqa
+    but you can use this field for all of your operation, for instance you might want to stop a
+    tensorboard after 12 hours, this way you don't have to actively look for running tensorboards.
+
+    ```yaml
+    >>> termination:
+    >>>   timeout: 1000
+    ```
+    """
+
     IDENTIFIER = "termination"
     SCHEMA = TerminationSchema
     REDUCED_ATTRIBUTES = ["maxRetries", "timeout", "ttl"]

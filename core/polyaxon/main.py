@@ -136,29 +136,3 @@ if settings.CLIENT_CONFIG.is_ops:
     cli.add_command(proxy)
     cli.add_command(notify)
     cli.add_command(tuner)
-
-
-if DOCS_GEN:
-
-    def recursive_help(cmd, cmd_file, parent=None, root=False):
-        ctx = click.core.Context(cmd, info_name=cmd.name, parent=parent)
-        if not root:
-            cmd_file += "\n---\n" + cmd.get_help(ctx)
-        commands = getattr(cmd, "commands", {})
-        for sub in commands.values():
-            cmd_file = recursive_help(sub, cmd_file, ctx)
-            if root:
-                print("-------------------------------")
-                print("-------------------------------")
-                print(sub.name)
-                print("-------------------------------")
-                print("-------------------------------")
-                print(cmd_file)
-                cmd_file = ""
-
-        return cmd_file
-
-    # Used like:
-    @cli.command()
-    def docs():
-        recursive_help(cli, "", root=True)
