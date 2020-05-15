@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **version** | **Float** |  |  [optional]
 **kind** | **String** |  |  [optional]
 **name** | **String** |  |  [optional]
-**tag** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **profile** | **String** |  |  [optional]

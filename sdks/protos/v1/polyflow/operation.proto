@@ -38,64 +38,61 @@ message Operation {
     // Optional component name, should a valid slug
     string name = 3;
 
-    // Optional component tag version
-    string tag = 4;
-
     // Optional component description
-    string description = 5;
+    string description = 4;
 
     // Optional component tags
-    repeated string tags = 6;
+    repeated string tags = 5;
 
     // Optional profile to use for running this component
-    string profile = 7;
+    string profile = 6;
 
     // Optional queue to use for running this component
-    string queue = 8;
+    string queue = 7;
 
     // Optional flag to disable cache validation and force run this component
-    Cache cache = 9;
+    Cache cache = 8;
 
     // Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
-    google.protobuf.Struct schedule = 10;
+    google.protobuf.Struct schedule = 9;
 
     // Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
-    repeated google.protobuf.Struct events = 11;
+    repeated google.protobuf.Struct events = 10;
 
     // Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-    google.protobuf.Struct parallel = 12;
+    google.protobuf.Struct parallel = 11;
 
     // Optional graph dependencies of this op
-    repeated string dependencies = 13;
+    repeated string dependencies = 12;
 
     // Optional trigger policy
-    TriggerPolicy trigger = 14;
+    TriggerPolicy trigger = 13;
 
     // An optional list of condition to check before starting the run, entities should be a valid Condition
-    repeated string conditions = 15;
+    repeated string conditions = 14;
 
     // Optional flag to skip this run if upstream was skipped
-    bool skip_on_upstream_skip = 16;
+    bool skip_on_upstream_skip = 15;
 
     // optional termination section
-    Termination termination = 17;
+    Termination termination = 16;
 
     // Optional plugins to enable
-    Plugins plugins = 18;
+    Plugins plugins = 17;
 
     // Optional dict of params
-    map<string, Param> params = 19;
+    map<string, Param> params = 18;
 
     // Optional a run section to override the the content of the run in the template
     // should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run_patch = 20;
+    google.protobuf.Struct run_patch = 19;
 
     // Component template specification
     oneof template {
-        string dag_ref = 21;
-        string url_ref = 22;
-        string path_ref = 23;
-        string hub_ref = 24;
-        Component component = 25;
+        string dag_ref = 20;
+        string url_ref = 21;
+        string path_ref = 22;
+        string hub_ref = 23;
+        Component component = 24;
     }
 }

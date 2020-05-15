@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 **version** | **float** |  | [optional] 
 **kind** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
-**tag** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
 **profile** | **str** |  | [optional] 

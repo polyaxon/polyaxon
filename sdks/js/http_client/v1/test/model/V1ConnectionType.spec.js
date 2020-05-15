@@ -74,6 +74,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property description (base name: "description")', function() {
+      // uncomment below and update the code to test the property description
+      //var instane = new PolyaxonSdk.V1ConnectionType();
+      //expect(instance).to.be();
+    });
+
     it('should have the property kind (base name: "kind")', function() {
       // uncomment below and update the code to test the property kind
       //var instane = new PolyaxonSdk.V1ConnectionType();

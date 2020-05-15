@@ -85,14 +85,6 @@ public class V1ComponentTest {
     }
 
     /**
-     * Test the property 'tag'
-     */
-    @Test
-    public void tagTest() {
-        // TODO: test tag
-    }
-
-    /**
      * Test the property 'description'
      */
     @Test

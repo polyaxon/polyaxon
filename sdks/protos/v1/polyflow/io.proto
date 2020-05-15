@@ -67,12 +67,12 @@ message Param {
     // The value to pass, if no ref or search is passed then it corresponds to a literal value
     google.protobuf.Struct value = 1;
 
-    // Ref correspond to a reference of an object
+    // Ref corresponds to a reference of an object
     string ref = 2;
 
-    // Search correspond to a valid search that can be resolved
-    ParamSearch search = 4;
+    // Search corresponds to a valid search that can be resolved
+    ParamSearch search = 3;
 
     // A flag to signal to Polyaxon that this param should not be validated against io
-    bool context_only = 5;
+    bool context_only = 4;
 }

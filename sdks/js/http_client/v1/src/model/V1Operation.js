@@ -76,9 +76,6 @@ class V1Operation {
             if (data.hasOwnProperty('name')) {
                 obj['name'] = ApiClient.convertToType(data['name'], 'String');
             }
-            if (data.hasOwnProperty('tag')) {
-                obj['tag'] = ApiClient.convertToType(data['tag'], 'String');
-            }
             if (data.hasOwnProperty('description')) {
                 obj['description'] = ApiClient.convertToType(data['description'], 'String');
             }
@@ -163,11 +160,6 @@ V1Operation.prototype['kind'] = undefined;
  * @member {String} name
  */
 V1Operation.prototype['name'] = undefined;
-
-/**
- * @member {String} tag
- */
-V1Operation.prototype['tag'] = undefined;
 
 /**
  * @member {String} description

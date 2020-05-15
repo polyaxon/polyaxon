@@ -51,6 +51,7 @@ class V1ConnectionType(object):
     """
     openapi_types = {
         "name": "str",
+        "description": "str",
         "kind": "V1ConnectionKind",
         "schema": "object",
         "secret": "V1K8sResourceSchema",
@@ -59,6 +60,7 @@ class V1ConnectionType(object):
 
     attribute_map = {
         "name": "name",
+        "description": "description",
         "kind": "kind",
         "schema": "schema",
         "secret": "secret",
@@ -68,6 +70,7 @@ class V1ConnectionType(object):
     def __init__(
         self,
         name=None,
+        description=None,
         kind=None,
         schema=None,
         secret=None,
@@ -80,6 +83,7 @@ class V1ConnectionType(object):
         self.local_vars_configuration = local_vars_configuration
 
         self._name = None
+        self._description = None
         self._kind = None
         self._schema = None
         self._secret = None
@@ -88,6 +92,8 @@ class V1ConnectionType(object):
 
         if name is not None:
             self.name = name
+        if description is not None:
+            self.description = description
         if kind is not None:
             self.kind = kind
         if schema is not None:
@@ -117,6 +123,27 @@ class V1ConnectionType(object):
         """
 
         self._name = name
+
+    @property
+    def description(self):
+        """Gets the description of this V1ConnectionType.  # noqa: E501
+
+
+        :return: The description of this V1ConnectionType.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this V1ConnectionType.
+
+
+        :param description: The description of this V1ConnectionType.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
 
     @property
     def kind(self):

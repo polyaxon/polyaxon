@@ -3968,7 +3968,7 @@ public class RunsV1Api {
     }
 
     /**
-     * Get run status
+     * Get run statuses
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
@@ -3991,7 +3991,7 @@ public class RunsV1Api {
     }
 
     /**
-     * Get run status
+     * Get run statuses
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
@@ -4015,7 +4015,7 @@ public class RunsV1Api {
     }
 
     /**
-     * Get run status (asynchronously)
+     * Get run statuses (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project (required)

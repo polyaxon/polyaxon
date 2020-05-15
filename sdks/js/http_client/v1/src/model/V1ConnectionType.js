@@ -66,6 +66,9 @@ class V1ConnectionType {
             if (data.hasOwnProperty('name')) {
                 obj['name'] = ApiClient.convertToType(data['name'], 'String');
             }
+            if (data.hasOwnProperty('description')) {
+                obj['description'] = ApiClient.convertToType(data['description'], 'String');
+            }
             if (data.hasOwnProperty('kind')) {
                 obj['kind'] = V1ConnectionKind.constructFromObject(data['kind']);
             }
@@ -89,6 +92,11 @@ class V1ConnectionType {
  * @member {String} name
  */
 V1ConnectionType.prototype['name'] = undefined;
+
+/**
+ * @member {String} description
+ */
+V1ConnectionType.prototype['description'] = undefined;
 
 /**
  * @member {module:model/V1ConnectionKind} kind

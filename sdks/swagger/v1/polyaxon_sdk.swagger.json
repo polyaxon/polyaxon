@@ -9106,7 +9106,7 @@
     },
     "/api/v1/{owner}/{project}/runs/{uuid}/statuses": {
       "get": {
-        "summary": "Get run status",
+        "summary": "Get run statuses",
         "operationId": "GetRunStatuses",
         "responses": {
           "200": {
@@ -11963,10 +11963,6 @@
           "type": "string",
           "title": "Optional component name, should a valid slug"
         },
-        "tag": {
-          "type": "string",
-          "title": "Optional component tag version"
-        },
         "description": {
           "type": "string",
           "title": "Optional component description"
@@ -12071,11 +12067,7 @@
         },
         "name": {
           "type": "string",
-          "title": "Optional component name, should a valid slug"
-        },
-        "tag": {
-          "type": "string",
-          "title": "Optional component tag version"
+          "title": "Optional component name, should be a valid fully qualified value: name[:version]"
         },
         "description": {
           "type": "string",
@@ -12259,6 +12251,10 @@
         "name": {
           "type": "string",
           "title": "Connection name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional connection description"
         },
         "kind": {
           "$ref": "#/definitions/v1ConnectionKind",
@@ -13490,11 +13486,7 @@
         },
         "name": {
           "type": "string",
-          "title": "Name"
-        },
-        "tag": {
-          "type": "string",
-          "title": "Optional component tag version"
+          "title": "Optional component name, should be a valid fully qualified value: name[:version]"
         },
         "content": {
           "type": "string",
@@ -13543,11 +13535,7 @@
         },
         "name": {
           "type": "string",
-          "title": "Name"
-        },
-        "tag": {
-          "type": "string",
-          "title": "Optional model tag version"
+          "title": "Optional component name, should be a valid fully qualified value: name[:version]"
         },
         "framework": {
           "type": "string",
@@ -14700,10 +14688,6 @@
           "type": "string",
           "title": "Optional component name, should a valid slug"
         },
-        "tag": {
-          "type": "string",
-          "title": "Optional component tag version"
-        },
         "description": {
           "type": "string",
           "title": "Optional component description"
@@ -14999,11 +14983,11 @@
         },
         "ref": {
           "type": "string",
-          "title": "Ref correspond to a reference of an object"
+          "title": "Ref corresponds to a reference of an object"
         },
         "search": {
           "$ref": "#/definitions/v1ParamSearch",
-          "title": "Search correspond to a valid search that can be resolved"
+          "title": "Search corresponds to a valid search that can be resolved"
         },
         "context_only": {
           "type": "boolean",

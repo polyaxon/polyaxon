@@ -80,12 +80,6 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property tag (base name: "tag")', function() {
-      // uncomment below and update the code to test the property tag
-      //var instane = new PolyaxonSdk.V1HubComponent();
-      //expect(instance).to.be();
-    });
-
     it('should have the property content (base name: "content")', function() {
       // uncomment below and update the code to test the property content
       //var instane = new PolyaxonSdk.V1HubComponent();

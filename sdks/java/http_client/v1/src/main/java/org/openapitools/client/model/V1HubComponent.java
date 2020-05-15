@@ -54,10 +54,6 @@ public class V1HubComponent {
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
-  public static final String SERIALIZED_NAME_TAG = "tag";
-  @SerializedName(SERIALIZED_NAME_TAG)
-  private String tag;
-
   public static final String SERIALIZED_NAME_CONTENT = "content";
   @SerializedName(SERIALIZED_NAME_CONTENT)
   private String content;
@@ -130,29 +126,6 @@ public class V1HubComponent {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-
-  public V1HubComponent tag(String tag) {
-    
-    this.tag = tag;
-    return this;
-  }
-
-   /**
-   * Get tag
-   * @return tag
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getTag() {
-    return tag;
-  }
-
-
-  public void setTag(String tag) {
-    this.tag = tag;
   }
 
 
@@ -336,7 +309,6 @@ public class V1HubComponent {
     V1HubComponent v1HubComponent = (V1HubComponent) o;
     return Objects.equals(this.uuid, v1HubComponent.uuid) &&
         Objects.equals(this.name, v1HubComponent.name) &&
-        Objects.equals(this.tag, v1HubComponent.tag) &&
         Objects.equals(this.content, v1HubComponent.content) &&
         Objects.equals(this.description, v1HubComponent.description) &&
         Objects.equals(this.tags, v1HubComponent.tags) &&
@@ -348,7 +320,7 @@ public class V1HubComponent {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, tag, content, description, tags, disabled, deleted, createdAt, updatedAt);
+    return Objects.hash(uuid, name, content, description, tags, disabled, deleted, createdAt, updatedAt);
   }
 
 
@@ -358,7 +330,6 @@ public class V1HubComponent {
     sb.append("class V1HubComponent {\n");
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");

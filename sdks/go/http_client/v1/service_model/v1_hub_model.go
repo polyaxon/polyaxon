@@ -47,11 +47,8 @@ type V1HubModel struct {
 	// Model framework
 	Framework string `json:"framework,omitempty"`
 
-	// Name
+	// Optional component name, should be a valid fully qualified value: name[:version]
 	Name string `json:"name,omitempty"`
-
-	// Optional model tag version
-	Tag string `json:"tag,omitempty"`
 
 	// Optional tags of this entity
 	Tags []string `json:"tags"`

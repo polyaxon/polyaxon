@@ -49,6 +49,10 @@ public class V1ConnectionType {
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
+  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
+  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  private String description;
+
   public static final String SERIALIZED_NAME_KIND = "kind";
   @SerializedName(SERIALIZED_NAME_KIND)
   private V1ConnectionKind kind = V1ConnectionKind.HOST_PATH;
@@ -86,6 +90,29 @@ public class V1ConnectionType {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+
+  public V1ConnectionType description(String description) {
+    
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Get description
+   * @return description
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getDescription() {
+    return description;
+  }
+
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 
@@ -191,6 +218,7 @@ public class V1ConnectionType {
     }
     V1ConnectionType v1ConnectionType = (V1ConnectionType) o;
     return Objects.equals(this.name, v1ConnectionType.name) &&
+        Objects.equals(this.description, v1ConnectionType.description) &&
         Objects.equals(this.kind, v1ConnectionType.kind) &&
         Objects.equals(this.schema, v1ConnectionType.schema) &&
         Objects.equals(this.secret, v1ConnectionType.secret) &&
@@ -199,7 +227,7 @@ public class V1ConnectionType {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, kind, schema, secret, configMap);
+    return Objects.hash(name, description, kind, schema, secret, configMap);
   }
 
 
@@ -208,6 +236,7 @@ public class V1ConnectionType {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1ConnectionType {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    schema: ").append(toIndentedString(schema)).append("\n");
     sb.append("    secret: ").append(toIndentedString(secret)).append("\n");

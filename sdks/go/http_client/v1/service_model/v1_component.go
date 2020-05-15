@@ -44,7 +44,7 @@ type V1Component struct {
 	// Optional component kind, should be equal to "operation"
 	Kind string `json:"kind,omitempty"`
 
-	// Optional component name, should a valid slug
+	// Optional component name, should be a valid fully qualified value: name[:version]
 	Name string `json:"name,omitempty"`
 
 	// Optional outputs definition
@@ -61,9 +61,6 @@ type V1Component struct {
 
 	// Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
 	Run interface{} `json:"run,omitempty"`
-
-	// Optional component tag version
-	Tag string `json:"tag,omitempty"`
 
 	// Optional component tags
 	Tags []string `json:"tags"`

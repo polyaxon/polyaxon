@@ -34,39 +34,36 @@ message Component {
     // Optional component kind, should be equal to "operation"
     string kind = 2;
 
-    // Optional component name, should a valid slug
+    // Optional component name, should be a valid fully qualified value: name[:version]
     string name = 3;
 
-    // Optional component tag version
-    string tag = 4;
-
     // Optional component description
-    string description = 5;
+    string description = 4;
 
     // Optional component tags
-    repeated string tags = 6;
+    repeated string tags = 5;
 
     // Optional profile to use for running this component
-    string profile = 7;
+    string profile = 6;
 
     // Optional queue to use for running this component
-    string queue = 8;
+    string queue = 7;
 
     // Optional flag to disable cache validation and force run this component
-    Cache cache = 9;
+    Cache cache = 8;
 
     // optional termination section
-    Termination termination = 10;
+    Termination termination = 9;
 
     // Optional plugins to enable
-    Plugins plugins = 11;
+    Plugins plugins = 10;
 
     // Optional inputs definition
-    repeated IO inputs = 12;
+    repeated IO inputs = 11;
 
     // Optional outputs definition
-    repeated IO outputs = 13;
+    repeated IO outputs = 12;
 
     // Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 14;
+    google.protobuf.Struct run = 13;
 }

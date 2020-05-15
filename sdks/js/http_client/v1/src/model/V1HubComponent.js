@@ -67,9 +67,6 @@ class V1HubComponent {
             if (data.hasOwnProperty('name')) {
                 obj['name'] = ApiClient.convertToType(data['name'], 'String');
             }
-            if (data.hasOwnProperty('tag')) {
-                obj['tag'] = ApiClient.convertToType(data['tag'], 'String');
-            }
             if (data.hasOwnProperty('content')) {
                 obj['content'] = ApiClient.convertToType(data['content'], 'String');
             }
@@ -107,11 +104,6 @@ V1HubComponent.prototype['uuid'] = undefined;
  * @member {String} name
  */
 V1HubComponent.prototype['name'] = undefined;
-
-/**
- * @member {String} tag
- */
-V1HubComponent.prototype['tag'] = undefined;
 
 /**
  * @member {String} content

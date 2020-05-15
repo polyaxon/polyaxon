@@ -535,7 +535,7 @@ public class RunsV1ApiTest {
     }
     
     /**
-     * Get run status
+     * Get run statuses
      *
      * 
      *

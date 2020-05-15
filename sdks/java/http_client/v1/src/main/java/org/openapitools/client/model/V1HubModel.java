@@ -54,10 +54,6 @@ public class V1HubModel {
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
-  public static final String SERIALIZED_NAME_TAG = "tag";
-  @SerializedName(SERIALIZED_NAME_TAG)
-  private String tag;
-
   public static final String SERIALIZED_NAME_FRAMEWORK = "framework";
   @SerializedName(SERIALIZED_NAME_FRAMEWORK)
   private String framework;
@@ -130,29 +126,6 @@ public class V1HubModel {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-
-  public V1HubModel tag(String tag) {
-    
-    this.tag = tag;
-    return this;
-  }
-
-   /**
-   * Get tag
-   * @return tag
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getTag() {
-    return tag;
-  }
-
-
-  public void setTag(String tag) {
-    this.tag = tag;
   }
 
 
@@ -336,7 +309,6 @@ public class V1HubModel {
     V1HubModel v1HubModel = (V1HubModel) o;
     return Objects.equals(this.uuid, v1HubModel.uuid) &&
         Objects.equals(this.name, v1HubModel.name) &&
-        Objects.equals(this.tag, v1HubModel.tag) &&
         Objects.equals(this.framework, v1HubModel.framework) &&
         Objects.equals(this.description, v1HubModel.description) &&
         Objects.equals(this.tags, v1HubModel.tags) &&
@@ -348,7 +320,7 @@ public class V1HubModel {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, tag, framework, description, tags, disabled, deleted, createdAt, updatedAt);
+    return Objects.hash(uuid, name, framework, description, tags, disabled, deleted, createdAt, updatedAt);
   }
 
 
@@ -358,7 +330,6 @@ public class V1HubModel {
     sb.append("class V1HubModel {\n");
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
     sb.append("    framework: ").append(toIndentedString(framework)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");

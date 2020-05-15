@@ -29,7 +29,7 @@ Method | HTTP request | Description
 [**get_run_namespace**](RunsV1Api.md#get_run_namespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
 [**get_run_resources**](RunsV1Api.md#get_run_resources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 [**get_run_settings**](RunsV1Api.md#get_run_settings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
-[**get_run_statuses**](RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
+[**get_run_statuses**](RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run statuses
 [**get_runs_artifacts_lineage**](RunsV1Api.md#get_runs_artifacts_lineage) | **GET** /api/v1/{owner}/{project}/runs/artifacts_lineage | Get runs artifacts lineage
 [**impersonate_token**](RunsV1Api.md#impersonate_token) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
 [**invalidate_run**](RunsV1Api.md#invalidate_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
@@ -1825,7 +1825,7 @@ Name | Type | Description  | Notes
 # **get_run_statuses**
 > V1Status get_run_statuses(owner, project, uuid)
 
-Get run status
+Get run statuses
 
 ### Example
 
@@ -1854,7 +1854,7 @@ project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
-        # Get run status
+        # Get run statuses
         api_response = api_instance.get_run_statuses(owner, project, uuid)
         pprint(api_response)
     except ApiException as e:

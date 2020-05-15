@@ -75,12 +75,6 @@ export interface V1Component {
      * @type {string}
      * @memberof V1Component
      */
-    tag?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Component
-     */
     description?: string;
     /**
      * 
@@ -151,7 +145,6 @@ export function V1ComponentFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'version': !exists(json, 'version') ? undefined : json['version'],
         'kind': !exists(json, 'kind') ? undefined : json['kind'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'tag': !exists(json, 'tag') ? undefined : json['tag'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'profile': !exists(json, 'profile') ? undefined : json['profile'],
@@ -177,7 +170,6 @@ export function V1ComponentToJSON(value?: V1Component | null): any {
         'version': value.version,
         'kind': value.kind,
         'name': value.name,
-        'tag': value.tag,
         'description': value.description,
         'tags': value.tags,
         'profile': value.profile,

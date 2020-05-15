@@ -33,10 +33,10 @@ type V1Param struct {
 	// A flag to signal to Polyaxon that this param should not be validated against io
 	ContextOnly bool `json:"context_only,omitempty"`
 
-	// Ref correspond to a reference of an object
+	// Ref corresponds to a reference of an object
 	Ref string `json:"ref,omitempty"`
 
-	// Search correspond to a valid search that can be resolved
+	// Search corresponds to a valid search that can be resolved
 	Search *V1ParamSearch `json:"search,omitempty"`
 
 	// The value to pass, if no ref or search is passed then it corresponds to a literal value

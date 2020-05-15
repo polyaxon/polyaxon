@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 **version** | **Number** |  | [optional] 
 **kind** | **String** |  | [optional] 
 **name** | **String** |  | [optional] 
-**tag** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
 **profile** | **String** |  | [optional] 

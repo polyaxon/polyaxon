@@ -39,7 +39,12 @@ class OperationSpecification(BaseSpecification):
     @classmethod
     def generate_run_data(cls, config: V1Operation, override=None, override_post=True):
         op_config = config.to_light_dict()
+        name = None
+        if config.component:
+            name = config.component.get_name()
         component_config = op_config.pop("component", {})
+        if name:
+            component_config["name"] = name
         values = [
             {"version": config.version},
             component_config,

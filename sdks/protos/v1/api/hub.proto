@@ -26,32 +26,29 @@ message HubModel {
     // UUID
     string uuid = 1;
 
-    // Name
+    // Optional component name, should be a valid fully qualified value: name[:version]
     string name = 2;
 
-    // Optional model tag version
-    string tag = 3;
-
     // Model framework
-    string framework = 4;
+    string framework = 3;
 
     // Optional description
-    string description = 5;
+    string description = 4;
 
     // Optional tags of this entity
-    repeated string tags = 6;
+    repeated string tags = 5;
 
     // Optional a flag to disable the model
-    bool disabled = 7;
+    bool disabled = 6;
 
     // Optional if the entity has been deleted
-    bool deleted = 8;
+    bool deleted = 7;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 9;
+    google.protobuf.Timestamp created_at = 8;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 10;
+    google.protobuf.Timestamp updated_at = 9;
 
 }
 
@@ -85,32 +82,29 @@ message HubComponent {
     // UUID
     string uuid = 1;
 
-    // Name
+    // Optional component name, should be a valid fully qualified value: name[:version]
     string name = 2;
 
-    // Optional component tag version
-    string tag = 3;
-
     // The Component body content
-    string content = 4;
+    string content = 3;
 
     // Optional description
-    string description = 5;
+    string description = 4;
 
     // Optional tags of this entity
-    repeated string tags = 6;
+    repeated string tags = 5;
 
     // Optional a flag to disable the model
-    bool disabled = 7;
+    bool disabled = 6;
 
     // Optional if the entity has been deleted
-    bool deleted = 8;
+    bool deleted = 7;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 9;
+    google.protobuf.Timestamp created_at = 8;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 10;
+    google.protobuf.Timestamp updated_at = 9;
 
 }
 

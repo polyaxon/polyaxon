@@ -74,14 +74,6 @@ public class V1HubComponentTest {
     }
 
     /**
-     * Test the property 'tag'
-     */
-    @Test
-    public void tagTest() {
-        // TODO: test tag
-    }
-
-    /**
      * Test the property 'content'
      */
     @Test

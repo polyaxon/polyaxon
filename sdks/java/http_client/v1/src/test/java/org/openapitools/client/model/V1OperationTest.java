@@ -89,14 +89,6 @@ public class V1OperationTest {
     }
 
     /**
-     * Test the property 'tag'
-     */
-    @Test
-    public void tagTest() {
-        // TODO: test tag
-    }
-
-    /**
      * Test the property 'description'
      */
     @Test

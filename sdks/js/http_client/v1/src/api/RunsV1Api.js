@@ -1509,7 +1509,7 @@ export default class RunsV1Api {
      */
 
     /**
-     * Get run status
+     * Get run statuses
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity

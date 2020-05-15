@@ -53,7 +53,6 @@ class V1Operation(object):
         "version": "float",
         "kind": "str",
         "name": "str",
-        "tag": "str",
         "description": "str",
         "tags": "list[str]",
         "profile": "str",
@@ -81,7 +80,6 @@ class V1Operation(object):
         "version": "version",
         "kind": "kind",
         "name": "name",
-        "tag": "tag",
         "description": "description",
         "tags": "tags",
         "profile": "profile",
@@ -110,7 +108,6 @@ class V1Operation(object):
         version=None,
         kind=None,
         name=None,
-        tag=None,
         description=None,
         tags=None,
         profile=None,
@@ -142,7 +139,6 @@ class V1Operation(object):
         self._version = None
         self._kind = None
         self._name = None
-        self._tag = None
         self._description = None
         self._tags = None
         self._profile = None
@@ -172,8 +168,6 @@ class V1Operation(object):
             self.kind = kind
         if name is not None:
             self.name = name
-        if tag is not None:
-            self.tag = tag
         if description is not None:
             self.description = description
         if tags is not None:
@@ -279,27 +273,6 @@ class V1Operation(object):
         """
 
         self._name = name
-
-    @property
-    def tag(self):
-        """Gets the tag of this V1Operation.  # noqa: E501
-
-
-        :return: The tag of this V1Operation.  # noqa: E501
-        :rtype: str
-        """
-        return self._tag
-
-    @tag.setter
-    def tag(self, tag):
-        """Sets the tag of this V1Operation.
-
-
-        :param tag: The tag of this V1Operation.  # noqa: E501
-        :type: str
-        """
-
-        self._tag = tag
 
     @property
     def description(self):

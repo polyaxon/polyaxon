@@ -65,10 +65,6 @@ public class V1Operation {
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
-  public static final String SERIALIZED_NAME_TAG = "tag";
-  @SerializedName(SERIALIZED_NAME_TAG)
-  private String tag;
-
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
   private String description;
@@ -220,29 +216,6 @@ public class V1Operation {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-
-  public V1Operation tag(String tag) {
-    
-    this.tag = tag;
-    return this;
-  }
-
-   /**
-   * Get tag
-   * @return tag
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getTag() {
-    return tag;
-  }
-
-
-  public void setTag(String tag) {
-    this.tag = tag;
   }
 
 
@@ -781,7 +754,6 @@ public class V1Operation {
     return Objects.equals(this.version, v1Operation.version) &&
         Objects.equals(this.kind, v1Operation.kind) &&
         Objects.equals(this.name, v1Operation.name) &&
-        Objects.equals(this.tag, v1Operation.tag) &&
         Objects.equals(this.description, v1Operation.description) &&
         Objects.equals(this.tags, v1Operation.tags) &&
         Objects.equals(this.profile, v1Operation.profile) &&
@@ -807,7 +779,7 @@ public class V1Operation {
 
   @Override
   public int hashCode() {
-    return Objects.hash(version, kind, name, tag, description, tags, profile, queue, cache, schedule, events, parallel, dependencies, trigger, conditions, skipOnUpstreamSkip, termination, plugins, params, runPatch, dagRef, urlRef, pathRef, hubRef, component);
+    return Objects.hash(version, kind, name, description, tags, profile, queue, cache, schedule, events, parallel, dependencies, trigger, conditions, skipOnUpstreamSkip, termination, plugins, params, runPatch, dagRef, urlRef, pathRef, hubRef, component);
   }
 
 
@@ -818,7 +790,6 @@ public class V1Operation {
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    profile: ").append(toIndentedString(profile)).append("\n");

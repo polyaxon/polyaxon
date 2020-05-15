@@ -1003,7 +1003,7 @@ func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.C
 }
 
 /*
-  GetRunStatuses gets run status
+  GetRunStatuses gets run statuses
 */
 func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error) {
 	// TODO: Validate the params before sending

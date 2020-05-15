@@ -46,9 +46,9 @@ class V1Notification(BaseConfig, polyaxon_sdk.V1Notification):
      * stopped
      * done
 
-     Params:
-        connections: list[str]
-        trigger: str
+     Args:
+         connections: List[str]
+         trigger: str
 
     ## Yaml usage
 

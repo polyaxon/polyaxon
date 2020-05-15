@@ -33,6 +33,9 @@ type V1ConnectionType struct {
 	// ConfigMap resource schema
 	ConfigMap *V1K8sResourceSchema `json:"config_map,omitempty"`
 
+	// Optional connection description
+	Description string `json:"description,omitempty"`
+
 	// Connection kind
 	Kind V1ConnectionKind `json:"kind,omitempty"`
 

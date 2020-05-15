@@ -1602,7 +1602,7 @@ export class RunsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get run status
+     * Get run statuses
      */
     async getRunStatusesRaw(requestParameters: GetRunStatusesRequest): Promise<runtime.ApiResponse<V1Status>> {
         if (requestParameters.owner === null || requestParameters.owner === undefined) {
@@ -1636,7 +1636,7 @@ export class RunsV1Api extends runtime.BaseAPI {
     }
 
     /**
-     * Get run status
+     * Get run statuses
      */
     async getRunStatuses(requestParameters: GetRunStatusesRequest): Promise<V1Status> {
         const response = await this.getRunStatusesRaw(requestParameters);

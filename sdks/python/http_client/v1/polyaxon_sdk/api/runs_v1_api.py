@@ -3962,7 +3962,7 @@ class RunsV1Api(object):
         )
 
     def get_run_statuses(self, owner, project, uuid, **kwargs):  # noqa: E501
-        """Get run status  # noqa: E501
+        """Get run statuses  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -3992,7 +3992,7 @@ class RunsV1Api(object):
     def get_run_statuses_with_http_info(
         self, owner, project, uuid, **kwargs
     ):  # noqa: E501
-        """Get run status  # noqa: E501
+        """Get run statuses  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

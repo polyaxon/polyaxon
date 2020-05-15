@@ -74,17 +74,20 @@ message ConnectionType {
     // Connection name
     string name = 1;
 
+    // Optional connection description
+    string description = 2;
+
     // Connection kind
-    ConnectionKind kind = 2;
+    ConnectionKind kind = 3;
 
     // The connection schema should be a valid ConnectionSchema
-    google.protobuf.Struct schema = 3;
+    google.protobuf.Struct schema = 4;
 
     // Secret resource schema
-    K8sResourceSchema secret = 4;
+    K8sResourceSchema secret = 5;
 
     // ConfigMap resource schema
-    K8sResourceSchema config_map = 5;
+    K8sResourceSchema config_map = 6;
 }
 
 message ConnectionSchema {

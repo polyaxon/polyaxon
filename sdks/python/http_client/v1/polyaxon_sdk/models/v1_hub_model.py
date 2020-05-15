@@ -52,7 +52,6 @@ class V1HubModel(object):
     openapi_types = {
         "uuid": "str",
         "name": "str",
-        "tag": "str",
         "framework": "str",
         "description": "str",
         "tags": "list[str]",
@@ -65,7 +64,6 @@ class V1HubModel(object):
     attribute_map = {
         "uuid": "uuid",
         "name": "name",
-        "tag": "tag",
         "framework": "framework",
         "description": "description",
         "tags": "tags",
@@ -79,7 +77,6 @@ class V1HubModel(object):
         self,
         uuid=None,
         name=None,
-        tag=None,
         framework=None,
         description=None,
         tags=None,
@@ -96,7 +93,6 @@ class V1HubModel(object):
 
         self._uuid = None
         self._name = None
-        self._tag = None
         self._framework = None
         self._description = None
         self._tags = None
@@ -110,8 +106,6 @@ class V1HubModel(object):
             self.uuid = uuid
         if name is not None:
             self.name = name
-        if tag is not None:
-            self.tag = tag
         if framework is not None:
             self.framework = framework
         if description is not None:
@@ -168,27 +162,6 @@ class V1HubModel(object):
         """
 
         self._name = name
-
-    @property
-    def tag(self):
-        """Gets the tag of this V1HubModel.  # noqa: E501
-
-
-        :return: The tag of this V1HubModel.  # noqa: E501
-        :rtype: str
-        """
-        return self._tag
-
-    @tag.setter
-    def tag(self, tag):
-        """Sets the tag of this V1HubModel.
-
-
-        :param tag: The tag of this V1HubModel.  # noqa: E501
-        :type: str
-        """
-
-        self._tag = tag
 
     @property
     def framework(self):

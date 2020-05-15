@@ -83,12 +83,6 @@ export interface V1Operation {
      * @type {string}
      * @memberof V1Operation
      */
-    tag?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Operation
-     */
     description?: string;
     /**
      * 
@@ -225,7 +219,6 @@ export function V1OperationFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'version': !exists(json, 'version') ? undefined : json['version'],
         'kind': !exists(json, 'kind') ? undefined : json['kind'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'tag': !exists(json, 'tag') ? undefined : json['tag'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'profile': !exists(json, 'profile') ? undefined : json['profile'],
@@ -262,7 +255,6 @@ export function V1OperationToJSON(value?: V1Operation | null): any {
         'version': value.version,
         'kind': value.kind,
         'name': value.name,
-        'tag': value.tag,
         'description': value.description,
         'tags': value.tags,
         'profile': value.profile,

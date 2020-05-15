@@ -74,9 +74,6 @@ class V1Component {
             if (data.hasOwnProperty('name')) {
                 obj['name'] = ApiClient.convertToType(data['name'], 'String');
             }
-            if (data.hasOwnProperty('tag')) {
-                obj['tag'] = ApiClient.convertToType(data['tag'], 'String');
-            }
             if (data.hasOwnProperty('description')) {
                 obj['description'] = ApiClient.convertToType(data['description'], 'String');
             }
@@ -128,11 +125,6 @@ V1Component.prototype['kind'] = undefined;
  * @member {String} name
  */
 V1Component.prototype['name'] = undefined;
-
-/**
- * @member {String} tag
- */
-V1Component.prototype['tag'] = undefined;
 
 /**
  * @member {String} description

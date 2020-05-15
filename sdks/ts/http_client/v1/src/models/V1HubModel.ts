@@ -50,12 +50,6 @@ export interface V1HubModel {
      * @type {string}
      * @memberof V1HubModel
      */
-    tag?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1HubModel
-     */
     framework?: string;
     /**
      * 
@@ -107,7 +101,6 @@ export function V1HubModelFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         
         'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'tag': !exists(json, 'tag') ? undefined : json['tag'],
         'framework': !exists(json, 'framework') ? undefined : json['framework'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
@@ -129,7 +122,6 @@ export function V1HubModelToJSON(value?: V1HubModel | null): any {
         
         'uuid': value.uuid,
         'name': value.name,
-        'tag': value.tag,
         'framework': value.framework,
         'description': value.description,
         'tags': value.tags,

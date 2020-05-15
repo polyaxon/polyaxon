@@ -47,11 +47,8 @@ type V1HubComponent struct {
 	// Optional a flag to disable the model
 	Disabled bool `json:"disabled,omitempty"`
 
-	// Name
+	// Optional component name, should be a valid fully qualified value: name[:version]
 	Name string `json:"name,omitempty"`
-
-	// Optional component tag version
-	Tag string `json:"tag,omitempty"`
 
 	// Optional tags of this entity
 	Tags []string `json:"tags"`

@@ -52,6 +52,12 @@ export interface V1ConnectionType {
     name?: string;
     /**
      * 
+     * @type {string}
+     * @memberof V1ConnectionType
+     */
+    description?: string;
+    /**
+     * 
      * @type {V1ConnectionKind}
      * @memberof V1ConnectionType
      */
@@ -87,6 +93,7 @@ export function V1ConnectionTypeFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'kind': !exists(json, 'kind') ? undefined : V1ConnectionKindFromJSON(json['kind']),
         'schema': !exists(json, 'schema') ? undefined : json['schema'],
         'secret': !exists(json, 'secret') ? undefined : V1K8sResourceSchemaFromJSON(json['secret']),
@@ -104,6 +111,7 @@ export function V1ConnectionTypeToJSON(value?: V1ConnectionType | null): any {
     return {
         
         'name': value.name,
+        'description': value.description,
         'kind': V1ConnectionKindToJSON(value.kind),
         'schema': value.schema,
         'secret': V1K8sResourceSchemaToJSON(value.secret),

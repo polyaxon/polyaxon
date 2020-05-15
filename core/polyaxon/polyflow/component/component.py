@@ -22,12 +22,12 @@ from polyaxon.polyflow.component.base import BaseComponent, BaseComponentSchema
 from polyaxon.polyflow.io import IOSchema
 from polyaxon.polyflow.references import RefMixin
 from polyaxon.polyflow.run import RunMixin, RunSchema
-from polyaxon.schemas.base import NAME_REGEX
+from polyaxon.schemas.base import FULLY_QUALIFIED_NAME_REGEX
 
 
 class ComponentSchema(BaseComponentSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("component"))
-    tag = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
+    name = fields.Str(validate=validate.Regexp(regex=FULLY_QUALIFIED_NAME_REGEX), allow_none=True)
     inputs = fields.Nested(IOSchema, allow_none=True, many=True)
     outputs = fields.Nested(IOSchema, allow_none=True, many=True)
     run = fields.Nested(RunSchema, required=True)
@@ -38,10 +38,300 @@ class ComponentSchema(BaseComponentSchema):
 
 
 class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
+    """Component is a discrete, repeatable, and self-contained action that defines
+    an environment and a runtime.
+
+    A component is made of code that performs an action,
+    such as container building, data preprocessing, data transformation, model training, and so on.
+
+    You can use any language to write the logic of your component,
+    Polyaxon uses containers to execute that logic.
+
+    Components are definitions that can be shared if they reach a
+    certain maturity and can be managed by the [components hub](/docs/management/components/).
+    This allows you to create a library of frequently-used components and reuse them
+    either by submitting them directly or by referencing them from your operations.
+
+    Components can be used as well to extract as much information and be used as templates
+    with default queues, container resource requirements, node scheduling, ...
+
+    Args:
+        version: str
+        kind: str, equal to `component`
+        name: str, optional
+        description: str, optional
+        tags: List[str], optional
+        profile: str, optional
+        queue: str, optional
+        cache: [V1Cache](/docs/automation/helpers/cache/), optional
+        termination: [V1Termination](/docs/core/specification/termination/), optional
+        plugins: [V1Plugins](/docs/core/specification/plugins/), optional
+        inputs: [V1IO](/docs/core/specification/io/), optional
+        outputs: [V1IO](/docs/core/specification/io/), optional
+        run: Union[[V1Job](/docs/experimentation/jobs/),
+             [V1Service](/docs/experimentation/services/),
+             [V1TFJob](/docs/experimentation/distributed/tf-jobs/),
+             [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/),
+             [V1MPIJob](/docs/experimentation/distributed/mpi-jobs/),
+             [V1Spark](/docs/experimentation/distributed/spark-jobs/),
+             [V1Dask](/docs/experimentation/distributed/dask-jobs/),
+             [V1Dag](/docs/automation/flow-engine/specification/)]
+
+    ## Yaml usage
+
+    ```yaml
+    >>> component:
+    >>>   version: 1.1
+    >>>   kind: component
+    >>>   name:
+    >>>   description:
+    >>>   tags:
+    >>>   profile:
+    >>>   queue:
+    >>>   cache:
+    >>>   termination:
+    >>>   plugins:
+    >>>   inputs:
+    >>>   outputs:
+    >>>   run:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1Cache, V1Component, V1IO, V1Plugins, V1Termination
+    >>> component = V1Component(
+    >>>     name="test",
+    >>>     description="test",
+    >>>     tags=["test"],
+    >>>     profile="test",
+    >>>     queue="test",
+    >>>     cache=V1Cache(...),
+    >>>     termination=V1Termination(...),
+    >>>     plugins=V1Plugins(...),
+    >>>     inputs=V1IO(...),
+    >>>     outputs=V1IO(...),
+    >>>     run=...
+    >>> )
+    ```
+
+    ## Fields
+
+    ### version
+
+    The polyaxon specification version to use to validate the component.
+
+    If you are using the component inline in an operation, this field is not required since it
+    will be populated by the operation.
+
+    ```yaml
+    >>> component:
+    >>>   version: 1.1
+    ```
+
+    ### kind
+
+    The kind allows to signal to the CLI, client and other tools that this is a component.
+
+    If you are using the python client to create a component,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> component:
+    >>>   kind: component
+    ```
+
+    ### name
+
+    The default component name.
+
+    This name can be `slug` or `slug:tag`.
+
+    This name will be passed as the default value to all operations using this component,
+    unless the operations overrides the name or a name is passed as an argument to the cli/client.
+
+    ```yaml
+    >>> component:
+    >>>   name: test
+    ```
+
+    ### description
+
+    The default component description.
+
+    This description will be passed as the default value to all operations using this component,
+    unless the operations overrides the description or a
+    description is passed as an argument to the cli/client.
+
+    ```yaml
+    >>> component:
+    >>>   description: test
+    ```
+
+    ### tags
+
+    The default component tags.
+
+    These tags will be passed as the default value to all operations using this component,
+    unless the operations overrides the tags or tags are passed as an argument to the cli/client.
+
+    ```yaml
+    >>> component:
+    >>>   tags: [test]
+    ```
+
+    ### profile
+
+    The default component [run profile](/docs/management/run-profiles/).
+
+    This profile will be passed as the default value to all operations using this component,
+    unless the operations overrides the profile or a profile
+    is passed as an argument to the cli/client.
+
+    ```yaml
+    >>> component:
+    >>>   profile: test
+    ```
+
+    ### queue
+
+    The default component [queue](/docs/core/scheduling-strategies/queue-routing/).
+
+    This queue will be passed as the default value to all operations using this component,
+    unless the operations overrides the queue or a queue
+    is passed as an argument to the cli/client.
+
+    ```yaml
+    >>> component:
+    >>>   queue: test
+    ```
+
+    ### cache
+
+    The default component [cache](/docs/automation/helpers/cache/).
+
+    This cache definition will be passed as the default value to
+    all operations using this component,
+    unless the operations overrides the cache or a `nocache`
+    is passed as an argument to the cli/client.
+
+    ```yaml
+    >>> component:
+    >>>   cache:
+    >>>     disable: false
+    >>>     ttl: 100
+    ```
+
+    ### termination
+
+    The default termination [termination](/docs/core/specification/termination/).
+
+    This termination definition will be passed as the default value to
+    all operations using this component,
+    unless the operations overrides the termination.
+
+    ```yaml
+    >>> component:
+    >>>   termination:
+    >>>     maxRetries: 2
+    ```
+
+    ### plugins
+
+    The default plugins [plugins](/docs/core/specification/plugins/).
+
+    This plugins definition will be passed as the default value to
+    all operations using this component,
+    unless the operations overrides the plugins.
+
+    ```yaml
+    >>> component:
+    >>>   name: debug
+    >>>   ...
+    >>>   plugins:
+    >>>     auth: false
+    >>>     collectLogs: false
+    >>>   ...
+    ```
+
+    Build using docker:
+
+    ```yaml
+    >>> component:
+    >>>   name: build
+    >>>   ...
+    >>>   plugins:
+    >>>     docker: true
+    >>>   ...
+    ```
+
+    ### inputs
+
+    The inputs definition for this component.
+
+    If the component defines required inputs, anytime a user tries to run
+    this component without passing the required params or passing params with wrong types,
+    an exception will be raised.
+
+    ```yaml
+    >>> component:
+    >>>   name: tensorboard
+    >>>   ...
+    >>>   inputs:
+    >>>     - name: image
+    >>>       type: str
+    >>>       isOptional: true
+    >>>       value: tensorflow:2.1
+    >>>     - name: log_dir
+    >>>       type: path
+    >>>   ...
+    ```
+
+    ### outputs
+
+    The outputs definition for this component.
+
+    If the component defines required outputs, no exception will be raised at execution time,
+    since Polyaxon will consider the outputs values will be resolved in the future,
+    for example during the run time when the user will be using the tracking
+    client to log a metric or a value or an artifact.
+
+    Sometimes the outputs can be resolved immediately at execution time,
+    for example a container image name, because such information is required for the
+    job to finish successfully, i.e. pushing the image with correct name.
+
+    ```yaml
+    >>> component:
+    >>>   name: tensorboard
+    >>>   ...
+    >>>   outputs:
+    >>>     - name: image
+    >>>       type: str
+    >>>   ...
+    ```
+
+    ### run
+
+    This run section of the component is how Polyaxon knows
+    if it should start:
+        * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,
+                                                data processing jobs, ...
+        * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks,
+                                                        streamlit, custom services or an API.
+        * [V1TFJob](/docs/experimentation/distributed/tf-jobs/): for running distributed
+                                                                 Tensorflow training job.
+        * [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/): for running distributed
+                                                                           Pytorch training job.
+        * [V1MPIJob](/docs/experimentation/distributed/mpi-jobs/): for running distributed
+                                                                   MPI job.
+        * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
+        * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
+        * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG / workflow.
+
+    """
     SCHEMA = ComponentSchema
     IDENTIFIER = "component"
     REDUCED_ATTRIBUTES = BaseComponent.REDUCED_ATTRIBUTES + [
-        "tag",
         "inputs",
         "outputs",
         "run",
@@ -57,3 +347,6 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
         config_dict = self.to_light_dict()
         config_dict.pop("tag", None)
         return config_dict
+
+    def get_name(self):
+        return self.name.split(":")[0] if self.name else None

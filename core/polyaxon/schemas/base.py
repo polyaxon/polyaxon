@@ -373,3 +373,4 @@ class BaseMultiSchema(Schema):
 
 
 NAME_REGEX = r"^[-a-zA-Z0-9_]+\Z"
+FULLY_QUALIFIED_NAME_REGEX = r"^[-a-zA-Z0-9_]+(:[-a-zA-Z0-9_.]+)?\Z"

@@ -89,9 +89,6 @@ type V1Operation struct {
 	// Optional flag to skip this run if upstream was skipped
 	SkipOnUpstreamSkip bool `json:"skip_on_upstream_skip,omitempty"`
 
-	// Optional component tag version
-	Tag string `json:"tag,omitempty"`
-
 	// Optional component tags
 	Tags []string `json:"tags"`
 
