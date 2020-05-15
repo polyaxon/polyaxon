@@ -68,6 +68,368 @@ class OperationSchema(BaseOpSchema):
 
 
 class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
+    """An operation is how Polyaxon executes a component by passing parameters,
+    connections, and a run environment.
+
+    With an operation users can:
+     * pass the parameters for required inputs or override the default values of optional inputs
+     * patch the definition of the component to set environments
+     * set termination logic and retries
+     * set trigger logic
+     * parallelize or map the operation over a matrix of parameters
+     * put an operation on a schedule
+     * subscribe an operation to events to trigger executions automatically
+
+
+
+    Args:
+        version: str
+        kind: str, equal to `operation`
+        name: str, optional
+        description: str, optional
+        tags: List[str], optional
+        profile: str, optional
+        queue: str, optional
+        cache: [V1Cache](/docs/automation/helpers/cache/), optional
+        termination: [V1Termination](/docs/core/specification/termination/), optional
+        plugins: [V1Plugins](/docs/core/specification/plugins/), optional
+        params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
+        schedule: Union[[V1CronSchedule](/docs/automation/schedules/cron/)
+                  [V1IntervalSchedule](/docs/automation/schedules/interval/),
+                  [V1RepeatableSchedule](/docs/automation/schedules/repeatable/),
+                  [V1ExactTimeSchedule](/docs/automation/schedules/exact-time/)], optional
+        events: [events](/docs/automation/optimization-engine/events/),
+                optional
+        parallel: Union[[V1Mapping](/docs/automation/mapping/),
+                  [V1GridSearch](/docs/automation/optimization-engine/grid-search/),
+                  [V1RandomSearch](/docs/automation/optimization-engine/random-search/),
+                  [V1Hyperband](/docs/automation/optimization-engine/hyperband/),
+                  [V1Bayes](/docs/automation/optimization-engine/bayesian-optimization/),
+                  [V1Hyperopt](/docs/automation/optimization-engine/hyperopt/),
+                  [V1Iterative](/docs/automation/optimization-engine/iterative/)], optional
+        dependencies: [trigger](/docs/automation/optimization-engine/flow-engine/trigger/),
+                      optional
+        trigger: [trigger](/docs/automation/optimization-engine/flow-engine/trigger/),
+                 optional
+        conditions: [conditions](/docs/automation/optimization-engine/flow-engine/conditions/),
+                    optional
+        skip_on_upstream_skip: [skip_on_upstream_skip](/docs/automation/optimization-engine/flow-engine/conditions/),  # noqa
+                               optional
+        run_patch: Dict, optional
+        hub_ref: str, optional
+        dag_ref: str, optional
+        url_ref: str, optional
+        path_ref: str, optional
+        component: [V1Component](/docs/core/specification/component/), optional
+
+    ## Yaml usage
+
+    ```yaml
+    >>> operation:
+    >>>   version: 1.1
+    >>>   kind: operation
+    >>>   name:
+    >>>   description:
+    >>>   tags:
+    >>>   profile:
+    >>>   queue:
+    >>>   cache:
+    >>>   termination:
+    >>>   plugins:
+    >>>   params:
+    >>>   runPatch:
+    >>>   hubRef:
+    >>>   dagRef:
+    >>>   dagRef:
+    >>>   component:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1Cache, V1Component, V1Param, V1Plugins, V1Operation, V1Termination
+    >>> operation = V1Operation(
+    >>>     name="test",
+    >>>     description="test",
+    >>>     tags=["test"],
+    >>>     profile="test",
+    >>>     queue="test",
+    >>>     cache=V1Cache(...),
+    >>>     termination=V1Termination(...),
+    >>>     plugins=V1Plugins(...),
+    >>>     outputs={"param1": V1Param(...), ...},
+    >>>     component=V1Component(...),
+    >>> )
+    ```
+
+    ## Fields
+
+    ### version
+
+    The polyaxon specification version to use to validate the operation.
+
+    ```yaml
+    >>> operation:
+    >>>   version: 1.1
+    ```
+
+    ### kind
+
+    The kind allows to signal to the CLI, client and other tools that this is an operation.
+
+    If you are using the python client to create an operation,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> operation:
+    >>>   kind: component
+    ```
+
+    ### name
+
+    The name to use for this operation run,
+    if provided will override the component's name otherwise
+    the name of the component will be used if it exists.
+
+    ```yaml
+    >>> operation:
+    >>>   name: test
+    ```
+
+    ### description
+
+    The description to use for this operation run,
+    if provided will override the component's description otherwise
+    the description of the component will be used if it exists.
+
+    ```yaml
+    >>> operation:
+    >>>   description: test
+    ```
+
+    ### tags
+
+    The tags to use for this operation run,
+    if provided will override the component's tags otherwise
+    the tags of the component will be used if it exists.
+
+    ```yaml
+    >>> operation:
+    >>>   tags: [test]
+    ```
+
+    ### profile
+
+    The [run profile](/docs/management/run-profiles/) to use for this operation run,
+    if provided will override the component's profile otherwise
+    the profile of the component will be used if it exists.
+
+    ```yaml
+    >>> operation:
+    >>>   profile: test
+    ```
+
+    ### queue
+
+    The [queue](/docs/core/scheduling-strategies/queue-routing/) to use for this operation run,
+    if provided will override the component's queue otherwise
+    the queue of the component will be used if it exists.
+
+    ```yaml
+    >>> operation:
+    >>>   queue: test
+    ```
+
+    ### cache
+
+    The [cache](/docs/automation/helpers/cache/) to use for this operation run,
+    if provided will override the component's cache otherwise
+    the cache of the component will be used if it exists.
+
+    ```yaml
+    >>> operation:
+    >>>   cache:
+    >>>     disable: false
+    >>>     ttl: 100
+    ```
+
+    ### termination
+
+    The [termination](/docs/core/specification/termination/) to use for this operation run,
+    if provided will override the component's termination otherwise
+    the termination of the component will be used if it exists.
+
+    ```yaml
+    >>> operation:
+    >>>   termination:
+    >>>     maxRetries: 2
+    ```
+
+    ### plugins
+
+    The [plugins](/docs/core/specification/plugins/) to use for this operation run,
+    if provided will override the component's plugins otherwise
+    the plugins of the component will be used if it exists.
+
+    ```yaml
+    >>> operation:
+    >>>   name: debug
+    >>>   ...
+    >>>   plugins:
+    >>>     auth: false
+    >>>     collectLogs: false
+    >>>   ...
+    ```
+
+    ### params
+
+    The [params](/docs/core/specification/params/)  to pass to the component,
+    will be validated against the inputs / outputs.
+    If a param is passed and the component does not define a corresponding inputs / outputs,
+    a validation error will be raise unless the param is has the contextOnly flag enabled.
+
+    ```yaml
+    >>> operation:
+    >>>   params:
+    >>>     param1: {value: 1.1}
+    >>>     param2: {value: test}
+    >>>     param3: {ref: dag.upstream-operation, value: outputs.metric}
+    >>>   ...
+    ```
+
+    ### run_patch
+
+    The run patch provide a way to override information about the component's run section,
+    for example the container's resources or the environment section.
+
+    The run patch is dict that can modify most of the run time information and
+    will be resolved against the corresponding run kind:
+
+        * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,
+                                                data processing jobs, ...
+        * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks,
+                                                        streamlit, custom services or an API.
+        * [V1TFJob](/docs/experimentation/distributed/tf-jobs/): for running distributed
+                                                                 Tensorflow training job.
+        * [V1PytorchJob](/docs/experimentation/distributed/pytorch-jobs/): for running distributed
+                                                                           Pytorch training job.
+        * [V1MPIJob](/docs/experimentation/distributed/mpi-jobs/): for running distributed
+                                                                   MPI job.
+        * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
+        * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
+        * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG / workflow.
+
+    For example, you might want defined a generic component for running Jupyter Notebook:
+
+    ```yaml
+    >>> version: 1.1
+    >>> kind: component
+    >>> name: notebook
+    >>> run:
+    >>>   kind: service
+    >>>   ports: [8888]
+    >>>   container:
+    >>>     image: "jupyter/tensorflow-notebook"
+    >>>     command: ["jupyter", "lab"]
+    >>>     args: [
+    >>>       "--no-browser",
+    >>>       "--ip=0.0.0.0",
+    >>>       "--port={{globals.ports[0]}}",
+    >>>       "--allow-root",
+    >>>       "--NotebookApp.allow_origin=*",
+    >>>       "--NotebookApp.trust_xheaders=True",
+    >>>       "--NotebookApp.token=",
+    >>>       "--NotebookApp.base_url={{globals.base_url}}",
+    >>>       "--LabApp.base_url={{globals.base_url}}"
+    >>>     ]
+    ```
+
+    This component is generic, and does not define resource requirements,
+    if for instance this component is hosted on github and you don't
+    want to modify the component while on the same you want to request a GPU for the notebook,
+    you can patch the run:
+
+    ```yaml
+    >>> version: 1.1
+    >>> kind: operation
+    >>> urlRef: https://raw.githubusercontent.com/org/repo/master/components/notebook.yaml
+    >>> runPatch:
+    >>>   container:
+    >>>     resources:
+    >>>       limits:
+    >>>         nvidia.com/gpu: 1
+    ```
+
+    By applying a run patch you can effectively share component while having
+    full control over customizable details.
+
+    ### hub_ref
+
+    Polyaxon provides a [components hub](/docs/management/components/)
+    for hosting versioned components with access control system to improve
+    the productivity of your team.
+
+    To run a component hosted on Polyaxon components hub, you can use `hubRef`
+
+    ```yaml
+    >>> version: 1.1
+    >>> kind: operation
+    >>> hubRef: myComponent:v1.1
+    ...
+    ```
+
+    ### dag_ref
+
+    If you building a dag and you have a component that can be used by several operation,
+    you can define a component and reuse it in all operations using `dagRef`.
+    Please check Polyaxon automation section [flow engine](/docs/automation/flow-engine/)
+    for more details.
+
+    ### url_ref
+
+    You can host your components on an accessible url, e.g github,
+    and reference the those component without download data manually.
+
+    ```yaml
+    >>> version: 1.1
+    >>> kind: operation
+    >>> urlRef: https://raw.githubusercontent.com/org/repo/master/components/my-component.yaml
+    ...
+    ```
+
+    ### path_ref
+
+    In many situations, components can be placed in different folders within a project, e.g.
+    data-processing, data-exploration, ml-modeling, ...
+
+    You can define operations without the need to change
+    the directory by referencing a path to that component:
+
+    ```yaml
+    >>> version: 1.1
+    >>> kind: operation
+    >>> pathRef: ../data-processing/component-clean.yaml
+    ...
+    ```
+
+    ### component
+
+    If you are still in the developement phase or if you are building a
+    singleton operation that can be executed in a unique way, you can define
+    the component inline inside the operation:
+
+     ```yaml
+    >>> version: 1.1
+    >>> kind: operation
+    >>> component:
+    >>>   run:
+    >>>      kind: job
+    >>>      container:
+    >>>        image: foo:latest
+    >>>        command: train --lr=0.01
+    ...
+    ```
+    """
     SCHEMA = OperationSchema
     IDENTIFIER = "operation"
     REDUCED_ATTRIBUTES = BaseOp.REDUCED_ATTRIBUTES + [

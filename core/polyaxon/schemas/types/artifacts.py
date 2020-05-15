@@ -35,6 +35,96 @@ class ArtifactsTypeSchema(BaseCamelSchema):
 
 
 class V1ArtifactsType(BaseConfig, polyaxon_sdk.V1ArtifactsType):
+    """"Artifacts type allows to easily pass
+    the files and directories to initialize as a single parameter.
+
+    If used as an input type, Polyaxon can resolve several connections (blob storage and volumes)
+    and will turn this input type into an initializer with logic to download/provide
+    the requested files and / or directories into a context for your jobs and operations.
+
+
+    Args:
+        connection: str, optional, the connection to use,
+                    if not provided the default artifacts store is used
+        files: List[str], optional, list of file subpaths
+        dirs: List[str], optional, list of directory subpaths
+        init: bool, optional, if True the files and dirs will be automatically
+              downloaded / provided in the run's artifacts context.
+        workers: int, optional, number of threads for downloading data from S3/GCS/Azure.
+
+    ### Yaml usage
+
+    The inputs definition
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: some-file-names
+    >>>     type: artifacts
+    >>>   - name: tensorboard-log-dir
+    >>>     type: artifacts
+    >>>   - name: dataset1
+    >>>     type: artifacts
+    ```
+
+    The params usage
+
+    ```yaml
+    >>> params:
+    >>>   some-file-names: {value: {files: ["file1", "/path/to/file2"]}}
+    >>>   tensorboard-log-dir: {value: {dirs: ["/tensorboard-logs"], connection: "foo", init: True}}
+    >>>   dataset1: {value: {connection: "s3-dataset", init: True}}
+    ```
+
+    The first param will be just a list of files definition that the user should know how to handle in their program.
+
+    The second param, Polyaxon will load only that directory path from connection "foo".
+    This connection could be any bycket or volume.
+
+    In the third param, `dataset1` will be resolved automatically because
+    Polyaxon knows about that connection and that it's of type S3.
+    It will load all data in that S3 bucket before starting the experiment.
+
+    ### Python usage
+
+    The inputs definition
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="some-file-names",
+    >>>         iotype=types.ARTIFACTS,
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="tensorboard-log-dir",
+    >>>         iotype=types.ARTIFACTS,
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="dataset1",
+    >>>         iotype=types.ARTIFACTS,
+    >>>     )
+    >>> ]
+    ```
+
+    The params usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1Param
+    >>> params = {
+    >>>     "test1": V1Param(value=types.V1ArtifactsType(files=["file1", "/path/to/file2"])),
+    >>>     "test2": V1Param(
+    >>>         value=types.V1ArtifactsType(dirs=["/tensorboard-logs"], connection="foo", init=True)
+    >>>     ),
+    >>>     "test3": V1Param(
+    >>>         value=types.V1ArtifactsType(connection="s3-dataset", init=True, workers=10)
+    >>>     ),
+    >>> }
+    ```
+    """
     IDENTIFIER = "artifacts"
     SCHEMA = ArtifactsTypeSchema
     REDUCED_ATTRIBUTES = ["files", "dirs", "connection", "init", "workers"]

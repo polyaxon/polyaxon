@@ -19,26 +19,31 @@ from polyaxon.utils.tz_utils import now
 
 
 class V1Statuses(polyaxon_sdk.V1Statuses):
-    """The supported statuses by Polyaxon.
+    """Status is the information that represents the current state of a run.
+
+    By examining a run status and/or the history of its statuses,
+    you can learn what stage the run is at, and what stages are left.
+
+    The supported statuses by Polyaxon.
 
     Enum:
-        created
-        resuming
-        warning
-        unschedulable
-        compiled
-        queued
-        scheduled
-        starting
-        running
-        succeeded
-        failed
-        upstream_failed
-        stopping
-        stopped
-        skipped
-        retrying
-        unknown
+        CREATED: "created"
+        RESUMING: "resuming"
+        WARNING: "warning"
+        UNSCHEDULABLE: "unschedulable"
+        COMPILED: "compiled"
+        QUEUED: "queued"
+        SCHEDULED: "scheduled"
+        STARTING: "starting"
+        RUNNING: "running"
+        SUCCEEDED: "succeeded"
+        FAILED: "failed"
+        UPSTREAM_FAILED: "upstream_failed"
+        STOPPING: "stopping"
+        STOPPED: "stopped"
+        SKIPPED: "skipped"
+        RETRYING: "retrying"
+        UNKNOWN: "unknown"
     """
 
 
@@ -46,11 +51,11 @@ class StatusColor:
     """The statuses colors.
 
     Enum:
-        GREEN = #1aaa55
-        RED = #aa310f
-        BLUE = #2e77aa
-        YELLOW = #aa9e4a
-        GREY = #485563
+        GREEN: #1aaa55
+        RED: #aa310f
+        BLUE: #2e77aa
+        YELLOW: #aa9e4a
+        GREY: #485563
     """
 
     GREEN = "#1aaa55"
@@ -80,7 +85,7 @@ class StatusColor:
 
 
 class LifeCycle:
-    """The Run LifeCycle is stats machine for state transition."""
+    """The Run LifeCycle is state machine for status transition."""
 
     CHOICES = (
         (V1Statuses.CREATED, V1Statuses.CREATED),
@@ -124,74 +129,92 @@ class LifeCycle:
 
     @classmethod
     def can_check_heartbeat(cls, status: str) -> bool:
+        """Checks if a run with this status is in a state to check for heartbeat."""
         return status in cls.RUNNING_VALUES
 
     @classmethod
     def is_unschedulable(cls, status: str) -> bool:
+        """Checks if a run with this status is unschedulable."""
         return status == V1Statuses.UNSCHEDULABLE
 
     @classmethod
     def is_warning(cls, status: str) -> bool:
+        """Checks if a run with this status is in warning status."""
         return status in cls.WARNING_VALUES
 
     @classmethod
     def is_pending(cls, status: str) -> bool:
+        """Checks if a run with this status is in pending status."""
         return status in cls.PENDING_VALUES
 
     @classmethod
     def is_compiled(cls, status: str) -> bool:
+        """Checks if a run with this status is compiled."""
         return status == V1Statuses.COMPILED
 
     @classmethod
     def is_compilable(cls, status: str) -> bool:
+        """Checks if a run with this status is compilable."""
         return status in cls.COMPILABLE_VALUES
 
     @classmethod
     def is_queued(cls, status: str) -> bool:
+        """Checks if a run with this status is queued."""
         return status == V1Statuses.QUEUED
 
     @classmethod
     def is_starting(cls, status: str) -> bool:
+        """Checks if a run with this status is starting."""
         return status == V1Statuses.STARTING
 
     @classmethod
     def is_running(cls, status: str) -> bool:
+        """Checks if a run with this status is running."""
         return status in cls.RUNNING_VALUES
 
     @classmethod
     def is_unknown(cls, status: str) -> bool:
+        """Checks if a run with this status is in an unknown state."""
         return status == V1Statuses.UNKNOWN
 
     @classmethod
     def is_k8s_stoppable(cls, status: str) -> bool:
+        """Checks if a run with this status is in on k8s and is stoppable."""
         return status in cls.ON_K8s_VALUES
 
     @classmethod
     def is_stoppable(cls, status: str) -> bool:
+        """Checks if a run with this status is stoppable."""
         return not cls.is_done(status)
 
     @classmethod
     def is_stopping(cls, status: str) -> bool:
+        """Checks if a run with this status is stopping."""
         return status == V1Statuses.STOPPING
 
     @classmethod
     def is_done(cls, status: str) -> bool:
+        """Checks if a run with this status is done."""
         return status in cls.DONE_VALUES
 
     @classmethod
     def failed(cls, status: str) -> bool:
+        """Checks if a run with this status is failed."""
         return status == V1Statuses.FAILED or status == V1Statuses.UPSTREAM_FAILED
 
     @classmethod
     def succeeded(cls, status: str) -> bool:
+        """Checks if a run with this status is succeeded."""
         return status == V1Statuses.SUCCEEDED
 
     @classmethod
     def stopped(cls, status: str) -> bool:
+        """Checks if a run with this status is stopped."""
         return status == V1Statuses.STOPPED
 
     @classmethod
     def skipped(cls, status: str) -> bool:
+        """Checks if a run with this status is skipped."""
         return status == V1Statuses.SKIPPED
 
 

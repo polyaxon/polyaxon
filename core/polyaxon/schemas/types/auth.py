@@ -32,6 +32,75 @@ class AuthTypeSchema(BaseCamelSchema):
 
 
 class V1AuthType(BaseConfig, polyaxon_sdk.V1AuthType):
+    """Auth type.
+
+    Args:
+        user: str
+        password: str
+
+    ### Yaml usage
+
+    The inputs definition
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: test1
+    >>>     type: auth
+    >>>   - name: test2
+    >>>     type: auth
+    ```
+
+    The params usage
+
+    ```yaml
+    >>> params:
+    >>>   test1: {value: "username1:password1"}
+    >>>   test1: {value: {"user": "username2", "password": "password2"}}
+    ```
+
+    ### Python usage
+
+    The inputs definition
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="test1",
+    >>>         iotype=types.AUTH,
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="test2",
+    >>>         iotype=types.AUTH,
+    >>>     ),
+    >>> ]
+    ```
+
+    The params usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1Param
+    >>> params = {
+    >>>     "test1": V1Param(value=types.V1AuthType(user="username1", password="password1")),
+    >>>     "test2": V1Param(value=types.V1AuthType(user="username2", password="password2")),
+    >>> }
+    ```
+
+    > Normally you should not be passing auth details in plain values.
+
+    This type validate several values:
+
+      * string values:
+         '{"user": "foo", "password": "bar"}'
+         'foo:bar'
+
+      * dict values:
+        {"user": "foo", "password": "bar"}
+    """
     IDENTIFIER = "auth"
     SCHEMA = AuthTypeSchema
     REDUCED_ATTRIBUTES = ["user", "password"]

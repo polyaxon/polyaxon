@@ -115,6 +115,322 @@ class IOSchema(BaseCamelSchema):
 
 
 class V1IO(BaseConfig, polyaxon_sdk.V1IO):
+    """Each Component may have its own inputs and outputs.
+    The inputs and outputs describe the expected parameters to pass to the component
+    and their types. In the context of a DAG,
+    inputs and outputs types are used to validate the flow of information
+    going from one operation to another.
+
+    The final value of an input / output can be resolved
+    from [params](/docs/core/specification/params/), or from other values in
+    the [context](/docs/core/specification/context/).
+
+    Examples:
+     * A build component may have a git repository as input and a container image as output.
+     * A traning component may have a container image, data path,
+       and some hyperparameters as input and a list metrics results as outputs.
+
+    An input/output section includes a name, a description, a type to check the value passed,
+    a flag to tell if the input/output is optional, and a default value if it is optional.
+
+    For inputs with type `bool`, users can additionally use
+    the flag `isFlag` which will transform the input to a flag.
+
+    Args:
+        name: str
+        description: str, optional
+        iotype: str, one of: [any, int, float, bool, str, dict, dict_of_dicts, uri, auth, list,
+                              gcs, s3, wasb, dockerfile, git, image, event, artifacts, path,
+                              metric, metadata, date, datetime]
+        value: any, optional
+        is_optional: bool, optional
+        is_list: bool, optional
+        is_flag: bool, optional
+        delay_validation: bool, optional
+        options: List[any], optional
+
+    ## Yaml usage
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: loss
+    >>>     type: str
+    >>>     isOptional: true
+    >>>     value: MeanSquaredError
+    >>>   - name: preprocess
+    >>>     type: bool
+    >>>     isFlag: true
+    >>> outputs:
+    >>>   - name: accuracy
+    >>>     type: float
+    >>>   - name: outputs-path
+    >>>     type: path
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="loss",
+    >>>         iotype=types.STR,
+    >>>         description="Loss to use for training my model",
+    >>>         is_optional=True,
+    >>>         value="MeanSquaredError"
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="preprocess",
+    >>>         iotype=types.BOOL,
+    >>>         description="A flag to preprocess data before training",
+    >>>         is_flag=True
+    >>>     )
+    >>> ]
+    >>> outputs = [
+    >>>     V1IO(
+    >>>         name="accuracy",
+    >>>         iotype=types.FLOAT,
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="outputs-path",
+    >>>         iotype=types.PATH,
+    >>>     )
+    >>> ]
+    ```
+
+    These inputs/outputs declarations can be used to pass values to our program:
+
+    ```bash
+     ... --loss={{ loss }} {{ preprocess }}
+    ```
+
+    ## Fields
+
+    ### name
+
+    The input / output name.
+
+    the name must be a valid slug, and cannot include dots `.`.
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: learning_rate
+    ```
+
+    ### description
+
+    An optional description for the input / output.
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: learning_rate
+    >>>     description: A short description about this input
+    ```
+
+    ### type
+
+    The type of the input / output. The type will be used to validate the value
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: learning_rate
+    >>>     description: A short description about this input
+    >>>     type: float
+    ```
+
+    for more details about composite type validation and schema,
+    please check the [types section](/docs/core/specification/types/),
+    possible types:
+        * ANY: "any"
+        * INT: "int"
+        * FLOAT: "float"
+        * BOOL: "bool"
+        * STR: "str"
+        * DICT: "dict"
+        * DICT_OF_DICTS: "dict_of_dicts"
+        * URI: "uri"
+        * AUTH: "auth"
+        * LIST: "list"
+        * GCS: "gcs"
+        * S3: "s3"
+        * WASB: "wasb"
+        * DOCKERFILE: "dockerfile"
+        * GIT: "git"
+        * IMAGE: "image"
+        * EVENT: "event"
+        * ARTIFACTS: "artifacts"
+        * PATH: "path"
+        * METRIC: "metric"
+        * METADATA: "metadata"
+        * DATE: "date"
+        * DATETIME: "datetime"
+
+    ### value
+
+    If an input is optional you should assign it a value.
+    If an output is optional you can assign it a value.
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: learning_rate
+    >>>     description: A short description about this input
+    >>>     type: float
+    >>>     value: 1.1
+    ```
+
+    ### is_optional
+
+    A flag to tell if an input / output is optional.
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: learning_rate
+    >>>     description: A short description about this input
+    >>>     type: float
+    >>>     value: 1.1
+    >>>     isOptional: true
+    ```
+
+    ### is_list
+
+    A flag to tell if an input / output is a list of the type passed.
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: learning_rates
+    >>>     type: float
+    >>>     isList: true
+    ```
+
+    In this case the input name `learning_rates` will expect value of type `List[float]`,
+    e.g. [0.1 0.01, 0.0001]
+
+    ### is_flag
+
+    A flag to tell if an input / output is a a flag. This only works and makes sense for inputs
+    of type `bool`.
+
+    When this flag is enabled, it will turn the usage of the input to `--...`
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: check
+    >>>     type: bool
+    >>>     isFlag: true
+    ```
+
+    ```yaml
+    >>> container:
+    >>>    command: ["run", "model.py", "--param1=1.1", "{{ check }}"]
+    ```
+
+    If the resolved value of the input `check` is True, `"{{ check }}"` will be resolved to `"--check"`
+    other it will be an empty string `""`
+
+    ### delay_validation
+
+    A flag to tell if an input / output is should not be
+    validated at compilation or resolution time.
+
+    This is flag is enabled by default for outputs, since they can only be
+    resolved after or during the run.
+
+    ### options
+
+    Options allows to pass a list of values that you will be used to validate any passed params.
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: learning_rate
+    >>>     description: A short description about this input
+    >>>     type: float
+    >>>     value: 1.1
+    >>>     options: [1.1, 2.2, 3.3]
+    ```
+
+    If you pass a value for learning rate `4.4` it will raise a validation error.
+
+    ## Example
+
+
+    ```yaml
+    >>> version: 1.1
+    >>> kind: component
+    >>> inputs:
+    >>>   - name: batch_size
+    >>>     description: batch size
+    >>>     isOptional: true
+    >>>     value: 128
+    >>>     type: int
+    >>>   - name: num_steps
+    >>>     isOptional: true
+    >>>     default: 500
+    >>>     type: int
+    >>>   - name: learning_rate
+    >>>     isOptional: true
+    >>>     default: 0.001
+    >>>     type: float
+    >>>   - name: dropout
+    >>>     isOptional: true
+    >>>     default: 0.25
+    >>>     type: float
+    >>>   - name: num_epochs
+    >>>     isOptional: true
+    >>>     default: 1
+    >>>     type: int
+    >>>   - name: activation
+    >>>     isOptional: true
+    >>>     default: relu
+    >>>     type: str
+    >>> run:
+    >>>   kind: job
+    >>>   image: foo:bar
+    >>>   container:
+    >>>     command: [python3, model.py]
+    >>>     args: [
+    >>>         "--batch_size={{ batch_size }}",
+    >>>         "--num_steps={{ num_steps }}",
+    >>>         "--learning_rate={{ learning_rate }}",
+    >>>         "--dropout={{ dropout }",
+    >>>         "--num_epochs={{ num_epochs }}",
+    >>>         "--activation={{ activation }}"
+    >>>     ]
+    ```
+
+    ### Running a typed component using the CLI
+
+    Using the Polyaxon CLI we can now run this compoennt and override the inputs' default values:
+
+    ```bash
+    polyaxon run -f polyaxonfile.yaml -P activation=sigmoid -P dropout=0.4
+    ```
+
+    this will result in an run where the params are passed and validate against the inputs,
+    the values are checked to validate that they correspond to the type of the inputs.
+
+    ### Required inputs
+
+    In the example all inputs are optional.
+    If we decide for instance to make the activation required:
+
+    ````yaml
+    >>> ...
+    >>> inputs:
+    >>>   ...
+    >>>   - name: activation
+    >>>     type: str
+    >>>   ...
+    ...
+    ````
+
+    By changing this input, polyaxon can not run this component without passing the activation:
+
+
+    ```bash
+    polyaxon run -f polyaxonfile.yaml -P activation=sigmoid
+    ```
+    """
     SCHEMA = IOSchema
     IDENTIFIER = "io"
     REDUCED_ATTRIBUTES = [

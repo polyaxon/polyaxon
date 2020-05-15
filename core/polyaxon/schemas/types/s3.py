@@ -32,6 +32,64 @@ class S3TypeSchema(BaseCamelSchema):
 
 
 class V1S3Type(BaseConfig, polyaxon_sdk.V1S3Type):
+    """S3 type.
+
+    Args:
+        bucket: str
+        key: str
+
+    ### Yaml usage
+
+    The inputs definition
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: test1
+    >>>     type: s3
+    >>>   - name: test2
+    >>>     type: s3
+    ```
+
+    The params usage
+
+    ```yaml
+    >>> params:
+    >>>   test1: {value: {bucket: "s3://bucket1"}}
+    >>>   test1: {value: {bucket: "s3://bucket2", key: "keyName"}}
+    ```
+
+    ### Python usage
+
+    The inputs definition
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="test1",
+    >>>         iotype=types.S3,
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="test2",
+    >>>         iotype=types.S3,
+    >>>     ),
+    >>> ]
+    ```
+
+    The params usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1Param
+    >>> params = {
+    >>>     "test1": V1Param(value=types.V1S3Type(bucket="s3://bucket1")),
+    >>>     "test2": V1Param(value=types.V1S3Type(bucket="s3://bucket1", key="keyName")),
+    >>> }
+    ```
+    """
     IDENTIFIER = "s3"
     SCHEMA = S3TypeSchema
     REDUCED_ATTRIBUTES = ["bucket", "key"]

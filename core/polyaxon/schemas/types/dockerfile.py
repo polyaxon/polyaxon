@@ -51,6 +51,94 @@ class DockerfileTypeSchema(BaseCamelSchema):
 
 
 class V1DockerfileType(BaseConfig, polyaxon_sdk.V1DockerfileType):
+    """Dockerfile type.
+
+    This is type allows you to easily construct a dockerfile without
+    the need to clone repo or download a file. It exposes a very simple interface for generating
+    a dockerfile to build your container.
+
+    Args:
+        image: str
+        env: Dict, optional
+        path: List[str], optional
+        copy: List[str], optional
+        run: List[str], optional
+        lang_env: str, optional
+        uid: str, optional
+        gid: str, optional
+        filename: str, optional
+        workdir: str, optional
+        workdir_path: str, optional
+        shell: str, optional
+
+    ### Yaml usage
+
+    The inputs definition
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: test1
+    >>>     type: dockerfile
+    ```
+
+    The params usage
+
+    ```yaml
+    >>> params:
+    >>>   test1:
+    >>>     value:
+    >>>       image: test
+    >>>       run: ["pip install package1"]
+    >>>       env: {'KEY1': 'en_US.UTF-8', 'KEY2':2}
+    ```
+
+    ### Python usage
+
+    The inputs definition
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="test1",
+    >>>         iotype=types.DOCKERFILE,
+    >>>     ),
+    >>> ]
+    ```
+
+    The params usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1Param
+    >>> params = {
+    >>>     "test1": V1Param(
+    >>>         value=types.V1DockerfileType(
+    >>>             image="test:version",
+    >>>             run=["pip install package1"],
+    >>>             env={'KEY1': 'en_US.UTF-8', 'KEY2':2}
+    >>>         )
+    >>>     ),
+    >>> }
+    ```
+
+    ### Fields
+      * image: the base image to build an image for you to run your code.
+      * env: environment variables dictionary that will be exposed as `ENV` sections.
+      * path: list of paths to be added to your `PATH` environment variable.
+      * copy: a list a copy commands that will be exposed as list of COPY commands.
+      * run: a list a run commands that will be exposed as list of RUN commands.
+      * langEnv: if passed it will expose these environment variable: ENV LC_ALL, LANG, LANGUAGE
+      * uid and gid: will create a new user based on these 2 values.
+      * filename: an optional name for your dockerfile, default is Dockerfile.
+      * workdir: the WORKDIR for your dockerfile, default is `/code`
+      * workdirPath: the local workdir to copy to the docker container.
+      * shell: shell type environment variable, default `/bin/bash`
+
+    """
     IDENTIFIER = "dockerfile"
     SCHEMA = DockerfileTypeSchema
     REDUCED_ATTRIBUTES = [

@@ -33,6 +33,69 @@ class WasbTypeSchema(BaseCamelSchema):
 
 
 class V1WasbType(BaseConfig, polyaxon_sdk.V1WasbType):
+    """Wasb type.
+
+    Args:
+        container: str
+        storage_account: str
+        path: str
+
+    ### Yaml usage
+
+    The inputs definition
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: test1
+    >>>     type: wasb
+    >>>   - name: test2
+    >>>     type: wasb
+    ```
+
+    The params usage
+
+    ```yaml
+    >>> params:
+    >>>   test1: {value: {container: "containerName", user: "username"}}
+    >>>   test2: {value: {container: "containerName", user: "username", key: "some/path"}}
+    ```
+
+    ### Python usage
+
+    The inputs definition
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="test1",
+    >>>         iotype=types.WASB,
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="test2",
+    >>>         iotype=types.WASB,
+    >>>     ),
+    >>> ]
+    ```
+
+    The params usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1Param
+    >>> params = {
+    >>>     "test1": V1Param(value=types.V1WasbType(container="containerName", user="username")),
+    >>>     "test2": V1Param(
+    >>>         value=types.V1WasbType(
+    >>>              container="containerName2", user="username", path="path/value"
+    >>>         )
+    >>>      ),
+    >>> }
+    ```
+    """
     IDENTIFIER = "wasb"
     SCHEMA = WasbTypeSchema
     REDUCED_ATTRIBUTES = ["container", "storageAccount", "path"]

@@ -33,6 +33,65 @@ class UriTypeSchema(BaseCamelSchema):
 
 
 class V1UriType(BaseConfig, polyaxon_sdk.V1UriType):
+    """Uri type.
+
+    Args:
+        user: str
+        password: str
+        host: str
+
+    ### Yaml usage
+
+    The inputs definition
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: test1
+    >>>     type: uri
+    >>>   - name: test2
+    >>>     type: uri
+    ```
+
+    The params usage
+
+    ```yaml
+    >>> params:
+    >>>   test1: {value: "username1:password1@service.com"}
+    >>>   test1: {value: {"user": "username2", "password": "password2", "host": "service.com"}
+    ```
+
+    ### Python usage
+
+    The inputs definition
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="test1",
+    >>>         iotype=types.URI,
+    >>>     ),
+    >>> ]
+    ```
+
+    The params usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1Param
+    >>> params = {
+    >>>     "test1": V1Param(
+    >>>         value=types.V1AuthType(user="username1", password="password1", host="service.com")
+    >>>     ),
+    >>> }
+    ```
+
+    > Normally you should not be passing auth details in plain values.
+    """
+
     IDENTIFIER = "uri"
     SCHEMA = UriTypeSchema
     REDUCED_ATTRIBUTES = ["user", "password", "host"]

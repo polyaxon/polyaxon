@@ -22,7 +22,7 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
-class GitImageSchema(BaseCamelSchema):
+class ImageSchema(BaseCamelSchema):
     name = RefOrObject(fields.Str(allow_none=True))
     connection = RefOrObject(fields.Str(allow_none=True))
 
@@ -33,5 +33,5 @@ class GitImageSchema(BaseCamelSchema):
 
 class V1ImageType(BaseConfig, polyaxon_sdk.V1ImageType):
     IDENTIFIER = "image"
-    SCHEMA = GitImageSchema
+    SCHEMA = ImageSchema
     REDUCED_ATTRIBUTES = ["name", "connection"]

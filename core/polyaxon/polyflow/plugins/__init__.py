@@ -55,7 +55,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         collect_resources: bool, optional, default: True
         sync_statuses: bool, optional, default: True
         log_level: str, optional
-        notifications: List[V1Notification](/docs/core/specification/notifications/)
+        notifications: List[[V1Notification](/docs/core/specification/notifications/)]
 
     ## Yaml usage
 
@@ -258,7 +258,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     This plugin allows you to enable per run notification configuration.
 
     For more information about notifications please check the
-    [notifications section][/docs/core/specification/notifications/]
+    [notifications section](/docs/core/specification/notifications/)
 
     ```yaml
     >>> plugins:

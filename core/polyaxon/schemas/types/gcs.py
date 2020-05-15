@@ -32,6 +32,64 @@ class GcsTypeSchema(BaseCamelSchema):
 
 
 class V1GcsType(BaseConfig, polyaxon_sdk.V1GcsType):
+    """GCS type.
+
+    Args:
+        bucket: str
+        blob: str
+
+    ### Yaml usage
+
+    The inputs definition
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: test1
+    >>>     type: gcs
+    >>>   - name: test2
+    >>>     type: gcs
+    ```
+
+    The params usage
+
+    ```yaml
+    >>> params:
+    >>>   test1: {value: {bucket: "gs://bucket1"}}
+    >>>   test1: {value: {bucket: "gs://bucket2", blob: "blobName"}}
+    ```
+
+    ### Python usage
+
+    The inputs definition
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="test1",
+    >>>         iotype=types.GCS,
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="test2",
+    >>>         iotype=types.GCS,
+    >>>     ),
+    >>> ]
+    ```
+
+    The params usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1Param
+    >>> params = {
+    >>>     "test1": V1Param(value=types.V1GcsType(bucket="gs://bucket1")),
+    >>>     "test2": V1Param(value=types.V1GcsType(bucket="gs://bucket1", blob="blobName")),
+    >>> }
+    ```
+    """
     IDENTIFIER = "gcs"
     SCHEMA = GcsTypeSchema
     REDUCED_ATTRIBUTES = ["bucket", "blob"]

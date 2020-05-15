@@ -34,6 +34,75 @@ class GitTypeSchema(BaseCamelSchema):
 
 
 class V1GitType(BaseConfig, polyaxon_sdk.V1GitType):
+    """Git type allows you to pass git repo as a parameter.
+
+    If used as an input type, Polyaxon can resolve several the git connections
+    and will turn this input type into an initializer with logic to git clone
+    the repo with support of branches and commits,
+    the requested repo will be exposed in a context for your jobs and operations to use it.
+
+    Args:
+        url: str, optional.
+        revision: str, optional.
+        connection: str, optional.
+        init: bool, optioanl.
+
+    ### Yaml usage
+
+    The inputs definition
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: test1
+    >>>     type: git
+    >>>   - name: test2
+    >>>     type: git
+    ```
+
+    The params usage
+
+    ```yaml
+    >>> params:
+    >>>   test1: {value: {"url": "https://github.com/tensorflow/models"}}
+    >>>   test2: {value: {connection: "my-git-connection", revision: "branchA"}}
+    ```
+
+    ### Python usage
+
+    The inputs definition
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1IO
+    >>> inputs = [
+    >>>     V1IO(
+    >>>         name="test1",
+    >>>         iotype=types.GIT,
+    >>>     ),
+    >>>     V1IO(
+    >>>         name="test2",
+    >>>         iotype=types.GIT,
+    >>>     ),
+    >>> ]
+    ```
+
+    The params usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.schemas import types
+    >>> from polyaxon.polyflow import V1Param
+    >>> params = {
+    >>>     "test1": V1Param(
+    >>>         value=types.V1GitType(url="https://github.com/tensorflow/models")
+    >>>     ),
+    >>>     "test2": V1Param(
+    >>>         value=types.V1GitType(connection="my-git-connection", revision="branchA")
+    >>>     ),
+    >>> }
+    ```
+    """
     IDENTIFIER = "git"
     SCHEMA = GitTypeSchema
     REDUCED_ATTRIBUTES = ["url", "revision", "connection", "init"]
