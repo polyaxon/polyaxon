@@ -89,22 +89,22 @@ message Spark {
     repeated string arguments = 10;
 
     // HadoopConf carries user-specified Hadoop configuration properties as they would use the  the "--conf" option
-	// in spark-submit.  The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
-	// configuration properties.
+    // in spark-submit.  The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
+    // configuration properties.
     map<string, string> hadoop_conf = 11;
 
     // HadoopConf carries user-specified Hadoop configuration properties as they would use the  the "--conf" option
-	// in spark-submit.  The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
-	// configuration properties.
+	  // in spark-submit.  The SparkApplication controller automatically adds prefix "spark.hadoop." to Hadoop
+	  // configuration properties.
     map<string, string> spark_conf = 12;
 
     // SparkConfigMap carries the name of the ConfigMap containing Spark configuration files such as log4j.properties.
-	// The controller will add environment variable SPARK_CONF_DIR to the path where the ConfigMap is mounted to.
+	  // The controller will add environment variable SPARK_CONF_DIR to the path where the ConfigMap is mounted to.
     string spark_config_map = 13;
 
-	// HadoopConfigMap carries the name of the ConfigMap containing Hadoop configuration files such as core-site.xml.
-	// The controller will add environment variable HADOOP_CONF_DIR to the path where the ConfigMap is mounted to.
-	string hadoop_config_map = 14;
+	  // HadoopConfigMap carries the name of the ConfigMap containing Hadoop configuration files such as core-site.xml.
+	  // The controller will add environment variable HADOOP_CONF_DIR to the path where the ConfigMap is mounted to.
+	  string hadoop_config_map = 14;
 
     // Optional spark executor definition
     SparkReplica executor = 15;

@@ -27,33 +27,36 @@ message Dask {
     // Optional component kind, should be equal to "Dask"
     string kind = 1;
 
+    // Number of threads
+    int32 threads = 2;
+
     // Number of workers
-    int32 scale = 2;
+    int32 scale = 3;
 
     // Adaptive config min workers
-    int32 adapt_min = 3;
+    int32 adapt_min = 4;
 
     // Adaptive config max workers
-    int32 adapt_max = 4;
+    int32 adapt_max = 5;
 
     // Adaptive config interval
-    string adapt_interval = 5;
+    string adapt_interval = 6;
 
     // Optional environment section
-    Environment environment = 6;
+    Environment environment = 7;
 
     // Optional connections section
-    repeated string connections = 7;
+    repeated string connections = 8;
 
     // Volumes is a list of volumes that can be mounted.
-    repeated Volume volumes = 8;
+    repeated Volume volumes = 9;
 
     // Optional init connections/containers section
-    repeated Init init = 9;
+    repeated Init init = 10;
 
     // Optional sidecars section
-    repeated Container sidecars = 10;
+    repeated Container sidecars = 11;
 
     // Optional container to run
-    Container container = 11;
+    Container container = 12;
 }
