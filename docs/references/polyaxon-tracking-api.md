@@ -39,7 +39,7 @@ Polyaxon tracking allow track several aspect of a run, i.e. n experiment or a jo
  * Run time: Start and end time of the run.
  * Environment: Name of the file to launch the run, the command, arguments, python packages, ...
  * Parameters: Key-value parameters used or this run.
- * Metrics: Key-value metrics where the value is numeric. Each metric can be updated throughout the course of the run (for example, to track how your model’s loss function is converging), and MLflow records and lets you visualize the metric’s full history.
+ * Metrics: Key-value metrics where the value is numeric. Each metric can be updated throughout the course of the run (for example, to track how your model’s loss function is converging), and lets you visualize the metric’s full history.
  * Outputs/Artifacts: Output files in any format. For example, you can record images, audio, models (e.g., a pickled scikit-learn model), or even data files (e.g. a Parquet file) as artifacts.
 
 ## Tracking reference
