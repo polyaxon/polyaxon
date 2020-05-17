@@ -38,6 +38,92 @@ class PytorchJobSchema(BaseCamelSchema):
 
 
 class V1PytorchJob(BaseConfig, polyaxon_sdk.V1PytorchJob):
+    """Kubeflow Pytorch-Job provides an interface to train a distributed experiments with Pytorch.
+
+    Args:
+        kind: str, should be equal `pytorchjob`
+        clean_pod_policy: str, one of [`All`, `Running`, `None`]
+        master: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
+        worker: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
+
+    ## Yaml usage
+
+    ```yaml
+    >>> run:
+    >>>   kind: pytorchjob
+    >>>   cleanPodPolicy:
+    >>>   master:
+    >>>   worker:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1KFReplica, V1PytorchJob
+    >>> from polyaxon.k8s import k8s_schemas
+    >>> pytorch_job = V1PytorchJob(
+    >>>     clean_pod_policy='All',
+    >>>     master=V1KFReplica(...),
+    >>>     worker=V1KFReplica(...),
+    >>> )
+    ```
+
+    ## Fields
+
+    ### kind
+
+    The kind signals to the CLI, client and other tools that this
+    component's runtime is a pytorchjob.
+
+    If you are using the python client to create the runtime,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> run:
+    >>>   kind: pytorchjob
+    ```
+
+    ### cleanPodPolicy
+
+    Controls deletion of pods when a job terminates.
+    The policy can be one of the following values: [`All`, `Running`, `None`]
+
+
+    ```yaml
+    >>> run:
+    >>>   kind: pytorchjob
+    >>>   cleanPodPolicy: 'All'
+    >>>  ...
+    ```
+
+    ### master
+
+    The master replica in the distributed PytorchJob
+
+    ```yaml
+    >>> run:
+    >>>   kind: pytorchjob
+    >>>   master:
+    >>>     replicas: 1
+    >>>     container:
+    >>>       ...
+    >>>  ...
+    ```
+
+    ### worker
+
+    The workers do the actual work of training the model.
+
+    ```yaml
+    >>> run:
+    >>>   kind: pytorchjob
+    >>>   worker:
+    >>>     replicas: 3
+    >>>     container:
+    >>>       ...
+    >>>  ...
+    ```
+    """
     SCHEMA = PytorchJobSchema
     IDENTIFIER = V1RunKind.PYTORCHJOB
     REDUCED_ATTRIBUTES = ["cleanPodPolicy", "master", "worker"]

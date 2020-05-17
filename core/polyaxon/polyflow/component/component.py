@@ -57,7 +57,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     Args:
         version: str
-        kind: str, equal to `component`
+        kind: str, should be equal to `component`
         name: str, optional
         description: str, optional
         tags: List[str], optional
@@ -131,7 +131,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ### kind
 
-    The kind allows to signal to the CLI, client and other tools that this is a component.
+    The kind signals to the CLI, client and other tools that this is a component.
 
     If you are using the python client to create a component,
     this field is not required and is set by default.

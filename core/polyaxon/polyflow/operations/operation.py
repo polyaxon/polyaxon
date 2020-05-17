@@ -84,7 +84,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     Args:
         version: str
-        kind: str, equal to `operation`
+        kind: str, should be equal to `operation`
         name: str, optional
         description: str, optional
         tags: List[str], optional
@@ -175,7 +175,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     ### kind
 
-    The kind allows to signal to the CLI, client and other tools that this is an operation.
+    The kind signals to the CLI, client and other tools that this is an operation.
 
     If you are using the python client to create an operation,
     this field is not required and is set by default.
@@ -418,7 +418,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     singleton operation that can be executed in a unique way, you can define
     the component inline inside the operation:
 
-     ```yaml
+    ```yaml
     >>> version: 1.1
     >>> kind: operation
     >>> component:

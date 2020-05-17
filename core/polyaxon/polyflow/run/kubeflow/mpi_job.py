@@ -39,6 +39,94 @@ class MPIJobSchema(BaseCamelSchema):
 
 
 class V1MPIJob(BaseConfig, polyaxon_sdk.V1MPIJob):
+    """Kubeflow MPI-Job provides an interface to train a distributed experiments with Pytorch.
+
+    Args:
+        kind: str, should be equal `mpijob`
+        clean_pod_policy: str, one of [`All`, `Running`, `None`]
+        slots_per_worker: int, optional
+        launcher: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
+        worker: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
+
+    ## Yaml usage
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    >>>   cleanPodPolicy:
+    >>>   slots_per_worker:
+    >>>   launcher:
+    >>>   worker:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1KFReplica, V1MPIJob
+    >>> from polyaxon.k8s import k8s_schemas
+    >>> mpi_job = V1MPIJob(
+    >>>     clean_pod_policy='All',
+    >>>     launcher=V1KFReplica(...),
+    >>>     worker=V1KFReplica(...),
+    >>> )
+    ```
+
+    ## Fields
+
+    ### kind
+
+    The kind signals to the CLI, client and other tools that this
+    component's runtime is a mpijob.
+
+    If you are using the python client to create the runtime,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    ```
+
+    ### cleanPodPolicy
+
+    Controls deletion of pods when a job terminates.
+    The policy can be one of the following values: [`All`, `Running`, `None`]
+
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    >>>   cleanPodPolicy: 'All'
+    >>>  ...
+    ```
+
+    ### launcher
+
+    The launcher replica in the distributed mpijob
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    >>>   master:
+    >>>     replicas: 1
+    >>>     container:
+    >>>       ...
+    >>>  ...
+    ```
+
+    ### worker
+
+    The workers do the actual work of training the model.
+
+    ```yaml
+    >>> run:
+    >>>   kind: mpijob
+    >>>   worker:
+    >>>     replicas: 3
+    >>>     container:
+    >>>       ...
+    >>>  ...
+    ```
+    """
     SCHEMA = MPIJobSchema
     IDENTIFIER = V1RunKind.MPIJOB
     REDUCED_ATTRIBUTES = [

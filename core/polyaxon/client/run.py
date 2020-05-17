@@ -65,13 +65,13 @@ class RunClient:
     If you intend to create a new run instance or to list run,
     only the `owner` and `project` parameters are required.
 
-    Each instance of this class has this properties:
-        * project: str.
-        * owner: str.
-        * run_uuid: str.
-        * run_data: V1Run.
-        * status: str.
-        * namespace: str.
+    Properties:
+        project: str.
+        owner: str.
+        run_uuid: str.
+        run_data: V1Run.
+        status: str.
+        namespace: str.
 
     Args:
         owner: str, optional, the owner is the username or

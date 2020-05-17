@@ -39,10 +39,10 @@ class ProjectClient:
     If you intend to create a new project instance or to list projects,
     only the `owner` parameter is required.
 
-    Each instance of this class has this properties:
-        * project: str.
-        * owner: str.
-        * project_data: V1Project.
+    Properties:
+        project: str.
+        owner: str.
+        project_data: V1Project.
 
     Args:
         owner: str, optional, the owner is the username or
