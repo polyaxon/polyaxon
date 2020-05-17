@@ -35,10 +35,10 @@ from polyaxon.schemas.types.k8s_resources import V1K8sResourceType
 
 class ConnectionTypeSchema(BaseCamelSchema):
     name = fields.Str(required=True)
-    description = fields.Str(required=True)
     kind = fields.Str(
         required=True, validate=validate.OneOf(V1ConnectionKind.allowable_values)
     )
+    description = fields.Str(allow_none=True)
     schema = fields.Nested(ConnectionSchema, allow_none=True)
     secret = fields.Nested(K8sResourceSchema, allow_none=True)
     config_map = fields.Nested(K8sResourceSchema, allow_none=True)
@@ -258,7 +258,7 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
     """
     IDENTIFIER = "connection"
     SCHEMA = ConnectionTypeSchema
-    REDUCED_ATTRIBUTES = ["name", "kind", "schema", "secret", "configMap"]
+    REDUCED_ATTRIBUTES = ["name", "kind", "description", "schema", "secret", "configMap"]
 
     @classmethod
     def from_model(cls, model) -> "V1ConnectionType":
