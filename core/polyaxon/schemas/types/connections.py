@@ -112,7 +112,7 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
         config_map: str, optional
 
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> artifactsStore:

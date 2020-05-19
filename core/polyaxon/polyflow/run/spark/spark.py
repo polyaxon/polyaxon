@@ -84,7 +84,7 @@ class V1Spark(BaseConfig, polyaxon_sdk.V1Spark):
         executor: [V1SparkReplica](/docs/experimentation/distributed/spark-replica/)
         driver: [V1SparkReplica](/docs/experimentation/distributed/spark-replica/)
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> run:
@@ -125,7 +125,7 @@ class V1Spark(BaseConfig, polyaxon_sdk.V1Spark):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this component's runtime is a job.
+    The kind signals to the CLI, client, and other tools that this component's runtime is a job.
 
     If you are using the python client to create the runtime,
     this field is not required and is set by default.

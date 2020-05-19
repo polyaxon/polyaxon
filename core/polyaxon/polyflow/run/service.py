@@ -65,7 +65,7 @@ class V1Service(BaseConfig, polyaxon_sdk.V1Service):
         ports: List[int], optional
         rewrite_path: bool, optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> run:
@@ -101,7 +101,7 @@ class V1Service(BaseConfig, polyaxon_sdk.V1Service):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this component's runtime is a service.
+    The kind signals to the CLI, client, and other tools that this component's runtime is a service.
 
     If you are using the python client to create the runtime,
     this field is not required and is set by default.

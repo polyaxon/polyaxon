@@ -63,7 +63,7 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> matrix:
@@ -96,7 +96,7 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this matrix is hyperopt.
+    The kind signals to the CLI, client, and other tools that this matrix is hyperopt.
 
     If you are using the python client to create the mapping,
     this field is not required and is set by default.

@@ -44,7 +44,7 @@ class V1CronSchedule(BaseConfig, polyaxon_sdk.V1CronSchedule):
         depends_on_past: bool, optional
 
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> schedule:
@@ -72,7 +72,7 @@ class V1CronSchedule(BaseConfig, polyaxon_sdk.V1CronSchedule):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this schedule is a cron schedule.
+    The kind signals to the CLI, client, and other tools that this schedule is a cron schedule.
 
     If you are using the python client to create the schedule,
     this field is not required and is set by default.

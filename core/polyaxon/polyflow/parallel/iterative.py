@@ -69,7 +69,7 @@ class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> matrix:
@@ -103,7 +103,7 @@ class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this matrix is an iterative process.
+    The kind signals to the CLI, client, and other tools that this matrix is an iterative process.
 
     If you are using the python client to create the mapping,
     this field is not required and is set by default.

@@ -44,7 +44,7 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
         ttl: int, optional
         inputs: List[str], optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> cache:

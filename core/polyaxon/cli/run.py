@@ -56,7 +56,7 @@ from polyaxon.utils.validation import validate_tags
 @click.option(
     "--hub",
     type=str,
-    help="The component hub name containing the polyaxonfile to run.",
+    help="The Component Hub name containing the polyaxonfile to run.",
 )
 @click.option(
     "--name",

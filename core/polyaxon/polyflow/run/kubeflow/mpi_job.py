@@ -48,7 +48,7 @@ class V1MPIJob(BaseConfig, polyaxon_sdk.V1MPIJob):
         launcher: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
         worker: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> run:
@@ -75,7 +75,7 @@ class V1MPIJob(BaseConfig, polyaxon_sdk.V1MPIJob):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this
+    The kind signals to the CLI, client, and other tools that this
     component's runtime is a mpijob.
 
     If you are using the python client to create the runtime,

@@ -59,7 +59,7 @@ class V1RandomSearch(BaseConfig, polyaxon_sdk.V1RandomSearch):
         seed: int, optional
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> matrix:
@@ -90,7 +90,7 @@ class V1RandomSearch(BaseConfig, polyaxon_sdk.V1RandomSearch):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this matrix is a random search.
+    The kind signals to the CLI, client, and other tools that this matrix is a random search.
 
     If you are using the python client to create the mapping,
     this field is not required and is set by default.

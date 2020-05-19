@@ -53,7 +53,7 @@ class V1SparkReplica(BaseConfig, polyaxon_sdk.V1SparkReplica):
                   optional
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> executor/driver:

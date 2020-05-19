@@ -38,7 +38,7 @@ class V1AuthType(BaseConfig, polyaxon_sdk.V1AuthType):
         user: str
         password: str
 
-    ### Yaml usage
+    ### YAML usage
 
     The inputs definition
 
@@ -94,12 +94,12 @@ class V1AuthType(BaseConfig, polyaxon_sdk.V1AuthType):
 
     This type validate several values:
 
-      * string values:
-         '{"user": "foo", "password": "bar"}'
-         'foo:bar'
+    String values:
+       * '{"user": "foo", "password": "bar"}'
+       * 'foo:bar'
 
-      * dict values:
-        {"user": "foo", "password": "bar"}
+    Dict values:
+       * {"user": "foo", "password": "bar"}
     """
 
     IDENTIFIER = "auth"

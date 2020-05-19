@@ -53,7 +53,7 @@ class DockerfileTypeSchema(BaseCamelSchema):
 class V1DockerfileType(BaseConfig, polyaxon_sdk.V1DockerfileType):
     """Dockerfile type.
 
-    This is type allows you to easily construct a dockerfile without
+    This type allows you to easily construct a dockerfile without
     the need to clone repo or download a file. It exposes a very simple interface for generating
     a dockerfile to build your container.
 
@@ -71,7 +71,7 @@ class V1DockerfileType(BaseConfig, polyaxon_sdk.V1DockerfileType):
         workdir_path: str, optional
         shell: str, optional
 
-    ### Yaml usage
+    ### YAML usage
 
     The inputs definition
 
@@ -126,7 +126,7 @@ class V1DockerfileType(BaseConfig, polyaxon_sdk.V1DockerfileType):
     ```
 
     ### Fields
-      * image: the base image to build an image for you to run your code.
+      * image: the base image to use, is will exposed as `FROM` command in the dockerfile.
       * env: environment variables dictionary that will be exposed as `ENV` sections.
       * path: list of paths to be added to your `PATH` environment variable.
       * copy: a list a copy commands that will be exposed as list of COPY commands.

@@ -58,7 +58,7 @@ class V1KFReplica(BaseConfig, polyaxon_sdk.V1KFReplica):
                   optional
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> worker:

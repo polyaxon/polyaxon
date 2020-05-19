@@ -70,15 +70,16 @@ class InitSchema(BaseCamelSchema):
 
 
 class V1Init(BaseConfig, polyaxon_sdk.V1Init):
-    """Polyaxon init section exposes an interface for users to runs init
+    """Polyaxon init section exposes an interface for users to run init
     containers before the main container containing the logic for training models
     or processing data.
 
     Polyaxon init section is an extension of
-    [Kubernetes init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/),  # noqa
-    it has special handlers for several connections in addition to the possibility for the users to
-    provide their own containers and run any custom Init containers which can contain utilities
-    or setup scripts not present in an the main container.
+    [Kubernetes init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/).  # noqa
+
+    Polyaxon init section has special handlers for several connections in addition to the possibility for the users to
+    provide their own containers and run any custom init containers which can contain utilities
+    or setup scripts not present in the main container.
 
     By default all built-in handlers will mount and initialize data under the path
     `/plx-context/artifacts/{{connection-name}}` unless the user pass a custom `path`.
@@ -92,11 +93,11 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/), optional
 
 
-    ## Yaml usage
+    ## YAML usage
 
     You can only use one of the possibilities for built-in handlers,
     otherwise an exception will be raised.
-    It possible to customize the container used with default built-in handlers.
+    It's possible to customize the container used with the default built-in handlers.
 
     ```yaml
     >>> version: 1.05
@@ -138,7 +139,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     ## Python usage
 
     Similar to the YAML example if you pass more than one handler, an exception will be raised.
-    It possible to customize the container used with default built-in handlers.
+    It's possible to customize the container used with the default built-in handlers.
 
     ```python
     >>> from polyaxon.polyflow import V1Component, V1Init, V1Job
@@ -199,9 +200,10 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
      * Two files `data1`, `path/to/data2` from an S3 connection named `s3-datasets`,
         and we specified that the 2 files should be initialized under
         `/s3-path` instead of the default path that Polyaxon uses.
-     * A repo configured under the connection name `repo1` will be cloned with default branch.
-     * A repo configured under the connection name `repo2` will be cloned with branch name `branch2`.
-     * A dockerfile will be generated with specification that we passed.
+     * A repo configured under the connection name `repo1` will be cloned from the default branch.
+     * A repo configured under the connection name `repo2` will be cloned
+        from the branch name `branch2`.
+     * A dockerfile will be generated with the specification that was provided.
      * A custom container will finally run our own custom code, in this case an echo command.
     """
 

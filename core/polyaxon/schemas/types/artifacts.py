@@ -35,12 +35,12 @@ class ArtifactsTypeSchema(BaseCamelSchema):
 
 
 class V1ArtifactsType(BaseConfig, polyaxon_sdk.V1ArtifactsType):
-    """"Artifacts type allows to easily pass
+    """Artifacts type allows to easily pass
     the files and directories to initialize as a single parameter.
 
     If used as an input type, Polyaxon can resolve several connections (blob storage and volumes)
     and will turn this input type into an initializer with logic to download/provide
-    the requested files and / or directories into a context for your jobs and operations.
+    the requested files and/or directories into a context for your jobs and operations.
 
 
     Args:
@@ -48,11 +48,11 @@ class V1ArtifactsType(BaseConfig, polyaxon_sdk.V1ArtifactsType):
                     if not provided the default artifacts store is used
         files: List[str], optional, list of file subpaths
         dirs: List[str], optional, list of directory subpaths
-        init: bool, optional, if True the files and dirs will be automatically
+        init: bool, optional, if True the files and the dirs will be automatically
               downloaded / provided in the run's artifacts context.
         workers: int, optional, number of threads for downloading data from S3/GCS/Azure.
 
-    ### Yaml usage
+    ### YAML usage
 
     The inputs definition
 

@@ -34,12 +34,12 @@ class GitTypeSchema(BaseCamelSchema):
 
 
 class V1GitType(BaseConfig, polyaxon_sdk.V1GitType):
-    """Git type allows you to pass git repo as a parameter.
+    """Git type allows you to pass a git repo as a parameter.
 
-    If used as an input type, Polyaxon can resolve several the git connections
-    and will turn this input type into an initializer with logic to git clone
+    If used as an input type, Polyaxon can resolve several git connections
+    and will turn this input type into an initializer with logic to clone
     the repo with support of branches and commits,
-    the requested repo will be exposed in a context for your jobs and operations to use it.
+    the requested repo will be exposed as a context for your jobs and operations.
 
     Args:
         url: str, optional.
@@ -47,7 +47,7 @@ class V1GitType(BaseConfig, polyaxon_sdk.V1GitType):
         connection: str, optional.
         init: bool, optioanl.
 
-    ### Yaml usage
+    ### YAML usage
 
     The inputs definition
 

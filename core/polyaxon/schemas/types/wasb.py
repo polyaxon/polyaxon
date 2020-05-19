@@ -40,7 +40,7 @@ class V1WasbType(BaseConfig, polyaxon_sdk.V1WasbType):
         storage_account: str
         path: str
 
-    ### Yaml usage
+    ### YAML usage
 
     The inputs definition
 

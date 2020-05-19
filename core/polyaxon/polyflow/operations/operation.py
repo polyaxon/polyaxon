@@ -78,7 +78,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
      * set trigger logic to start a component in a pipeline context.
      * parallelize or map the component over a matrix of parameters.
      * put an operation on a schedule.
-     * subscribe an component to events to trigger executions automatically.
+     * subscribe a component to events to trigger executions automatically.
 
     Args:
         version: str
@@ -105,14 +105,16 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
                   [V1Bayes](/docs/automation/optimization-engine/bayesian-optimization/),
                   [V1Hyperopt](/docs/automation/optimization-engine/hyperopt/),
                   [V1Iterative](/docs/automation/optimization-engine/iterative/)], optional
-        dependencies: [dependencies](/docs/automation/optimization-engine/flow-engine/dependencies/),
-                      optional
-        trigger: [trigger](/docs/automation/optimization-engine/flow-engine/trigger/),
+        dependencies:
+            [dependencies](/docs/automation/flow-engine/specification/#dependencies),
+            optional
+        trigger: [trigger](/docs/automation/flow-engine/specification/#trigger),
                  optional
-        conditions: [conditions](/docs/automation/optimization-engine/flow-engine/conditions/),
+        conditions: [conditions](/docs/automation/flow-engine/specification/#conditions),
                     optional
-        skip_on_upstream_skip: [skip_on_upstream_skip](/docs/automation/optimization-engine/flow-engine/conditions/),  # noqa
-                               optional
+        skip_on_upstream_skip:
+            [skip_on_upstream_skip](/docs/automation/flow-engine/skiponupstreamskip/),
+            optional
         run_patch: Dict, optional
         hub_ref: str, optional
         dag_ref: str, optional
@@ -120,7 +122,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
         path_ref: str, optional
         component: [V1Component](/docs/core/specification/component/), optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> operation:
@@ -173,7 +175,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this is an operation.
+    The kind signals to the CLI, client, and other tools that this is an operation.
 
     If you are using the python client to create an operation,
     this field is not required and is set by default.
@@ -186,7 +188,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### name
 
     The name to use for this operation run,
-    if provided will override the component's name otherwise
+    if provided, it will override the component's name otherwise
     the name of the component will be used if it exists.
 
     ```yaml
@@ -197,7 +199,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### description
 
     The description to use for this operation run,
-    if provided will override the component's description otherwise
+    if provided, it will override the component's description otherwise
     the description of the component will be used if it exists.
 
     ```yaml
@@ -208,7 +210,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### tags
 
     The tags to use for this operation run,
-    if provided will override the component's tags otherwise
+    if provided, it will override the component's tags otherwise
     the tags of the component will be used if it exists.
 
     ```yaml
@@ -219,7 +221,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### profile
 
     The [run profile](/docs/management/run-profiles/) to use for this operation run,
-    if provided will override the component's profile otherwise
+    if provided, it will override the component's profile otherwise
     the profile of the component will be used if it exists.
 
     ```yaml
@@ -230,7 +232,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### queue
 
     The [queue](/docs/core/scheduling-strategies/queue-routing/) to use for this operation run,
-    if provided will override the component's queue otherwise
+    if provided, it will override the component's queue otherwise
     the queue of the component will be used if it exists.
 
     ```yaml
@@ -241,7 +243,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### cache
 
     The [cache](/docs/automation/helpers/cache/) to use for this operation run,
-    if provided will override the component's cache otherwise
+    if provided, it will override the component's cache otherwise
     the cache of the component will be used if it exists.
 
     ```yaml
@@ -254,7 +256,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### termination
 
     The [termination](/docs/core/specification/termination/) to use for this operation run,
-    if provided will override the component's termination otherwise
+    if provided, it will override the component's termination otherwise
     the termination of the component will be used if it exists.
 
     ```yaml
@@ -266,7 +268,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### plugins
 
     The [plugins](/docs/core/specification/plugins/) to use for this operation run,
-    if provided will override the component's plugins otherwise
+    if provided, it will override the component's plugins otherwise
     the plugins of the component will be used if it exists.
 
     ```yaml
@@ -282,16 +284,16 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### params
 
     The [params](/docs/core/specification/params/)  to pass to the component,
-    will be validated against the inputs / outputs.
+    they will be validated against the inputs / outputs.
     If a param is passed and the component does not define a corresponding inputs / outputs,
-    a validation error will be raise unless the param is has the contextOnly flag enabled.
+    a validation error will be raised unless the param is has the contextOnly flag enabled.
 
     ```yaml
     >>> operation:
     >>>   params:
     >>>     param1: {value: 1.1}
     >>>     param2: {value: test}
-    >>>     param3: {ref: dag.upstream-operation, value: outputs.metric}
+    >>>     param3: {ref: ops.upstream-operation, value: outputs.metric}
     >>>   ...
     ```
 
@@ -300,7 +302,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     The run patch provide a way to override information about the component's run section,
     for example the container's resources or the environment section.
 
-    The run patch is dict that can modify most of the run time information and
+    The run patch is a dictionary that can modify most of the run time information and
     will be resolved against the corresponding run kind:
 
         * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,
@@ -317,7 +319,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
         * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
         * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG / workflow.
 
-    For example, you might want defined a generic component for running Jupyter Notebook:
+    For example, fi we define a generic component for running Jupyter Notebook:
 
     ```yaml
     >>> version: 1.1
@@ -344,7 +346,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     This component is generic, and does not define resource requirements,
     if for instance this component is hosted on github and you don't
-    want to modify the component while on the same you want to request a GPU for the notebook,
+    want to modify the component while on the sametime you want to request a GPU for the notebook,
     you can patch the run:
 
     ```yaml
@@ -358,16 +360,16 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>>         nvidia.com/gpu: 1
     ```
 
-    By applying a run patch you can effectively share component while having
+    By applying a run patch you can effectively share components while having
     full control over customizable details.
 
     ### hub_ref
 
-    Polyaxon provides a [components hub](/docs/management/components/)
+    Polyaxon provides a [Component Hub](/docs/management/components/)
     for hosting versioned components with access control system to improve
     the productivity of your team.
 
-    To run a component hosted on Polyaxon components hub, you can use `hubRef`
+    To run a component hosted on Polyaxon Component Hub, you can use `hubRef`
 
     ```yaml
     >>> version: 1.1
@@ -380,13 +382,13 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     If you building a dag and you have a component that can be used by several operation,
     you can define a component and reuse it in all operations using `dagRef`.
-    Please check Polyaxon automation section [flow engine](/docs/automation/flow-engine/)
+    Please check Polyaxon automation's [flow engine section](/docs/automation/flow-engine/)
     for more details.
 
     ### url_ref
 
     You can host your components on an accessible url, e.g github,
-    and reference the those component without download data manually.
+    and reference those components without downloading the data manually.
 
     ```yaml
     >>> version: 1.1
@@ -394,6 +396,8 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>> urlRef: https://raw.githubusercontent.com/org/repo/master/components/my-component.yaml
     ...
     ```
+
+    > Please note that you can only use this reference when using the CLI tool.
 
     ### path_ref
 
@@ -409,6 +413,8 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>> pathRef: ../data-processing/component-clean.yaml
     ...
     ```
+
+    > Please note that you can only use this reference when using the CLI tool.
 
     ### component
 

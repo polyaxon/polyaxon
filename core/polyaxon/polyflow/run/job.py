@@ -61,7 +61,7 @@ class V1Job(BaseConfig, polyaxon_sdk.V1Job):
                   optional
         container: [Kubernetes Container](https://kubernetes.io/docs/concepts/containers/)
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> run:
@@ -93,7 +93,7 @@ class V1Job(BaseConfig, polyaxon_sdk.V1Job):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this component's runtime is a job.
+    The kind signals to the CLI, client, and other tools that this component's runtime is a job.
 
     If you are using the python client to create the runtime,
     this field is not required and is set by default.

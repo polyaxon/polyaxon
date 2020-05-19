@@ -226,7 +226,7 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> matrix:
@@ -264,7 +264,7 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this matrix is bayes.
+    The kind signals to the CLI, client, and other tools that this matrix is bayes.
 
     If you are using the python client to create the mapping,
     this field is not required and is set by default.

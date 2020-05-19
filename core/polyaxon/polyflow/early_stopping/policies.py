@@ -119,7 +119,7 @@ class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
                 V1TruncationStoppingPolicy,
                 V1DiffStoppingPolicy], optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> earlyStopping:
@@ -147,7 +147,7 @@ class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this matrix is metric_early_stopping.
+    The kind signals to the CLI, client, and other tools that this matrix is metric_early_stopping.
 
     If you are using the python client to create the early stopping,
     this field is not required and is set by default.
@@ -227,7 +227,7 @@ class V1FailureEarlyStopping(BaseConfig, polyaxon_sdk.V1FailureEarlyStopping):
         percent: int (>0, <=99)
 
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> earlyStopping:
@@ -246,7 +246,7 @@ class V1FailureEarlyStopping(BaseConfig, polyaxon_sdk.V1FailureEarlyStopping):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this matrix is failure_early_stopping.
+    The kind signals to the CLI, client, and other tools that this matrix is failure_early_stopping.
 
     If you are using the python client to create the early stopping,
     this field is not required and is set by default.

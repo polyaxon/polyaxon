@@ -427,7 +427,7 @@ class S3Service(AWSService, StoreMixin):
                 by S3 and will be stored in an encrypted form while at rest in S3.
             acl: `str`. ACL to use for uploading, e.g. "public-read".
             use_basename: `bool`. whether or not to use the basename of the directory.
-            last_time: `datetime`. If provided will only upload the file if changed after last_time.
+            last_time: `datetime`. if provided, it will only upload the file if changed after last_time.
         """
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)

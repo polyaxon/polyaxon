@@ -39,7 +39,7 @@ class PluginsSchema(BaseCamelSchema):
 
 
 class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
-    """Plugins provide a way to set notifications and customize extract Polyaxon utilities.
+    """Plugins section provides a way to set notifications and customize extrat Polyaxon utilities.
 
     By default Polyaxon injects some information for example an auth context
     and triggers some mechanisms for collecting logs and outputs.
@@ -57,7 +57,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         log_level: str, optional
         notifications: List[[V1Notification](/docs/core/specification/notifications/)]
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> plugins:
@@ -75,7 +75,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     ## Python usage
 
     ```python
-    >>> from polyaxon.polyflow import V1Plugins
+    >>> from polyaxon.polyflow import V1Notification, V1Plugins
     >>> plugins = V1Plugins(
     >>>     auth=False,
     >>>     docker=True,
@@ -93,18 +93,18 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### auth
 
-    This plugin is enabled by default.
+    <blockquote class="light">This plugin is enabled by default in Polyaxon deployment with user management.</blockquote>
 
     By default Polyaxon will create an auth context for each operation, this removes the overhead
     to think about how you can pass tokens to your runs,
     or the need to create secrets to load the token from during the run time.
 
     The auth context that Polyaxon provides is not only specific to the user who
-    executed the run, but also it impersonates similar access rights, it has the same scopes
+    executed the run, but it also impersonates similar user access rights, it has the same scopes
     and restrictions the user usually has within the context of the project
     the run is running inside.
-    this is important to verify accessed resources and APIs calls initiated during the run
-    by the user's code.
+    This is important to make sure the API calls made during the run
+    by the user's code have access rights to the resources requested.
 
     Oftentimes, users might not need to use an authenticated client inside their containers,
     in that case they can disable this plugin.
@@ -118,9 +118,9 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### docker
 
-    This plugin is disabled by default.
+    <blockquote class="light">This plugin is disabled by default.</blockquote>
 
-    This plugin allows to expose docker docket volume to your runs.
+    This plugin exposes a docker socket volume to your run container.
 
     N.B. use this plugin carefully, you might also need to check with your devops
     team before using it, it requires docker.sock of the host to be mounted
@@ -135,7 +135,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### shm
 
-    This plugin is enabled by default.
+    <blockquote class="light">This plugin is enabled by default.</blockquote>
 
     This plugin mounts an tmpfs volume to /dev/shm.
     This will set /dev/shm size to half of the RAM of node.
@@ -152,7 +152,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### collectArtifacts
 
-    This plugin is enabled by default.
+    <blockquote class="light">This plugin is enabled by default.</blockquote>
 
     By default Polyaxon will collect all artifacts and outputs that you share in the
     `plx-context/artifacts/run-uuid/outputs` to the default artifacts store
@@ -170,12 +170,12 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     ```
 
     Sometimes you might want to access the artifacts path in your polyaxonfile,
-    Polyaxon expose a context that get resolved during the compilation time,
+    Polyaxon expose a [context](/docs/core/specification/context/) that get resolved during the compilation time,
     you can just use "{{artifacts_path}}" global variable and it will be resolved automatically.
 
     Example:
 
-    ```
+    ```yaml
     >>> run:
     >>>   kind: job
     >>>   container:
@@ -187,9 +187,9 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### collectLogs
 
-    This plugin is enabled by default.
+    <blockquote class="light">This plugin is enabled by default.</blockquote>
 
-    By default Polyaxon will collect all logs related to you runs before deleting
+    By default Polyaxon will collect all logs related to your runs before deleting
     the resource on the clusters. This ensures that your cluster(s) are kept clean and no resources
     are actively putting pressure on the API server.
 
@@ -204,7 +204,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### collectResources
 
-    This plugin is enabled by default.
+    <blockquote class="light">This plugin is enabled by default.</blockquote>
 
     By default Polyaxon will collect all Mem/CPU/GPU resources
     for your runs that use the python client.
@@ -221,7 +221,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### syncStatuses
 
-    This plugin is enabled by default.
+    <blockquote class="light">This plugin is enabled by default.</blockquote>
 
     Every job that is scheduled on Kubernetes by Polyaxon will be tracked to notify the user about
     it's progress and in case of warnings.
@@ -237,7 +237,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### logLevel
 
-    Default is None.
+    <blockquote class="light">Default is None.</blockquote>
 
     If you want to control the log level of your runs in similar way locally and on cluster,
     you can either use env vars or this plugin to share the same log level with all containers
@@ -250,10 +250,9 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### notifications
 
-    Default is None.
+    <blockquote class="light">Default is None.</blockquote>
 
-    This plugin was asked by several users, because Polyaxon used to only expose a global way
-    for sending notifications about runs.
+    Polyaxon used to only expose a global way for sending notifications about runs.
 
     This plugin allows you to enable per run notification configuration.
 

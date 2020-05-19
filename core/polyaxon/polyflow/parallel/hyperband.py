@@ -87,7 +87,7 @@ class V1Hyperband(BaseConfig, polyaxon_sdk.V1Hyperband):
         concurrency: int, optional
         early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> matrix:
@@ -124,7 +124,7 @@ class V1Hyperband(BaseConfig, polyaxon_sdk.V1Hyperband):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this matrix is hyperband.
+    The kind signals to the CLI, client, and other tools that this matrix is hyperband.
 
     If you are using the python client to create the mapping,
     this field is not required and is set by default.

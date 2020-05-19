@@ -232,7 +232,7 @@ class GCSService(GCPService, StoreMixin):
             blob: `str`. blob to upload to.
             bucket_name: `str`. the name of the bucket.
             use_basename: `bool`. whether or not to use the basename of the directory.
-            last_time: `datetime`. If provided will only upload the file if changed after last_time.
+            last_time: `datetime`. if provided, it will only upload the file if changed after last_time.
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)

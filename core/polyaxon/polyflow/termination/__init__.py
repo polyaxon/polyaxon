@@ -32,15 +32,15 @@ class TerminationSchema(BaseCamelSchema):
 
 
 class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
-    """The termination section allows users to define and control when
-    to stop an operation and how long to keep it's resources on the cluster.
+    """The termination section allows to define and control when
+    to stop an operation and how long to keep its resources on the cluster.
 
     Args:
         max_retries: int, optional
         ttl: int, optional
         timeout: int, optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> termination:
@@ -71,9 +71,10 @@ class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
     from the environment section.
 
     This field is the equivalent of the
-    [backoffLimit](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
-    Polyaxon how to manage and inject this value into the underlying primitive,
-    i.e. Job, service, TFJob CRD, Spark Application CRD, to expose a uniform specification
+    [backoffLimit](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/).
+    Polyaxon exposes a uniform specification and knows how
+    to manage and inject this value into the underlying primitive in the runtime,
+    i.e. Job, service, TFJob CRD, Spark Application CRD, ...
 
     ```yaml
     >>> termination:
@@ -82,7 +83,7 @@ class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
 
     ### ttl
 
-    Polyaxon will automatically clean all resources on the cluster just after they finish and after
+    Polyaxon will automatically clean all resources just after they finish and after
     the various helpers finish collecting and archiving information from the cluster,
     such as logs, outputs, ... This ensures that your cluster(s) are kept clean and no resources
     are actively putting pressure on the API server.
@@ -108,7 +109,7 @@ class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
     Sometime you might to stop an operation after a certain time, timeout let's you define how
     long before Polyaxon decides to stop that operation, this is the equivalent of Kubernetes Jobs
     [activeDeadlineSeconds](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#job-termination-and-cleanup)  # noqa
-    but you can use this field for all of your operation, for instance you might want to stop a
+    but you can use this field for all runtimes, for instance you might want to stop a
     tensorboard after 12 hours, this way you don't have to actively look for running tensorboards.
 
     ```yaml

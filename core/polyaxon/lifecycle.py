@@ -129,7 +129,7 @@ class LifeCycle:
 
     @classmethod
     def can_check_heartbeat(cls, status: str) -> bool:
-        """Checks if a run with this status is in a state to check for heartbeat."""
+        """Checks if a run with this status is in a state that allows to check for a heartbeat."""
         return status in cls.RUNNING_VALUES
 
     @classmethod
@@ -139,12 +139,12 @@ class LifeCycle:
 
     @classmethod
     def is_warning(cls, status: str) -> bool:
-        """Checks if a run with this status is in warning status."""
+        """Checks if a run with this status is in a warning status."""
         return status in cls.WARNING_VALUES
 
     @classmethod
     def is_pending(cls, status: str) -> bool:
-        """Checks if a run with this status is in pending status."""
+        """Checks if a run with this status is in a pending status."""
         return status in cls.PENDING_VALUES
 
     @classmethod
@@ -179,7 +179,7 @@ class LifeCycle:
 
     @classmethod
     def is_k8s_stoppable(cls, status: str) -> bool:
-        """Checks if a run with this status is in on k8s and is stoppable."""
+        """Checks if a run with this status is scheduled on k8s and is stoppable."""
         return status in cls.ON_K8s_VALUES
 
     @classmethod

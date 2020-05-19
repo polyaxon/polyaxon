@@ -44,7 +44,7 @@ class V1IntervalSchedule(BaseConfig, polyaxon_sdk.V1IntervalSchedule):
         depends_on_past: bool, optional
 
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> schedule:
@@ -72,7 +72,7 @@ class V1IntervalSchedule(BaseConfig, polyaxon_sdk.V1IntervalSchedule):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this schedule is an interval schedule.
+    The kind signals to the CLI, client, and other tools that this schedule is an interval schedule.
 
     If you are using the python client to create the schedule,
     this field is not required and is set by default.

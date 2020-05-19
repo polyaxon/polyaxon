@@ -240,7 +240,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
             blob: `str`. blob to upload to.
             container_name: `str`. the name of the container.
             use_basename: `bool`. whether or not to use the basename of the directory.
-            last_time: `datetime`. If provided will only upload the file if changed after last_time.
+            last_time: `datetime`. if provided, it will only upload the file if changed after last_time.
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)

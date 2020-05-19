@@ -50,7 +50,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     Polyaxon uses containers to execute that logic.
 
     Components are definitions that can be shared if they reach a
-    certain maturity and can be managed by the [components hub](/docs/management/components/).
+    certain maturity and can be managed by the [Component Hub](/docs/management/components/).
     This allows you to create a library of frequently-used components and reuse them
     either by submitting them directly or by referencing them from your operations.
 
@@ -79,7 +79,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
              [V1Dask](/docs/experimentation/distributed/dask-jobs/),
              [V1Dag](/docs/automation/flow-engine/specification/)]
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> component:
@@ -133,9 +133,9 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this is a component.
+    The kind signals to the CLI, client, and other tools that this is a component.
 
-    If you are using the component inline in an operation or
+    If you are using the component inline in an operation or a dag or
     if you are using the python client to create a component,
     this field is not required and is set by default.
 
@@ -185,7 +185,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ### profile
 
-    The default component [run profile](/docs/management/run-profiles/).
+    The default component [run profile](/docs/core/scheduling-strategies/run-profiles/).
 
     This profile will be passed as the default value to all operations using this component,
     unless the operations override the profile or `--profile`
@@ -295,14 +295,14 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     The [outputs](/docs/core/specification/io/) definition for this component.
 
     If the component defines required outputs, no exception will be raised at execution time,
-    since Polyaxon will consider the outputs values will be resolved in the future,
+    since Polyaxon considers the outputs values will be resolved in the future,
     for example during the run time when the user will be using the tracking
     client to log a metric or a value or an artifact.
 
     Sometimes the outputs can be resolved immediately at execution time,
     for example a container image name, because such information is required for the
     job to finish successfully, i.e. pushing the image with correct name,
-    in that case you can disable `delayValidation`.
+    in that case you can disable `delayValidation` flag.
 
     ```yaml
     >>> component:
@@ -311,12 +311,13 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     >>>   outputs:
     >>>     - name: image
     >>>       type: str
+    >>>       delayValidation: false
     >>>   ...
     ```
 
     ### run
 
-    This is the run section of the component, and it defines the runtime:
+    This is the section that defines the runtime of the component:
         * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,
                                                 data processing jobs, ...
         * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks,

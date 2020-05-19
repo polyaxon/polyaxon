@@ -46,7 +46,7 @@ class V1PytorchJob(BaseConfig, polyaxon_sdk.V1PytorchJob):
         master: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
         worker: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> run:
@@ -72,7 +72,7 @@ class V1PytorchJob(BaseConfig, polyaxon_sdk.V1PytorchJob):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this
+    The kind signals to the CLI, client, and other tools that this
     component's runtime is a pytorchjob.
 
     If you are using the python client to create the runtime,

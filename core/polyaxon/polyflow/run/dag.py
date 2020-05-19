@@ -51,6 +51,374 @@ class DagSchema(BaseCamelSchema):
 
 
 class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
+    """Dags are Directed Acyclic Graphs –
+    a collection of all the operations you want to run,
+    organized in a way that reflects their relationships and dependencies.
+
+    A dag's main goal is to describe and run several operations
+    necessary for a Machine Learning (ML) workflow.
+
+    A dag execute a dependency graph of Kubernetes pods that execute the logic
+    described in the component that operation, similarly to how you can run
+    an independent operation.
+
+    Dags are defined in Polyaxon as a [component runtime](/docs/core/specification/component/#run),
+    which makes them compatible with all knowledge used for running other runtimes:
+      * They can be reusable components and can be registered in the Component Hub.
+      * They get executed using operations.
+      * They can be parametrised similar to jobs and services.
+      * Since They are defined as components and they run operations of components,
+        they can be nested natively.
+      * They can run leverage all [pipeline helpers](/docs/automation/helpers/).
+      * They can be run in parallel and be used with [mapping](/docs/automation/mapping/) or
+        other [optimization algorithms](/docs/automation/optimization-engine/).
+      * They can be put on a [schedule](/docs/automation/schedules/)
+      * They can subscribe to [events](/docs/automation/events/)
+      * They can take advantage of all scheduling strategies to route operations to nodes,
+        namespaces, and clusters even within the same DAG.
+
+    Args:
+        kind: str, should be equal `dag`
+        operations: List[[V1Operation](/docs/core/specification/operation/)]
+        components: List[[V1Operation](/docs/core/specification/component/)], optional
+        environment: [V1Environment](/docs/core/specification/environment/), optional
+        connections: List[str], optional
+        volumes: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
+                 optional
+        concurrency: init, optional
+        early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
+
+    ## YAML usage
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    >>>   operations:
+    >>>   components:
+    >>>   environment:
+    >>>   connections:
+    >>>   volumes:
+    >>>   concurrency:
+    >>>   earlyStopping:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1Dag, V1Component, V1Environment, V1Operation
+    >>> from polyaxon.k8s import k8s_schemas
+    >>> dag = V1Dag(
+    >>>     operations=[V1Operation(...)],
+    >>>     components=[V1Component(...), V1Component(...)],
+    >>>     environment=V1Environment(...),
+    >>>     connections=["connection-name1"],
+    >>>     volumes=[k8s_schemas.V1Volume(...)],
+    >>> )
+    ```
+
+    ## Fields
+
+    ### kind
+
+    The kind signals to the CLI, client, and other tools that this component's runtime is a dag.
+
+    If you are using the python client to create the runtime,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    ```
+
+    ### operations
+
+    A List of operations and their with dependency definition.
+    If operations are defined with dependencies or no params are
+    passed from one operation to another, the operations will be running in parallel following the
+    concurrency and other queue priority definitions.
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    >>>   operations:
+    >>>     - name: job1
+    >>>       hubRef: component1:latest
+    >>>       params:
+    >>>         ...
+    >>>     - name: job2
+    >>>       hubRef: component1:2.1
+    >>>       params:
+    >>>         ...
+    >>>     - name: job3
+    >>>       urlRef: https://some_url.com
+    >>>       params:
+    >>>         param1:
+    >>>           ref: ops.job2
+    >>>           value: outputs.outputName
+    >>>
+    ```
+
+    #### dependencies
+
+    Dags expose 2 ways to define dependencies between operations:
+     * Using `dependencies` field.
+     * Using a parameter reference.
+
+    In addition to the dependency definition, users can add trigger and conditions
+    to perform extra checks on the state of those dependencies.
+
+    If an operation must wait for another operation and does not expect
+    any parameters from that operation, you can define the dependency manually:
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    >>>   operations:
+    >>>     - name: job1
+    >>>       hubRef: component1:latest
+    >>>       params:
+    >>>         ...
+    >>>     - name: job2
+    >>>       hubRef: component1:2.1
+    >>>       params:
+    >>>         ...
+    >>>     - name: job3
+    >>>       urlRef: https://some_url.com
+    >>>       dependencies: [job1, job2]
+    ```
+
+    The job1 and job2 will run in parallel and job3 will wait for both jobs to finish.
+
+    #### params dependencies
+
+    If an operation is expecting a parameter from an upstream oepration(s),
+    we don't need to define the dependency since it will be infered from the params defintion.
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    >>>   operations:
+    >>>     - name: job1
+    >>>       hubRef: component1:latest
+    >>>       params:
+    >>>         ...
+    >>>     - name: job2
+    >>>       hubRef: component1:2.1
+    >>>       params:
+    >>>         ...
+    >>>     - name: job3
+    >>>       urlRef: https://some_url.com
+    >>>       dependencies: [job1]
+    >>>       params:
+    >>>         image:
+    >>>           ref: ops.job2
+    >>>           value: outputs.results
+    ```
+
+    This is similar to the previous depencies defintion in the sense that
+    the job1 and job2 will run in parallel and job3 will wait for both jobs to finish.
+
+    The dependency between job2 and job3 is infered from the params defintion.
+
+    #### trigger
+
+    In order to define a trigger condition or how to trigger job3 based on job1 and job2,
+    we can use the `trigger` field.
+    It determine if a task should run based on the statuses of upstream tasks.
+
+    ```yaml
+    >>> - name: job3
+    >>>   urlRef: https://some_url.com
+    >>>   dependencies: [job1, job2]
+    >>>   trigger: all_succeeded
+    ```
+
+    Possible values: `all_succeeded`, `all_failed`, `all_done`,
+        `one_succeeded`, `one_failed`, `one_done`
+
+    #### skipOnUpstreamSkip
+
+    if True, if any immediately upstream tasks are skipped,
+    this task will automatically be skipped as well, regardless of other conditions or trigger.
+    By default, this prevents tasks from attempting to use an incomplete context
+    that won't be populated fro the upstream that didn't run.
+    If False, the task's trigger will be used with any skipped operations considered successes.
+
+    ```yaml
+    >>> - name: job3
+    >>>   urlRef: https://some_url.com
+    >>>   dependencies: [job1, job2]
+    >>>   trigger: all_succeeded
+    >>>   skipOnUpstreamSkip: true
+    ```
+
+    #### conditions
+
+    Conditions are an advance use case for resolving dependencies between operations.
+    Conditions take advantage of information resolved the in the context to decide if an operation
+    can be started.
+
+
+    ```yaml
+    >>> - name: job3
+    >>>   urlRef: https://some_url.com
+    >>>   dependencies: [job1]
+    >>>   params:
+    >>>     image:
+    >>>       ref: ops.job2
+    >>>       value: outputs.results
+    >>>   conditions: '{{ image == "some-value" }}'
+    >>>   skipOnUpstreamSkip: true
+    ```
+
+    ### references
+
+    A List of operations and their with dependency definition.
+    If operations are defined with dependencies or no params are
+    passed from one operation to another, the operations will be running in parallel following the
+    concurrency and other queue priority definitions.
+
+    Operations can reference components using:
+        * [dagRef](/docs/core/specification/operation/#hub_ref):
+            reusable component defined inside the dag
+        * [hubRef](/docs/core/specification/operation/#hub_ref)
+        * [pathRef](/docs/core/specification/operation/#path_ref)
+        * [urlRef](/docs/core/specification/operation/#url_ref)
+        * [inline component](/docs/core/specification/operation/#component)
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    >>>   operations:
+    >>>     - name: download1
+    >>>     dagRef: download
+    >>>     params:
+    >>>       url: {value: 'gs://ml-pipeline-playground/shakespeare1.txt'}
+    >>>       result: {value: 'result.txt'}
+    >>>     - name: download2
+    >>>       dagRef: download
+    >>>       params:
+    >>>         url: {value: 'gs://ml-pipeline-playground/shakespeare2.txt'}
+    >>>         result: {value: 'result.txt'}
+    ```
+
+    ### components
+
+    A list of reusable components defined inside the DAG that can be used by one
+    or several operations. This field is only useful when you need to define inline components
+    for your operations and more than one operation is using the same component definition.
+
+    ```yaml
+    >>> components:
+    >>>   - name: download
+    >>>     inputs:
+    >>>       - name: url
+    >>>         type: url
+    >>>     outputs:
+    >>>       - name: result
+    >>>         type: path
+    >>>         delayValidation: false
+    >>>     run:
+    >>>       kind: job
+    >>>       container:
+    >>>         image: 'google/cloud-sdk:272.0.0'
+    >>>         command: ['sh', '-c'],
+    >>>         args: ['gsutil cat $0 | tee $1', "{{ url }}", "{{ outputs_path }}/{{ result }}"]
+    ```
+
+    ### environment
+
+    Optional [environment section](/docs/core/specification/environment/),
+    it provides a way to inject pod related information.
+
+    The environment definition will be passed to all children operations.
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    >>>   environment:
+    >>>     labels:
+    >>>        key1: "label1"
+    >>>        key2: "label2"
+    >>>      annotations:
+    >>>        key1: "value1"
+    >>>        key2: "value2"
+    >>>      nodeSelector:
+    >>>        node_label: node_value
+    >>>      ...
+    >>>  ...
+    ```
+
+    ### connections
+
+    A list of [connection names](/docs/setup/connections/) to resolve for the dag.
+
+    If you are referencing a connection it must be configured.
+
+    All referenced connections will be checked:
+     * If they are accessible in the context of the project this job is running
+     * If the user running the job can have access to those connections
+
+    The connections defintion will be passed to all operations.
+    After checks, the connections will be resolved and inject any volumes, secrets, configMaps,
+    environment variables for your main container to function correctly.
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    >>>   connections: [connection1, connection2]
+    ```
+
+    ### volumes
+
+    A list of [Kubernetes Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
+    to resolve mount for your jobs.
+
+    This is an advanced use-case where configuring a connection is not an option.
+
+    the volumes definition will be passed to all operations.
+
+    When you add a volume you need to mount it manually to your container(s).
+
+    ```yaml
+    >>> run:
+    >>>   kind: dag
+    >>>   volumes:
+    >>>     - name: volume1
+    >>>       persistentVolumeClaim:
+    >>>       claimName: pvc1
+    >>>   ...
+    ```
+    ### concurrency
+
+    Optional value to set the number of concurrent operations.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: dag
+    >>>   concurrency: 2
+    ```
+
+    For more details about concurrency management,
+    please check the [concurrency section](/docs/automation/helpers/concurrency/).
+
+    ### earlyStopping
+
+    A list of early stopping conditions to check for terminating the
+    all operations managed by the pipeline.
+    if one of the early stopping conditions is met,
+    a signal will be sent to terminate all running and pending operations.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: dag
+    >>>   earlyStopping: ...
+    ```
+
+    For more details please check the
+    [early stopping section](/docs/automation/helpers/early-stopping/).
+
+    """
     SCHEMA = DagSchema
     IDENTIFIER = V1RunKind.DAG
     REDUCED_ATTRIBUTES = [

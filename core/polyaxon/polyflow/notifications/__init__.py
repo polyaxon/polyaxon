@@ -50,7 +50,7 @@ class V1Notification(BaseConfig, polyaxon_sdk.V1Notification):
          connections: List[str]
          trigger: str
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> notification:
@@ -82,14 +82,14 @@ class V1Notification(BaseConfig, polyaxon_sdk.V1Notification):
 
     ### trigger
 
-    The trigger represents the status condition to send or not the notification.
+    The trigger represents the status condition to check before sending the notification.
 
     ```yaml
     >>> notification:
     >>>   trigger: succeeded
     ```
 
-    This notification will be sent if the run succeeds.
+    In this example, the notification will be sent if the run succeeds.
     """
 
     IDENTIFIER = "notification"

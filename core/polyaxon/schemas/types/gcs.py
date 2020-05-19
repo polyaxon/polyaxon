@@ -38,7 +38,7 @@ class V1GcsType(BaseConfig, polyaxon_sdk.V1GcsType):
         bucket: str
         blob: str
 
-    ### Yaml usage
+    ### YAML usage
 
     The inputs definition
 

@@ -37,7 +37,7 @@ class V1ExactTimeSchedule(BaseConfig, polyaxon_sdk.V1ExactTimeSchedule):
         kind: str, should be equal to `exact_time`
         start_at: datetime, required
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> schedule:
@@ -59,7 +59,7 @@ class V1ExactTimeSchedule(BaseConfig, polyaxon_sdk.V1ExactTimeSchedule):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this schedule
+    The kind signals to the CLI, client, and other tools that this schedule
     is an exact time schedule.
 
     If you are using the python client to create the schedule,

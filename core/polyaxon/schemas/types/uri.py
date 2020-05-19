@@ -40,7 +40,7 @@ class V1UriType(BaseConfig, polyaxon_sdk.V1UriType):
         password: str
         host: str
 
-    ### Yaml usage
+    ### YAML usage
 
     The inputs definition
 

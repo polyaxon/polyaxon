@@ -55,10 +55,10 @@ class EnvironmentSchema(BaseCamelSchema):
 
 class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     """The environment section allows to alter the
-    resources and configuration of the runtime of your jobs, experiments, and services.
+    configuration of the runtime of your jobs, experiments, and services.
 
     Based on this section you can define several information
-    that will be injected to the pod running on Kubernetes, e.g. the node selectors.
+    that will be injected to the pod running on Kubernetes, e.g. the node selector.
 
     Args:
         labels: Dict, optional
@@ -79,7 +79,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
         priority: int, optional
         restart_policy: str, optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> environment:
@@ -192,24 +192,13 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     > The affinity/anti-affinity feature, greatly expands the types of constraints you can express.
 
     The affinity to use for the scheduling the job.
-    You can also set default
-    [affinity](/references/polyaxon-helm-reference/#node-and-deployment-manipulation)
-    during the deployment and use this subsection to override the default values.
 
     ```yaml
     >>> environment:
     >>>   affinity:
     >>>     podAffinity:
     >>>       preferredDuringSchedulingIgnoredDuringExecution:
-    >>>         - weight: 100
-    >>>           podAffinityTerm:
-    >>>             labelSelector:
-    >>>               matchExpressions:
-    >>>               - key: type
-    >>>                 operator: In
-    >>>                 values:
-    >>>                 - "polyaxon-experiments"
-    >>>             topologyKey: "kubernetes.io/hostname"
+    >>>         ...
     ```
 
 
@@ -252,6 +241,22 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     ```yaml
     >>> environment:
     >>>   serviceAccountName: build-robot
+    ```
+
+    In order for the custom service account to function correctly
+    with Polyaxon sidecars/initializers, we recommend to include these rules in your custom service accounts:
+
+    ```yaml
+    >>> rules:
+    >>>   - apiGroups: [""]
+    >>>     resources: ["pods"]
+    >>>     verbs: ["get", "watch", "list"]
+    >>>   - apiGroups: ["metrics.k8s.io"]
+    >>>     resources: ["pods", "nodes", "apis"]
+    >>>     verbs: ["get", "list", "watch"]
+    >>>   - apiGroups: ["", "*"]
+    >>>     resources: ["events", "pods/status", "pods/log"]
+    >>>     verbs: ["watch", "get", "list"]
     ```
 
     ### hostAliases

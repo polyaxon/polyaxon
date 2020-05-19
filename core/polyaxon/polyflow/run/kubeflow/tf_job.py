@@ -50,7 +50,7 @@ class V1TFJob(BaseConfig, polyaxon_sdk.V1TFJob):
         worker: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
         evaluator: [V1KFReplica](/docs/experimentation/distributed/kubeflow-replica/), optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> run:
@@ -80,7 +80,7 @@ class V1TFJob(BaseConfig, polyaxon_sdk.V1TFJob):
 
     ### kind
 
-    The kind signals to the CLI, client and other tools that this component's runtime is a tfjob.
+    The kind signals to the CLI, client, and other tools that this component's runtime is a tfjob.
 
     If you are using the python client to create the runtime,
     this field is not required and is set by default.

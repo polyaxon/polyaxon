@@ -38,7 +38,7 @@ class V1S3Type(BaseConfig, polyaxon_sdk.V1S3Type):
         bucket: str
         key: str
 
-    ### Yaml usage
+    ### YAML usage
 
     The inputs definition
 

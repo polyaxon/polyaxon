@@ -149,7 +149,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
         delay_validation: bool, optional
         options: List[any], optional
 
-    ## Yaml usage
+    ## YAML usage
 
     ```yaml
     >>> inputs:
@@ -303,7 +303,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>>     isList: true
     ```
 
-    In this case the input name `learning_rates` will expect value of type `List[float]`,
+    In this case the input name `learning_rates` will expect a value of type `List[float]`,
     e.g. [0.1 0.01, 0.0001]
 
     ### is_flag
@@ -325,20 +325,21 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>>    command: ["run", "model.py", "--param1=1.1", "{{ check }}"]
     ```
 
-    If the resolved value of the input `check` is True, `"{{ check }}"` will be resolved to `"--check"`
-    other it will be an empty string `""`
+    If the resolved value of the input `check` is True, `"{{ check }}"`
+    will be resolved to `"--check"` otherwise it will be an empty string `""`.
 
-    ### delay_validation
+    ### delayValidation
 
-    A flag to tell if an input / output is should not be
+    A flag to tell if an input / output should not be
     validated at compilation or resolution time.
 
-    This is flag is enabled by default for outputs, since they can only be
-    resolved after or during the run.
+    This flag is enabled by default for outputs, since they can only be
+    resolved after or during the run. To request validation at compilation time for outputs,
+    you need set this flag to `False`.
 
     ### options
 
-    Options allows to pass a list of values that you will be used to validate any passed params.
+    Options allows to pass a list of values that will be used to validate any passed params.
 
     ```yaml
     >>> inputs:
@@ -349,7 +350,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>>     options: [1.1, 2.2, 3.3]
     ```
 
-    If you pass a value for learning rate `4.4` it will raise a validation error.
+    If you pass the value `4.4` for learning rate it will raise a validation error.
 
     ## Example
 
@@ -406,8 +407,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     polyaxon run -f polyaxonfile.yaml -P activation=sigmoid -P dropout=0.4
     ```
 
-    this will result in an run where the params are passed and validate against the inputs,
-    the values are checked to validate that they correspond to the type of the inputs.
+    this will result in an run where the params are passed and validated against the inputs types.
 
     ### Required inputs
 
