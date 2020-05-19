@@ -111,12 +111,9 @@ message FailureEarlyStopping {
     // Kind of this metric early stopping policy, should be equal to "failure_early_stopping"
     string kind = 1;
 
-    // The percentage failed runs, at each evaluation interval.
+    // The percentage of failed runs, at each evaluation interval.
     // e.g. 1 - 99.
     int32 percent = 2;
-
-    // Interval/Frequency for applying the policy.
-    string evaluation_interval = 3;
 }
 
 

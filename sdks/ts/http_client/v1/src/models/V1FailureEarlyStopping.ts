@@ -40,17 +40,11 @@ export interface V1FailureEarlyStopping {
      */
     kind?: string;
     /**
-     * The percentage failed runs, at each evaluation interval. e.g. 1 - 99.
+     * The percentage of failed runs, at each evaluation interval. e.g. 1 - 99.
      * @type {number}
      * @memberof V1FailureEarlyStopping
      */
     percent?: number;
-    /**
-     * Interval/Frequency for applying the policy.
-     * @type {string}
-     * @memberof V1FailureEarlyStopping
-     */
-    evaluation_interval?: string;
 }
 
 export function V1FailureEarlyStoppingFromJSON(json: any): V1FailureEarlyStopping {
@@ -65,7 +59,6 @@ export function V1FailureEarlyStoppingFromJSONTyped(json: any, ignoreDiscriminat
         
         'kind': !exists(json, 'kind') ? undefined : json['kind'],
         'percent': !exists(json, 'percent') ? undefined : json['percent'],
-        'evaluation_interval': !exists(json, 'evaluation_interval') ? undefined : json['evaluation_interval'],
     };
 }
 
@@ -80,7 +73,6 @@ export function V1FailureEarlyStoppingToJSON(value?: V1FailureEarlyStopping | nu
         
         'kind': value.kind,
         'percent': value.percent,
-        'evaluation_interval': value.evaluation_interval,
     };
 }
 

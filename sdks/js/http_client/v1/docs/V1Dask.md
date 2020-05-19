@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  | [optional] [default to &#39;dask&#39;]
+**threads** | **Number** |  | [optional] 
 **scale** | **Number** |  | [optional] 
 **adapt_min** | **Number** |  | [optional] 
 **adapt_max** | **Number** |  | [optional] 

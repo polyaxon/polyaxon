@@ -45,7 +45,7 @@ import java.io.IOException;
 public class V1HpNormal {
   public static final String SERIALIZED_NAME_KIND = "kind";
   @SerializedName(SERIALIZED_NAME_KIND)
-  private String kind;
+  private String kind = "normal";
 
   public static final String SERIALIZED_NAME_VALUE = "value";
   @SerializedName(SERIALIZED_NAME_VALUE)

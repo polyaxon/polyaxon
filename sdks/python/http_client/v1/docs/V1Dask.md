@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **str** |  | [optional] [default to 'dask']
+**threads** | **int** |  | [optional] 
 **scale** | **int** |  | [optional] 
 **adapt_min** | **int** |  | [optional] 
 **adapt_max** | **int** |  | [optional] 

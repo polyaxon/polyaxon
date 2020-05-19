@@ -45,7 +45,7 @@ import java.io.IOException;
 public class V1HpQLogUniform {
   public static final String SERIALIZED_NAME_KIND = "kind";
   @SerializedName(SERIALIZED_NAME_KIND)
-  private String kind;
+  private String kind = "qloguniform";
 
   public static final String SERIALIZED_NAME_VALUE = "value";
   @SerializedName(SERIALIZED_NAME_VALUE)

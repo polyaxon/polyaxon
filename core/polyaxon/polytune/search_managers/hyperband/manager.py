@@ -18,7 +18,7 @@ import math
 
 from typing import Dict, List, Tuple
 
-from polyaxon.polyflow import Optimization, V1Hyperband, V1RandomSearch
+from polyaxon.polyflow import V1Hyperband, V1Optimization, V1RandomSearch
 from polyaxon.polytune.search_managers.base import BaseManager
 from polyaxon.polytune.search_managers.random_search.manager import RandomSearchManager
 
@@ -220,7 +220,7 @@ class HyperbandManager(BaseManager):
         experiments = sorted(
             experiments,
             key=lambda x: x[1],
-            reverse=Optimization.maximize(self.config.optimization),
+            reverse=V1Optimization.maximize(self.config.optimization),
         )
         # Keep n experiments config
         return [xp[0] for xp in experiments[:n_configs_to_keep]]

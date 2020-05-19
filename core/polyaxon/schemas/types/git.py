@@ -103,6 +103,7 @@ class V1GitType(BaseConfig, polyaxon_sdk.V1GitType):
     >>> }
     ```
     """
+
     IDENTIFIER = "git"
     SCHEMA = GitTypeSchema
     REDUCED_ATTRIBUTES = ["url", "revision", "connection", "init"]

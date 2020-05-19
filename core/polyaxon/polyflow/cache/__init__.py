@@ -32,6 +32,76 @@ class CacheSchema(BaseCamelSchema):
 
 
 class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
+    """Polyaxon provides a caching layer for run executions,
+    this behaviour is enabled by default for all runs executed in the context of a DAG,
+    a hyperparameter tuning, or a mapping.
+
+    When runs are cached their outputs will be reused for future
+    runs with similar inputs and component version.
+
+    Args:
+        disable: bool, optional, default: False
+        ttl: int, optional
+        inputs: List[str], optional
+
+    ## Yaml usage
+
+    ```yaml
+    >>> cache:
+    >>>   disable:
+    >>>   ttl:
+    >>>   inputs:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1Cache
+    >>> cache = V1Cache(
+    >>>   disable=False,
+    >>>   ttl=3600,
+    >>>   inputs=['param1', 'param4']
+    >>> )
+    ```
+
+    ## Fields
+
+    ### disable
+
+    Caching is enabled by default, if you want to disable the cache
+    for a component or just for a specific component run, you can set this field to `false`
+
+    ```yaml
+    >>> cache:
+    >>>   disable: true
+    ```
+
+    ### ttl
+
+    the default caching behaviour is to persist and reuse a run's results everytime a new operation
+    with similar characteristics is scheduled to run.
+
+    In order to make invalidate the cache after a certain period of time you can
+    define time to live value.
+
+    ```yaml
+    >>> cache:
+    >>>   ttl: 36000  # 10 hours
+    ```
+
+    ### inputs
+
+    Sometime you might want to discard an input from being considered for the cache,
+    or you might want to cache a component's run irrespective of the params you pass to some inputs.
+
+    This field gives you full control to define how you want to calculate the state cache state.
+
+    ```yaml
+    >>> cache:
+    >>>   inputs: ['param1', 'param4']
+    ```
+    """
+
     SCHEMA = CacheSchema
     IDENTIFIER = "cache"
     REDUCED_ATTRIBUTES = ["disable", "ttl", "inputs"]

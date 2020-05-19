@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpLogUniform Matrix Log Uniform Dist specification
+// V1HpLogUniform HP Log Uniform Dist specification
 //
 // swagger:model v1HpLogUniform
 type V1HpLogUniform struct {
 
-	// Kind of hp matrix, should be equal to "loguniform"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "loguniform"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

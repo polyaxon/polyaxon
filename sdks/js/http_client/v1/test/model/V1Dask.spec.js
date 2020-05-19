@@ -74,6 +74,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property threads (base name: "threads")', function() {
+      // uncomment below and update the code to test the property threads
+      //var instane = new PolyaxonSdk.V1Dask();
+      //expect(instance).to.be();
+    });
+
     it('should have the property scale (base name: "scale")', function() {
       // uncomment below and update the code to test the property scale
       //var instane = new PolyaxonSdk.V1Dask();

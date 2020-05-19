@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpLogSpace Matrix Log Space specification
+// V1HpLogSpace HP Log Space specification
 //
 // swagger:model v1HpLogSpace
 type V1HpLogSpace struct {
 
-	// Kind of hp matrix, should be equal to "logspace"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "logspace"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

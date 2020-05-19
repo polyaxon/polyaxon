@@ -1,0 +1,168 @@
+/**
+ * Copyright 2018-2020 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+// HP Choice specification
+message HpChoice {
+    // Kind of hp, should be equal to "choice"
+    string kind = 1;
+
+   // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Probabilistic Choice specification
+message HpPChoice {
+    // Kind of hp, should be equal to "pchoice"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Range specification
+message HpRange {
+    // Kind of hp, should be equal to "range"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+
+// HP Linear Space specification
+message HpLinSpace {
+    // Kind of hp, should be equal to "linspace"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Log Space specification
+message HpLogSpace {
+    // Kind of hp, should be equal to "logspace"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Geom Space specification
+message HpGeomSpace {
+    // Kind of hp, should be equal to "geomspace"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Uniform Dist specification
+message HpUniform {
+    // Kind of hp, should be equal to "uniform"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Quantized Uniform Dist specification
+message HpQUniform {
+    // Kind of hp, should be equal to "quniform"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Log Uniform Dist specification
+message HpLogUniform {
+    // Kind of hp, should be equal to "loguniform"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Quantized Log Uniform Dist specification
+message HpQLogUniform {
+    // Kind of hp, should be equal to "qloguniform"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Normal Dist specification
+message HpNormal {
+    // Kind of hp, should be equal to "normal"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Quantized Normal Dist specification
+message HpQNormal {
+    // Kind of hp, should be equal to "qnormal"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Log Normal Dist specification
+message HpLogNormal {
+    // Kind of hp, should be equal to "lognormal"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// HP Quantized Log Normal Dist specification
+message HpQLogNormal {
+    // Kind of hp, should be equal to "qlognormal"
+    string kind = 1;
+
+    // Value
+    google.protobuf.Struct value = 2;
+}
+
+// Hp Matrix specification
+message HpParams {
+    oneof hp_params {
+        HpChoice choice = 1;
+        HpPChoice pchoice = 2;
+        HpRange range = 3;
+        HpLinSpace linspace = 4;
+        HpLogSpace logspace = 5;
+        HpGeomSpace geomspace = 6;
+        HpUniform uniform = 7;
+        HpQUniform quniform = 8;
+        HpLogUniform loguniform = 9;
+        HpQLogUniform qloguniform = 10;
+        HpNormal normal = 11;
+        HpQNormal qnormal = 12;
+        HpLogNormal lognormal = 13;
+        HpQLogNormal qlognormal = 14;
+    }
+}

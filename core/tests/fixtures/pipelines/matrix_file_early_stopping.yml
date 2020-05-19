@@ -7,7 +7,6 @@ run:
   earlyStopping:
   - kind: failure_early_stopping
     percent: 0.1
-    evaluationInterval: 1
   operations:
   - name: build
     hubRef: kaniko

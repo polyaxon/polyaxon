@@ -139,6 +139,7 @@ class V1DockerfileType(BaseConfig, polyaxon_sdk.V1DockerfileType):
       * shell: shell type environment variable, default `/bin/bash`
 
     """
+
     IDENTIFIER = "dockerfile"
     SCHEMA = DockerfileTypeSchema
     REDUCED_ATTRIBUTES = [

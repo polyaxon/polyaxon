@@ -270,6 +270,7 @@ class V1Service(BaseConfig, polyaxon_sdk.V1Service):
     >>>   rewritePath: true
     ```
     """
+
     SCHEMA = ServiceSchema
     IDENTIFIER = V1RunKind.SERVICE
     REDUCED_ATTRIBUTES = [

@@ -76,8 +76,9 @@ class V1HpGeomSpace {
 
 /**
  * @member {String} kind
+ * @default 'geomspace'
  */
-V1HpGeomSpace.prototype['kind'] = undefined;
+V1HpGeomSpace.prototype['kind'] = 'geomspace';
 
 /**
  * @member {Object} value

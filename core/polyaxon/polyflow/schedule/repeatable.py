@@ -32,5 +32,69 @@ class RepeatableScheduleSchema(BaseCamelSchema):
 
 
 class V1RepeatableSchedule(BaseConfig, polyaxon_sdk.V1RepeatableSchedule):
+    """Repeatable schedules is an interface to trigger components repeatedly for a limited time.
+
+    Args:
+        kind: str, should be equal to `interval`
+        limit: int, required
+        depends_on_past: bool, optional
+
+
+    ## Yaml usage
+
+    ```yaml
+    >>> schedule:
+    >>>   kind:
+    >>>   limit:
+    >>>   dependsOnPast:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1RepeatableSchedule
+    >>> schedule = V1RepeatableSchedule(
+    >>>   frequency=10,
+    >>>   dependsOnPast=True,
+    >>> )
+    ```
+
+    ## Fields
+
+    ### kind
+
+    The kind signals to the CLI, client and other tools that this schedule is a repeatable schedule.
+
+    If you are using the python client to create the schedule,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> run:
+    >>>   kind: repeatable
+    ```
+
+    ### limit
+
+    The maximum number of times to execute the component.
+
+    ```yaml
+    >>> run:
+    >>>   limit: 10
+    ```
+
+    ### dependsOnPast
+
+    Optional field to tell Polyaxon to check if the
+    previous execution was done before scheduling a new one, by default this is set to `false`.
+
+    In the case where this field is set to False,
+    the operations will trigger all runs at the same time.
+
+    ```yaml
+    >>> run:
+    >>>   limit: 10
+    ```
+    """
+
     SCHEMA = RepeatableScheduleSchema
     IDENTIFIER = "repeatable"

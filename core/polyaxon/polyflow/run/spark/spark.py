@@ -14,9 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import polyaxon_sdk
+
 from marshmallow import fields, validate
 
-import polyaxon_sdk
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.polyflow.run.spark.replica import SparkReplicaSchema
@@ -65,7 +66,7 @@ class V1Spark(BaseConfig, polyaxon_sdk.V1Spark):
     [Apache Spark](https://spark.apache.org/) is data-processing engine.
 
     Args:
-        kind: str, should be equal `job`
+        kind: str, should be equal `spark`
         connections: List[str], optional
         volumes: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
                  optional
@@ -318,6 +319,7 @@ class V1Spark(BaseConfig, polyaxon_sdk.V1Spark):
     ```
 
     """
+
     SCHEMA = SparkSchema
     IDENTIFIER = V1RunKind.SPARK
     REDUCED_ATTRIBUTES = [

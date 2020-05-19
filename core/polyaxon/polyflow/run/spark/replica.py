@@ -176,6 +176,7 @@ class V1SparkReplica(BaseConfig, polyaxon_sdk.V1SparkReplica):
     >>>     command: ["python", "/plx-context/artifacts/my-tf-code-repo/model.py"]
     ```
     """
+
     SCHEMA = SparkReplicaSchema
     IDENTIFIER = "replica"
     REDUCED_ATTRIBUTES = [

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from polyaxon.polyflow.schedule.cron import CronScheduleSchema, V1CronSchedule
-from polyaxon.polyflow.schedule.execute import (
+from polyaxon.polyflow.schedule.exact_time import (
     ExactTimeScheduleSchema,
     V1ExactTimeSchedule,
 )

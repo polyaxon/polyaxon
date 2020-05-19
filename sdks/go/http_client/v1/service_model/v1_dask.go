@@ -62,6 +62,9 @@ type V1Dask struct {
 	// Optional sidecars section
 	Sidecars []V1Container `json:"sidecars"`
 
+	// Number of threads
+	Threads int32 `json:"threads,omitempty"`
+
 	// Volumes is a list of volumes that can be mounted.
 	Volumes []V1Volume `json:"volumes"`
 }

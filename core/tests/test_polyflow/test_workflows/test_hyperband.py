@@ -19,7 +19,7 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import BaseTestCase, assert_equal_dict
 
-from polyaxon.polyflow.optimization import Optimization, V1OptimizationMetric
+from polyaxon.polyflow.optimization import V1Optimization, V1OptimizationMetric
 from polyaxon.polyflow.parallel import V1Hyperband
 
 
@@ -33,7 +33,7 @@ class TestWorkflowV1Hyperbands(BaseTestCase):
             "resource": {"name": "steps", "type": "int"},
             "resume": False,
             "metric": V1OptimizationMetric(
-                name="loss", optimization=Optimization.MINIMIZE
+                name="loss", optimization=V1Optimization.MINIMIZE
             ).to_dict(),
             "params": {"lr": {"kind": "choice", "value": [[0.1], [0.9]]}},
         }

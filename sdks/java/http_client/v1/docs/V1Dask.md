@@ -7,6 +7,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
+**threads** | **Integer** |  |  [optional]
 **scale** | **Integer** |  |  [optional]
 **adaptMin** | **Integer** |  |  [optional]
 **adaptMax** | **Integer** |  |  [optional]

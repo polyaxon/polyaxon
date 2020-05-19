@@ -20,7 +20,7 @@ from marshmallow.exceptions import ValidationError
 from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow.operations import V1CompiledOperation
-from polyaxon.polyflow.optimization import Optimization, V1OptimizationMetric
+from polyaxon.polyflow.optimization import V1Optimization, V1OptimizationMetric
 from polyaxon.polyflow.parallel.bayes import (
     AcquisitionFunctions,
     GaussianProcessesKernels,
@@ -103,7 +103,7 @@ class TestWorkflowConfigs(BaseTestCase):
             "resource": {"name": "steps", "type": "int"},
             "resume": False,
             "metric": V1OptimizationMetric(
-                name="loss", optimization=Optimization.MINIMIZE
+                name="loss", optimization=V1Optimization.MINIMIZE
             ).to_dict(),
             "params": {
                 "lr": {"kind": "pchoice", "value": [(1, 0.3), (2, 0.3), (3, 0.3)]}
@@ -119,14 +119,14 @@ class TestWorkflowConfigs(BaseTestCase):
                 "kind": "metric_early_stopping",
                 "metric": "loss",
                 "value": 0.1,
-                "optimization": Optimization.MINIMIZE,
+                "optimization": V1Optimization.MINIMIZE,
                 "policy": {"kind": "median", "evaluationInterval": 1},
             },
             {
                 "kind": "metric_early_stopping",
                 "metric": "accuracy",
                 "value": 0.9,
-                "optimization": Optimization.MAXIMIZE,
+                "optimization": V1Optimization.MAXIMIZE,
                 "policy": {
                     "kind": "truncation",
                     "percent": 50,
@@ -141,7 +141,7 @@ class TestWorkflowConfigs(BaseTestCase):
         config_dict["parallel"] = {
             "kind": "bayes",
             "metric": V1OptimizationMetric(
-                name="loss", optimization=Optimization.MINIMIZE
+                name="loss", optimization=V1Optimization.MINIMIZE
             ).to_dict(),
             "numInitialRuns": 2,
             "numIterations": 10,

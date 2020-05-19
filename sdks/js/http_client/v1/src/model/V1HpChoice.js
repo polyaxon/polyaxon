@@ -76,8 +76,9 @@ class V1HpChoice {
 
 /**
  * @member {String} kind
+ * @default 'choice'
  */
-V1HpChoice.prototype['kind'] = undefined;
+V1HpChoice.prototype['kind'] = 'choice';
 
 /**
  * @member {Object} value

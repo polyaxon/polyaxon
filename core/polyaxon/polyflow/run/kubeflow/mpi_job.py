@@ -127,6 +127,7 @@ class V1MPIJob(BaseConfig, polyaxon_sdk.V1MPIJob):
     >>>  ...
     ```
     """
+
     SCHEMA = MPIJobSchema
     IDENTIFIER = V1RunKind.MPIJOB
     REDUCED_ATTRIBUTES = [

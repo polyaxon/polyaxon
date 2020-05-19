@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpLinSpace Matrix Linear Space specification
+// V1HpLinSpace HP Linear Space specification
 //
 // swagger:model v1HpLinSpace
 type V1HpLinSpace struct {
 
-	// Kind of hp matrix, should be equal to "linspace"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "linspace"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

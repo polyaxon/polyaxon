@@ -226,6 +226,7 @@ class V1KFReplica(BaseConfig, polyaxon_sdk.V1KFReplica):
     >>>     command: ["python", "/plx-context/artifacts/my-tf-code-repo/model.py"]
     ```
     """
+
     SCHEMA = KFReplicaSchema
     IDENTIFIER = "replica"
     REDUCED_ATTRIBUTES = [

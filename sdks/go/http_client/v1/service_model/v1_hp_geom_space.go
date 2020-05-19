@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpGeomSpace Matrix Geom Space specification
+// V1HpGeomSpace HP Geom Space specification
 //
 // swagger:model v1HpGeomSpace
 type V1HpGeomSpace struct {
 
-	// Kind of hp matrix, should be equal to "geomspace"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "geomspace"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

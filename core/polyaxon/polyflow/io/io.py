@@ -431,6 +431,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     polyaxon run -f polyaxonfile.yaml -P activation=sigmoid
     ```
     """
+
     SCHEMA = IOSchema
     IDENTIFIER = "io"
     REDUCED_ATTRIBUTES = [

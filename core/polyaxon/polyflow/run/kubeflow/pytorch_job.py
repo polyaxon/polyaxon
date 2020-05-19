@@ -124,6 +124,7 @@ class V1PytorchJob(BaseConfig, polyaxon_sdk.V1PytorchJob):
     >>>  ...
     ```
     """
+
     SCHEMA = PytorchJobSchema
     IDENTIFIER = V1RunKind.PYTORCHJOB
     REDUCED_ATTRIBUTES = ["cleanPodPolicy", "master", "worker"]

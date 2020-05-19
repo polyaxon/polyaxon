@@ -19,7 +19,7 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import BaseTestCase, assert_equal_dict
 
-from polyaxon.polyflow.optimization import Optimization, V1OptimizationMetric
+from polyaxon.polyflow.optimization import V1Optimization, V1OptimizationMetric
 from polyaxon.polyflow.parallel.bayes import (
     AcquisitionFunctions,
     GaussianProcessConfig,
@@ -80,7 +80,7 @@ class TestWorkflowV1Bayes(BaseTestCase):
         config_dict = {
             "kind": "bayes",
             "metric": V1OptimizationMetric(
-                name="loss", optimization=Optimization.MINIMIZE
+                name="loss", optimization=V1Optimization.MINIMIZE
             ).to_dict(),
             "numInitialRuns": 2,
             "numIterations": 19,

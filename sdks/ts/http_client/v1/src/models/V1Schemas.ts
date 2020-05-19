@@ -76,6 +76,10 @@ import {
     V1GitTypeFromJSON,
     V1GitTypeFromJSONTyped,
     V1GitTypeToJSON,
+    V1HpParams,
+    V1HpParamsFromJSON,
+    V1HpParamsFromJSONTyped,
+    V1HpParamsToJSON,
     V1ImageType,
     V1ImageTypeFromJSON,
     V1ImageTypeFromJSONTyped,
@@ -84,10 +88,6 @@ import {
     V1K8sResourceTypeFromJSON,
     V1K8sResourceTypeFromJSONTyped,
     V1K8sResourceTypeToJSON,
-    V1Matrix,
-    V1MatrixFromJSON,
-    V1MatrixFromJSONTyped,
-    V1MatrixToJSON,
     V1Operation,
     V1OperationFromJSON,
     V1OperationFromJSONTyped,
@@ -194,10 +194,10 @@ export interface V1Schemas {
     connection_schema?: V1ConnectionSchema;
     /**
      * 
-     * @type {V1Matrix}
+     * @type {V1HpParams}
      * @memberof V1Schemas
      */
-    matrix?: V1Matrix;
+    hp_params?: V1HpParams;
     /**
      * 
      * @type {V1Reference}
@@ -326,7 +326,7 @@ export function V1SchemasFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'compiled_operation': !exists(json, 'compiled_operation') ? undefined : V1CompiledOperationFromJSON(json['compiled_operation']),
         'schedule': !exists(json, 'schedule') ? undefined : V1ScheduleFromJSON(json['schedule']),
         'connection_schema': !exists(json, 'connection_schema') ? undefined : V1ConnectionSchemaFromJSON(json['connection_schema']),
-        'matrix': !exists(json, 'matrix') ? undefined : V1MatrixFromJSON(json['matrix']),
+        'hp_params': !exists(json, 'hp_params') ? undefined : V1HpParamsFromJSON(json['hp_params']),
         'reference': !exists(json, 'reference') ? undefined : V1ReferenceFromJSON(json['reference']),
         'artifacts_mount': !exists(json, 'artifacts_mount') ? undefined : V1ArtifactsMountFromJSON(json['artifacts_mount']),
         'polyaxon_sidecar_container': !exists(json, 'polyaxon_sidecar_container') ? undefined : V1PolyaxonSidecarContainerFromJSON(json['polyaxon_sidecar_container']),
@@ -365,7 +365,7 @@ export function V1SchemasToJSON(value?: V1Schemas | null): any {
         'compiled_operation': V1CompiledOperationToJSON(value.compiled_operation),
         'schedule': V1ScheduleToJSON(value.schedule),
         'connection_schema': V1ConnectionSchemaToJSON(value.connection_schema),
-        'matrix': V1MatrixToJSON(value.matrix),
+        'hp_params': V1HpParamsToJSON(value.hp_params),
         'reference': V1ReferenceToJSON(value.reference),
         'artifacts_mount': V1ArtifactsMountToJSON(value.artifacts_mount),
         'polyaxon_sidecar_container': V1PolyaxonSidecarContainerToJSON(value.polyaxon_sidecar_container),

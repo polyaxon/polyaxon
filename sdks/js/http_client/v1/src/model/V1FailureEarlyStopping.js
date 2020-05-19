@@ -68,9 +68,6 @@ class V1FailureEarlyStopping {
             if (data.hasOwnProperty('percent')) {
                 obj['percent'] = ApiClient.convertToType(data['percent'], 'Number');
             }
-            if (data.hasOwnProperty('evaluation_interval')) {
-                obj['evaluation_interval'] = ApiClient.convertToType(data['evaluation_interval'], 'String');
-            }
         }
         return obj;
     }
@@ -85,16 +82,10 @@ class V1FailureEarlyStopping {
 V1FailureEarlyStopping.prototype['kind'] = 'failure_early_stopping';
 
 /**
- * The percentage failed runs, at each evaluation interval. e.g. 1 - 99.
+ * The percentage of failed runs, at each evaluation interval. e.g. 1 - 99.
  * @member {Number} percent
  */
 V1FailureEarlyStopping.prototype['percent'] = undefined;
-
-/**
- * Interval/Frequency for applying the policy.
- * @member {String} evaluation_interval
- */
-V1FailureEarlyStopping.prototype['evaluation_interval'] = undefined;
 
 
 

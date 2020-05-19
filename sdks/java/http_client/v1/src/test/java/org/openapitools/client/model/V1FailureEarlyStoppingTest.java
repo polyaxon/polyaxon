@@ -70,12 +70,4 @@ public class V1FailureEarlyStoppingTest {
         // TODO: test percent
     }
 
-    /**
-     * Test the property 'evaluationInterval'
-     */
-    @Test
-    public void evaluationIntervalTest() {
-        // TODO: test evaluationInterval
-    }
-
 }

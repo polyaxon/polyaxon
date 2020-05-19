@@ -27,7 +27,9 @@ from polyaxon.schemas.base import FULLY_QUALIFIED_NAME_REGEX
 
 class ComponentSchema(BaseComponentSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("component"))
-    name = fields.Str(validate=validate.Regexp(regex=FULLY_QUALIFIED_NAME_REGEX), allow_none=True)
+    name = fields.Str(
+        validate=validate.Regexp(regex=FULLY_QUALIFIED_NAME_REGEX), allow_none=True
+    )
     inputs = fields.Nested(IOSchema, allow_none=True, many=True)
     outputs = fields.Nested(IOSchema, allow_none=True, many=True)
     run = fields.Nested(RunSchema, required=True)
@@ -133,7 +135,8 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     The kind signals to the CLI, client and other tools that this is a component.
 
-    If you are using the python client to create a component,
+    If you are using the component inline in an operation or
+    if you are using the python client to create a component,
     this field is not required and is set by default.
 
     ```yaml
@@ -145,10 +148,10 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     The default component name.
 
-    This name can be `slug` or `slug:tag`.
+    This name can be a `slug` or a `slug:tag`.
 
     This name will be passed as the default value to all operations using this component,
-    unless the operations overrides the name or a name is passed as an argument to the cli/client.
+    unless the operations override the name or a `--name` is passed as an argument to the cli/client.
 
     ```yaml
     >>> component:
@@ -160,8 +163,8 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     The default component description.
 
     This description will be passed as the default value to all operations using this component,
-    unless the operations overrides the description or a
-    description is passed as an argument to the cli/client.
+    unless the operations override the description or a
+    `--description` is passed as an argument to the cli/client.
 
     ```yaml
     >>> component:
@@ -173,7 +176,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     The default component tags.
 
     These tags will be passed as the default value to all operations using this component,
-    unless the operations overrides the tags or tags are passed as an argument to the cli/client.
+    unless the operations override the tags or `--tags` are passed as an argument to the cli/client.
 
     ```yaml
     >>> component:
@@ -185,7 +188,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     The default component [run profile](/docs/management/run-profiles/).
 
     This profile will be passed as the default value to all operations using this component,
-    unless the operations overrides the profile or a profile
+    unless the operations override the profile or `--profile`
     is passed as an argument to the cli/client.
 
     ```yaml
@@ -198,7 +201,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     The default component [queue](/docs/core/scheduling-strategies/queue-routing/).
 
     This queue will be passed as the default value to all operations using this component,
-    unless the operations overrides the queue or a queue
+    unless the operations override the queue or `--queue`
     is passed as an argument to the cli/client.
 
     ```yaml
@@ -212,7 +215,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     This cache definition will be passed as the default value to
     all operations using this component,
-    unless the operations overrides the cache or a `nocache`
+    unless the operations override the cache or `--nocache`
     is passed as an argument to the cli/client.
 
     ```yaml
@@ -224,11 +227,11 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ### termination
 
-    The default termination [termination](/docs/core/specification/termination/).
+    The default component [termination](/docs/core/specification/termination/).
 
     This termination definition will be passed as the default value to
     all operations using this component,
-    unless the operations overrides the termination.
+    unless the operations override the termination.
 
     ```yaml
     >>> component:
@@ -238,11 +241,11 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ### plugins
 
-    The default plugins [plugins](/docs/core/specification/plugins/).
+    The default component [plugins](/docs/core/specification/plugins/).
 
     This plugins definition will be passed as the default value to
     all operations using this component,
-    unless the operations overrides the plugins.
+    unless the operations override the plugins.
 
     ```yaml
     >>> component:
@@ -267,7 +270,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ### inputs
 
-    The inputs definition for this component.
+    The [inputs](/docs/core/specification/io/) definition for this component.
 
     If the component defines required inputs, anytime a user tries to run
     this component without passing the required params or passing params with wrong types,
@@ -289,7 +292,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ### outputs
 
-    The outputs definition for this component.
+    The [outputs](/docs/core/specification/io/) definition for this component.
 
     If the component defines required outputs, no exception will be raised at execution time,
     since Polyaxon will consider the outputs values will be resolved in the future,
@@ -298,7 +301,8 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     Sometimes the outputs can be resolved immediately at execution time,
     for example a container image name, because such information is required for the
-    job to finish successfully, i.e. pushing the image with correct name.
+    job to finish successfully, i.e. pushing the image with correct name,
+    in that case you can disable `delayValidation`.
 
     ```yaml
     >>> component:
@@ -312,8 +316,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ### run
 
-    This run section of the component is how Polyaxon knows
-    if it should start:
+    This is the run section of the component, and it defines the runtime:
         * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,
                                                 data processing jobs, ...
         * [V1Service](/docs/experimentation/services/): for running tensorboards, notebooks,
@@ -329,6 +332,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
         * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG / workflow.
 
     """
+
     SCHEMA = ComponentSchema
     IDENTIFIER = "component"
     REDUCED_ATTRIBUTES = BaseComponent.REDUCED_ATTRIBUTES + [

@@ -34,5 +34,92 @@ class CronScheduleSchema(BaseCamelSchema):
 
 
 class V1CronSchedule(BaseConfig, polyaxon_sdk.V1CronSchedule):
+    """Cron schedules is an interface to trigger components repeatedly using a cron definition.
+
+    Args:
+        kind: str, should be equal to `cron`
+        start_at: datetime, optional
+        end_at: datetime, optional
+        cron: str, required
+        depends_on_past: bool, optional
+
+
+    ## Yaml usage
+
+    ```yaml
+    >>> schedule:
+    >>>   kind:
+    >>>   startAt:
+    >>>   endAt:
+    >>>   cron:
+    >>>   dependsOnPast:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from datetime import datetime
+    >>> from polyaxon.polyflow import V1CronSchedule
+    >>> schedule = V1CronSchedule(
+    >>>   start_at=datetime(...),
+    >>>   end_at=datetime(...),
+    >>>   cron="0 0 * * *",
+    >>>   dependsOnPast=False,
+    >>> )
+    ```
+
+    ## Fields
+
+    ### kind
+
+    The kind signals to the CLI, client and other tools that this schedule is a cron schedule.
+
+    If you are using the python client to create the schedule,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> run:
+    >>>   kind: cron
+    ```
+
+    ### startAt
+
+    Optional field to set the start time for kicking the first execution,
+    all following executions will be relative to this time.
+
+    ```yaml
+    >>> run:
+    >>>   startAt: "2019-06-24T21:20:07+00:00"
+    ```
+
+    ### endAt
+
+    Optional field to set the end time for stopping this schedule.
+
+    ```yaml
+    >>> run:
+    >>>   endAt: "2019-06-24T21:20:07+00:00"
+    ```
+
+    ### cron
+
+    The cron expression to generate the component executions.
+
+    ```yaml
+    >>> run:
+    >>>   cron: "0 0 * * *"
+    ```
+
+    ### dependsOnPast
+
+    Optional field to tell Polyaxon to check if the
+    previous execution was done before scheduling a new one, by default this is set to `false`.
+
+    ```yaml
+    >>> run:
+    >>>   dependsOnPast: true
+    ```
+    """
+
     SCHEMA = CronScheduleSchema
     IDENTIFIER = "cron"

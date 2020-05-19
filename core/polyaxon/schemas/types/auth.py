@@ -101,6 +101,7 @@ class V1AuthType(BaseConfig, polyaxon_sdk.V1AuthType):
       * dict values:
         {"user": "foo", "password": "bar"}
     """
+
     IDENTIFIER = "auth"
     SCHEMA = AuthTypeSchema
     REDUCED_ATTRIBUTES = ["user", "password"]

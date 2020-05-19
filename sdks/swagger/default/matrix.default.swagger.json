@@ -1,97 +1,97 @@
 {
   "definitions": {
-    "v1MatrixChoice": {
+    "v1HpChoice": {
       "properties": {
         "kind": {
           "default": "choice"
         }
       }
     },
-    "v1MatrixPChoice": {
+    "v1HpPChoice": {
       "properties": {
         "kind": {
           "default": "pchoice"
         }
       }
     },
-    "v1MatrixRange": {
+    "v1HpRange": {
       "properties": {
         "kind": {
           "default": "range"
         }
       }
     },
-    "v1MatrixLinSpace": {
+    "v1HpLinSpace": {
       "properties": {
         "kind": {
           "default": "linspace"
         }
       }
     },
-    "v1MatrixLogSpace": {
+    "v1HpLogSpace": {
       "properties": {
         "kind": {
           "default": "logspace"
         }
       }
     },
-    "v1MatrixGeomSpace": {
+    "v1HpGeomSpace": {
       "properties": {
         "kind": {
           "default": "geomspace"
         }
       }
     },
-    "v1MatrixUniform": {
+    "v1HpUniform": {
       "properties": {
         "kind": {
           "default": "uniform"
         }
       }
     },
-    "v1MatrixQUniform": {
+    "v1HpQUniform": {
       "properties": {
         "kind": {
           "default": "quniform"
         }
       }
     },
-    "v1MatrixLogUniform": {
+    "v1HpLogUniform": {
       "properties": {
         "kind": {
           "default": "loguniform"
         }
       }
     },
-    "v1MatrixQLogUniform": {
+    "v1HpQLogUniform": {
       "properties": {
         "kind": {
           "default": "qloguniform"
         }
       }
     },
-    "v1MatrixNormal": {
+    "v1HpNormal": {
       "properties": {
         "kind": {
           "default": "normal"
         }
       }
     },
-    "v1MatrixQNormal": {
+    "v1HpQNormal": {
       "properties": {
         "kind": {
           "default": "qnormal"
         }
       }
     },
-    "v1MatrixLogNormal": {
+    "v1HpLogNormal": {
       "properties": {
         "kind": {
           "default": "lognormal"
         }
       }
     },
-    "v1MatrixQLogNormal": {
+    "v1HpQLogNormal": {
       "properties": {
         "kind": {
           "default": "qlognormal"

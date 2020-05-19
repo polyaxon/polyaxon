@@ -80,12 +80,6 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property evaluation_interval (base name: "evaluation_interval")', function() {
-      // uncomment below and update the code to test the property evaluation_interval
-      //var instane = new PolyaxonSdk.V1FailureEarlyStopping();
-      //expect(instance).to.be();
-    });
-
   });
 
 }));

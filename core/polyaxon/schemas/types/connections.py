@@ -256,9 +256,17 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
         * items: List[str], optional, if you only want to expose a subset
                  of the items in the configMap.
     """
+
     IDENTIFIER = "connection"
     SCHEMA = ConnectionTypeSchema
-    REDUCED_ATTRIBUTES = ["name", "kind", "description", "schema", "secret", "configMap"]
+    REDUCED_ATTRIBUTES = [
+        "name",
+        "kind",
+        "description",
+        "schema",
+        "secret",
+        "configMap",
+    ]
 
     @classmethod
     def from_model(cls, model) -> "V1ConnectionType":

@@ -36,6 +36,95 @@ class MappingSchema(BaseCamelSchema):
 
 
 class V1Mapping(BaseConfig, polyaxon_sdk.V1Mapping):
+    """Mapping is a flexible way for dynamically executing parallel component
+    based on a list of parameter combinations.
+
+    Args:
+        kind: str, should be equal `mapping`
+        values: List[Dict]
+        concurrency: int, optional
+        early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
+
+    ## Yaml usage
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: mapping
+    >>>   values:
+    >>>   concurrency:
+    >>>   earlyStopping:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import V1Mapping, V1FailureEarlyStopping
+    >>> mapping = V1Mapping(
+    >>>     values=[{...}, {...}, ...],
+    >>>     concurrency=4,
+    >>>     early_stopping=[V1FailureEarlyStopping(...)]
+    >>> )
+    ```
+
+    ## Fields
+
+    ### kind
+
+    The kind signals to the CLI, client and other tools that this matrix is mapping.
+
+    If you are using the python client to create the mapping,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: mapping
+    ```
+
+    ### values
+
+    A List of dictionaries (key/value objects) that will be used to pass
+    those dictionaries as params to each execution.
+
+    ```yaml
+    >>> matrix:
+    >>>   values:
+    >>>     - lr: 0.001
+    >>>       dropout: 0.1
+    >>>     - lr: 0.01
+    >>>       dropout: 0.2
+    >>>     - lr: 0.1
+    >>>       dropout: 0.3
+    ```
+
+    ### concurrency
+
+    Optional value to set the number of concurrent executions, this value should be less or equal to
+    the total length of the list of dictionaries.
+
+    ```yaml
+    >>> matrix:
+    >>>   concurrency: 2
+    ```
+
+    For more details about concurrency management,
+    please check the [concurrency section](/docs/automation/helpers/concurrency/).
+
+    ### earlyStopping
+
+    A list of early stopping conditions to check for terminating the runs,
+    if one of the early stopping conditions is met,
+    a signal will be sent to terminate all running and pending runs.
+
+    ```yaml
+    >>> matrix:
+    >>>   earlyStopping: ...
+    ```
+
+    For more details please check the
+    [early stopping section](/docs/automation/helpers/early-stopping/).
+
+    """
+
     SCHEMA = MappingSchema
     IDENTIFIER = V1ParallelKind.MAPPING
     REDUCED_ATTRIBUTES = ["concurrency", "earlyStopping"]

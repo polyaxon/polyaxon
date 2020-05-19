@@ -76,8 +76,9 @@ class V1HpNormal {
 
 /**
  * @member {String} kind
+ * @default 'normal'
  */
-V1HpNormal.prototype['kind'] = undefined;
+V1HpNormal.prototype['kind'] = 'normal';
 
 /**
  * @member {Object} value

@@ -39,7 +39,7 @@ class ResourceType(polyaxon_sdk.V1ResourceType):
         return value in cls.FLOAT_VALUES
 
 
-class Optimization(polyaxon_sdk.V1Optimization):
+class V1Optimization(polyaxon_sdk.V1Optimization):
     MAXIMIZE = polyaxon_sdk.V1Optimization.MAXIMIZE
     MINIMIZE = polyaxon_sdk.V1Optimization.MINIMIZE
 
@@ -60,7 +60,7 @@ class Optimization(polyaxon_sdk.V1Optimization):
 class OptimizationMetricSchema(BaseCamelSchema):
     name = fields.Str()
     optimization = fields.Str(
-        allow_none=True, validate=validate.OneOf(Optimization.VALUES)
+        allow_none=True, validate=validate.OneOf(V1Optimization.VALUES)
     )
 
     @staticmethod

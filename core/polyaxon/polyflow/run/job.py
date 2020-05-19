@@ -237,6 +237,7 @@ class V1Job(BaseConfig, polyaxon_sdk.V1Job):
     >>>     command: ["python", "/plx-context/artifacts/my-tf-code-repo/model.py"]
     ```
     """
+
     SCHEMA = JobSchema
     IDENTIFIER = V1RunKind.JOB
     REDUCED_ATTRIBUTES = [

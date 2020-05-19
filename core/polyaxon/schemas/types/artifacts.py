@@ -125,6 +125,7 @@ class V1ArtifactsType(BaseConfig, polyaxon_sdk.V1ArtifactsType):
     >>> }
     ```
     """
+
     IDENTIFIER = "artifacts"
     SCHEMA = ArtifactsTypeSchema
     REDUCED_ATTRIBUTES = ["files", "dirs", "connection", "init", "workers"]

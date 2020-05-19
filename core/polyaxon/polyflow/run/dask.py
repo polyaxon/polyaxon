@@ -314,6 +314,7 @@ class V1Dask(BaseConfig, polyaxon_sdk.V1Dask):
     >>>     command: ["python", "/plx-context/artifacts/my-tf-code-repo/model.py"]
     ```
     """
+
     SCHEMA = DaskSchema
     IDENTIFIER = V1RunKind.DASK
     REDUCED_ATTRIBUTES = [

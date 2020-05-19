@@ -76,8 +76,9 @@ class V1HpRange {
 
 /**
  * @member {String} kind
+ * @default 'range'
  */
-V1HpRange.prototype['kind'] = undefined;
+V1HpRange.prototype['kind'] = 'range';
 
 /**
  * @member {Object} value

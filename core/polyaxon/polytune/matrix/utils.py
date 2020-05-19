@@ -35,7 +35,7 @@ from polyaxon.polyflow import (
     V1HpRange,
     V1HpUniform,
 )
-from polyaxon.polyflow.parallel.matrix import pchoice
+from polyaxon.polyflow.parallel.params import pchoice
 from polyaxon.polytune.matrix import dist
 
 

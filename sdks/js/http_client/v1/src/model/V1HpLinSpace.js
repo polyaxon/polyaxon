@@ -76,8 +76,9 @@ class V1HpLinSpace {
 
 /**
  * @member {String} kind
+ * @default 'linspace'
  */
-V1HpLinSpace.prototype['kind'] = undefined;
+V1HpLinSpace.prototype['kind'] = 'linspace';
 
 /**
  * @member {Object} value

@@ -20,7 +20,7 @@ from marshmallow import fields, validate
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.parallel.kinds import V1ParallelKind
-from polyaxon.polyflow.parallel.matrix import MatrixSchema
+from polyaxon.polyflow.parallel.params import MatrixSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
@@ -46,6 +46,152 @@ class HyperoptSchema(BaseCamelSchema):
 
 
 class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
+    """Hyperopt is a search algorithm that is backed by
+    [Hyperopt](http://hyperopt.github.io/hyperopt/)
+    to perform sequential model-based hyperparameter optimization.
+
+    the Hyperopt integration exposes 3 algorithms: `tpe`, `rand`, `anneal`.
+
+    Args:
+        kind: hyperopt
+        algorithm: str, one of tpe, rand, anneal
+        params: List[Dict[str,
+        [params](/docs/automation/optimization-engine/params/#discrete-values)]]
+        concurrency: int, optional
+        num_runs: int, optional
+        seed: int, optional
+        early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
+
+
+    ## Yaml usage
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   algorithm:
+    >>>   concurrency:
+    >>>   params:
+    >>>   numRuns:
+    >>>   seed:
+    >>>   earlyStopping:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon.polyflow import (
+    >>>     V1Hyperopt, V1HpLogSpace, V1HpUniform, V1FailureEarlyStopping, V1MetricEarlyStopping
+    >>> )
+    >>> matrix = V1Hyperopt(
+    >>>   algorithm="tpe",
+    >>>   num_runs=20,
+    >>>   concurrency=2,
+    >>>   seed=23,
+    >>>   params={"param1": V1HpLogSpace(...), "param2": V1HpUniform(...), ... },
+    >>>   early_stopping=[V1FailureEarlyStopping(...), V1MetricEarlyStopping(...)]
+    >>> )
+    ```
+
+    ## Fields
+
+    ### kind
+
+    The kind signals to the CLI, client and other tools that this matrix is hyperopt.
+
+    If you are using the python client to create the mapping,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    ```
+
+    ### algorithm
+
+    The algorithm to use from the hyperopt library, the supported
+    algorithms: `tpe`, `rand`, `anneal`.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   algorithm: anneal
+    ```
+
+    ### concurrency
+
+    Optional value to set the number of concurrent executions, this value should be less or equal to
+    the total number of possible runs.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   concurrency: 2
+    ```
+
+    For more details about concurrency management,
+    please check the [concurrency section](/docs/automation/helpers/concurrency/).
+
+    ### params
+
+    A dictionary of `key -> value generator`
+    to generate parameters.
+
+    To learn about all possible
+    [params generators](/docs/automation/optimization-engine/params/).
+
+    The parameters generated will be checked against
+    the component inputs/outputs definition to check that the parameters
+    can be passed and have valid types.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   params:
+    >>>     param1:
+    >>>        kind: ...
+    >>>        value: ...
+    >>>     param2:
+    >>>        kind: ...
+    >>>        value: ...
+    ```
+
+    ### numRuns
+
+    Maximum number of runs to start based on the search space defined.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   numRuns: 5
+    ```
+
+    ### seed
+
+    Since this algorithm uses random generators,
+    if you want to control the seed for the random generator, you can pass a seed.
+
+     ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   seed: 523
+    ```
+
+    ### earlyStopping
+
+    A list of early stopping conditions to check for terminating the runs,
+    if one of the early stopping conditions is met,
+    a signal will be sent to terminate all running and pending runs.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   earlyStopping: ...
+    ```
+
+
+
+    """
+
     SCHEMA = HyperoptSchema
     IDENTIFIER = V1ParallelKind.HYPEROPT
     REDUCED_ATTRIBUTES = ["numRuns", "seed", "concurrency", "earlyStopping"]

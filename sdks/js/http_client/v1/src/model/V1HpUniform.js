@@ -76,8 +76,9 @@ class V1HpUniform {
 
 /**
  * @member {String} kind
+ * @default 'uniform'
  */
-V1HpUniform.prototype['kind'] = undefined;
+V1HpUniform.prototype['kind'] = 'uniform';
 
 /**
  * @member {Object} value

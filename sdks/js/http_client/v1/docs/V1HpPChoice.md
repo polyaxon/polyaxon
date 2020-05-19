@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **String** |  | [optional] 
+**kind** | **String** |  | [optional] [default to &#39;pchoice&#39;]
 **value** | [**Object**](.md) |  | [optional] 
 
 

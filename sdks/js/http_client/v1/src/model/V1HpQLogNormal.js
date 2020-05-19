@@ -76,8 +76,9 @@ class V1HpQLogNormal {
 
 /**
  * @member {String} kind
+ * @default 'qlognormal'
  */
-V1HpQLogNormal.prototype['kind'] = undefined;
+V1HpQLogNormal.prototype['kind'] = 'qlognormal';
 
 /**
  * @member {Object} value

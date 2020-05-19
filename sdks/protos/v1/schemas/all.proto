@@ -20,7 +20,7 @@ package v1;
 
 import "v1/polyflow/condition.proto";
 import "v1/polyflow/early_stopping.proto";
-import "v1/polyflow/matrix.proto";
+import "v1/polyflow/hp_params.proto";
 import "v1/polyflow/mounts.proto";
 import "v1/polyflow/parallel.proto";
 import "v1/polyflow/run.proto";
@@ -49,7 +49,7 @@ message Schemas {
     CompiledOperation compiled_operation = 6;
     Schedule schedule = 7;
     ConnectionSchema connection_schema = 8;
-    Matrix matrix = 9;
+    HpParams hp_params = 9;
     Reference reference = 10;
     ArtifactsMount artifacts_mount = 11;
     PolyaxonSidecarContainer polyaxon_sidecar_container = 12;

@@ -72,15 +72,13 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     connections, and a run environment.
 
     With an operation users can:
-     * pass the parameters for required inputs or override the default values of optional inputs
-     * patch the definition of the component to set environments
-     * set termination logic and retries
-     * set trigger logic
-     * parallelize or map the operation over a matrix of parameters
-     * put an operation on a schedule
-     * subscribe an operation to events to trigger executions automatically
-
-
+     * pass the parameters for required inputs or override the default values of optional inputs.
+     * patch the definition of the component to set environments, initializers, and resources.
+     * set termination logic and retries.
+     * set trigger logic to start a component in a pipeline context.
+     * parallelize or map the component over a matrix of parameters.
+     * put an operation on a schedule.
+     * subscribe an component to events to trigger executions automatically.
 
     Args:
         version: str
@@ -107,7 +105,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
                   [V1Bayes](/docs/automation/optimization-engine/bayesian-optimization/),
                   [V1Hyperopt](/docs/automation/optimization-engine/hyperopt/),
                   [V1Iterative](/docs/automation/optimization-engine/iterative/)], optional
-        dependencies: [trigger](/docs/automation/optimization-engine/flow-engine/trigger/),
+        dependencies: [dependencies](/docs/automation/optimization-engine/flow-engine/dependencies/),
                       optional
         trigger: [trigger](/docs/automation/optimization-engine/flow-engine/trigger/),
                  optional
@@ -430,6 +428,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ...
     ```
     """
+
     SCHEMA = OperationSchema
     IDENTIFIER = "operation"
     REDUCED_ATTRIBUTES = BaseOp.REDUCED_ATTRIBUTES + [

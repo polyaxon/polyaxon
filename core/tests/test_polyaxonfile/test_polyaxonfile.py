@@ -37,7 +37,7 @@ from polyaxon.polyflow.parallel import (
     V1Mapping,
     V1RandomSearch,
 )
-from polyaxon.polyflow.parallel.matrix import V1HpChoice, V1HpLinSpace
+from polyaxon.polyflow.parallel.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.termination import V1Termination
 
 

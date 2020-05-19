@@ -48,7 +48,7 @@ from polyaxon.polyflow.operations import (
 )
 from polyaxon.polyflow.operators import ForConfig, IfConfig
 from polyaxon.polyflow.optimization import (
-    Optimization,
+    V1Optimization,
     OptimizationMetricSchema,
     OptimizationResourceSchema,
     ResourceType,

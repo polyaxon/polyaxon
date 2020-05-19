@@ -67,6 +67,14 @@ public class V1DaskTest {
     }
 
     /**
+     * Test the property 'threads'
+     */
+    @Test
+    public void threadsTest() {
+        // TODO: test threads
+    }
+
+    /**
      * Test the property 'scale'
      */
     @Test

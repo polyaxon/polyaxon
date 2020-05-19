@@ -76,8 +76,9 @@ class V1HpLogUniform {
 
 /**
  * @member {String} kind
+ * @default 'loguniform'
  */
-V1HpLogUniform.prototype['kind'] = undefined;
+V1HpLogUniform.prototype['kind'] = 'loguniform';
 
 /**
  * @member {Object} value

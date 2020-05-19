@@ -204,6 +204,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
      * A dockerfile will be generated with specification that we passed.
      * A custom container will finally run our own custom code, in this case an echo command.
     """
+
     IDENTIFIER = "init"
     SCHEMA = InitSchema
     REDUCED_ATTRIBUTES = [

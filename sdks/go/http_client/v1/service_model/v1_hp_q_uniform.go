@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpQUniform Matrix Quantized Uniform Dist specification
+// V1HpQUniform HP Quantized Uniform Dist specification
 //
 // swagger:model v1HpQUniform
 type V1HpQUniform struct {
 
-	// Kind of hp matrix, should be equal to "quniform"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "quniform"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

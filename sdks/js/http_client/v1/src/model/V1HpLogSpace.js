@@ -76,8 +76,9 @@ class V1HpLogSpace {
 
 /**
  * @member {String} kind
+ * @default 'logspace'
  */
-V1HpLogSpace.prototype['kind'] = undefined;
+V1HpLogSpace.prototype['kind'] = 'logspace';
 
 /**
  * @member {Object} value

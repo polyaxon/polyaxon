@@ -66,6 +66,9 @@ class V1Dask {
             if (data.hasOwnProperty('kind')) {
                 obj['kind'] = ApiClient.convertToType(data['kind'], 'String');
             }
+            if (data.hasOwnProperty('threads')) {
+                obj['threads'] = ApiClient.convertToType(data['threads'], 'Number');
+            }
             if (data.hasOwnProperty('scale')) {
                 obj['scale'] = ApiClient.convertToType(data['scale'], 'Number');
             }
@@ -108,6 +111,11 @@ class V1Dask {
  * @default 'dask'
  */
 V1Dask.prototype['kind'] = 'dask';
+
+/**
+ * @member {Number} threads
+ */
+V1Dask.prototype['threads'] = undefined;
 
 /**
  * @member {Number} scale

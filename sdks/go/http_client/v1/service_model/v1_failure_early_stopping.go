@@ -32,13 +32,10 @@ import (
 // swagger:model v1FailureEarlyStopping
 type V1FailureEarlyStopping struct {
 
-	// Interval/Frequency for applying the policy.
-	EvaluationInterval string `json:"evaluation_interval,omitempty"`
-
 	// Kind of this metric early stopping policy, should be equal to "failure_early_stopping"
 	Kind *string `json:"kind,omitempty"`
 
-	// The percentage failed runs, at each evaluation interval.
+	// The percentage of failed runs, at each evaluation interval.
 	// e.g. 1 - 99.
 	Percent int32 `json:"percent,omitempty"`
 }

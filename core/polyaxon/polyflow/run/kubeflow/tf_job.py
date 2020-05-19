@@ -161,6 +161,7 @@ class V1TFJob(BaseConfig, polyaxon_sdk.V1TFJob):
     >>>  ...
     ```
     """
+
     SCHEMA = TFJobSchema
     IDENTIFIER = V1RunKind.TFJOB
     REDUCED_ATTRIBUTES = [

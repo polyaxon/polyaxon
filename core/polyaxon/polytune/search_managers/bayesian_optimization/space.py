@@ -17,7 +17,7 @@
 import logging
 import numpy as np
 
-from polyaxon.polyflow import Optimization
+from polyaxon.polyflow import V1Optimization
 from polyaxon.polytune.matrix.utils import get_max, get_min, to_numpy
 
 _logger = logging.getLogger("polyaxon.hpsearch.search_managers")
@@ -112,7 +112,7 @@ class SearchSpace(object):
             return metrics
         y_values = []
         for value in metrics:
-            if Optimization.maximize(self.config.metric.optimization):
+            if V1Optimization.maximize(self.config.metric.optimization):
                 y_values.append(float(value))
             else:
                 y_values.append(-float(value))

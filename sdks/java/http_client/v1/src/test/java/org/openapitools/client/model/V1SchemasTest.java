@@ -47,9 +47,9 @@ import org.openapitools.client.model.V1Event;
 import org.openapitools.client.model.V1EventType;
 import org.openapitools.client.model.V1GcsType;
 import org.openapitools.client.model.V1GitType;
+import org.openapitools.client.model.V1HpParams;
 import org.openapitools.client.model.V1ImageType;
 import org.openapitools.client.model.V1K8sResourceType;
-import org.openapitools.client.model.V1Matrix;
 import org.openapitools.client.model.V1Operation;
 import org.openapitools.client.model.V1OperationCond;
 import org.openapitools.client.model.V1Parallel;
@@ -146,11 +146,11 @@ public class V1SchemasTest {
     }
 
     /**
-     * Test the property 'matrix'
+     * Test the property 'hpParams'
      */
     @Test
-    public void matrixTest() {
-        // TODO: test matrix
+    public void hpParamsTest() {
+        // TODO: test hpParams
     }
 
     /**

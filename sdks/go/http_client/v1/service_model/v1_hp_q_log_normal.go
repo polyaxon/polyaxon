@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpQLogNormal Matrix Quantized Log Normal Dist specification
+// V1HpQLogNormal HP Quantized Log Normal Dist specification
 //
 // swagger:model v1HpQLogNormal
 type V1HpQLogNormal struct {
 
-	// Kind of hp matrix, should be equal to "qlognormal"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "qlognormal"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

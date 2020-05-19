@@ -21,7 +21,7 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import BaseTestCase
 
-from polyaxon.polyflow.parallel.matrix import (
+from polyaxon.polyflow.parallel.params import (
     V1HpChoice,
     V1HpGeomSpace,
     V1HpLinSpace,

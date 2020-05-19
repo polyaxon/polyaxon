@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **compiled_operation** | [**V1CompiledOperation**](V1CompiledOperation.md) |  | [optional] 
 **schedule** | [**V1Schedule**](V1Schedule.md) |  | [optional] 
 **connection_schema** | [**V1ConnectionSchema**](V1ConnectionSchema.md) |  | [optional] 
-**matrix** | [**V1Matrix**](V1Matrix.md) |  | [optional] 
+**hp_params** | [**V1HpParams**](V1HpParams.md) |  | [optional] 
 **reference** | [**V1Reference**](V1Reference.md) |  | [optional] 
 **artifacts_mount** | [**V1ArtifactsMount**](V1ArtifactsMount.md) |  | [optional] 
 **polyaxon_sidecar_container** | [**V1PolyaxonSidecarContainer**](V1PolyaxonSidecarContainer.md) |  | [optional] 

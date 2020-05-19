@@ -76,8 +76,9 @@ class V1HpQUniform {
 
 /**
  * @member {String} kind
+ * @default 'quniform'
  */
-V1HpQUniform.prototype['kind'] = undefined;
+V1HpQUniform.prototype['kind'] = 'quniform';
 
 /**
  * @member {Object} value

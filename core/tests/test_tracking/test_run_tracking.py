@@ -165,19 +165,19 @@ class TestRunTracking(TestEnvVarsCase):
         settings.CLIENT_CONFIG.is_managed = False
 
         run = Run(project="owner-test.test")
-        assert run.artifacts_path is None
-        assert run.outputs_path is None
+        assert run.get_artifacts_path() is None
+        assert run.get_outputs_path() is None
         assert run._event_logger is None
 
         # Add run id
         run = Run(project="owner-test.test", run_uuid="uuid")
-        assert run.artifacts_path is None
-        assert run.outputs_path is None
+        assert run.get_artifacts_path() is None
+        assert run.get_outputs_path() is None
         assert run._event_logger is None
 
         run.set_artifacts_path()
-        assert run.artifacts_path == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uuid")
-        assert run.outputs_path == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uuid")
+        assert run.get_artifacts_path() == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uuid")
+        assert run.get_outputs_path() == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uuid")
 
         with patch("polyaxon.tracking.run.EventFileWriter") as mock_call:
             run.set_run_event_logger()
@@ -193,8 +193,8 @@ class TestRunTracking(TestEnvVarsCase):
                 run = Run(project="owner-test.test", run_uuid="uuid")
         assert event_call.call_count == 1
         assert resource_call.call_count == 1
-        assert run.artifacts_path == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uuid")
-        assert run.outputs_path == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uuid")
+        assert run.get_artifacts_path() == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uuid")
+        assert run.get_outputs_path() == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uuid")
 
     def test_event_logger_from_a_managed_run(self):
         # Set managed flag
@@ -202,8 +202,8 @@ class TestRunTracking(TestEnvVarsCase):
         os.environ[POLYAXON_KEYS_RUN_INSTANCE] = "user.project_bar.runs.uid"
 
         run = Run()
-        assert run.artifacts_path == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uid")
-        assert run.outputs_path == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uid")
+        assert run.get_artifacts_path() == CONTEXT_MOUNT_ARTIFACTS_FORMAT.format("uid")
+        assert run.get_outputs_path() == CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("uid")
         assert run._event_logger is None
 
         # Set collect flag

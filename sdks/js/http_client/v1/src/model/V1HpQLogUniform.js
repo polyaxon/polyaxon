@@ -76,8 +76,9 @@ class V1HpQLogUniform {
 
 /**
  * @member {String} kind
+ * @default 'qloguniform'
  */
-V1HpQLogUniform.prototype['kind'] = undefined;
+V1HpQLogUniform.prototype['kind'] = 'qloguniform';
 
 /**
  * @member {Object} value

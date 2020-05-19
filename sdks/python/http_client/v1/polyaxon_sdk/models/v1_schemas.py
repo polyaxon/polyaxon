@@ -58,7 +58,7 @@ class V1Schemas(object):
         "compiled_operation": "V1CompiledOperation",
         "schedule": "V1Schedule",
         "connection_schema": "V1ConnectionSchema",
-        "matrix": "V1Matrix",
+        "hp_params": "V1HpParams",
         "reference": "V1Reference",
         "artifacts_mount": "V1ArtifactsMount",
         "polyaxon_sidecar_container": "V1PolyaxonSidecarContainer",
@@ -88,7 +88,7 @@ class V1Schemas(object):
         "compiled_operation": "compiled_operation",
         "schedule": "schedule",
         "connection_schema": "connection_schema",
-        "matrix": "matrix",
+        "hp_params": "hp_params",
         "reference": "reference",
         "artifacts_mount": "artifacts_mount",
         "polyaxon_sidecar_container": "polyaxon_sidecar_container",
@@ -119,7 +119,7 @@ class V1Schemas(object):
         compiled_operation=None,
         schedule=None,
         connection_schema=None,
-        matrix=None,
+        hp_params=None,
         reference=None,
         artifacts_mount=None,
         polyaxon_sidecar_container=None,
@@ -153,7 +153,7 @@ class V1Schemas(object):
         self._compiled_operation = None
         self._schedule = None
         self._connection_schema = None
-        self._matrix = None
+        self._hp_params = None
         self._reference = None
         self._artifacts_mount = None
         self._polyaxon_sidecar_container = None
@@ -190,8 +190,8 @@ class V1Schemas(object):
             self.schedule = schedule
         if connection_schema is not None:
             self.connection_schema = connection_schema
-        if matrix is not None:
-            self.matrix = matrix
+        if hp_params is not None:
+            self.hp_params = hp_params
         if reference is not None:
             self.reference = reference
         if artifacts_mount is not None:
@@ -398,25 +398,25 @@ class V1Schemas(object):
         self._connection_schema = connection_schema
 
     @property
-    def matrix(self):
-        """Gets the matrix of this V1Schemas.  # noqa: E501
+    def hp_params(self):
+        """Gets the hp_params of this V1Schemas.  # noqa: E501
 
 
-        :return: The matrix of this V1Schemas.  # noqa: E501
-        :rtype: V1Matrix
+        :return: The hp_params of this V1Schemas.  # noqa: E501
+        :rtype: V1HpParams
         """
-        return self._matrix
+        return self._hp_params
 
-    @matrix.setter
-    def matrix(self, matrix):
-        """Sets the matrix of this V1Schemas.
+    @hp_params.setter
+    def hp_params(self, hp_params):
+        """Sets the hp_params of this V1Schemas.
 
 
-        :param matrix: The matrix of this V1Schemas.  # noqa: E501
-        :type: V1Matrix
+        :param hp_params: The hp_params of this V1Schemas.  # noqa: E501
+        :type: V1HpParams
         """
 
-        self._matrix = matrix
+        self._hp_params = hp_params
 
     @property
     def reference(self):

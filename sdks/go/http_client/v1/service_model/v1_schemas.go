@@ -66,14 +66,14 @@ type V1Schemas struct {
 	// git
 	Git *V1GitType `json:"git,omitempty"`
 
+	// hp params
+	HpParams *V1HpParams `json:"hp_params,omitempty"`
+
 	// image
 	Image *V1ImageType `json:"image,omitempty"`
 
 	// k8s resource
 	K8sResource *V1K8sResourceType `json:"k8s_resource,omitempty"`
-
-	// matrix
-	Matrix *V1Matrix `json:"matrix,omitempty"`
 
 	// operation
 	Operation *V1Operation `json:"operation,omitempty"`
@@ -164,15 +164,15 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateHpParams(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateImage(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateK8sResource(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateMatrix(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -446,6 +446,24 @@ func (m *V1Schemas) validateGit(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Schemas) validateHpParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.HpParams) { // not required
+		return nil
+	}
+
+	if m.HpParams != nil {
+		if err := m.HpParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("hp_params")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Schemas) validateImage(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Image) { // not required
@@ -474,24 +492,6 @@ func (m *V1Schemas) validateK8sResource(formats strfmt.Registry) error {
 		if err := m.K8sResource.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("k8s_resource")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Schemas) validateMatrix(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Matrix) { // not required
-		return nil
-	}
-
-	if m.Matrix != nil {
-		if err := m.Matrix.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("matrix")
 			}
 			return err
 		}

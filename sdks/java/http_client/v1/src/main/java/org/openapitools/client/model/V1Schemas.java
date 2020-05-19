@@ -49,9 +49,9 @@ import org.openapitools.client.model.V1Event;
 import org.openapitools.client.model.V1EventType;
 import org.openapitools.client.model.V1GcsType;
 import org.openapitools.client.model.V1GitType;
+import org.openapitools.client.model.V1HpParams;
 import org.openapitools.client.model.V1ImageType;
 import org.openapitools.client.model.V1K8sResourceType;
-import org.openapitools.client.model.V1Matrix;
 import org.openapitools.client.model.V1Operation;
 import org.openapitools.client.model.V1OperationCond;
 import org.openapitools.client.model.V1Parallel;
@@ -102,9 +102,9 @@ public class V1Schemas {
   @SerializedName(SERIALIZED_NAME_CONNECTION_SCHEMA)
   private V1ConnectionSchema connectionSchema;
 
-  public static final String SERIALIZED_NAME_MATRIX = "matrix";
-  @SerializedName(SERIALIZED_NAME_MATRIX)
-  private V1Matrix matrix;
+  public static final String SERIALIZED_NAME_HP_PARAMS = "hp_params";
+  @SerializedName(SERIALIZED_NAME_HP_PARAMS)
+  private V1HpParams hpParams;
 
   public static final String SERIALIZED_NAME_REFERENCE = "reference";
   @SerializedName(SERIALIZED_NAME_REFERENCE)
@@ -363,26 +363,26 @@ public class V1Schemas {
   }
 
 
-  public V1Schemas matrix(V1Matrix matrix) {
+  public V1Schemas hpParams(V1HpParams hpParams) {
     
-    this.matrix = matrix;
+    this.hpParams = hpParams;
     return this;
   }
 
    /**
-   * Get matrix
-   * @return matrix
+   * Get hpParams
+   * @return hpParams
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public V1Matrix getMatrix() {
-    return matrix;
+  public V1HpParams getHpParams() {
+    return hpParams;
   }
 
 
-  public void setMatrix(V1Matrix matrix) {
-    this.matrix = matrix;
+  public void setHpParams(V1HpParams hpParams) {
+    this.hpParams = hpParams;
   }
 
 
@@ -817,7 +817,7 @@ public class V1Schemas {
         Objects.equals(this.compiledOperation, v1Schemas.compiledOperation) &&
         Objects.equals(this.schedule, v1Schemas.schedule) &&
         Objects.equals(this.connectionSchema, v1Schemas.connectionSchema) &&
-        Objects.equals(this.matrix, v1Schemas.matrix) &&
+        Objects.equals(this.hpParams, v1Schemas.hpParams) &&
         Objects.equals(this.reference, v1Schemas.reference) &&
         Objects.equals(this.artifactsMount, v1Schemas.artifactsMount) &&
         Objects.equals(this.polyaxonSidecarContainer, v1Schemas.polyaxonSidecarContainer) &&
@@ -840,7 +840,7 @@ public class V1Schemas {
 
   @Override
   public int hashCode() {
-    return Objects.hash(operationCond, earlyStopping, parallel, run, operation, compiledOperation, schedule, connectionSchema, matrix, reference, artifactsMount, polyaxonSidecarContainer, polyaxonInitContainer, artifacs, wasb, gcs, s3, autg, dockerfile, git, uri, k8sResource, connection, image, eventType, event, parallelKind);
+    return Objects.hash(operationCond, earlyStopping, parallel, run, operation, compiledOperation, schedule, connectionSchema, hpParams, reference, artifactsMount, polyaxonSidecarContainer, polyaxonInitContainer, artifacs, wasb, gcs, s3, autg, dockerfile, git, uri, k8sResource, connection, image, eventType, event, parallelKind);
   }
 
 
@@ -856,7 +856,7 @@ public class V1Schemas {
     sb.append("    compiledOperation: ").append(toIndentedString(compiledOperation)).append("\n");
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
     sb.append("    connectionSchema: ").append(toIndentedString(connectionSchema)).append("\n");
-    sb.append("    matrix: ").append(toIndentedString(matrix)).append("\n");
+    sb.append("    hpParams: ").append(toIndentedString(hpParams)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
     sb.append("    artifactsMount: ").append(toIndentedString(artifactsMount)).append("\n");
     sb.append("    polyaxonSidecarContainer: ").append(toIndentedString(polyaxonSidecarContainer)).append("\n");

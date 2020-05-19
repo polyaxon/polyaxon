@@ -18,13 +18,13 @@ from typing import Dict, List
 import hyperopt
 
 from polyaxon.polyflow import (
-    Optimization,
     V1HpChoice,
     V1HpGeomSpace,
     V1HpLinSpace,
     V1HpLogSpace,
     V1HpRange,
     V1Hyperopt,
+    V1Optimization,
 )
 from polyaxon.polytune.matrix.hyperopt import to_hyperopt
 from polyaxon.polytune.matrix.utils import to_numpy
@@ -98,7 +98,7 @@ class HyperoptManager(BaseManager):
             observation_miscs.append(trial_misc)
 
             observation_metric = metrics[tid]
-            if self.config.metric.optimization == Optimization.MAXIMIZE:
+            if self.config.metric.optimization == V1Optimization.MAXIMIZE:
                 observation_metric = -1 * observation_metric
 
             observation_results.append(

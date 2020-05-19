@@ -31,7 +31,7 @@ from polyaxon.polyaxonfile.specs import (
 from polyaxon.polyflow import V1CompiledOperation, V1Hyperband
 from polyaxon.polyflow.io import V1IO
 from polyaxon.polyflow.parallel import V1GridSearch
-from polyaxon.polyflow.parallel.matrix import V1HpChoice, V1HpLinSpace
+from polyaxon.polyflow.parallel.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.params import V1Param
 
 

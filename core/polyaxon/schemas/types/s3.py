@@ -90,6 +90,7 @@ class V1S3Type(BaseConfig, polyaxon_sdk.V1S3Type):
     >>> }
     ```
     """
+
     IDENTIFIER = "s3"
     SCHEMA = S3TypeSchema
     REDUCED_ATTRIBUTES = ["bucket", "key"]

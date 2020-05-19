@@ -54,7 +54,7 @@ class V1HpLogNormal(object):
     attribute_map = {"kind": "kind", "value": "value"}
 
     def __init__(
-        self, kind=None, value=None, local_vars_configuration=None
+        self, kind="lognormal", value=None, local_vars_configuration=None
     ):  # noqa: E501
         """V1HpLogNormal - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:

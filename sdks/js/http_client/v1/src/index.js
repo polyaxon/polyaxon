@@ -101,6 +101,7 @@ import V1HpLogSpace from './model/V1HpLogSpace';
 import V1HpLogUniform from './model/V1HpLogUniform';
 import V1HpNormal from './model/V1HpNormal';
 import V1HpPChoice from './model/V1HpPChoice';
+import V1HpParams from './model/V1HpParams';
 import V1HpQLogNormal from './model/V1HpQLogNormal';
 import V1HpQLogUniform from './model/V1HpQLogUniform';
 import V1HpQNormal from './model/V1HpQNormal';
@@ -144,21 +145,6 @@ import V1LogHandler from './model/V1LogHandler';
 import V1Logs from './model/V1Logs';
 import V1MPIJob from './model/V1MPIJob';
 import V1Mapping from './model/V1Mapping';
-import V1Matrix from './model/V1Matrix';
-import V1MatrixChoice from './model/V1MatrixChoice';
-import V1MatrixGeomSpace from './model/V1MatrixGeomSpace';
-import V1MatrixLinSpace from './model/V1MatrixLinSpace';
-import V1MatrixLogNormal from './model/V1MatrixLogNormal';
-import V1MatrixLogSpace from './model/V1MatrixLogSpace';
-import V1MatrixLogUniform from './model/V1MatrixLogUniform';
-import V1MatrixNormal from './model/V1MatrixNormal';
-import V1MatrixPChoice from './model/V1MatrixPChoice';
-import V1MatrixQLogNormal from './model/V1MatrixQLogNormal';
-import V1MatrixQLogUniform from './model/V1MatrixQLogUniform';
-import V1MatrixQNormal from './model/V1MatrixQNormal';
-import V1MatrixQUniform from './model/V1MatrixQUniform';
-import V1MatrixRange from './model/V1MatrixRange';
-import V1MatrixUniform from './model/V1MatrixUniform';
 import V1MedianStoppingPolicy from './model/V1MedianStoppingPolicy';
 import V1MetricEarlyStopping from './model/V1MetricEarlyStopping';
 import V1Notification from './model/V1Notification';
@@ -730,6 +716,12 @@ export {
     V1HpPChoice,
 
     /**
+     * The V1HpParams model constructor.
+     * @property {module:model/V1HpParams}
+     */
+    V1HpParams,
+
+    /**
      * The V1HpQLogNormal model constructor.
      * @property {module:model/V1HpQLogNormal}
      */
@@ -986,96 +978,6 @@ export {
      * @property {module:model/V1Mapping}
      */
     V1Mapping,
-
-    /**
-     * The V1Matrix model constructor.
-     * @property {module:model/V1Matrix}
-     */
-    V1Matrix,
-
-    /**
-     * The V1MatrixChoice model constructor.
-     * @property {module:model/V1MatrixChoice}
-     */
-    V1MatrixChoice,
-
-    /**
-     * The V1MatrixGeomSpace model constructor.
-     * @property {module:model/V1MatrixGeomSpace}
-     */
-    V1MatrixGeomSpace,
-
-    /**
-     * The V1MatrixLinSpace model constructor.
-     * @property {module:model/V1MatrixLinSpace}
-     */
-    V1MatrixLinSpace,
-
-    /**
-     * The V1MatrixLogNormal model constructor.
-     * @property {module:model/V1MatrixLogNormal}
-     */
-    V1MatrixLogNormal,
-
-    /**
-     * The V1MatrixLogSpace model constructor.
-     * @property {module:model/V1MatrixLogSpace}
-     */
-    V1MatrixLogSpace,
-
-    /**
-     * The V1MatrixLogUniform model constructor.
-     * @property {module:model/V1MatrixLogUniform}
-     */
-    V1MatrixLogUniform,
-
-    /**
-     * The V1MatrixNormal model constructor.
-     * @property {module:model/V1MatrixNormal}
-     */
-    V1MatrixNormal,
-
-    /**
-     * The V1MatrixPChoice model constructor.
-     * @property {module:model/V1MatrixPChoice}
-     */
-    V1MatrixPChoice,
-
-    /**
-     * The V1MatrixQLogNormal model constructor.
-     * @property {module:model/V1MatrixQLogNormal}
-     */
-    V1MatrixQLogNormal,
-
-    /**
-     * The V1MatrixQLogUniform model constructor.
-     * @property {module:model/V1MatrixQLogUniform}
-     */
-    V1MatrixQLogUniform,
-
-    /**
-     * The V1MatrixQNormal model constructor.
-     * @property {module:model/V1MatrixQNormal}
-     */
-    V1MatrixQNormal,
-
-    /**
-     * The V1MatrixQUniform model constructor.
-     * @property {module:model/V1MatrixQUniform}
-     */
-    V1MatrixQUniform,
-
-    /**
-     * The V1MatrixRange model constructor.
-     * @property {module:model/V1MatrixRange}
-     */
-    V1MatrixRange,
-
-    /**
-     * The V1MatrixUniform model constructor.
-     * @property {module:model/V1MatrixUniform}
-     */
-    V1MatrixUniform,
 
     /**
      * The V1MedianStoppingPolicy model constructor.

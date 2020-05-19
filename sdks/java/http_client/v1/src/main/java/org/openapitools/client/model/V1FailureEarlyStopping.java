@@ -52,10 +52,6 @@ public class V1FailureEarlyStopping {
   @SerializedName(SERIALIZED_NAME_PERCENT)
   private Integer percent;
 
-  public static final String SERIALIZED_NAME_EVALUATION_INTERVAL = "evaluation_interval";
-  @SerializedName(SERIALIZED_NAME_EVALUATION_INTERVAL)
-  private String evaluationInterval;
-
 
   public V1FailureEarlyStopping kind(String kind) {
     
@@ -87,11 +83,11 @@ public class V1FailureEarlyStopping {
   }
 
    /**
-   * The percentage failed runs, at each evaluation interval. e.g. 1 - 99.
+   * The percentage of failed runs, at each evaluation interval. e.g. 1 - 99.
    * @return percent
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The percentage failed runs, at each evaluation interval. e.g. 1 - 99.")
+  @ApiModelProperty(value = "The percentage of failed runs, at each evaluation interval. e.g. 1 - 99.")
 
   public Integer getPercent() {
     return percent;
@@ -100,29 +96,6 @@ public class V1FailureEarlyStopping {
 
   public void setPercent(Integer percent) {
     this.percent = percent;
-  }
-
-
-  public V1FailureEarlyStopping evaluationInterval(String evaluationInterval) {
-    
-    this.evaluationInterval = evaluationInterval;
-    return this;
-  }
-
-   /**
-   * Interval/Frequency for applying the policy.
-   * @return evaluationInterval
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Interval/Frequency for applying the policy.")
-
-  public String getEvaluationInterval() {
-    return evaluationInterval;
-  }
-
-
-  public void setEvaluationInterval(String evaluationInterval) {
-    this.evaluationInterval = evaluationInterval;
   }
 
 
@@ -136,13 +109,12 @@ public class V1FailureEarlyStopping {
     }
     V1FailureEarlyStopping v1FailureEarlyStopping = (V1FailureEarlyStopping) o;
     return Objects.equals(this.kind, v1FailureEarlyStopping.kind) &&
-        Objects.equals(this.percent, v1FailureEarlyStopping.percent) &&
-        Objects.equals(this.evaluationInterval, v1FailureEarlyStopping.evaluationInterval);
+        Objects.equals(this.percent, v1FailureEarlyStopping.percent);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(kind, percent, evaluationInterval);
+    return Objects.hash(kind, percent);
   }
 
 
@@ -152,7 +124,6 @@ public class V1FailureEarlyStopping {
     sb.append("class V1FailureEarlyStopping {\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    percent: ").append(toIndentedString(percent)).append("\n");
-    sb.append("    evaluationInterval: ").append(toIndentedString(evaluationInterval)).append("\n");
     sb.append("}");
     return sb.toString();
   }

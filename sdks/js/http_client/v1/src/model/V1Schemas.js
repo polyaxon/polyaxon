@@ -38,9 +38,9 @@ import V1Event from './V1Event';
 import V1EventType from './V1EventType';
 import V1GcsType from './V1GcsType';
 import V1GitType from './V1GitType';
+import V1HpParams from './V1HpParams';
 import V1ImageType from './V1ImageType';
 import V1K8sResourceType from './V1K8sResourceType';
-import V1Matrix from './V1Matrix';
 import V1Operation from './V1Operation';
 import V1OperationCond from './V1OperationCond';
 import V1Parallel from './V1Parallel';
@@ -112,8 +112,8 @@ class V1Schemas {
             if (data.hasOwnProperty('connection_schema')) {
                 obj['connection_schema'] = V1ConnectionSchema.constructFromObject(data['connection_schema']);
             }
-            if (data.hasOwnProperty('matrix')) {
-                obj['matrix'] = V1Matrix.constructFromObject(data['matrix']);
+            if (data.hasOwnProperty('hp_params')) {
+                obj['hp_params'] = V1HpParams.constructFromObject(data['hp_params']);
             }
             if (data.hasOwnProperty('reference')) {
                 obj['reference'] = V1Reference.constructFromObject(data['reference']);
@@ -217,9 +217,9 @@ V1Schemas.prototype['schedule'] = undefined;
 V1Schemas.prototype['connection_schema'] = undefined;
 
 /**
- * @member {module:model/V1Matrix} matrix
+ * @member {module:model/V1HpParams} hp_params
  */
-V1Schemas.prototype['matrix'] = undefined;
+V1Schemas.prototype['hp_params'] = undefined;
 
 /**
  * @member {module:model/V1Reference} reference

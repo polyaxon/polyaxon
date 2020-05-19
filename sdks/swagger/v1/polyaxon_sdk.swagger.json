@@ -12454,6 +12454,11 @@
           "title": "Optional component kind, should be equal to \"Dask\"",
           "default": "dask"
         },
+        "threads": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of threads"
+        },
         "scale": {
           "type": "integer",
           "format": "int32",
@@ -13123,11 +13128,7 @@
         "percent": {
           "type": "integer",
           "format": "int32",
-          "description": "The percentage failed runs, at each evaluation interval.\ne.g. 1 - 99."
-        },
-        "evaluation_interval": {
-          "type": "string",
-          "description": "Interval/Frequency for applying the policy."
+          "description": "The percentage of failed runs, at each evaluation interval.\ne.g. 1 - 99."
         }
       },
       "description": "FailureEarlyStoppingSchema specification\nEarly stopping based on failure config.\nthis policy stops based on a percentage of\nfailed runs at every evaluation."
@@ -13286,196 +13287,258 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"choice\""
+          "title": "Kind of hp, should be equal to \"choice\"",
+          "default": "choice"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Choice specification"
+      "title": "HP Choice specification"
     },
     "v1HpGeomSpace": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"geomspace\""
+          "title": "Kind of hp, should be equal to \"geomspace\"",
+          "default": "geomspace"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Geom Space specification"
+      "title": "HP Geom Space specification"
     },
     "v1HpLinSpace": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"linspace\""
+          "title": "Kind of hp, should be equal to \"linspace\"",
+          "default": "linspace"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Linear Space specification"
+      "title": "HP Linear Space specification"
     },
     "v1HpLogNormal": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"lognormal\""
+          "title": "Kind of hp, should be equal to \"lognormal\"",
+          "default": "lognormal"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Log Normal Dist specification"
+      "title": "HP Log Normal Dist specification"
     },
     "v1HpLogSpace": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"logspace\""
+          "title": "Kind of hp, should be equal to \"logspace\"",
+          "default": "logspace"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Log Space specification"
+      "title": "HP Log Space specification"
     },
     "v1HpLogUniform": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"loguniform\""
+          "title": "Kind of hp, should be equal to \"loguniform\"",
+          "default": "loguniform"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Log Uniform Dist specification"
+      "title": "HP Log Uniform Dist specification"
     },
     "v1HpNormal": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"normal\""
+          "title": "Kind of hp, should be equal to \"normal\"",
+          "default": "normal"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Normal Dist specification"
+      "title": "HP Normal Dist specification"
     },
     "v1HpPChoice": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"pchoice\""
+          "title": "Kind of hp, should be equal to \"pchoice\"",
+          "default": "pchoice"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Probabilistic Choice specification"
+      "title": "HP Probabilistic Choice specification"
+    },
+    "v1HpParams": {
+      "type": "object",
+      "properties": {
+        "choice": {
+          "$ref": "#/definitions/v1HpChoice"
+        },
+        "pchoice": {
+          "$ref": "#/definitions/v1HpPChoice"
+        },
+        "range": {
+          "$ref": "#/definitions/v1HpRange"
+        },
+        "linspace": {
+          "$ref": "#/definitions/v1HpLinSpace"
+        },
+        "logspace": {
+          "$ref": "#/definitions/v1HpLogSpace"
+        },
+        "geomspace": {
+          "$ref": "#/definitions/v1HpGeomSpace"
+        },
+        "uniform": {
+          "$ref": "#/definitions/v1HpUniform"
+        },
+        "quniform": {
+          "$ref": "#/definitions/v1HpQUniform"
+        },
+        "loguniform": {
+          "$ref": "#/definitions/v1HpLogUniform"
+        },
+        "qloguniform": {
+          "$ref": "#/definitions/v1HpQLogUniform"
+        },
+        "normal": {
+          "$ref": "#/definitions/v1HpNormal"
+        },
+        "qnormal": {
+          "$ref": "#/definitions/v1HpQNormal"
+        },
+        "lognormal": {
+          "$ref": "#/definitions/v1HpLogNormal"
+        },
+        "qlognormal": {
+          "$ref": "#/definitions/v1HpQLogNormal"
+        }
+      },
+      "title": "Hp Matrix specification"
     },
     "v1HpQLogNormal": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"qlognormal\""
+          "title": "Kind of hp, should be equal to \"qlognormal\"",
+          "default": "qlognormal"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Quantized Log Normal Dist specification"
+      "title": "HP Quantized Log Normal Dist specification"
     },
     "v1HpQLogUniform": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"qloguniform\""
+          "title": "Kind of hp, should be equal to \"qloguniform\"",
+          "default": "qloguniform"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Quantized Log Uniform Dist specification"
+      "title": "HP Quantized Log Uniform Dist specification"
     },
     "v1HpQNormal": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"qnormal\""
+          "title": "Kind of hp, should be equal to \"qnormal\"",
+          "default": "qnormal"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Quantized Normal Dist specification"
+      "title": "HP Quantized Normal Dist specification"
     },
     "v1HpQUniform": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"quniform\""
+          "title": "Kind of hp, should be equal to \"quniform\"",
+          "default": "quniform"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Quantized Uniform Dist specification"
+      "title": "HP Quantized Uniform Dist specification"
     },
     "v1HpRange": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"range\""
+          "title": "Kind of hp, should be equal to \"range\"",
+          "default": "range"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Range specification"
+      "title": "HP Range specification"
     },
     "v1HpUniform": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of hp matrix, should be equal to \"uniform\""
+          "title": "Kind of hp, should be equal to \"uniform\"",
+          "default": "uniform"
         },
         "value": {
           "type": "object",
           "title": "Value"
         }
       },
-      "title": "Matrix Uniform Dist specification"
+      "title": "HP Uniform Dist specification"
     },
     "v1HubComponent": {
       "type": "object",
@@ -14553,54 +14616,6 @@
         }
       },
       "title": "Parallelism based on map/array either specified manually by the user or passed from another step"
-    },
-    "v1Matrix": {
-      "type": "object",
-      "properties": {
-        "choice": {
-          "$ref": "#/definitions/v1HpChoice"
-        },
-        "pchoice": {
-          "$ref": "#/definitions/v1HpPChoice"
-        },
-        "range": {
-          "$ref": "#/definitions/v1HpRange"
-        },
-        "linspace": {
-          "$ref": "#/definitions/v1HpLinSpace"
-        },
-        "logspace": {
-          "$ref": "#/definitions/v1HpLogSpace"
-        },
-        "geomspace": {
-          "$ref": "#/definitions/v1HpGeomSpace"
-        },
-        "uniform": {
-          "$ref": "#/definitions/v1HpUniform"
-        },
-        "quniform": {
-          "$ref": "#/definitions/v1HpQUniform"
-        },
-        "loguniform": {
-          "$ref": "#/definitions/v1HpLogUniform"
-        },
-        "qloguniform": {
-          "$ref": "#/definitions/v1HpQLogUniform"
-        },
-        "normal": {
-          "$ref": "#/definitions/v1HpNormal"
-        },
-        "qnormal": {
-          "$ref": "#/definitions/v1HpQNormal"
-        },
-        "lognormal": {
-          "$ref": "#/definitions/v1HpLogNormal"
-        },
-        "qlognormal": {
-          "$ref": "#/definitions/v1HpQLogNormal"
-        }
-      },
-      "title": "Hp Matrix specification"
     },
     "v1MedianStoppingPolicy": {
       "type": "object",
@@ -15883,8 +15898,8 @@
         "connection_schema": {
           "$ref": "#/definitions/v1ConnectionSchema"
         },
-        "matrix": {
-          "$ref": "#/definitions/v1Matrix"
+        "hp_params": {
+          "$ref": "#/definitions/v1HpParams"
         },
         "reference": {
           "$ref": "#/definitions/v1Reference"
@@ -16595,104 +16610,6 @@
       "properties": {
         "kind": {
           "default": "average"
-        }
-      }
-    },
-    "v1MatrixChoice": {
-      "properties": {
-        "kind": {
-          "default": "choice"
-        }
-      }
-    },
-    "v1MatrixPChoice": {
-      "properties": {
-        "kind": {
-          "default": "pchoice"
-        }
-      }
-    },
-    "v1MatrixRange": {
-      "properties": {
-        "kind": {
-          "default": "range"
-        }
-      }
-    },
-    "v1MatrixLinSpace": {
-      "properties": {
-        "kind": {
-          "default": "linspace"
-        }
-      }
-    },
-    "v1MatrixLogSpace": {
-      "properties": {
-        "kind": {
-          "default": "logspace"
-        }
-      }
-    },
-    "v1MatrixGeomSpace": {
-      "properties": {
-        "kind": {
-          "default": "geomspace"
-        }
-      }
-    },
-    "v1MatrixUniform": {
-      "properties": {
-        "kind": {
-          "default": "uniform"
-        }
-      }
-    },
-    "v1MatrixQUniform": {
-      "properties": {
-        "kind": {
-          "default": "quniform"
-        }
-      }
-    },
-    "v1MatrixLogUniform": {
-      "properties": {
-        "kind": {
-          "default": "loguniform"
-        }
-      }
-    },
-    "v1MatrixQLogUniform": {
-      "properties": {
-        "kind": {
-          "default": "qloguniform"
-        }
-      }
-    },
-    "v1MatrixNormal": {
-      "properties": {
-        "kind": {
-          "default": "normal"
-        }
-      }
-    },
-    "v1MatrixQNormal": {
-      "properties": {
-        "kind": {
-          "default": "qnormal"
-        }
-      }
-    },
-    "v1MatrixLogNormal": {
-      "properties": {
-        "kind": {
-          "default": "lognormal"
-        }
-      }
-    },
-    "v1MatrixQLogNormal": {
-      "properties": {
-        "kind": {
-          "default": "qlognormal"
         }
       }
     }

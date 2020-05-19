@@ -21,12 +21,12 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.optimization import OptimizationMetricSchema
 from polyaxon.polyflow.parallel.kinds import V1ParallelKind
-from polyaxon.polyflow.parallel.matrix import MatrixSchema
+from polyaxon.polyflow.parallel.params import MatrixSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
-class AcquisitionFunctions(object):
+class AcquisitionFunctions:
     UCB = "ucb"
     EI = "ei"
     POI = "poi"
@@ -50,7 +50,7 @@ class AcquisitionFunctions(object):
         return value in cls.POI_VALUES
 
 
-class GaussianProcessesKernels(object):
+class GaussianProcessesKernels:
     RBF = "rbf"
     MATERN = "matern"
 
@@ -204,6 +204,286 @@ class BayesSchema(BaseCamelSchema):
 
 
 class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
+    """Bayesian optimization is an extremely powerful technique.
+    The main idea behind it is to compute a posterior distribution
+    over the objective function based on the data, and then select good points
+    to try with respect to this distribution.
+
+    The way Polyaxon performs bayesian optimization is by measuring
+    the expected increase in the maximum objective value seen over all
+    experiments in the group, given the next point we pick.
+
+    Args:
+        kind: string, should be equal to `bayes`
+        utility_function: UtilityFunctionConfig
+        num_initial_runs: int
+        num_iterations: int
+        metric: V1OptimizationMetric
+        params: List[Dict[str,
+        [params](/docs/automation/optimization-engine/params/#discrete-values)]]
+        seed: int, optional
+        concurrency: int, optional
+        early_stopping: List[[EarlyStopping](/docs/automation/helpers/early-stopping)], optional
+
+
+    ## Yaml usage
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   utilityFunction:
+    >>>   numInitialRuns:
+    >>>   numIterations:
+    >>>   metric:
+    >>>   params:
+    >>>   seed:
+    >>>   concurrency:
+    >>>   earlyStopping:
+    ```
+
+    ## Python usage
+
+    ```python
+    >>> from polyaxon import types
+    >>> from polyaxon.polyflow import (
+    >>>     V1Bayes, V1HpLogSpace, V1HpChoice, V1FailureEarlyStopping, V1MetricEarlyStopping,
+    >>>     V1OptimizationMetric, V1Optimization, V1OptimizationResource, UtilityFunctionConfig
+    >>> )
+    >>> matrix = V1Bayes(
+    >>>   concurrency=20,
+    >>>   utility_function=UtilityFunctionConfig(...),
+    >>>   numInitialRuns=40,
+    >>>   numIterations=20,
+    >>>   params={"param1": V1HpLogSpace(...), "param2": V1HpChoice(...), ... },
+    >>>   metric=V1OptimizationMetric(name="loss", optimization=V1Optimization.MINIMIZE),
+    >>>   early_stopping=[V1FailureEarlyStopping(...), V1MetricEarlyStopping(...)]
+    >>> )
+    ```
+
+    ## Fields
+
+    ### kind
+
+    The kind signals to the CLI, client and other tools that this matrix is bayes.
+
+    If you are using the python client to create the mapping,
+    this field is not required and is set by default.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    ```
+
+    ### params
+
+    A dictionary of `key -> value generator`
+    to generate parameters.
+
+    To learn about all possible
+    [params generators](/docs/automation/optimization-engine/params/).
+
+    The parameters generated will be checked against
+    the component inputs/outputs definition to check that the parameters
+    can be passed and have valid types.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   params:
+    >>>     param1:
+    >>>        kind: ...
+    >>>        value: ...
+    >>>     param2:
+    >>>        kind: ...
+    >>>        value: ...
+    ```
+
+    ### utilityFunction
+
+    the utility function defines what acquisition function and bayesian process to use.
+
+    ### Acquisition functions
+
+    A couple of acquisition functions can be used: `ucb`, `ei` or `poi`.
+
+      * `ucb`: Upper Confidence Bound,
+      * `ei`: Expected Improvement
+      * `poi`: Probability of Improvement
+
+    When using `ucb` as acquisition function, a tunable parameter `kappa` is also required, to balance exploitation
+    against exploration, increasing kappa will make the optimized hyperparameters pursuing exploration.
+
+    When using `ei` or `poi` as acquisition function, a tunable parameter `eps` is also required,
+    to balance exploitation against exploration, increasing epsilon will
+    make the optimized hyperparameters are more spread out across the whole range.
+
+    ### Gaussian process
+
+    Polyaxon allows to tune the gaussian process.
+
+     * `kernel`: `matern` or `rbf`.
+     * `lengthScale`: float
+     * `nu`: float
+     * `numRestartsOptimizer`: int
+
+     ```yaml
+     >>> matrix:
+     >>>   kind: bayes
+     >>>   utility_function:
+     >>>     acquisitionFunction: ucb
+     >>>     kappa: 1.2
+     >>>     gaussianProcess:
+     >>>       kernel: matern
+     >>>       lengthScale: 1.0
+     >>>       nu: 1.9
+     >>>       numRestartsOptimizer: 0
+     ```
+
+    ### numInitialRuns
+
+    the initial iteration of random experiments is required to create a seed of observations.
+
+    This initial random results are used by the algorithm to update
+    the regression model for generating the next suggestions.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   numInitialRuns: 40
+    ```
+
+    ### numIterations
+
+    After creating the first set of random observations,
+    the algorithm will use these results to update
+    the regression model and suggest a new experiment to run.
+
+    Every time an experiment is done,
+    the results are used as an observation and are appended
+    to the historical values so that the algorithm can use all
+    the observations again to suggest more experiments to run.
+
+    The algorithm will keep suggesting more experiments and adding
+    their results as an observation, every time we make a new observation,
+    i.e. an experiment finishes and reports results to the platform,
+    the results are append to the historical values, and then used to make a better suggestion.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   numIterations: 15
+    ```
+
+    This configuration will make 15 suggestions based on the historical values,
+    every time an observation is made is appended to the historical values
+    to make better subsequent suggestions.
+
+    ### metric
+
+    The metric to optimize during the iterations,
+    this is the metric that you want to maximize or minimize.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   metric:
+    >>>     name: loss
+    >>>     optimization: minimize
+    ```
+
+    ### seed
+
+    Since this algorithm uses random generators,
+    if you want to control the seed for the random generator, you can pass a seed.
+
+     ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   seed: 523
+    ```
+
+    ### concurrency
+
+    Optional value to set the number of concurrent executions, this value should be less or equal to
+    the total number of possible runs.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   concurrency: 20
+    ```
+
+    For more details about concurrency management,
+    please check the [concurrency section](/docs/automation/helpers/concurrency/).
+
+    ### earlyStopping
+
+    A list of early stopping conditions to check for terminating the runs,
+    if one of the early stopping conditions is met,
+    a signal will be sent to terminate all running and pending runs.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   earlyStopping: ...
+    ```
+
+    For more details please check the
+    [early stopping section](/docs/automation/helpers/early-stopping/).
+
+
+    ## Example
+
+    This is an example of using bayesian search for hyperparameter tuning:
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   concurrency: 5
+    >>>   maxIterations: 15
+    >>>   numInitialTrials: 30
+    >>>   metric:
+    >>>     name: loss
+    >>>     optimization: minimize
+    >>>   utilityFunction:
+    >>>     acquisitionFunction: ucb
+    >>>     kappa: 1.2
+    >>>     gaussianProcess:
+    >>>       kernel: matern
+    >>>       lengthScale: 1.0
+    >>>       nu: 1.9
+    >>>       numRestartsOptimizer: 0
+    >>>   params:
+    >>>     lr:
+    >>>       kind: uniform
+    >>>       value: [0, 0.9]
+    >>>     dropout:
+    >>>       kind: choice
+    >>>       value: [0.25, 0.3]
+    >>>     activation:
+    >>>       kind: pchoice
+    >>>       value: [[relu, 0.1], [sigmoid, 0.8]]
+    >>> component:
+    >>>   inputs:
+    >>>     - name: batch_size
+    >>>       type: int
+    >>>       isOptional: true
+    >>>       value: 128
+    >>>     - name: lr
+    >>>       type: float
+    >>>     - name: dropout
+    >>>       type: float
+    >>>   container:
+    >>>     image: image:latest
+    >>>     command: [python3, train.py]
+    >>>     args: [
+    >>>         "--batch-size={{ batch_size }}",
+    >>>         "--lr={{ lr }}",
+    >>>         "--dropout={{ dropout }}",
+    >>>         "--activation={{ activation }}"
+    ```
+    """
+
     SCHEMA = BayesSchema
     IDENTIFIER = V1ParallelKind.BAYES
     REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping"]

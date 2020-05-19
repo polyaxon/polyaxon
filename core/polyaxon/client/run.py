@@ -62,8 +62,10 @@ class RunClient:
         * If you use this client in the context of a job or a service managed by Polyaxon,
         a configuration will be available to resolve the values based on that run.
 
-    If you intend to create a new run instance or to list run,
+    If you intend to create a new run instance or to list runs,
     only the `owner` and `project` parameters are required.
+
+    You can always access the `self.client` to execute more APIs.
 
     Properties:
         project: str.
@@ -72,6 +74,7 @@ class RunClient:
         run_data: V1Run.
         status: str.
         namespace: str.
+        client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/)
 
     Args:
         owner: str, optional, the owner is the username or
@@ -237,6 +240,9 @@ class RunClient:
     ):
         """Creates a new run based on the data passed.
 
+        N.B. Create methods are only useful if you want to create run programatically,
+        if you run a component/operation from the CLI/UI an instance will be created automatically.
+
         This is a generic create function, you can check other methods for creating runs:
           * from yaml
           * from hub
@@ -297,6 +303,9 @@ class RunClient:
     ):
         """Creates a new run based on the a polyaxonfile.
 
+        N.B. Create methods are only useful if you want to create run programatically,
+        if you run a component/operation from the CLI/UI an instance will be created automatically.
+
         [Run API](/docs/api/#operation/CreateRun)
 
         Args:
@@ -350,6 +359,9 @@ class RunClient:
         nocache: bool = True,
     ):
         """Creates a new run from url containing a Polyaxonfile specification.
+
+        N.B. Create methods are only useful if you want to create run programatically,
+        if you run a component/operation from the CLI/UI an instance will be created automatically.
 
         [Run API](/docs/api/#operation/CreateRun)
 
@@ -405,6 +417,9 @@ class RunClient:
     ):
         """Creates a new run from the hub based on the component name.
 
+        N.B. Create methods are only useful if you want to create run programatically,
+        if you run a component/operation from the CLI/UI an instance will be created automatically.
+
         By default the hub hosts components. If the component has required inputs,
         you should pass the params.
 
@@ -449,7 +464,7 @@ class RunClient:
     def log_status(self, status: str, reason: str = None, message: str = None):
         """Logs a new run status.
 
-        If you are executing a managed run, you don't need to set the status manually,
+        N.B. If you are executing a managed run, you don't need to set the status manually,
         Polyaxon will automatically set all statuses.
 
         This method is only useful for manual runs outside of Polyaxon.
@@ -788,12 +803,17 @@ class RunClient:
     def log_inputs(self, reset: bool = False, async_req: bool = True, **inputs):
         """Logs a new inputs/params for the current run.
 
+        N.B. If you are starting a run from the CLI/UI
+        polyaxon will track all inputs from the Polyaxonfile,
+        so you generally don't need to set them manually.
+        But you can always add or reset these params/inputs once your code starts running:
+
         Args:
             reset: bool, optional, if True, it will reset the whole inputs state.
                 Note that Polyaxon will automatically populate the inputs based
                 on the Polyaxonfile inputs definition and params passed.
             async_req: bool, optional, default: False, execute request asynchronously.
-            inputs: *List[key=value], e.g. param1=value1, param2=value2, ...
+            inputs: **kwargs, e.g. param1=value1, param2=value2, ...
         """
         patch_dict = {"inputs": inputs}
         if reset is False:
@@ -809,12 +829,13 @@ class RunClient:
     def log_outputs(self, reset: bool = False, async_req: bool = True, **outputs):
         """Logs a new inputs/params for the current run.
 
+
         Args:
             reset: bool, optional, if True, it will reset the whole outputs state.
                 Note that Polyaxon will automatically populate some outputs based
                 on the Polyaxonfile outputs definition and params passed.
             async_req: bool, optional, default: False, execute request asynchronously.
-            outputs: *List[key=value], e.g. output1=value1, metric2=value2, ...
+            outputs: **kwargs, e.g. output1=value1, metric2=value2, ...
         """
         patch_dict = {"outputs": outputs}
         if reset is False:

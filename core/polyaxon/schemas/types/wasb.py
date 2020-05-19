@@ -96,6 +96,7 @@ class V1WasbType(BaseConfig, polyaxon_sdk.V1WasbType):
     >>> }
     ```
     """
+
     IDENTIFIER = "wasb"
     SCHEMA = WasbTypeSchema
     REDUCED_ATTRIBUTES = ["container", "storageAccount", "path"]

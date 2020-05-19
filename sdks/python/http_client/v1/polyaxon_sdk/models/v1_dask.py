@@ -51,6 +51,7 @@ class V1Dask(object):
     """
     openapi_types = {
         "kind": "str",
+        "threads": "int",
         "scale": "int",
         "adapt_min": "int",
         "adapt_max": "int",
@@ -65,6 +66,7 @@ class V1Dask(object):
 
     attribute_map = {
         "kind": "kind",
+        "threads": "threads",
         "scale": "scale",
         "adapt_min": "adapt_min",
         "adapt_max": "adapt_max",
@@ -80,6 +82,7 @@ class V1Dask(object):
     def __init__(
         self,
         kind="dask",
+        threads=None,
         scale=None,
         adapt_min=None,
         adapt_max=None,
@@ -98,6 +101,7 @@ class V1Dask(object):
         self.local_vars_configuration = local_vars_configuration
 
         self._kind = None
+        self._threads = None
         self._scale = None
         self._adapt_min = None
         self._adapt_max = None
@@ -112,6 +116,8 @@ class V1Dask(object):
 
         if kind is not None:
             self.kind = kind
+        if threads is not None:
+            self.threads = threads
         if scale is not None:
             self.scale = scale
         if adapt_min is not None:
@@ -153,6 +159,27 @@ class V1Dask(object):
         """
 
         self._kind = kind
+
+    @property
+    def threads(self):
+        """Gets the threads of this V1Dask.  # noqa: E501
+
+
+        :return: The threads of this V1Dask.  # noqa: E501
+        :rtype: int
+        """
+        return self._threads
+
+    @threads.setter
+    def threads(self, threads):
+        """Sets the threads of this V1Dask.
+
+
+        :param threads: The threads of this V1Dask.  # noqa: E501
+        :type: int
+        """
+
+        self._threads = threads
 
     @property
     def scale(self):

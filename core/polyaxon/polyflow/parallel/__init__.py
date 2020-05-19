@@ -24,7 +24,7 @@ from polyaxon.polyflow.parallel.bayes import (
     UtilityFunctionConfig,
     V1Bayes,
 )
-from polyaxon.polyflow.parallel.matrix import (
+from polyaxon.polyflow.parallel.params import (
     V1HpChoice,
     HpChoiceSchema,
     V1HpPChoice,

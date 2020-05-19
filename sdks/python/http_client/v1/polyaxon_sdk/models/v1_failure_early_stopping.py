@@ -49,20 +49,12 @@ class V1FailureEarlyStopping(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    openapi_types = {"kind": "str", "percent": "int", "evaluation_interval": "str"}
+    openapi_types = {"kind": "str", "percent": "int"}
 
-    attribute_map = {
-        "kind": "kind",
-        "percent": "percent",
-        "evaluation_interval": "evaluation_interval",
-    }
+    attribute_map = {"kind": "kind", "percent": "percent"}
 
     def __init__(
-        self,
-        kind="failure_early_stopping",
-        percent=None,
-        evaluation_interval=None,
-        local_vars_configuration=None,
+        self, kind="failure_early_stopping", percent=None, local_vars_configuration=None
     ):  # noqa: E501
         """V1FailureEarlyStopping - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
@@ -71,15 +63,12 @@ class V1FailureEarlyStopping(object):
 
         self._kind = None
         self._percent = None
-        self._evaluation_interval = None
         self.discriminator = None
 
         if kind is not None:
             self.kind = kind
         if percent is not None:
             self.percent = percent
-        if evaluation_interval is not None:
-            self.evaluation_interval = evaluation_interval
 
     @property
     def kind(self):
@@ -106,7 +95,7 @@ class V1FailureEarlyStopping(object):
     def percent(self):
         """Gets the percent of this V1FailureEarlyStopping.  # noqa: E501
 
-        The percentage failed runs, at each evaluation interval. e.g. 1 - 99.  # noqa: E501
+        The percentage of failed runs, at each evaluation interval. e.g. 1 - 99.  # noqa: E501
 
         :return: The percent of this V1FailureEarlyStopping.  # noqa: E501
         :rtype: int
@@ -117,36 +106,13 @@ class V1FailureEarlyStopping(object):
     def percent(self, percent):
         """Sets the percent of this V1FailureEarlyStopping.
 
-        The percentage failed runs, at each evaluation interval. e.g. 1 - 99.  # noqa: E501
+        The percentage of failed runs, at each evaluation interval. e.g. 1 - 99.  # noqa: E501
 
         :param percent: The percent of this V1FailureEarlyStopping.  # noqa: E501
         :type: int
         """
 
         self._percent = percent
-
-    @property
-    def evaluation_interval(self):
-        """Gets the evaluation_interval of this V1FailureEarlyStopping.  # noqa: E501
-
-        Interval/Frequency for applying the policy.  # noqa: E501
-
-        :return: The evaluation_interval of this V1FailureEarlyStopping.  # noqa: E501
-        :rtype: str
-        """
-        return self._evaluation_interval
-
-    @evaluation_interval.setter
-    def evaluation_interval(self, evaluation_interval):
-        """Sets the evaluation_interval of this V1FailureEarlyStopping.
-
-        Interval/Frequency for applying the policy.  # noqa: E501
-
-        :param evaluation_interval: The evaluation_interval of this V1FailureEarlyStopping.  # noqa: E501
-        :type: str
-        """
-
-        self._evaluation_interval = evaluation_interval
 
     def to_dict(self):
         """Returns the model properties as a dict"""

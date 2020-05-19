@@ -90,6 +90,7 @@ class V1GcsType(BaseConfig, polyaxon_sdk.V1GcsType):
     >>> }
     ```
     """
+
     IDENTIFIER = "gcs"
     SCHEMA = GcsTypeSchema
     REDUCED_ATTRIBUTES = ["bucket", "blob"]

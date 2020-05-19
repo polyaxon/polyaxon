@@ -259,6 +259,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     and will inject it automatically in the context to be used.
     You can use for example `{{ convolutions.conv1 }}` in the specification.
     """
+
     SCHEMA = ParamSchema
     IDENTIFIER = "param"
     REDUCED_ATTRIBUTES = [

@@ -116,8 +116,8 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property matrix (base name: "matrix")', function() {
-      // uncomment below and update the code to test the property matrix
+    it('should have the property hp_params (base name: "hp_params")', function() {
+      // uncomment below and update the code to test the property hp_params
       //var instane = new PolyaxonSdk.V1Schemas();
       //expect(instance).to.be();
     });

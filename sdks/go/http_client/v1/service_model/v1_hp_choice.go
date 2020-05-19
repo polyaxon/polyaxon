@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpChoice Matrix Choice specification
+// V1HpChoice HP Choice specification
 //
 // swagger:model v1HpChoice
 type V1HpChoice struct {
 
-	// Kind of hp matrix, should be equal to "choice"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "choice"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

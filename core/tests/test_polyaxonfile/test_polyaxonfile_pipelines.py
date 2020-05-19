@@ -34,7 +34,7 @@ from polyaxon.polyflow.early_stopping import (
     V1MetricEarlyStopping,
 )
 from polyaxon.polyflow.parallel import V1GridSearch, V1Hyperband, V1RandomSearch
-from polyaxon.polyflow.parallel.matrix import V1HpChoice, V1HpLinSpace
+from polyaxon.polyflow.parallel.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.run import V1Dag
 
 

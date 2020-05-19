@@ -22,7 +22,7 @@ from polyaxon.polyflow.early_stopping import (
     V1FailureEarlyStopping,
     V1MetricEarlyStopping,
 )
-from polyaxon.polyflow.optimization import Optimization
+from polyaxon.polyflow.optimization import V1Optimization
 
 
 @pytest.mark.workflow_mark
@@ -32,11 +32,11 @@ class TestEarlyStoppingConfigs(BaseTestCase):
             "kind": "metric_early_stopping",
             "metric": "loss",
             "value": 0.1,
-            "optimization": Optimization.MAXIMIZE,
+            "optimization": V1Optimization.MAXIMIZE,
         }
         config = V1MetricEarlyStopping.from_dict(config_dict)
         config_to_dict = config.to_dict()
-        assert config_to_dict.pop("optimization") == Optimization.MAXIMIZE
+        assert config_to_dict.pop("optimization") == V1Optimization.MAXIMIZE
         assert_equal_dict(config_to_dict, config_dict)
 
     def test_metric_early_stopping_with_median_policy(self):
@@ -44,7 +44,7 @@ class TestEarlyStoppingConfigs(BaseTestCase):
             "kind": "metric_early_stopping",
             "metric": "loss",
             "value": 0.1,
-            "optimization": Optimization.MINIMIZE,
+            "optimization": V1Optimization.MINIMIZE,
             "policy": {"kind": "median", "evaluationInterval": 1},
         }
         config = V1MetricEarlyStopping.from_dict(config_dict)
@@ -55,7 +55,7 @@ class TestEarlyStoppingConfigs(BaseTestCase):
             "kind": "metric_early_stopping",
             "metric": "loss",
             "value": 0.1,
-            "optimization": Optimization.MINIMIZE,
+            "optimization": V1Optimization.MINIMIZE,
             "policy": {
                 "kind": "diff",
                 "evaluationInterval": 1,
@@ -71,7 +71,7 @@ class TestEarlyStoppingConfigs(BaseTestCase):
             "kind": "metric_early_stopping",
             "metric": "loss",
             "value": 0.1,
-            "optimization": Optimization.MAXIMIZE,
+            "optimization": V1Optimization.MAXIMIZE,
             "policy": {"kind": "truncation", "percent": 0.5, "evaluationInterval": 1},
         }
         config = V1MetricEarlyStopping.from_dict(config_dict)
@@ -81,7 +81,6 @@ class TestEarlyStoppingConfigs(BaseTestCase):
         config_dict = {
             "kind": "failure_early_stopping",
             "percent": 0.3,
-            "evaluationInterval": 1,
         }
         config = V1FailureEarlyStopping.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

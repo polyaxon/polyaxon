@@ -51,6 +51,10 @@ public class V1Dask {
   @SerializedName(SERIALIZED_NAME_KIND)
   private String kind = "dask";
 
+  public static final String SERIALIZED_NAME_THREADS = "threads";
+  @SerializedName(SERIALIZED_NAME_THREADS)
+  private Integer threads;
+
   public static final String SERIALIZED_NAME_SCALE = "scale";
   @SerializedName(SERIALIZED_NAME_SCALE)
   private Integer scale;
@@ -112,6 +116,29 @@ public class V1Dask {
 
   public void setKind(String kind) {
     this.kind = kind;
+  }
+
+
+  public V1Dask threads(Integer threads) {
+    
+    this.threads = threads;
+    return this;
+  }
+
+   /**
+   * Get threads
+   * @return threads
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Integer getThreads() {
+    return threads;
+  }
+
+
+  public void setThreads(Integer threads) {
+    this.threads = threads;
   }
 
 
@@ -387,6 +414,7 @@ public class V1Dask {
     }
     V1Dask v1Dask = (V1Dask) o;
     return Objects.equals(this.kind, v1Dask.kind) &&
+        Objects.equals(this.threads, v1Dask.threads) &&
         Objects.equals(this.scale, v1Dask.scale) &&
         Objects.equals(this.adaptMin, v1Dask.adaptMin) &&
         Objects.equals(this.adaptMax, v1Dask.adaptMax) &&
@@ -401,7 +429,7 @@ public class V1Dask {
 
   @Override
   public int hashCode() {
-    return Objects.hash(kind, scale, adaptMin, adaptMax, adaptInterval, environment, connections, volumes, init, sidecars, container);
+    return Objects.hash(kind, threads, scale, adaptMin, adaptMax, adaptInterval, environment, connections, volumes, init, sidecars, container);
   }
 
 
@@ -410,6 +438,7 @@ public class V1Dask {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1Dask {\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
+    sb.append("    threads: ").append(toIndentedString(threads)).append("\n");
     sb.append("    scale: ").append(toIndentedString(scale)).append("\n");
     sb.append("    adaptMin: ").append(toIndentedString(adaptMin)).append("\n");
     sb.append("    adaptMax: ").append(toIndentedString(adaptMax)).append("\n");

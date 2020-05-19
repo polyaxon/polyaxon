@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpRange Matrix Range specification
+// V1HpRange HP Range specification
 //
 // swagger:model v1HpRange
 type V1HpRange struct {
 
-	// Kind of hp matrix, should be equal to "range"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "range"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

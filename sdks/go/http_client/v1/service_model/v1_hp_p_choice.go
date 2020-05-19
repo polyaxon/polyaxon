@@ -24,13 +24,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1HpPChoice Matrix Probabilistic Choice specification
+// V1HpPChoice HP Probabilistic Choice specification
 //
 // swagger:model v1HpPChoice
 type V1HpPChoice struct {
 
-	// Kind of hp matrix, should be equal to "pchoice"
-	Kind string `json:"kind,omitempty"`
+	// Kind of hp, should be equal to "pchoice"
+	Kind *string `json:"kind,omitempty"`
 
 	// Value
 	Value interface{} `json:"value,omitempty"`

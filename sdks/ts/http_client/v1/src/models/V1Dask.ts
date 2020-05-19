@@ -55,6 +55,12 @@ export interface V1Dask {
      * @type {number}
      * @memberof V1Dask
      */
+    threads?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Dask
+     */
     scale?: number;
     /**
      * 
@@ -123,6 +129,7 @@ export function V1DaskFromJSONTyped(json: any, ignoreDiscriminator: boolean): V1
     return {
         
         'kind': !exists(json, 'kind') ? undefined : json['kind'],
+        'threads': !exists(json, 'threads') ? undefined : json['threads'],
         'scale': !exists(json, 'scale') ? undefined : json['scale'],
         'adapt_min': !exists(json, 'adapt_min') ? undefined : json['adapt_min'],
         'adapt_max': !exists(json, 'adapt_max') ? undefined : json['adapt_max'],
@@ -146,6 +153,7 @@ export function V1DaskToJSON(value?: V1Dask | null): any {
     return {
         
         'kind': value.kind,
+        'threads': value.threads,
         'scale': value.scale,
         'adapt_min': value.adapt_min,
         'adapt_max': value.adapt_max,

@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **compiledOperation** | [**V1CompiledOperation**](V1CompiledOperation.md) |  |  [optional]
 **schedule** | [**V1Schedule**](V1Schedule.md) |  |  [optional]
 **connectionSchema** | [**V1ConnectionSchema**](V1ConnectionSchema.md) |  |  [optional]
-**matrix** | [**V1Matrix**](V1Matrix.md) |  |  [optional]
+**hpParams** | [**V1HpParams**](V1HpParams.md) |  |  [optional]
 **reference** | [**V1Reference**](V1Reference.md) |  |  [optional]
 **artifactsMount** | [**V1ArtifactsMount**](V1ArtifactsMount.md) |  |  [optional]
 **polyaxonSidecarContainer** | [**V1PolyaxonSidecarContainer**](V1PolyaxonSidecarContainer.md) |  |  [optional]
