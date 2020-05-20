@@ -353,13 +353,16 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     A list of [connection names](/docs/setup/connections/) to resolve for the dag.
 
+    <blockquote class="light">
     If you are referencing a connection it must be configured.
-
     All referenced connections will be checked:
-     * If they are accessible in the context of the project this job is running
-     * If the user running the job can have access to those connections
 
-    The connections defintion will be passed to all operations.
+     * If they are accessible in the context of the project of this run
+
+     * If the user running the operation can have access to those connections
+    </blockquote>
+
+    The connections definition will be passed to all operations.
     After checks, the connections will be resolved and inject any volumes, secrets, configMaps,
     environment variables for your main container to function correctly.
 

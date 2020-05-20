@@ -122,11 +122,14 @@ class V1KFReplica(BaseConfig, polyaxon_sdk.V1KFReplica):
 
     A list of [connection names](/docs/setup/connections/) to resolve for the job.
 
+    <blockquote class="light">
     If you are referencing a connection it must be configured.
-
     All referenced connections will be checked:
-     * If they are accessible in the context of the project this job is running
-     * If the user running the job can have access to those connections
+
+     * If they are accessible in the context of the project of this run
+
+     * If the user running the operation can have access to those connections
+    </blockquote>
 
     After checks, the connections will be resolved and inject any volumes, secrets, configMaps,
     environment variables for your main container to function correctly.
@@ -166,11 +169,14 @@ class V1KFReplica(BaseConfig, polyaxon_sdk.V1KFReplica):
     A list of [init handlers and containers](/docs/core/specification/init/)
     to resolve for the job.
 
+    <blockquote class="light">
     If you are referencing a connection it must be configured.
-
     All referenced connections will be checked:
-     * If they are accessible in the context of the project this job is running
-     * If the user running the job can have access to those connections
+
+     * If they are accessible in the context of the project of this run
+
+     * If the user running the operation can have access to those connections
+    </blockquote>
 
     ```yaml
     >>> worker:

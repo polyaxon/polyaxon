@@ -115,23 +115,31 @@ def ls(ctx, io, query, sort, limit, offset):
     Get all runs:
 
     \b
-    polyaxon project runs
-
 
     Get all runs with with status {created or running}, and
     creation date between 2018-01-01 and 2018-01-02, and params activation equal to sigmoid
     and metric loss less or equal to 0.2
 
     \b
-    $ polyaxon project runs \
-      -q "status:created|running, started_at:2018-01-01..2018-01-02, \
-          params.activation:sigmoid, metric.loss:<=0.2"
+    $ polyaxon ops ls \
+    -q "status:created|running, started_at:2018-01-01..2018-01-02, \
+    params.activation:sigmoid, metric.loss:<=0.2"
 
 
-    Get all runs sorted by update date
+    Get all runs sorted by update date:
 
     \b
-    $ polyaxon project runs -s "-updated_at"
+    $ polyaxon ops ls -s "-updated_at"
+
+    Get all runs of kind job:
+
+    \b
+    $ polyaxon ops ls -q "kind: job"
+
+    Get all runs of kind service:
+
+    \b
+    $ polyaxon ops ls -q "kind: service"
     """
     owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
 
@@ -215,7 +223,7 @@ def get(ctx):
     $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 get  # project is cached
 
     \b
-    $ polyaxon ops --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 get
+    $ polyaxon ops --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80 get
 
     \b
     $ polyaxon ops -p alain/cats-vs-dogs --uid=8aac02e3a62a4f0aaa257c59da5eab80 get
@@ -258,7 +266,7 @@ def delete(ctx):
     $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 delete  # project is cached
 
     \b
-    $ polyaxon ops --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 delete
+    $ polyaxon ops --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80 delete
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
@@ -301,7 +309,7 @@ def update(ctx, name, description, tags):
     --description="new description for my runs"
 
     \b
-    $ polyaxon ops --project=cats-vs-dogs -id 8aac02e3a62a4f0aaa257c59da5eab80 update
+    $ polyaxon ops --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80 update
     --tags="foo, bar" --name="unique-name"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -487,15 +495,15 @@ def resume(ctx, polyaxonfile, u):
 @ops.command()
 @click.pass_context
 @clean_outputs
-def invalidate_run(ctx):
-    """Invalidate runs' cache inside this project.
+def invalidate(ctx):
+    """Invalidate the run's cache state.
 
     Uses /docs/core/cli/#caching
 
     Examples:
 
     \b
-    $ polyaxon invalidate_run
+    $ polyaxon ops invalidate
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(

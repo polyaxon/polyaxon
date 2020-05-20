@@ -50,26 +50,27 @@ def init(
     ...
     ```
 
-    A global `TRACKING_RUN` will be set on the module.
+    > A global `TRACKING_RUN` will be set on the module.
 
-    Args:
-        owner: str, optional, the owner is the username or
-            the organization name owning this project.
-        project: str, optional, project name owning the run(s).
-        run_uuid: str, optional, run uuid.
-        client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/), optional,
-            an instance of a configured client, if not passed,
-            a new instance will be created based on the available environment.
-        track_code: bool, optional, default True, to track code version.
-            Polyaxon will try to track information about any repo
-            configured in the context where this client is instantiated.
-        track_env: bool, optional, default True, to track information about the environment.
-        refresh_data: bool, optional, default False, to refresh the run data at instantiation.
-        artifacts_path: str, optional, for in-cluster runs it will be set automatically.
 
-    Raises:
-        PolyaxonClientException: If no owner and/or project are passed and Polyaxon cannot
-            resolve the values from the environment.
+        Args:
+            owner: str, optional, the owner is the username or
+                the organization name owning this project.
+            project: str, optional, project name owning the run(s).
+            run_uuid: str, optional, run uuid.
+            client: [PolyaxonClient](/docs/core/python-library/polyaxon-client/), optional,
+                an instance of a configured client, if not passed,
+                a new instance will be created based on the available environment.
+            track_code: bool, optional, default True, to track code version.
+                Polyaxon will try to track information about any repo
+                configured in the context where this client is instantiated.
+            track_env: bool, optional, default True, to track information about the environment.
+            refresh_data: bool, optional, default False, to refresh the run data at instantiation.
+            artifacts_path: str, optional, for in-cluster runs it will be set automatically.
+
+        Raises:
+            PolyaxonClientException: If no owner and/or project are passed and Polyaxon cannot
+                resolve the values from the environment.
     """
     global TRACKING_RUN
 

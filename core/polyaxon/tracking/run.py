@@ -251,7 +251,7 @@ class Run(RunClient):
         >>> log_metric(name="loss", value=0.01, step=10)
         ```
 
-        It's very important to log `step` as one of your metrics
+        > It's very important to log `step` as one of your metrics
         if you want to compare experiments on the dashboard
         and use the steps in x-axis instead of timestamps.
 
@@ -288,6 +288,10 @@ class Run(RunClient):
         >>> log_metrics(step=123, loss=0.023, accuracy=0.91)
         ```
 
+        > It's very important to log `step` as one of your metrics
+        if you want to compare experiments on the dashboard
+        and use the steps in x-axis instead of timestamps.
+
         Args:
             step: int, optional
             timestamp: datetime, optional
@@ -316,7 +320,7 @@ class Run(RunClient):
     @check_offline
     @can_log_events
     def log_roc_auc_curve(self, name, fpr, tpr, auc=None, step=None, timestamp=None):
-        """Logs ROC/AUC curve, expect an already processed values.
+        """Logs ROC/AUC curve. This method expects an already processed values.
 
         ```python
         >>> log_roc_auc_curve("roc_value", fpr, tpr, auc=0.6, step=1)
@@ -376,7 +380,7 @@ class Run(RunClient):
     def log_pr_curve(
         self, name, precision, recall, average_precision=None, step=None, timestamp=None
     ):
-        """Logs PR curve, expect an already processed values.
+        """Logs PR curve. This method expects an already processed values.
 
         ```python
         >>> log_pr_curve("pr_value", precision, recall, step=10)
@@ -703,7 +707,7 @@ class Run(RunClient):
         timestamp=None,
         content_type=None,
     ):
-        """
+        """Logs a audio.
 
         ```python
         >>> log_audio("path/to/my_audio1"),
@@ -972,7 +976,7 @@ class Run(RunClient):
     def log_artifact(
         self, path, name=None, artifact_kind=None, step=None, timestamp=None
     ):
-        """Logs an a generic artifact.
+        """Logs a generic artifact.
 
         Args:
             path: str, path to the artifact

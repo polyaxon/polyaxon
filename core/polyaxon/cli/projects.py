@@ -172,7 +172,7 @@ def ls(owner, limit, offset):
 @click.pass_context
 @clean_outputs
 def get(ctx):
-    """Get info for current project, by project_name, or user/project_name.
+    """Get info for current project, by project_name, or owner/project_name.
 
     Uses /docs/core/cli/#caching
 
@@ -186,7 +186,7 @@ def get(ctx):
     To get a project by name
 
     \b
-    $ polyaxon project get user/project
+    $ polyaxon project get owner/project
     """
     owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
 

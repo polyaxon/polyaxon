@@ -114,11 +114,14 @@ class V1SparkReplica(BaseConfig, polyaxon_sdk.V1SparkReplica):
     A list of [init handlers and containers](/docs/core/specification/init/)
     to resolve for the replica (executor/driver).
 
+    <blockquote class="light">
     If you are referencing a connection it must be configured.
-
     All referenced connections will be checked:
-     * If they are accessible in the context of the project this job is running
-     * If the user running the job can have access to those connections
+
+     * If they are accessible in the context of the project of this run
+
+     * If the user running the operation can have access to those connections
+    </blockquote>
 
     ```yaml
     >>> executor:

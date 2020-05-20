@@ -35,7 +35,10 @@ from polyaxon.utils.path_utils import create_project_tarfile, get_files_by_paths
 @click.command()
 @clean_outputs
 def upload(sync=True):  # pylint:disable=assign-to-new-keyword
-    """Upload code of the current directory while respecting the .polyaxonignore file."""
+    """N.B. This is not available in all distributions.
+
+    Upload code of the current directory while respecting the .polyaxonignore file.
+    """
     project = ProjectManager.get_config_or_raise()
     files = IgnoreManager.get_unignored_filepaths()
     try:

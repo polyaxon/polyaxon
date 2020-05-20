@@ -799,10 +799,12 @@ class RunClient:
     def log_inputs(self, reset: bool = False, async_req: bool = True, **inputs):
         """Logs or resets new inputs/params for the current run.
 
+        <blockquote class="light">
         N.B. If you are starting a run from the CLI/UI
         polyaxon will track all inputs from the Polyaxonfile,
         so you generally don't need to set them manually.
         But you can always add or reset these params/inputs once your code starts running.
+        </blockquote>
 
         Args:
             reset: bool, optional, if True, it will reset the whole inputs state.
