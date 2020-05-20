@@ -22,13 +22,13 @@ from polyaxon.client.transport import Transport
 
 class PolyaxonClient:
     """Auto-configurable and high level base client that abstract
-    the need to set configuration for specific client for each service.
+    the need to set a configuration for each service.
 
     PolyaxonClient comes with logic
     to pass config and token to other specific clients.
 
     If no values are passed to this class,
-    Polyaxon will try to resolve the project from environment:
+    Polyaxon will try to resolve the configuration from the environment:
         * If you have a configured CLI, Polyaxon will use the configuration of the cli.
         * If you use this client in the context of a job or a service managed by Polyaxon,
         a configuration will be available.
@@ -41,9 +41,8 @@ class PolyaxonClient:
         config: ClientConfig, optional, Instance of a ClientConfig.
         token: str, optional, the token to use for authenticating the clients,
                if the user is already logged in using the CLI, it will automatically use that token.
-               Use the client inside a job/service scheduled with Polyaxon will have access to the
-               token of the user who started the run.
-               N.B. The `auth` context must be enabled.
+               Using the client inside a job/service scheduled with Polyaxon will have access to the
+               token of the user who started the run if the `auth` context is enabled.
 
     You can access specific clients:
 

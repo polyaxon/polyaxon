@@ -26,7 +26,7 @@ from polyaxon.utils.query_params import get_query_params
 
 
 class ProjectClient:
-    """ProjectClient is client to communicate with Polyaxon projects endpoints.
+    """ProjectClient is a client to communicate with Polyaxon projects endpoints.
 
     If no values are passed to this class,
     Polyaxon will try to resolve the owner and project from the environment:

@@ -52,7 +52,7 @@ from polyaxon.utils.validation import validate_tags
 
 
 class RunClient:
-    """RunClient is client to communicate with Polyaxon runs endpoints.
+    """RunClient is a client to communicate with Polyaxon runs endpoints.
 
     If no values are passed to this class,
     Polyaxon will try to resolve the owner, project, and run uuid from the environment:
@@ -162,7 +162,7 @@ class RunClient:
 
     @check_no_op
     def get_inputs(self):
-        """Gets run's inputs.
+        """Gets the run's inputs.
         Returns:
             dict, all the run inputs/params.
         """
@@ -170,7 +170,7 @@ class RunClient:
 
     @check_no_op
     def get_outputs(self):
-        """Gets run's outputs.
+        """Gets the run's outputs.
         Returns:
              dict, all the run outputs/metrics.
         """
@@ -179,8 +179,7 @@ class RunClient:
     @check_no_op
     @check_offline
     def refresh_data(self):
-        """Fetches the run data from the api.
-        """
+        """Fetches the run data from the api."""
         self._run_data = self.client.runs_v1.get_run(
             self.owner, self.project, self.run_uuid
         )
@@ -205,11 +204,11 @@ class RunClient:
         [Run API](/docs/api/#operation/PatchRun)
 
         Args:
-            data: Dict or V1Project, required.
+            data: Dict or V1Run, required.
             async_req: bool, optional, default: False, execute request asynchronously.
 
         Returns:
-            V1Project, project instance from the response.
+            V1Run, run instance from the response.
         """
         return self._update(data=data, async_req=async_req)
 
@@ -240,7 +239,7 @@ class RunClient:
     ):
         """Creates a new run based on the data passed.
 
-        N.B. Create methods are only useful if you want to create run programatically,
+        N.B. Create methods are only useful if you want to create a run programmatically,
         if you run a component/operation from the CLI/UI an instance will be created automatically.
 
         This is a generic create function, you can check other methods for creating runs:
@@ -254,12 +253,11 @@ class RunClient:
         [Run API](/docs/api/#operation/CreateRun)
 
         Args:
-            name: str, optional, name
-                note it will override the name in the operation if available.
-            description: str, optional, description
-                note it will override the description in the operation if available.
+            name: str, optional, it will override the name in the operation if provided.
+            description: str, optional,
+                it will override the description in the operation if provided.
             tags: str or List[str], optional, list of tags,
-                note it will override the tags in the operation if available.
+                it will override the tags in the operation if provided.
             content: str or Dict or V1Operation, optional.
 
         Returns:
@@ -301,9 +299,9 @@ class RunClient:
         queue: str = None,
         nocache: bool = True,
     ):
-        """Creates a new run based on the a polyaxonfile.
+        """Creates a new run based on a polyaxonfile.
 
-        N.B. Create methods are only useful if you want to create run programatically,
+        N.B. Create methods are only useful if you want to create a run programmatically,
         if you run a component/operation from the CLI/UI an instance will be created automatically.
 
         [Run API](/docs/api/#operation/CreateRun)
@@ -313,12 +311,12 @@ class RunClient:
                 The polyaxonfile should contain a
                 [V1Component](/docs/core/specification/component/) or an
                 [V1Operation](/docs/core/specification/operation/).
-            name: str, optional, name
-                note it will override the name in the operation if available.
-            description: str, optional, description
-                note it will override the description in the operation if available.
+            name: str, optional,
+                it will override the name in the operation if provided.
+            description: str, optional,
+                it will override the description in the operation if provided.
             tags: str or List[str], optional, list of tags,
-                note it will override the tags in the operation if available.
+                it will override the tags in the operation if provided.
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
             profile: str, optional, the name of the
@@ -358,9 +356,9 @@ class RunClient:
         queue: str = None,
         nocache: bool = True,
     ):
-        """Creates a new run from url containing a Polyaxonfile specification.
+        """Creates a new run from a url containing a Polyaxonfile specification.
 
-        N.B. Create methods are only useful if you want to create run programatically,
+        N.B. Create methods are only useful if you want to create a run programmatically,
         if you run a component/operation from the CLI/UI an instance will be created automatically.
 
         [Run API](/docs/api/#operation/CreateRun)
@@ -370,12 +368,11 @@ class RunClient:
                 The url's polyaxonfile should contain a
                 [V1Component](/docs/core/specification/component/) or an
                 [V1Operation](/docs/core/specification/operation/).
-            name: str, optional, name
-                note it will override the name in the operation if available.
-            description: str, optional, description
-                note it will override the description in the operation if available.
+            name: str, optional, it will override the name in the operation if provided.
+            description: str, optional,
+                it will override the description in the operation if provided.
             tags: str or List[str], optional, list of tags,
-                note it will override the tags in the operation if available.
+                it will override the tags in the operation if provided.
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
             profile: str, optional, the name of the
@@ -417,7 +414,7 @@ class RunClient:
     ):
         """Creates a new run from the hub based on the component name.
 
-        N.B. Create methods are only useful if you want to create run programatically,
+        N.B. Create methods are only useful if you want to create a run programmatically,
         if you run a component/operation from the CLI/UI an instance will be created automatically.
 
         By default the hub hosts components. If the component has required inputs,
@@ -427,12 +424,11 @@ class RunClient:
 
         Args:
             component: str, name of the hub component.
-            name: str, optional, name
-                note it will override the name in the component if available.
-            description: str, optional, description
-                note it will override the description in the component if available.
+            name: str, optional, it will override the name in the component if provided.
+            description: str, optional,
+                it will override the description in the component if provided.
             tags: str or List[str], optional, list of tags,
-                note it will override the tags in the component if available.
+                it will override the tags in the component if provided.
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
             profile: str, optional, the name of the
@@ -464,12 +460,12 @@ class RunClient:
     def log_status(self, status: str, reason: str = None, message: str = None):
         """Logs a new run status.
 
-        N.B. If you are executing a managed run, you don't need to set the status manually,
-        Polyaxon will automatically set all statuses.
-
+        <blockquote class="info">
+        N.B. If you are executing a managed run, you don't need to call the this method manually.
         This method is only useful for manual runs outside of Polyaxon.
+        </blockquote>
 
-        Note you will probably use one of the simpler methods:
+        N.B you will probably use one of the simpler methods:
             * log_succeeded
             * log_stopped
             * log_failed
@@ -497,7 +493,7 @@ class RunClient:
     @check_no_op
     @check_offline
     def get_statuses(self, last_status: str = None):
-        """Gets run statuses.
+        """Gets the run's statuses.
 
         [Run API](/docs/api/#operation/GetRunStatus)
 
@@ -546,7 +542,7 @@ class RunClient:
     @check_no_op
     @check_offline
     def get_logs(self, last_file=None, last_time=None):
-        """Gets run logs.
+        """Gets the run's logs.
 
         This method return up-to 2000 line logs per request.
 
@@ -574,7 +570,7 @@ class RunClient:
     @check_no_op
     @check_offline
     def get_events(self, kind: V1ArtifactKind, names: List[str], orient: str = None):
-        """Gets run events
+        """Gets the run's events
 
         Args:
             kind: str, a valid `V1ArtifactKind`.
@@ -621,7 +617,7 @@ class RunClient:
     @check_no_op
     @check_offline
     def get_artifact(self, path: str, stream: bool = True):
-        """Gets run artifact.
+        """Gets the run's artifact.
 
         Args:
             path: str, the relative path of the artifact to return.
@@ -801,12 +797,12 @@ class RunClient:
     @check_no_op
     @check_offline
     def log_inputs(self, reset: bool = False, async_req: bool = True, **inputs):
-        """Logs a new inputs/params for the current run.
+        """Logs or resets new inputs/params for the current run.
 
         N.B. If you are starting a run from the CLI/UI
         polyaxon will track all inputs from the Polyaxonfile,
         so you generally don't need to set them manually.
-        But you can always add or reset these params/inputs once your code starts running:
+        But you can always add or reset these params/inputs once your code starts running.
 
         Args:
             reset: bool, optional, if True, it will reset the whole inputs state.
@@ -827,7 +823,7 @@ class RunClient:
     @check_no_op
     @check_offline
     def log_outputs(self, reset: bool = False, async_req: bool = True, **outputs):
-        """Logs a new inputs/params for the current run.
+        """Logs a new outputs for the current run.
 
 
         Args:
@@ -864,7 +860,7 @@ class RunClient:
         reset: bool = False,
         async_req: bool = True,
     ):
-        """Logs a new tags for the current run.
+        """Logs new tags for the current run.
 
         Args:
             tags: str or List[str], tag or tags to log.
@@ -881,12 +877,12 @@ class RunClient:
     @check_no_op
     @check_offline
     def start(self):
-        """Set the current run to `running` status.
+        """Sets the current run to `running` status.
 
-        If you are executing a managed run, you don't need to set the status manually,
-        Polyaxon will automatically set all statuses.
-
+        <blockquote class="info">
+        N.B. If you are executing a managed run, you don't need to call the this method manually.
         This method is only useful for manual runs outside of Polyaxon.
+        </blockquote>
         """
         self.log_status(polyaxon_sdk.V1Statuses.RUNNING, "Job is running")
         self._run_data.status = polyaxon_sdk.V1Statuses.RUNNING
@@ -894,12 +890,12 @@ class RunClient:
     @check_no_op
     @check_offline
     def end(self, status: str, message: str = None, traceback: str = None):
-        """Set the current run to `status` status.
+        """Sets the current run to `status` status.
 
-        If you are executing a managed run, you don't need to set the status manually,
-        Polyaxon will automatically set all statuses.
-
+        <blockquote class="info">
+        N.B. If you are executing a managed run, you don't need to call the this method manually.
         This method is only useful for manual runs outside of Polyaxon.
+        </blockquote>
 
         Args:
             status: str, a valid [Statuses](/docs/core/specification/lifecycle/) value.
@@ -917,36 +913,36 @@ class RunClient:
     @check_no_op
     @check_offline
     def log_succeeded(self):
-        """Set the current run to `succeeded` status.
+        """Sets the current run to `succeeded` status.
 
-        If you are executing a managed run, you don't need to set the status manually,
-        Polyaxon will automatically set all statuses.
-
+        <blockquote class="info">
+        N.B. If you are executing a managed run, you don't need to call the this method manually.
         This method is only useful for manual runs outside of Polyaxon.
+        </blockquote>
         """
         self.end("succeeded", "Job has succeeded")
 
     @check_no_op
     @check_offline
     def log_stopped(self):
-        """Set the current run to `stopped` status.
+        """Sets the current run to `stopped` status.
 
-        If you are executing a managed run, you don't need to set the status manually,
-        Polyaxon will automatically set all statuses.
-
+        <blockquote class="info">
+        N.B. If you are executing a managed run, you don't need to call the this method manually.
         This method is only useful for manual runs outside of Polyaxon.
+        </blockquote>
         """
         self.end("stopped", "Job is stopped")
 
     @check_no_op
     @check_offline
     def log_failed(self, message: str = None, traceback: str = None):
-        """Set the current run to `failed` status.
+        """Sets the current run to `failed` status.
 
-        If you are executing a managed run, you don't need to set the status manually,
-        Polyaxon will automatically set all statuses.
-
+        <blockquote class="info">
+        N.B. If you are executing a managed run, you don't need to call the this method manually.
         This method is only useful for manual runs outside of Polyaxon.
+        </blockquote>
 
         Args:
             message: str, optional, message to log with this status.
