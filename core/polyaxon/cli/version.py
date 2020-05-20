@@ -157,8 +157,15 @@ def version():
 @click.command()
 @clean_outputs
 def upgrade():
-    """Install/Upgrade polyaxon-cli."""
+    """Install/Upgrade polyaxon cli."""
     try:
         pip_upgrade(PROJECT_CLI_NAME)
     except Exception as e:
         logger.error(e)
+
+
+@click.command()
+@clean_outputs
+def check():
+    """Checks the polyaxon cli version."""
+    check_cli_version()
