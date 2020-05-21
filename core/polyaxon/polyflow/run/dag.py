@@ -51,28 +51,27 @@ class DagSchema(BaseCamelSchema):
 
 
 class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
-    """Dags are Directed Acyclic Graphs –
+    """Dag (Directed Acyclic Graphs) is
     a collection of all the operations you want to run,
     organized in a way that reflects their relationships and dependencies.
 
     A dag's main goal is to describe and run several operations
     necessary for a Machine Learning (ML) workflow.
 
-    A dag execute a dependency graph of Kubernetes pods that execute the logic
-    described in the component that operation, similarly to how you can run
-    an independent operation.
+    A dag executes a dependency graph of operations, each operation runs a Kubernetes privmitive
+    described in its component.
 
     Dags are defined in Polyaxon as a [component runtime](/docs/core/specification/component/#run),
     which makes them compatible with all knowledge used for running other runtimes:
-      * They can be reusable components and can be registered in the Component Hub.
+      * They can be defined in reusable components and can be registered in the Component Hub.
       * They get executed using operations.
       * They can be parametrised similar to jobs and services.
-      * Since They are defined as components and they run operations of components,
+      * Since they are defined as components' runtimes, and they run a graph of other components,
         they can be nested natively.
-      * They can run leverage all [pipeline helpers](/docs/automation/helpers/).
-      * They can be run in parallel and be used with [mapping](/docs/automation/mapping/) or
+      * They can leverage all [pipeline helpers](/docs/automation/helpers/).
+      * They can run in parallel and can be used with [mapping](/docs/automation/mapping/) or
         other [optimization algorithms](/docs/automation/optimization-engine/).
-      * They can be put on a [schedule](/docs/automation/schedules/)
+      * They can run on [schedule](/docs/automation/schedules/)
       * They can subscribe to [events](/docs/automation/events/)
       * They can take advantage of all scheduling strategies to route operations to nodes,
         namespaces, and clusters even within the same DAG.
@@ -132,8 +131,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     ### operations
 
-    A List of operations and their with dependency definition.
-    If operations are defined with dependencies or no params are
+    A List of operations to run with their dependency definition.
+    If the operations are defined with no dependencies or no params are
     passed from one operation to another, the operations will be running in parallel following the
     concurrency and other queue priority definitions.
 
@@ -161,10 +160,10 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     #### dependencies
 
     Dags expose 2 ways to define dependencies between operations:
-     * Using `dependencies` field.
+     * Using the `dependencies` field.
      * Using a parameter reference.
 
-    In addition to the dependency definition, users can add trigger and conditions
+    In addition to the `dependencies` definition, users can add trigger and conditions
     to perform extra checks on the state of those dependencies.
 
     If an operation must wait for another operation and does not expect
@@ -191,8 +190,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     #### params dependencies
 
-    If an operation is expecting a parameter from an upstream oepration(s),
-    we don't need to define the dependency since it will be infered from the params defintion.
+    If an operation is expecting a parameter from upstream operations,
+    we don't need to define the dependency since it will be inferred from the params definition.
 
     ```yaml
     >>> run:
@@ -215,16 +214,16 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     >>>           value: outputs.results
     ```
 
-    This is similar to the previous depencies defintion in the sense that
+    This is similar to the previous `dependencies` definition in the sense that
     the job1 and job2 will run in parallel and job3 will wait for both jobs to finish.
 
-    The dependency between job2 and job3 is infered from the params defintion.
+    The dependency between job2 and job3 is inferred from the params definition.
 
     #### trigger
 
-    In order to define a trigger condition or how to trigger job3 based on job1 and job2,
+    In order to define a trigger condition or how to trigger job3 based on the status job1 and job2,
     we can use the `trigger` field.
-    It determine if a task should run based on the statuses of upstream tasks.
+    It determines if a task should run based on the statuses of the upstream tasks.
 
     ```yaml
     >>> - name: job3
@@ -241,7 +240,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     if True, if any immediately upstream tasks are skipped,
     this task will automatically be skipped as well, regardless of other conditions or trigger.
     By default, this prevents tasks from attempting to use an incomplete context
-    that won't be populated fro the upstream that didn't run.
+    that won't be populated from the upstream tasks that didn't run.
     If False, the task's trigger will be used with any skipped operations considered successes.
 
     ```yaml
@@ -254,8 +253,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     #### conditions
 
-    Conditions are an advance use case for resolving dependencies between operations.
-    Conditions take advantage of information resolved the in the context to decide if an operation
+    Conditions are an advance tool for resolving dependencies between operations.
+    Conditions take advantage of information resolved in the context to decide if an operation
     can be started.
 
 
@@ -271,6 +270,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     >>>   skipOnUpstreamSkip: true
     ```
 
+    In the example above, the job3 will only run if the param passed is equal to "some-value"
+
     ### references
 
     A List of operations and their with dependency definition.
@@ -279,8 +280,8 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     concurrency and other queue priority definitions.
 
     Operations can reference components using:
-        * [dagRef](/docs/core/specification/operation/#hub_ref):
-            reusable component defined inside the dag
+        * [dagRef](/docs/core/specification/operation/#hub_ref)
+            (reusable component defined inside the dag)
         * [hubRef](/docs/core/specification/operation/#hub_ref)
         * [pathRef](/docs/core/specification/operation/#path_ref)
         * [urlRef](/docs/core/specification/operation/#url_ref)
@@ -309,6 +310,13 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     for your operations and more than one operation is using the same component definition.
 
     ```yaml
+    >>> operations:
+    >>>   - name: download-url1
+    >>>     dagRef: download
+    >>>     ...
+    >>>   - name: download-url2
+    >>>     dagRef: download
+    >>>     ...
     >>> components:
     >>>   - name: download
     >>>     inputs:
@@ -394,7 +402,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     ```
     ### concurrency
 
-    Optional value to set the number of concurrent operations.
+    An optional value to set the number of concurrent operations.
 
     ```yaml
     >>> matrix:
@@ -407,9 +415,9 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     ### earlyStopping
 
-    A list of early stopping conditions to check for terminating the
+    A list of early stopping conditions to check for terminating
     all operations managed by the pipeline.
-    if one of the early stopping conditions is met,
+    If one of the early stopping conditions is met,
     a signal will be sent to terminate all running and pending operations.
 
     ```yaml
@@ -422,6 +430,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     [early stopping section](/docs/automation/helpers/early-stopping/).
 
     """
+
     SCHEMA = DagSchema
     IDENTIFIER = V1RunKind.DAG
     REDUCED_ATTRIBUTES = [

@@ -101,8 +101,8 @@ class MetricEarlyStoppingSchema(BaseCamelSchema):
 
 
 class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
-    """Metric early stopping is an early stopping strategy based on metrics of runs that allows
-    to terminate a dag, a mapping, or hyperparameter tuning group when a run's metric(s)
+    """Metric early stopping is an early stopping strategy based on metrics of runs,
+    it allows to terminate a dag, a mapping, or hyperparameter tuning when a run's metric(s)
     meet(s) one or multiple conditions.
 
     If no policy is set and a metric early stopping condition is met the pipeline will be marked
@@ -147,7 +147,8 @@ class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
 
     ### kind
 
-    The kind signals to the CLI, client, and other tools that this matrix is metric_early_stopping.
+    The kind signals to the CLI, client, and other tools
+    that this early stopping is `metric_early_stopping`.
 
     If you are using the python client to create the early stopping,
     this field is not required and is set by default.
@@ -187,11 +188,11 @@ class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
 
     ### policy
 
-    A policy allows to defines how to evaluate the metric value against the value, by default Polyaxon will check the
+    A policy allows to defines how to evaluate the metric value against the defined value,
     there are a couple of policies:
      * MedianStopping: Early stopping with median stopping,
-         this policy computes running medians across all runs and stops t
-         hose whose best performance is worse than the median of the running runs.
+         this policy computes running medians across all runs and stops
+         those whose best performance is worse than the median of the running runs.
      * DiffStopping: Early stopping with diff factor stopping,
         this policy computes checks runs against the best run and
         stops those whose performance is worse than the best by the factor defined by the user.
@@ -219,8 +220,9 @@ class V1FailureEarlyStopping(BaseConfig, polyaxon_sdk.V1FailureEarlyStopping):
     to terminate a dag, a mapping, or hyperparameter tuning group
     when they reach a certain level of failures.
 
-    If a percentage of the runs in the pipeline fail the pipeline will be marked as failed and
-    all pending or running operations will be stopped.
+    If a percentage of the runs in the pipeline fail,
+    the pipeline will be marked as failed as well,
+    and all pending or running operations will be stopped.
 
     Args:
         kind: str, should be equal to `failure_early_stopping`
@@ -246,7 +248,8 @@ class V1FailureEarlyStopping(BaseConfig, polyaxon_sdk.V1FailureEarlyStopping):
 
     ### kind
 
-    The kind signals to the CLI, client, and other tools that this matrix is failure_early_stopping.
+    The kind signals to the CLI, client, and other tools
+    that this early stopping is `failure_early_stopping`.
 
     If you are using the python client to create the early stopping,
     this field is not required and is set by default.
@@ -258,7 +261,7 @@ class V1FailureEarlyStopping(BaseConfig, polyaxon_sdk.V1FailureEarlyStopping):
 
     ### percent
 
-    The percentage of failed runs, at each evaluation interval,
+    The percentage of failed runs at each evaluation interval,
     should be a value between 1 and 99.
 
     ```yaml

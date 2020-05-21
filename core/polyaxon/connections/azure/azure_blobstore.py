@@ -205,7 +205,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
     def upload_file(self, filename, blob, container_name=None, use_basename=True):
         """
-        Uploads a local file to Google Cloud Storage.
+        Uploads a local file to Azure Blob service.
 
         Args:
             filename: `str`. the file to upload.
@@ -233,7 +233,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         last_time=None,
     ):
         """
-        Uploads a local directory to to Google Cloud Storage.
+        Uploads a local directory to Azure Blob service.
 
         Args:
             dirname: `str`. name of the directory to upload.
@@ -279,7 +279,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
     def download_file(self, blob, local_path, container_name=None, use_basename=True):
         """
-        Downloads a file from Google Cloud Storage.
+        Downloads a file from Azure Blob service.
 
         Args:
             blob: `str`. blob to download.
@@ -311,7 +311,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         self, blob, local_path, container_name=None, use_basename=True, workers=0
     ):
         """
-        Download a directory from Google Cloud Storage.
+        Download a directory from Azure Blob service.
 
         Args:
             blob: `str`. blob to download.

@@ -32,7 +32,7 @@ class CacheSchema(BaseCamelSchema):
 
 
 class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
-    """Polyaxon provides a caching layer for run executions,
+    """Polyaxon provides a caching layer for operation executions,
     this behaviour is enabled by default for all runs executed in the context of a DAG,
     a hyperparameter tuning, or a mapping.
 
@@ -81,8 +81,8 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
     the default caching behaviour is to persist and reuse a run's results everytime a new operation
     with similar characteristics is scheduled to run.
 
-    In order to make invalidate the cache after a certain period of time you can
-    define time to live value.
+    In order to invalidate the cache after a certain period of time you can
+    define a time to live value.
 
     ```yaml
     >>> cache:
@@ -91,10 +91,11 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
 
     ### inputs
 
-    Sometime you might want to discard an input from being considered for the cache,
+    Sometime you might want to discard an input from being considered for
+    the cache state calculation,
     or you might want to cache a component's run irrespective of the params you pass to some inputs.
 
-    This field gives you full control to define how you want to calculate the state cache state.
+    This field gives you full control to define how you want to calculate the cache state.
 
     ```yaml
     >>> cache:

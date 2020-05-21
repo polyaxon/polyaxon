@@ -27,7 +27,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1SparkReplica Spark replica defintion
+// V1SparkReplica Spark replica definition
 //
 // swagger:model v1SparkReplica
 type V1SparkReplica struct {

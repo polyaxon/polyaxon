@@ -50,7 +50,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     Polyaxon uses containers to execute that logic.
 
     Components are definitions that can be shared if they reach a
-    certain maturity and can be managed by the [Component Hub](/docs/management/components/).
+    certain maturity and can be managed by the [Component Hub](/docs/management/component-hub/).
     This allows you to create a library of frequently-used components and reuse them
     either by submitting them directly or by referencing them from your operations.
 

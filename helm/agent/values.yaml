@@ -16,7 +16,7 @@ api:
 
 gateway:
   image: polyaxon/polyaxon-gateway
-  imageTag: 1.0.8
+  imageTag: 1.0.9
   imagePullPolicy: Always
   replicas: 1
   resources:
@@ -37,7 +37,7 @@ gateway:
 
 streams:
   image: polyaxon/polyaxon-streams
-  imageTag: 1.0.8
+  imageTag: 1.0.9
   imagePullPolicy: Always
   replicas: 1
   resources:
@@ -64,7 +64,7 @@ streams:
 
 init:
   image: polyaxon/polyaxon-init
-  imageTag: 1.0.8
+  imageTag: 1.0.9
   imagePullPolicy: Always
   resources:
     limits:
@@ -76,7 +76,7 @@ init:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 1.0.8
+  imageTag: 1.0.9
   imagePullPolicy: Always
   sleepInterval: 10
   syncInterval: 10
@@ -93,7 +93,7 @@ agent:
   instance:
   enabled: false
   image: polyaxon/polyaxon-agent
-  imageTag: 1.0.8
+  imageTag: 1.0.9
   imagePullPolicy: Always
   resources:
     limits:
@@ -106,7 +106,7 @@ agent:
 operator:
   enabled: false
   image: polyaxon/polyaxon-operator
-  imageTag: 1.0.8
+  imageTag: 1.0.9
   imagePullPolicy: Always
   resources:
     limits:

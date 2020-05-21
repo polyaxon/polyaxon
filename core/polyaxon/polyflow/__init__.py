@@ -128,6 +128,7 @@ from polyaxon.polyflow.run import (
     SparkSchema,
     TFJobSchema,
     TunerSchema,
+    validate_run_patch,
     V1CleanPodPolicy,
     V1CloningKind,
     V1Dag,

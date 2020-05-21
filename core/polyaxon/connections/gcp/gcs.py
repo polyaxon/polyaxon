@@ -225,7 +225,7 @@ class GCSService(GCPService, StoreMixin):
         last_time=None,
     ):
         """
-        Uploads a local directory to to Google Cloud Storage.
+        Uploads a local directory to Google Cloud Storage.
 
         Args:
             dirname: `str`. name of the directory to upload.

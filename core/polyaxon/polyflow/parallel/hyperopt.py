@@ -46,8 +46,8 @@ class HyperoptSchema(BaseCamelSchema):
 
 
 class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
-    """Hyperopt is a search algorithm that is backed by
-    [Hyperopt](http://hyperopt.github.io/hyperopt/)
+    """Hyperopt is a search algorithm that is backed by the
+    [Hyperopt](http://hyperopt.github.io/hyperopt/) library
     to perform sequential model-based hyperparameter optimization.
 
     the Hyperopt integration exposes 3 algorithms: `tpe`, `rand`, `anneal`.
@@ -119,8 +119,11 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
 
     ### concurrency
 
-    Optional value to set the number of concurrent executions, this value should be less or equal to
-    the total number of possible runs.
+    An optional value to set the number of concurrent operations.
+
+    <blockquote class="light">
+    This value only makes sense if less or equal to the total number of possible runs.
+    </blockquote>
 
     ```yaml
     >>> matrix:
@@ -134,13 +137,13 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
     ### params
 
     A dictionary of `key -> value generator`
-    to generate parameters.
+    to generate the parameters.
 
     To learn about all possible
     [params generators](/docs/automation/optimization-engine/params/).
 
-    The parameters generated will be checked against
-    the component inputs/outputs definition to check that the parameters
+    > The parameters generated will be validated against
+    the component's inputs/outputs definition to check that the values
     can be passed and have valid types.
 
     ```yaml
@@ -178,9 +181,10 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
 
     ### earlyStopping
 
-    A list of early stopping conditions to check for terminating the runs,
-    if one of the early stopping conditions is met,
-    a signal will be sent to terminate all running and pending runs.
+    A list of early stopping conditions to check for terminating
+    all operations managed by the pipeline.
+    If one of the early stopping conditions is met,
+    a signal will be sent to terminate all running and pending operations.
 
     ```yaml
     >>> matrix:

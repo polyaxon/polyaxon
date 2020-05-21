@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.89",
+    "version": "1.0.90",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -16210,7 +16210,7 @@
           "title": "Optional container to run"
         }
       },
-      "title": "Spark replica defintion"
+      "title": "Spark replica definition"
     },
     "v1SparkType": {
       "type": "string",

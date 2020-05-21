@@ -24,7 +24,7 @@ import "v1/polyflow/environment.proto";
 import "v1/polyflow/init.proto";
 import "v1/polyflow/k8s.proto";
 
-// Spark replica defintion
+// Spark replica definition
 message SparkReplica {
     // Number of replicas
     int32 replicas = 1;

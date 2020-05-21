@@ -229,7 +229,7 @@ class HpChoiceSchema(BaseCamelSchema):
 
 
 class V1HpChoice(BaseConfig, polyaxon_sdk.V1HpChoice):
-    """`Choice` picks a value from a list values.
+    """`Choice` picks a value from a of list values.
 
     ```yaml
     >>> params:
@@ -440,6 +440,7 @@ class V1HpLinSpace(BaseHParamConfig, polyaxon_sdk.V1HpLinSpace):
     >>> param_test = V1HpLinSpace(value=[1, 10, 20])
     ```
     """
+
     SCHEMA = HpLinSpaceSchema
     IDENTIFIER = "linspace"
 
@@ -496,6 +497,7 @@ class V1HpLogSpace(BaseHParamConfig, polyaxon_sdk.V1HpLogSpace):
     >>> param_test = V1HpLinSpace(value=[1, 10, 20])
     ```
     """
+
     SCHEMA = HpLogSpaceSchema
     IDENTIFIER = "logspace"
 
@@ -668,6 +670,7 @@ class V1HpQUniform(BaseHParamConfig, polyaxon_sdk.V1HpQUniform):
     >>> param_test = V1HpQUniform(value=[0, 1, 0.1])
     ```
     """
+
     SCHEMA = HpQUniformSchema
     IDENTIFIER = "quniform"
 
@@ -725,6 +728,7 @@ class V1HpLogUniform(BaseHParamConfig, polyaxon_sdk.V1HpLogUniform):
     >>> param_test = V1HpLogUniform(value=[0, 1])
     ```
     """
+
     SCHEMA = HpLogUniformSchema
     IDENTIFIER = "loguniform"
 
@@ -782,6 +786,7 @@ class V1HpQLogUniform(BaseHParamConfig, polyaxon_sdk.V1HpQLogUniform):
     >>> param_test = V1HpQLogUniform(value=[0, 1, 0.1])
     ```
     """
+
     SCHEMA = HpQLogUniformSchema
     IDENTIFIER = "qloguniform"
 
@@ -843,6 +848,7 @@ class V1HpNormal(BaseHParamConfig, polyaxon_sdk.V1HpNormal):
     >>> param_test = V1HpNormal(value=[0, 1])
     ```
     """
+
     SCHEMA = HpNormalSchema
     IDENTIFIER = "normal"
 
@@ -900,6 +906,7 @@ class V1HpQNormal(BaseHParamConfig, polyaxon_sdk.V1HpQNormal):
     >>> param_test = V1HpNormal(value=[0, 1, 0.1])
     ```
     """
+
     SCHEMA = HpQNormalSchema
     IDENTIFIER = "qnormal"
 

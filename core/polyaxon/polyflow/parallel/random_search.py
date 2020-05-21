@@ -43,8 +43,8 @@ class RandomSearchSchema(BaseCamelSchema):
 
 
 class V1RandomSearch(BaseConfig, polyaxon_sdk.V1RandomSearch):
-    """Random search creates a number of unique experiments by sampling randomly from a search space.
-
+    """Random search creates a number of unique experiments by sampling randomly
+    from a search space.
     Random search is a competitive method for black-box parameter tuning in machine learning.
 
     Random search requires a parameter `numRuns`,
@@ -102,8 +102,11 @@ class V1RandomSearch(BaseConfig, polyaxon_sdk.V1RandomSearch):
 
     ### concurrency
 
-    Optional value to set the number of concurrent executions, this value should be less or equal to
-    the total number of possible runs.
+    An optional value to set the number of concurrent operations.
+
+    <blockquote class="light">
+    This value only makes sense if less or equal to the total number of possible runs.
+    </blockquote>
 
     ```yaml
     >>> matrix:
@@ -117,13 +120,13 @@ class V1RandomSearch(BaseConfig, polyaxon_sdk.V1RandomSearch):
     ### params
 
     A dictionary of `key -> value generator`
-    to generate parameters.
+    to generate the parameters.
 
     To learn about all possible
     [params generators](/docs/automation/optimization-engine/params/).
 
-    The parameters generated will be checked against
-    the component inputs/outputs definition to check that the parameters
+    > The parameters generated will be validated against
+    the component's inputs/outputs definition to check that the values
     can be passed and have valid types.
 
     ```yaml
@@ -161,9 +164,10 @@ class V1RandomSearch(BaseConfig, polyaxon_sdk.V1RandomSearch):
 
     ### earlyStopping
 
-    A list of early stopping conditions to check for terminating the runs,
-    if one of the early stopping conditions is met,
-    a signal will be sent to terminate all running and pending runs.
+    A list of early stopping conditions to check for terminating
+    all operations managed by the pipeline.
+    If one of the early stopping conditions is met,
+    a signal will be sent to terminate all running and pending operations.
 
     ```yaml
     >>> matrix:
@@ -177,7 +181,7 @@ class V1RandomSearch(BaseConfig, polyaxon_sdk.V1RandomSearch):
     ## Example
 
     In this example the random search algorithm will try 20 unique experiments based on the
-    space search defined in the params subsection.
+    search space defined in the params subsection.
 
 
     ```yaml

@@ -36,7 +36,7 @@ class MappingSchema(BaseCamelSchema):
 
 
 class V1Mapping(BaseConfig, polyaxon_sdk.V1Mapping):
-    """Mapping is a flexible way for dynamically executing parallel component
+    """Mapping is a flexible way for dynamically executing a component sequentially or in parallel
     based on a list of parameter combinations.
 
     Args:
@@ -98,8 +98,11 @@ class V1Mapping(BaseConfig, polyaxon_sdk.V1Mapping):
 
     ### concurrency
 
-    Optional value to set the number of concurrent executions, this value should be less or equal to
-    the total length of the list of dictionaries.
+    An optional value to set the number of concurrent operations.
+
+    <blockquote class="light">
+    This value only makes sense if less or equal to the total number of possible runs.
+    </blockquote>
 
     ```yaml
     >>> matrix:
@@ -111,9 +114,10 @@ class V1Mapping(BaseConfig, polyaxon_sdk.V1Mapping):
 
     ### earlyStopping
 
-    A list of early stopping conditions to check for terminating the runs,
-    if one of the early stopping conditions is met,
-    a signal will be sent to terminate all running and pending runs.
+    A list of early stopping conditions to check for terminating
+    all operations managed by the pipeline.
+    If one of the early stopping conditions is met,
+    a signal will be sent to terminate all running and pending operations.
 
     ```yaml
     >>> matrix:
