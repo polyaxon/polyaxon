@@ -22,7 +22,7 @@ from polyaxon.polyflow.component.component import ComponentSchema
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
 from polyaxon.polyflow.params import ParamSchema
 from polyaxon.polyflow.references import V1DagRef, V1HubRef, V1PathRef, V1UrlRef
-from polyaxon.polyflow.run import RunSchema
+from polyaxon.polyflow.run.patch import validate_run_patch
 
 
 class OperationSchema(BaseOpSchema):
@@ -30,7 +30,7 @@ class OperationSchema(BaseOpSchema):
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(ParamSchema), allow_none=True
     )
-    run_patch = fields.Nested(RunSchema, allow_none=True)
+    run_patch = fields.Dict(keys=fields.Str(), values=fields.Raw(), allow_none=True)
     hub_ref = fields.Str(allow_none=True)
     dag_ref = fields.Str(allow_none=True)
     url_ref = fields.Str(allow_none=True)
@@ -40,6 +40,15 @@ class OperationSchema(BaseOpSchema):
     @staticmethod
     def schema_config():
         return V1Operation
+
+    @validates_schema
+    def validate_run_patch(self, data, **kwargs):
+        component = data.get("component")
+        run_patch = data.get("run_patch")
+        if not component or not run_patch:
+            return
+
+        validate_run_patch(run_patch=run_patch, kind=component.run.kind)
 
     @validates_schema
     def validate_reference(self, data, **kwargs):
@@ -220,7 +229,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     ### profile
 
-    The [run profile](/docs/management/run-profiles/) to use for this operation run,
+    The [run profile](/docs/management/ui/run-profiles/) to use for this operation run,
     if provided, it will override the component's profile otherwise
     the profile of the component will be used if it exists.
 
@@ -365,7 +374,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     ### hub_ref
 
-    Polyaxon provides a [Component Hub](/docs/management/components/)
+    Polyaxon provides a [Component Hub](/docs/management/component-hub/)
     for hosting versioned components with access control system to improve
     the productivity of your team.
 

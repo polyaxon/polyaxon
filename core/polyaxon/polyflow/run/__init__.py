@@ -25,6 +25,7 @@ from polyaxon.polyflow.run.kubeflow.pytorch_job import PytorchJobSchema, V1Pytor
 from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema, V1KFReplica
 from polyaxon.polyflow.run.kubeflow.tf_job import TFJobSchema, V1TFJob
 from polyaxon.polyflow.run.notifier import NotifierSchema, V1Notifier
+from polyaxon.polyflow.run.patch import validate_run_patch
 from polyaxon.polyflow.run.tuner import TunerSchema, V1Tuner
 from polyaxon.polyflow.run.ray import RaySchema, V1Ray
 from polyaxon.polyflow.run.service import ServiceSchema, V1Service
