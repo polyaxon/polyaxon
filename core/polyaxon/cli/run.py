@@ -48,7 +48,10 @@ from polyaxon.utils.validation import validate_tags
     "-pm",
     "--python-module",
     type=str,
-    help="The python module containing the polyaxonfile to run.",
+    help="The python module containing the polyaxonfile to run. "
+         "If python file contains a component main: polyaxon run -pm path/to/my-component.py "
+         "if the file container more than one component, you can specify the component: "
+         "polyaxon run -pm path/to/my-component.py:componentA",
 )
 @click.option(
     "--url", type=str, help="The url containing the polyaxonfile to run.",
@@ -106,7 +109,7 @@ from polyaxon.utils.validation import validate_tags
     "--nocache",
     is_flag=True,
     default=None,
-    help="Check cache before starting this operation.",
+    help="Disable cache check before starting this operation.",
 )
 @click.pass_context
 @clean_outputs
