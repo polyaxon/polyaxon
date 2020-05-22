@@ -663,6 +663,10 @@ def bokeh_chart(figure) -> V1EventChart:
     return V1EventChart(kind=V1EventChartKind.BOKEH, figure=json_item(figure))
 
 
+def altair_chart(figure) -> V1EventChart:
+    return V1EventChart(kind=V1EventChartKind.VEGA, figure=figure.to_dict())
+
+
 def plotly_chart(figure) -> V1EventChart:
     try:
         import plotly.tools

@@ -18,6 +18,7 @@ import atexit
 import os
 import sys
 import time
+import ujson
 
 import polyaxon_sdk
 
@@ -1060,6 +1061,28 @@ class Run(RunClient):
     @check_no_op
     @check_offline
     @can_log_events
+    def log_altair_chart(self, name, figure, step=None, timestamp=None):
+        """Logs a vega/altair chart/figure.
+
+        Args:
+            name: str, name of the figure
+            figure: figure
+            step: int, optional
+            timestamp: datetime, optional
+        """
+        self._log_has_events()
+
+        chart = events_processors.altair_chart(figure=figure)
+        logged_event = LoggedEventSpec(
+            name=name,
+            kind=V1ArtifactKind.CHART,
+            event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
+        )
+        self._event_logger.add_event(logged_event)
+
+    @check_no_op
+    @check_offline
+    @can_log_events
     def log_mpl_plotly_chart(self, name, figure, step=None, timestamp=None):
         """Logs a matplotlib figure to plotly figure.
 
@@ -1128,4 +1151,4 @@ class Run(RunClient):
         """
         env_data = get_run_env()
         with open(os.path.join(self._outputs_path, ".polyaxon"), "w") as env_file:
-            env_file.write(env_data)
+            env_file.write(ujson.dumps(env_data))

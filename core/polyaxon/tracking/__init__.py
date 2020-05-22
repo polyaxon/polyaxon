@@ -370,6 +370,16 @@ def log_bokeh_chart(name, figure, step=None, timestamp=None):
 log_bokeh_chart.__doc__ = Run.log_bokeh_chart.__doc__
 
 
+def log_altair_chart(name, figure, step=None, timestamp=None):
+    global TRACKING_RUN
+    TRACKING_RUN.log_altair_chart(
+        name=name, figure=figure, step=step, timestamp=timestamp,
+    )
+
+
+log_altair_chart.__doc__ = Run.log_altair_chart.__doc__
+
+
 def log_mpl_plotly_chart(name, figure, step=None, timestamp=None):
     global TRACKING_RUN
     TRACKING_RUN.log_mpl_plotly_chart(

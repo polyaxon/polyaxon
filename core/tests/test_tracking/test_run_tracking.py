@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import numpy as np
+import pandas as pd
 import os
 import tempfile
 import uuid
@@ -23,6 +24,7 @@ from unittest.mock import patch
 import matplotlib.pyplot as plt
 import pytest
 
+import altair as alt
 from bokeh.plotting import figure
 from plotly import figure_factory
 from tests.test_tracking.test_events.test_event_values import tensor_np
@@ -1212,6 +1214,9 @@ class TestRunLogging(TestEnvVarsCase):
             hist_data, group_labels, bin_size=[0.1, 0.25, 0.5]
         )
 
+        df1 = pd.DataFrame([["A", "B", "C", "D"], [28, 55, 43, 91]], index=["a", "b"]).T
+        alt_test = alt.Chart(df1).mark_bar().encode(x="a", y="b")
+
         assert (
             os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.CHART))
             is False
@@ -1223,7 +1228,8 @@ class TestRunLogging(TestEnvVarsCase):
         with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
             self.run.log_bokeh_chart(name="bokeh_test", figure=bokeh_test, step=1)
             self.run.log_plotly_chart(name="plotly_test", figure=plotly_test, step=1)
-        assert log_dashboard.call_count == 2
+            self.run.log_altair_chart(name="alt_test", figure=alt_test, step=1)
+        assert log_dashboard.call_count == 3
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.CHART))
@@ -1249,6 +1255,15 @@ class TestRunLogging(TestEnvVarsCase):
         assert os.path.exists(events_file) is True
         results = V1Events.read(
             kind=V1ArtifactKind.CHART, name="plotly_test", data=events_file
+        )
+        assert len(results.df.values) == 1
+
+        events_file = get_event_path(
+            self.run_path, kind=V1ArtifactKind.CHART, name="alt_test"
+        )
+        assert os.path.exists(events_file) is True
+        results = V1Events.read(
+            kind=V1ArtifactKind.CHART, name="alt_test", data=events_file
         )
         assert len(results.df.values) == 1
 
