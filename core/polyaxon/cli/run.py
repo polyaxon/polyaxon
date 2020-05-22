@@ -48,10 +48,7 @@ from polyaxon.utils.validation import validate_tags
     "-pm",
     "--python-module",
     type=str,
-    help="The python module containing the polyaxonfile to run. "
-         "If python file contains a component main: polyaxon run -pm path/to/my-component.py "
-         "if the file container more than one component, you can specify the component: "
-         "polyaxon run -pm path/to/my-component.py:componentA",
+    help="The python module containing the polyaxonfile to run."
 )
 @click.option(
     "--url", type=str, help="The url containing the polyaxonfile to run.",
@@ -164,6 +161,17 @@ def run(
 
     \b
     $ polyaxon run -p project1 -f file.yaml -P param1=234.2 -P param2=relu
+
+    If a python file contains a component main, you can run that component
+
+    \b
+    polyaxon run -pm path/to/my-component.py
+
+
+    If a python file contains more than one component, you can specify the component to run
+
+    \b
+    polyaxon run -pm path/to/my-component.py:componentA
     """
     op_spec = check_polyaxonfile(
         polyaxonfile=polyaxonfile,
