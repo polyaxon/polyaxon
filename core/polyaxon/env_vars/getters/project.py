@@ -48,15 +48,15 @@ def get_project_or_local(project=None, is_cli: bool = False):
             raise PolyaxonClientException("Please provide a valid project.")
 
     if project:
-        user, project_name = get_project_info(project)
+        owner, project_name = get_project_info(project)
     else:
         project = ProjectManager.get_config()
-        user, project_name = project.user, project.name
+        owner, project_name = project.owner, project.name
 
-    if not all([user, project_name]):
+    if not all([owner, project_name]):
         if is_cli:
             Printer.print_error("Please provide a valid project.")
             sys.exit(1)
         else:
             raise PolyaxonClientException("Please provide a valid project.")
-    return user, project_name
+    return owner, project_name

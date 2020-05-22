@@ -96,6 +96,8 @@ class ProjectClient:
         self._project_data = self.client.projects_v1.get_project(
             self.owner, self.project
         )
+        if self._project_data.owner is None:
+            self._project_data.owner = self.owner
 
     @check_no_op
     @check_offline
