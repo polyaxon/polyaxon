@@ -90,7 +90,15 @@ setup(
         "docker": ["docker"],
         "git": ["git"],
         "polytune": ["scikit-learn==0.22.2", "hyperopt==0.2.4"],
-        "polyboard": ["Pillow", "matplotlib", "moviepy", "plotly", "bokeh", "pandas", "altair"],
+        "polyboard": [
+            "Pillow",
+            "matplotlib",
+            "moviepy",
+            "plotly",
+            "bokeh",
+            "pandas",
+            "altair",
+        ],
         "streams": [
             "kubernetes-asyncio==11.2.0",
             "starlette==0.13.4",

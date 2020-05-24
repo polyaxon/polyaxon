@@ -75,14 +75,17 @@ def get_op_specification(
     if nocache is not None:
         job_data["cache"] = {"disable": nocache}
 
-    if hub:
-        job_data["hubRef"] = hub
-        config = get_specification(data=[job_data])
-    elif config.kind == kinds.OPERATION:
-        config = get_specification(data=[config.to_dict(), job_data])
-    else:
+    if config and config.kind == kinds.COMPONENT:
         job_data["component"] = config.to_dict()
         config = get_specification(data=[job_data])
+    elif config and config.kind == kinds.OPERATION:
+        config = get_specification(data=[config.to_dict(), job_data])
+    elif hub:
+        job_data["hubRef"] = hub
+        config = get_specification(data=[job_data])
+
+    if hub and config.hub_ref is None:
+        config.hub_ref = hub
     params = copy.deepcopy(config.params)
     # Sanity check if params were passed and we are not dealing with a hub component
     if not hub:

@@ -116,13 +116,18 @@ def check_polyaxonfile(
     try:
         plx_file = None
         path_context = None
-        if not hub:
+        public_hub = hub and "/" not in hub
+
+        if not hub or public_hub:
             if python_module:
                 path_context = python_module[0]
                 plx_file = ConfigSpec.get_from(python_module, config_type=".py").read()
 
             elif url:
                 plx_file = ConfigSpec.get_from(url, "url").read()
+
+            elif hub:
+                plx_file = ConfigSpec.get_from(hub, "hub").read()
 
             else:
                 path_context = polyaxonfile[0]

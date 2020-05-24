@@ -18,6 +18,8 @@ import os
 
 import pytest
 
+from mock import patch
+
 from marshmallow import ValidationError
 from tests.utils import BaseTestCase
 
@@ -87,11 +89,20 @@ class TestPolyaxonfiles(BaseTestCase):
         with self.assertRaises(PolyaxonfileError):
             check_polyaxonfile(hub="component:12", is_cli=False, to_op=False)
 
-    def test_from_hub(self):
-        operation = check_polyaxonfile(hub="component:12", is_cli=False, to_op=True)
-        assert operation.version == pkg.SCHEMA_VERSION
+    def test_from_public_hub(self):
+        with patch("polyaxon.config_reader.spec._read_from_public_hub") as request_mock:
+            request_mock.return_value = os.path.abspath("tests/fixtures/plain/simple_job.yml")
+            operation = check_polyaxonfile(hub="component:12", is_cli=False, to_op=True)
+
+        assert request_mock.call_count == 1
         assert operation.kind == "operation"
         assert operation.hub_ref == "component:12"
+
+    def test_from_hub(self):
+        operation = check_polyaxonfile(hub="org/component:12", is_cli=False, to_op=True)
+        assert operation.version == pkg.SCHEMA_VERSION
+        assert operation.kind == "operation"
+        assert operation.hub_ref == "org/component:12"
 
     def test_simple_file_passes(self):
         run_config = CompiledOperationSpecification.read(

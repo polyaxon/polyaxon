@@ -78,6 +78,9 @@ class ConfigSpec(object):
         if self.config_type == "url":
             return _read_from_url(self.value)
 
+        if self.config_type == "hub":
+            return _read_from_public_hub(self.value)
+
         raise PolyaxonSchemaError(
             "Received an invalid configuration: `{}`".format(self.value)
         )
@@ -117,7 +120,16 @@ def _read_from_url(url: str):
 
     resp = safe_request(url)
     resp.raise_for_status()
-    return _read_from_stream(resp.content)
+    return _read_from_stream(resp.content.decode())
+
+
+def _read_from_public_hub(hub: str):
+    hub, version = hub.split(":")
+    version = version or "latest"
+    url = "https://raw.githubusercontent.com/polyaxon/polyaxon-hub/dev/{}/{}.yaml".format(
+        hub, version
+    )
+    return _read_from_url(url)
 
 
 def _read_from_stream(stream):
