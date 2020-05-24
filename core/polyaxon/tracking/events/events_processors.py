@@ -444,16 +444,23 @@ def roc_auc_curve(fpr, tpr, auc=None):
 
 def sklearn_roc_auc_curve(y_preds, y_targets):
     try:
-        from sklearn.metrics import roc_curve
-        from sklearn.metrics import roc_auc_score
+        from sklearn.metrics import roc_curve, auc
     except ImportError:
         logger.warning(SKLEARN_ERROR_MESSAGE)
 
-    y_true = y_targets.numpy()
-    y_pred = y_preds.numpy()
+    try:
+        y_true = y_targets.numpy()
+    except AttributeError:
+        y_true = y_targets
+    try:
+        y_pred = y_preds.numpy()
+    except AttributeError:
+        y_pred = y_preds
     fpr, tpr, _ = roc_curve(y_true, y_pred)
-    auc = roc_auc_score(y_true, y_pred)
-    return V1EventCurve(kind=V1EventCurveKind.ROC, x=fpr, y=tpr, annotation=str(auc),)
+    auc_score = auc(fpr, tpr)
+    return V1EventCurve(
+        kind=V1EventCurveKind.ROC, x=fpr, y=tpr, annotation=str(auc_score),
+    )
 
 
 def pr_curve(precision, recall, average_precision=None):
@@ -472,8 +479,15 @@ def sklearn_pr_curve(y_preds, y_targets):
     except ImportError:
         logger.warning(SKLEARN_ERROR_MESSAGE)
 
-    y_true = y_targets.numpy()
-    y_pred = y_preds.numpy()
+    try:
+        y_true = y_targets.numpy()
+    except AttributeError:
+        y_true = y_targets
+    try:
+        y_pred = y_preds.numpy()
+    except AttributeError:
+        y_pred = y_preds
+
     precision, recall, _ = precision_recall_curve(y_true, y_pred)
     ap = average_precision_score(y_true, y_pred)
     return V1EventCurve(

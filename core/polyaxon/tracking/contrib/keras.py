@@ -54,10 +54,11 @@ class PolyaxonKerasCallback(Callback):
 class PolyaxonKerasModelCheckpoint(ModelCheckpoint):
     """Save model checkpoint with polyaxon."""
 
-    def __init__(self, run, filepath, **kwargs):
+    def __init__(self, run, filepath=None, **kwargs):
         self.run = run
         if settings.CLIENT_CONFIG.is_managed:
             self.run = self.run or Run()
+            filepath = self.run.get_outputs_path() + '/model'
         super().__init__(filepath, **kwargs)
 
     def on_epoch_end(self, epoch, logs=None):
