@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import logging
 import os
 
 from concurrent import futures
@@ -44,6 +44,10 @@ from polyaxon.utils.path_utils import (
     check_dirname_exists,
     get_files_in_path_context,
 )
+
+logging.getLogger("azure").setLevel(logging.WARNING)
+logging.getLogger("azure.storage").setLevel(logging.WARNING)
+logging.getLogger("azure.storage.blob").setLevel(logging.WARNING)
 
 
 def get_blob_service_connection(
