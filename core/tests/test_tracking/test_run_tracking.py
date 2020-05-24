@@ -15,17 +15,17 @@
 # limitations under the License.
 
 import numpy as np
-import pandas as pd
 import os
+import pandas as pd
 import tempfile
 import uuid
 
 from unittest.mock import patch
 
+import altair as alt
 import matplotlib.pyplot as plt
 import pytest
 
-import altair as alt
 from bokeh.plotting import figure
 from plotly import figure_factory
 from tests.test_tracking.test_events.test_event_values import tensor_np

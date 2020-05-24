@@ -48,7 +48,7 @@ from polyaxon.utils.validation import validate_tags
     "-pm",
     "--python-module",
     type=str,
-    help="The python module containing the polyaxonfile to run."
+    help="The python module containing the polyaxonfile to run.",
 )
 @click.option(
     "--url", type=str, help="The url containing the polyaxonfile to run.",

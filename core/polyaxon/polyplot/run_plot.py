@@ -17,8 +17,6 @@ import pandas as pd
 
 from typing import Dict, List, Set, Union
 
-import plotly.express as px
-
 from polyaxon.client import RunClient
 from polyaxon.client.decorators import check_no_op
 from polyaxon.polyboard.artifacts import V1ArtifactKind
@@ -80,16 +78,22 @@ class RunPlot(RunClient):
         color: str = "name",
         barmode: str = "group",
     ):
+        import plotly.express as px
+
         df = self.get_tidy_df()
         return px.bar(df, x=x, y=y, color=color, barmode=barmode)
 
     @check_no_op
     def line(self, x: str = "timestamp", y: str = "metric", color: str = "name"):
+        import plotly.express as px
+
         df = self.get_tidy_df()
         return px.line(df, x=x, y=y, color=color)
 
     @check_no_op
     def scatter(self, x: str = None, y: str = None, color: str = None, **kwargs):
+        import plotly.express as px
+
         if len(self.metric_names) < 2:
             raise ValueError("You need at least 2 metrics to use this plot.")
 
@@ -130,7 +134,7 @@ class MultiRunPlot(RunClient):
     def get_runs(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ) -> Dict:
-        runs = self.list(query=query, sort=sort, limit=limit, offset=offset,).data
+        runs = self.list(query=query, sort=sort, limit=limit, offset=offset,).results
         for r in runs:
             self.run_uuids.add(r.uuid)
             self.runs[r.uuid] = r
@@ -143,9 +147,10 @@ class MultiRunPlot(RunClient):
         runs = self.get_runs(query=query, sort=sort, limit=limit, offset=offset)
         data = []
         for r in runs:
-            values = r.inputs or {}
-            values.update(r.outputs or {})
-            data.append({"uid": r.uuid, "values": values})
+            run = runs[r]
+            values = run.inputs or {}
+            values.update(run.outputs or {})
+            data.append({"uid": run.uuid, "values": values})
         return data
 
     @check_no_op

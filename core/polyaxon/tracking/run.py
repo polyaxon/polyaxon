@@ -18,9 +18,9 @@ import atexit
 import os
 import sys
 import time
-import ujson
 
 import polyaxon_sdk
+import ujson
 
 from polyaxon import settings
 from polyaxon.client import RunClient
