@@ -66,7 +66,6 @@ class OperationSpecification(BaseSpecification):
             cls.TRIGGER,
             cls.CONDITIONS,
             cls.SKIP_ON_UPSTREAM_SKIP,
-            cls.HUB_REF,
         ]:
             override_field = op_config.get(field)
             if override_field:
