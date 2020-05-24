@@ -11938,17 +11938,19 @@ spec:
         notifications:
           description: List of notigications for this operation
           items:
-            description: NotificationSpec is deinition of how to send notification
+            description: NotificationSpec is definition of how to send notification
               for new status of this operation
             properties:
-              connection:
-                type: string
+              connections:
+                items:
+                  type: string
+                type: array
               trigger:
                 description: OperationTriggerNotificationType maps the notifiable
                   conditions
                 type: string
             required:
-            - connection
+            - connections
             - trigger
             type: object
           type: array

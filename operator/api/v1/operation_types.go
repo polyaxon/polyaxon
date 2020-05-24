@@ -71,8 +71,8 @@ type Operation struct {
 // NotificationSpec is definition of how to send notification for new status of this operation
 // +k8s:openapi-gen=true
 type NotificationSpec struct {
-	Connections []string                           `json:"connections" protobuf:"bytes,1,opt,name=connections"`
-	Trigger    OperationTriggerNotificationType `json:"trigger" protobuf:"bytes,2,opt,name=trigger"`
+	Connections []string                         `json:"connections" protobuf:"bytes,1,opt,name=connections"`
+	Trigger     OperationTriggerNotificationType `json:"trigger" protobuf:"bytes,2,opt,name=trigger"`
 }
 
 // IsBeingDeleted checks if the job is being deleted
