@@ -49,6 +49,7 @@ def resolve_contexts(
             "uuid": run_uuid,
             "namespace": namespace,
             "iteration": iteration,
+            "context_path": contexts.CONTEXT_ROOT,
         },
         "init": {},
         "connections": {},
@@ -118,6 +119,7 @@ def resolve_globals_contexts(
             "uuid": run_uuid,
             "namespace": namespace,
             "iteration": iteration,
+            "context_path": contexts.CONTEXT_ROOT,
             "artifacts_path": get_path(contexts.CONTEXT_MOUNT_ARTIFACTS, run_path),
         }
     }
