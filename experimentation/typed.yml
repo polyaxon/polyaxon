@@ -1,0 +1,38 @@
+version: 1.1
+kind: component
+name: typed-experiment
+description: experiment with inputs
+tags: [examples]
+
+inputs:
+- {name: conv1_size, type: int, value: 32, isOptional: true}
+- {name: conv2_size, type: int, value: 64, isOptional: true}
+- {name: dropout, type: float, value: 0.2, isOptional: true}
+- {name: hidden1_size, type: int, value: 500, isOptional: true}
+- {name: conv_activation, type: str, value: relu, isOptional: true}
+- {name: dense_activation, type: str, value: relu, isOptional: true}
+- {name: optimizer, type: str, value: adam, isOptional: true}
+- {name: learning_rate, type: float, value: 0.001, isOptional: true}
+- {name: epochs, type: int}
+outputs:
+- {name: loss, type: float}
+- {name: validation, type: float}
+
+run:
+  kind: job
+  init:
+  - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
+  container:
+    image: polyaxon/polyaxon-quick-start
+    command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/model.py"]
+    args: [
+      "--conv1_size={{ conv1_size }}",
+      "--conv2_size={{ conv2_size }}",
+      "--dropout={{ dropout }}",
+      "--hidden1_size={{ hidden1_size }}",
+      "--optimizer={{ optimizer }}",
+      "--conv_activation={{ conv_activation }}",
+      "--dense_activation={{ dense_activation }}",
+      "--learning_rate={{ learning_rate }}",
+      "--epochs={{ epochs }}"
+    ]
