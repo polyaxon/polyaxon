@@ -1,0 +1,66 @@
+version: 1.1
+kind: component
+name: automated-process
+description: runs an experiment. if the loss is higher than max_loss start a hyperparameter tuning process, and then print the best models
+inputs:
+- {name: max_loss, type: float, value: 0.01, isOptional: true, description: "max loss to start a tuning job."}
+- {name: top, type: int, value: 5, isOptional: true, description: "top jobs."}
+run:
+  kind: dag
+  operations:
+  - name: build
+    params:
+      destination:
+        value:
+          name: polyaxon/polyaxon-quick-start
+          connection: docker-connection
+    runPatch:
+      init:
+      - dockerfile:
+          image: "tensorflow/tensorflow:2.0.1-py3"
+          run:
+          - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
+          langEnv: 'en_US.UTF-8'
+  - name: experiment
+      urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+      dependencies: [build]
+      params:
+        learning_rate : 0.005
+        epochs: 10
+  - name: tune
+    urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+    params:
+      upstream_loss:
+        ref: ops.experiment
+        value: outputs.loss
+        contextOnly: true
+    condition: "{{ upstream_loss > dag.inputs.max_loss }}"
+    matrix:
+      kind: random
+      concurrency: 2
+      numRuns: 20
+      params:
+        learning_rate:
+          kind: linspace
+          value: 0.001:0.1:5
+        dropout:
+          kind: choice
+          value: [0.25, 0.3]
+        conv_activation:
+          kind: pchoice
+          value: [[relu, 0.1], [sigmoid, 0.8]]
+        epochs:
+          kind: choice
+          value: [5, 10]
+  - name: best_model
+    dependencies: [experiment, tune]
+    trigger: all_done
+    component:
+      run:
+        kind: job
+        init:
+        - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
+        container:
+          image: polyaxon/polyaxon-quick-start
+          command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/best_models.py"]
+          args: ["--project={{ globals.project_name }}", "--top={{ dag.inputs.top }}"]

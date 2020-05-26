@@ -1,0 +1,28 @@
+version: 1.1
+kind: operation
+matrix:
+  kind: hyperband
+  concurrency: 20
+  maxIterations: 10
+  eta: 3
+  resource:
+    name: steps
+    type: int
+  resume: False
+  metric:
+    name: loss
+    optimization: minimize
+  params:
+    learning_rate:
+      kind: uniform
+      value: [0, 0.01]
+    dropout:
+      kind: choice
+      value: [0.25, 0.3]
+    conv_activation:
+      kind: pchoice
+      value: [[relu, 0.1], [sigmoid, 0.8]]
+    epochs:
+      kind: choice
+      value: [5, 10]
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
