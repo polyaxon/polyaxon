@@ -1,6 +1,10 @@
 import argparse
+import gzip
 import numpy as np
+import os
 import tensorflow as tf
+
+from six.moves.urllib.request import urlretrieve
 
 # Polyaxon
 from polyaxon.tracking import Run
@@ -12,7 +16,7 @@ ACTIVATIONS = {
 }
 
 OPTIMIZERS = {
-    'sgd': tf.train.GradientDescentOptimizer,
+    'gradient_descent': tf.train.GradientDescentOptimizer,
     'rmsprop': tf.train.RMSPropOptimizer,
     'adam': tf.train.AdamOptimizer,
 }
@@ -24,6 +28,44 @@ TEST_IMAGES = 't10k-images-idx3-ubyte.gz'
 TEST_LABELS = 't10k-labels-idx1-ubyte.gz'
 IMAGE_WIDTH = 28
 OUTPUT_CLASSES = 10
+
+
+def load_onehot_data(filename):
+    with gzip.open(filename, 'rb') as unzipped_file:
+        data = np.frombuffer(unzipped_file.read(), dtype=np.uint8)
+    labels = data[8:]
+    length = len(labels)
+    onehot = np.zeros((length, OUTPUT_CLASSES), dtype=np.float32)
+    onehot[np.arange(length), labels] = 1
+    return onehot
+
+
+def load_image_data(filename):
+    with gzip.open(filename, 'rb') as unzipped_file:
+        data = np.frombuffer(unzipped_file.read(), dtype=np.uint8)
+    images = data[16:].reshape((-1, IMAGE_WIDTH ** 2)).astype(np.float32)
+    images /= 255
+    return images
+
+
+def load_mnist_data(path='/tmp/mnist'):
+    if not os.path.isdir(path):
+        os.makedirs(path)
+    for data_file in [
+        TRAIN_IMAGES,
+        TRAIN_LABELS,
+        TEST_IMAGES,
+        TEST_LABELS,
+    ]:
+        destination = os.path.join(path, data_file)
+        if not os.path.isfile(destination):
+            urlretrieve("{}{}".format(MNIST_HOST, data_file), destination)
+    return (
+        (load_image_data(os.path.join(path, TRAIN_IMAGES)),
+         load_onehot_data(os.path.join(path, TRAIN_LABELS))),
+        (load_image_data(os.path.join(path, TEST_IMAGES)),
+         load_onehot_data(os.path.join(path, TEST_LABELS))),
+    )
 
 
 def weight_variable(shape):
@@ -176,11 +218,26 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Run()
+    experiment = Run(project='mnist', artifacts_path='/tmp/mnist')
+    experiment.create(tags=['examples', 'tensorflow'])
+    experiment.log_inputs(
+        conv1_size=args.conv1_size,
+        conv1_out=args.conv1_out,
+        conv1_activation=args.conv1_activation,
+        pool1_size=args.pool1_size,
+        conv2_size=args.conv2_size,
+        conv2_out=args.conv2_out,
+        conv2_activation=args.conv2_activation,
+        pool2_size=args.pool2_size,
+        fc1_activation=args.fc1_activation,
+        fc1_size=args.fc1_size,
+        optimizer=args.optimizer,
+        log_learning_rate=args.log_learning_rate,
+        batch_size=args.batch_size,
+        dropout=args.dropout,
+        epochs=args.epochs)
 
-    mnist = tf.keras.datasets.mnist
-
-    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = load_mnist_data()
 
     # Polyaxon
     experiment.log_data_ref(content=x_train, name='x_train')
@@ -212,4 +269,4 @@ if __name__ == '__main__':
         accuracy = evaluate_model(model, x_test, y_test)
 
         # Polyaxon
-        experiment.log_metrics(accuracy=accuracy)
+        experiment.log_outputs(accuracy=accuracy)

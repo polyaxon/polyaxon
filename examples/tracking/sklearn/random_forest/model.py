@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon.tracking import Run
 
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
@@ -42,17 +42,17 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment(project='random-forest')
-    experiment.create(framework='scikit-learn', tags=['examples'])
-    experiment.log_params(n_estimators=args.n_estimators,
+    experiment = Run(project='random-forest')
+    experiment.create(tags=['examples', 'scikit-learn'])
+    experiment.log_inputs(n_estimators=args.n_estimators,
                           max_features=args.max_features,
                           min_samples_leaf=args.min_samples_leaf)
 
     (X, y) = load_data()
 
     # Polyaxon
-    experiment.log_data_ref(data=X, data_name='dataset_X')
-    experiment.log_data_ref(data=y, data_name='dataset_y')
+    experiment.log_data_ref(content=X, name='dataset_X')
+    experiment.log_data_ref(content=y, name='dataset_y')
 
     accuracies = model(X=X,
                        y=y,
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     print('Accuracy: {} +/- {}'.format(accuracy_mean, accuracy_std))
 
     # Polyaxon
-    experiment.log_metrics(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)
+    experiment.log_outputs(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)

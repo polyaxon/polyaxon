@@ -1,41 +1,8 @@
----
-version: 1
-
-kind: experiment
-
-framework: keras
-
-tags: [examples]
-
-environment:
-  resources:
-    gpu:
-      requests: 1
-      limits: 1
-
-declarations:
-  max_features: 20000
-  skip_top: 30
-  maxlen: 100
-  batch_size: 32
-  num_nodes: 8
-  optimizer: 'adam'
-  log_learning_rate: -3
-  dropout: 0.8
-  epochs: 4
-
-build:
-  image: python:3.6
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
-
-run:
-  cmd: python -u model.py --max_features={{ max_features }} \
-                          --skip_top={{ skip_top }} \
-                          --maxlen={{ maxlen }} \
-                          --batch_size={{ batch_size }} \
-                          --num_nodes={{ num_nodes }} \
-                          --optimizer={{ optimizer }} \
-                          --log_learning_rate={{ log_learning_rate }} \
-                          --dropout={{ dropout }} \
-                          --epochs={{ epochs }}
+version: 1.1
+kind: operation
+runPatch:
+  container:
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+pathRef: ./polyaxonfile.yml

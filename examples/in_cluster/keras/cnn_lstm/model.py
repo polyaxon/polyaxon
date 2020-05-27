@@ -3,7 +3,7 @@ import logging
 
 from keras.datasets import imdb
 from keras import optimizers
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras.layers import Conv1D, MaxPooling1D
 from keras.layers import Dense, Dropout, Activation
 from keras.layers import Embedding
@@ -12,8 +12,8 @@ from keras.models import Sequential
 from keras.preprocessing import sequence
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment, get_outputs_path
-from polyaxon_client.tracking.contrib.keras import PolyaxonKeras
+from polyaxon import tracking
+from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback, PolyaxonKerasModelCheckpoint
 
 logger = logging.getLogger('cnn-lstm')
 
@@ -30,8 +30,7 @@ def transform_data(x_train, y_train, x_test, y_test, maxlen):
     return x_train, y_train, x_test, y_test
 
 
-def train(experiment,
-          max_features,
+def train(max_features,
           maxlen,
           embedding_size,
           kernel_size,
@@ -62,8 +61,10 @@ def train(experiment,
               epochs=epochs,
               validation_data=(x_test, y_test),
               callbacks=[
-                  PolyaxonKeras(experiment=experiment),
-                  ModelCheckpoint(get_outputs_path() + '/model')
+                  PolyaxonKerasCallback(),
+                  PolyaxonKerasModelCheckpoint(),
+                  TensorBoard(log_dir=tracking.get_tensorboard_path(), histogram_freq=1),
+                  ModelCheckpoint(tracking.get_model_path())
               ])
 
     score, accuracy = model.evaluate(x_test, y_test, batch_size=batch_size)
@@ -135,8 +136,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment()
-    experiment.log_tags(['keras'])
+    tracking.init()
 
     logger.info('Loading data...')
     (x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=args.max_features,
@@ -146,10 +146,10 @@ if __name__ == '__main__':
     logger.info('test sequences %s', len(x_test))
 
     # Polyaxon
-    experiment.log_data_ref(data=x_train, data_name='x_train')
-    experiment.log_data_ref(data=y_train, data_name='y_train')
-    experiment.log_data_ref(data=x_test, data_name='x_test')
-    experiment.log_data_ref(data=y_test, data_name='y_test')
+    tracking.log_data_ref(content=x_train, name='x_train')
+    tracking.log_data_ref(content=y_train, name='y_train')
+    tracking.log_data_ref(content=x_test, name='x_test')
+    tracking.log_data_ref(content=y_test, name='y_test')
 
     logger.info('Transforming data...')
     x_train, y_train, x_test, y_test = transform_data(x_train,
@@ -159,8 +159,7 @@ if __name__ == '__main__':
                                                       args.maxlen)
 
     logger.info('Training...')
-    score, accuracy = train(experiment=experiment,
-                            max_features=args.max_features,
+    score, accuracy = train(max_features=args.max_features,
                             maxlen=args.maxlen,
                             epochs=args.epochs,
                             embedding_size=args.embedding_size,
@@ -173,7 +172,7 @@ if __name__ == '__main__':
                             log_learning_rate=args.log_learning_rate)
 
     # Polyaxon
-    experiment.log_metrics(score=score, accuracy=accuracy)
+    tracking.log_metrics(eval_score=score, eval_accuracy=accuracy)
 
     logger.info('Test score: %s', score)
     logger.info('Test accuracy: %s', accuracy)

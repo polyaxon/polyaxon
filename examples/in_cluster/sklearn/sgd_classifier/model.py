@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon.tracking import Run
 
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import cross_val_score
@@ -34,8 +34,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--penalty',
         type=str,
-        default=None,
-        help='elasticnet')
+        default='elasticnet')
     parser.add_argument(
         '--l1_ratio',
         type=float,
@@ -52,13 +51,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment()
+    experiment = Run()
 
     (X, y) = load_data()
 
     # Polyaxon
-    experiment.log_data_ref(data=X, data_name='dataset_X')
-    experiment.log_data_ref(data=y, data_name='dataset_y')
+    experiment.log_data_ref(content=X, name='dataset_X')
+    experiment.log_data_ref(content=y, name='dataset_y')
 
     accuracies = model(X=X,
                        y=y,

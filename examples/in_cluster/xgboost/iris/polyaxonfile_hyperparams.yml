@@ -1,34 +1,20 @@
----
-version: 1
-
-kind: group
-
-framework: xgboost
-
-tags: [examples]
-
-hptuning:
+version: 1.1
+kind: operation
+matrix:
+  kind: random
   concurrency: 5
-  random_search:
-    n_experiments: 50
-
-  matrix:
+  numRuns: 50
+  params:
     log_learning_rate:
-      range: [-5, 0, 1]
+      kind: range
+      value: [-5, 0, 1]
     max_depth:
-      range: [2, 8, 2]
+      kind: range
+      value: [2, 8, 2]
     num_rounds:
-      values: [10, 20]
+      kind: choice
+      value: [10, 20]
     min_child_weight:
-      values: [5, 6, 7]
-
-build:
-  image: python:3.6
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
-
-run:
-  cmd: python -u model.py --log_learning_rate={{ log_learning_rate }} \
-                          --max_depth={{ max_depth }} \
-                          --num_rounds={{ num_rounds }} \
-                          --min_child_weight={{ min_child_weight }}
+      kind: choice
+      value: [5, 6, 7]
+pathRef: ./model.yml

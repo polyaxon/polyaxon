@@ -1,33 +1,17 @@
----
-version: 1
-
-kind: experiment
-
-framework: tensorflow
-
-backend: kubeflow
-
-
-environment:
-  resources:
-    gpu:
-      requests: 1
-      limits: 1
-
-  replicas:
-    n_workers: 2
-
-    default_worker:
-      resources:
-        gpu:
-          requests: 1
-          limits: 1
-
-
-build:
-  image: tensorflow/tensorflow:1.10.0-gpu
-  build_steps:
-    - pip install polyaxon-client==0.5.5
+version: 1.1
+kind: component
+tags: [examples, tensorflow, kubeflow]
 
 run:
-  cmd: python -u run.py
+  kind: tfjob
+  worker:
+    replicas: 2
+    init:
+    - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+    container:
+      image: tensorflow/tensorflow:1.10.0-gpu
+      command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/kubeflow/tfjob/run.py"]
+      imagePullPolicy: "Always"
+      resources:
+        limits:
+          nvidia.com/gpu: 1

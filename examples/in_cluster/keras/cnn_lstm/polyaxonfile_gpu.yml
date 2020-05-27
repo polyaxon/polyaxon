@@ -1,47 +1,8 @@
----
-version: 1
-
-kind: experiment
-
-framework: keras
-
-tags: [examples]
-
-environment:
-  resources:
-    gpu:
-      requests: 1
-      limits: 1
-
-declarations:
-  max_features: 20000
-  skip_top: 50
-  maxlen: 100
-  embedding_size: 128
-  pool_size: 4
-  kernel_size: 5
-  filters: 64
-  lstm_output_size: 70
-  batch_size: 32
-  optimizer: 'adam'
-  log_learning_rate: -3
-  epochs: 1
-
-build:
-  image: python:3.6
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
-
-run:
-  cmd: python -u model.py --max_features={{ max_features }} \
-                          --skip_top={{ skip_top }} \
-                          --maxlen={{ maxlen }} \
-                          --embedding_size={{ embedding_size }} \
-                          --pool_size={{ pool_size }} \
-                          --kernel_size={{ kernel_size }} \
-                          --filters={{ filters }} \
-                          --lstm_output_size={{ lstm_output_size }} \
-                          --batch_size={{ batch_size }} \
-                          --optimizer={{ optimizer }} \
-                          --log_learning_rate={{ log_learning_rate }} \
-                          --epochs={{ epochs }}
+version: 1.1
+kind: operation
+runPatch:
+  container:
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+pathRef: ./polyaxonfile.yml

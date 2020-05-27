@@ -1,33 +1,14 @@
 ---
-version: 1
-
-kind: group
-
-framework: scikit-learn
-
-tags: [examples]
-
-hptuning:
+version: 1.1
+kind: operation
+matrix:
+  kind: random
   concurrency: 3
-
-  matrix:
+  params:
     n_estimators:
-      range: [3, 4, 5, 6]
+      kind: range
+      value: [3, 4, 5, 6]
     min_samples_leaf:
-      values: [80, 100, 120]
-
-
-
-declarations:
-  max_features: 3
-  min_samples_leaf: 80
-
-build:
-  image: python:2.7
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
-
-run:
-  cmd: python -u model.py --n_estimators={{ n_estimators }} \
-                          --max_features={{ max_features }} \
-                          --min_samples_leaf={{ min_samples_leaf }}
+      kind: choice
+      value: [80, 100, 120]
+pathRef: ./polyaxonfile.yml

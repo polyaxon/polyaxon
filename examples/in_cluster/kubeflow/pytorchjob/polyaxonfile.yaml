@@ -1,34 +1,25 @@
----
 version: 1
-
-kind: experiment
-
-framework: pytorch
-
-backend: kubeflow
-
-
-environment:
-  resources:
-    gpu:
-      requests: 1
-      limits: 1
-
-  replicas:
-    n_workers: 1
-
-    default_worker:
-      resources:
-        gpu:
-          requests: 1
-          limits: 1
-
-
-build:
-  image: pytorch/pytorch:1.0-cuda10.0-cudnn7-runtime
-  build_steps:
-    - pip install tensorboardX==1.6.0
-    - pip install polyaxon-client==0.5.5
-
+kind: component
+tags: [examples, pytorch, kubeflow]
 run:
-  cmd: python -u mnist.py
+  kind: pytorchjob
+  master:
+    replicas: 1
+    init:
+    - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+    container:
+      image: pytorch/pytorch:1.0-cuda10.0-cudnn7-runtime
+      command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/kubeflow/pytorchjob/mnist.py"]
+      resources:
+        requests:
+          nvidia.com/gpu: 1
+  worker:
+    replicas: 1
+    init:
+    - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+    container:
+      image: pytorch/pytorch:1.0-cuda10.0-cudnn7-runtime
+      command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/kubeflow/pytorchjob/mnist.py"]
+      resources:
+        requests:
+          nvidia.com/gpu: 1

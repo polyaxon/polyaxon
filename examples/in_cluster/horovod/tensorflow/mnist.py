@@ -12,7 +12,7 @@ import horovod.tensorflow as hvd
 from tensorflow import keras
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon.tracking import Run
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
@@ -126,7 +126,7 @@ def main(unused_argv):
 
     # Polyaxon
     if hvd.rank() == 0:
-        experiment = Experiment()
+        experiment = Run()
 
     # Keras automatically creates a cache directory in ~/.keras/datasets for
     # storing the downloaded MNIST data. This creates a race
@@ -149,10 +149,10 @@ def main(unused_argv):
 
     # Polyaxon
     if hvd.rank() == 0:
-        experiment.log_data_ref(data=train_data, data_name='x_train')
-        experiment.log_data_ref(data=train_labels, data_name='y_train')
-        experiment.log_data_ref(data=eval_data, data_name='x_test')
-        experiment.log_data_ref(data=eval_labels, data_name='y_test')
+        experiment.log_data_ref(content=train_data, name='x_train')
+        experiment.log_data_ref(content=train_labels, name='y_train')
+        experiment.log_data_ref(content=eval_data, name='x_test')
+        experiment.log_data_ref(content=eval_labels, name='y_test')
 
     # The shape of downloaded data is (-1, 28, 28), hence we need to reshape it
     # into (-1, 784) to feed into our network. Also, need to normalize the

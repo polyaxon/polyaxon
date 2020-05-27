@@ -1,27 +1,24 @@
----
-version: 1
-
-kind: experiment
-
-framework: scikit-learn
-
-tags: [examples]
-
-declarations:
-  loss: log
-  penalty: elasticnet
-  l1_ratio: 1.0
-  max_iter: 1000
-  tol: 0.001
-
-build:
-  image: python:2.7
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
+version: 1.1
+kind: component
+tags: [examples, scikit-learn]
+inputs:
+- {name: loss, type: str, isOptional: true, value: log}
+- {name: penalty, type: str, isOptional: true, value: elasticnet}
+- {name: l1_ratio, type: float, isOptional: true, value: 1.0}
+- {name: max_iter, type: int, isOptional: true, value: 1000}
+- {name: tol, type: float, isOptional: true, value: 0.001}
 
 run:
-  cmd: python -u model.py --loss={{ loss }} \
-                          --penalty={{ penalty }} \
-                          --l1_ratio={{ l1_ratio }} \
-                          --max_iter={{ max_iter }} \
-                          --tol={{ tol }}
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/sklearn/sgd_classifier/model.py"]
+    args: [
+      "--loss={{ loss }}",
+      "--penalty={{ penalty }}",
+      "--l1_ratio={{ l1_ratio }}",
+      "--max_iter={{ max_iter }}",
+      "--tol={{ tol }}",
+    ]

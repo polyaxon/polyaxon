@@ -2,27 +2,21 @@ version: 1.1
 kind: operation
 matrix:
   kind: random
-  concurrency: 5
+  concurrency: 10
   numRuns: 50
   params:
-    conv1_out:
+    conv1_size:
       kind: choice
       value: [32, 64, 128]
-    conv2_out:
+    conv2_size:
       kind: choice
       value: [32, 64, 128]
-    conv1_activation:
-      kind: choice
-      value: ['relu', 'sigmoid', 'tanh']
-    conv2_activation:
-      kind: choice
-      value: ['relu', 'sigmoid', 'tanh']
-    fc1_activation:
-      kind: choice
-      value: ['relu', 'sigmoid', 'tanh']
     dropout:
       kind: uniform
       value: 0:1
+    hidden1_size:
+      kind: range
+      value: 10:600:50
     optimizer:
       kind: pchoice
       value: [[adam, 0.5], [rmsprop, 0.3], [sgd, 0.2]]
@@ -32,4 +26,7 @@ matrix:
     epochs:
       kind: choice
       value: [1, 3, 7]
+    batch_size:
+      kind: choice
+      value: [32, 64]
 pathRef: ./polyaxonfile.yml

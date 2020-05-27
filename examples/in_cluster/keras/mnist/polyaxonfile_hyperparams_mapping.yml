@@ -1,0 +1,44 @@
+version: 1.1
+kind: operation
+matrix:
+  kind: mapping
+  concurrency: 2
+  values: [
+    {
+      conv1_size: 32,
+      conv2_size: 32,
+      dropout: 0.1,
+      hidden1_size: 10,
+      optimizer: adam,
+      log_learning_rate: -5,
+      epochs: 1,
+    },
+    {
+      conv1_size: 64,
+      conv2_size: 64,
+      dropout: 0.2,
+      hidden1_size: 100,
+      optimizer: sgd,
+      log_learning_rate: -1,
+      epochs: 2,
+    },
+    {
+      conv1_size: 64,
+      conv2_size: 128,
+      dropout: 0.2,
+      hidden1_size: 100,
+      optimizer: rmsprop,
+      log_learning_rate: -2,
+      epochs: 2,
+    },
+    {
+      conv1_size: 128,
+      conv2_size: 128,
+      dropout: 0.3,
+      hidden1_size: 600,
+      optimizer: rmsprop,
+      log_learning_rate: -3,
+      epochs: 1,
+    },
+  ]
+pathRef: ./polyaxonfile.yml

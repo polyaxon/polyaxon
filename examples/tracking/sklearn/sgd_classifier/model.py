@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon.tracking import Run
 
 from sklearn import datasets
 from sklearn.linear_model import SGDClassifier
@@ -34,8 +34,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--penalty',
         type=str,
-        default=None,
-        help='elasticnet')
+        default='elasticnet')
     parser.add_argument(
         '--l1_ratio',
         type=float,
@@ -52,9 +51,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment(project='sgd-classifier')
-    experiment.create(framework='scikit-learn', tags=['examples'])
-    experiment.log_params(loss=args.loss,
+    experiment = Run(project='sgd-classifier')
+    experiment.create(tags=['examples', 'scikit-learn'])
+    experiment.log_inputs(loss=args.loss,
                           penalty=args.penalty,
                           l1_ratio=args.l1_ratio,
                           max_iter=args.max_iter,
@@ -63,8 +62,8 @@ if __name__ == "__main__":
     (X, y) = load_data()
 
     # Polyaxon
-    experiment.log_data_ref(data=X, data_name='dataset_X')
-    experiment.log_data_ref(data=y, data_name='dataset_y')
+    experiment.log_data_ref(content=X, name='dataset_X')
+    experiment.log_data_ref(content=y, name='dataset_y')
 
     accuracies = model(X=X,
                        y=y,
@@ -77,4 +76,4 @@ if __name__ == "__main__":
     print('Accuracy: {} +/- {}'.format(accuracy_mean, accuracy_std))
 
     # Polyaxon
-    experiment.log_metrics(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)
+    experiment.log_outputs(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)

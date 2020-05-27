@@ -1,41 +1,41 @@
----
-version: 1
+version: 1.1
+kind: component
+tags: [examples, keras]
 
-kind: experiment
-
-framework: keras
-
-tags: [examples]
-
-declarations:
-  max_features: 20000
-  skip_top: 50
-  maxlen: 100
-  embedding_size: 128
-  pool_size: 4
-  kernel_size: 5
-  filters: 64
-  lstm_output_size: 70
-  batch_size: 32
-  optimizer: 'adam'
-  log_learning_rate: -3
-  epochs: 1
-
-build:
-  image: python:3.6
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
+inputs:
+- {name: image, type: str}
+- {name: max_features, type: int, value: 20000, isOptional: true}
+- {name: skip_top, type: int, value: 50, isOptional: true}
+- {name: maxlen, type: int, value: 100, isOptional: true}
+- {name: embedding_size, type: int, value: 128, isOptional: true}
+- {name: pool_size, type: int, value: 4, isOptional: true}
+- {name: kernel_size, type: int, value: 5, isOptional: true}
+- {name: filters, type: int, value: 64, isOptional: true}
+- {name: lstm_output_size, type: int, value: 70, isOptional: true}
+- {name: batch_size, type: int, value: 32, isOptional: true}
+- {name: optimizer, type: str, value: adam, isOptional: true}
+- {name: log_learning_rate, type: int, value: -3, isOptional: true}
+- {name: epochs, type: int, value: 1, isOptional: true}
 
 run:
-  cmd: python -u model.py --max_features={{ max_features }} \
-                          --skip_top={{ skip_top }} \
-                          --maxlen={{ maxlen }} \
-                          --embedding_size={{ embedding_size }} \
-                          --pool_size={{ pool_size }} \
-                          --kernel_size={{ kernel_size }} \
-                          --filters={{ filters }} \
-                          --lstm_output_size={{ lstm_output_size }} \
-                          --batch_size={{ batch_size }} \
-                          --optimizer={{ optimizer }} \
-                          --log_learning_rate={{ log_learning_rate }} \
-                          --epochs={{ epochs }}
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/keras/cnn_lstm/model.py"]
+    imagePullPolicy: "Always"
+    args: [
+      "--max_features={{ max_features }}",
+      "--skip_top={{ skip_top }}",
+      "--maxlen={{ maxlen }}",
+      "--embedding_size={{ embedding_size }}",
+      "--pool_size={{ pool_size }}",
+      "--kernel_size={{ kernel_size }}",
+      "--filters={{ filters }}",
+      "--lstm_output_size={{ lstm_output_size }}",
+      "--batch_size={{ batch_size }}",
+      "--optimizer={{ optimizer }}",
+      "--log_learning_rate={{ log_learning_rate }}",
+      "--epochs={{ epochs }}",
+    ]

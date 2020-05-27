@@ -2,7 +2,7 @@ import os
 import argparse
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment, get_outputs_path
+from polyaxon import tracking
 
 from model import train_and_eval
 
@@ -31,11 +31,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment()
+    tracking.init()
 
     # Train and eval the model with given parameters.
     # Polyaxon
-    output_path = os.path.join(get_outputs_path(), "model.joblib")
+    output_path = os.path.join(tracking.get_outputs_path(), "model.joblib")
     metrics = train_and_eval(output=output_path,
                              ngram_range=(args.ngram, args.ngram),
                              max_features=args.max_features,
@@ -45,4 +45,4 @@ if __name__ == '__main__':
     # Logging metrics
     print("Testing metrics: {}", metrics)
     # Polyaxon
-    experiment.log_metrics(**metrics)
+    tracking.log_metrics(**metrics)

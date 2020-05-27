@@ -2,7 +2,7 @@ import argparse
 import logging
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon import tracking
 
 from sklearn.datasets import load_iris
 from sklearn.metrics import accuracy_score
@@ -50,8 +50,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment()
-    experiment.log_tags(['xgboost'])
+    tracking.init()
 
     iris = load_iris()
     X = iris.data
@@ -60,14 +59,14 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2)
 
     # Polyaxon
-    experiment.log_data_ref(data=X_train, data_name='x_train')
-    experiment.log_data_ref(data=y_train, data_name='y_train')
-    experiment.log_data_ref(data=X_test, data_name='X_test')
-    experiment.log_data_ref(data=y_test, data_name='y_train')
+    tracking.log_data_ref(content=X_train, name='x_train')
+    tracking.log_data_ref(content=y_train, name='y_train')
+    tracking.log_data_ref(content=X_test, name='X_test')
+    tracking.log_data_ref(content=y_test, name='y_train')
 
     logger.info('Train model...')
     accuracy = model(log_learning_rate=args.log_learning_rate,
                      max_depth=args.max_depth,
                      num_rounds=args.num_rounds,
                      min_child_weight=args.min_child_weight)
-    experiment.log_metrics(accuracy=accuracy)
+    tracking.log_metrics(accuracy=accuracy)

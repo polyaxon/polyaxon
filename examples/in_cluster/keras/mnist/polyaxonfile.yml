@@ -1,31 +1,29 @@
----
-version: 1
+version: 1.1
+kind: component
+tags: [examples, keras]
 
-kind: experiment
-
-framework: keras
-
-tags: [examples]
-
-declarations:
-  conv1_size: 32
-  conv2_size: 64
-  dropout: 0.8
-  hidden1_size: 500
-  optimizer: adam
-  log_learning_rate: -3
-  epochs: 1
-
-build:
-  image: python:3.6
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
+inputs:
+- {name: image, type: str}
+- {name: conv1_size, type: int, value: 32, isOptional: true}
+- {name: conv2_size, type: int, value: 64, isOptional: true}
+- {name: dropout, type: float, value: 0.8, isOptional: true}
+- {name: hidden1_size, type: int, value: 500, isOptional: true}
+- {name: optimizer, type: str, value: adam, isOptional: true}
+- {name: log_learning_rate, type: int, value: -3, isOptional: true}
+- {name: epochs, type: int, value: 1, isOptional: true}
 
 run:
-  cmd: python -u model.py --conv1_size={{ conv1_size }} \
-                          --conv2_size={{ conv2_size }} \
-                          --dropout={{ dropout }} \
-                          --hidden1_size={{ hidden1_size }} \
-                          --optimizer={{ optimizer }} \
-                          --log_learning_rate={{ log_learning_rate }} \
-                          --epochs={{ epochs }}
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/keras/mnist/model.py"]
+    imagePullPolicy: "Always"
+    args: ["--conv1_size={{ conv1_size }}",
+           "--conv2_size={{ conv2_size }}",
+           "--dropout={{ dropout }}",
+           "--hidden1_size={{ hidden1_size }}",
+           "--optimizer={{ optimizer }}",
+           "--log_learning_rate={{ log_learning_rate }}",
+           "--epochs={{ epochs }}"]

@@ -4,7 +4,7 @@ import mxnet as mx
 import os
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon import tracking
 
 logger = logging.getLogger('mnist')
 
@@ -124,8 +124,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment()
-    experiment.log_tags(['mxnet'])
+    tracking.init()
 
     logger.info('Downloading data ...')
     mnist = mx.test_utils.get_mnist()
@@ -134,10 +133,10 @@ if __name__ == '__main__':
     val_iter = mx.io.NDArrayIter(mnist['test_data'], mnist['test_label'], args.batch_size)
 
     # Polyaxon
-    experiment.log_data_ref(data=mnist['train_data'], data_name='x_train')
-    experiment.log_data_ref(data=mnist['train_label'], data_name='y_train')
-    experiment.log_data_ref(data=mnist['test_data'], data_name='x_test')
-    experiment.log_data_ref(data=mnist['test_label'], data_name='y_test')
+    tracking.log_data_ref(content=mnist['train_data'], name='x_train')
+    tracking.log_data_ref(content=mnist['train_label'], name='y_train')
+    tracking.log_data_ref(content=mnist['test_data'], name='x_test')
+    tracking.log_data_ref(content=mnist['test_label'], name='y_test')
 
     context = mx.gpu if os.environ.get('NVIDIA_VISIBLE_DEVICES') else mx.cpu
 
@@ -158,4 +157,4 @@ if __name__ == '__main__':
                     epochs=args.epochs)
 
     # Polyaxon
-    experiment.log_metrics(accuracy=metrics)
+    tracking.log_metrics(accuracy=metrics)

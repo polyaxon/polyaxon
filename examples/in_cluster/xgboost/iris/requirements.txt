@@ -1,3 +1,0 @@
-scikit-learn==0.19.2
-xgboost==0.80
-polyaxon-client==0.5.5

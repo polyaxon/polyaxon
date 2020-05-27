@@ -10,7 +10,7 @@ from mxnet import autograd, gluon, nd
 from mxnet.test_utils import download
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon.tracking import Run
 
 # Training settings
 parser = argparse.ArgumentParser(description='MXNet MNIST Example')
@@ -105,7 +105,7 @@ hvd.init()
 
 # Polyaxon
 if hvd.rank() == 0:
-    experiment = Experiment()
+    experiment = Run()
 
 # Horovod: pin context to local rank
 context = mx.cpu(hvd.local_rank()) if args.no_cuda else mx.gpu(hvd.local_rank())

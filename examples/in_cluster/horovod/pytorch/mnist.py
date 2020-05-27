@@ -8,7 +8,7 @@ import torch.utils.data.distributed
 import horovod.torch as hvd
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon.tracking import Run
 
 # Training settings
 parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
@@ -39,7 +39,7 @@ torch.manual_seed(args.seed)
 
 # Polyaxon
 if hvd.rank() == 0:
-    experiment = Experiment()
+    experiment = Run()
 
 if args.cuda:
     # Horovod: pin GPU to local rank.
@@ -175,6 +175,7 @@ def test():
             test_loss, 100. * test_accuracy))
 
         experiment.log_metrics(test_loss=test_loss, test_accuracy=100. * test_accuracy)
+
 
 for epoch in range(1, args.epochs + 1):
     train(epoch)

@@ -11,8 +11,8 @@ from keras.models import Sequential
 from keras.preprocessing import sequence
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
-from polyaxon_client.tracking.contrib.keras import PolyaxonKeras
+from polyaxon.tracking import Run
+from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback
 
 logger = logging.getLogger('cnn-lstm')
 
@@ -60,7 +60,7 @@ def train(experiment,
               batch_size=batch_size,
               epochs=epochs,
               validation_data=(x_test, y_test),
-              callbacks=[PolyaxonKeras(experiment=experiment)])
+              callbacks=[PolyaxonKerasCallback(run=experiment)])
 
     score, accuracy = model.evaluate(x_test, y_test, batch_size=batch_size)
     return score, accuracy
@@ -131,9 +131,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment('cnn-lstm')
+    experiment = Run(project='cnn-lstm')
     experiment.create(framework='keras', tags=['examples'])
-    experiment.log_params(max_features=args.max_features,
+    experiment.log_inputs(max_features=args.max_features,
                           skip_top=args.skip_top,
                           maxlen=args.maxlen,
                           epochs=args.epochs,
@@ -154,10 +154,10 @@ if __name__ == '__main__':
     logger.info('test sequences %s', len(x_test))
 
     # Polyaxon
-    experiment.log_data_ref(data=x_train, data_name='x_train')
-    experiment.log_data_ref(data=y_train, data_name='y_train')
-    experiment.log_data_ref(data=x_test, data_name='x_test')
-    experiment.log_data_ref(data=y_test, data_name='y_test')
+    experiment.log_data_ref(content=x_train, name='x_train')
+    experiment.log_data_ref(content=y_train, name='y_train')
+    experiment.log_data_ref(content=x_test, name='x_test')
+    experiment.log_data_ref(content=y_test, name='y_test')
 
     logger.info('Transforming data...')
     x_train, y_train, x_test, y_test = transform_data(x_train,
@@ -181,7 +181,7 @@ if __name__ == '__main__':
                             log_learning_rate=args.log_learning_rate)
 
     # Polyaxon
-    experiment.log_metrics(score=score, accuracy=accuracy)
+    experiment.log_outputs(score=score, accuracy=accuracy)
 
     logger.info('Test score: %s', score)
     logger.info('Test accuracy: %s', accuracy)

@@ -1,6 +1,0 @@
-numpy
-scikit-learn
-git+https://github.com/pytorch/vision.git
-git+https://github.com/pytorch/ignite.git
-git+https://github.com/lanpa/tensorboard-pytorch.git
-git+https://github.com/Cadene/pretrained-models.pytorch.git

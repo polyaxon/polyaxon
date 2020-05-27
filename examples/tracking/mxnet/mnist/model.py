@@ -4,7 +4,7 @@ import mxnet as mx
 import os
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon.tracking import Run
 
 logger = logging.getLogger('mnist')
 
@@ -122,9 +122,9 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    experiment = Experiment('mnist')
-    experiment.create(framework='mxnet', tags=['examples'])
-    experiment.log_params(conv1_kernel=args.conv1_kernel,
+    experiment = Run(project='mnist')
+    experiment.create(tags=['examples', 'mxnet'])
+    experiment.log_inputs(conv1_kernel=args.conv1_kernel,
                           conv1_filters=args.conv1_filters,
                           conv1_activation=args.conv1_activation,
                           conv2_kernel=args.conv1_kernel,
@@ -143,10 +143,10 @@ if __name__ == '__main__':
     val_iter = mx.io.NDArrayIter(mnist['test_data'], mnist['test_label'], args.batch_size)
 
     # Polyaxon
-    experiment.log_data_ref(data=mnist['train_data'], data_name='x_train')
-    experiment.log_data_ref(data=mnist['train_label'], data_name='y_train')
-    experiment.log_data_ref(data=mnist['test_data'], data_name='x_test')
-    experiment.log_data_ref(data=mnist['test_label'], data_name='y_test')
+    experiment.log_data_ref(content=mnist['train_data'], name='x_train')
+    experiment.log_data_ref(content=mnist['train_label'], name='y_train')
+    experiment.log_data_ref(content=mnist['test_data'], name='x_test')
+    experiment.log_data_ref(content=mnist['test_label'], name='y_test')
 
     context = mx.gpu if os.environ.get('NVIDIA_VISIBLE_DEVICES') else mx.cpu
 
@@ -165,4 +165,4 @@ if __name__ == '__main__':
                     epochs=args.epochs)
 
     # Polyaxon
-    experiment.log_metrics(accuracy=metrics)
+    experiment.log_outputs(accuracy=metrics)

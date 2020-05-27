@@ -9,8 +9,8 @@ from keras.models import Sequential
 from keras.preprocessing import sequence
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
-from polyaxon_client.tracking.contrib.keras import PolyaxonKeras
+from polyaxon.tracking import Run
+from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback
 
 logger = logging.getLogger('bidir-lstm')
 
@@ -54,7 +54,7 @@ def train(experiment,
               callbacks=[
                   EarlyStopping(
                       monitor='val_loss', min_delta=1e-4, patience=3, verbose=1, mode='auto'),
-                  PolyaxonKeras(experiment=experiment)
+                  PolyaxonKerasCallback(run=experiment)
               ])
 
     return model.evaluate(x_test, y_test)[1]
@@ -115,9 +115,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment('bidirectional-lstm')
-    experiment.create(framework='keras', tags=['examples'])
-    experiment.log_params(max_features=args.max_features,
+    experiment = Run(project='bidirectional-lstm')
+    experiment.create(tags=['examples', 'keras'])
+    experiment.log_inputs(max_features=args.max_features,
                           skip_top=args.skip_top,
                           maxlen=args.maxlen,
                           batch_size=args.batch_size,
@@ -136,10 +136,10 @@ if __name__ == '__main__':
     logger.info('test sequences %s', len(x_test))
 
     # Polyaxon
-    experiment.log_data_ref(data=x_train, data_name='x_train')
-    experiment.log_data_ref(data=y_train, data_name='y_train')
-    experiment.log_data_ref(data=x_test, data_name='x_test')
-    experiment.log_data_ref(data=y_test, data_name='y_test')
+    experiment.log_data_ref(content=x_train, name='x_train')
+    experiment.log_data_ref(content=y_train, name='y_train')
+    experiment.log_data_ref(content=x_test, name='x_test')
+    experiment.log_data_ref(content=y_test, name='y_test')
 
     logger.info('Transforming data...')
     x_train, y_train, x_test, y_test = transform_data(x_train,
@@ -159,4 +159,4 @@ if __name__ == '__main__':
                      epochs=args.epochs)
 
     # Polyaxon
-    experiment.log_metrics(accuracy=accuracy)
+    experiment.log_outputs(accuracy=accuracy)

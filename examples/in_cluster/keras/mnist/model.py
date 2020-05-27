@@ -7,7 +7,7 @@ from keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
 from keras.models import Sequential
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon import tracking
 
 
 OPTIMIZERS = {
@@ -94,15 +94,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment()
+    tracking.init()
 
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
     # Polyaxon
-    experiment.log_data_ref(data=x_train, data_name='x_train')
-    experiment.log_data_ref(data=y_train, data_name='y_train')
-    experiment.log_data_ref(data=x_test, data_name='x_test')
-    experiment.log_data_ref(data=y_test, data_name='y_test')
+    tracking.log_data_ref(content=x_train, name='x_train')
+    tracking.log_data_ref(content=y_train, name='y_train')
+    tracking.log_data_ref(content=x_test, name='x_test')
+    tracking.log_data_ref(content=y_test, name='y_test')
 
     x_train, y_train, x_test, y_test = transform_data(x_train, y_train, x_test, y_test)
     accuracy = train(conv1_size=args.conv1_size,
@@ -114,4 +114,4 @@ if __name__ == '__main__':
                      epochs=args.epochs)
 
     # Polyaxon
-    experiment.log_metrics(accuracy=accuracy)
+    tracking.log_metrics(accuracy=accuracy)

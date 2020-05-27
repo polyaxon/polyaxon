@@ -1,44 +1,42 @@
----
-version: 1
+version: 1.1
+kind: component
+tags: [mxnet, examples]
 
-kind: experiment
-
-framework: mxnet
-
-tags: [examples]
-
-declarations:
-  conv1_kernel: 5
-  conv1_filters: 20
-  conv1_activation: 'relu'
-  conv2_kernel: 5
-  conv2_filters: 50
-  conv2_activation: 'relu'
-  fc1_hidden: 10
-  fc1_activation: 'relu'
-  optimizer: 'adam'
-  log_learning_rate: -3
-  batch_size: 10
-  epochs: 1
-
-build:
-  image: python:2.7
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
+inputs:
+- { name: conv1_kernel, isOptional: true, type: int, value: 5}
+- { name: conv1_filters, isOptional: true, type: int, value: 20}
+- { name: conv1_activation, isOptional: true, type: str, value: 'relu'}
+- { name: conv2_kernel, isOptional: true, type: int, value: 5}
+- { name: conv2_filters, isOptional: true, type: int, value: 50}
+- { name: conv2_activation, isOptional: true, type: str, value: 'relu'}
+- { name: fc1_hidden, isOptional: true, type: int, value: 10}
+- { name: fc1_activation, isOptional: true, type: str, value: 'relu'}
+- { name: optimizer, isOptional: true, type: str, value: 'adam'}
+- { name: log_learning_rate, isOptional: true, type: int, value: -3}
+- { name: batch_size, isOptional: true, type: int, value: 10}
+- { name: epochs, isOptional: true, type: int, value: 1}
 
 run:
-  cmd: python -u model.py --conv1_kernel={{ conv1_kernel }} \
-                          --conv1_filters={{ conv1_filters }} \
-                          --conv1_activation={{ conv1_activation }} \
-                          --conv2_kernel={{ conv2_kernel }} \
-                          --conv2_filters={{ conv2_filters }} \
-                          --conv2_activation={{ conv2_activation }} \
-                          --fc1_hidden={{ fc1_hidden }} \
-                          --fc1_activation={{ fc1_activation }} \
-                          --optimizer={{ optimizer }} \
-                          --log_learning_rate={{ log_learning_rate }} \
-                          --batch_size={{ batch_size }} \
-                          --epochs={{ epochs }}
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/mxnet/mnist/model.py"]
+    args: [
+      "--conv1_kernel={{ conv1_kernel }}",
+      "--conv1_filters={{ conv1_filters }}",
+      "--conv1_activation={{ conv1_activation }}",
+      "--conv2_kernel={{ conv2_kernel }}",
+      "--conv2_filters={{ conv2_filters }}",
+      "--conv2_activation={{ conv2_activation }}",
+      "--fc1_hidden={{ fc1_hidden }}",
+      "--fc1_activation={{ fc1_activation }}",
+      "--optimizer={{ optimizer }}",
+      "--log_learning_rate={{ log_learning_rate }}",
+      "--batch_size={{ batch_size }}",
+      "--epochs={{ epochs }}",
+    ]
 
 
 

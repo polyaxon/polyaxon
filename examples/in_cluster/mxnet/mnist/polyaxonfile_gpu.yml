@@ -1,47 +1,8 @@
----
-version: 1
-
-kind: experiment
-
-framework: mxnet
-
-tags: [examples]
-
-environment:
-  resources:
-    gpu:
-      requests: 1
-      limits: 1
-
-declarations:
-  conv1_kernel: 5
-  conv1_filters: 20
-  conv1_activation: 'tanh'
-  conv2_kernel: 5
-  conv2_filters: 50
-  conv2_activation: 'tanh'
-  fc1_hidden: 10
-  fc1_activation: 'tanh'
-  optimizer: 'adam'
-  log_learning_rate: -3
-  batch_size: 100
-  epochs: 1
-
-build:
-  image: python:2.7
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
-
-run:
-  cmd: python -u model.py --conv1_kernel={{ conv1_kernel }} \
-                          --conv1_filters={{ conv1_filters }} \
-                          --conv1_activation={{ conv1_activation }} \
-                          --conv2_kernel={{ conv2_kernel }} \
-                          --conv2_filters={{ conv2_filters }} \
-                          --conv2_activation={{ conv2_activation }} \
-                          --fc1_hidden={{ fc1_hidden }} \
-                          --fc1_activation={{ fc1_activation }} \
-                          --optimizer={{ optimizer }} \
-                          --log_learning_rate={{ log_learning_rate }} \
-                          --batch_size={{ batch_size }} \
-                          --epochs={{ epochs }}
+version: 1.1
+kind: operation
+runPatch:
+  container:
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+pathRef: ./polyaxonfile.yml

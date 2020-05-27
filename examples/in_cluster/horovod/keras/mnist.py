@@ -10,7 +10,7 @@ import tensorflow as tf
 import horovod.keras as hvd
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment
+from polyaxon.tracking import Run
 
 
 # Horovod: initialize Horovod.
@@ -18,7 +18,7 @@ hvd.init()
 
 # Polyaxon
 if hvd.rank() == 0:
-    experiment = Experiment()
+    experiment = Run()
 
 # Horovod: pin GPU to be used to process local rank (one GPU per process)
 config = tf.ConfigProto()
@@ -30,7 +30,7 @@ batch_size = 128
 num_classes = 10
 # Polyaxon
 if hvd.rank() == 0:
-    experiment.log_params(batch_size = 128, num_classes = 10)
+    experiment.log_inputs(batch_size=128, num_classes=10)
 
 # Horovod: adjust number of epochs based on number of GPUs.
 epochs = int(math.ceil(12.0 / hvd.size()))
@@ -43,10 +43,10 @@ img_rows, img_cols = 28, 28
 
 # Polyaxon
 if hvd.rank() == 0:
-    experiment.log_data_ref(data=x_train, data_name='x_train')
-    experiment.log_data_ref(data=y_train, data_name='y_train')
-    experiment.log_data_ref(data=x_test, data_name='x_test')
-    experiment.log_data_ref(data=y_test, data_name='y_test')
+    experiment.log_data_ref(content=x_train, name='x_train')
+    experiment.log_data_ref(content=y_train, name='y_train')
+    experiment.log_data_ref(content=x_test, name='x_test')
+    experiment.log_data_ref(data=y_test, name='y_test')
 
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
@@ -114,4 +114,4 @@ print('Test accuracy:', score[1])
 
 # Polyaxon
 if hvd.rank() == 0:
-    experiment.log_params(loss=score[0], accuracy=score[1])
+    experiment.log_inputs(loss=score[0], accuracy=score[1])

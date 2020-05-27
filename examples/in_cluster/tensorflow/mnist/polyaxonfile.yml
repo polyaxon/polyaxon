@@ -1,47 +1,45 @@
----
-version: 1
+version: 1.1
+kind: component
+tags: [examples, tensorflow]
 
-kind: experiment
-
-framework: tensorflow
-
-tags: [examples]
-
-declarations:
-  conv1_size: 5
-  conv1_out: 32
-  conv1_activation: 'relu'
-  pool1_size: 2
-  conv2_size: 5
-  conv2_out: 64
-  conv2_activation: 'relu'
-  pool2_size: 2
-  dropout: 0.2
-  fc1_size: 1024
-  fc1_activation: 'sigmoid'
-  optimizer: 'adam'
-  log_learning_rate: -3
-  batch_size: 100
-  epochs: 1
-
-build:
-  image: python:2.7
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
+inputs:
+- { name: conv1_size, type: int, isOptional: true, value: 5}
+- { name: conv1_out, type: int, isOptional: true, value: 32}
+- { name: conv1_activation, type: int, isOptional: true, value: 'relu'}
+- { name: pool1_size, type: int, isOptional: true, value: 2}
+- { name: conv2_size, type: int, isOptional: true, value: 5}
+- { name: conv2_out, type: int, isOptional: true, value: 64}
+- { name: conv2_activation, type: int, isOptional: true, value: 'relu'}
+- { name: pool2_size, type: int, isOptional: true, value: 2}
+- { name: dropout, type: int, isOptional: true, value: 0.2}
+- { name: fc1_size, type: int, isOptional: true, value: 1024}
+- { name: fc1_activation, type: int, isOptional: true, value: 'sigmoid'}
+- { name: optimizer, type: int, isOptional: true, value: 'adam'}
+- { name: log_learning_rate, type: int, isOptional: true, value: -3}
+- { name: batch_size, type: int, isOptional: true, value: 100}
+- { name: epochs, type: int, isOptional: true, value: 1}
 
 run:
-  cmd: python -u model.py --conv1_size={{ conv1_size }} \
-                          --conv1_out={{ conv1_out }} \
-                          --conv1_activation={{ conv1_activation }} \
-                          --pool1_size={{ pool1_size }} \
-                          --conv2_size={{ conv2_size }} \
-                          --conv2_out={{ conv2_out }} \
-                          --conv2_activation={{ conv2_activation }} \
-                          --pool2_size={{ pool2_size }} \
-                          --dropout={{ dropout }} \
-                          --fc1_size={{ fc1_size }} \
-                          --fc1_activation={{ fc1_activation }} \
-                          --optimizer={{ optimizer }} \
-                          --log_learning_rate={{ log_learning_rate }} \
-                          --batch_size={{ batch_size }} \
-                          --epochs={{ epochs }}
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/tensorflow/mnist/model.py"]
+    args: [
+      "--conv1_size={{ conv1_size }}",
+      "--conv1_out={{ conv1_out }}",
+      "--conv1_activation={{ conv1_activation }}",
+      "--pool1_size={{ pool1_size }}",
+      "--conv2_size={{ conv2_size }}",
+      "--conv2_out={{ conv2_out }}",
+      "--conv2_activation={{ conv2_activation }}",
+      "--pool2_size={{ pool2_size }}",
+      "--dropout={{ dropout }}",
+      "--fc1_size={{ fc1_size }}",
+      "--fc1_activation={{ fc1_activation }}",
+      "--optimizer={{ optimizer }}",
+      "--log_learning_rate={{ log_learning_rate }}",
+      "--batch_size={{ batch_size }}",
+      "--epochs={{ epochs }}",
+  ]

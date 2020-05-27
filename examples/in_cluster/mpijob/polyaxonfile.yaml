@@ -1,26 +1,19 @@
----
-version: 1
-
-kind: experiment
-
-framework: tensorflow
-
-backend: mpi
-
-environment:
-  replicas:
-    n_workers: 2
-    default_worker:
-      resources:
-        gpu:
-          requests: 1
-          limits: 1
-
-build:
-  image: mpioperator/tensorflow-benchmarks:latest
+version: 1.1
+kind: component
+tags: [examples, mpi, kubeflow]
 
 run:
-  cmd: mpirun python -u scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py \
-      --model resnet101 \
-      --batch_size 64 \
-      --variable_update horovod
+  kind: mpijob
+  worker:
+    replicas: 2
+    container:
+      image: mpioperator/tensorflow-benchmarks:latest
+      command: ["mpirun", "python", "-u", "scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py"]
+      args: [
+        "--model resnet101",
+        "--batch_size 64",
+        "--variable_update horovod",
+      ]
+      resources:
+        limits:
+          nvidia.com/gpu: 1

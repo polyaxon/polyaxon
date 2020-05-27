@@ -1,25 +1,22 @@
----
-version: 1
+version: 1.1
+kind: component
+tags: [examples, scikit-learn]
 
-kind: experiment
-
-framework: scikit-learn
-
-tags: [examples]
-
-declarations:
-  C: 1.0
-  max_features: 20000
-  max_df: 1.0
-  ngram: 1
-
-build:
-  image: python:2.7
-  build_steps:
-    - pip install --no-cache-dir -r requirements.txt
-
+inputs:
+- {name: C, type: float, isOptional: true, value: 1.0}
+- {name: max_features, type: int, isOptional: true, value: 20000}
+- {name: max_df, type: float, isOptional: true, value: 1.0}
+- {name: ngram, type: int, isOptional: true, value: 1}
 run:
-  cmd: python run.py --C={{ C }} \
-                     --max_features={{ max_features }} \
-                     --max_df={{ max_df }} \
-                     --ngram={{ ngram }}
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/sklearn/newsgroup/run.py"]
+    args: [
+      "--C={{ C }}",
+      "--max_features={{ max_features }}",
+      "--max_df={{ max_df }}",
+      "--ngram={{ ngram }}",
+    ]

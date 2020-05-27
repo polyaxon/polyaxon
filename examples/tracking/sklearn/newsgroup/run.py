@@ -1,7 +1,7 @@
 import argparse
 
 # Polyaxon
-from polyaxon_client.tracking import Experiment, get_outputs_path
+from polyaxon.tracking import Run
 
 from model import train_and_eval
 
@@ -30,9 +30,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Polyaxon
-    experiment = Experiment(project='newsgroup')
-    experiment.create(framework='scikit-learn', tags=['examples'])
-    experiment.log_params(ngram_range=(args.ngram, args.ngram),
+    experiment = Run(project='newsgroup')
+    experiment.create(tags=['examples', 'scikit-learn'])
+    experiment.log_inputs(ngram_range=(args.ngram, args.ngram),
                           max_features=args.max_features,
                           max_df=args.max_df,
                           C=args.C)
@@ -47,4 +47,4 @@ if __name__ == '__main__':
     # Logging metrics
     print("Testing metrics: {}", metrics)
     # Polyaxon
-    experiment.log_metrics(**metrics)
+    experiment.log_outputs(**metrics)
