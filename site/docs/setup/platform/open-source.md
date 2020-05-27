@@ -11,7 +11,7 @@ sidebar: "setup"
 ---
 
 <blockquote class="warning">
-The open-source distribution for this version is not published yet! Please join the [chat](/slack/) for more details.
+The open-source distribution for this version is not published yet! Please join the <a href="/slack/">chat</a> for more details.
 </blockquote>
 
 ## Polyaxon open-source

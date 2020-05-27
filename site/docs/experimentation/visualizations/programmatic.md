@@ -18,7 +18,7 @@ Polyaxon has a programmatic experience for generating visualizations for single 
 
 ## Single run
 
-You can use the module `Polyplot` which, requires `Plotly express`, to drive visualizations inside a notebook or jupyter lab.
+You can use the module `Polyplot` which requires `Plotly express` to drive visualizations inside a notebook or jupyter lab.
 
 the module comes with functions to load events, and visualize them:
 
@@ -38,7 +38,7 @@ client.bar()
  
 ## HiPlot
 
-You can use the module `MultiRunPlot` which, requires `hiplot` express, to create interactive parallel coordinates inside a notebook or jupyter lab.
+You can use the module `MultiRunPlot` which requires `hiplot` to create interactive parallel coordinates inside a notebook or jupyter lab.
 
 
 ```python

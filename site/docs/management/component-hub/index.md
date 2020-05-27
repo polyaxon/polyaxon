@@ -23,7 +23,7 @@ Polyaxon Component Hub is a product for managing versioned and reusable componen
 
 ![overview](../../../../content/images/dashboard/hub/overview.png)
 
-Component are the entity in Polyaxon that defines a run time, it allows to package a containerize workload or a whole workflow, 
+Component is the entity in Polyaxon that defines a run time, it allows to package a containerize workload or a whole workflow, 
 and makes it repeatable, portable, and sharable.
 
 Polyaxon Component Hub gives you the extra utilities and features to manage access, security, and versioning.

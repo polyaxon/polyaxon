@@ -1,5 +1,5 @@
 ---
-title: "Models Registry"
+title: "Model Registry"
 sub_link: "models-registry"
 meta_title: "Polyaxon management - Model Registry"
 meta_description: "Polyaxon Model Registry is a powerful models store and a system to manage versioning, logging, staging, and production."
@@ -17,7 +17,7 @@ sidebar: "management"
 
 Polyaxon Model Registry is a models store and a system that provides:
  * APIs and a UI.
- * It can be used with your teams configuration and access control settings to enable collaborative model management.
+ * It can be used with your teams' configuration and access control settings to enable collaborative model management.
  * Logging and lineage using the experimentation feature.
  * Versioning.
  * Deploying as an internal tool or as a test api using the service abstraction.

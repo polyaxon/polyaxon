@@ -41,7 +41,7 @@ Polyaxon Component Hub is a product for managing versioned components, each comp
 
 Polyaxon Model Registry is a models store and a system that provides:
  * APIs and a UI.
- * It can be used with your teams configuration and access control settings to enable collaborative model management.
+ * It can be used with your teams' configuration and access control settings to enable collaborative model management.
  * Logging and lineage using the experimentation feature.
  * Versioning.
  * Deploying as an internal tool or as a test api using the service abstraction.

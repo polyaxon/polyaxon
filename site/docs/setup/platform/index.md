@@ -13,7 +13,7 @@ sidebar: "setup"
 ---
 
 <blockquote class="warning">
-The open-source distribution for this version is not published yet! Please join the [chat](/slack/) for more details.
+The open-source distribution for this version is not published yet! Please join the <a href="/slack/">chat</a> for more details.
 </blockquote>
 
 If you are here, it means that you have a Kubernetes cluster and [helm](/docs/guides/setup-helm/) setup.
