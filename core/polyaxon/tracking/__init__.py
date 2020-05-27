@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List, Optional
+from typing import List, Optional, Union, Sequence
 
 from polyaxon import settings
 from polyaxon.client import RunClient
@@ -417,17 +417,17 @@ def log_mpl_plotly_chart(name, figure, step=None, timestamp=None):
 log_mpl_plotly_chart.__doc__ = Run.log_mpl_plotly_chart.__doc__
 
 
-def set_description(description):
+def set_description(description: str, async_req: bool = True):
     global TRACKING_RUN
-    TRACKING_RUN.set_description(description=description)
+    TRACKING_RUN.set_description(description=description, async_req=async_req)
 
 
 set_description.__doc__ = Run.set_description.__doc__
 
 
-def set_name(name):
+def set_name( name: str, async_req: bool = True):
     global TRACKING_RUN
-    TRACKING_RUN.set_name(name=name)
+    TRACKING_RUN.set_name(name=name, async_req=async_req)
 
 
 set_name.__doc__ = Run.set_name.__doc__
@@ -443,25 +443,29 @@ def log_status(status, reason=None, message=None):
 log_status.__doc__ = Run.log_status.__doc__
 
 
-def log_inputs(reset=False, **inputs):
+def log_inputs(reset: bool = False, async_req: bool = True, **inputs):
     global TRACKING_RUN
-    TRACKING_RUN.log_inputs(reset=reset, **inputs)
+    TRACKING_RUN.log_inputs(reset=reset, async_req=async_req, **inputs)
 
 
 log_inputs.__doc__ = Run.log_inputs.__doc__
 
 
-def log_outputs(reset=False, **outputs):
+def log_outputs(reset: bool = False, async_req: bool = True, **outputs):
     global TRACKING_RUN
-    TRACKING_RUN.log_outputs(reset=reset, **outputs)
+    TRACKING_RUN.log_outputs(reset=reset, async_req=async_req, **outputs)
 
 
 log_outputs.__doc__ = Run.log_outputs.__doc__
 
 
-def log_tags():
+def log_tags(
+    tags: Union[str, Sequence[str]],
+    reset: bool = False,
+    async_req: bool = True,
+):
     global TRACKING_RUN
-    TRACKING_RUN.log_tags()
+    TRACKING_RUN.log_tags(tags=tags, reset=reset, async_req=async_req)
 
 
 log_tags.__doc__ = Run.log_tags.__doc__
