@@ -29,9 +29,7 @@ from polyaxon.schemas.fields.swagger import SwaggerField
 
 
 class IterativeSchema(BaseCamelSchema):
-    kind = fields.Str(
-        allow_none=True, validate=validate.Equal(V1MatrixKind.ITERATIVE)
-    )
+    kind = fields.Str(allow_none=True, validate=validate.Equal(V1MatrixKind.ITERATIVE))
     num_iterations = RefOrObject(
         fields.Int(required=True, validate=validate.Range(min=1)), required=True
     )

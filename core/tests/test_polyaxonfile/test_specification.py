@@ -51,7 +51,7 @@ class TestSpecifications(BaseTestCase):
 
     def test_patch_experiment_without_io_and_params_raises(self):
         content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "component",
             "run": {
                 "kind": V1RunKind.JOB,
@@ -66,7 +66,7 @@ class TestSpecifications(BaseTestCase):
         assert config.to_dict() == content
 
         content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "compiled_operation",
             "run": {
                 "kind": V1RunKind.JOB,
@@ -88,7 +88,7 @@ class TestSpecifications(BaseTestCase):
 
     def test_apply_context_raises_with_required_inputs(self):
         content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "component",
             "inputs": [
                 {"name": "lr", "type": types.FLOAT},
@@ -107,7 +107,7 @@ class TestSpecifications(BaseTestCase):
         assert component_config.to_dict() == content
 
         content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "compiled_operation",
             "inputs": [
                 {"name": "lr", "type": types.FLOAT},
@@ -139,7 +139,7 @@ class TestSpecifications(BaseTestCase):
 
     def test_apply_context_passes_with_required_inputs_and_params(self):
         content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "component",
             "inputs": [
                 {"name": "lr", "type": types.FLOAT},
@@ -158,7 +158,7 @@ class TestSpecifications(BaseTestCase):
         assert component_config.to_dict() == content
 
         content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "compiled_operation",
             "inputs": [
                 {"name": "lr", "type": types.FLOAT},
@@ -190,7 +190,7 @@ class TestSpecifications(BaseTestCase):
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
         updated_content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "compiled_operation",
             "inputs": [
                 {"name": "lr", "type": types.FLOAT, "isOptional": True, "value": 0.1},
@@ -229,7 +229,7 @@ class TestSpecifications(BaseTestCase):
 
     def test_apply_params_extends_connections_and_init(self):
         content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "compiled_operation",
             "inputs": [
                 {"name": "docker_image", "type": types.IMAGE},
@@ -273,7 +273,7 @@ class TestSpecifications(BaseTestCase):
 
     def test_patch_experiment_with_optional_inputs(self):
         content = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "compiled_operation",
             "inputs": [
                 {"name": "lr", "type": types.FLOAT, "value": 0.6, "isOptional": True},
@@ -338,7 +338,7 @@ class TestSpecifications(BaseTestCase):
 
     def test_op_specification_with_override_info(self):
         config_dict = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "operation",
             "name": "foo",
             "description": "a description",
@@ -396,7 +396,7 @@ class TestSpecifications(BaseTestCase):
 
     def test_op_specification(self):
         config_dict = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "operation",
             "name": "foo",
             "description": "a description",
@@ -456,7 +456,7 @@ class TestSpecifications(BaseTestCase):
 
     def test_op_specification_with_nocache(self):
         config_dict = {
-            "version":  1.1,
+            "version": 1.1,
             "kind": "operation",
             "name": "foo",
             "description": "a description",

@@ -6,10 +6,8 @@ date: "2018-10-01"
 meta_title: "How to install Polyaxon on Kubernetes"
 meta_description: "This is a guide to assist you through the process of setting up a Polyaxon deployment using Kubernetes."
 tags:
-    - setup
+    - guides
     - kubernetes
-    - Minikube
-    - install
 ---
 
 If you are here, it means that you have a Minikube cluster and [helm](/docs/guides/setup-helm/) setup.

@@ -425,7 +425,7 @@ def set_description(description: str, async_req: bool = True):
 set_description.__doc__ = Run.set_description.__doc__
 
 
-def set_name( name: str, async_req: bool = True):
+def set_name(name: str, async_req: bool = True):
     global TRACKING_RUN
     TRACKING_RUN.set_name(name=name, async_req=async_req)
 
@@ -460,9 +460,7 @@ log_outputs.__doc__ = Run.log_outputs.__doc__
 
 
 def log_tags(
-    tags: Union[str, Sequence[str]],
-    reset: bool = False,
-    async_req: bool = True,
+    tags: Union[str, Sequence[str]], reset: bool = False, async_req: bool = True,
 ):
     global TRACKING_RUN
     TRACKING_RUN.log_tags(tags=tags, reset=reset, async_req=async_req)

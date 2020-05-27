@@ -31,7 +31,7 @@ class TestResolveContexts(BaseTestCase):
     def test_resolver_default_contexts(self):
         compiled_operation = V1CompiledOperation.read(
             {
-                "version":  1.1,
+                "version": 1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -85,7 +85,7 @@ class TestResolveContexts(BaseTestCase):
 
         compiled_operation = V1CompiledOperation.read(
             {
-                "version":  1.1,
+                "version": 1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -145,7 +145,7 @@ class TestResolveContexts(BaseTestCase):
         )
         compiled_operation = V1CompiledOperation.read(
             {
-                "version":  1.1,
+                "version": 1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -199,7 +199,7 @@ class TestResolveContexts(BaseTestCase):
     def test_resolver_default_service_ports(self):
         compiled_operation = V1CompiledOperation.read(
             {
-                "version":  1.1,
+                "version": 1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,

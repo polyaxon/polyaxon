@@ -352,7 +352,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert run_config.is_dag_run is True
         assert run_config.has_pipeline is True
         assert run_config.schedule is None
@@ -403,7 +403,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert run_config.is_dag_run is True
         assert run_config.has_pipeline is True
         assert run_config.schedule is None

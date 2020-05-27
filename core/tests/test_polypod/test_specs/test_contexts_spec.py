@@ -29,7 +29,7 @@ class TestPluginsContextsSpec(BaseTestCase):
     def test_get_from_spec(self):
         compiled_operation = V1CompiledOperation.read(
             {
-                "version":  1.1,
+                "version": 1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,

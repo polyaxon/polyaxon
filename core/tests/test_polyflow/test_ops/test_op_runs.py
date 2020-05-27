@@ -92,7 +92,7 @@ class TestCompiledOperationsConfigs(BaseTestCase):
     def test_component_with_cache(self):
         config_dict = {
             "cache": {"disable": True},
-            "version":  1.1,
+            "version": 1.1,
             "kind": "compiled_operation",
             "name": "A",
             "tags": ["backend", "kaniko"],

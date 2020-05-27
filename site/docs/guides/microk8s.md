@@ -5,10 +5,19 @@ sub_link: "Microk8s"
 date: "2018-10-01"
 meta_title: "How to install Polyaxon on Microk8s"
 meta_description: "This is a guide to assist you through the process of setting up a Polyaxon deployment using Microk8s."
+custom_excerpt: "This is a guide to assist you through the process of setting up a Polyaxon deployment using Microk8s."
+featured: false
+visibility: public
+status: published
 tags:
-    - setup
+    - guides
     - kubernetes
-    - install
+author:
+  name: "Polyaxon"
+  slug: "polyaxon"
+  website: "http://polyaxon.com"
+  twitter: "polyaxonai"
+  github: "polyaxon"
 ---
 
 ## Install Microk8s

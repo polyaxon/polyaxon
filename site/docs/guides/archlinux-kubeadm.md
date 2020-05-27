@@ -5,10 +5,13 @@ sub_link: "kubernetes"
 date: "2018-10-01"
 meta_title: "How to install Polyaxon using kubeadm on Kubernetes"
 meta_description: "This is a guide to assist you through the process of setting up a Polyaxon deployment using kubeadm and Kubernetes."
+custom_excerpt: "This is a guide to assist you through the process of setting up a Polyaxon deployment using kubeadm and Kubernetes."
+featured: false
+visibility: public
+status: published
 tags:
-    - setup
+    - guides
     - kubernetes
-    - install
 author:
   name: "jorgemf"
   slug: "jorgemf"

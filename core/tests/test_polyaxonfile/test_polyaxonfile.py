@@ -114,7 +114,7 @@ class TestPolyaxonfiles(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert run_config.tags is None
         assert len(run_config.run.volumes) == 1
         assert run_config.run.to_dict()["volumes"][0] == {
@@ -158,7 +158,7 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.inputs[1].value is True
         run_config = CompiledOperationSpecification.apply_context(run_config)
         run_config = CompiledOperationSpecification.apply_run_contexts(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert run_config.tags == ["foo", "bar"]
         assert run_config.run.container.image == "my_image"
         assert run_config.run.container.command == ["/bin/sh", "-c"]
@@ -183,7 +183,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert isinstance(run_config.plugins, V1Plugins)
         assert run_config.plugins.log_level == "INFO"
         assert run_config.plugins.auth is True
@@ -210,7 +210,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert isinstance(run_config.termination, V1Termination)
         assert run_config.termination.max_retries == 5
         assert run_config.termination.timeout == 500
@@ -225,7 +225,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert isinstance(run_config.run.environment, V1Environment)
         assert run_config.run.environment.node_selector == {"polyaxon.com": "core"}
         assert run_config.run.container.resources == {
@@ -259,7 +259,7 @@ class TestPolyaxonfiles(BaseTestCase):
         )
         run_config = OperationSpecification.compile_operation(plx_file)
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert isinstance(run_config.matrix, V1Hyperband)
         assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
         assert isinstance(run_config.matrix.params["loss"], V1HpChoice)
@@ -303,7 +303,7 @@ class TestPolyaxonfiles(BaseTestCase):
         run_config = OperationSpecification.compile_operation(plx_file)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert isinstance(run_config.matrix, V1GridSearch)
         assert isinstance(run_config.matrix.params["param1"], V1HpChoice)
         assert isinstance(run_config.matrix.params["param2"], V1HpChoice)
@@ -332,7 +332,7 @@ class TestPolyaxonfiles(BaseTestCase):
         run_config = OperationSpecification.compile_operation(plx_file)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert isinstance(run_config.matrix, V1RandomSearch)
         assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
         assert isinstance(run_config.matrix.params["loss"], V1HpChoice)
@@ -363,7 +363,7 @@ class TestPolyaxonfiles(BaseTestCase):
         config_run = OperationSpecification.compile_operation(plx_file)
 
         config_run = CompiledOperationSpecification.apply_context(config_run)
-        assert config_run.version ==  1.1
+        assert config_run.version == 1.1
         assert isinstance(config_run.matrix, V1Mapping)
         assert config_run.matrix.values == [
             {"lr": 0.001, "loss": "MeanSquaredError"},
@@ -384,7 +384,7 @@ class TestPolyaxonfiles(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert run_config.termination is not None
         assert run_config.termination.ttl == 12
         assert run_config.is_tf_job_run
@@ -412,7 +412,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
 
         assert run_config.termination is not None
         assert run_config.termination.ttl == 12
@@ -447,7 +447,7 @@ class TestPolyaxonfiles(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version ==  1.1
+        assert run_config.version == 1.1
         assert run_config.is_mpi_job_run
         assert run_config.termination is None
         assert run_config.run.launcher.replicas == 1

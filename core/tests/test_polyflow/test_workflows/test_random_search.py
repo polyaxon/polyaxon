@@ -20,8 +20,8 @@ from marshmallow.exceptions import ValidationError
 from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow import V1RunKind
-from polyaxon.polyflow.operations import V1CompiledOperation
 from polyaxon.polyflow.matrix.random_search import V1RandomSearch
+from polyaxon.polyflow.operations import V1CompiledOperation
 
 
 @pytest.mark.workflow_mark

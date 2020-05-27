@@ -136,8 +136,28 @@ class V1DockerfileType(BaseConfig, polyaxon_sdk.V1DockerfileType):
       * filename: an optional name for your dockerfile, default is Dockerfile.
       * workdir: the WORKDIR for your dockerfile, default is `/code`
       * workdirPath: the local workdir to copy to the docker container.
-      * shell: shell type environment variable, default `/bin/bash`
+      * shell: shell type environment variable, default `/bin/bash`.
 
+    ### Example
+
+    ```yaml
+    image: image:tag
+    env:
+      KEY1: value1
+      KEY2: value2
+    path:
+    - module/add/to/path
+    copy:
+    - copy/local/path
+    run:
+    - pip install ...
+    - mv foo bar
+    langEnv: en_US.UTF-8
+    uid: 2222
+    gid: 1111
+    filename: Dockerfile2
+    workdir: ../my-code
+    ```
     """
 
     IDENTIFIER = "dockerfile"

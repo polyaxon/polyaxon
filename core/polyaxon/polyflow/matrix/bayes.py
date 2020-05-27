@@ -19,9 +19,9 @@ import polyaxon_sdk
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
-from polyaxon.polyflow.optimization import OptimizationMetricSchema
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import MatrixSchema
+from polyaxon.polyflow.optimization import OptimizationMetricSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 

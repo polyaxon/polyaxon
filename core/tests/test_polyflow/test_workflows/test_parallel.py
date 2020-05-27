@@ -19,12 +19,12 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import BaseTestCase, assert_equal_dict
 
-from polyaxon.polyflow.operations import V1CompiledOperation
-from polyaxon.polyflow.optimization import V1Optimization, V1OptimizationMetric
 from polyaxon.polyflow.matrix.bayes import (
     AcquisitionFunctions,
     GaussianProcessesKernels,
 )
+from polyaxon.polyflow.operations import V1CompiledOperation
+from polyaxon.polyflow.optimization import V1Optimization, V1OptimizationMetric
 from polyaxon.polyflow.run.kinds import V1RunKind
 
 
@@ -67,17 +67,13 @@ class TestWorkflowConfigs(BaseTestCase):
         assert config.to_dict() == config_dict
 
         # Add matrix definition should pass
-        config_dict["matrix"]["params"] = {
-            "lr": {"kind": "choice", "value": [1, 2, 3]}
-        }
+        config_dict["matrix"]["params"] = {"lr": {"kind": "choice", "value": [1, 2, 3]}}
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
         # Add grid_search should raise
         config_dict["matrix"] = {"kind": "grid", "numRuns": 10}
-        config_dict["matrix"]["params"] = {
-            "lr": {"kind": "choice", "value": [1, 2, 3]}
-        }
+        config_dict["matrix"]["params"] = {"lr": {"kind": "choice", "value": [1, 2, 3]}}
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
@@ -89,9 +85,7 @@ class TestWorkflowConfigs(BaseTestCase):
             V1CompiledOperation.from_dict(config_dict)
 
         # Updating the matrix should pass
-        config_dict["matrix"]["params"] = {
-            "lr": {"kind": "choice", "value": [1, 2, 3]}
-        }
+        config_dict["matrix"]["params"] = {"lr": {"kind": "choice", "value": [1, 2, 3]}}
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
