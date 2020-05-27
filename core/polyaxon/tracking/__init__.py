@@ -105,6 +105,14 @@ def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
         return TRACKING_RUN
 
 
+def get_model_path():
+    global TRACKING_RUN
+    return TRACKING_RUN.get_tensorboard_path()
+
+
+get_model_path.__doc__ = Run.get_model_path.__doc__
+
+
 def get_tensorboard_path():
     global TRACKING_RUN
     return TRACKING_RUN.get_tensorboard_path()
