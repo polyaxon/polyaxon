@@ -4,7 +4,7 @@
 [![Docs](https://img.shields.io/badge/docs-0.6.1-brightgreen.svg?style=flat)](https://docs.polyaxon.com)
 [![Release](https://img.shields.io/badge/release-0.6.1-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/0.6.1)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/90c05b6b112548c1a88b950beceacb69)](https://www.codacy.com/app/polyaxon/polyaxon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon&amp;utm_campaign=Badge_Grade)
-[![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://polyaxon.slack.com/join/shared_invite/enQtMzQ0ODc2MDg1ODc0LTViMjMwY2VlNjQzYzU2NTUzODVlNzBjNDc2NDMyY2M0MDljMDliOWViNDljMDNmZmViZTg1YzFlOWY0YTQwMTM)
+[![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://polyaxon.com/slack/)
 
 # Polyaxon
 
