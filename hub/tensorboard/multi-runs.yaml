@@ -11,9 +11,6 @@ inputs:
   isOptional: true
   isList: true
   type: str
-- name: run_path
-  isOptional: true
-  type: str
 
 run:
   kind: service
@@ -25,7 +22,7 @@ run:
     image: "{{ image }}"
     command: ["tensorboard"]
     args: [
-      "--logdir={{'/plx-context/artifacts/'}}",
+      "--logdir={{globals.artifacts_path}}",
       "--port={{globals.ports[0]}}",
       "--path_prefix={{globals.base_url}}",
       "--host=0.0.0.0",

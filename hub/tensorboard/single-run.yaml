@@ -19,12 +19,12 @@ run:
   ports: [6006]
   init:
     - connection: azure
-      artifacts: {"dirs": ["{{run_uuid + '/outputs'}}"]}
+      artifacts: {"dirs": ["{{run_path  or (run_uuid + '/outputs')}}"]}
   container:
     image: "{{ image }}"
     command: ["tensorboard"]
     args: [
-      "--logdir={{run_path or '/plx-context/artifacts/' + run_uuid + '/outputs'}}",
+      "--logdir={{run_path or (artifacts_path + run_uuid + '/outputs')}}",
       "--port={{globals.ports[0]}}",
       "--path_prefix={{globals.base_url}}",
       "--host=0.0.0.0",
