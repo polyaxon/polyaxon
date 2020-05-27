@@ -58,11 +58,11 @@ type V1Operation struct {
 	// Optional component kind, should be equal to "component"
 	Kind string `json:"kind,omitempty"`
 
+	// Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
+	Matrix interface{} `json:"matrix,omitempty"`
+
 	// Optional component name, should a valid slug
 	Name string `json:"name,omitempty"`
-
-	// Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-	Parallel interface{} `json:"parallel,omitempty"`
 
 	// Optional dict of params
 	Params map[string]V1Param `json:"params,omitempty"`
@@ -79,7 +79,7 @@ type V1Operation struct {
 	// Optional queue to use for running this component
 	Queue string `json:"queue,omitempty"`
 
-	// Optional a run section to override the the content of the run in the template
+	// Optional a run section to override  the content of the run in the template
 	// should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
 	RunPatch interface{} `json:"run_patch,omitempty"`
 

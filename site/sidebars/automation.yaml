@@ -1,0 +1,53 @@
+- groups:
+  - group: Flow Engine
+    items:
+    - title: Overview
+      link: /docs/automation/flow-engine/
+    - title: Specification
+      link: /docs/automation/flow-engine/specification/
+  - group: Optmization Engine
+    items:
+    - title: Overview
+      link: /docs/automation/optimization-engine/
+    - title: Grid search
+      link: /docs/automation/optimization-engine/grid-search/
+    - title: Random search
+      link: /docs/automation/optimization-engine/random-search/
+    - title: Hyperband
+      link: /docs/automation/optimization-engine/hyperband/
+    - title: Bayesian Optimization
+      link: /docs/automation/optimization-engine/bayesian-optimization/
+    - title: Hyperopt
+      link: /docs/automation/optimization-engine/hyperopt/
+    - title: Custom Iterative Optimization
+      link: /docs/automation/optimization-engine/iterative/
+    - title: Params
+      link: /docs/automation/optimization-engine/params/
+  - group: Mapping
+    items:
+    - title: Overview
+      link: /docs/automation/mapping/
+    - title: Specification
+      link: /docs/automation/mapping/specification/
+  - group: Pipeline helpers
+    items:
+    - title: Overview
+      link: /docs/automation/helpers/
+    - title: Concurrency
+      link: /docs/automation/helpers/concurrency/
+    - title: Cache
+      link: /docs/automation/helpers/cache/
+    - title: Early Stopping
+      link: /docs/automation/helpers/early-stopping/
+  - group: Schedules
+    items:
+    - title: Overview
+      link: /docs/automation/schedules/
+    - title: Cron Schedule
+      link: /docs/automation/schedules/cron/
+    - title: Interval Schedule
+      link: /docs/automation/schedules/interval/
+    - title: Repeatable Schedule
+      link: /docs/automation/schedules/repeatable/
+    - title: Exact time Schedule
+      link: /docs/automation/schedules/exact-time/

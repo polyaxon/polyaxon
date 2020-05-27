@@ -50,6 +50,7 @@ def resolve_contexts(
             "namespace": namespace,
             "iteration": iteration,
             "context_path": contexts.CONTEXT_ROOT,
+            "artifacts_path": contexts.CONTEXT_MOUNT_ARTIFACTS,
         },
         "init": {},
         "connections": {},
@@ -57,13 +58,15 @@ def resolve_contexts(
     contexts_spec = PluginsContextsSpec.from_config(compiled_operation.plugins)
 
     if contexts_spec.collect_artifacts:
-        resolved_contexts["globals"]["artifacts_path"] = get_path(
-            contexts.CONTEXT_MOUNT_ARTIFACTS, run_path
-        )
+        run_artifacts_path = contexts.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path)
+        run_outputs_path = contexts.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path)
+        resolved_contexts["globals"]["run_artifacts_path"] = run_artifacts_path
+        resolved_contexts["globals"]["run_outputs_path"] = run_outputs_path
     elif artifacts_store:
-        resolved_contexts["globals"]["artifacts_path"] = get_path(
-            artifacts_store.store_path, run_path
-        )
+        run_artifacts_path = get_path(artifacts_store.store_path, run_path)
+        run_outputs_path = get_path(run_artifacts_path, "outputs")
+        resolved_contexts["globals"]["run_artifacts_path"] = run_artifacts_path
+        resolved_contexts["globals"]["run_outputs_path"] = run_outputs_path
 
     if compiled_operation and not compiled_operation.has_pipeline:
         init = compiled_operation.run.init or []
@@ -120,7 +123,13 @@ def resolve_globals_contexts(
             "namespace": namespace,
             "iteration": iteration,
             "context_path": contexts.CONTEXT_ROOT,
-            "artifacts_path": get_path(contexts.CONTEXT_MOUNT_ARTIFACTS, run_path),
+            "artifacts_path": contexts.CONTEXT_MOUNT_ARTIFACTS,
+            "run_artifacts_path": contexts.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(
+                run_path
+            ),
+            "run_outputs_path": contexts.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(
+                run_path
+            ),
         }
     }
 

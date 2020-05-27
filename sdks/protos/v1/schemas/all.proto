@@ -22,7 +22,7 @@ import "v1/polyflow/condition.proto";
 import "v1/polyflow/early_stopping.proto";
 import "v1/polyflow/hp_params.proto";
 import "v1/polyflow/mounts.proto";
-import "v1/polyflow/parallel.proto";
+import "v1/polyflow/matrix.proto";
 import "v1/polyflow/run.proto";
 import "v1/polyflow/compiled_operation.proto";
 import "v1/polyflow/reference.proto";
@@ -43,7 +43,7 @@ import "v1/polyflow/operation.proto";
 message Schemas {
     OperationCond operation_cond = 1;
     EarlyStopping early_stopping = 2;
-    Parallel parallel = 3;
+    Matrix matrix = 3;
     RunSchema run = 4;
     Operation operation = 5;
     CompiledOperation compiled_operation = 6;
@@ -68,5 +68,5 @@ message Schemas {
     ImageType image = 25;
     EventType event_type = 26;
     Event event = 28;
-    ParallelKind parallel_kind = 27;
+    MatrixKind matrix_kind = 27;
 }

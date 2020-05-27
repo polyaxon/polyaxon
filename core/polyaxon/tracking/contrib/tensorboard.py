@@ -16,6 +16,7 @@
 
 import os
 
+from polyaxon import tracking
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.logger import logger
 
@@ -44,6 +45,7 @@ if not summary_pb2:
 class PolyaxonTensorboardLogger:
     @classmethod
     def process_summary(cls, summary, global_step=None, run=None):
+        run = tracking.get_or_create_run(run)
         if not run:
             return
 

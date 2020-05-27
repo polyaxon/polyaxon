@@ -55,7 +55,7 @@ from polyaxon.polyflow.optimization import (
     V1OptimizationMetric,
     V1OptimizationResource,
 )
-from polyaxon.polyflow.parallel import (
+from polyaxon.polyflow.matrix import (
     AcquisitionFunctions,
     BayesSchema,
     GaussianProcessConfig,
@@ -65,8 +65,8 @@ from polyaxon.polyflow.parallel import (
     HyperoptSchema,
     IterativeSchema,
     MappingSchema,
-    ParallelMixin,
-    ParallelSchema,
+    MatrixMixin,
+    MatrixSchema,
     RandomSearchSchema,
     UtilityFunctionConfig,
     V1Bayes,
@@ -76,8 +76,8 @@ from polyaxon.polyflow.parallel import (
     V1Iterative,
     V1Mapping,
     V1RandomSearch,
-    V1Parallel,
-    V1ParallelKind,
+    V1Matrix,
+    V1MatrixKind,
     V1HpChoice,
     V1HpGeomSpace,
     V1HpLinSpace,

@@ -21,7 +21,7 @@ from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow import V1RunKind
 from polyaxon.polyflow.operations import V1CompiledOperation
-from polyaxon.polyflow.parallel.iterative import V1Iterative
+from polyaxon.polyflow.matrix.iterative import V1Iterative
 
 
 @pytest.mark.workflow_mark
@@ -30,7 +30,7 @@ class TestWorkflowV1Iterative(BaseTestCase):
         config_dict = {
             "kind": "iterative",
             "numIterations": 10,
-            "container": {"image": "my-parallel"},
+            "container": {"image": "my-matrix"},
         }
         config = V1Iterative.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
@@ -56,11 +56,11 @@ class TestWorkflowV1Iterative(BaseTestCase):
     def test_iterative_without_num_iterations(self):
         config_dict = {
             "kind": "compiled_operation",
-            "parallel": {
+            "matrix": {
                 "kind": "iterative",
                 "params": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
                 "seed": 1,
-                "container": {"image": "my-parallel"},
+                "container": {"image": "my-matrix"},
             },
             "run": {"kind": V1RunKind.JOB, "container": {"image": "foo/bar"}},
         }
@@ -68,6 +68,6 @@ class TestWorkflowV1Iterative(BaseTestCase):
         with self.assertRaises(ValidationError):
             V1CompiledOperation.from_dict(config_dict)
 
-        config_dict["parallel"]["numIterations"] = 10
+        config_dict["matrix"]["numIterations"] = 10
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict

@@ -60,7 +60,7 @@ class OperationSpecification(BaseSpecification):
             cls.CACHE,
             cls.PLUGINS,
             cls.TERMINATION,
-            cls.PARALLEL,
+            cls.MATRIX,
             cls.SCHEDULE,
             cls.DEPENDENCIES,
             cls.TRIGGER,

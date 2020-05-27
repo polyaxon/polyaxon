@@ -225,7 +225,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
         client = self.connection.get_container_client(container_name)
         with open(filename, "rb") as file:
-            client.upload_blob(blob, file)
+            client.upload_blob(blob, file, overwrite=True)
 
     def upload_dir(
         self,

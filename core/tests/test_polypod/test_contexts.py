@@ -31,7 +31,7 @@ class TestResolveContexts(BaseTestCase):
     def test_resolver_default_contexts(self):
         compiled_operation = V1CompiledOperation.read(
             {
-                "version": 1.05,
+                "version":  1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -64,6 +64,7 @@ class TestResolveContexts(BaseTestCase):
                 "project_uuid": "uuid",
                 "run_info": "user.project.runs.uuid",
                 "context_path": "/plx-context",
+                "artifacts_path": "/plx-context/artifacts",
                 "name": "run",
                 "uuid": "uuid",
                 "namespace": "test",
@@ -84,7 +85,7 @@ class TestResolveContexts(BaseTestCase):
 
         compiled_operation = V1CompiledOperation.read(
             {
-                "version": 1.05,
+                "version":  1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -122,8 +123,10 @@ class TestResolveContexts(BaseTestCase):
                 "project_uuid": "uuid",
                 "name": "run",
                 "uuid": "uuid",
-                "artifacts_path": "/claim/path/test",
                 "context_path": "/plx-context",
+                "artifacts_path": "/plx-context/artifacts",
+                "run_artifacts_path": "/claim/path/test",
+                "run_outputs_path": "/claim/path/test/outputs",
                 "namespace": "test",
                 "iteration": 12,
                 "run_info": "user.project.runs.uuid",
@@ -142,7 +145,7 @@ class TestResolveContexts(BaseTestCase):
         )
         compiled_operation = V1CompiledOperation.read(
             {
-                "version": 1.05,
+                "version":  1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -181,8 +184,11 @@ class TestResolveContexts(BaseTestCase):
                 "name": "run",
                 "uuid": "uuid",
                 "run_info": "user.project.runs.uuid",
-                "artifacts_path": "/plx-context/artifacts/test",
                 "context_path": "/plx-context",
+                "artifacts_path": "/plx-context/artifacts/test",
+                "artifacts_path": "/plx-context/artifacts",
+                "run_artifacts_path": "/plx-context/artifacts/test",
+                "run_outputs_path": "/plx-context/artifacts/test/outputs",
                 "namespace": "test",
                 "iteration": 12,
             },
@@ -193,7 +199,7 @@ class TestResolveContexts(BaseTestCase):
     def test_resolver_default_service_ports(self):
         compiled_operation = V1CompiledOperation.read(
             {
-                "version": 1.05,
+                "version":  1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -231,8 +237,10 @@ class TestResolveContexts(BaseTestCase):
                 "run_info": "user.project.runs.uuid",
                 "name": "run",
                 "uuid": "uuid",
-                "artifacts_path": "/plx-context/artifacts/test",
                 "context_path": "/plx-context",
+                "artifacts_path": "/plx-context/artifacts",
+                "run_artifacts_path": "/plx-context/artifacts/test",
+                "run_outputs_path": "/plx-context/artifacts/test/outputs",
                 "namespace": "test",
                 "iteration": 12,
                 "ports": [1212, 1234],

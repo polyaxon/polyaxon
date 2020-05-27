@@ -58,8 +58,8 @@ message CompiledOperation {
     // Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
     repeated google.protobuf.Struct events = 10;
 
-    // Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-    google.protobuf.Struct parallel = 11;
+    // Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
+    google.protobuf.Struct matrix = 11;
 
     // Optional graph dependencies of this op
     repeated string dependencies = 12;

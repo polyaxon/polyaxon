@@ -17,7 +17,7 @@
 from marshmallow import fields, validate
 
 from polyaxon.polyflow.component.base import BaseComponent, BaseComponentSchema
-from polyaxon.polyflow.parallel import ParallelMixin, ParallelSchema
+from polyaxon.polyflow.matrix import MatrixMixin, MatrixSchema
 from polyaxon.polyflow.schedule import ScheduleMixin, ScheduleSchema
 from polyaxon.polyflow.trigger_policies import V1TriggerPolicy
 
@@ -25,7 +25,7 @@ from polyaxon.polyflow.trigger_policies import V1TriggerPolicy
 class BaseOpSchema(BaseComponentSchema):
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
     events = fields.List(fields.Raw(), allow_none=True)
-    parallel = fields.Nested(ParallelSchema, allow_none=True)
+    matrix = fields.Nested(MatrixSchema, allow_none=True)
     dependencies = fields.List(fields.Str(), allow_none=True)
     trigger = fields.Str(
         allow_none=True, validate=validate.OneOf(V1TriggerPolicy.allowable_values)
@@ -38,20 +38,20 @@ class BaseOpSchema(BaseComponentSchema):
         return BaseOp
 
 
-class BaseOp(BaseComponent, ParallelMixin, ScheduleMixin):
+class BaseOp(BaseComponent, MatrixMixin, ScheduleMixin):
     SCHEMA = BaseOpSchema
     REDUCED_ATTRIBUTES = BaseComponent.REDUCED_ATTRIBUTES + [
         "schedule",
         "events",
-        "parallel",
+        "matrix",
         "dependencies",
         "trigger",
         "conditions",
         "skipOnUpstreamSkip",
     ]
 
-    def get_parallel_kind(self):
-        return self.parallel.kind if self.parallel else None
+    def get_matrix_kind(self):
+        return self.matrix.kind if self.matrix else None
 
     def get_schedule_kind(self):
-        return self.schedule.kind if self.schedule else None
+        return self.matrix.kind if self.matrix else None

@@ -82,6 +82,7 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
+    proxy_hide_header X-Frame-Options;
     proxy_set_header Origin "";
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -98,6 +99,7 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
+    proxy_hide_header X-Frame-Options;
     proxy_set_header Origin "";
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -198,6 +200,7 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
+    proxy_hide_header X-Frame-Options;
     proxy_set_header Origin "";
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -217,6 +220,7 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
+    proxy_hide_header X-Frame-Options;
     proxy_set_header Origin "";
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;

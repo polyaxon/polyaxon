@@ -1,5 +1,5 @@
 ---
-version: 1.05
+version:  1.1
 
 kind: component
 
@@ -9,7 +9,7 @@ inputs:
     value: [MeanSquaredError, AbsoluteDifference]
     isOptional: true
 
-parallel:
+matrix:
   kind: random
   params:
     loss:

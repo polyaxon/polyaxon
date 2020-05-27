@@ -18,7 +18,7 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.polyflow.parallel import V1Hyperband
+from polyaxon.polyflow.matrix import V1Hyperband
 from polyaxon.polytune.search_managers.hyperband.manager import HyperbandManager
 
 

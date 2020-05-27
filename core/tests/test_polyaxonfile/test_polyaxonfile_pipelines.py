@@ -33,8 +33,8 @@ from polyaxon.polyflow.early_stopping import (
     V1FailureEarlyStopping,
     V1MetricEarlyStopping,
 )
-from polyaxon.polyflow.parallel import V1GridSearch, V1Hyperband, V1RandomSearch
-from polyaxon.polyflow.parallel.params import V1HpChoice, V1HpLinSpace
+from polyaxon.polyflow.matrix import V1GridSearch, V1Hyperband, V1RandomSearch
+from polyaxon.polyflow.matrix.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.run import V1Dag
 
 
@@ -115,7 +115,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         with patch("polyaxon.config_reader.spec.ConfigSpec.read") as config_read:
             config_read.return_value = V1Component(
                 kind="component",
-                version="1.05",
+                version=" 1.1",
                 inputs=[V1IO(name="str-input", iotype="str")],
                 run=V1Job(container=V1Container(name="test")),
             ).to_dict()
@@ -326,7 +326,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         assert run_config.run.kind == V1Dag.IDENTIFIER
         assert len(run_config.run.operations) == 2
         assert len(run_config.run.components) == 1
-        template_random = run_config.run.operations[1].parallel
+        template_random = run_config.run.operations[1].matrix
         assert isinstance(template_random, V1RandomSearch)
         assert isinstance(template_random.params["lr"], V1HpLinSpace)
         assert isinstance(template_random.params["loss"], V1HpChoice)
@@ -352,7 +352,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.is_dag_run is True
         assert run_config.has_pipeline is True
         assert run_config.schedule is None
@@ -362,7 +362,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         assert run_config.run.kind == V1Dag.IDENTIFIER
         assert len(run_config.run.operations) == 2
         assert len(run_config.run.components) == 1
-        template_hyperband = run_config.run.operations[1].parallel
+        template_hyperband = run_config.run.operations[1].matrix
         assert isinstance(template_hyperband.params["lr"], V1HpLinSpace)
         assert isinstance(template_hyperband.params["loss"], V1HpChoice)
         assert template_hyperband.params["lr"].to_dict() == {
@@ -403,7 +403,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.is_dag_run is True
         assert run_config.has_pipeline is True
         assert run_config.schedule is None
@@ -413,7 +413,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         assert run_config.run.kind == V1Dag.IDENTIFIER
         assert len(run_config.run.operations) == 2
         assert len(run_config.run.components) == 1
-        template_grid = run_config.run.operations[1].parallel
+        template_grid = run_config.run.operations[1].matrix
         assert isinstance(template_grid, V1GridSearch)
         assert isinstance(template_grid.params["param1"], V1HpChoice)
         assert isinstance(template_grid.params["param2"], V1HpChoice)

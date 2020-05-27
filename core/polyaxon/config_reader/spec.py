@@ -24,6 +24,7 @@ from yaml.parser import ParserError  # noqa
 from yaml.scanner import ScannerError  # noqa
 
 from polyaxon.config_reader.utils import deep_update
+from polyaxon.env_vars.keys import POLYAXON_KEYS_PUBLIC_REGISTRY
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.utils.list_utils import to_list
 
@@ -123,12 +124,24 @@ def _read_from_url(url: str):
     return _read_from_stream(resp.content.decode())
 
 
-def _read_from_public_hub(hub: str):
-    hub, version = hub.split(":")
-    version = version or "latest"
-    url = "https://raw.githubusercontent.com/polyaxon/polyaxon-hub/dev/{}/{}.yaml".format(
-        hub, version
+def get_default_registry():
+    return os.environ.get(
+        POLYAXON_KEYS_PUBLIC_REGISTRY,
+        "https://raw.githubusercontent.com/polyaxon/polyaxon-hub/dev",
     )
+
+
+def _read_from_public_hub(hub: str):
+    hub_values = hub.split(":")
+    if len(hub_values) > 2:
+        raise PolyaxonSchemaError("Received an invalid hub reference: `{}`".format(hub))
+    if len(hub_values) == 2:
+        hub, version = hub_values
+    else:
+        hub, version = hub_values[0], "latest"
+    version = version or "latest"
+    registry = get_default_registry()
+    url = "{}/{}/{}.yaml".format(registry, hub, version)
     return _read_from_url(url)
 
 

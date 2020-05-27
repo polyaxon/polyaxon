@@ -81,13 +81,13 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     connections, and a run environment.
 
     With an operation users can:
-     * pass the parameters for required inputs or override the default values of optional inputs.
-     * patch the definition of the component to set environments, initializers, and resources.
-     * set termination logic and retries.
-     * set trigger logic to start a component in a pipeline context.
-     * parallelize or map the component over a matrix of parameters.
-     * put an operation on a schedule.
-     * subscribe a component to events to trigger executions automatically.
+     * Pass the parameters for required inputs or override the default values of optional inputs.
+     * Patch the definition of the component to set environments, initializers, and resources.
+     * Set termination logic and retries.
+     * Set trigger logic to start a component in a pipeline context.
+     * Parallelize or map the component over a matrix of parameters.
+     * Put an operation on a schedule.
+     * Subscribe a component to events to trigger executions automatically.
 
     Args:
         version: str
@@ -107,7 +107,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
                   [V1ExactTimeSchedule](/docs/automation/schedules/exact-time/)], optional
         events: [events](/docs/automation/optimization-engine/events/),
                 optional
-        parallel: Union[[V1Mapping](/docs/automation/mapping/),
+        matrix: Union[[V1Mapping](/docs/automation/mapping/),
                   [V1GridSearch](/docs/automation/optimization-engine/grid-search/),
                   [V1RandomSearch](/docs/automation/optimization-engine/random-search/),
                   [V1Hyperband](/docs/automation/optimization-engine/hyperband/),
@@ -353,9 +353,9 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>>     ]
     ```
 
-    This component is generic, and does not define resource requirements,
+    This component is generic, and does not define resources requirements,
     if for instance this component is hosted on github and you don't
-    want to modify the component while on the sametime you want to request a GPU for the notebook,
+    want to modify the component while at the sametime you want to request a GPU for the notebook,
     you can patch the run:
 
     ```yaml
@@ -467,6 +467,12 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     @property
     def has_hub_reference(self) -> bool:
         return bool(self.hub_ref)
+
+    @property
+    def has_public_hub_reference(self) -> bool:
+        if not self.has_hub_reference:
+            return False
+        return "/" not in self.hub_ref
 
     @property
     def has_path_reference(self) -> bool:

@@ -22,7 +22,7 @@ class V1RunKind(polyaxon_sdk.V1RunKind):
         (polyaxon_sdk.V1RunKind.JOB, polyaxon_sdk.V1RunKind.JOB),
         (polyaxon_sdk.V1RunKind.SERVICE, polyaxon_sdk.V1RunKind.SERVICE),
         (polyaxon_sdk.V1RunKind.DAG, polyaxon_sdk.V1RunKind.DAG),
-        (polyaxon_sdk.V1RunKind.PARALLEL, polyaxon_sdk.V1RunKind.PARALLEL),
+        (polyaxon_sdk.V1RunKind.MATRIX, polyaxon_sdk.V1RunKind.MATRIX),
         (polyaxon_sdk.V1RunKind.SPARK, polyaxon_sdk.V1RunKind.SPARK),
         (polyaxon_sdk.V1RunKind.DASK, polyaxon_sdk.V1RunKind.DASK),
         (polyaxon_sdk.V1RunKind.FLINK, polyaxon_sdk.V1RunKind.FLINK),
@@ -49,5 +49,5 @@ class V1CloningKind(polyaxon_sdk.V1CloningKind):
 class V1PipelineKind(polyaxon_sdk.V1PipelineKind):
     CHOICES = (
         (polyaxon_sdk.V1PipelineKind.DAG, polyaxon_sdk.V1PipelineKind.DAG),
-        (polyaxon_sdk.V1PipelineKind.PARALLEL, polyaxon_sdk.V1PipelineKind.PARALLEL,),
+        (polyaxon_sdk.V1PipelineKind.MATRIX, polyaxon_sdk.V1PipelineKind.MATRIX,),
     )

@@ -7,7 +7,7 @@
 
 * `DAG` (value: `"dag"`)
 
-* `PARALLEL` (value: `"parallel"`)
+* `MATRIX` (value: `"matrix"`)
 
 
 

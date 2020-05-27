@@ -126,15 +126,15 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     the [context](/docs/core/specification/context/).
 
     Examples:
-     * A build component may have a git repository as input and a container image as output.
-     * A traning component may have a container image, data path,
-       and some hyperparameters as input and a list metrics results as outputs.
+      * A build component may have a git repository as input and a container image as output.
+      * A training component may have a container image, data path,
+       and some hyperparameters as input and a list of metrics and artifacts as outputs.
 
     An input/output section includes a name, a description, a type to check the value passed,
-    a flag to tell if the input/output is optional, and a default value if it is optional.
+    a flag to tell if the input/output is optional, and a default value if it's optional.
 
     For inputs with type `bool`, users can additionally use
-    the flag `isFlag` which will transform the input to a flag.
+    the field `isFlag` which will transform the input to a flag.
 
     Args:
         name: str

@@ -17,6 +17,7 @@
 import os
 
 from collections import OrderedDict
+from typing import Dict
 
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
@@ -30,8 +31,12 @@ from polyaxon.utils.list_utils import to_list
 
 
 def collect_references(config: V1Operation, path_context: str = None):
-    if config.has_component_reference or config.has_hub_reference:
+    if config.has_component_reference or (
+        config.has_hub_reference and not config.has_public_hub_reference
+    ):
         return config
+    elif config.has_public_hub_reference:
+        component = ConfigSpec.get_from(config.hub_ref, "hub").read()
     elif config.has_url_reference:
         component = ConfigSpec.get_from(config.url_ref, "url").read()
     elif config.has_path_reference:
@@ -66,11 +71,12 @@ def check_polyaxonfile(
     python_module: str = None,
     url: str = None,
     hub: str = None,
-    params=None,
-    profile=None,
-    queue=None,
-    nocache=None,
-    log=True,
+    params: Dict = None,
+    profile: str = None,
+    queue: str = None,
+    nocache: bool = None,
+    log: bool = True,
+    eager_hub: bool = True,
     is_cli: bool = True,
     to_op: bool = True,
 ):
@@ -118,7 +124,7 @@ def check_polyaxonfile(
         path_context = None
         public_hub = hub and "/" not in hub
 
-        if not hub or public_hub:
+        if not hub or (public_hub and eager_hub):
             if python_module:
                 path_context = python_module[0]
                 plx_file = ConfigSpec.get_from(python_module, config_type=".py").read()
@@ -167,9 +173,9 @@ def check_polyaxonfile_kind(specification, kind):
         )
 
 
-def get_parallel_info(kind, concurrency, early_stopping=False, **kwargs):
+def get_matrix_info(kind, concurrency, early_stopping=False, **kwargs):
     info = OrderedDict()
-    info["Parallel kind"] = kind.lower()
+    info["Matrix kind"] = kind.lower()
     info["Concurrency"] = (
         "{} runs".format("sequential")
         if concurrency == 1

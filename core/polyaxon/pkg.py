@@ -16,7 +16,7 @@
 
 NAME = "polyaxon"
 VERSION = "1.0.9"
-SCHEMA_VERSION = 1.05
+SCHEMA_VERSION = 1.1
 DESC = "Command Line Interface (CLI) for Polyaxon."
 URL = "https://github.com/polyaxon/polyaxon"
 AUTHOR = "Polyaxon, Inc."

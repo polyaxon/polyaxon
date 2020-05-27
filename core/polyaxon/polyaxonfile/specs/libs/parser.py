@@ -78,14 +78,14 @@ class Parser(object):
             ]
 
         # Check workflow
-        parallel_section = cls._get_section(config, Sections.PARALLEL)
-        if parallel_section:
-            parsed_data[Sections.PARALLEL] = cls.parse_expression(
-                parallel_section, parsed_params
+        matrix_section = cls._get_section(config, Sections.MATRIX)
+        if matrix_section:
+            parsed_data[Sections.MATRIX] = cls.parse_expression(
+                matrix_section, parsed_params
             )
-            parallel_params = copy.copy(parsed_data[Sections.PARALLEL])
-            if parallel_params:
-                parsed_params = deep_update(parallel_params, parsed_params)
+            matrix_params = copy.copy(parsed_data[Sections.MATRIX])
+            if matrix_params:
+                parsed_params = deep_update(matrix_params, parsed_params)
 
         for section in Sections.PARSING_SECTIONS:
             config_section = cls._get_section(config, section)

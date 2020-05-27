@@ -42,7 +42,7 @@ class TestResolver(BaseTestCase):
         super().setUp()
         self.compiled_operation = V1CompiledOperation.read(
             {
-                "version": 1.05,
+                "version":  1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -161,7 +161,7 @@ class TestResolver(BaseTestCase):
         # Add run spec to resolve connections
         compiled_operation = V1CompiledOperation.read(
             {
-                "version": 1.05,
+                "version":  1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,
@@ -199,7 +199,7 @@ class TestResolver(BaseTestCase):
         # Add run spec to resolve connections
         compiled_operation = V1CompiledOperation.read(
             {
-                "version": 1.05,
+                "version":  1.1,
                 "kind": kinds.COMPILED_OPERATION,
                 "plugins": {
                     "auth": False,

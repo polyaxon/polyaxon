@@ -82,7 +82,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     or setup scripts not present in the main container.
 
     By default all built-in handlers will mount and initialize data under the path
-    `/plx-context/artifacts/{{connection-name}}` unless the user pass a custom `path`.
+    `/plx-context/artifacts/{{connection-name}}` unless the user passes a custom `path`.
 
     Args:
         artifacts: [V1ArtifactsType](/docs/core/specification/types/#v1artifactstype), optional
@@ -100,7 +100,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     It's possible to customize the container used with the default built-in handlers.
 
     ```yaml
-    >>> version: 1.05
+    >>> version:  1.1
     >>> kind: component
     >>> run:
     >>>   kind: job

@@ -86,9 +86,11 @@ def get_op_specification(
 
     if hub and config.hub_ref is None:
         config.hub_ref = hub
+    hub = config.hub_ref
+    public_hub = config.has_public_hub_reference
     params = copy.deepcopy(config.params)
     # Sanity check if params were passed and we are not dealing with a hub component
-    if not hub:
+    if not (hub and not public_hub):
         run_config = OperationSpecification.compile_operation(config)
         run_config.validate_params(params=params, is_template=False)
         if run_config.is_dag_run:

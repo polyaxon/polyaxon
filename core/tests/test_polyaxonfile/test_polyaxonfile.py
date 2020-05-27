@@ -18,9 +18,8 @@ import os
 
 import pytest
 
-from mock import patch
-
 from marshmallow import ValidationError
+from mock import patch
 from tests.utils import BaseTestCase
 
 from polyaxon import pkg
@@ -33,13 +32,13 @@ from polyaxon.polyaxonfile.specs import (
 from polyaxon.polyflow import V1CompiledOperation, V1Plugins, V1RunKind
 from polyaxon.polyflow.early_stopping import V1MetricEarlyStopping
 from polyaxon.polyflow.environment import V1Environment
-from polyaxon.polyflow.parallel import (
+from polyaxon.polyflow.matrix import (
     V1GridSearch,
     V1Hyperband,
     V1Mapping,
     V1RandomSearch,
 )
-from polyaxon.polyflow.parallel.params import V1HpChoice, V1HpLinSpace
+from polyaxon.polyflow.matrix.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.termination import V1Termination
 
 
@@ -91,7 +90,9 @@ class TestPolyaxonfiles(BaseTestCase):
 
     def test_from_public_hub(self):
         with patch("polyaxon.config_reader.spec._read_from_public_hub") as request_mock:
-            request_mock.return_value = os.path.abspath("tests/fixtures/plain/simple_job.yml")
+            request_mock.return_value = os.path.abspath(
+                "tests/fixtures/plain/simple_job.yml"
+            )
             operation = check_polyaxonfile(hub="component:12", is_cli=False, to_op=True)
 
         assert request_mock.call_count == 1
@@ -113,7 +114,7 @@ class TestPolyaxonfiles(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.tags is None
         assert len(run_config.run.volumes) == 1
         assert run_config.run.to_dict()["volumes"][0] == {
@@ -157,7 +158,7 @@ class TestPolyaxonfiles(BaseTestCase):
         assert run_config.inputs[1].value is True
         run_config = CompiledOperationSpecification.apply_context(run_config)
         run_config = CompiledOperationSpecification.apply_run_contexts(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.tags == ["foo", "bar"]
         assert run_config.run.container.image == "my_image"
         assert run_config.run.container.command == ["/bin/sh", "-c"]
@@ -182,7 +183,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert isinstance(run_config.plugins, V1Plugins)
         assert run_config.plugins.log_level == "INFO"
         assert run_config.plugins.auth is True
@@ -209,7 +210,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert isinstance(run_config.termination, V1Termination)
         assert run_config.termination.max_retries == 5
         assert run_config.termination.timeout == 500
@@ -224,7 +225,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert isinstance(run_config.run.environment, V1Environment)
         assert run_config.run.environment.node_selector == {"polyaxon.com": "core"}
         assert run_config.run.container.resources == {
@@ -258,38 +259,38 @@ class TestPolyaxonfiles(BaseTestCase):
         )
         run_config = OperationSpecification.compile_operation(plx_file)
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
-        assert isinstance(run_config.parallel, V1Hyperband)
-        assert isinstance(run_config.parallel.params["lr"], V1HpLinSpace)
-        assert isinstance(run_config.parallel.params["loss"], V1HpChoice)
-        assert run_config.parallel.params["lr"].to_dict() == {
+        assert run_config.version ==  1.1
+        assert isinstance(run_config.matrix, V1Hyperband)
+        assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
+        assert isinstance(run_config.matrix.params["loss"], V1HpChoice)
+        assert run_config.matrix.params["lr"].to_dict() == {
             "kind": "linspace",
             "value": {"start": 0.01, "stop": 0.1, "num": 5},
         }
-        assert run_config.parallel.params["loss"].to_dict() == {
+        assert run_config.matrix.params["loss"].to_dict() == {
             "kind": "choice",
             "value": ["MeanSquaredError", "AbsoluteDifference"],
         }
-        assert run_config.parallel.params["normal_rate"].to_dict() == {
+        assert run_config.matrix.params["normal_rate"].to_dict() == {
             "kind": "normal",
             "value": {"loc": 0, "scale": 0.9},
         }
-        assert run_config.parallel.params["dropout"].to_dict() == {
+        assert run_config.matrix.params["dropout"].to_dict() == {
             "kind": "qloguniform",
             "value": {"high": 0.8, "low": 0, "q": 0.1},
         }
-        assert run_config.parallel.params["activation"].to_dict() == {
+        assert run_config.matrix.params["activation"].to_dict() == {
             "kind": "pchoice",
             "value": [["relu", 0.1], ["sigmoid", 0.8]],
         }
-        assert run_config.parallel.params["model"].to_dict() == {
+        assert run_config.matrix.params["model"].to_dict() == {
             "kind": "choice",
             "value": ["CDNA", "DNA", "STP"],
         }
-        assert run_config.parallel.concurrency == 2
-        assert isinstance(run_config.parallel, V1Hyperband)
-        assert run_config.parallel.kind == V1Hyperband.IDENTIFIER
-        assert run_config.parallel.early_stopping is None
+        assert run_config.matrix.concurrency == 2
+        assert isinstance(run_config.matrix, V1Hyperband)
+        assert run_config.matrix.kind == V1Hyperband.IDENTIFIER
+        assert run_config.matrix.early_stopping is None
 
     def test_matrix_file_passes_int_float_types(self):
         plx_file = check_polyaxonfile(
@@ -302,22 +303,22 @@ class TestPolyaxonfiles(BaseTestCase):
         run_config = OperationSpecification.compile_operation(plx_file)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
-        assert isinstance(run_config.parallel, V1GridSearch)
-        assert isinstance(run_config.parallel.params["param1"], V1HpChoice)
-        assert isinstance(run_config.parallel.params["param2"], V1HpChoice)
-        assert run_config.parallel.params["param1"].to_dict() == {
+        assert run_config.version ==  1.1
+        assert isinstance(run_config.matrix, V1GridSearch)
+        assert isinstance(run_config.matrix.params["param1"], V1HpChoice)
+        assert isinstance(run_config.matrix.params["param2"], V1HpChoice)
+        assert run_config.matrix.params["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert run_config.parallel.params["param2"].to_dict() == {
+        assert run_config.matrix.params["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert run_config.parallel.concurrency == 2
-        assert isinstance(run_config.parallel, V1GridSearch)
-        assert run_config.parallel.kind == V1GridSearch.IDENTIFIER
-        assert run_config.parallel.early_stopping is None
+        assert run_config.matrix.concurrency == 2
+        assert isinstance(run_config.matrix, V1GridSearch)
+        assert run_config.matrix.kind == V1GridSearch.IDENTIFIER
+        assert run_config.matrix.early_stopping is None
 
     def test_matrix_early_stopping_file_passes(self):
         plx_file = check_polyaxonfile(
@@ -331,24 +332,24 @@ class TestPolyaxonfiles(BaseTestCase):
         run_config = OperationSpecification.compile_operation(plx_file)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
-        assert isinstance(run_config.parallel, V1RandomSearch)
-        assert isinstance(run_config.parallel.params["lr"], V1HpLinSpace)
-        assert isinstance(run_config.parallel.params["loss"], V1HpChoice)
-        assert run_config.parallel.params["lr"].to_dict() == {
+        assert run_config.version ==  1.1
+        assert isinstance(run_config.matrix, V1RandomSearch)
+        assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
+        assert isinstance(run_config.matrix.params["loss"], V1HpChoice)
+        assert run_config.matrix.params["lr"].to_dict() == {
             "kind": "linspace",
             "value": {"start": 0.01, "stop": 0.1, "num": 5},
         }
-        assert run_config.parallel.params["loss"].to_dict() == {
+        assert run_config.matrix.params["loss"].to_dict() == {
             "kind": "choice",
             "value": ["MeanSquaredError", "AbsoluteDifference"],
         }
-        assert run_config.parallel.concurrency == 2
-        assert run_config.parallel.num_runs == 300
-        assert isinstance(run_config.parallel, V1RandomSearch)
-        assert run_config.parallel.kind == V1RandomSearch.IDENTIFIER
-        assert len(run_config.parallel.early_stopping) == 1
-        assert isinstance(run_config.parallel.early_stopping[0], V1MetricEarlyStopping)
+        assert run_config.matrix.concurrency == 2
+        assert run_config.matrix.num_runs == 300
+        assert isinstance(run_config.matrix, V1RandomSearch)
+        assert run_config.matrix.kind == V1RandomSearch.IDENTIFIER
+        assert len(run_config.matrix.early_stopping) == 1
+        assert isinstance(run_config.matrix.early_stopping[0], V1MetricEarlyStopping)
 
     def test_mapping_early_stopping_file_passes(self):
         plx_file = check_polyaxonfile(
@@ -362,17 +363,17 @@ class TestPolyaxonfiles(BaseTestCase):
         config_run = OperationSpecification.compile_operation(plx_file)
 
         config_run = CompiledOperationSpecification.apply_context(config_run)
-        assert config_run.version == 1.05
-        assert isinstance(config_run.parallel, V1Mapping)
-        assert config_run.parallel.values == [
+        assert config_run.version ==  1.1
+        assert isinstance(config_run.matrix, V1Mapping)
+        assert config_run.matrix.values == [
             {"lr": 0.001, "loss": "MeanSquaredError"},
             {"lr": 0.1, "loss": "AbsoluteDifference"},
         ]
-        assert config_run.parallel.concurrency == 2
-        assert isinstance(config_run.parallel, V1Mapping)
-        assert config_run.parallel.kind == V1Mapping.IDENTIFIER
-        assert len(config_run.parallel.early_stopping) == 1
-        assert isinstance(config_run.parallel.early_stopping[0], V1MetricEarlyStopping)
+        assert config_run.matrix.concurrency == 2
+        assert isinstance(config_run.matrix, V1Mapping)
+        assert config_run.matrix.kind == V1Mapping.IDENTIFIER
+        assert len(config_run.matrix.early_stopping) == 1
+        assert isinstance(config_run.matrix.early_stopping[0], V1MetricEarlyStopping)
 
     def test_tf_passes(self):
         run_config = CompiledOperationSpecification.read(
@@ -383,7 +384,7 @@ class TestPolyaxonfiles(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.termination is not None
         assert run_config.termination.ttl == 12
         assert run_config.is_tf_job_run
@@ -411,7 +412,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
 
         assert run_config.termination is not None
         assert run_config.termination.ttl == 12
@@ -446,7 +447,7 @@ class TestPolyaxonfiles(BaseTestCase):
         )
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.is_mpi_job_run
         assert run_config.termination is None
         assert run_config.run.launcher.replicas == 1

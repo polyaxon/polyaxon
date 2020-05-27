@@ -25,7 +25,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1Bayes Parallelism based on Bayesian Optimization
+// V1Bayes Matrix based on Bayesian Optimization
 //
 // swagger:model v1Bayes
 type V1Bayes struct {
@@ -36,7 +36,7 @@ type V1Bayes struct {
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
-	// Kind of parallel, should be equal to "bayes"
+	// Kind of matrix, should be equal to "bayes"
 	Kind *string `json:"kind,omitempty"`
 
 	// Metric to optimize during the iterations
@@ -48,7 +48,7 @@ type V1Bayes struct {
 	// Number of iteration for producing new observations
 	NumIterations int32 `json:"num_iterations,omitempty"`
 
-	// Matrix/Space definition of params to traverse
+	// Hyperparams/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`
 
 	// Seed for the random generator

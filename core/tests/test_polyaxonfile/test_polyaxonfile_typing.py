@@ -30,8 +30,8 @@ from polyaxon.polyaxonfile.specs import (
 )
 from polyaxon.polyflow import V1CompiledOperation, V1Hyperband
 from polyaxon.polyflow.io import V1IO
-from polyaxon.polyflow.parallel import V1GridSearch
-from polyaxon.polyflow.parallel.params import V1HpChoice, V1HpLinSpace
+from polyaxon.polyflow.matrix import V1GridSearch
+from polyaxon.polyflow.matrix.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.params import V1Param
 
 
@@ -109,7 +109,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         assert run_config.inputs[1].value is False
         run_config = CompiledOperationSpecification.apply_context(run_config)
         run_config = CompiledOperationSpecification.apply_run_contexts(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.tags == ["foo", "bar"]
         assert run_config.run.container.image == "my_image"
         assert run_config.run.container.command == ["/bin/sh", "-c"]
@@ -131,7 +131,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         assert run_config.inputs[1].value is True
         run_config = CompiledOperationSpecification.apply_context(run_config)
         run_config = CompiledOperationSpecification.apply_run_contexts(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.tags == ["foo", "bar"]
         assert run_config.run.container.image == "my_image"
         assert run_config.run.container.command == ["/bin/sh", "-c"]
@@ -173,23 +173,23 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         run_config = OperationSpecification.compile_operation(plxfile)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.has_pipeline
         assert run_config.is_dag_run is False
-        assert isinstance(run_config.parallel.params["param1"], V1HpChoice)
-        assert isinstance(run_config.parallel.params["param2"], V1HpChoice)
-        assert run_config.parallel.params["param1"].to_dict() == {
+        assert isinstance(run_config.matrix.params["param1"], V1HpChoice)
+        assert isinstance(run_config.matrix.params["param2"], V1HpChoice)
+        assert run_config.matrix.params["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert run_config.parallel.params["param2"].to_dict() == {
+        assert run_config.matrix.params["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert isinstance(run_config.parallel, V1GridSearch)
-        assert run_config.parallel.concurrency == 2
-        assert run_config.parallel.kind == V1GridSearch.IDENTIFIER
-        assert run_config.parallel.early_stopping is None
+        assert isinstance(run_config.matrix, V1GridSearch)
+        assert run_config.matrix.concurrency == 2
+        assert run_config.matrix.kind == V1GridSearch.IDENTIFIER
+        assert run_config.matrix.early_stopping is None
 
     def test_matrix_job_file_passes_int_float_types(self):
         plxfile = check_polyaxonfile(
@@ -203,21 +203,21 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         run_config = OperationSpecification.compile_operation(plxfile)
 
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
-        assert isinstance(run_config.parallel.params["param1"], V1HpChoice)
-        assert isinstance(run_config.parallel.params["param2"], V1HpChoice)
-        assert run_config.parallel.params["param1"].to_dict() == {
+        assert run_config.version ==  1.1
+        assert isinstance(run_config.matrix.params["param1"], V1HpChoice)
+        assert isinstance(run_config.matrix.params["param2"], V1HpChoice)
+        assert run_config.matrix.params["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert run_config.parallel.params["param2"].to_dict() == {
+        assert run_config.matrix.params["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert isinstance(run_config.parallel, V1GridSearch)
-        assert run_config.parallel.concurrency == 2
-        assert run_config.parallel.kind == V1GridSearch.IDENTIFIER
-        assert run_config.parallel.early_stopping is None
+        assert isinstance(run_config.matrix, V1GridSearch)
+        assert run_config.matrix.concurrency == 2
+        assert run_config.matrix.kind == V1GridSearch.IDENTIFIER
+        assert run_config.matrix.early_stopping is None
 
     def test_matrix_file_with_required_inputs_and_wrong_matrix_type_fails(self):
         with self.assertRaises(PolyaxonfileError):
@@ -237,22 +237,22 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         )
         run_config = OperationSpecification.compile_operation(plx_file)
         run_config = CompiledOperationSpecification.apply_context(run_config)
-        assert run_config.version == 1.05
-        assert isinstance(run_config.parallel, V1Hyperband)
-        assert isinstance(run_config.parallel.params["lr"], V1HpLinSpace)
-        assert isinstance(run_config.parallel.params["loss"], V1HpChoice)
-        assert run_config.parallel.params["lr"].to_dict() == {
+        assert run_config.version ==  1.1
+        assert isinstance(run_config.matrix, V1Hyperband)
+        assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
+        assert isinstance(run_config.matrix.params["loss"], V1HpChoice)
+        assert run_config.matrix.params["lr"].to_dict() == {
             "kind": "linspace",
             "value": {"start": 0.01, "stop": 0.1, "num": 5},
         }
-        assert run_config.parallel.params["loss"].to_dict() == {
+        assert run_config.matrix.params["loss"].to_dict() == {
             "kind": "choice",
             "value": ["MeanSquaredError", "AbsoluteDifference"],
         }
-        assert run_config.parallel.concurrency == 2
-        assert isinstance(run_config.parallel, V1Hyperband)
-        assert run_config.parallel.kind == V1Hyperband.IDENTIFIER
-        assert run_config.parallel.early_stopping is None
+        assert run_config.matrix.concurrency == 2
+        assert isinstance(run_config.matrix, V1Hyperband)
+        assert run_config.matrix.kind == V1Hyperband.IDENTIFIER
+        assert run_config.matrix.early_stopping is None
 
     def test_run_simple_file_passes(self):
         run_config = V1CompiledOperation.read(
@@ -294,7 +294,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         run_config.apply_params(params={"num_masks": {"value": 100}})
         run_config = CompiledOperationSpecification.apply_context(run_config)
         run_config = CompiledOperationSpecification.apply_run_contexts(run_config)
-        assert run_config.version == 1.05
+        assert run_config.version ==  1.1
         assert run_config.tags == ["foo", "bar"]
         container = run_config.run.container
         assert isinstance(container, k8s_schemas.V1Container)

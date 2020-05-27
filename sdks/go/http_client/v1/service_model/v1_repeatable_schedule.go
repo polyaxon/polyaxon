@@ -32,7 +32,7 @@ type V1RepeatableSchedule struct {
 	// A flag to set a dependency on past executions
 	DependsOnPast bool `json:"depends_on_past,omitempty"`
 
-	// Kind of parallel, should be equal to "repeatable"
+	// Kind of schedule, should be equal to "repeatable"
 	Kind *string `json:"kind,omitempty"`
 
 	// Limit to stop executing this schedule

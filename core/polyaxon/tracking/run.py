@@ -44,6 +44,8 @@ from polyaxon.tracking.events.writer import ResourceFileWriter
 from polyaxon.utils.env import get_run_env
 from polyaxon.utils.path_utils import get_path_extension
 
+TEMP_RUN_ARTIFACTS = "/tmp/.plxartifacts"
+
 
 class Run(RunClient):
     """Run tracking is client to instrument your machine learning model and track experiments.
@@ -125,6 +127,11 @@ class Run(RunClient):
             if get_collect_resources():
                 self.set_run_resource_logger()
 
+        # no artifacts path is set, we use the temp path
+        if not self._artifacts_path:
+            self._artifacts_path = TEMP_RUN_ARTIFACTS
+            self._outputs_path = TEMP_RUN_ARTIFACTS
+
         self._run = polyaxon_sdk.V1Run()
         if settings.CLIENT_CONFIG.is_offline:
             return
@@ -161,6 +168,21 @@ class Run(RunClient):
             str, outputs_path
         """
         return self._outputs_path
+
+    @check_no_op
+    def get_model_path(self, rel_path: str = "model"):
+        """Returns a model path for this run relative to the outputs path.
+
+        Args:
+             rel_path: str, optional, default "model",
+                       the relative path to the `outputs` context.
+        Returns:
+            str, outputs_path / rel_path
+        """
+        path = self._outputs_path
+        if rel_path:
+            path = os.path.join(path, rel_path)
+        return path
 
     @check_no_op
     @check_offline

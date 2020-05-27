@@ -41,7 +41,7 @@ type V1CronSchedule struct {
 	// Format: date-time
 	EndAt strfmt.DateTime `json:"end_at,omitempty"`
 
-	// Kind of parallel, should be equal to "cron"
+	// Kind of schedule, should be equal to "cron"
 	Kind *string `json:"kind,omitempty"`
 
 	// Whan to start this cron schedule

@@ -593,7 +593,7 @@ class TestComponentsConfigs(BaseTestCase):
 
         config_dict = {
             "kind": "component",
-            "parallel": {
+            "matrix": {
                 "concurrency": 2,
                 "kind": "mapping",
                 "values": [{"a": 1}, {"a": 1}],
@@ -605,7 +605,7 @@ class TestComponentsConfigs(BaseTestCase):
 
         config_dict = {
             "kind": "component",
-            "parallel": {
+            "matrix": {
                 "concurrency": 2,
                 "kind": "mapping",
                 "values": [{"a": 1}, {"a": 1}],

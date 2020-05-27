@@ -51,7 +51,7 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
             inputs=self.inputs,
             outputs=self.outputs,
             params=params,
-            parallel=self.parallel,
+            matrix=self.matrix,
             context=context,
             is_template=is_template,
             check_runs=check_runs,
@@ -83,4 +83,4 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
 
     @property
     def has_pipeline(self):
-        return self.is_dag_run or self.parallel
+        return self.is_dag_run or self.matrix

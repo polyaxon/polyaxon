@@ -55,7 +55,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     either by submitting them directly or by referencing them from your operations.
 
     Components can be used as well to extract as much information and be used as templates
-    with default queues, container resource requirements, node scheduling, ...
+    with default queues, container resources requirements, node scheduling, ...
 
     Args:
         version: str
@@ -148,7 +148,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     The default component name.
 
-    This name can be a `slug` or a `slug:tag`.
+    This name can be a `slug`, a `slug:tag`, `org/slug`, or `org/slug:slug`.
 
     This name will be passed as the default value to all operations using this component,
     unless the operations override the name or a `--name` is passed as an argument to the cli/client.

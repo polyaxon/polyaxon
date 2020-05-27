@@ -1,100 +1,51 @@
 {
   "definitions": {
-    "v1HpChoice": {
+    "v1Mapping": {
       "properties": {
         "kind": {
-          "default": "choice"
+          "default": "mapping"
         }
       }
     },
-    "v1HpPChoice": {
+    "v1GridSearch": {
       "properties": {
         "kind": {
-          "default": "pchoice"
+          "default": "grid"
         }
       }
     },
-    "v1HpRange": {
+    "v1RandomSearch": {
       "properties": {
         "kind": {
-          "default": "range"
+          "default": "random"
         }
       }
     },
-    "v1HpLinSpace": {
+    "v1Hyperband": {
       "properties": {
         "kind": {
-          "default": "linspace"
+          "default": "hyperband"
         }
       }
     },
-    "v1HpLogSpace": {
+    "v1Bayes": {
       "properties": {
         "kind": {
-          "default": "logspace"
+          "default": "bayes"
         }
       }
     },
-    "v1HpGeomSpace": {
+    "v1Hyperopt": {
       "properties": {
         "kind": {
-          "default": "geomspace"
+          "default": "hyperopt"
         }
       }
     },
-    "v1HpUniform": {
+    "v1Iterative": {
       "properties": {
         "kind": {
-          "default": "uniform"
-        }
-      }
-    },
-    "v1HpQUniform": {
-      "properties": {
-        "kind": {
-          "default": "quniform"
-        }
-      }
-    },
-    "v1HpLogUniform": {
-      "properties": {
-        "kind": {
-          "default": "loguniform"
-        }
-      }
-    },
-    "v1HpQLogUniform": {
-      "properties": {
-        "kind": {
-          "default": "qloguniform"
-        }
-      }
-    },
-    "v1HpNormal": {
-      "properties": {
-        "kind": {
-          "default": "normal"
-        }
-      }
-    },
-    "v1HpQNormal": {
-      "properties": {
-        "kind": {
-          "default": "qnormal"
-        }
-      }
-    },
-    "v1HpLogNormal": {
-      "properties": {
-        "kind": {
-          "default": "lognormal"
-        }
-      }
-    },
-    "v1HpQLogNormal": {
-      "properties": {
-        "kind": {
-          "default": "qlognormal"
+          "default": "iterative"
         }
       }
     }

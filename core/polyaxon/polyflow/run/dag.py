@@ -255,7 +255,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     Conditions are an advance tool for resolving dependencies between operations.
     Conditions take advantage of information resolved in the context to decide if an operation
-    can be started.
+    can be started, and they can be used to define branching strategies.
 
 
     ```yaml
@@ -270,11 +270,11 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     >>>   skipOnUpstreamSkip: true
     ```
 
-    In the example above, the job3 will only run if the param passed is equal to "some-value"
+    In the example above, the job3 will only run if the param passed is equal to "some-value".
 
     ### references
 
-    A List of operations and their with dependency definition.
+    A List of operations and their dependency definition.
     If operations are defined with dependencies or no params are
     passed from one operation to another, the operations will be running in parallel following the
     concurrency and other queue priority definitions.
@@ -678,7 +678,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 inputs=inputs,
                 outputs=outputs,
                 context=self._context,
-                parallel=op.parallel,
+                matrix=op.matrix,
                 is_template=False,
                 check_runs=False,
                 extra_info="<op {}>.<component {}>".format(op.name, component_ref),

@@ -20,7 +20,7 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.polyflow.parallel import V1RandomSearch
+from polyaxon.polyflow.matrix import V1RandomSearch
 from polyaxon.polytune.search_managers.random_search.manager import RandomSearchManager
 
 

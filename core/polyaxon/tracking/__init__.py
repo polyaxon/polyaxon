@@ -13,12 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List, Union, Sequence
+from typing import List, Optional
 
+from polyaxon import settings
 from polyaxon.client import RunClient
 from polyaxon.polyboard.artifacts import V1RunArtifact
 from polyaxon.tracking.run import Run
-from polyaxon_sdk import V1Operation
 
 TRACKING_RUN = None
 
@@ -84,6 +84,25 @@ def init(
         track_env=track_env,
         artifacts_path=artifacts_path,
     )
+
+
+def get_or_create_run(tracking_run: Run = None) -> Optional[Run]:
+    """Get or create a new tracking run.
+
+    It tries to create a new instance, for in-cluster runs, this will work automatically.
+
+    This is used inside some Polyaxon callbacks, you should use `init` instead.
+    """
+    global TRACKING_RUN
+
+    if tracking_run:
+        return tracking_run
+    if TRACKING_RUN:
+        return TRACKING_RUN
+
+    if settings.CLIENT_CONFIG.is_managed:
+        init()
+        return TRACKING_RUN
 
 
 def get_tensorboard_path():

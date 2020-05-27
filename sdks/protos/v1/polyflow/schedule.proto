@@ -22,7 +22,7 @@ import "google/protobuf/timestamp.proto";
 
 // Cron schedule specification
 message CronSchedule {
-    // Kind of parallel, should be equal to "cron"
+    // Kind of schedule, should be equal to "cron"
     string kind = 1;
 
     // Whan to start this cron schedule
@@ -41,7 +41,7 @@ message CronSchedule {
 
 // Exact time schedule specification
 message ExactTimeSchedule {
-    // Kind of parallel, should be equal to "exact_time"
+    // Kind of schedule, should be equal to "exact_time"
     string kind = 1;
 
     // Whan to start this cron schedule
@@ -51,7 +51,7 @@ message ExactTimeSchedule {
 
 // Interval schedule specification
 message IntervalSchedule {
-    // Kind of parallel, should be equal to "interval"
+    // Kind of schedule, should be equal to "interval"
     string kind = 1;
 
     // When to start this interval schedule
@@ -70,7 +70,7 @@ message IntervalSchedule {
 
 // Repeatable schedule specification
 message RepeatableSchedule {
-    // Kind of parallel, should be equal to "repeatable"
+    // Kind of schedule, should be equal to "repeatable"
     string kind = 1;
 
     // Limit to stop executing this schedule

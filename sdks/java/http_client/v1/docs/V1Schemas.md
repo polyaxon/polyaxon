@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **operationCond** | [**V1OperationCond**](V1OperationCond.md) |  |  [optional]
 **earlyStopping** | [**V1EarlyStopping**](V1EarlyStopping.md) |  |  [optional]
-**parallel** | [**V1Parallel**](V1Parallel.md) |  |  [optional]
+**matrix** | [**V1Matrix**](V1Matrix.md) |  |  [optional]
 **run** | [**V1RunSchema**](V1RunSchema.md) |  |  [optional]
 **operation** | [**V1Operation**](V1Operation.md) |  |  [optional]
 **compiledOperation** | [**V1CompiledOperation**](V1CompiledOperation.md) |  |  [optional]
@@ -32,7 +32,7 @@ Name | Type | Description | Notes
 **image** | [**V1ImageType**](V1ImageType.md) |  |  [optional]
 **eventType** | [**V1EventType**](V1EventType.md) |  |  [optional]
 **event** | [**V1Event**](V1Event.md) |  |  [optional]
-**parallelKind** | [**V1ParallelKind**](V1ParallelKind.md) |  |  [optional]
+**matrixKind** | [**V1MatrixKind**](V1MatrixKind.md) |  |  [optional]
 
 
 

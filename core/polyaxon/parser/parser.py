@@ -45,7 +45,7 @@ from polyaxon.schemas.types.image import V1ImageType
 
 def get_int(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
-    Get a the value corresponding to the key and converts it to `int`/`list(int)`.
+    Get the value corresponding to the key and converts it to `int`/`list(int)`.
 
     Args:
         key: the dict key.
@@ -82,7 +82,7 @@ def get_int(key, value, is_list=False, is_optional=False, default=None, options=
 
 def get_float(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
-    Get a the value corresponding to the key and converts it to `float`/`list(float)`.
+    Get the value corresponding to the key and converts it to `float`/`list(float)`.
 
     Args:
         key: the dict key.
@@ -121,7 +121,7 @@ def get_boolean(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts it to `bool`/`list(str)`.
+    Get the value corresponding to the key and converts it to `bool`/`list(str)`.
 
     Args:
         key: the dict key.
@@ -160,7 +160,7 @@ def get_string(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts it to `str`/`list(str)`.
+    Get the value corresponding to the key and converts it to `str`/`list(str)`.
 
     Args:
         key: the dict key.
@@ -206,7 +206,7 @@ def convert_to_dict(x, key):
 
 def get_dict(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
-    Get a the value corresponding to the key and converts it to `dict`.
+    Get the value corresponding to the key and converts it to `dict`.
 
     Args:
         key: the dict key.
@@ -254,7 +254,7 @@ def get_dict_of_dicts(
     key, value, is_list=None, is_optional=False, default=None, options=None  # noqa
 ):
     """
-    Get a the value corresponding to the key and converts it to `dict`.
+    Get the value corresponding to the key and converts it to `dict`.
 
     Add an extra validation that all keys have a dict as values.
 
@@ -286,7 +286,7 @@ def get_dict_of_dicts(
 
 def get_uri(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
-    Get a the value corresponding to the key and converts it to `V1UriType`.
+    Get the value corresponding to the key and converts it to `V1UriType`.
 
     Args
         key: the dict key.
@@ -327,7 +327,7 @@ def get_auth(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ) -> V1AuthType:
     """
-    Get a the value corresponding to the key and converts it to `V1AuthType`.
+    Get the value corresponding to the key and converts it to `V1AuthType`.
 
     Args
         key: the dict key.
@@ -368,7 +368,7 @@ def get_list(
     key, value, is_list=None, is_optional=False, default=None, options=None  # noqa
 ):
     """
-    Get a the value corresponding to the key and converts comma separated values to a list.
+    Get the value corresponding to the key and converts comma separated values to a list.
 
     Args:
         key: the dict key.
@@ -405,7 +405,7 @@ def get_wasbs_path(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ) -> V1WasbType:
     """
-    Get a the value corresponding to the key and converts it to `V1WasbType`.
+    Get the value corresponding to the key and converts it to `V1WasbType`.
 
     Args
         key: the dict key.
@@ -446,7 +446,7 @@ def get_gcs_path(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts it to `V1GcsType`.
+    Get the value corresponding to the key and converts it to `V1GcsType`.
 
     Args
         key: the dict key.
@@ -487,7 +487,7 @@ def get_s3_path(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts it to `V1S3Type`.
+    Get the value corresponding to the key and converts it to `V1S3Type`.
 
     Args
         key: the dict key.
@@ -526,7 +526,7 @@ def get_s3_path(
 
 def get_date(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
-    Get a the value corresponding to the key and converts it to `date`/`list(date)`.
+    Get the value corresponding to the key and converts it to `date`/`list(date)`.
 
     Args:
         key: the dict key.
@@ -565,7 +565,7 @@ def get_datetime(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts it to `datetime`/`list(datetime)`.
+    Get the value corresponding to the key and converts it to `datetime`/`list(datetime)`.
 
     Args:
         key: the dict key.
@@ -604,7 +604,7 @@ def get_dockerfile_init(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts
+    Get the value corresponding to the key and converts
     it to `V1DockerfileType`/`list(V1DockerfileType)`.
 
     Args:
@@ -652,7 +652,7 @@ def get_image_init(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts
+    Get the value corresponding to the key and converts
     it to `V1ImageType`/`list(V1ImageType)`.
 
     Args:
@@ -700,7 +700,7 @@ def get_event_init(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts
+    Get the value corresponding to the key and converts
     it to `V1EventType`/`list(V1EventType)`.
 
     Args:
@@ -748,7 +748,7 @@ def get_git_init(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts
+    Get the value corresponding to the key and converts
     it to `V1GitType`/`list(V1GitType)`.
 
     Args:
@@ -796,7 +796,7 @@ def get_artifacts_init(
     key, value, is_list=False, is_optional=False, default=None, options=None
 ):
     """
-    Get a the value corresponding to the key and converts
+    Get the value corresponding to the key and converts
     it to `V1ArtifactsType`/`list(V1ArtifactsType)`.
 
     Args:

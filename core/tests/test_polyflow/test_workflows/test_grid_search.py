@@ -21,7 +21,7 @@ from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow import V1RunKind
 from polyaxon.polyflow.operations import V1CompiledOperation
-from polyaxon.polyflow.parallel.grid_search import V1GridSearch
+from polyaxon.polyflow.matrix.grid_search import V1GridSearch
 
 
 @pytest.mark.workflow_mark
@@ -56,7 +56,7 @@ class TestWorkflowV1GridSearch(BaseTestCase):
     def test_grid_search_without_num_runs(self):
         config_dict = {
             "kind": "compiled_operation",
-            "parallel": {
+            "matrix": {
                 "kind": "grid",
                 "concurrency": 1,
                 "params": {"lr": {"kind": "choice", "value": [1, 2, 3]}},

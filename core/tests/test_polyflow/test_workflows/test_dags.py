@@ -331,7 +331,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
-    def test_dag_parallel_ops(self):
+    def test_dag_matrix_ops(self):
         config_dict = {
             "kind": V1RunKind.DAG,
             "operations": [

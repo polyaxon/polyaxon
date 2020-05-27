@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.90",
+    "version": "1.0.92",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -11807,7 +11807,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"bayes\"",
+          "title": "Kind of matrix, should be equal to \"bayes\"",
           "default": "bayes"
         },
         "params": {
@@ -11815,7 +11815,7 @@
           "additionalProperties": {
             "type": "object"
           },
-          "title": "Matrix/Space definition of params to traverse"
+          "title": "Hyperparams/Space definition of params to traverse"
         },
         "num_initial_runs": {
           "type": "integer",
@@ -11853,7 +11853,7 @@
           "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
         }
       },
-      "title": "Parallelism based on Bayesian Optimization"
+      "title": "Matrix based on Bayesian Optimization"
     },
     "v1BucketConnection": {
       "type": "object",
@@ -11997,9 +11997,9 @@
           },
           "title": "Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
         },
-        "parallel": {
+        "matrix": {
           "type": "object",
-          "title": "Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
+          "title": "Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
         },
         "dependencies": {
           "type": "array",
@@ -12297,7 +12297,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"cron\"",
+          "title": "Kind of schedule, should be equal to \"cron\"",
           "default": "cron"
         },
         "start_at": {
@@ -13106,7 +13106,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"exact_time\"",
+          "title": "Kind of schedule, should be equal to \"exact_time\"",
           "default": "exact_time"
         },
         "start_at": {
@@ -13206,7 +13206,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"grid\"",
+          "title": "Kind of matrix, should be equal to \"grid\"",
           "default": "grid"
         },
         "params": {
@@ -13214,7 +13214,7 @@
           "additionalProperties": {
             "type": "object"
           },
-          "title": "Matrix/Space definition of params to traverse"
+          "title": "Hyperparams/Space definition of params to traverse"
         },
         "num_runs": {
           "type": "integer",
@@ -13239,7 +13239,7 @@
           "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
         }
       },
-      "title": "Parallelism based on grid/cartesian product generated search space"
+      "title": "Matrix based on grid/cartesian product generated search space"
     },
     "v1HostAlias": {
       "type": "object",
@@ -13658,7 +13658,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"hyperband\"",
+          "title": "Kind of matrix, should be equal to \"hyperband\"",
           "default": "hyperband"
         },
         "params": {
@@ -13666,7 +13666,7 @@
           "additionalProperties": {
             "type": "object"
           },
-          "title": "Matrix/Space definition of params to traverse"
+          "title": "Hyperparams/Space definition of params to traverse"
         },
         "max_iterations": {
           "type": "integer",
@@ -13709,14 +13709,14 @@
           "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
         }
       },
-      "title": "Parallelism based on hyperband"
+      "title": "Matrix based on hyperband"
     },
     "v1Hyperopt": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"hyperopt\"",
+          "title": "Kind of matrix, should be equal to \"hyperopt\"",
           "default": "hyperopt"
         },
         "algorithm": {
@@ -13728,7 +13728,7 @@
           "additionalProperties": {
             "type": "object"
           },
-          "title": "Matrix/Space definition of params to traverse"
+          "title": "Hyperparams/Space definition of params to traverse"
         },
         "num_runs": {
           "type": "integer",
@@ -13753,7 +13753,7 @@
           "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
         }
       },
-      "title": "Parallelism based on hyperopt"
+      "title": "Matrix based on hyperopt"
     },
     "v1HyperoptAlgorithms": {
       "type": "string",
@@ -13864,7 +13864,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"interval\"",
+          "title": "Kind of schedule, should be equal to \"interval\"",
           "default": "interval"
         },
         "start_at": {
@@ -13913,7 +13913,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"iterative\"",
+          "title": "Kind of matrix, should be equal to \"iterative\"",
           "default": "iterative"
         },
         "params": {
@@ -13921,7 +13921,7 @@
           "additionalProperties": {
             "type": "object"
           },
-          "title": "Matrix/Space definition of params to traverse"
+          "title": "Hyperparams/Space definition of params to traverse"
         },
         "num_iterations": {
           "type": "integer",
@@ -13950,7 +13950,7 @@
           "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
         }
       },
-      "title": "Parallelism based on a custom iterative algorithm (suggestions -> mapping -> reduce -> repeat)"
+      "title": "Matrix based on a custom iterative algorithm (suggestions -> mapping -> reduce -> repeat)"
     },
     "v1Job": {
       "type": "object",
@@ -14592,7 +14592,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"mapping\"",
+          "title": "Kind of matrix, should be equal to \"mapping\"",
           "default": "mapping"
         },
         "values": {
@@ -14615,7 +14615,47 @@
           "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
         }
       },
-      "title": "Parallelism based on map/array either specified manually by the user or passed from another step"
+      "title": "Matrix based on map/array either specified manually by the user or passed from another step"
+    },
+    "v1Matrix": {
+      "type": "object",
+      "properties": {
+        "random": {
+          "$ref": "#/definitions/v1RandomSearch"
+        },
+        "grid": {
+          "$ref": "#/definitions/v1GridSearch"
+        },
+        "hyperband": {
+          "$ref": "#/definitions/v1Hyperband"
+        },
+        "bayes": {
+          "$ref": "#/definitions/v1Bayes"
+        },
+        "hyperopt": {
+          "$ref": "#/definitions/v1Hyperopt"
+        },
+        "iterative": {
+          "$ref": "#/definitions/v1Iterative"
+        },
+        "mapping": {
+          "$ref": "#/definitions/v1Mapping"
+        }
+      },
+      "title": "All Schemas message"
+    },
+    "v1MatrixKind": {
+      "type": "string",
+      "enum": [
+        "random",
+        "grid",
+        "hyperband",
+        "bayes",
+        "hyperopt",
+        "iterative",
+        "mapping"
+      ],
+      "default": "random"
     },
     "v1MedianStoppingPolicy": {
       "type": "object",
@@ -14737,9 +14777,9 @@
           },
           "title": "Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
         },
-        "parallel": {
+        "matrix": {
           "type": "object",
-          "title": "Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
+          "title": "Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
         },
         "dependencies": {
           "type": "array",
@@ -14781,7 +14821,7 @@
         },
         "run_patch": {
           "type": "object",
-          "title": "Optional a run section to override the the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
+          "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
         },
         "dag_ref": {
           "type": "string"
@@ -14949,46 +14989,6 @@
       },
       "title": "Organization member specification"
     },
-    "v1Parallel": {
-      "type": "object",
-      "properties": {
-        "random": {
-          "$ref": "#/definitions/v1RandomSearch"
-        },
-        "grid": {
-          "$ref": "#/definitions/v1GridSearch"
-        },
-        "hyperband": {
-          "$ref": "#/definitions/v1Hyperband"
-        },
-        "bayes": {
-          "$ref": "#/definitions/v1Bayes"
-        },
-        "hyperopt": {
-          "$ref": "#/definitions/v1Hyperopt"
-        },
-        "iterative": {
-          "$ref": "#/definitions/v1Iterative"
-        },
-        "mapping": {
-          "$ref": "#/definitions/v1Mapping"
-        }
-      },
-      "title": "All Schemas message"
-    },
-    "v1ParallelKind": {
-      "type": "string",
-      "enum": [
-        "random",
-        "grid",
-        "hyperband",
-        "bayes",
-        "hyperopt",
-        "iterative",
-        "mapping"
-      ],
-      "default": "random"
-    },
     "v1Param": {
       "type": "object",
       "properties": {
@@ -15058,7 +15058,7 @@
         },
         "kind": {
           "$ref": "#/definitions/v1PipelineKind",
-          "title": "Optional if the pipeline kind dag/parallel"
+          "title": "Optional if the pipeline kind dag/matrix"
         }
       }
     },
@@ -15066,7 +15066,7 @@
       "type": "string",
       "enum": [
         "dag",
-        "parallel"
+        "matrix"
       ],
       "default": "dag"
     },
@@ -15379,7 +15379,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"random\"",
+          "title": "Kind of matrix, should be equal to \"random\"",
           "default": "random"
         },
         "params": {
@@ -15387,7 +15387,7 @@
           "additionalProperties": {
             "type": "object"
           },
-          "title": "Matrix/Space definition of params to traverse"
+          "title": "Hyperparams/Space definition of params to traverse"
         },
         "num_runs": {
           "type": "integer",
@@ -15412,7 +15412,7 @@
           "title": "A list of Early stoppings, accpets both metric and failure early stopping mechanisms"
         }
       },
-      "title": "Parallelism based on randomly generated search space"
+      "title": "Matrix based on randomly generated search space"
     },
     "v1Ray": {
       "type": "object",
@@ -15451,7 +15451,7 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"repeatable\"",
+          "title": "Kind of schedule, should be equal to \"repeatable\"",
           "default": "repeatable"
         },
         "limit": {
@@ -15678,14 +15678,14 @@
         "mpijob",
         "tfjob",
         "pytorchjob",
-        "parallel",
+        "matrix",
         "scheduler",
         "tuner",
         "watchdog",
         "notifier"
       ],
       "default": "job",
-      "title": "Run kind enum\nKinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob\nMeta kinds: job, service, dag, parallel, schedule\nhelper kinds: tuner, watchdog, notifier"
+      "title": "Run kind enum\nKinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob\nMeta kinds: job, service, dag, matrix, schedule\nhelper kinds: tuner, watchdog, notifier"
     },
     "v1RunProfile": {
       "type": "object",
@@ -15880,8 +15880,8 @@
         "early_stopping": {
           "$ref": "#/definitions/v1EarlyStopping"
         },
-        "parallel": {
-          "$ref": "#/definitions/v1Parallel"
+        "matrix": {
+          "$ref": "#/definitions/v1Matrix"
         },
         "run": {
           "$ref": "#/definitions/v1RunSchema"
@@ -15952,8 +15952,8 @@
         "event": {
           "$ref": "#/definitions/v1Event"
         },
-        "parallel_kind": {
-          "$ref": "#/definitions/v1ParallelKind"
+        "matrix_kind": {
+          "$ref": "#/definitions/v1MatrixKind"
         }
       }
     },

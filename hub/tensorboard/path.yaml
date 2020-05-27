@@ -1,0 +1,35 @@
+version: 1.1
+kind: component
+name: tensorboard
+description: Creates a tensorboard based on an absolute path.
+
+inputs:
+- name: image
+  isOptional: true
+  type: str
+  value: "tensorflow/tensorflow:1.4.1-py3"
+- name: path
+  isOptional: true
+  type: str
+- name: s3_path
+  isOptional: true
+  type: s3
+- name: gcs_path
+  isOptional: true
+  type: gcs
+- name: port
+  isOptional: true
+  type: int
+  value: 6006
+
+run:
+  kind: service
+  ports: ["{{port}}"]
+  container:
+    image: "{{ image }}"
+    command: ["tensorboard"]
+    args: [
+      "--logdir={{path or s3_path or gcs_path}}",
+      "--port={{port}}",
+      "--host=0.0.0.0",
+    ]

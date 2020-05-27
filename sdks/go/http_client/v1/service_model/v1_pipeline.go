@@ -30,7 +30,7 @@ import (
 // swagger:model v1Pipeline
 type V1Pipeline struct {
 
-	// Optional if the pipeline kind dag/parallel
+	// Optional if the pipeline kind dag/matrix
 	Kind V1PipelineKind `json:"kind,omitempty"`
 
 	// Optional name of the pipeline run

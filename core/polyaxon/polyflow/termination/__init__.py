@@ -73,8 +73,8 @@ class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
     This field is the equivalent of the
     [backoffLimit](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/).
     Polyaxon exposes a uniform specification and knows how
-    to manage and inject this value into the underlying primitive in the runtime,
-    i.e. Job, service, TFJob CRD, Spark Application CRD, ...
+    to manage and inject this value into the underlying primitive of the runtime,
+    i.e. Job, Service, TFJob CRD, Spark Application CRD, ...
 
     ```yaml
     >>> termination:
@@ -88,7 +88,7 @@ class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
     such as logs, outputs, ... This ensures that your cluster(s) are kept clean and no resources
     are actively putting pressure on the API server.
 
-    That being said, sometimes user might want to keep the resources after
+    That being said, sometimes users might want to keep the resources after
     they finish for sanity check or debugging.
 
     The ttl field allows you to leverage the TTL controller provided by some primitives,

@@ -28,7 +28,7 @@ import "v1/api/status.proto";
 
 // Run kind enum
 // Kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob
-// Meta kinds: job, service, dag, parallel, schedule
+// Meta kinds: job, service, dag, matrix, schedule
 // helper kinds: tuner, watchdog, notifier
 enum RunKind {
     job = 0;
@@ -41,7 +41,7 @@ enum RunKind {
     mpijob = 7;
     tfjob = 8;
     pytorchjob = 9;
-    parallel = 10;
+    matrix = 10;
     scheduler = 11;
     tuner = 12;
     watchdog = 13;
@@ -69,7 +69,7 @@ message Cloning {
 message Pipeline {
     enum Kind {
         dag = 0;
-        parallel = 1;
+        matrix = 1;
     }
 
     // Optional uuid of the pipeline run
@@ -78,7 +78,7 @@ message Pipeline {
     // Optional name of the pipeline run
     string name = 2;
 
-    // Optional if the pipeline kind dag/parallel
+    // Optional if the pipeline kind dag/matrix
     Kind kind = 3;
 }
 

@@ -19,7 +19,7 @@ from typing import Dict, List, Union
 from marshmallow import ValidationError
 
 from polyaxon.polyflow.io.io import V1IO
-from polyaxon.polyflow.parallel import V1Mapping, V1Parallel
+from polyaxon.polyflow.matrix import V1Mapping, V1Matrix
 from polyaxon.polyflow.params.params import ParamSpec, V1Param
 
 
@@ -27,7 +27,7 @@ def validate_params(
     params: Dict[str, Union[Dict, V1Param]],
     inputs: List[V1IO],
     outputs: List[V1IO],
-    parallel: V1Parallel = None,
+    matrix: V1Matrix = None,
     context: Dict = None,
     is_template: bool = True,
     check_runs: bool = False,
@@ -43,10 +43,10 @@ def validate_params(
         and types are correct.
     """
     if requires_params(inputs, outputs):
-        if not is_template and not params and not parallel:
+        if not is_template and not params and not matrix:
             message = (
                 "The Polyaxonfile has non optional inputs/outputs, "
-                "you need to pass valid params."
+                "you need to pass valid params"
             )
             if extra_info:
                 message += " Please check: {}".format(extra_info)
@@ -63,17 +63,17 @@ def validate_params(
             return v
         return V1Param.read(v, config_type=".yaml")
 
-    def validate_parallel(io: V1IO) -> bool:
-        if isinstance(parallel, V1Mapping):
-            return parallel.has_key(io.name)
-        elif io.name in parallel.params:
-            parallel.params[io.name].validate_io(io)
+    def validate_matrix(io: V1IO) -> bool:
+        if isinstance(matrix, V1Mapping):
+            return matrix.has_key(io.name)
+        elif io.name in matrix.params:
+            matrix.params[io.name].validate_io(io)
             return True
         return False
 
     params = params or {}
     params = {k: parse_param(params[k]) for k in params}
-    parallel = parallel or {}
+    matrix = matrix or {}
     inputs = inputs or []
     outputs = outputs or []
 
@@ -96,7 +96,7 @@ def validate_params(
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(inp.name)
-        elif parallel and validate_parallel(inp):
+        elif matrix and validate_matrix(inp):
             pass
         elif not inp.is_optional and not is_template:
             message = "Input {} is required, no param was passed.".format(inp.name)

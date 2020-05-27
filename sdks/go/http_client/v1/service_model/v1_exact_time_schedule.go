@@ -31,7 +31,7 @@ import (
 // swagger:model v1ExactTimeSchedule
 type V1ExactTimeSchedule struct {
 
-	// Kind of parallel, should be equal to "exact_time"
+	// Kind of schedule, should be equal to "exact_time"
 	Kind *string `json:"kind,omitempty"`
 
 	// Whan to start this cron schedule

@@ -461,7 +461,7 @@ class RunClient:
         """Logs a new run status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call the this method manually.
+        N.B. If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
 
@@ -882,7 +882,7 @@ class RunClient:
         """Sets the current run to `running` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call the this method manually.
+        N.B. If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
@@ -895,7 +895,7 @@ class RunClient:
         """Sets the current run to `status` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call the this method manually.
+        N.B. If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
 
@@ -918,7 +918,7 @@ class RunClient:
         """Sets the current run to `succeeded` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call the this method manually.
+        N.B. If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
@@ -930,7 +930,7 @@ class RunClient:
         """Sets the current run to `stopped` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call the this method manually.
+        N.B. If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
@@ -942,7 +942,7 @@ class RunClient:
         """Sets the current run to `failed` status.
 
         <blockquote class="info">
-        N.B. If you are executing a managed run, you don't need to call the this method manually.
+        N.B. If you are executing a managed run, you don't need to call this method manually.
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
 

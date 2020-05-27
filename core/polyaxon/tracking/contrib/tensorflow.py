@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon import settings
+from polyaxon import tracking
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.tracking import Run
 from polyaxon.tracking.contrib.tensorboard import PolyaxonTensorboardLogger
 
 try:
@@ -54,9 +53,7 @@ class PolyaxonLoggingTensorHook(LoggingTensorHook):
             every_num_iterations=every_num_iterations,
             every_n_secs=every_n_secs,
         )
-        self.run = run
-        if settings.CLIENT_CONFIG.is_managed:
-            self.run = self.run or Run()
+        self.run = tracking.get_or_create_run(run)
 
     def _log_tensors(self, tensor_values):
         super()._log_tensors(tensor_values)
@@ -71,9 +68,7 @@ class PolyaxonSessionRunHook(SessionRunHook):
     def __init__(self, summary_op=None, steps_per_log=1000, run=None):
         self._summary_op = summary_op
         self._steps_per_log = steps_per_log
-        self.run = run
-        if settings.CLIENT_CONFIG.is_managed:
-            self.run = self.run or Run()
+        self.run = tracking.get_or_create_run(run)
 
     def begin(self):
         if self._summary_op is None:

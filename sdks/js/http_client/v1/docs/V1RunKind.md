@@ -23,7 +23,7 @@
 
 * `pytorchjob` (value: `"pytorchjob"`)
 
-* `parallel` (value: `"parallel"`)
+* `matrix` (value: `"matrix"`)
 
 * `scheduler` (value: `"scheduler"`)
 

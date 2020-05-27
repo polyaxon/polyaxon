@@ -77,8 +77,8 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
     All connections in Polyaxon are typed, and some of them have special built-in handlers
     to automatically connect and load information.
 
-    Using connections you can define the builerplate required
-    to connect a volume or a blob storge once,
+    Using connections you can define the boilerplate required
+    to connect a volume or a blob storage once,
     and end users, e.g. data scientist, can just reference the name of the connection to use it
     without dealing with the configuration every time.
 
@@ -92,10 +92,10 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
     defining all the volumes and mounting them to the containers manually.
 
     For some distributions, Polyaxon will exposes:
-        * Analytics about how often connections are used
-        * Jobs that requested those connections
-        * Profiling and run time meta data to optimize access to those resources and connections
-        * Additional RBAC and ACL rules to control who can access the connections
+        * Analytics about how often connections are used.
+        * Jobs that requested those connections.
+        * Profiling and run time meta data to optimize access to those resources and connections.
+        * Additional RBAC and ACL rules to control who can access the connections.
 
     Args:
          name: str
@@ -185,7 +185,7 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
 
     ### schema
 
-    If order to leverage some built-in functionalities in Polyaxon,
+     In order to leverage some built-in functionalities in Polyaxon,
     e.g. automatic management of outputs,
     initializers for cloning code from git repos,
     loading data from S3/GCS/Azure/Volumes/Paths,

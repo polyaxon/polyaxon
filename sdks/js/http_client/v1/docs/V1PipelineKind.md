@@ -5,6 +5,6 @@
 
 * `dag` (value: `"dag"`)
 
-* `parallel` (value: `"parallel"`)
+* `matrix` (value: `"matrix"`)
 
 

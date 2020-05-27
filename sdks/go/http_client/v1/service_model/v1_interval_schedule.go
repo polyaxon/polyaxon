@@ -41,7 +41,7 @@ type V1IntervalSchedule struct {
 	// Frequency at which to execute the runs
 	Frequency int32 `json:"frequency,omitempty"`
 
-	// Kind of parallel, should be equal to "interval"
+	// Kind of schedule, should be equal to "interval"
 	Kind *string `json:"kind,omitempty"`
 
 	// When to start this interval schedule

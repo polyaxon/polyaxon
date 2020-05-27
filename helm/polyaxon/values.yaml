@@ -36,14 +36,9 @@ ssl: {}
 
 dns: {}
 
-auth:
-  enabled: true
-  external:
-  useResolver: true
-
 # If you enable ingress, please set the gateway service type value to:
 #    * ClusterIP or NodePort (on GKE you cannot use ClusterIP)
-# Otherwise you should set it to LoadBalancer (default)
+# Otherwise you should set it to ClusterIP (default)
 gateway:
   image: polyaxon/polyaxon-gateway
   imageTag: 1.0.9
@@ -59,7 +54,7 @@ gateway:
 
   service:
     name: gateway
-    type: LoadBalancer
+    type: ClusterIP
     port: 80
     targetPort: 80
     nodePort: 31833
@@ -95,6 +90,7 @@ api:
     maxpods: 4
 
 streams:
+  enabled: true
   image: polyaxon/polyaxon-streams
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -163,7 +159,7 @@ agent:
       memory: 300Mi
 
 operator:
-  enabled: false
+  enabled: true
   image: polyaxon/polyaxon-operator
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -274,7 +270,7 @@ postgresql:
   # To use an external postgres instance:
   #  * set enabled to False, to disable the in-cluster deployment
   #  * configure external postgresql required attributes in services.postgresql
-  enabled: true
+  enabled: false
   connMaxAge: 60
   postgresqlUsername: polyaxon
   postgresqlPassword: polyaxon
@@ -301,7 +297,7 @@ redis:
   # To use an external redis instance:
   #  * set enabled to False, to disable the in-cluster deployment
   #  * configure external redis required attributes in services.redis
-  enabled: true
+  enabled: false
   usePassword: false
   password:
   image:

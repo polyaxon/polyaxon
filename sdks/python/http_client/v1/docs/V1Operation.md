@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **cache** | [**V1Cache**](V1Cache.md) |  | [optional] 
 **schedule** | [**object**](.md) |  | [optional] 
 **events** | **list[object]** |  | [optional] 
-**parallel** | [**object**](.md) |  | [optional] 
+**matrix** | [**object**](.md) |  | [optional] 
 **dependencies** | **list[str]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 
 **conditions** | **list[str]** |  | [optional] 

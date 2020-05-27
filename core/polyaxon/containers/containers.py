@@ -159,7 +159,7 @@ def get_default_tuner_container(command):
         image_pull_policy=PullPolicy.ALWAYS.value,
         command=command,
         args=[
-            "--parallel={{parallel}}",
+            "--matrix={{matrix}}",
             "--configs={{configs}}",
             "--metrics={{metrics}}",
         ],

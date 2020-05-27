@@ -24,7 +24,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1Mapping Parallelism based on map/array either specified manually by the user or passed from another step
+// V1Mapping Matrix based on map/array either specified manually by the user or passed from another step
 //
 // swagger:model v1Mapping
 type V1Mapping struct {
@@ -35,7 +35,7 @@ type V1Mapping struct {
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
-	// Kind of parallel, should be equal to "mapping"
+	// Kind of matrix, should be equal to "mapping"
 	Kind *string `json:"kind,omitempty"`
 
 	// The mapping values

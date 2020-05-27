@@ -25,7 +25,7 @@ from polyaxon.polyflow import (
     V1Hyperband,
     V1Hyperopt,
     V1Operation,
-    V1Parallel,
+    V1Matrix,
     V1Param,
     V1Plugins,
     V1Termination,
@@ -36,7 +36,7 @@ from polyaxon.polyflow import (
 def get_tuner(
     name: str,
     container: V1Container,
-    parallel: V1Parallel,
+    matrix: V1Matrix,
     configs: List[Dict],
     metrics: List[float],
     iteration: int,
@@ -45,7 +45,7 @@ def get_tuner(
         params={
             "configs": V1Param(value=configs),
             "metrics": V1Param(value=metrics),
-            "parallel": V1Param(value=parallel),
+            "matrix": V1Param(value=matrix),
             "iteration": V1Param(value=iteration),
         },
         termination=V1Termination(max_retries=3),
@@ -83,7 +83,7 @@ def get_tuner(
 
 
 def get_bo_tuner(
-    parallel: V1Bayes,
+    matrix: V1Bayes,
     configs: List[Dict],
     metrics: List[float],
     iteration: int,
@@ -93,7 +93,7 @@ def get_bo_tuner(
     return get_tuner(
         name="bayesian-tuner",
         container=container,
-        parallel=parallel,
+        matrix=matrix,
         configs=configs,
         metrics=metrics,
         iteration=iteration,
@@ -101,7 +101,7 @@ def get_bo_tuner(
 
 
 def get_hyperband_tuner(
-    parallel: V1Hyperband,
+    matrix: V1Hyperband,
     configs: List[Dict],
     metrics: List[float],
     iteration: int,
@@ -113,7 +113,7 @@ def get_hyperband_tuner(
     return get_tuner(
         name="hyperband-tuner",
         container=container,
-        parallel=parallel,
+        matrix=matrix,
         configs=configs,
         metrics=metrics,
         iteration=iteration,
@@ -121,7 +121,7 @@ def get_hyperband_tuner(
 
 
 def get_hyperopt_tuner(
-    parallel: V1Hyperopt,
+    matrix: V1Hyperopt,
     configs: List[Dict],
     metrics: List[float],
     iteration: int,
@@ -133,7 +133,7 @@ def get_hyperopt_tuner(
     return get_tuner(
         name="hyperopt-tuner",
         container=container,
-        parallel=parallel,
+        matrix=matrix,
         configs=configs,
         metrics=metrics,
         iteration=iteration,

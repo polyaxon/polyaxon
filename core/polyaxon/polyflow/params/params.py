@@ -147,11 +147,11 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     >>>     value: MeanSquaredError
     >>>   preprocess
     >>>     value: true
-    >>>   accuracy
+    >>>   accuracy:
     >>>     value: 0.1
-    >>>   outputs-path
+    >>>   outputs_path:
     >>>     ref: ops.upstream-job1
-    >>>     value: outputs.images-path
+    >>>     value: outputs.images_path
     ```
 
     ## Python usage
@@ -162,7 +162,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     >>>     "loss": V1Param(value="MeanSquaredError"),
     >>>     "preprocess": V1Param(value=True),
     >>>     "accuracy": V1Param(value=0.1),
-    >>>     "outputs-path": V1Param(ref="ops.upstream-job1", value="outputs.images-path")
+    >>>     "outputs-path": V1Param(ref="ops.upstream_job1", value="outputs.images_path")
     >>> }
     ```
 
@@ -184,10 +184,10 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
     ```yaml
     >>> params:
-    >>>   current-project:
-    >>>     value: {{project_name}}
-    >>>   current-run:
-    >>>     value: {{uuid}}
+    >>>   current_project:
+    >>>     value: {{globals.project_name}}
+    >>>   current_run:
+    >>>     value: {{globals.uuid}}
     ```
 
     ### ref
@@ -195,7 +195,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     Ref corresponds to a reference of an object.
 
     A reference could be a previous run in the database or
-    an operation in DAG that has not been run yet.
+    an operation in DAG that has not been executed yet.
 
     ```yaml
     >>> params:
@@ -214,7 +214,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     ### search
 
     A Search corresponds to a valid search that can be resolved by Polyaxon,
-    the result will be inject to resolve the param value.
+    the result will be injected to resolve the param value.
 
     ```yaml
     >>> params:
@@ -237,7 +237,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
     ### contextOnly
 
-    A flag to signal to Polyaxon that this param should not be validated against inputs / outputs,
+    A flag to signal to Polyaxon that this param should not be validated against the inputs / outputs,
     and it's only used to resolve some information and inject it to the context.
 
     ```yaml

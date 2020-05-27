@@ -20,7 +20,7 @@ from marshmallow.exceptions import ValidationError
 from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow.optimization import V1Optimization, V1OptimizationMetric
-from polyaxon.polyflow.parallel.bayes import (
+from polyaxon.polyflow.matrix.bayes import (
     AcquisitionFunctions,
     GaussianProcessConfig,
     GaussianProcessesKernels,

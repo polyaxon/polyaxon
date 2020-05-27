@@ -1,5 +1,5 @@
 ---
-version: 1.05
+version:  1.1
 kind: component
 run:
   kind: dag
@@ -9,7 +9,7 @@ run:
       hubRef: kaniko
     - name: experiment-group
       dagRef: grid-experiment
-      parallel:
+      matrix:
         kind: grid
         concurrency: 2
         params:

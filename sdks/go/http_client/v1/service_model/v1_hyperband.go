@@ -25,7 +25,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1Hyperband Parallelism based on hyperband
+// V1Hyperband Matrix based on hyperband
 //
 // swagger:model v1Hyperband
 type V1Hyperband struct {
@@ -39,7 +39,7 @@ type V1Hyperband struct {
 	// Eta
 	Eta int32 `json:"eta,omitempty"`
 
-	// Kind of parallel, should be equal to "hyperband"
+	// Kind of matrix, should be equal to "hyperband"
 	Kind *string `json:"kind,omitempty"`
 
 	// Max iteration
@@ -48,7 +48,7 @@ type V1Hyperband struct {
 	// Metric to optimize during the iterations
 	Metric *V1OptimizationMetric `json:"metric,omitempty"`
 
-	// Matrix/Space definition of params to traverse
+	// Hyperparams/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`
 
 	// Resource to optimize (should be an integer or a float)

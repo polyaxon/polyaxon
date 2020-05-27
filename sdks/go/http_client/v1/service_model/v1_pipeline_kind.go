@@ -37,8 +37,8 @@ const (
 	// V1PipelineKindDag captures enum value "dag"
 	V1PipelineKindDag V1PipelineKind = "dag"
 
-	// V1PipelineKindParallel captures enum value "parallel"
-	V1PipelineKindParallel V1PipelineKind = "parallel"
+	// V1PipelineKindMatrix captures enum value "matrix"
+	V1PipelineKindMatrix V1PipelineKind = "matrix"
 )
 
 // for schema
@@ -46,7 +46,7 @@ var v1PipelineKindEnum []interface{}
 
 func init() {
 	var res []V1PipelineKind
-	if err := json.Unmarshal([]byte(`["dag","parallel"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["dag","matrix"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

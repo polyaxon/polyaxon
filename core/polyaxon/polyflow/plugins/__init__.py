@@ -44,7 +44,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     By default Polyaxon injects some information for example an auth context
     and triggers some mechanisms for collecting logs and outputs.
 
-    Plugins section exposes more control to the end user to enable/disable some of these utilities.
+    Plugins section provides more control to the end user to enable/disable some of these utilities.
 
     Args:
         auth: bool, optional, default: True
@@ -102,9 +102,9 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     The auth context that Polyaxon provides is not only specific to the user who
     executed the run, but it also impersonates similar user access rights, it has the same scopes
     and restrictions the user usually has within the context of the project
-    the run is running inside.
+    managing the run.
     This is important to make sure the API calls made during the run
-    by the user's code have access rights to the resources requested.
+    by the user's code have the right access to the resources requested.
 
     Oftentimes, users might not need to use an authenticated client inside their containers,
     in that case they can disable this plugin.
@@ -170,8 +170,9 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     ```
 
     Sometimes you might want to access the artifacts path in your polyaxonfile,
-    Polyaxon expose a [context](/docs/core/specification/context/) that get resolved during the compilation time,
-    you can just use "{{artifacts_path}}" global variable and it will be resolved automatically.
+    Polyaxon expose a [context](/docs/core/specification/context/) that get resolved during
+    the compilation time, you can just use
+    "{{run_artifacts_path}}" global variable and it will be resolved automatically.
 
     Example:
 
@@ -179,7 +180,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>> run:
     >>>   kind: job
     >>>   container:
-    >>>     command: "cp /some/know/path/file {{artifacts_path}}/file"
+    >>>     command: "cp /some/know/path/file {{run_artifacts_path}}/file"
 
     ```
 
@@ -265,7 +266,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>     - connections: [slack-connection]
     >>>       trigger: succeeded
     >>>     - connections: [slack-connection, pagerduty-connection]
-    >>>       trigger:failed
+    >>>       trigger: failed
     ```
     """
 

@@ -49,7 +49,7 @@ from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events, get_asset_path, get_event_path
 from polyaxon.tracking.events import EventFileWriter
 from polyaxon.tracking.events.writer import ResourceFileWriter
-from polyaxon.tracking.run import Run
+from polyaxon.tracking.run import TEMP_RUN_ARTIFACTS, Run
 from polyaxon.utils.path_utils import create_path
 
 
@@ -168,14 +168,14 @@ class TestRunTracking(TestEnvVarsCase):
         settings.CLIENT_CONFIG.is_managed = False
 
         run = Run(project="owner-test.test")
-        assert run.get_artifacts_path() is None
-        assert run.get_outputs_path() is None
+        assert run.get_artifacts_path() == TEMP_RUN_ARTIFACTS
+        assert run.get_outputs_path() == TEMP_RUN_ARTIFACTS
         assert run._event_logger is None
 
         # Add run id
         run = Run(project="owner-test.test", run_uuid="uuid")
-        assert run.get_artifacts_path() is None
-        assert run.get_outputs_path() is None
+        assert run.get_artifacts_path() == TEMP_RUN_ARTIFACTS
+        assert run.get_outputs_path() == TEMP_RUN_ARTIFACTS
         assert run._event_logger is None
 
         run.set_artifacts_path()

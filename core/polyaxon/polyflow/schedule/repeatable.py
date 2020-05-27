@@ -32,7 +32,8 @@ class RepeatableScheduleSchema(BaseCamelSchema):
 
 
 class V1RepeatableSchedule(BaseConfig, polyaxon_sdk.V1RepeatableSchedule):
-    """Repeatable schedules is an interface to trigger components repeatedly for a limited time.
+    """Repeatable schedules is an interface to trigger components repeatedly for a
+    limited number of times.
 
     Args:
         kind: str, should be equal to `interval`

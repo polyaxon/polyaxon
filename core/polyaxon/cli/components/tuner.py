@@ -46,8 +46,8 @@ def log_suggestions(suggestions: List[Dict]):
 
 @tuner.command()
 @click.option(
-    "--parallel",
-    help="A string representing the parallel configuration for bayesian optimzation.",
+    "--matrix",
+    help="A string representing the matrix configuration for bayesian optimzation.",
 )
 @click.option(
     "--configs",
@@ -57,16 +57,16 @@ def log_suggestions(suggestions: List[Dict]):
     "--metrics", help="A string representing the list metrics to use for tuning."
 )
 @clean_outputs
-def bayesian(parallel, configs, metrics):
+def bayesian(matrix, configs, metrics):
     """Create suggestions based on bayesian optimization."""
     from polyaxon.polyflow import V1Bayes
     from polyaxon.polytune.search_managers.bayesian_optimization.manager import (
         BayesSearchManager,
     )
 
-    parallel = V1Bayes.read(parallel)
+    matrix = V1Bayes.read(matrix)
 
-    suggestions = BayesSearchManager(config=parallel).get_suggestions(
+    suggestions = BayesSearchManager(config=matrix).get_suggestions(
         configs=configs, metrics=metrics
     )
     log_suggestions(suggestions)
@@ -76,7 +76,7 @@ def bayesian(parallel, configs, metrics):
 
 @tuner.command()
 @click.option(
-    "--parallel", help="A string representing the parallel configuration for hyperband."
+    "--matrix", help="A string representing the matrix configuration for hyperband."
 )
 @click.option("--iteration", type=int, help="The current hyperband iteration.")
 @click.option(
@@ -90,14 +90,14 @@ def bayesian(parallel, configs, metrics):
     "--metrics", help="A string representing the list metrics to use for tuning."
 )
 @clean_outputs
-def hyperband(parallel, iteration, bracket_iteration, configs, metrics):
+def hyperband(matrix, iteration, bracket_iteration, configs, metrics):
     """Create suggestions based on hyperband."""
     from polyaxon.polyflow import V1Hyperband
     from polyaxon.polytune.search_managers.hyperband.manager import HyperbandManager
 
-    parallel = V1Hyperband.read(parallel)
+    matrix = V1Hyperband.read(matrix)
 
-    suggestions = HyperbandManager(config=parallel).get_suggestions(
+    suggestions = HyperbandManager(config=matrix).get_suggestions(
         configs=configs,
         metrics=metrics,
         bracket_iteration=bracket_iteration,
@@ -110,7 +110,7 @@ def hyperband(parallel, iteration, bracket_iteration, configs, metrics):
 
 @tuner.command()
 @click.option(
-    "--parallel", help="A string representing the parallel configuration for hyperopt."
+    "--matrix", help="A string representing the matrix configuration for hyperopt."
 )
 @click.option(
     "--configs",
@@ -120,14 +120,14 @@ def hyperband(parallel, iteration, bracket_iteration, configs, metrics):
     "--metrics", help="A string representing the list metrics to use for tuning."
 )
 @clean_outputs
-def hyperopt(parallel, configs, metrics):
+def hyperopt(matrix, configs, metrics):
     """Create suggestions based on hyperopt."""
     from polyaxon.polyflow import V1Hyperopt
     from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
 
-    parallel = V1Hyperopt.read(parallel)
+    matrix = V1Hyperopt.read(matrix)
 
-    suggestions = HyperoptManager(config=parallel).get_suggestions(
+    suggestions = HyperoptManager(config=matrix).get_suggestions(
         configs=configs, metrics=metrics
     )
     log_suggestions(suggestions)

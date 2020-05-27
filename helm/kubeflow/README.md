@@ -15,7 +15,7 @@ To learn more about how you can easily switch backends for your distributed expe
 
 ### Setup Helm
 
-To install the TFJob operator make sure you have helm installed, please see this [guide](https://docs.polyaxon.com/guides/setup-helm/).
+To install the TFJob operator make sure you have helm installed, please see this [guide](/docs/guides/setup-helm/).
 
 ### Namespace
 

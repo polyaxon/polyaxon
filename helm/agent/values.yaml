@@ -14,6 +14,11 @@ api:
   host: https://*.polyaxon.com
   token: token-default-value
 
+auth:
+  enabled: true
+  external:
+  useResolver: true
+
 gateway:
   image: polyaxon/polyaxon-gateway
   imageTag: 1.0.9
@@ -120,6 +125,21 @@ securityContext:
   enabled: false
   user: 2222
   group: 2222
+
+nodeSelector: {}
+tolerations: []
+affinity:
+  podAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-core"
+          topologyKey: "kubernetes.io/hostname"
 
 imagePullSecrets: []
 

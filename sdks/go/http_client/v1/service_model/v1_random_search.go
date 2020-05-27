@@ -24,7 +24,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1RandomSearch Parallelism based on randomly generated search space
+// V1RandomSearch Matrix based on randomly generated search space
 //
 // swagger:model v1RandomSearch
 type V1RandomSearch struct {
@@ -35,13 +35,13 @@ type V1RandomSearch struct {
 	// A list of Early stoppings, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
-	// Kind of parallel, should be equal to "random"
+	// Kind of matrix, should be equal to "random"
 	Kind *string `json:"kind,omitempty"`
 
 	// Number of runs to generate and search
 	NumRuns int32 `json:"num_runs,omitempty"`
 
-	// Matrix/Space definition of params to traverse
+	// Hyperparams/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`
 
 	// Seed for the random generator

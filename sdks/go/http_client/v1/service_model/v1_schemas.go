@@ -75,17 +75,17 @@ type V1Schemas struct {
 	// k8s resource
 	K8sResource *V1K8sResourceType `json:"k8s_resource,omitempty"`
 
+	// matrix
+	Matrix *V1Matrix `json:"matrix,omitempty"`
+
+	// matrix kind
+	MatrixKind V1MatrixKind `json:"matrix_kind,omitempty"`
+
 	// operation
 	Operation *V1Operation `json:"operation,omitempty"`
 
 	// operation cond
 	OperationCond *V1OperationCond `json:"operation_cond,omitempty"`
-
-	// parallel
-	Parallel *V1Parallel `json:"parallel,omitempty"`
-
-	// parallel kind
-	ParallelKind V1ParallelKind `json:"parallel_kind,omitempty"`
 
 	// polyaxon init container
 	PolyaxonInitContainer *V1PolyaxonInitContainer `json:"polyaxon_init_container,omitempty"`
@@ -176,19 +176,19 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateMatrix(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateMatrixKind(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOperation(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateOperationCond(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateParallel(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateParallelKind(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -500,6 +500,40 @@ func (m *V1Schemas) validateK8sResource(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Schemas) validateMatrix(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Matrix) { // not required
+		return nil
+	}
+
+	if m.Matrix != nil {
+		if err := m.Matrix.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("matrix")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateMatrixKind(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.MatrixKind) { // not required
+		return nil
+	}
+
+	if err := m.MatrixKind.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("matrix_kind")
+		}
+		return err
+	}
+
+	return nil
+}
+
 func (m *V1Schemas) validateOperation(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Operation) { // not required
@@ -531,40 +565,6 @@ func (m *V1Schemas) validateOperationCond(formats strfmt.Registry) error {
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *V1Schemas) validateParallel(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Parallel) { // not required
-		return nil
-	}
-
-	if m.Parallel != nil {
-		if err := m.Parallel.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("parallel")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Schemas) validateParallelKind(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ParallelKind) { // not required
-		return nil
-	}
-
-	if err := m.ParallelKind.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("parallel_kind")
-		}
-		return err
 	}
 
 	return nil

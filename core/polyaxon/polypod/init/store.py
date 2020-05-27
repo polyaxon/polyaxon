@@ -95,7 +95,7 @@ def get_volume_args(
         path_from = os.path.join(base_path_from, p)
         path_to = os.path.join(mount_path, p)
 
-        # If we are initializing a file we need to create a the base folder
+        # If we are initializing a file we need to create the base folder
         _p = os.path.split(p)[0]
         base_path_to = os.path.join(mount_path, _p)
         # We need to check that the path exists first

@@ -1,0 +1,109 @@
+- groups:
+  - group: Introduction
+    items:
+    - title: Welcome to Polyaxon
+      link: /docs/core/introduction/
+    - title: Features
+      link: /docs/core/introduction/features/
+    - title: Core concepts
+      link: /docs/core/introduction/concepts/
+  - group: Quick Start
+    items:
+    - title: Get Started
+      link: /docs/core/quick-start/
+    - title: Components
+      link: /docs/core/quick-start/components/
+    - title: Operations
+      link: /docs/core/quick-start/operations/
+    - title: Iterate
+      link: /docs/core/quick-start/notebooks/
+    - title: Scaling
+      link: /docs/core/quick-start/scaling/
+    - title: Builds
+      link: /docs/core/quick-start/builds/
+  - group: Specification
+    items:
+    - title: Overview
+      link: /docs/core/specification/
+    - title: Component
+      link: /docs/core/specification/component/
+    - title: Operation
+      link: /docs/core/specification/operation/
+    - title: Context
+      link: /docs/core/specification/context/
+    - title: Environment
+      link: /docs/core/specification/environment/
+    - title: Plugins
+      link: /docs/core/specification/plugins/
+    - title: Notifications
+      link: /docs/core/specification/notifications/
+    - title: Termination
+      link: /docs/core/specification/termination/
+    - title: Lifecycle
+      link: /docs/core/specification/lifecycle/
+    - title: Inputs / Ouputs
+      link: /docs/core/specification/io/
+    - title: Params
+      link: /docs/core/specification/params/
+    - title: Init
+      link: /docs/core/specification/init/
+    - title: Sidecars
+      link: /docs/core/specification/sidecars/
+    - title: Types
+      link: /docs/core/specification/types/
+  - group: Python Library
+    items:
+    - title: Overview
+      link: /docs/core/python-library/
+    - title: Polyaxon Client
+      link: /docs/core/python-library/polyaxon-client/
+    - title: Run Client
+      link: /docs/core/python-library/run-client/
+    - title: Project Client
+      link: /docs/core/python-library/project-client/
+  - group: Query Syntax
+    items:
+    - title: Overview
+      link: /docs/core/query-syntax/
+    - title: Runs
+      link: /docs/core/query-syntax/runs/
+    - title: Projects
+      link: /docs/core/query-syntax/projects/
+  - group: CLI
+    items:
+    - title: Overview
+      link: /docs/core/cli/
+    - title: Auth
+      link: /docs/core/cli/auth/
+    - title: Admin
+      link: /docs/core/cli/admin/
+    - title: Check
+      link: /docs/core/cli/check/
+    - title: Config
+      link: /docs/core/cli/config/
+    - title: Project
+      link: /docs/core/cli/project/
+    - title: Run
+      link: /docs/core/cli/run/
+    - title: Ops
+      link: /docs/core/cli/ops/
+    - title: Dashboard
+      link: /docs/core/cli/dashboard/
+    - title: Init
+      link: /docs/core/cli/init/
+    - title: Upload
+      link: /docs/core/cli/upload/
+    - title: Completion
+      link: /docs/core/cli/completion/
+    - title: Version
+      link: /docs/core/cli/version/
+  - group: Scheduling Strategies
+    items:
+    - title: Overview
+      link: /docs/core/scheduling-strategies/
+    - title: Node Scheduling
+      link: /docs/core/scheduling-strategies/node-scheduling/
+    - title: Routing with Queues
+      link: /docs/core/scheduling-strategies/queue-routing/
+    - title: Run profiles
+      link: /docs/core/scheduling-strategies/run-profiles/

@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon import settings
+from polyaxon import tracking
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.tracking import Run
 
 try:
     from keras.callbacks import Callback
@@ -33,9 +32,7 @@ except ImportError:
 
 class PolyaxonKerasCallback(Callback):
     def __init__(self, run=None, metrics=None):
-        self.run = run
-        if settings.CLIENT_CONFIG.is_managed:
-            self.run = self.run or Run()
+        self.run = tracking.get_or_create_run(run)
         self.metrics = metrics
 
     def on_epoch_end(self, epoch, logs=None):
@@ -54,11 +51,9 @@ class PolyaxonKerasCallback(Callback):
 class PolyaxonKerasModelCheckpoint(ModelCheckpoint):
     """Save model checkpoint with polyaxon."""
 
-    def __init__(self, run, filepath=None, **kwargs):
-        self.run = run
-        if settings.CLIENT_CONFIG.is_managed:
-            self.run = self.run or Run()
-            filepath = self.run.get_outputs_path() + '/model'
+    def __init__(self, run=None, filepath=None, **kwargs):
+        self.run = tracking.get_or_create_run(run)
+        filepath = filepath or self.run.get_model_path()
         super().__init__(filepath, **kwargs)
 
     def on_epoch_end(self, epoch, logs=None):

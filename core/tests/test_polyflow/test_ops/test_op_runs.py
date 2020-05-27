@@ -92,7 +92,7 @@ class TestCompiledOperationsConfigs(BaseTestCase):
     def test_component_with_cache(self):
         config_dict = {
             "cache": {"disable": True},
-            "version": 1.05,
+            "version":  1.1,
             "kind": "compiled_operation",
             "name": "A",
             "tags": ["backend", "kaniko"],
@@ -616,7 +616,7 @@ class TestCompiledOperationsConfigs(BaseTestCase):
 
         config_dict = {
             "kind": "compiled_operation",
-            "parallel": {
+            "matrix": {
                 "concurrency": 2,
                 "kind": "mapping",
                 "values": [{"a": 1}, {"a": 1}],
@@ -625,11 +625,11 @@ class TestCompiledOperationsConfigs(BaseTestCase):
         }
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict()["run"] == config_dict["run"]
-        assert config.to_dict()["parallel"] == config_dict["parallel"]
+        assert config.to_dict()["matrix"] == config_dict["matrix"]
 
         config_dict = {
             "kind": "compiled_operation",
-            "parallel": {
+            "matrix": {
                 "concurrency": 2,
                 "kind": "mapping",
                 "values": [{"a": 1}, {"a": 1}],

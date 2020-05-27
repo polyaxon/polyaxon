@@ -83,7 +83,7 @@ class ConfigManager:
         options=None,
     ):
         """
-        Get a the value corresponding to the key and converts it to `int`/`list(int)`.
+        Get the value corresponding to the key and converts it to `int`/`list(int)`.
 
         Args:
             key: the dict key.
@@ -119,7 +119,7 @@ class ConfigManager:
         options=None,
     ):
         """
-        Get a the value corresponding to the key and converts it to `float`/`list(float)`.
+        Get the value corresponding to the key and converts it to `float`/`list(float)`.
 
         Args:
             key: the dict key.
@@ -155,7 +155,7 @@ class ConfigManager:
         options=None,
     ):
         """
-        Get a the value corresponding to the key and converts it to `bool`/`list(str)`.
+        Get the value corresponding to the key and converts it to `bool`/`list(str)`.
 
         Args:
             key: the dict key.
@@ -191,7 +191,7 @@ class ConfigManager:
         options=None,
     ):
         """
-        Get a the value corresponding to the key and converts it to `str`/`list(str)`.
+        Get the value corresponding to the key and converts it to `str`/`list(str)`.
 
         Args:
             key: the dict key.
@@ -227,7 +227,7 @@ class ConfigManager:
         options=None,
     ):
         """
-        Get a the value corresponding to the key and converts it to `dict`.
+        Get the value corresponding to the key and converts it to `dict`.
 
         Args:
             key: the dict key.
@@ -263,7 +263,7 @@ class ConfigManager:
         options=None,
     ):
         """
-        Get a the value corresponding to the key and converts it to `dict`.
+        Get the value corresponding to the key and converts it to `dict`.
 
         Add an extra validation that all keys have a dict as values.
 
@@ -300,7 +300,7 @@ class ConfigManager:
         options=None,
     ) -> V1UriType:
         """
-        Get a the value corresponding to the key and converts it to `V1UriType`.
+        Get the value corresponding to the key and converts it to `V1UriType`.
 
         Args
             key: the dict key.
@@ -336,7 +336,7 @@ class ConfigManager:
         options=None,
     ) -> V1AuthType:
         """
-        Get a the value corresponding to the key and converts it to `V1AuthType`.
+        Get the value corresponding to the key and converts it to `V1AuthType`.
 
         Args
             key: the dict key.
@@ -371,7 +371,7 @@ class ConfigManager:
         options=None,
     ):
         """
-        Get a the value corresponding to the key and converts comma separated values to a list.
+        Get the value corresponding to the key and converts comma separated values to a list.
 
         Args:
             key: the dict key.

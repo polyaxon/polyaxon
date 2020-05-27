@@ -34,7 +34,7 @@ class Sections(object):
     CONNECTIONS = "connections"
     RUN = "run"
     RUN_PATCH = "runPatch"
-    PARALLEL = "parallel"
+    MATRIX = "matrix"
     OPERATIONS = "operations"
     COMPONENTS = "components"
     SCHEDULE = "schedule"
@@ -60,7 +60,7 @@ class Sections(object):
         PLUGINS,
         TERMINATION,
         CONNECTIONS,
-        PARALLEL,
+        MATRIX,
         OPERATIONS,
         SCHEDULE,
         DEPENDENCIES,

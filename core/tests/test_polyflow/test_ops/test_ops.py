@@ -189,7 +189,7 @@ class TestV1Operations(BaseTestCase):
             "params": {"param1": {"value": "foo"}, "param2": {"value": "bar"}},
             "trigger": "all_succeeded",
             "component": {
-                "version": 1.05,
+                "version":  1.1,
                 "key_not_supported": [
                     {"dagRef": "build-template", "name": "A"},
                     {"dagRef": "job-template", "name": "B", "dependencies": ["A"]},

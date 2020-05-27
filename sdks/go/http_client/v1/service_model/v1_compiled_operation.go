@@ -53,14 +53,14 @@ type V1CompiledOperation struct {
 	// Optional component kind, should be equal to "operation"
 	Kind string `json:"kind,omitempty"`
 
+	// Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
+	Matrix interface{} `json:"matrix,omitempty"`
+
 	// Optional component name, should a valid slug
 	Name string `json:"name,omitempty"`
 
 	// Optional outputs definition
 	Outputs []*V1IO `json:"outputs"`
-
-	// Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-	Parallel interface{} `json:"parallel,omitempty"`
 
 	// Optional plugins to enable
 	Plugins *V1Plugins `json:"plugins,omitempty"`

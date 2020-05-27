@@ -1,0 +1,53 @@
+- groups:
+  - group: Management
+    items:
+    - title: Overview
+      link: /docs/management/
+  - group: Management UI
+    items:
+    - title: Overview
+      link: /docs/management/ui/
+    - title: Organizations
+      link: /docs/management/ui/organizations/
+    - title: Teams
+      link: /docs/management/ui/teams/
+    - title: Agents
+      link: /docs/management/ui/agents/
+    - title: Queues
+      link: /docs/management/ui/queues/
+    - title: Run Profiles
+      link: /docs/management/ui/run-profiles/
+    - title: Projects
+      link: /docs/management/ui/projects/
+    - title: Searches
+      link: /docs/management/ui/searches/
+    - title: Dashboards
+      link: /docs/management/ui/dashboards/
+    - title: Users
+      link: /docs/management/ui/users/
+  - group: Runs Dashboard
+    items:
+    - title: Overview
+      link: /docs/management/runs-dashboard/
+    - title: Comparison
+      link: /docs/management/runs-dashboard/comparison/
+    - title: Run Info
+      link: /docs/management/runs-dashboard/info/
+    - title: Run Logs
+      link: /docs/management/runs-dashboard/logs/
+    - title: Run Monitoring
+      link: /docs/management/runs-dashboard/monitoring/
+    - title: Run Lineage
+      link: /docs/management/runs-dashboard/lineage/
+    - title: Run Artifacts
+      link: /docs/management/runs-dashboard/artifacts/
+    - title: Run Dashboards
+      link: /docs/management/runs-dashboard/dashboards/
+  - group: Component Hub
+    items:
+    - title: Overview
+      link: /docs/management/component-hub/
+  - group: Models regitry
+    items:
+    - title: Overview
+      link: /docs/management/model-registry/

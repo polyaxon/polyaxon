@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon import settings
+from polyaxon import tracking
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.tracking import Run
 
 try:
     from fastai.callbacks import TrackerCallback
@@ -30,12 +29,10 @@ class PolyaxonFastai(TrackerCallback):
         if monitor is None:
             # use default TrackerCallback monitor value
             super().__init__(learn, mode=mode)
-        self.run = run
-        if settings.CLIENT_CONFIG.is_managed:
-            self.run = self.run or Run()
+        self.run = tracking.get_or_create_run(run)
 
     def on_epoch_end(self, epoch, smooth_loss, last_metrics, **kwargs):
-        if not self.experiment:
+        if not self.run:
             return
         metrics = {
             name: stat

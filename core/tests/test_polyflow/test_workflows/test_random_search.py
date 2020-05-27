@@ -21,7 +21,7 @@ from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow import V1RunKind
 from polyaxon.polyflow.operations import V1CompiledOperation
-from polyaxon.polyflow.parallel.random_search import V1RandomSearch
+from polyaxon.polyflow.matrix.random_search import V1RandomSearch
 
 
 @pytest.mark.workflow_mark
@@ -56,7 +56,7 @@ class TestWorkflowV1RandomSearch(BaseTestCase):
     def test_random_search_without_num_runs(self):
         config_dict = {
             "kind": "compiled_operation",
-            "parallel": {
+            "matrix": {
                 "kind": "random",
                 "concurrency": 1,
                 "params": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
@@ -68,6 +68,6 @@ class TestWorkflowV1RandomSearch(BaseTestCase):
         with self.assertRaises(ValidationError):
             V1CompiledOperation.from_dict(config_dict)
 
-        config_dict["parallel"]["numRuns"] = 10
+        config_dict["matrix"]["numRuns"] = 10
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict

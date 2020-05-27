@@ -24,7 +24,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1Iterative Parallelism based on a custom iterative algorithm (suggestions -> mapping -> reduce -> repeat)
+// V1Iterative Matrix based on a custom iterative algorithm (suggestions -> mapping -> reduce -> repeat)
 //
 // swagger:model v1Iterative
 type V1Iterative struct {
@@ -38,13 +38,13 @@ type V1Iterative struct {
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
-	// Kind of parallel, should be equal to "iterative"
+	// Kind of matrix, should be equal to "iterative"
 	Kind *string `json:"kind,omitempty"`
 
 	// Number of iterations to run
 	NumIterations int32 `json:"num_iterations,omitempty"`
 
-	// Matrix/Space definition of params to traverse
+	// Hyperparams/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`
 
 	// Seed for the random generator

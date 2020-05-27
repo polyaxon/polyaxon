@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **cache** | [**V1Cache**](V1Cache.md) |  | [optional] 
 **schedule** | [**Object**](.md) |  | [optional] 
 **events** | **[Object]** |  | [optional] 
-**parallel** | [**Object**](.md) |  | [optional] 
+**matrix** | [**Object**](.md) |  | [optional] 
 **dependencies** | **[String]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 
 **conditions** | **[String]** |  | [optional] 

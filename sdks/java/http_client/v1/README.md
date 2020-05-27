@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.0.90
+- API version: 1.0.92
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.0.90</version>
+  <version>1.0.92</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.0.90"
+compile "org.openapitools:openapi-java-client:1.0.92"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.0.90.jar`
+* `target/openapi-java-client-1.0.92.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -425,6 +425,8 @@ Class | Method | HTTP request | Description
  - [V1Logs](docs/V1Logs.md)
  - [V1MPIJob](docs/V1MPIJob.md)
  - [V1Mapping](docs/V1Mapping.md)
+ - [V1Matrix](docs/V1Matrix.md)
+ - [V1MatrixKind](docs/V1MatrixKind.md)
  - [V1MedianStoppingPolicy](docs/V1MedianStoppingPolicy.md)
  - [V1MetricEarlyStopping](docs/V1MetricEarlyStopping.md)
  - [V1Notification](docs/V1Notification.md)
@@ -436,8 +438,6 @@ Class | Method | HTTP request | Description
  - [V1OptimizationResource](docs/V1OptimizationResource.md)
  - [V1Organization](docs/V1Organization.md)
  - [V1OrganizationMember](docs/V1OrganizationMember.md)
- - [V1Parallel](docs/V1Parallel.md)
- - [V1ParallelKind](docs/V1ParallelKind.md)
  - [V1Param](docs/V1Param.md)
  - [V1ParamSearch](docs/V1ParamSearch.md)
  - [V1PathRef](docs/V1PathRef.md)

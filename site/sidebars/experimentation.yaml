@@ -1,0 +1,51 @@
+- groups:
+  - group: Jobs
+    items:
+    - title: Introduction
+      link: /docs/experimentation/jobs/
+    - title: Specification
+      link: /docs/experimentation/jobs/specification/
+  - group: Distributed Jobs
+    items:
+    - title: Intorudction
+      link: /docs/experimentation/distributed/
+    - title: TF-Job Specification
+      link: /docs/experimentation/distributed/tf-jobs/
+    - title: Pytorch-Job Specification
+      link: /docs/experimentation/distributed/pytorch-jobs/
+    - title: MPI-Job Specification
+      link: /docs/experimentation/distributed/mpi-jobs/
+    - title: Spark-Job Specification
+      link: /docs/experimentation/distributed/spark-jobs/
+    - title: Dask-Job Specification
+      link: /docs/experimentation/distributed/dask-jobs/
+    - title: Kubeflow-Replica Specification
+      link: /docs/experimentation/distributed/kubeflow-replica/
+    - title: Spark-Replica Specification
+      link: /docs/experimentation/distributed/spark-replica/
+  - group: Services
+    items:
+    - title: Intorudction
+      link: /docs/experimentation/services/
+    - title: Specification
+      link: /docs/experimentation/services/specification/
+  - group: Tracking
+    items:
+    - title: Overview
+      link: /docs/experimentation/tracking/
+    - title: Client Reference
+      link: /docs/experimentation/tracking/client/
+    - title: Module Reference
+      link: /docs/experimentation/tracking/module/
+  - group: Visualization
+    items:
+    - title: Overview
+      link: /docs/experimentation/visualizations/
+    - title: Native Charts & Media
+      link: /docs/experimentation/visualizations/native/
+    - title: Custom Charts
+      link: /docs/experimentation/visualizations/custom/
+    - title: Programmatic Experience
+      link: /docs/experimentation/visualizations/programmatic/
+    - title: Tensorboard
+      link: /docs/experimentation/visualizations/tensorboard/

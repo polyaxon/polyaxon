@@ -20,7 +20,7 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.polyflow.parallel import V1GridSearch
+from polyaxon.polyflow.matrix import V1GridSearch
 from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager
 
 

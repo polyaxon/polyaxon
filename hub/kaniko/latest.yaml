@@ -1,0 +1,41 @@
+version: 1.1
+kind: component
+name: kaniko
+description: "Build container images in Kubernetes with Kaniko"
+tags: ["build"]
+
+inputs:
+- name: image
+  isOptional: true
+  type: str
+  value: gcr.io/kaniko-project/executor:latest
+- name: context
+  isOptional: true
+  type: str
+- name: cache
+  isOptional: true
+  type: bool
+  value: true
+  isFlag: true
+- name: cache_ttl
+  isOptional: true
+  type: str
+  value: 1h
+
+outputs:
+- name: destination
+  type: image
+
+run:
+  kind: job
+  connections: ["{{ destination.connection }}"]
+  container:
+    image: "{{ image }}"
+    args: [
+      "-c",
+      "{{ context or globals.artifacts_path }}",
+      "-d",
+      "{{ destination.name }}",
+      "{{ cache }}",
+      "--cache-ttl={{ cache_ttl }}"
+    ]

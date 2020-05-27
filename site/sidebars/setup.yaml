@@ -1,0 +1,53 @@
+- groups:
+  - group: Agent
+    items:
+    - title: Setup
+      link: /docs/setup/agent/
+    - title: Helm Reference
+      link: /docs/setup/agent/reference/
+  - group: Platform
+    items:
+    - title: Setup
+      link: /docs/setup/platform/
+    - title: Open-Source Reference
+      link: /docs/setup/platform/open-source/
+    - title: Control Plane Reference
+      link: /docs/setup/platform/control-plane/
+    - title: Common Helm Reference
+      link: /docs/setup/platform/common-reference/
+    - title: PostgreSQL HA
+      link: /docs/setup/platform/postgresql-ha/
+    - title: Rabbitmq HA
+      link: /docs/setup/platform/rabbitmq-ha/
+    - title: Redis HA
+      link: /docs/setup/platform/redis-ha/
+    - title: Replication & Concurrency
+      link: /docs/setup/platform/replication-concurrency/
+    - title: Async Workers Broker
+      link: /docs/setup/platform/broker/
+    - title: Distributed Task Queue
+      link: /docs/setup/platform/celery/
+    - title: Encryption
+      link: /docs/setup/platform/encryption/
+  - group: Connections
+    items:
+    - title: Introduction
+      link: /docs/setup/connections/
+    - title: Specification
+      link: /docs/setup/connections/specification/
+    - title: Artifacts connections
+      link: /docs/setup/connections/artifacts/
+    - title: Docker Registry Connections
+      link: /docs/setup/connections/registry/
+    - title: Git Connections
+      link: /docs/setup/connections/git/
+    - title: Notifications
+      link: /docs/setup/connections/notifications/
+  - group: Deployment Strategies
+    items:
+    - title: Overview
+      link: /docs/setup/deployment-strategies/
+  - group: Install cli
+    items:
+    - title: Overview
+      link: /docs/setup/cli/

@@ -21,7 +21,7 @@ from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow.operations import V1CompiledOperation
 from polyaxon.polyflow.optimization import V1Optimization, V1OptimizationMetric
-from polyaxon.polyflow.parallel.bayes import (
+from polyaxon.polyflow.matrix.bayes import (
     AcquisitionFunctions,
     GaussianProcessesKernels,
 )
@@ -33,7 +33,7 @@ class TestWorkflowConfigs(BaseTestCase):
     def test_workflow_config_raise_conditions(self):
         config_dict = {
             "kind": "compiled_operation",
-            "parallel": {
+            "matrix": {
                 "kind": "mapping",
                 "concurrency": 2,
                 "values": [{"foo": 1}, {"foo": 2}, {"foo": 3}],
@@ -44,12 +44,12 @@ class TestWorkflowConfigs(BaseTestCase):
         assert config.to_dict() == config_dict
 
         # Add random_search without matrix should raise
-        config_dict["parallel"] = {"kind": "random", "numRuns": 10}
+        config_dict["matrix"] = {"kind": "random", "numRuns": 10}
         with self.assertRaises(ValidationError):
             V1CompiledOperation.from_dict(config_dict)
 
         # Add a matrix definition with 2 methods
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"]["params"] = {
             "lr": {
                 "kind": "choice",
                 "value": [1, 2, 3],
@@ -60,43 +60,43 @@ class TestWorkflowConfigs(BaseTestCase):
             V1CompiledOperation.from_dict(config_dict)
 
         # Using a distribution with random search should pass
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"]["params"] = {
             "lr": {"kind": "pchoice", "value": [(1, 0.3), (2, 0.3), (3, 0.3)]}
         }
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
         # Add matrix definition should pass
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"]["params"] = {
             "lr": {"kind": "choice", "value": [1, 2, 3]}
         }
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
         # Add grid_search should raise
-        config_dict["parallel"] = {"kind": "grid", "numRuns": 10}
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"] = {"kind": "grid", "numRuns": 10}
+        config_dict["matrix"]["params"] = {
             "lr": {"kind": "choice", "value": [1, 2, 3]}
         }
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
         # Adding a distribution should raise
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"]["params"] = {
             "lr": {"kind": "pchoice", "value": [(1, 0.3), (2, 0.3), (3, 0.3)]}
         }
         with self.assertRaises(ValidationError):
             V1CompiledOperation.from_dict(config_dict)
 
         # Updating the matrix should pass
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"]["params"] = {
             "lr": {"kind": "choice", "value": [1, 2, 3]}
         }
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
         # Add hyperband should raise
-        config_dict["parallel"] = {
+        config_dict["matrix"] = {
             "kind": "hyperband",
             "maxIterations": 10,
             "eta": 3,
@@ -114,7 +114,7 @@ class TestWorkflowConfigs(BaseTestCase):
         assert config.to_dict() == config_dict
 
         # Add early stopping
-        config_dict["parallel"]["earlyStopping"] = [
+        config_dict["matrix"]["earlyStopping"] = [
             {
                 "kind": "metric_early_stopping",
                 "metric": "loss",
@@ -138,7 +138,7 @@ class TestWorkflowConfigs(BaseTestCase):
         assert config.to_dict() == config_dict
 
         # Add bayes should raise
-        config_dict["parallel"] = {
+        config_dict["matrix"] = {
             "kind": "bayes",
             "metric": V1OptimizationMetric(
                 name="loss", optimization=V1Optimization.MINIMIZE
@@ -165,20 +165,20 @@ class TestWorkflowConfigs(BaseTestCase):
 
         # Using non uniform distribution should raise
         # Updating the matrix should pass
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"]["params"] = {
             "lr": {"kind": "pchoice", "value": [[0.1, 0.1], [0.2, 0.9]]}
         }
         with self.assertRaises(ValidationError):
             V1CompiledOperation.from_dict(config_dict)
 
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"]["params"] = {
             "lr": {"kind": "normal", "value": [0.1, 0.2]}
         }
         with self.assertRaises(ValidationError):
             V1CompiledOperation.from_dict(config_dict)
 
         # Using uniform distribution should not raise
-        config_dict["parallel"]["params"] = {
+        config_dict["matrix"]["params"] = {
             "lr": {"kind": "uniform", "value": {"low": 0.1, "high": 0.2}}
         }
         config = V1CompiledOperation.from_dict(config_dict)

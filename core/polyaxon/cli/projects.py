@@ -37,6 +37,7 @@ from polyaxon.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate,
 )
+from polyaxon.utils.validation import validate_tags
 
 
 def get_project_details(project):
@@ -77,13 +78,14 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
     "if not provided it will default to the namespace of the current user.",
 )
 @click.option("--description", type=str, help="Description of the project.")
+@click.option("--tags", type=str, help="Tags of the project, comma separated values.")
 @click.option(
     "--private", is_flag=True, help="Set the visibility of the project to private."
 )
 @click.option("--init", is_flag=True, help="Initialize the project after creation.")
 @click.pass_context
 @clean_outputs
-def create(ctx, name, owner, description, private, init):
+def create(ctx, name, owner, description, tags, private, init):
     """Create a new project.
 
     Uses /docs/core/cli/#caching
@@ -94,6 +96,7 @@ def create(ctx, name, owner, description, private, init):
     $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
     """
     owner = owner or AuthConfigManager.get_value("username")
+    tags = validate_tags(tags)
 
     if not owner:
         Printer.print_error(
@@ -104,7 +107,7 @@ def create(ctx, name, owner, description, private, init):
 
     try:
         project_config = V1Project(
-            name=name, description=description, is_public=not private
+            name=name, description=description, tags=tags, is_public=not private
         )
         _project = ProjectClient(owner=owner).create(project_config)
     except (ApiException, HTTPError) as e:

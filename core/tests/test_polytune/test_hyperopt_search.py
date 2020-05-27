@@ -19,7 +19,7 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.polyflow.parallel.hyperopt import V1Hyperopt
+from polyaxon.polyflow.matrix.hyperopt import V1Hyperopt
 from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
 
 

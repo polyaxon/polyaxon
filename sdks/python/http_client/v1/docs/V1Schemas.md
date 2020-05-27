@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **operation_cond** | [**V1OperationCond**](V1OperationCond.md) |  | [optional] 
 **early_stopping** | [**V1EarlyStopping**](V1EarlyStopping.md) |  | [optional] 
-**parallel** | [**V1Parallel**](V1Parallel.md) |  | [optional] 
+**matrix** | [**V1Matrix**](V1Matrix.md) |  | [optional] 
 **run** | [**V1RunSchema**](V1RunSchema.md) |  | [optional] 
 **operation** | [**V1Operation**](V1Operation.md) |  | [optional] 
 **compiled_operation** | [**V1CompiledOperation**](V1CompiledOperation.md) |  | [optional] 
@@ -29,7 +29,7 @@ Name | Type | Description | Notes
 **image** | [**V1ImageType**](V1ImageType.md) |  | [optional] 
 **event_type** | [**V1EventType**](V1EventType.md) |  | [optional] 
 **event** | [**V1Event**](V1Event.md) |  | [optional] 
-**parallel_kind** | [**V1ParallelKind**](V1ParallelKind.md) |  | [optional] 
+**matrix_kind** | [**V1MatrixKind**](V1MatrixKind.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

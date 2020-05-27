@@ -1,0 +1,20 @@
+version: 1.1
+kind: component
+name: notebook
+run:
+  kind: service
+  ports: [8888]
+  container:
+    image: "jupyter/tensorflow-notebook"
+    command: ["jupyter", "lab"]
+    args: [
+      "--no-browser",
+      "--ip=0.0.0.0",
+      "--port={{globals.ports[0]}}",
+      "--allow-root",
+      "--NotebookApp.allow_origin=*",
+      "--NotebookApp.trust_xheaders=True",
+      "--NotebookApp.token=",
+      "--NotebookApp.base_url={{globals.base_url}}",
+      "--LabApp.base_url={{globals.base_url}}"
+    ]
