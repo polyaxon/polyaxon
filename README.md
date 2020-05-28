@@ -102,9 +102,9 @@ and update your polyaxonfile.
 Here are some examples of using distributed training: 
 
  * [Distributed Tensorflow](https://polyaxon.com/docs/experimentation/distributed/tf-jobs/)
- * [Pytorch distributed](https://polyaxon.com/docs/experimentation/distributed/pytorch-jobs/)
- * [MPI distributed](https://polyaxon.com/docs/experimentation/distributed/mpi-jobs/)
- * [Horovod distributed](https://polyaxon.com/integrations/horovod/)
+ * [Distributed Pytorch](https://polyaxon.com/docs/experimentation/distributed/pytorch-jobs/)
+ * [Distributed MPI](https://polyaxon.com/docs/experimentation/distributed/mpi-jobs/)
+ * [Horovod](https://polyaxon.com/integrations/horovod/)
  * [Spark](https://polyaxon.com/docs/experimentation/distributed/spark-jobs/)
  * [Dask](https://polyaxon.com/docs/experimentation/distributed/dask-jobs/)
 
@@ -122,7 +122,7 @@ An experiment group in Polyaxon defines a search algorithm, a search space, and 
 
 # Parallel executions
 
-You can run you processing jobs or model training in parallel, Polyaxon provides a [mapping](https://polyaxon.com/docs/automation/mapping/) abstraction to manage concurrent jobs.
+You can run your processing or model training jobs in parallel, Polyaxon provides a [mapping](https://polyaxon.com/docs/automation/mapping/) abstraction to manage concurrent jobs.
 
 # DAGs and workflows
 

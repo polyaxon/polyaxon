@@ -15,8 +15,8 @@ sidebar: "management"
 Polyaxon provides a queue abstraction to:
   * Prioritize operations on a queue.
   * Throttle the number of operations on a queue.
-  * Route operations on queue to a namespace or cluster.
-  * Limit the number of operations queued from a single workflow or nested workflow.
+  * Route operations on a queue to a namespace or cluster.
+  * Limit the number of operations queued from a single workflow or nested workflows.
 
 
 Every agent comes with a default queue.

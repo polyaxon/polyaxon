@@ -4,8 +4,8 @@ sub_link: "scheduling-strategies/route-queuing"
 meta_title: "Queue routing in Polyaxon - Scheduling strategies"
 meta_description: "Polyaxon provides a queue abstraction to prioritize operations on a queue, 
 to throttle the number of operations on a queue, 
-to route operations on queue to a namespace or cluster,
-to limit the number of operations queued from a single workflow or nested workflow."
+to route operations on a queue to a namespace or cluster,
+to limit the number of operations queued from a single workflow or nested workflows."
 tags:
     - configuration
     - polyaxon
@@ -24,8 +24,8 @@ sidebar: "core"
 Polyaxon provides a queue abstraction to:
   * Prioritize operations on a queue.
   * Throttle the number of operations on a queue.
-  * Route operations on queue to a namespace or cluster.
-  * Limit the number of operations queued from a single workflow or nested workflow.
+  * Route operations on a queue to a namespace or cluster.
+  * Limit the number of operations queued from a single workflow or nested workflows.
 
 ## Concepts
 

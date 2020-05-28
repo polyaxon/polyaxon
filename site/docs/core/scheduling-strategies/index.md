@@ -36,7 +36,7 @@ There are several distinct features involved in the scheduling strategies featur
  * [Node scheduling](/docs/core/scheduling-strategies/node-scheduling/): A feature that leverages the Kubernetes API.
  * [Queue priority](/docs/core/scheduling-strategies/queue-routing/#priority): A feature to prioritize operations on a queue.
  * [Queue concurrency](/docs/core/scheduling-strategies/queue-routing/#concurrency): A feature to throttle the number of operations on a queue.
- * [Queue agent](/docs/core/scheduling-strategies/queue-routing/#agent): A feature to route operations on queue to a namespace or cluster. 
- * [Workflow concurrency](/docs/core/scheduling-strategies/queue-routing/#concurrency): A feature to limit the number of operations queued from a single workflow or nested workflow. 
+ * [Queue agent](/docs/core/scheduling-strategies/queue-routing/#agent): A feature to route operations on a queue to a namespace or cluster. 
+ * [Workflow concurrency](/docs/core/scheduling-strategies/queue-routing/#concurrency): A feature to limit the number of operations queued from a single workflow or nested workflows. 
  * [Run profile](/docs/core/scheduling-strategies/run-profiles/): A feature for injecting certain information into operations at compilation time to preset configuration 
    for node scheduling, queue routing, resources requirements and definition, connections, and access level control.
