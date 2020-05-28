@@ -87,4 +87,4 @@ Operations can reference components in several ways:
 
 Operations are how you execute components. To learn more about operations, please check the [specification section](/docs/core/specification/operation/)
 
-The next section of [this tutorial](/docs/core/quick-start/notebooks/) we will explore how to use notebooks to run an interactive process for scheduling experiments.
+The next section of [this tutorial](/docs/core/quick-start/iterate/) we will explore how to use notebooks to run an interactive process for scheduling experiments.

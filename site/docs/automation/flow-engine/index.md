@@ -41,8 +41,8 @@ Polyaxon flow engine provides several features to reduce the complexity and incr
  * Easy-to-use: It is easy to use and does not add any extra complexity or extra dependencies to a cluster already running Polyaxon.
  * Scalability: It scales massively with scheduling and routing capabilities, it defines extra API endpoints, and it reuses same logic for tracking and monitoring runs.
  * Flexibility: It allows users to run anything that can be run in a container.
- * Reusability: It introduces new concepts that will allow several teams to operationalize and reuse common logic. 
- * Kubernetes and container Native: It integrates natively with the rest of Polyaxon and reuses it's components, and it also allows to leverage Kubernetes services such as volumes, secrets, and RBAC.
+ * Reusability: A Dag is a runtime of a component, they can be parameterized and shared like any other component, all operations in a DAG are also running other components which means you can reuse common logic. 
+ * Kubernetes and container Native: It integrates natively with the rest of Polyaxon and reuses it's components, which allows you to leverage Kubernetes services such as volumes, secrets, and RBAC, as well as concepts such as routes and connections.
  * Interoperability: It can be used to leverage and interact with external systems.
  
 ## Specification

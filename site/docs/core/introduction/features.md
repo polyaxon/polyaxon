@@ -64,7 +64,7 @@ Polyaxon exposes a flow engine that enables users to author workflows and DAGs.
 
 ## Built-in Optimization engine
 
-Polyaxon exposes an ensemble of hyperparameters tuning algorithms that can effectively optimize any model.
+Polyaxon exposes an ensemble of hyperparameter tuning algorithms that can effectively optimize any model.
 
 Our optimization engine is based on open-source tools, and can intelligently chooses the best parameters for your problem by balancing exploration and exploitation of your parameter search space to obtain high-performing results.
 

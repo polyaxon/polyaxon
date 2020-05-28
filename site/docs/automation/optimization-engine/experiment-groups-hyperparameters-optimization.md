@@ -310,14 +310,14 @@ Experiments:
 
 ## Experiment group search algorithms
 
-In these introductory sections we demonstrated how to conduct hyperparameters tuning with 2 algorithms;
+In these introductory sections we demonstrated how to conduct hyperparameter tuning with 2 algorithms;
 [grid search](/references/polyaxon-optimization-engine/grid-search/) and [random search](/references/polyaxon-optimization-engine/random-search/).
 
 Sometimes you might have a large search space where you want to use advanced search algorithms.
 Polyaxon supports, in addition to [grid search](/references/polyaxon-optimization-engine/grid-search/) and [random search](/references/polyaxon-optimization-engine/random-search/), 
 [Hyperband](/references/polyaxon-optimization-engine/hyperband/) and [Bayesian Optimization](/references/polyaxon-optimization-engine/bayesian-optimization/).
 
-For more information on hyperparameters tuning and optimization please go to [Optimization Engine Reference](/references/polyaxon-optimization-engine/).
+For more information on hyperparameter tuning and optimization please go to [Optimization Engine Reference](/references/polyaxon-optimization-engine/).
 
 
 > For more details about this command please run `polyaxon group --help`, 

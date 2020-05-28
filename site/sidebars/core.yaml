@@ -16,9 +16,9 @@
     - title: Operations
       link: /docs/core/quick-start/operations/
     - title: Iterate
-      link: /docs/core/quick-start/notebooks/
-    - title: Scaling
-      link: /docs/core/quick-start/scaling/
+      link: /docs/core/quick-start/iterate/
+    - title: Scale
+      link: /docs/core/quick-start/scale/
     - title: Builds
       link: /docs/core/quick-start/builds/
   - group: Specification

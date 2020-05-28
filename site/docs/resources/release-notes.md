@@ -583,7 +583,7 @@ This is a patch release on top of 0.4.3/0.4.2 containing no breaking changes., t
  * Add description editing from dashboard.
  * Add health status endpoint.
  * Add tracking API documentation.
- * Fix issue with hyperparameters tuning; experiment groups are stuck trying to sample new values when user requests larger number of experiments than the provided space (happens only when using discrete distributions).
+ * Fix issue with hyperparameter tuning; experiment groups are stuck trying to sample new values when user requests larger number of experiments than the provided space (happens only when using discrete distributions).
  * Add is_continuous property to space values.
  * Fix issue with cli upload large files.
  * Fix issue with cli losing connection due to timeout.

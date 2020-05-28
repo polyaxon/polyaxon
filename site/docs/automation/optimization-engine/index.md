@@ -25,7 +25,7 @@ Finding good hyperparameters can be very challenging,
 and requires to efficiently search the space of possible hyperparameters as well as
 how to manage, schedule, and monitor a large set of experiments for hyperparameter tuning, 
 
-The way Polyaxon performs hyperparameters tuning is by providing a selection of customizable search algorithms.
+The way Polyaxon performs hyperparameter tuning is by providing a selection of customizable search algorithms.
 Polyaxon supports both simple approaches such as `random search` and `grid search`, and provides a simple interface for
 advanced approaches, such as `Hyperband` and `Bayesian Optimization`, it also integrates with tools such as `Hyperopt`, 
 and provides an interface fo running custom iterative processes.

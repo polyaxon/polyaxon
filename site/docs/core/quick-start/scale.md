@@ -1,6 +1,6 @@
 ---
-title: "Quick Start: Scaling"
-sub_link: "Automation-start/scaling"
+title: "Quick Start: Scale"
+sub_link: "quick-start/scale"
 meta_title: "Scaling - Polyaxon quick start tutorial - Core Concepts"
 meta_description: "Scaling - Get started with Polyaxon and become familiar with the ecosystem of Polyaxon with a top-level overview and useful links to get you started."
 visibility: public
@@ -22,7 +22,7 @@ There are different ways to scale your operations:
 Oftentimes you may want to create many experiments with different parameters and automatically manage their execution.
 
 Polyaxon has APIs and clients that you can use with your favorite scheduler. 
-it also comes with a built-in support for distributed jobs, a parallel executions, an optimization and a flow engine.    
+It also comes with a built-in support for distributed jobs, parallel executions, an optimization and a flow engine.    
 
 ## Scaling with distributed jobs
 
@@ -53,9 +53,9 @@ run:
 
 This will start a TFJob with 1 replica of type chief and 2 workers.
 
-### Scaling with Hyperparameters tuning 
+## Scaling with Hyperparameter tuning 
 
-Let's run another polyaxonfile `polyaxonfile_hyperparams.yaml`, which contains a hyperparameters tuning definition, this is the content of the file:
+Let's run another polyaxonfile `polyaxonfile_hyperparams.yaml`, which contains a hyperparameter tuning definition, this is the content of the file:
 
 ```yaml
 version: 1.1
@@ -104,7 +104,7 @@ or check the [command reference](/docs/core/cli/run/)
 
 The repo contains more hyperparameter tuning examples in the automation folder.
 
-### Automate with DAGs
+## Automation with DAGs
 
 DAGs are one of the runtimes supported by Polyaxon.
 

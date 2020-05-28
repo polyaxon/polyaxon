@@ -1,7 +1,7 @@
 ---
-title: "Quick Start: Notebooks"
-sub_link: "quick-start/notebooks"
-meta_title: "Notebooks - Polyaxon quick start tutorial - Core Concepts"
+title: "Quick Start: Iterate"
+sub_link: "quick-start/iterate"
+meta_title: "Notebooks Iteration - Polyaxon quick start tutorial - Core Concepts"
 meta_description: "Operations - Get started with Polyaxon and become familiar with the ecosystem of Polyaxon with a top-level overview and useful links to get you started."
 visibility: public
 status: published
