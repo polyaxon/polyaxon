@@ -17,7 +17,7 @@ tags:
 ---
 
 
-We have a [documentation](https://docs.polyaxon.com/) that covers how to install and use Polyaxon.
-Our code is open source and can be found [here](https://docs.polyaxon.com/).
+We have a [documentation](https://polyaxon.com/docs/) that covers how to install and use Polyaxon.
+Our code is open source and can be found [here](https://polyaxon.com/docs/).
 You can also check this [demo video](https://www.youtube.com/watch?v=Iexwrka_hys)
 from PyData about how to scale deep and reproduce deep learning on Kubernetes with Polyaxon.
