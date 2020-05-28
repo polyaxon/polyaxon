@@ -114,7 +114,7 @@ The file `dag.yml` contains a DAG definition, it automates the journey we built 
 version: 1.1
 kind: component
 name: automated-process
-description: runs an experiment. if the loss is higher than max_loss start a hyperparameter tuning process, and then print the best models
+description: runs an experiment, if the loss is higher than max_loss start a hyperparameter tuning process, and then print the best models
 inputs:
 - {name: max_loss, type: float, value: 0.01, isOptional: true, description: "max loss to start a tuning job."}
 - {name: top, type: int, value: 5, isOptional: true, description: "top jobs."}

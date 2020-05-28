@@ -126,7 +126,7 @@ An `operation` is how you execute your components, it allows you to:
  * subscribe a component to events to trigger executions automatically.
 
 <blockquote class="light">
-Please refer to <a href="/docs/core/specification/operations/">core/specification/operation</a> and <a href="/docs/management/runs-dashboard/">management/Runs Dashboard</a> to learn about the operation specification.
+Please refer to <a href="/docs/core/specification/operation/">core/specification/operation</a> and <a href="/docs/management/runs-dashboard/">management/Runs Dashboard</a> to learn about the operation specification.
 </blockquote>
 
  

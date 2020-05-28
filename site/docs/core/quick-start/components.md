@@ -90,7 +90,7 @@ every time we run this component, Polyaxon will clone the repo and inject it in 
 
 In nutshell what Polyaxon provides is a simple way to schedule and run containerized workload.
 
-> We will [come back](/docs/core/quick-start/builds/) the docker image to learn how to build containers later, 
+> We will [come back](/docs/core/quick-start/builds/) to the docker image to learn how to build containers later, 
  for now let's assume that we have an image with all requirements installed
 
 ## The model

@@ -127,7 +127,7 @@ def _read_from_url(url: str):
 def get_default_registry():
     return os.environ.get(
         POLYAXON_KEYS_PUBLIC_REGISTRY,
-        "https://raw.githubusercontent.com/polyaxon/polyaxon-hub/dev",
+        "https://raw.githubusercontent.com/polyaxon/polyaxon-hub",
     )
 
 
