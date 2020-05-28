@@ -31,4 +31,4 @@ pandas==1.0.3
 
 nvidia-ml-py3==7.352.0
 
--e git+https://github.com/polyaxon/polyaxon.git@master#egg=polyaxon-sdk==1.0.92&subdirectory=sdks/python/http_client/v1
+-e git+https://github.com/polyaxon/polyaxon.git@master#egg=polyaxon-sdk==1.0.93&subdirectory=sdks/python/http_client/v1
