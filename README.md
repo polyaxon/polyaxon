@@ -8,7 +8,8 @@
 
 # Polyaxon
 
-Welcome to Polyaxon, a platform for building, training, and monitoring large scale deep learning applications.
+Welcome to , a platform for building, training, and monitoring large scale deep learning applications.
+We are making a system to solve reproducibility, automation, and scalability for machine learning applications.
 
 Polyaxon deploys into any data center, cloud provider, or can be hosted and managed by Polyaxon, and it supports all the major deep learning frameworks such as Tensorflow, MXNet, Caffe, Torch, etc.
 
@@ -38,7 +39,7 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
 
     ```bash
     # Install Polyaxon CLI
-    $ pip install -U polyaxon-cli
+    $ pip install -U polyaxon
 
     # Config Polyaxon CLI
     $ polyaxon config ...
@@ -60,26 +61,13 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
     ```bash
     # Create a project
     $ polyaxon project create --name=quick-start --description='Polyaxon quick start.'
-
-    # Clone the quick start repo
-    $ git clone https://github.com/polyaxon/polyaxon-quick-start.git
-    $ cd polyaxon-quick-start
-
-    # initialize it
-    $ polyaxon init quick-start
     ```
 
  * Train and track logs & resources
 
     ```bash
     # Upload code and start experiments
-    $ polyaxon run -u
-
-    # Stream logs
-    $ polyaxon experiment -xp 1 logs
-
-    # Stream resources
-    $ polyaxon experiment -xp 1 resources
+    $ polyaxon run -f experiment.yaml -l
     ```
 
  * Dashboard
@@ -94,56 +82,54 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
  * Notebook
     ```bash
     # Start Jupyter notebook for your project
-    $ polyaxon notebook start -f polyaxonfile_notebook.yml
-
-    Notebook is being deployed for project `quick-start`
-
-    It may take some time before you can access the notebook..
-
-    Your notebook will be available on:
-
-        http://52.226.37.54:80/notebook/root/quick-start
+    $ polyaxon run --hub notebook
     ```
 
  * Tensorboard
     ```bash
-    # Start TensorBoard
-    $ polyaxon tensorboard start
-
-    Tensorboard is being deployed for project `quick-start`
-
-    It may take some time before you can access tensorboard.
-
-    Your tensorboard will be available on:
-
-        http://52.226.37.54:80/tensorboard/root/quick-start
+    # Start TensorBoard for a run's output
+    $ polyaxon run --hub tensorboard --run-uuid=UUID
     ```
 
-Please check our [quick start guide](https://docs.polyaxon.com/concepts/quick-start) to start training your first experiment.
+Please check our [quick start guide](https://polyaxon.com/docs/core/quick-start/) to start training your first experiment.
 
-# Distributed training
+# Distributed job
 
-Polyaxon supports and simplifies distributed training.
-Depending on the framework you are using, you need to adapt your code to enable the distributed training,
-and update your polyaxonfile with an environment section.
+Polyaxon supports and simplifies distributed jobs.
+Depending on the framework you are using, you need to deploy the corresponding operator, adapt your code to enable the distributed training,
+and update your polyaxonfile.
 
 Here are some examples of using distributed training: 
 
- * [Tensorflow distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/tensorflow/cifar10/polyaxonfile_distributed.yml)
- * [MXNet distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/mxnet/cifar10/polyaxonfile_distributed.yml)
- * [Pytorch distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/pytorch/mnist/polyaxonfile_distributed.yml)
- * [Horovod distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/horovod/tensorflow/polyaxonfile.yml)
- * [MPI distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/mpijob/polyaxonfile.yaml)
+ * [Distributed Tensorflow](https://polyaxon.com/docs/experimentation/distributed/tf-jobs/)
+ * [Pytorch distributed](https://polyaxon.com/docs/experimentation/distributed/pytorch-jobs/)
+ * [MPI distributed](https://polyaxon.com/docs/experimentation/distributed/mpi-jobs/)
+ * [Horovod distributed](https://polyaxon.com/integrations/horovod/)
+ * [Spark](https://polyaxon.com/docs/experimentation/distributed/spark-jobs/)
+ * [Dask](https://polyaxon.com/docs/experimentation/distributed/dask-jobs/)
 
 # Hyperparameters tuning
 
 Polyaxon has a concept for suggesting hyperparameters and managing their results very similar to Google Vizier called experiment groups.
 An experiment group in Polyaxon defines a search algorithm, a search space, and a model to train.
 
- * [Grid search](https://github.com/polyaxon/polyaxon-quick-start/blob/master/polyaxonfile_hyperparams_grid.yml)
- * [Random search with early stopping](https://github.com/polyaxon/polyaxon-quick-start/blob/master/polyaxonfile_hyperparams_early_stopping.yml)
- * [Hyperband](https://github.com/polyaxon/polyaxon-quick-start/blob/master/polyaxonfile_hyperparams_hyperband.yml)
- * [Bayesian Optimization](https://github.com/polyaxon/polyaxon-quick-start/blob/master/polyaxonfile_hyperparams_bo.yml)
+ * [Grid search](https://polyaxon.com/docs/automation/optimization-engine/grid-search/)
+ * [Random search](https://polyaxon.com/docs/automation/optimization-engine/random-search/)
+ * [Hyperband](https://polyaxon.com/docs/automation/optimization-engine/hyperband/)
+ * [Bayesian Optimization](https://polyaxon.com/docs/automation/optimization-engine/bayesian-optimization/)
+ * [Hyperopt](https://polyaxon.com/docs/automation/optimization-engine/hyperopt/)
+ * [Custom Iterative Optimization](https://polyaxon.com/docs/automation/optimization-engine/iterative/)
+
+# Parallel executions
+
+You can run you processing jobs or model training in parallel, Polyaxon provides a [mapping](https://polyaxon.com/docs/automation/mapping/) abstraction to manage concurrent jobs.
+
+# DAGs and workflows
+
+[Polyaxon DAGs](https://polyaxon.com/docs/automation/flow-engine/) is a tool that provides container-native engine for running machine learning pipelines. 
+A DAG manages multiple operations with dependencies. Each operation is defined by a component runtime. 
+This means that operations in a DAG can be jobs, services, distributed jobs, parallel executions, or nested DAGs.
+ 
 
 # Architecture
 
@@ -151,7 +137,7 @@ An experiment group in Polyaxon defines a search algorithm, a search space, and 
 
 # Documentation
 
-Check out our [documentation](https://docs.polyaxon.com/) to learn more about Polyaxon.
+Check out our [documentation](https://polyaxon.com/docs/) to learn more about Polyaxon.
 
 # Dashboard
 
@@ -160,36 +146,15 @@ Polyaxon comes with a dashboard that shows the projects and experiments created 
 To start the dashboard, just run the following command in your terminal
 
 ```bash
-$ polyaxon dashboard
+$ polyaxon dashboard -y
 ```
 
- * List Projects
+![compare](artifacts/compare.png)
 
-    ![Polyaxon dashboard](artifacts/projects.png)
+![dashboards](artifacts/dashboards.png)
 
- * Project Overview
+![tensorboard](artifacts/tensorboard.png)
 
-    ![Polyaxon dashboard](artifacts/project_overview.png)
-
- * Experiments
-
-    ![Polyaxon dashboard](artifacts/experiments.png)
-
- * Experiment Groups
-
-    ![Polyaxon dashboard](artifacts/experiment_groups.png)
-
- * Experiment Overview
-
-    ![Polyaxon dashboard](artifacts/experiment.png)
- 
- * Experiment Metrics
- 
-     ![experiment](artifacts/experiment_metrics.png)
-    
- * Experiment Logs
- 
-     ![experiment](artifacts/experiment_logs.png)
 
 # Project status
 
