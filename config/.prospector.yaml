@@ -1,7 +1,7 @@
 output-format: grouped
 
 strictness: high
-test-warnings: false
+test-warnings: true
 doc-warnings: true
 
 max-line-length: 100
@@ -9,9 +9,7 @@ max-line-length: 100
 ignore-patterns:
   - __init__.py
   - (^|/)migrations(/|$)
-  - (^|/)config_settings/.*/apps.py
-  - (^|/)sidecar(/|$)
-  - src
+  - fixtures.py
 
 pep257:
   run: false
@@ -37,7 +35,13 @@ pylint:
     - unused-argument
     - too-many-return-statements
     - inconsistent-return-statements
+    - useless-object-inheritance
+
   enable:
     - missing-final-newline
   options:
     ignore: migrations
+
+pep8:
+  disable:
+    - E203
