@@ -84,7 +84,7 @@ Instead of defining a single set of params, similar to what we did in previous s
 this file defines a matrix, in this case a matrix with grid search algorithm.
 It uses the same component and Polyaxon validate the space search generated against
 the inputs and outputs defined in the component to validate the params.
-The Polyaxon will generate multiple operations based on the search space, and it will manage their execution using a pipeline.
+Polyaxon will generate multiple operations based on the search space, and it will manage their execution using a pipeline.
 
 Polyaxon provides several generators for defining a [search space](/docs/automation/optimization-engine/params/) and several 
 [search algorithms for hyperparameter tuning](/docs/automation/optimization-engine/). 
@@ -132,7 +132,7 @@ run:
       - dockerfile:
           image: "tensorflow/tensorflow:2.0.1-py3"
           run:
-          - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
+          - 'pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]'
           langEnv: 'en_US.UTF-8'
   - name: experiment
       urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
@@ -183,7 +183,7 @@ This DAG will start an experiment, if the experiment has a `loss > max_loss`
 it will start a tuning job based on a random search algorithm, 
 finally it will run a container to print the best 5 models.
 
-The DAG itself if parameterized, we can pass different values for `max_loss` and `top`.
+The DAG itself is parameterized, we can pass different values for `max_loss` and `top`.
 
 ```bash
 $ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/automation/dag.yml -P loss=0.002 -P top=10

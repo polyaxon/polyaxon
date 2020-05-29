@@ -166,7 +166,7 @@ file and pushing a new commit, then starting a new experiment, which is not idea
 ## Inputs / Outputs
 
 Instead of changing files and pushing and then starting a new experiment, 
-we can using the [inputs and outputs](/docs/core/specification/io/) sections to define how we can parametrize our program.
+we can use the [inputs and outputs](/docs/core/specification/io/) sections to parametrize our program.
 
 Let's look at the typed file:
 
@@ -225,14 +225,14 @@ $ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-s
 ```
 
 > The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
-If you want to force an output validation, you need to set `delayValidation: false`. 
+If you want to validate an output eagerly, you need to set `delayValidation: false`. 
 
 > You don't have to define outputs or inputs, and you can still log information during the run, 
 for instance we defined 2 outputs, but our program will log 4 results (val_loss and val_accuracy as well)
 
-When you run this experiment you will notice that Polyaxon will automatically populate the inputs section in the dashboard automatically.
+When you run this experiment you will notice that Polyaxon will populate the inputs section in the dashboard automatically.
 
-## List the runs 
+## List the operations 
 
 Let's check the list of experiments we've created so far:
 
@@ -273,7 +273,7 @@ $ polyaxon run run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-qui
 ```
 
 
-## Let's compare the experiment on the dashboard
+## Let's compare the experiments on the dashboard
 
 ![comparison-sort](../../../../content/images/dashboard/comparison/sort.png)
 

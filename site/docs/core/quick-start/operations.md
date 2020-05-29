@@ -74,12 +74,12 @@ in that case it will make sense to push more information to the component.
 
 ## Referencing a component
 
-Sine the operations do not define themselves a runtime, but just know how to execute components, they need to reference components.
+Sine operations don't define a runtime, but just know how to execute components, they need to reference components.
 
 Operations can reference components in several ways:
 
  * `urlRef`: This is what we used earlier to resolve the component to run, basically Polyaxon will fetch the content of the component based on a url.
- * `pathRef`: If we were to clone the repo we could replace the `urlRef` with a simple `pathRef: ./typed.yml` since both files are on the same machine.
+ * `pathRef`: If we were to clone the repo we could replace the `urlRef` with a simple `pathRef: ./typed.yml` since both files are on the same folder.
  * `hubRef`: This is similar to what we did for running Tensorboard with the `--hub` argument, in fact the CLI just injects this option using that flag.
  * `component`: It's possible to pass the component inline directly inside the operation, this use case is generally useful when running DAGs.
 

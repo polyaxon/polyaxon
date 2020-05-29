@@ -63,7 +63,7 @@ runPatch:
 
 ## Stop a notebook
 
-You stop a notebook similar to any other operation, run the following command in your terminal:
+You stop a notebook the same way you stop any other operation, run the following command in your terminal:
 
 If the operation is cached
 

@@ -33,24 +33,24 @@
       link: /docs/core/specification/context/
     - title: Environment
       link: /docs/core/specification/environment/
-    - title: Plugins
-      link: /docs/core/specification/plugins/
-    - title: Notifications
-      link: /docs/core/specification/notifications/
     - title: Termination
       link: /docs/core/specification/termination/
-    - title: Lifecycle
-      link: /docs/core/specification/lifecycle/
     - title: Inputs / Ouputs
       link: /docs/core/specification/io/
     - title: Params
       link: /docs/core/specification/params/
+    - title: Plugins
+      link: /docs/core/specification/plugins/
+    - title: Notifications
+      link: /docs/core/specification/notifications/
     - title: Init
       link: /docs/core/specification/init/
     - title: Sidecars
       link: /docs/core/specification/sidecars/
     - title: Types
       link: /docs/core/specification/types/
+    - title: Lifecycle
+      link: /docs/core/specification/lifecycle/
   - group: Python Library
     items:
     - title: Overview

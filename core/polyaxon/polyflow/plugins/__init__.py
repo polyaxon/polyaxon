@@ -93,7 +93,9 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ### auth
 
-    <blockquote class="light">This plugin is enabled by default in Polyaxon deployment with user management.</blockquote>
+    <blockquote class="light">
+    This plugin is enabled by default in Polyaxon deployments with user management.
+    </blockquote>
 
     By default Polyaxon will create an auth context for each operation, this removes the overhead
     to think about how you can pass tokens to your runs,

@@ -37,21 +37,22 @@ runPatch:
   - dockerfile:
       image: "tensorflow/tensorflow:2.0.1-py3"
       run:
-      - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
+      - 'pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]'
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko
 ```
 
 This configuration is using a public component called Kaniko, 
 it uses an initializer [dockerfile](/docs/core/specification/init/) which generates simple dockerfile.
-Note that we could have created a dockerfile, and used a git initializer to clone the repo containing the dockerfile.
+
+> **Note**: We could have created a dockerfile, and used a git initializer to clone the repo containing the dockerfile.
 
 Since we do not want to create or modify the Kaniko component, 
 we are using the `runPatch` section to add the init section to the job.
 The `runPatch` allows us to patch the component definition without having to rewrite it from scratch, 
 in this case we are generating a dockerfile.
 The dockerfile we are generating is a based on a tensorflow docker image and 
-we are just installing the `polyaxon` library to use the [tracking module](/docs/experimentation/tracking/) as well as some libraries.
+we are just installing `polyaxon` library and some extra dependencies to use the [tracking module](/docs/experimentation/tracking/).
 
 The `hubRef` is the reference of the component we are going to run, in this case it's a Kaniko component for building the image.
 

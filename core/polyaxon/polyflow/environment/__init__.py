@@ -58,7 +58,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     configuration of the runtime of your jobs, experiments, and services.
 
     Based on this section you can define several information
-    that will be injected to the pod running on Kubernetes, e.g. the node selector.
+    that will be injected into the pod running on Kubernetes, e.g. the node selector.
 
     Args:
         labels: Dict, optional

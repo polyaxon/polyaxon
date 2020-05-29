@@ -20,5 +20,5 @@ but it could be costly, Polyaxon provides several useful helpers to manage concu
 ## Concepts
 
  * [Concurrency](/docs/automation/helpers/concurrency/)
- * [Cache](/docs/automation/helpers/early-stopping/)
+ * [Cache](/docs/automation/helpers/cache/)
  * [Early stopping](/docs/automation/helpers/early-stopping/)
