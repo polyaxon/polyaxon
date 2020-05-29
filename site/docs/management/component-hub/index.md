@@ -16,8 +16,8 @@ sidebar: "management"
 
 ## Overview
 
-Polyaxon Component Hub is a product for managing versioned and reusable components, each component can:
- * Have multiple versions.
+Polyaxon Component Hub is a product for managing versioned and reusable components, each component:
+ * Can have multiple versions.
  * Can be published publicly or privately within your organization.
  * Can define team level permissions.
 

@@ -383,7 +383,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     ### volumes
 
     A list of [Kubernetes Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
-    to resolve mount for your jobs.
+    to resolve and mount for your jobs.
 
     This is an advanced use-case where configuring a connection is not an option.
 

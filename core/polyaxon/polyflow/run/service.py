@@ -157,7 +157,7 @@ class V1Service(BaseConfig, polyaxon_sdk.V1Service):
     ### volumes
 
     A list of [Kubernetes Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
-    to resolve mount for your services.
+    to resolve and mount for your services.
 
     This is an advanced use-case where configuring a connection is not an option.
 
