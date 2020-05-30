@@ -1,14 +1,16 @@
 version: 1.1
 kind: component
 name: kaniko
-description: "Build container images in Kubernetes with Kaniko"
+description: Build container images in Kubernetes with Kaniko
 tags: ["build"]
 
 inputs:
 - name: context
+  description: A directory containing a Dockerfile which kaniko will use to build your image, default is artifacts path.
   isOptional: true
   type: str
 - name: cache
+  description: Enable cache layers created by RUN commands in a remote repository.
   isOptional: true
   type: bool
   value: true
@@ -26,12 +28,12 @@ run:
   kind: job
   connections: ["{{ destination.connection }}"]
   container:
-    image: "gcr.io/kaniko-project/executor:v0.19.0"
+    image: gcr.io/kaniko-project/executor:v0.19.0
     args: [
       "-c",
       "{{ context or globals.artifacts_path }}",
       "-d",
       "{{ destination.name }}",
       "{{ cache }}",
-      "--cache-ttl={{ cache_ttl }}"
+      "--cache-ttl={{ cache_ttl }}",
     ]

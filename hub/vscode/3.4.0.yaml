@@ -1,0 +1,9 @@
+version: 1.1
+kind: component
+name: vscode
+
+run:
+  kind: job
+  container:
+    image: codercom/code-server:3.4.0
+    args: ["--auth", "none"]

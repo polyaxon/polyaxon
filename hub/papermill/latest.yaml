@@ -1,0 +1,43 @@
+version: 1.1
+kind: component
+name: papermill
+tags: ["notebook"]
+
+inputs:
+- name: image
+  isOptional: true
+  type: str
+  value: polyaxon/polyaxon-contrib
+- name: nb_input
+  description: The source notebook
+  type: path
+- name: parameters_file
+  description: Parameters file to pass to the parameters cell
+  isOptional: true
+  type: path
+- name: parameters_yaml
+  description: Parameters file to pass to the parameters cell
+  isOptional: true
+  type: str
+- name: parameters_base64
+  description: base64-encoded containing parameter values.
+  isOptional: true
+  type: str
+
+outputs:
+- name: nb_output
+  description: The destination notebook
+  type: path
+
+run:
+  kind: job
+  container:
+    image: "{{ image }}"
+    command: papermill
+    args: [
+      "{{ nb_input }}",
+      "{{ nb_output }}",
+      "{{ ('-f ' + parameters_file) if parameters_file else '' }}",
+      "{{ ('-y "' + parameters_yaml + '"') if parameters_yaml else '' }}",
+      "{{ ('-b ' + parameters_base64 ) if parameters_base64 else '' }}",
+    ]
