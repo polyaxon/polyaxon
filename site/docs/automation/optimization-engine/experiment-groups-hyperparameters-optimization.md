@@ -10,7 +10,7 @@ tags:
     - experiment-groups
     - architecture
     - experimentation
-    - hyperparams-optimization
+    - hyperparameter-optimization
 sidebar: "core"
 ---
 

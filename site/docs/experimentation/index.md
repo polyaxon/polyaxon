@@ -24,6 +24,7 @@ Polyaxon experimentation is a set of tools for:
  * [Running distributed jobs using cloud native operators](/docs/experimentation/distributed/)
  * [Tracking metrics and artifacts](/docs/experimentation/tracking/)
  * [Driving analyses and visualizing results](/docs/experimentation/visualizations/)
+ * [Run hyperparameter tuning using our open-source tools or using your own tools](/docs/experimentation/sweep/)
 
 
 ## Features

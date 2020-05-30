@@ -7,7 +7,7 @@ queue routing, resources requirements and definition, connections, and access le
 tags:
     - namespace
     - queueing
-    - pipeline
+    - pipelines
     - kubernetes
     - scheduling
 sidebar: "core"

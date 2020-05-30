@@ -10,7 +10,7 @@ tags:
     - reference
     - polyaxon
     - experimentation
-    - hyperparams-optimization
+    - hyperparameter-optimization
 sidebar: "automation"
 ---
 

@@ -8,7 +8,7 @@ status: published
 tags:
     - dags
     - pipelines
-    - hyperparams-optimization
+    - hyperparameter-optimization
 sidebar: "automation"
 ---
 

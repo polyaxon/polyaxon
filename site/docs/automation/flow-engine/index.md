@@ -8,8 +8,9 @@ status: published
 tags:
     - reference
     - polyaxon
-    - experimentation
-    - hyperparams-optimization
+    - automation
+    - workflow
+    - pipelines
 sidebar: "automation"
 ---
 

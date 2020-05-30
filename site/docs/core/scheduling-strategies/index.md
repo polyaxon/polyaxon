@@ -7,7 +7,7 @@ meta_description: "This is a guide to assist you through the process and strateg
 tags:
     - namespace
     - queueing
-    - pipeline
+    - pipelines
     - kubernetes
     - scheduling
 sidebar: "core"
