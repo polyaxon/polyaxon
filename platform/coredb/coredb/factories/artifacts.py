@@ -14,14 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+import factory
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+from coredb.models.artifacts import Artifact
+from polyaxon_sdk import V1ArtifactKind
+
+
+class ArtifactFactory(factory.DjangoModelFactory):
+    name = "accuracy"
+    kind = V1ArtifactKind.METRIC
+    summary = {"last_value": 0.9, "max_value": 0.9, "min_value": 0.1}
+    path = "accuracy"
+
+    class Meta:
+        model = Artifact

@@ -14,14 +14,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from coredb.models.runs import Run
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+runs = Run.all.select_related("original")
+runs = runs.only(
+    "original__id",
+    "original__uuid",
+    "original__name",
+    "user__username",
+    "id",
+    "uuid",
+    "name",
+    "kind",
+    "meta_info",
+    "description",
+    "created_at",
+    "updated_at",
+    "started_at",
+    "finished_at",
+    "status",
+    "cloning_kind",
+    "is_managed",
+    "inputs",
+    "outputs",
+    "tags",
+    "deleted",
+)

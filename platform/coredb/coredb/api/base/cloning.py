@@ -14,14 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from typing import Dict, Optional
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+from rest_framework import serializers
+
+from coredb.models.runs import Run
+
+
+class CloningMixin(serializers.Serializer):
+    def get_original(self, obj: Run) -> Optional[Dict]:
+        if not obj.original_id:
+            return None
+
+        return {
+            "uuid": obj.original.uuid.hex,
+            "name": obj.original.name,
+            "kind": obj.cloning_kind,
+        }

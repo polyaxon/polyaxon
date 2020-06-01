@@ -14,14 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+#!/usr/bin/env python
+from settings import configure
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+
+def pytest_configure():
+    configure()
+    import coredb.signals.users  # noqa
+    import coredb.signals.runs  # noqa
+    from polycommon import conf
+    from coredb import operations
+
+    conf.validate_and_setup()
+    operations.validate_and_setup()
+    import polycommon.options.conf_subscriptions  # noqa

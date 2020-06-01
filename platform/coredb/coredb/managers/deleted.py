@@ -14,14 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from django.db import models
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+
+class LiveManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(deleted=False)
+
+
+class ArchivedManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(deleted=True)

@@ -14,14 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from django.db import models
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+
+class SpecModel(models.Model):
+    raw_content = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The raw yaml content of the polyaxonfile/specification.",
+    )
+    content = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The compiled yaml content of the polyaxonfile/specification.",
+    )
+
+    class Meta:
+        abstract = True

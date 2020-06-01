@@ -14,14 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+import factory
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+from coredb.factories.users import UserFactory
+from coredb.models.projects import Project
+
+
+class ProjectFactory(factory.DjangoModelFactory):
+    name = factory.Sequence("project-{}".format)
+
+    user = factory.SubFactory(UserFactory)
+
+    class Meta:
+        model = Project

@@ -14,14 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from coredb.models.projects import Project
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+projects_query = Project.objects
+
+project_detail = projects_query.only(
+    "uuid", "name", "description", "created_at", "updated_at", "is_public", "readme",
+)
+
+projects = Project.all.only(
+    "uuid", "name", "description", "created_at", "updated_at", "is_public",
+)

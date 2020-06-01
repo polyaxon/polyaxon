@@ -14,14 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from django.conf import settings
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+from coredb.operations.service import OperationsService
+from polycommon.service_interface import LazyServiceWrapper
+
+
+def get_operation_backend_path():
+    return settings.OPERATIONS_BACKEND or "coredb.operations.service.OperationsService"
+
+
+backend = LazyServiceWrapper(
+    backend_base=OperationsService,
+    backend_path=get_operation_backend_path(),
+    options={},
+)
+backend.expose(locals())

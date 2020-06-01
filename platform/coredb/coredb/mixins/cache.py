@@ -14,14 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+class CachedMixin:
+    """
+    A mixin to help clear cached properties.
+    """
+
+    CACHED_PROPERTIES = ()
+
+    def clear_cached_properties(self, properties=None):
+        properties = properties or self.CACHED_PROPERTIES
+        for key in properties:
+            if key in self.__dict__:
+                del self.__dict__[key]

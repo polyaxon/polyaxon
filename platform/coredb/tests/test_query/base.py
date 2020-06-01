@@ -14,14 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from django.test import TestCase
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+from coredb.factories.projects import ProjectFactory
+from coredb.factories.runs import RunFactory
+from coredb.factories.users import UserFactory
+from coredb.models.owners import Owner
+
+
+class BaseTestQuery(TestCase):
+    def setUp(self):
+        super().setUp()
+        self.user = UserFactory()
+        self.owner = Owner.objects.filter(name=self.user.username).last()
+        self.project = ProjectFactory(owner_id=self.owner.id)
+        self.run = RunFactory(project=self.project)

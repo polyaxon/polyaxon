@@ -14,14 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from django.core.validators import validate_unicode_slug
+from django.db import models
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+from coredb.abstracts.diff import DiffModel
+from coredb.abstracts.uid import UuidModel
+
+
+class Owner(UuidModel, DiffModel):
+    name = models.CharField(
+        max_length=150, unique=True, validators=[validate_unicode_slug]
+    )
+
+    class Meta:
+        app_label = "coredb"
+        db_table = "db_owner"
+
+    def __str__(self):
+        return self.name

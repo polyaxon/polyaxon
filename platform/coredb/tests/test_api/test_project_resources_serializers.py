@@ -1,0 +1,115 @@
+#!/usr/bin/python
+#
+# Copyright 2018-2020 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import pytest
+
+from coredb.api.project_resources.serializers import (
+    OperationCreateSerializer,
+    RunSerializer,
+)
+from coredb.factories.runs import RunFactory
+from coredb.models.runs import Run
+from polyaxon.lifecycle import V1Statuses
+from polyaxon.polyflow import V1CloningKind
+from tests.test_api.base import BaseTestRunSerializer
+
+
+@pytest.mark.serializers_mark
+class TestRunSerializer(BaseTestRunSerializer):
+    serializer_class = RunSerializer
+    model_class = Run
+    factory_class = RunFactory
+    expected_keys = {
+        "uuid",
+        "name",
+        "description",
+        "created_at",
+        "updated_at",
+        "started_at",
+        "finished_at",
+        "run_time",
+        "status",
+        "kind",
+        "meta_info",
+        "original",
+        "is_managed",
+        "tags",
+        "inputs",
+        "outputs",
+        "deleted",
+    }
+    query = Run.objects
+
+    def create_one(self):
+        return self.factory_class(project=self.project, user=self.user)
+
+    def create_one_with_related(self):
+        run = self.factory_class(project=self.project, user=self.user)
+        return self.factory_class(
+            project=self.project,
+            original=run,
+            cloning_kind=V1CloningKind.CACHE,
+            status=V1Statuses.RUNNING,
+        )
+
+    def test_serialize_one(self):
+        obj1 = self.create_one_with_related()
+
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop("uuid") == obj1.uuid.hex
+        assert data.pop("original") == {
+            "uuid": obj1.original.uuid.hex,
+            "name": obj1.original.name,
+            "kind": obj1.cloning_kind,
+        }
+        data.pop("created_at")
+        data.pop("updated_at")
+        data.pop("started_at", None)
+        data.pop("finished_at", None)
+
+        for k, v in data.items():
+            assert getattr(obj1, k) == v
+
+
+@pytest.mark.projects_resources_mark
+class TestOperationCreateSerializer(BaseTestRunSerializer):
+    serializer_class = OperationCreateSerializer
+    model_class = Run
+    factory_class = RunFactory
+    expected_keys = {"uuid", "name", "description", "content", "is_managed", "tags"}
+    query = Run.objects
+
+    def create_one(self):
+        return self.factory_class(project=self.project)
+
+    def create_one_with_related(self):
+        return self.factory_class(project=self.project, user=self.user)
+
+    def test_serialize_one(self):
+        obj1 = self.create_one_with_related()
+
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop("uuid") == obj1.uuid.hex
+
+        for k, v in data.items():
+            assert getattr(obj1, k) == v
+
+
+del BaseTestRunSerializer

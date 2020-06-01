@@ -14,14 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from django.contrib.postgres.fields import JSONField
+from django.db import models
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+
+class RunEdge(models.Model):
+    downstream = models.ForeignKey(
+        "coredb.Run", on_delete=models.CASCADE, related_name="upstream_edges"
+    )
+    upstream = models.ForeignKey(
+        "coredb.Run", on_delete=models.CASCADE, related_name="downstream_edges"
+    )
+    values = JSONField(blank=True, null=True)
+
+    class Meta:
+        app_label = "coredb"
+        db_table = "db_runedge"

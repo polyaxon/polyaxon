@@ -14,14 +14,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from django.contrib.postgres.fields import JSONField
+from django.core.serializers.json import DjangoJSONEncoder
+from django.db import models
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+from polyaxon.lifecycle import LifeCycle, V1Statuses
+
+
+class StatusModel(models.Model):
+    status = models.CharField(
+        max_length=64,
+        blank=True,
+        null=True,
+        db_index=True,
+        default=V1Statuses.CREATED,
+        choices=LifeCycle.CHOICES,
+    )
+    status_conditions = JSONField(
+        encoder=DjangoJSONEncoder, blank=True, null=True, default=dict
+    )
+
+    class Meta:
+        abstract = True

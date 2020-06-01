@@ -14,14 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Setting values to None means using defaults
+from coredb.models.artifacts import ArtifactLineage
 
-ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
-AUDITOR_BACKEND = None
-AUDITOR_EVENTS_TASK = None
-WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
-OPERATIONS_BACKEND = None
+artifacts = ArtifactLineage.objects.prefetch_related("artifact").only(
+    "is_input",
+    "artifact__id",
+    "artifact__name",
+    "artifact__kind",
+    "artifact__path",
+    "artifact__summary",
+)
+
+project_runs_artifacts = (
+    ArtifactLineage.objects.prefetch_related("artifact")
+    .only("is_input", "artifact__id", "artifact__name", "artifact__kind",)
+    .distinct("is_input", "artifact__name", "artifact__kind",)
+)
