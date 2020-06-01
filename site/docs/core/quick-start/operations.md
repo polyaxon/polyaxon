@@ -12,7 +12,7 @@ tags:
 sidebar: "core"
 ---
 
-In the previous section we looked at components, we also saw how to to create components with inputs / outputs 
+In the previous section we looked at components, we also saw how to create components with inputs / outputs 
 to run our model with different parameters without changing the code or the component itself.
 
 In this section we will look at what happened when we run a component w/o params.
@@ -50,7 +50,7 @@ When a user runs the command `polyaxon run`, Polyaxon checks if the file contain
 But why create a file when we can just run the command with parameters and some flags?
 Creating a file with an operation allows to define more complex executables for our components, 
 for instance if we want to run the same component with GPU, we have 2 options:
- * We can parametrize resource section and Add inputs to define the number of GPUs. This not ideal because the number of inputs will grow fast every time we need to pass an information.
+ * We can parametrize the resource section and Add inputs to define the number of GPUs. This not ideal because the number of inputs will grow fast every time we need to pass an information.
  * Use an operation to patch the component with all information required to run it in the environment of our choice without changing the component itself.
  
 ```yaml

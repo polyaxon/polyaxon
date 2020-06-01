@@ -51,7 +51,7 @@ from polyaxon.polyflow import V1Component, V1Job
 from polyaxon.k8s import k8s_schemas
 component = V1Component(
     run=V1Job(
-       sidecara=[
+       sidecars=[
             k8s_schemas.V1Container(
                 name="sidecar1",
                 image="busybox:1.28",

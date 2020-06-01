@@ -21,7 +21,7 @@ Polyaxon exposes a concept called Connections.
 A connection is how you expose and connect your jobs to an artifacts store, 
 a volume, a git repo, a container registry, a slack channel, and other external systems.
 
-Polyaxon is built on top of Kubernetes, so you can and in some case will have to configure 
+Polyaxon is built on top of Kubernetes, so you can and in some cases will have to configure 
 access to some resources manually.
 However for many use cases, for example connecting to an S3 bucket, 
 using connections will reduce the amount of boilerplate in your jobs' specification files.
