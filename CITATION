@@ -1,0 +1,7 @@
+@misc{polyaxon,
+  author            = {Mourafiq, Mourad},
+  title             = {Polyaxon: Cloud native machine learning automation platform},
+  howpublished      = {Web page},
+  url               = {https://github.com/polyaxon/polyaxon},
+  year              = {2017}
+}
