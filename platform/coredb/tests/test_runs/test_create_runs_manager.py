@@ -23,8 +23,11 @@ from coredb.managers.operations import compile_operation_run
 from coredb.models.owners import Owner
 from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
 from polyaxon.polyflow import V1RunKind
-from tests.fixtures.jobs import get_fxt_job, get_fxt_job_with_inputs
-from tests.fixtures.services import get_fxt_service, get_fxt_service_with_inputs
+from polycommon.test_cases.fixtures.jobs import get_fxt_job, get_fxt_job_with_inputs
+from polycommon.test_cases.fixtures.services import (
+    get_fxt_service,
+    get_fxt_service_with_inputs,
+)
 
 
 class TestCreateRunManager(TestCase):

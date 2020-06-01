@@ -59,3 +59,29 @@ def get_fxt_service_with_inputs():
             },
         },
     }
+
+
+def get_fxt_service_with_upstream_runs(run_uuid: UUID):
+    return {
+        "version": 1.1,
+        "kind": "operation",
+        "name": "foo",
+        "description": "a description",
+        "params": {
+            "image": {
+                "value": "outputs.image-out",
+                "ref": "runs.{}".format(run_uuid.hex),
+            }
+        },
+        "component": {
+            "name": "service-template",
+            "inputs": [{"name": "image", "type": "str"}],
+            "tags": ["backend", "lab"],
+            "run": {
+                "kind": V1RunKind.SERVICE,
+                "container": {"image": "{{ image }}"},
+                "init": [{"connection": "foo", "git": {"revision": "dev"}}],
+                "ports": [5555],
+            },
+        },
+    }

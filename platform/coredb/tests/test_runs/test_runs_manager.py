@@ -28,7 +28,7 @@ from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1CloningKind
 from polycommon.events.registry import run as run_events
-from tests.fixtures.jobs import get_fxt_job_with_inputs
+from polycommon.test_cases.fixtures.jobs import get_fxt_job_with_inputs
 
 
 class TestRunManager(TestCase):
