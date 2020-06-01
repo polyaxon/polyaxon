@@ -115,11 +115,18 @@ Let get the top experiment:
 from polyaxon.client import RunClient
 
 client = RunClient()
-run = client.list(sort="-metrics.loss", limit=1)[0]
+run = client.list(sort="-metrics.loss", limit=1).results[0]
 run_client = RunClient(run_uuid=run.uuid)
-run_client.get_inputs()
-run_client.get_outputs()
+run_client.refresh_data()
+print(run_client.get_inputs())
+print(run_client.get_outputs())
 ```
+
+Example in notebook:
+
+![run-dashboards-hiplot1](../../../../content/images/dashboard/runs/programmatic-plotly-tidy.png)
+
+![run-dashboards-hiplot1](../../../../content/images/dashboard/runs/programmatic-plotly-metric.png)
 
 Let's compare runs:
 
