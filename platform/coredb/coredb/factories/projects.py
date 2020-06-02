@@ -16,14 +16,11 @@
 
 import factory
 
-from coredb.factories.users import UserFactory
-from coredb.models.projects import Project
+from coredb.abstracts.getter import get_project_model
 
 
 class ProjectFactory(factory.DjangoModelFactory):
     name = factory.Sequence("project-{}".format)
 
-    user = factory.SubFactory(UserFactory)
-
     class Meta:
-        model = Project
+        model = get_project_model()

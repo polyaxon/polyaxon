@@ -16,7 +16,7 @@
 
 import factory
 
-from coredb.models.artifacts import Artifact
+from coredb.abstracts.getter import get_artifact_model
 from polyaxon_sdk import V1ArtifactKind
 
 
@@ -27,4 +27,4 @@ class ArtifactFactory(factory.DjangoModelFactory):
     path = "accuracy"
 
     class Meta:
-        model = Artifact
+        model = get_artifact_model()

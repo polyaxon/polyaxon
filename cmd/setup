@@ -25,17 +25,6 @@ if [ $? -eq 0 ]; then
         cp $ROOT_DIR/polyaxon/polyaxon/env_vars/local_template.json $ROOT_DIR/polyaxon/polyaxon/env_vars/local.json;
     fi
 
-    if [ "$1" = "npm" ]; then
-        echo "Installing npm dependencies..."
-        $DIR/npm install
-
-        echo "Compiling ts to js..."
-        $DIR/npm run build
-
-        echo "Removing static..."
-        rm -rf static
-    fi
-
     # echo "Collecting static assets..."
     $DIR/manage collectstatic --noinput
 

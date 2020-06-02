@@ -25,8 +25,9 @@ class ExecutorService(EventService):
     HANDLER_MAPPING = {
         run.RUN_CREATED: run_handlers.handle_run_created,
         run.RUN_RESUMED_ACTOR: run_handlers.handle_run_created,
-        run.RUN_CLEANED: run_handlers.handle_run_cleaned_triggered,
         run.RUN_STOPPED_ACTOR: run_handlers.handle_run_stopped_triggered,
+        run.RUN_NEW_ARTIFACTS: run_handlers.handle_new_artifacts,
+        run.RUN_DELETED_ACTOR: run_handlers.handle_run_deleted,
     }
 
     event_manager = event_manager

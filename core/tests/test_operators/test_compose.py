@@ -68,5 +68,5 @@ class TestComposeOperator(BaseTestCase):
         )
 
     def test_generate(self):
-        config = reader.read("tests/fixtures/deployment/all_values.yml")
+        config = reader.read("tests/fixtures/deployment/all_platform_values.yml")
         assert ComposeOperator.generate_env(config) is not None

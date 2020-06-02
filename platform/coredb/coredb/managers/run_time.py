@@ -16,11 +16,11 @@
 
 from django.utils.timezone import now
 
-from coredb.models.runs import Run
+from coredb.abstracts.runs import BaseRun
 from polyaxon.lifecycle import LifeCycle
 
 
-def set_started_at(run: Run) -> bool:
+def set_started_at(run: BaseRun) -> bool:
     # We allow to override started_at if the value is running
     if run.started_at is not None:
         return False
@@ -32,7 +32,7 @@ def set_started_at(run: Run) -> bool:
     return False
 
 
-def set_finished_at(run: Run) -> bool:
+def set_finished_at(run: BaseRun) -> bool:
     if LifeCycle.is_done(run.status) and run.finished_at is None:
         run.finished_at = now()
         if run.started_at is None:  # We should not have this case

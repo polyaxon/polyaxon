@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from coredb.scheduler import manager
 from polycommon import conf
 from polycommon.celery.tasks import CoreSchedulerCeleryTasks
 from polycommon.options.registry.core import SCHEDULER_ENABLED
@@ -34,22 +35,44 @@ def handle_run_created(workers_backend, event: "Event") -> None:  # noqa: F821
         )
         return
 
-
-def handle_run_cleaned_triggered(workers_backend, event: "Event") -> None:  # noqa: F821
-    # Run is not managed by Polyaxon
-    if not event.data["is_managed"]:
-        return
-
-    if conf.get(SCHEDULER_ENABLED):
-        workers_backend.send(
-            CoreSchedulerCeleryTasks.RUNS_CLEAN, kwargs={"run_id": event.instance_id}
-        )
-        return
+    # Eager mode
+    manager.runs_prepare(run_id=event.instance_id, run=event.instance, eager=True)
 
 
 def handle_run_stopped_triggered(workers_backend, event: "Event") -> None:  # noqa: F821
-    if conf.get(SCHEDULER_ENABLED):
+    run = manager.get_run(run_id=event.instance_id, run=event.instance)
+
+    if run.is_managed and conf.get(SCHEDULER_ENABLED):
         workers_backend.send(
             CoreSchedulerCeleryTasks.RUNS_STOP, kwargs={"run_id": event.instance_id}
         )
         return
+
+    manager.runs_stop(run_id=event.instance_id, run=event.instance)
+
+
+def handle_new_artifacts(workers_backend, event: "Event") -> None:  # noqa: F821
+    artifacts = event.data.get("artifacts")
+    if not artifacts:
+        return
+
+    if conf.get(SCHEDULER_ENABLED):
+        workers_backend.send(
+            CoreSchedulerCeleryTasks.RUNS_SET_ARTIFACTS,
+            kwargs={"run_id": event.instance_id, "artifacts": artifacts},
+        )
+        return
+
+    manager.runs_set_artifacts(
+        run_id=event.instance_id, run=event.instance, artifacts=artifacts
+    )
+
+
+def handle_run_deleted(workers_backend, event: "Event") -> None:  # noqa: F821
+    if conf.get(SCHEDULER_ENABLED):
+        workers_backend.send(
+            CoreSchedulerCeleryTasks.RUNS_DELETE, kwargs={"run_id": event.instance_id}
+        )
+        return
+
+    manager.runs_delete(run_id=event.instance_id, run=event.instance)

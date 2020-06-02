@@ -1,4 +1,7 @@
+deploymentChart: agent
+deploymentType: kubernetes
 namespace: polyaxon
+limitResources: false
 
 rbac:
   enabled: true
@@ -10,9 +13,10 @@ roles:
   config: "polyaxon-config"
   agent: "polyaxon-agent"
 
-api:
-  host: https://*.polyaxon.com
-  token: token-default-value
+externalServices:
+  api:
+    host:
+    port:
 
 auth:
   enabled: true
@@ -20,6 +24,7 @@ auth:
   useResolver: true
 
 gateway:
+  enabled: true
   image: polyaxon/polyaxon-gateway
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -41,6 +46,7 @@ gateway:
     annotations: {}
 
 streams:
+  enabled: true
   image: polyaxon/polyaxon-streams
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -96,7 +102,7 @@ sidecar:
 agent:
   token:
   instance:
-  enabled: false
+  enabled: true
   image: polyaxon/polyaxon-agent
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -109,7 +115,7 @@ agent:
       memory: 300Mi
 
 operator:
-  enabled: false
+  enabled: true
   image: polyaxon/polyaxon-operator
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -143,6 +149,6 @@ affinity:
 
 imagePullSecrets: []
 
-artifactsStore: {}
+artifactsStore:
 connections: []
 notificationConnections: []

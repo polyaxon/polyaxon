@@ -21,7 +21,6 @@ from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
 from coredb.managers.artifacts import set_artifacts
 from coredb.models.artifacts import Artifact
-from coredb.models.owners import Owner
 from polyaxon.polyboard.artifacts.kinds import V1ArtifactKind
 from polyaxon.polyboard.artifacts.schemas import V1RunArtifact
 
@@ -30,8 +29,7 @@ class TestAnnotations(TestCase):
     def setUp(self):
         super().setUp()
         self.user = UserFactory()
-        self.owner = Owner.objects.filter(name=self.user.username).last()
-        self.project = ProjectFactory(owner_id=self.owner.id)
+        self.project = ProjectFactory()
         self.run = RunFactory(project=self.project)
 
     def test_set_metric_artifacts(self):

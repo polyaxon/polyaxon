@@ -16,7 +16,7 @@
 
 from rest_framework import fields, serializers
 
-from coredb.models.artifacts import ArtifactLineage
+from coredb.abstracts.getter import get_lineage_model
 
 
 class RunArtifactSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class RunArtifactSerializer(serializers.ModelSerializer):
     summary = fields.SerializerMethodField()
 
     class Meta:
-        model = ArtifactLineage
+        model = get_lineage_model()
         fields = ("name", "kind", "path", "summary", "state", "is_input")
 
     def get_name(self, obj):
@@ -51,7 +51,7 @@ class RunArtifactLightSerializer(serializers.ModelSerializer):
     kind = fields.SerializerMethodField()
 
     class Meta:
-        model = ArtifactLineage
+        model = get_lineage_model()
         fields = ("name", "kind", "is_input")
 
     def get_name(self, obj):
@@ -65,7 +65,7 @@ class RunArtifactNameSerializer(serializers.ModelSerializer):
     name = fields.SerializerMethodField()
 
     class Meta:
-        model = ArtifactLineage
+        model = get_lineage_model()
         fields = ("name",)
 
     def get_name(self, obj):

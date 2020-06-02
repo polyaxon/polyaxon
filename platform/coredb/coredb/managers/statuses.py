@@ -16,8 +16,9 @@
 
 from typing import List
 
+from coredb.abstracts.getter import get_run_model
+from coredb.abstracts.runs import BaseRun
 from coredb.managers.run_time import set_finished_at, set_started_at
-from coredb.models.runs import Run
 from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
 from polyaxon.utils.list_utils import to_list
 from polycommon import auditor
@@ -85,13 +86,13 @@ def new_status(entity, condition: V1StatusCondition):
     return previous_status
 
 
-def bulk_new_run_status(runs: List[Run], condition: V1StatusCondition):
+def bulk_new_run_status(runs: List[BaseRun], condition: V1StatusCondition):
     for run in runs:
         set_entity_status(entity=run, condition=condition)
-    Run.objects.bulk_update(runs, ["status_conditions", "status"])
+    get_run_model().objects.bulk_update(runs, ["status_conditions", "status"])
 
 
-def new_run_status(run: Run, condition: V1StatusCondition):
+def new_run_status(run: BaseRun, condition: V1StatusCondition):
     previous_status = new_status(entity=run, condition=condition)
     # Do not audit the new status since it's the same as the previous one
     if (

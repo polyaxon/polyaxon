@@ -18,13 +18,13 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.exceptions import ValidationError
 
-from coredb.models.runs import Run
+from coredb.abstracts.getter import get_run_model
 from polyaxon.utils.signal_decorators import ignore_raw, ignore_updates
 from polycommon import auditor
 from polycommon.events.registry.run import RUN_CREATED
 
 
-@receiver(post_save, sender=Run, dispatch_uid="run_created")
+@receiver(post_save, sender=get_run_model(), dispatch_uid="run_created")
 @ignore_updates
 @ignore_raw
 def run_created(sender, **kwargs):

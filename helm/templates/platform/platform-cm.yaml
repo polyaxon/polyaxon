@@ -42,6 +42,7 @@ data:
   {{- if .Values.email.backend }}
   POLYAXON_EMAIL_BACKEND: {{ .Values.email.backend | quote }}
   {{- end }}
+  POLYAXON_SCHEDULER_ENABLED: {{ .Values.scheduler.enabled | quote }}
   # Queues
   POLYAXON_INTERVALS_RUNS_SCHEDULER: {{ .Values.intervals.runsScheduler | quote }}
   POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operationsDefaultRetryDelay | quote }}

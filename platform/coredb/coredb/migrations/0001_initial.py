@@ -20,6 +20,7 @@ import uuid
 import django.contrib.auth.models
 import django.contrib.auth.validators
 import django.contrib.postgres.fields
+import django.contrib.postgres.fields.jsonb
 import django.core.serializers.json
 import django.core.validators
 import django.db.models.deletion
@@ -122,28 +123,6 @@ class Migration(migrations.Migration):
                         default=django.utils.timezone.now, verbose_name="date joined"
                     ),
                 ),
-                (
-                    "groups",
-                    models.ManyToManyField(
-                        blank=True,
-                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
-                        related_name="user_set",
-                        related_query_name="user",
-                        to="auth.Group",
-                        verbose_name="groups",
-                    ),
-                ),
-                (
-                    "user_permissions",
-                    models.ManyToManyField(
-                        blank=True,
-                        help_text="Specific permissions for this user.",
-                        related_name="user_set",
-                        related_query_name="user",
-                        to="auth.Permission",
-                        verbose_name="user permissions",
-                    ),
-                ),
             ],
             options={
                 "verbose_name": "user",
@@ -210,7 +189,7 @@ class Migration(migrations.Migration):
             options={"db_table": "db_artifact",},
         ),
         migrations.CreateModel(
-            name="Owner",
+            name="ArtifactLineage",
             fields=[
                 (
                     "id",
@@ -223,26 +202,9 @@ class Migration(migrations.Migration):
                 ),
                 ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
-                (
-                    "uuid",
-                    models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
-                ),
-                (
-                    "name",
-                    models.CharField(
-                        max_length=150,
-                        unique=True,
-                        validators=[
-                            django.core.validators.RegexValidator(
-                                re.compile("^[-\\w]+\\Z"),
-                                "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or hyphens.",
-                                "invalid",
-                            )
-                        ],
-                    ),
-                ),
+                ("is_input", models.NullBooleanField(default=False)),
             ],
-            options={"db_table": "db_owner",},
+            options={"db_table": "db_artifactlineage",},
         ),
         migrations.CreateModel(
             name="Project",
@@ -258,26 +220,8 @@ class Migration(migrations.Migration):
                 ),
                 ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
-                (
-                    "uuid",
-                    models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
-                ),
                 ("deleted", models.BooleanField(default=False)),
                 ("description", models.TextField(blank=True, null=True)),
-                (
-                    "name",
-                    models.CharField(
-                        max_length=128,
-                        validators=[
-                            django.core.validators.RegexValidator(
-                                re.compile("^[-a-zA-Z0-9_]+\\Z"),
-                                "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.",
-                                "invalid",
-                            ),
-                            polycommon.validation.blacklist.validate_blacklist_name,
-                        ],
-                    ),
-                ),
                 ("readme", models.TextField(blank=True, null=True)),
                 (
                     "tags",
@@ -289,27 +233,22 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "is_public",
-                    models.BooleanField(
-                        default=True, help_text="If project is public or private."
-                    ),
+                    "uuid",
+                    models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
                 ),
                 (
-                    "owner",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="projects",
-                        to="coredb.Owner",
-                    ),
-                ),
-                (
-                    "user",
-                    models.ForeignKey(
-                        blank=True,
-                        null=True,
-                        on_delete=django.db.models.deletion.SET_NULL,
-                        related_name="projects",
-                        to=settings.AUTH_USER_MODEL,
+                    "name",
+                    models.CharField(
+                        max_length=150,
+                        unique=True,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                re.compile("^[-a-zA-Z0-9_]+\\Z"),
+                                "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.",
+                                "invalid",
+                            ),
+                            polycommon.validation.blacklist.validate_blacklist_name,
+                        ],
                     ),
                 ),
             ],
@@ -329,11 +268,6 @@ class Migration(migrations.Migration):
                 ),
                 ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
-                ("state", models.UUIDField(blank=True, null=True)),
-                (
-                    "uuid",
-                    models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
-                ),
                 ("deleted", models.BooleanField(default=False)),
                 ("description", models.TextField(blank=True, null=True)),
                 (
@@ -362,6 +296,10 @@ class Migration(migrations.Migration):
                         null=True,
                         size=None,
                     ),
+                ),
+                (
+                    "uuid",
+                    models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
                 ),
                 (
                     "is_managed",
@@ -490,13 +428,12 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "controller",
-                    models.ForeignKey(
+                    "artifacts",
+                    models.ManyToManyField(
                         blank=True,
-                        null=True,
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="controller_runs",
-                        to="coredb.Run",
+                        related_name="runs",
+                        through="coredb.ArtifactLineage",
+                        to="coredb.Artifact",
                     ),
                 ),
                 (
@@ -510,16 +447,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "pipeline",
-                    models.ForeignKey(
-                        blank=True,
-                        null=True,
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="pipeline_runs",
-                        to="coredb.Run",
-                    ),
-                ),
-                (
                     "project",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
@@ -527,134 +454,73 @@ class Migration(migrations.Migration):
                         to="coredb.Project",
                     ),
                 ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={"db_table": "db_run",},
         ),
-        migrations.CreateModel(
-            name="RunEdge",
-            fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "values",
-                    django.contrib.postgres.fields.jsonb.JSONField(
-                        blank=True, null=True
-                    ),
-                ),
-                (
-                    "downstream",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="upstream_edges",
-                        to="coredb.Run",
-                    ),
-                ),
-                (
-                    "upstream",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="downstream_edges",
-                        to="coredb.Run",
-                    ),
-                ),
-            ],
-            options={"db_table": "db_runedge",},
+        migrations.AddIndex(
+            model_name="project",
+            index=models.Index(fields=["name"], name="db_project_name_4bfc0e_idx"),
         ),
         migrations.AddField(
-            model_name="run",
-            name="upstream_runs",
-            field=models.ManyToManyField(
-                blank=True,
-                related_name="downstream_runs",
-                through="coredb.RunEdge",
+            model_name="artifactlineage",
+            name="artifact",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="runs_lineage",
+                to="coredb.Artifact",
+            ),
+        ),
+        migrations.AddField(
+            model_name="artifactlineage",
+            name="run",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="artifacts_lineage",
                 to="coredb.Run",
             ),
         ),
-        migrations.AddField(
-            model_name="run",
-            name="user",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE,
-                related_name="+",
-                to=settings.AUTH_USER_MODEL,
-            ),
-        ),
-        migrations.CreateModel(
-            name="ArtifactLineage",
-            fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
-                ("updated_at", models.DateTimeField(auto_now=True)),
-                ("is_input", models.NullBooleanField(default=False)),
-                (
-                    "artifact",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="runs_lineage",
-                        to="coredb.Artifact",
-                    ),
-                ),
-                (
-                    "run",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="artifacts_lineage",
-                        to="coredb.Run",
-                    ),
-                ),
-            ],
-            options={"db_table": "db_artifact_lineage",},
+        migrations.AlterUniqueTogether(
+            name="artifact", unique_together={("name", "state")},
         ),
         migrations.AddField(
-            model_name="artifact",
-            name="owner",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE,
-                related_name="+",
-                to="coredb.Owner",
-            ),
-        ),
-        migrations.AddField(
-            model_name="artifact",
-            name="runs",
+            model_name="user",
+            name="groups",
             field=models.ManyToManyField(
                 blank=True,
-                help_text="list of runs related to this artifact (inputs/outputs).",
-                related_name="artifacts",
-                through="coredb.ArtifactLineage",
-                to="coredb.Run",
+                help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                related_name="user_set",
+                related_query_name="user",
+                to="auth.Group",
+                verbose_name="groups",
+            ),
+        ),
+        migrations.AddField(
+            model_name="user",
+            name="user_permissions",
+            field=models.ManyToManyField(
+                blank=True,
+                help_text="Specific permissions for this user.",
+                related_name="user_set",
+                related_query_name="user",
+                to="auth.Permission",
+                verbose_name="user permissions",
             ),
         ),
         migrations.AddIndex(
             model_name="run",
             index=models.Index(fields=["name"], name="db_run_name_47fc7c_idx"),
         ),
-        migrations.AddIndex(
-            model_name="project",
-            index=models.Index(fields=["name"], name="db_project_name_4bfc0e_idx"),
-        ),
-        migrations.AlterUniqueTogether(
-            name="project", unique_together={("owner", "name")},
-        ),
         migrations.AlterUniqueTogether(
             name="artifactlineage", unique_together={("run", "artifact", "is_input")},
-        ),
-        migrations.AlterUniqueTogether(
-            name="artifact", unique_together={("name", "state")},
         ),
     ]

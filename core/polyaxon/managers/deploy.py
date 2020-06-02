@@ -24,7 +24,7 @@ from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.deploy.operators.helm import HelmOperator
 from polyaxon.deploy.operators.kubectl import KubectlOperator
 from polyaxon.deploy.schemas.deployment import DeploymentConfig
-from polyaxon.deploy.schemas.deployment_types import DeploymentTypes
+from polyaxon.deploy.schemas.deployment_types import DeploymentCharts, DeploymentTypes
 from polyaxon.exceptions import PolyaxonException
 from polyaxon.managers.compose import ComposeConfigManager
 from polyaxon.utils.formatting import Printer
@@ -64,6 +64,26 @@ class DeployManager(object):
         if self.config and self.config.namespace:
             return self.config.namespace
         return "polyaxon"
+
+    @property
+    def k8s_chart(self):
+        deployment_chart = DeploymentCharts.PLATFORM
+        if self.config and self.config.deployment_chart:
+            deployment_chart = self.config.deployment_chart
+        if deployment_chart == DeploymentCharts.PLATFORM:
+            return "polyaxon/polyaxon"
+        else:
+            return "polyaxon/agent"
+
+    @property
+    def k8s_name(self):
+        deployment_chart = DeploymentCharts.PLATFORM
+        if self.config and self.config.deployment_chart:
+            deployment_chart = self.config.deployment_chart
+        if deployment_chart == DeploymentCharts.PLATFORM:
+            return "polyaxon"
+        else:
+            return "agent"
 
     @property
     def is_kubernetes(self):
@@ -169,11 +189,11 @@ class DeployManager(object):
     def install_on_kubernetes(self):
         self._get_or_create_namespace()
 
-        args = ["install", "polyaxon"]
+        args = ["install", self.k8s_name]
         if self.manager_path:
             args += [self.manager_path]
         else:
-            args += ["polyaxon/polyaxon"]
+            args += [self.k8s_chart]
 
         args += ["--namespace={}".format(self.deployment_namespace)]
         if self.filepath:
@@ -247,11 +267,11 @@ class DeployManager(object):
             self.install_on_heroku()
 
     def upgrade_on_kubernetes(self):
-        args = ["upgrade", "polyaxon"]
+        args = ["upgrade", self.k8s_name]
         if self.manager_path:
             args += [self.manager_path]
         else:
-            args += ["polyaxon/polyaxon"]
+            args += [self.k8s_chart]
         if self.filepath:
             args += ["-f", self.filepath]
         if self.deployment_version:
@@ -290,7 +310,7 @@ class DeployManager(object):
             self.upgrade_on_heroku()
 
     def teardown_on_kubernetes(self, hooks):
-        args = ["delete", "polyaxon"]
+        args = ["delete", self.k8s_name]
         if not hooks:
             args += ["--no-hooks"]
         args += ["--namespace={}".format(self.deployment_namespace)]

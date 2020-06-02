@@ -14,9 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from coredb.models.artifacts import ArtifactLineage
+from coredb.abstracts.getter import get_lineage_model
 
-artifacts = ArtifactLineage.objects.prefetch_related("artifact").only(
+lineage_model = get_lineage_model()
+
+artifacts_names = lineage_model.objects.prefetch_related("artifact").only(
+    "artifact__id", "artifact__name"
+)
+artifacts = lineage_model.objects.prefetch_related("artifact").only(
     "is_input",
     "artifact__id",
     "artifact__name",
@@ -26,7 +31,7 @@ artifacts = ArtifactLineage.objects.prefetch_related("artifact").only(
 )
 
 project_runs_artifacts = (
-    ArtifactLineage.objects.prefetch_related("artifact")
+    lineage_model.objects.prefetch_related("artifact")
     .only("is_input", "artifact__id", "artifact__name", "artifact__kind",)
     .distinct("is_input", "artifact__name", "artifact__kind",)
 )

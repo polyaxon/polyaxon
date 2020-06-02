@@ -20,5 +20,4 @@ from polycommon.options.registry import installation
 conf.subscribe(installation.PlatformEnvironmentVersion)
 conf.subscribe(installation.PlatformVersion)
 conf.subscribe(installation.ChartVersion)
-conf.subscribe(installation.OrganizationName)
 conf.subscribe(installation.OrganizationKey)

@@ -9,7 +9,9 @@ ingress:
       hosts:
       - polyaxon.cluster.local
 
-serviceType: ClusterIP
+gateway:
+  service:
+    type: ClusterIP
 
 environment: staging
 

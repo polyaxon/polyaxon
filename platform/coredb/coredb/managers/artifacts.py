@@ -19,6 +19,7 @@ from typing import List
 from django.db import transaction
 
 from coredb.models.artifacts import Artifact, ArtifactLineage
+from coredb.models.projects import Owner
 from coredb.models.runs import Run
 from polyaxon.polyboard.artifacts import V1RunArtifact
 
@@ -28,12 +29,11 @@ def set_artifacts(run: Run, artifacts: List[V1RunArtifact]):
     if not artifacts:
         return
 
-    owner = run.project.owner
-    namespace = owner.uuid
+    namespace = Owner.uuid
 
     artifacts_by_names = {m.name: m for m in artifacts}
     artifacts_names = list(artifacts_by_names.keys())
-    to_update = Artifact.objects.filter(owner=owner, name__in=artifacts_names)
+    to_update = Artifact.objects.filter(name__in=artifacts_names)
     to_create = {m for m in artifacts_names if m not in {m.name for m in to_update}}
 
     if to_create:
@@ -41,7 +41,6 @@ def set_artifacts(run: Run, artifacts: List[V1RunArtifact]):
         Artifact.objects.bulk_create(
             [
                 Artifact(
-                    owner=owner,
                     name=m.name,
                     kind=m.kind,
                     path=m.path,
@@ -62,9 +61,9 @@ def set_artifacts(run: Run, artifacts: List[V1RunArtifact]):
     Artifact.objects.bulk_update(updated, ["kind", "path", "summary", "state"])
 
     # Link artifacts to runs
-    artifacts_to_link = Artifact.objects.filter(
-        owner=owner, name__in=artifacts_names
-    ).only("id", "name")
+    artifacts_to_link = Artifact.objects.filter(name__in=artifacts_names).only(
+        "id", "name"
+    )
     for m in artifacts_to_link:
         ArtifactLineage.objects.get_or_create(
             artifact_id=m.id,

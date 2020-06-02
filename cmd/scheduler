@@ -1,0 +1,10 @@
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=$DIR/..
+source $DIR/environment
+
+$DIR/check
+
+if [ $? -eq 0 ]; then
+    QUEUES="$(cat ./platform/core-scheduler/polyaxon/queues)"
+    docker-compose run --rm --name=polyaxon_scheduler scheduler /bin/bash celery -A polyconf worker --without-mingle --without-gossip --loglevel=DEBUG -Q $QUEUES --concurrency=4 -n default@%h
+fi

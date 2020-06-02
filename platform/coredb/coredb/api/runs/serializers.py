@@ -16,11 +16,11 @@
 
 from rest_framework import fields, serializers
 
+from coredb.abstracts.getter import get_run_model
 from coredb.api.base.is_managed import IsManagedMixin
 from coredb.api.base.project import ProjectMixin
 from coredb.api.base.tags import TagsMixin
 from coredb.api.project_resources.serializers import RunSerializer
-from coredb.models.runs import Run
 
 
 class RunStatusSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class RunStatusSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = Run
+        model = get_run_model()
         fields = ("uuid", "status", "condition", "status_conditions")
         extra_kwargs = {
             "status": {"read_only": True},

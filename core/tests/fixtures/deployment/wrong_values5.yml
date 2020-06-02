@@ -1,14 +1,20 @@
-deploymentType: docker-compose
+deploymentType: kubernetes
+deploymentChart: agent
 
 rbac:
   enabled: true
 
-serviceType: ClusterIP
+gateway:
+  service:
+    type: ClusterIP
 
 environment: staging
 
 user:
   password: root
+
+scheduler:
+  enabled: true
 
 rabbitmq-ha:
   enabled: false  # Requires external service

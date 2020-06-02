@@ -14,14 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from coredb.models.projects import Project
+from coredb.abstracts.getter import get_project_model
+from coredb.queries.projects import PROJECT_DETAIL, PROJECT_LIST
 
-projects_query = Project.objects
+project_model = get_project_model()
 
-project_detail = projects_query.only(
-    "uuid", "name", "description", "created_at", "updated_at", "is_public", "readme",
-)
-
-projects = Project.all.only(
-    "uuid", "name", "description", "created_at", "updated_at", "is_public",
-)
+project_detail = project_model.objects.only(*PROJECT_DETAIL)
+projects = project_model.all.only(*PROJECT_LIST)

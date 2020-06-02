@@ -4,7 +4,9 @@ rbac:
 ingress:
   enabled: true
 
-serviceType: ClusterIP
+gateway:
+  service:
+    type: ClusterIP
 environment: staging
 user:
   password: root
@@ -59,9 +61,6 @@ allowedHosts:
   - 123.123.12.3
 
 rabbitmq-ha:
-  enabled: false
-
-docker-registry:
   enabled: false
 
 broker: redis

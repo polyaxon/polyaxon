@@ -309,14 +309,16 @@ affinity:
           topologyKey: "kubernetes.io/hostname"
 ```
 
-### API Host
+## Control Plane
 
 ```yaml
-api:
-  host: https://*.polyaxon.com
+externalServices:
+  api:
+    host:
+    port:
 ```
 
-### Agent configuration
+## Agent configuration
 
 Set the agent token and instance value:
 

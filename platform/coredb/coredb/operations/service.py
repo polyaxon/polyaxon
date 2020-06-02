@@ -16,7 +16,8 @@
 
 from typing import Dict, Optional, Tuple, Union
 
-from coredb.models.runs import Run
+from coredb.abstracts.getter import get_run_model
+from coredb.abstracts.runs import BaseRun
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1CompiledOperation, V1Operation, V1RunKind
@@ -53,6 +54,10 @@ class OperationsService(Service):
     ) -> Tuple[str, Dict]:
         return kind, {"meta_kind": meta_kind}
 
+    @staticmethod
+    def sanitize_kwargs(**kwargs):
+        return {}
+
     def init_run(
         self,
         project_id: int,
@@ -66,11 +71,10 @@ class OperationsService(Service):
         override_post: bool = True,
         params: Dict = None,
         readme: str = None,
-        pipeline_id: int = None,
-        controller_id: int = None,
         original_id: int = None,
         cloning_kind: str = None,
-    ) -> Tuple[V1CompiledOperation, Run]:
+        **kwargs,
+    ) -> Tuple[V1CompiledOperation, BaseRun]:
         content = None
         raw_content = None
         if op_spec:
@@ -95,7 +99,7 @@ class OperationsService(Service):
             tags = tags or compiled_operation.tags
             kind, meta_kind = self.get_kind(compiled_operation)
             kind, meta_info = self.get_meta_info(compiled_operation, kind, meta_kind)
-        instance = Run(
+        instance = get_run_model()(
             project_id=project_id,
             user_id=user_id,
             name=name,
@@ -106,10 +110,8 @@ class OperationsService(Service):
             content=content,
             params=params,
             inputs=inputs,
-            pipeline_id=pipeline_id,
             kind=kind,
             meta_info=meta_info,
-            controller_id=controller_id,
             original_id=original_id,
             cloning_kind=cloning_kind,
             status_conditions=[
@@ -120,5 +122,6 @@ class OperationsService(Service):
                     message="Run is created",
                 ).to_dict()
             ],
+            **self.sanitize_kwargs(**kwargs),
         )
         return compiled_operation, instance

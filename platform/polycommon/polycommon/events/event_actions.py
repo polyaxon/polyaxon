@@ -17,7 +17,6 @@
 CREATED = "created"
 UPDATED = "updated"
 DELETED = "deleted"
-CLEANED = "cleaned"
 VIEWED = "viewed"
 CLONED = "cloned"
 RESUMED = "resumed"
@@ -31,6 +30,6 @@ STOPPED = "stopped"
 SKIPPED = "skipped"
 SETTINGS = "settings"
 NEW_STATUS = "new_status"
-NEW_METRIC = "new_metric"
+NEW_ARTIFACTS = "new_artifacts"
 
 WRITE_ACTIONS = [CREATED, UPDATED, DELETED, RESUMED, COPIED, CLONED, STOPPED, SETTINGS]

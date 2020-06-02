@@ -20,14 +20,12 @@ from polycommon.options.option import Option, OptionScope, OptionStores
 POLYAXON_ENVIRONMENT = "POLYAXON_ENVIRONMENT"
 PLATFORM_VERSION = "PLATFORM_VERSION"
 CHART_VERSION = "CHART_VERSION"
-ORGANIZATION_NAME = "ORGANIZATION_NAME"
 ORGANIZATION_KEY = "ORGANIZATION_KEY"
 
 OPTIONS = {
     POLYAXON_ENVIRONMENT,
     PLATFORM_VERSION,
     CHART_VERSION,
-    ORGANIZATION_NAME,
     ORGANIZATION_KEY,
 }
 
@@ -65,18 +63,6 @@ class ChartVersion(Option):
     typing = types.STR
     store = OptionStores.SETTINGS
     default = None
-    options = None
-
-
-class OrganizationName(Option):
-    key = ORGANIZATION_NAME
-    scope = OptionScope.GLOBAL
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = types.STR
-    store = OptionStores.SETTINGS
-    default = "polyaxon"
     options = None
 
 

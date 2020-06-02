@@ -78,8 +78,8 @@ class TestEventsRegistry(TestCase):
             events,
         )
         self._asser_event(
-            run.RunNewMetricEvent,
-            run.RunNewMetricEvent.get_event_subject(),
+            run.RunNewArtifactsEvent,
+            run.RunNewArtifactsEvent.get_event_subject(),
             "run",
             events,
         )
@@ -118,9 +118,6 @@ class TestEventsRegistry(TestCase):
             run.RunResumedActorEvent.get_event_subject(),
             "run",
             events,
-        )
-        self._asser_event(
-            run.RunCleanedEvent, run.RunCleanedEvent.get_event_subject(), "run", events
         )
         self._asser_event(
             run.RunRestartedActorEvent,
@@ -166,8 +163,8 @@ class TestEventsRegistry(TestCase):
             events,
         )
         self._asser_event(
-            run.RunNewMetricEvent,
-            run.RunNewMetricEvent.get_event_action(),
+            run.RunNewArtifactsEvent,
+            run.RunNewArtifactsEvent.get_event_action(),
             None,
             events,
         )
@@ -176,9 +173,6 @@ class TestEventsRegistry(TestCase):
             run.RunSucceededEvent.get_event_action(),
             None,
             events,
-        )
-        self._asser_event(
-            run.RunCleanedEvent, run.RunCleanedEvent.get_event_action(), None, events
         )
         self._asser_event(
             run.RunFailedEvent, run.RunFailedEvent.get_event_action(), None, events

@@ -26,6 +26,11 @@ class TestOptions(TestCase):
         assert core.Logging.is_optional is False
         assert core.Logging.get_key_subject() == "LOGGING"
         assert core.Logging.get_namespace() is None
+        assert core.AdminViewEnabled.default is True
+        assert core.AdminViewEnabled.is_global() is True
+        assert core.AdminViewEnabled.is_optional is True
+        assert core.AdminViewEnabled.get_key_subject() == "ADMIN_VIEW_ENABLED"
+        assert core.AdminViewEnabled.get_namespace() is None
 
     def test_options_scheduler(self):
         assert scheduler.SchedulerCountdown.get_namespace() == "SCHEDULER"

@@ -1,0 +1,70 @@
+#!/usr/bin/python
+#
+# Copyright 2018-2020 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+from rest_framework import status
+from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
+
+import ujson
+
+from coredb.managers.statuses import new_run_status
+from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
+
+
+def clone_run(view, request, *args, **kwargs):
+    view.run = view.get_object()
+    view.pre_validate(view.run)
+    content = None
+    if "content" in request.data:
+        content = request.data["content"]
+    if content and not isinstance(content, dict):
+        try:
+            content = ujson.loads(content)
+        except Exception as e:
+            raise ValidationError("Cloning was not successful, error: {}".format(e))
+    try:
+        new_obj = view.clone(obj=view.run, content=content)
+    except Exception as e:
+        raise ValidationError("Cloning was not successful, error: {}".format(e))
+
+    view.audit(request, *args, **kwargs)
+    serializer = view.get_serializer(new_obj)
+    return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+
+def create_status(view, serializer):
+    serializer.is_valid()
+    validated_data = serializer.validated_data
+    if not validated_data:
+        return
+    condition = None
+    if validated_data.get("condition"):
+        condition = V1StatusCondition.get_condition(**validated_data.get("condition"))
+    if condition:
+        new_run_status(run=view.run, condition=condition)
+
+
+def stop_run(view, request, *args, **kwargs):
+    if LifeCycle.is_done(view.run.status):
+        return Response(status=status.HTTP_200_OK, data={})
+    condition = V1StatusCondition.get_condition(
+        type=V1Statuses.STOPPING,
+        status="True",
+        reason="PolyaxonRunStopping",
+        message="User requested to stop the run.",
+    )
+    new_run_status(run=view.run, condition=condition)
+    view.audit(request, *args, **kwargs)
+    return Response(status=status.HTTP_200_OK, data={})

@@ -26,7 +26,6 @@ It also packages some required dependencies for Polyaxon:
  * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
  * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq-ha)
- * [Docker-Registry](https://github.com/helm/charts/tree/master/stable/docker-registry)
 
 > **Note**: It's possible to provide your own managed version of each one fo these dependecies.
 
@@ -540,7 +539,6 @@ Dependent charts can also have values overwritten. Preface values with
  * `postgresql.*`
  * `redis.*`
  * `rabbitmq-ha.*`
- * `docker-registry.*`
 
 
 Polyaxon provides a list of options to select which nodes should be used for the core platform, for the dependencies, and for the runs.
@@ -574,11 +572,7 @@ redis:
 
 rabbitmq-ha:
   nodeSelector:
-    ...
-    
-docker-registry:
-  nodeSelector:
-    ... 
+    ...   
 ```
 
 ### Tolerations
@@ -604,10 +598,6 @@ redis:
       ...
 
 rabbitmq-ha:
-  tolerations:
-    ...
-    
-docker-registry:
   tolerations:
     ... 
 ```
@@ -656,10 +646,6 @@ redis:
 rabbitmq-ha:
   affinity:
     ...
-    
-docker-registry:
-  affinity:
-    ... 
 ```
 
 ### Resources discovery

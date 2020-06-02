@@ -18,9 +18,10 @@ from coredb.api.projects import queries as project_queries
 from coredb.api.runs import queries as run_queries
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
+from coredb.factories.users import UserFactory
 from coredb.models.projects import Project
 from coredb.models.runs import Run
-from polycommon_ee.test_cases.base import PolyaxonBaseTestSerializer
+from polycommon.test_cases.base import PolyaxonBaseTestSerializer
 
 
 class BaseTestProjectSerializer(PolyaxonBaseTestSerializer):
@@ -28,12 +29,8 @@ class BaseTestProjectSerializer(PolyaxonBaseTestSerializer):
     model_class = Project
     factory_class = ProjectFactory
 
-    def setUp(self):
-        super().setUp()
-        self.user, self.owner = self.get_user_owner()
-
     def create_one(self):
-        return self.factory_class(user=self.user, owner=self.owner)
+        return self.factory_class()
 
 
 class BaseTestRunSerializer(PolyaxonBaseTestSerializer):
@@ -43,5 +40,5 @@ class BaseTestRunSerializer(PolyaxonBaseTestSerializer):
 
     def setUp(self):
         super().setUp()
-        self.user, self.owner = self.get_user_owner()
-        self.project = ProjectFactory(user=self.user, owner=self.owner)
+        self.user = UserFactory()
+        self.project = ProjectFactory()

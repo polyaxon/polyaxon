@@ -1,3 +1,4 @@
+organizationKey: some-key
 rbac:
   enabled: true
 
@@ -6,7 +7,9 @@ environment: staging
 ingress:
   enabled: true
 
-serviceType: ClusterIP
+gateway:
+  service:
+    type: ClusterIP
 
 user:
   password: test
@@ -72,15 +75,11 @@ tablesHook:
 
 timezone: 'Europe/Berlin'
 
-reposAccessToken: sdfdsfdsfsdfsdfsdfsdf
 hostName: 19.3.50.12
 allowedHosts:
   - 127.0.0.1
   - 123.123.12.3
 logLevel: INFO
-adminModels: ['build_jobs', 'experiments']
-
-trackerBackend: "noop"
 
 rabbitmq-ha:
   enabled: false

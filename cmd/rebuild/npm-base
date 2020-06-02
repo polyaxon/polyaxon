@@ -1,0 +1,17 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=$DIR/..
+source $DIR/environment
+
+$DIR/check
+if [ $? -eq 0 ]; then
+    echo "========================"
+    echo "pull npm base"
+    echo "========================"
+    docker pull polyaxon/polyaxon-npm-base
+    echo "========================"
+    echo "build base dev"
+    echo "========================"
+    docker build -f platform/base/Dockerfile.dev -t polyaxon-base-dev .
+    echo "========================"
+fi

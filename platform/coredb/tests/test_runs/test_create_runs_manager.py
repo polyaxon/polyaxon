@@ -20,7 +20,6 @@ from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
 from coredb.managers.operations import compile_operation_run
-from coredb.models.owners import Owner
 from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
 from polyaxon.polyflow import V1RunKind
 from polycommon.test_cases.fixtures.jobs import get_fxt_job, get_fxt_job_with_inputs
@@ -34,8 +33,7 @@ class TestCreateRunManager(TestCase):
     def setUp(self):
         super().setUp()
         self.user = UserFactory()
-        self.owner = Owner.objects.filter(name=self.user.username).last()
-        self.project = ProjectFactory(owner_id=self.owner.id)
+        self.project = ProjectFactory()
 
     def test_create_run_without_spec(self):
         run = RunFactory(project=self.project, user=self.user)

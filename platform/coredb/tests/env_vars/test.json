@@ -4,5 +4,6 @@
   "POLYAXON_DB_USER": "polyaxon",
   "POLYAXON_DB_PASSWORD": "polyaxon",
   "POLYAXON_DB_HOST": "postgres",
-  "POLYAXON_DB_PORT": "5432"
+  "POLYAXON_DB_PORT": "5432",
+  "AUTH_USER_MODEL": "eedb.user"
 }

@@ -14,48 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.contrib.postgres.fields import JSONField
-from django.db import models
 
-from coredb.abstracts.diff import DiffModel
-from coredb.abstracts.state import StateModel
-from polyaxon.polyboard.artifacts import V1ArtifactKind
+from coredb.abstracts.artifacts import BaseArtifact, BaseArtifactLineage
 
 
-class Artifact(DiffModel, StateModel):
-    runs = models.ManyToManyField(
-        "coredb.Run",
-        blank=True,
-        through="coredb.ArtifactLineage",
-        related_name="artifacts",
-        help_text="list of runs related to this artifact (inputs/outputs).",
-    )
-    owner = models.ForeignKey(
-        "coredb.Owner", on_delete=models.CASCADE, related_name="+"
-    )
-    name = models.CharField(max_length=64, db_index=True)
-    kind = models.CharField(
-        max_length=12, db_index=True, choices=V1ArtifactKind.CHOICES,
-    )
-    path = models.CharField(max_length=256, blank=True, null=True)
-    summary = JSONField()
-
+class Artifact(BaseArtifact):
     class Meta:
-        unique_together = (("name", "state"),)
         app_label = "coredb"
+        unique_together = (("name", "state"),)
         db_table = "db_artifact"
 
 
-class ArtifactLineage(DiffModel):
-    run = models.ForeignKey(
-        "coredb.Run", on_delete=models.CASCADE, related_name="artifacts_lineage"
-    )
-    artifact = models.ForeignKey(
-        "coredb.Artifact", on_delete=models.CASCADE, related_name="runs_lineage"
-    )
-    is_input = models.NullBooleanField(null=True, blank=True, default=False)
-
+class ArtifactLineage(BaseArtifactLineage):
     class Meta:
-        unique_together = (("run", "artifact", "is_input"),)
         app_label = "coredb"
-        db_table = "db_artifact_lineage"
+        unique_together = (("run", "artifact", "is_input"),)
+        db_table = "db_artifactlineage"

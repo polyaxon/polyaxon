@@ -1,3 +1,4 @@
+{{- if .Values.streams.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -30,3 +31,4 @@ spec:
     nodePort: {{ .Values.streams.service.nodePort }}
     {{- end }}
     name: {{ .Values.streams.service.name }}
+{{- end }}

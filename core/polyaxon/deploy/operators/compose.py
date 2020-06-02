@@ -214,10 +214,6 @@ class ComposeOperator(CmdOperator):
 
         if config.log_level:
             env.append(template.format("POLYAXON_LOG_LEVEL", config.log_level))
-        if config.tracker_backend:
-            env.append(
-                template.format("POLYAXON_TRACKER_BACKEND", config.tracker_backend)
-            )
         env += cls._generate_postgres(config)
 
         return "\n".join(env)

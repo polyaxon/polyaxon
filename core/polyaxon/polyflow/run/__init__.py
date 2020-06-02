@@ -58,7 +58,7 @@ class RunSchema(BaseOneOfSchema):
     }
 
 
-class RunMixin(object):
+class RunMixin:
     def get_run_kind(self):
         raise NotImplementedError
 

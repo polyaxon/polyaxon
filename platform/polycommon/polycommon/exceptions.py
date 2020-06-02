@@ -21,3 +21,7 @@ class PolyCommonException(Exception):
 
 class AccessNotAuthorized(Exception):
     pass
+
+
+class AccessNotFound(Exception):
+    pass

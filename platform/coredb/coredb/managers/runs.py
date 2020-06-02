@@ -17,8 +17,9 @@
 from typing import List
 
 from coredb import operations
+from coredb.abstracts.getter import get_run_model
+from coredb.abstracts.runs import BaseRun
 from coredb.managers.statuses import new_run_status
-from coredb.models.runs import Run
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyflow import V1CloningKind, V1Operation, V1RunKind
 
@@ -30,8 +31,8 @@ def create_run(
     description: str = None,
     readme: str = None,
     tags: List[int] = None,
-) -> Run:
-    instance = Run.objects.create(
+) -> BaseRun:
+    instance = get_run_model().objects.create(
         project_id=project_id,
         user_id=user_id,
         name=name,
@@ -39,8 +40,6 @@ def create_run(
         readme=readme,
         tags=tags,
         kind=V1RunKind.JOB,
-        pipeline_id=None,
-        controller_id=None,
         is_managed=False,
         status_conditions=[
             V1StatusCondition.get_condition(
@@ -55,14 +54,14 @@ def create_run(
 
 
 def resume_run(
-    run: Run,
+    run: BaseRun,
     user_id: int = None,
     name: str = None,
     description: str = None,
     content: str = None,
     readme: str = None,
     tags: List[str] = None,
-) -> Run:
+) -> BaseRun:
     op_spec = V1Operation.read(run.raw_content)
     compiled_operation, instance = operations.init_run(
         project_id=run.project_id,
@@ -94,7 +93,7 @@ def resume_run(
 
 
 def clone_run(
-    run: Run,
+    run: BaseRun,
     cloning_kind: str,
     user_id: int = None,
     name: str = None,
@@ -102,7 +101,7 @@ def clone_run(
     content: str = None,
     readme: str = None,
     tags: List[int] = None,
-) -> Run:
+) -> BaseRun:
     op_spec = V1Operation.read(run.raw_content)
     compiled_operation, instance = operations.init_run(
         project_id=run.project_id,
@@ -122,14 +121,14 @@ def clone_run(
 
 
 def restart_run(
-    run: Run,
+    run: BaseRun,
     user_id: int = None,
     name: str = None,
     description: str = None,
     content: str = None,
     readme: str = None,
     tags: List[int] = None,
-) -> Run:
+) -> BaseRun:
     return clone_run(
         run=run,
         cloning_kind=V1CloningKind.RESTART,
@@ -143,14 +142,14 @@ def restart_run(
 
 
 def copy_run(
-    run: Run,
+    run: BaseRun,
     user_id: int = None,
     name: str = None,
     description: str = None,
     content: str = None,
     readme: str = None,
     tags: List[int] = None,
-) -> Run:
+) -> BaseRun:
     return clone_run(
         run=run,
         cloning_kind=V1CloningKind.COPY,

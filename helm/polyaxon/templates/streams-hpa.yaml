@@ -1,4 +1,4 @@
-{{- if .Values.streams.hpa.enabled -}}
+{{- if and .Values.streams.enabled .Values.streams.hpa.enabled -}}
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:

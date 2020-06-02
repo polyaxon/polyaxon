@@ -40,8 +40,3 @@ data:
   POLYAXON_TIME_ZONE: {{ .Values.timezone | quote }}
   # Versions
   POLYAXON_CHART_VERSION: {{ .Chart.Version | quote }}
-  {{- if .Values.includeChartRevision }}
-  POLYAXON_CHART_REVISION: {{ .Release.Revision | quote }}
-  {{- else }}
-  POLYAXON_CHART_REVISION: ""
-  {{- end }}

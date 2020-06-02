@@ -26,5 +26,5 @@ class CoreSchedulerCeleryTasks:
     RUNS_PREPARE = "runs_prepare"
     RUNS_START = "runs_start"
     RUNS_STOP = "runs_stop"
-    RUNS_CLEAN = "runs_clean"
+    RUNS_DELETE = "runs_delete"
     RUNS_SET_ARTIFACTS = "runs_set_artifacts"

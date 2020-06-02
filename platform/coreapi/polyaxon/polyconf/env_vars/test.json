@@ -1,0 +1,8 @@
+{
+  "POLYAXON_SCHEDULER_ENABLED": true,
+  "POLYAXON_CELERY_TASK_ALWAYS_EAGER": true,
+  "POLYAXON_AMQP_URL": "rabbitmq:5672",
+  "POLYAXON_ARTIFACTS_ROOT": "/tmp/plx/outputs_uploads",
+  "POLYAXON_ARCHIVES_ROOT": "/tmp/plx/archives",
+  "POLYAXON_ENVIRONMENT": "testing"
+}

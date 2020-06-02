@@ -17,6 +17,7 @@
 import base64
 import os
 
+from pathlib import Path
 from typing import List, Optional
 
 from django.utils.functional import cached_property
@@ -68,7 +69,7 @@ class ConfigManager(BaseConfigManager):
             POLYAXON_KEYS_TIME_ZONE, is_optional=True, default="UTC"
         )
         self._scheduler_enabled = self.get_boolean(
-            "POLYAXON_SCHEDULER_ENABLED", is_optional=True, default=True
+            "POLYAXON_SCHEDULER_ENABLED", is_optional=True, default=False
         )
         self._chart_version = self.get_string(
             "POLYAXON_CHART_VERSION", is_optional=True, default="1.0.9"
@@ -221,7 +222,17 @@ class ConfigManager(BaseConfigManager):
         return self._decode(value, 2) if value else None
 
 
-def get_config(env_var_dir):
+def get_config(context, file_path):
+    def base_directory():
+        root = Path(os.path.abspath(file_path))
+        root.resolve()
+        return root.parent.parent.parent
+
+    root_dir = base_directory()
+    env_var_dir = root_dir / "polyaxon" / "polyconf" / "env_vars"
+    context["ROOT_DIR"] = root_dir
+    context["ENV_VARS_DIR"] = env_var_dir
+
     config_values = [str(env_var_dir / "defaults.json"), os.environ]
 
     if TESTING:

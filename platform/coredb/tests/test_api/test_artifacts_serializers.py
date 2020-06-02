@@ -26,7 +26,7 @@ from coredb.factories.artifacts import ArtifactFactory
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.models.artifacts import Artifact, ArtifactLineage
-from polycommon_ee.test_cases.base import PolyaxonBaseTestSerializer
+from tests.test_api.base import PolyaxonBaseTestSerializer
 
 
 @pytest.mark.serializers_mark
@@ -39,22 +39,15 @@ class TestArtifactSerializer(PolyaxonBaseTestSerializer):
 
     def setUp(self):
         super().setUp()
-        self.user, self.owner = self.get_user_owner()
-        self.project = ProjectFactory(owner=self.owner, user=self.user)
+        self.project = ProjectFactory()
         self.run = RunFactory(
-            user=self.user,
-            project=self.project,
-            content="test",
-            raw_content="test",
-            is_managed=True,
+            project=self.project, content="test", raw_content="test", is_managed=True,
         )
-        self.state = self.owner.uuid
+        self.state = self.project.owner.uuid
 
     def create_one(self):
         i = random.randint(1, 100)
-        artifact = self.factory_class(
-            owner=self.owner, name=f"name{i}", state=self.state
-        )
+        artifact = self.factory_class(name=f"name{i}", state=self.state)
         return ArtifactLineage.objects.create(artifact=artifact, run=self.run)
 
     def test_serialize_one(self):
@@ -82,22 +75,15 @@ class TestArtifactLightSerializer(PolyaxonBaseTestSerializer):
 
     def setUp(self):
         super().setUp()
-        self.user, self.owner = self.get_user_owner()
-        self.project = ProjectFactory(owner=self.owner, user=self.user)
+        self.project = ProjectFactory()
         self.run = RunFactory(
-            user=self.user,
-            project=self.project,
-            content="test",
-            raw_content="test",
-            is_managed=True,
+            project=self.project, content="test", raw_content="test", is_managed=True,
         )
-        self.state = self.owner.uuid
+        self.state = self.project.owner.uuid
 
     def create_one(self):
         i = random.randint(1, 100)
-        artifact = self.factory_class(
-            owner=self.owner, name=f"name{i}", state=self.state
-        )
+        artifact = self.factory_class(name=f"name{i}", state=self.state)
         return ArtifactLineage.objects.create(artifact=artifact, run=self.run)
 
     def test_serialize_one(self):

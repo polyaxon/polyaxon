@@ -1,0 +1,179 @@
+deploymentChart: "agent"
+deploymentType: "kubernetes"
+namespace: polyaxon
+limitResources: false
+
+rbac:
+  enabled: true
+
+ingress:
+  enabled: false
+  hostName:
+  path:
+  # Ingress TLS configuration
+  # Secrets must be manually created in the namespace
+  tls: []
+  # - secretName: polyaxon.cluster.local-tls
+  #   hosts:
+  #     - polyaxon.cluster.local
+
+  # Default annotation, some of these values allow uploading large files to the API
+  # if you are using a different ingress other than nginx, you need to adapt the annotations.
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/add-base-url: "true"
+    ingress.kubernetes.io/proxy-connect-timeout: "600"
+    ingress.kubernetes.io/proxy-read-timeout: "600"
+    ingress.kubernetes.io/proxy-send-timeout: "600"
+    ingress.kubernetes.io/send-timeout: "600"
+    ingress.kubernetes.io/proxy-body-size: 4G
+
+  # kubernetes.io/tls-acme: 'true'
+
+# To set ssl and serve https with Polyaxon deployed with NodePort service
+ssl: {}
+
+dns: {}
+
+# If you enable ingress, please set the gateway service type value to:
+#    * ClusterIP or NodePort (on GKE you cannot use ClusterIP)
+# Otherwise you should set it to ClusterIP (default)
+
+externalServices:
+  api:
+    host: https://*.polyaxon.com
+    port: 443
+
+gateway:
+  image: polyaxon/polyaxon-gateway
+  imageTag: 1.0.9
+  imagePullPolicy: Always
+  replicas: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+  service:
+    name: gateway
+    type: LoadBalancer
+    port: 80
+    targetPort: 80
+    nodePort: 31833
+    annotations: {}
+
+streams:
+  image: polyaxon/polyaxon-streams
+  imageTag: 1.0.9
+  imagePullPolicy: Always
+  replicas: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+  service:
+    name: streams
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+    nodePort: 31822
+    annotations: {}
+
+  hpa:
+    enabled: false
+    cputhreshold: 70
+    minpods: 1
+    maxpods: 4
+
+init:
+  image: polyaxon/polyaxon-init
+  imageTag: 1.0.9
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+sidecar:
+  image: polyaxon/polyaxon-sidecar
+  imageTag: 1.0.9
+  imagePullPolicy: Always
+  sleepInterval: 10
+  syncInterval: 10
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+agent:
+  token:
+  instance:
+  enabled: false
+  image: polyaxon/polyaxon-agent
+  imageTag: 1.0.9
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+operator:
+  enabled: false
+  image: polyaxon/polyaxon-operator
+  imageTag: 1.0.9
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 20Mi
+
+securityContext:
+  enabled: false
+  user: 2222
+  group: 2222
+
+nodeSelector: {}
+tolerations: []
+affinity:
+  podAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-core"
+          topologyKey: "kubernetes.io/hostname"
+
+imagePullSecrets: []
+
+artifactsStore:
+connections: []
+notificationConnections: []
+
+auth:
+  enabled: true
+  external: test
+  useResolver: true

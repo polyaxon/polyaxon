@@ -1,3 +1,4 @@
+{{- if .Values.streams.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -100,3 +101,4 @@ spec:
           {{- end }}
       volumes:
 {{ include "config.artifactsStore.volume" . | indent 6}}
+{{- end }}

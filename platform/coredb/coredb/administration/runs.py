@@ -14,14 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.contrib.admin import site
-
 from coredb.administration.utils import DiffModelAdmin, ReadOnlyAdmin
-from coredb.models.runs import Run
-
-
-class OperationAdmin(DiffModelAdmin):
-    pass
 
 
 class RunLightAdmin(DiffModelAdmin, ReadOnlyAdmin):
@@ -47,6 +40,3 @@ class RunLightAdmin(DiffModelAdmin, ReadOnlyAdmin):
         "finished_at",
     )
     readonly_fields = ("status",)
-
-
-site.register(Run, RunLightAdmin)

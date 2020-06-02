@@ -14,15 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
 import os
 
 from typing import Dict
 
-from polycommon.config_manager import ConfigManager
 
-
-def get_logging(log_level: str, log_dir: str, log_handlers, debug=False) -> Dict:
+def set_logging(
+    context, root_dir: str, log_level: str, log_handlers, debug=False
+) -> Dict:
+    log_dir = root_dir / "logs"
+    context["LOG_DIRECTORY"] = log_dir
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
     logging_spec = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -69,4 +72,4 @@ def get_logging(log_level: str, log_dir: str, log_handlers, debug=False) -> Dict
             "handlers": ["console"],
             "level": log_level,
         }
-    return logging_spec
+    context["LOGGING"] = logging_spec

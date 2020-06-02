@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from marshmallow import fields
+from marshmallow import INCLUDE, fields
 
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
@@ -25,6 +25,9 @@ class IngressSchema(BaseCamelSchema):
     path = fields.Str(allow_none=True)
     tls = fields.List(fields.Dict(allow_none=True), allow_none=True)
     annotations = fields.Dict(allow_none=True)
+
+    class Meta:
+        unknown = INCLUDE
 
     @staticmethod
     def schema_config():
@@ -41,7 +44,8 @@ class IngressConfig(BaseConfig):
         host_name=None,
         path=None,
         tls=None,
-        annotations=None,  # noqa
+        annotations=None,
+        **kwargs,
     ):
         self.enabled = enabled
         self.host_name = host_name

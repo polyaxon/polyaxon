@@ -20,7 +20,7 @@ from django.core.management import BaseCommand
 class Command(BaseCommand):
     def handle(self, *args, **options) -> None:
         from kombu import Exchange
-        import workers
+        from polycommon import workers
 
         Exchange(
             "internal", type="topic", channel=workers.app.connection().channel()

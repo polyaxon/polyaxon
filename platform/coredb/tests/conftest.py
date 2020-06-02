@@ -14,13 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#!/usr/bin/env python
 from settings import configure
 
 
 def pytest_configure():
     configure()
-    import coredb.signals.users  # noqa
     import coredb.signals.runs  # noqa
     from polycommon import conf
     from coredb import operations

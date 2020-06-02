@@ -14,17 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.contrib.admin import site
-
 from coredb.administration.utils import DiffModelAdmin
-from coredb.models.projects import Project
 
 
 class ProjectAdmin(DiffModelAdmin):
-    list_display = ("uuid", "name", "user", "created_at", "updated_at")
+    list_display = ("uuid", "name", "created_at", "updated_at")
     list_display_links = ("uuid", "name")
     readonly_fields = DiffModelAdmin.readonly_fields + ("name",)
-    fields = ("name", "deleted", "is_public", "created_at", "updated_at")
+    fields = ("name", "deleted", "created_at", "updated_at")
 
     def get_queryset(self, request):
         qs = self.model.all.get_queryset()
@@ -32,6 +29,3 @@ class ProjectAdmin(DiffModelAdmin):
         if ordering:
             qs = qs.order_by(*ordering)
         return qs
-
-
-site.register(Project, ProjectAdmin)

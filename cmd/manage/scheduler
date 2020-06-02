@@ -5,5 +5,5 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    cmd/python/scheduler platform/scheduler polyaxon/manage.py $*
+    cmd/python/scheduler platform/core-scheduler polyaxon/manage.py $*
 fi

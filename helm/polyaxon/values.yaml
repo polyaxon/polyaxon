@@ -1,5 +1,6 @@
-namespace: "polyaxon"
-deploymentType: "kubernetes"
+deploymentChart: platform
+deploymentType: kubernetes
+namespace: polyaxon
 limitResources: false
 
 rbac:
@@ -40,6 +41,7 @@ dns: {}
 #    * ClusterIP or NodePort (on GKE you cannot use ClusterIP)
 # Otherwise you should set it to ClusterIP (default)
 gateway:
+  enabled: true
   image: polyaxon/polyaxon-gateway
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -90,7 +92,7 @@ api:
     maxpods: 4
 
 streams:
-  enabled: true
+  enabled: false
   image: polyaxon/polyaxon-streams
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -159,7 +161,7 @@ agent:
       memory: 300Mi
 
 operator:
-  enabled: true
+  enabled: false
   image: polyaxon/polyaxon-operator
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -326,7 +328,7 @@ rabbitmq-ha:
   # To use an external rabbitmq instance:
   #  * set enabled to False, to disable the in-cluster deployment
   #  * configure external rabbitmq required attributes in services.rabbitmq
-  enabled: true
+  enabled: false
   replicaCount: 1
   rabbitmqUsername: polyaxon
   rabbitmqPassword: polyaxon
@@ -407,7 +409,7 @@ metrics:
     selector:
       prometheus: kube-prometheus
 
-artifactsStore: {}
+artifactsStore:
 connections: []
 notificationConnections: []
 
@@ -502,5 +504,7 @@ intervals:  # in seconds
   operationsDefaultRetryDelay: 60
   operationsMaxRetryDelay: 3600
 
-services:
-  port: 80
+auth:
+  enabled: false
+  external:
+  useResolver: true

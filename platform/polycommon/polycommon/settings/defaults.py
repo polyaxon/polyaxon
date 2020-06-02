@@ -19,12 +19,16 @@
 from polycommon import pkg
 
 ENCRYPTION_BACKEND = None
-CONF_CHECK_OWNERSHIP = True
+CONF_CHECK_OWNERSHIP = False
 AUDITOR_BACKEND = None
 AUDITOR_EVENTS_TASK = None
 WORKERS_BACKEND = None
-EXECUTOR_BACKEND = None
-WORKERS_SERVICE = "workers"
-EXECUTOR_SERVICE = None
+EXECUTOR_BACKEND = "coredb.executor.service.ExecutorService"
+WORKERS_SERVICE = "polycommon.workers"
+EXECUTOR_SERVICE = "coredb.executor"
 OPERATIONS_BACKEND = None
 PLATFORM_VERSION = pkg.VERSION
+CONF_BACKEND = "polycommon.conf.service.ConfService"
+STORE_OPTION = "env"
+AUTH_USER_MODEL = "coredb.User"
+K8S_IN_CLUSTER = True

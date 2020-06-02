@@ -1,7 +1,9 @@
 rbac:
   enabled: true
 
-serviceType: ClusterIP
+gateway:
+ service:
+   type: ClusterIP
 
 environment: staging
 

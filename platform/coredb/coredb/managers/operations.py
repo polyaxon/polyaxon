@@ -17,7 +17,7 @@
 from typing import Dict, Union
 
 from coredb import operations
-from coredb.models.runs import Run
+from coredb.abstracts.runs import BaseRun
 from polyaxon.polyflow import V1CompiledOperation, V1Operation
 
 
@@ -35,7 +35,7 @@ def compile_operation_run(
     readme: str = None,
     pipeline_id: int = None,
     controller_id: int = None,
-) -> Run:
+) -> BaseRun:
     compiled_operation, instance = operations.init_run(
         project_id=project_id,
         user_id=user_id,

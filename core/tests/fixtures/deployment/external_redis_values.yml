@@ -1,12 +1,16 @@
 rbac:
   enabled: true
 
-serviceType: ClusterIP
+gateway:
+ service:
+   type: ClusterIP
 
 environment: staging
 
 user:
   password: root
+
+broker: redis
 
 redis:
   enabled: false

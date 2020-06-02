@@ -18,13 +18,13 @@ from django.db import IntegrityError
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
+from coredb.abstracts.getter import get_project_model
 from coredb.api.base.tags import TagsMixin
-from coredb.models.projects import Project
 
 
 class ProjectNameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Project
+        model = get_project_model()
         fields = ("name",)
 
 
@@ -32,7 +32,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format="hex", read_only=True)
 
     class Meta:
-        model = Project
+        model = get_project_model()
         fields = (
             "uuid",
             "name",
@@ -40,7 +40,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             "tags",
             "created_at",
             "updated_at",
-            "is_public",
             "deleted",
         )
 

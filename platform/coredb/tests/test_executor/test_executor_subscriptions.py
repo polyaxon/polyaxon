@@ -40,8 +40,10 @@ class TestExecutorsSubscriptions(TestCase):
             run.RUN_CREATED,
             run.RUN_RESUMED_ACTOR,
             run.RUN_STOPPED_ACTOR,
-            run.RUN_CLEANED,
+            run.RUN_DELETED_ACTOR,
             run.RUN_DONE,
+            run.RUN_NEW_ARTIFACTS,
         }
+
         self._assert_events_subscription(subscribed_events)
         self._assert_events_no_subscription(run.EVENTS - subscribed_events)

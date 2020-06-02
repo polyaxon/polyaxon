@@ -24,3 +24,10 @@ class DeploymentTypes:
     HEROKU = "heroku"
 
     VALUES = [KUBERNETES, MINIKUBE, MICRO_K8S, DOCKER_COMPOSE, DOCKER, HEROKU]
+
+
+class DeploymentCharts:
+    PLATFORM = "platform"
+    AGENT = "agent"
+
+    VALUES = [PLATFORM, AGENT]

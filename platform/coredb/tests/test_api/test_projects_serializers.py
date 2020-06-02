@@ -48,7 +48,6 @@ class TestProjectSerializer(BaseTestProjectSerializer):
         "tags",
         "created_at",
         "updated_at",
-        "is_public",
         "deleted",
     }
 

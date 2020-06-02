@@ -20,7 +20,6 @@ import sys
 import click
 
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.deploy import reader
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.deploy import DeployManager
 from polyaxon.utils.formatting import Printer
@@ -28,6 +27,8 @@ from polyaxon.utils.list_utils import to_list
 
 
 def read_deployment_config(filepaths):
+    from polyaxon.deploy import reader
+
     if not filepaths:
         return None
 

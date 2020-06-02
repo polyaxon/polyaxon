@@ -16,17 +16,16 @@
 
 import factory
 
+from coredb.abstracts.getter import get_run_model
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.users import UserFactory
-from coredb.models.runs import Run
 
 
 class RunFactory(factory.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)
-    pipeline = None
     original = None
     is_managed = False
 
     class Meta:
-        model = Run
+        model = get_run_model()

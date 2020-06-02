@@ -16,6 +16,9 @@ Platform envFrom
 {{- define "config.envFrom.platform" -}}
 - configMapRef:
     name: {{ template "polyaxon.fullname" . }}-platform-config
+{{- if (not .Values.organizationKey) }}
+    name: {{ template "polyaxon.fullname" . }}-agent-config
+{{- end }}
 {{- end -}}
 
 {{- /*

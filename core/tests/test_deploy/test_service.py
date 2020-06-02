@@ -18,18 +18,17 @@ from marshmallow import ValidationError
 from tests.utils import BaseTestCase
 
 from polyaxon.deploy.schemas.service import (
-    DockerRegistryConfig,
+    ExternalService,
     ExternalServicesConfig,
-    ExternalV1Service,
     PostgresqlConfig,
     RabbitmqConfig,
     RedisConfig,
-    ThirdPartyV1Service,
-    V1Service,
+    Service,
+    ThirdPartyService,
 )
 
 
-class TestV1Service(BaseTestCase):
+class TestService(BaseTestCase):
     def service_config_test(self):
         bad_config_dicts = [
             {"image": False, "imageTag": "foo", "imagePullPolicy": "sdf"},
@@ -40,23 +39,23 @@ class TestV1Service(BaseTestCase):
 
         for config_dict in bad_config_dicts:
             with self.assertRaises(ValidationError):
-                V1Service.from_dict(config_dict)
+                Service.from_dict(config_dict)
 
         config_dict = {"image": "foo", "imageTag": "bar", "imagePullPolicy": "Always"}
 
-        config = V1Service.from_dict(config_dict)
+        config = Service.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
         config_dict = {"image": "foo", "replicas": 12, "concurrency": 12}
 
-        config = V1Service.from_dict(config_dict)
+        config = Service.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
         config_dict = {
             "resources": {"requests": {"cpu": 2}, "limits": {"memory": "500Mi"}}
         }
 
-        config = V1Service.from_dict(config_dict)
+        config = Service.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
     def test_third_party_service(self):
@@ -74,7 +73,7 @@ class TestV1Service(BaseTestCase):
 
         for config_dict in bad_config_dicts:
             with self.assertRaises((ValidationError, TypeError)):
-                ThirdPartyV1Service.from_dict(config_dict)
+                ThirdPartyService.from_dict(config_dict)
 
         config_dict = {
             "image": "foo",
@@ -83,7 +82,7 @@ class TestV1Service(BaseTestCase):
             "replicas": 2,
         }
 
-        config = ThirdPartyV1Service.from_dict(config_dict)
+        config = ThirdPartyService.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
         config_dict = {
@@ -99,7 +98,7 @@ class TestV1Service(BaseTestCase):
             "affinity": {},
         }
 
-        config = ThirdPartyV1Service.from_dict(config_dict)
+        config = ThirdPartyService.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
     def test_postgresql_config(self):
@@ -234,50 +233,6 @@ class TestV1Service(BaseTestCase):
         config = RabbitmqConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
-    def test_docker_registry_config(self):
-        config_dict = {
-            "registryUser": "dsf",
-            "registryPassword": "sdf",
-            "externalRegistryHost": 123,
-        }
-        with self.assertRaises(ValidationError):
-            DockerRegistryConfig.from_dict(config_dict)
-
-        config_dict = {
-            "enabled": True,
-            "registryUser": "dsf",
-            "registryPassword": "sdf",
-            "resources": {"requests": {"cpu": 2}, "limits": {"memory": "500Mi"}},
-            "tolerations": [
-                {
-                    "key": "key",
-                    "operator": "Equal",
-                    "value": "value",
-                    "effect": "NoSchedule",
-                }
-            ],
-            "affinity": {},
-        }
-        config = DockerRegistryConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
-
-        config_dict = {
-            "registryUser": "dsf",
-            "registryPassword": "sdf",
-            "resources": {"requests": {"cpu": 2}, "limits": {"memory": "500Mi"}},
-            "tolerations": [
-                {
-                    "key": "key",
-                    "operator": "Equal",
-                    "value": "value",
-                    "effect": "NoSchedule",
-                }
-            ],
-            "affinity": {},
-        }
-        config = DockerRegistryConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
-
     def test_external_service_config(self):
         config_dict = {
             "user": "user",
@@ -286,7 +241,7 @@ class TestV1Service(BaseTestCase):
             "port": "user",
         }
         with self.assertRaises(ValidationError):
-            ExternalV1Service.from_dict(config_dict)
+            ExternalService.from_dict(config_dict)
 
         config_dict = {
             "user": "user",
@@ -294,7 +249,7 @@ class TestV1Service(BaseTestCase):
             "host": "123.123.123.123",
             "port": 123231,
         }
-        config = ExternalV1Service.from_dict(config_dict)
+        config = ExternalService.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
         config_dict = {
@@ -306,7 +261,7 @@ class TestV1Service(BaseTestCase):
             "usePassword": True,
             "connMaxAge": 100,
         }
-        config = ExternalV1Service.from_dict(config_dict)
+        config = ExternalService.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
     def test_test_external_services_config(self):

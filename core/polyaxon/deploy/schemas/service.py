@@ -36,10 +36,10 @@ class ServiceSchema(BaseCamelSchema):
 
     @staticmethod
     def schema_config():
-        return V1Service
+        return Service
 
 
-class V1Service(BaseConfig):
+class Service(BaseConfig):
     SCHEMA = ServiceSchema
     REDUCED_ATTRIBUTES = [
         "enabled",
@@ -78,9 +78,9 @@ class WorkerServiceSchema(ServiceSchema):
         return WorkerServiceConfig
 
 
-class WorkerServiceConfig(V1Service):
+class WorkerServiceConfig(Service):
     SCHEMA = WorkerServiceSchema
-    REDUCED_ATTRIBUTES = V1Service.REDUCED_ATTRIBUTES + ["celery"]
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["celery"]
 
     def __init__(
         self,
@@ -106,17 +106,17 @@ class WorkerServiceConfig(V1Service):
 
 
 class HelperServiceSchema(ServiceSchema):
-    sleepInterval = fields.Int(allow_none=True)
-    syncInterval = fields.Int(allow_none=True)
+    sleep_interval = fields.Int(allow_none=True)
+    sync_interval = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
         return HelperServiceConfig
 
 
-class HelperServiceConfig(V1Service):
+class HelperServiceConfig(Service):
     SCHEMA = HelperServiceSchema
-    REDUCED_ATTRIBUTES = V1Service.REDUCED_ATTRIBUTES + [
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + [
         "sleepInterval",
         "syncInterval",
     ]
@@ -155,9 +155,9 @@ class AgentServiceSchema(ServiceSchema):
         return AgentServiceConfig
 
 
-class AgentServiceConfig(V1Service):
+class AgentServiceConfig(Service):
     SCHEMA = AgentServiceSchema
-    REDUCED_ATTRIBUTES = V1Service.REDUCED_ATTRIBUTES + ["instance", "token"]
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["instance", "token"]
 
     def __init__(
         self,
@@ -192,7 +192,7 @@ class ApiServiceSchema(ServiceSchema):
         return ApiServiceConfig
 
 
-class ApiServiceConfig(V1Service):
+class ApiServiceConfig(Service):
     SCHEMA = ApiServiceSchema
 
     def __init__(
@@ -226,9 +226,9 @@ class HooksSchema(ServiceSchema):
         return HooksConfig
 
 
-class HooksConfig(V1Service):
+class HooksConfig(Service):
     SCHEMA = HooksSchema
-    REDUCED_ATTRIBUTES = V1Service.REDUCED_ATTRIBUTES + ["loadFixtures"]
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["loadFixtures"]
 
     def __init__(
         self,
@@ -262,10 +262,10 @@ class ThirdPartyServiceSchema(ServiceSchema):
 
     @staticmethod
     def schema_config():
-        return ThirdPartyV1Service
+        return ThirdPartyService
 
 
-class ThirdPartyV1Service(V1Service):
+class ThirdPartyService(Service):
     SCHEMA = ThirdPartyServiceSchema
     REDUCED_ATTRIBUTES = [
         "enabled",
@@ -319,9 +319,9 @@ class PostgresqlSchema(ThirdPartyServiceSchema):
         return PostgresqlConfig
 
 
-class PostgresqlConfig(ThirdPartyV1Service):
+class PostgresqlConfig(ThirdPartyService):
     SCHEMA = PostgresqlSchema
-    REDUCED_ATTRIBUTES = ThirdPartyV1Service.REDUCED_ATTRIBUTES + [
+    REDUCED_ATTRIBUTES = ThirdPartyService.REDUCED_ATTRIBUTES + [
         "postgresUser",
         "postgresPassword",
         "postgresDatabase",
@@ -373,9 +373,9 @@ class RedisSchema(ThirdPartyServiceSchema):
         return RedisConfig
 
 
-class RedisConfig(ThirdPartyV1Service):
+class RedisConfig(ThirdPartyService):
     SCHEMA = RedisSchema
-    REDUCED_ATTRIBUTES = ThirdPartyV1Service.REDUCED_ATTRIBUTES + [
+    REDUCED_ATTRIBUTES = ThirdPartyService.REDUCED_ATTRIBUTES + [
         "usePassword",
         "password",
     ]
@@ -420,9 +420,9 @@ class RabbitmqSchema(ThirdPartyServiceSchema):
         return RabbitmqConfig
 
 
-class RabbitmqConfig(ThirdPartyV1Service):
+class RabbitmqConfig(ThirdPartyService):
     SCHEMA = RabbitmqSchema
-    REDUCED_ATTRIBUTES = ThirdPartyV1Service.REDUCED_ATTRIBUTES + [
+    REDUCED_ATTRIBUTES = ThirdPartyService.REDUCED_ATTRIBUTES + [
         "rabbitmqUsername",
         "rabbitmqPassword",
     ]
@@ -458,53 +458,6 @@ class RabbitmqConfig(ThirdPartyV1Service):
         self.rabbitmq_password = rabbitmq_password
 
 
-class DockerRegistrySchema(ThirdPartyServiceSchema):
-    registry_user = fields.Str(allow_none=True)
-    registry_password = fields.Str(allow_none=True)
-
-    @staticmethod
-    def schema_config():
-        return DockerRegistryConfig
-
-
-class DockerRegistryConfig(ThirdPartyV1Service):
-    SCHEMA = DockerRegistrySchema
-    REDUCED_ATTRIBUTES = ThirdPartyV1Service.REDUCED_ATTRIBUTES + [
-        "registryUser",
-        "registryPassword",
-    ]
-
-    def __init__(
-        self,
-        enabled=None,
-        registry_user=None,
-        registry_password=None,
-        image=None,
-        image_tag=None,
-        image_pull_policy=None,
-        replicas=None,
-        resources=None,
-        persistence=None,
-        node_selector=None,
-        affinity=None,
-        tolerations=None,
-    ):
-        super().__init__(
-            enabled=enabled,
-            image=image,
-            image_tag=image_tag,
-            image_pull_policy=image_pull_policy,
-            replicas=replicas,
-            resources=resources,
-            persistence=persistence,
-            node_selector=node_selector,
-            affinity=affinity,
-            tolerations=tolerations,
-        )
-        self.registry_user = registry_user
-        self.registry_password = registry_password
-
-
 class ExternalServiceSchema(BaseCamelSchema):
     user = fields.Str(allow_none=True)
     password = fields.Str(allow_none=True)
@@ -516,10 +469,10 @@ class ExternalServiceSchema(BaseCamelSchema):
 
     @staticmethod
     def schema_config():
-        return ExternalV1Service
+        return ExternalService
 
 
-class ExternalV1Service(BaseConfig):
+class ExternalService(BaseConfig):
     SCHEMA = ExternalServiceSchema
     REDUCED_ATTRIBUTES = [
         "user",
@@ -554,6 +507,7 @@ class ExternalServicesSchema(BaseCamelSchema):
     redis = fields.Nested(ExternalServiceSchema, allow_none=True)
     rabbitmq = fields.Nested(ExternalServiceSchema, allow_none=True)
     postgresql = fields.Nested(ExternalServiceSchema, allow_none=True)
+    api = fields.Nested(ExternalServiceSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -562,9 +516,10 @@ class ExternalServicesSchema(BaseCamelSchema):
 
 class ExternalServicesConfig(BaseConfig):
     SCHEMA = ExternalServicesSchema
-    REDUCED_ATTRIBUTES = ["redis", "rabbitmq", "postgresql"]
+    REDUCED_ATTRIBUTES = ["redis", "rabbitmq", "postgresql", "api"]
 
-    def __init__(self, redis=None, rabbitmq=None, postgresql=None):
+    def __init__(self, redis=None, rabbitmq=None, postgresql=None, api=None):
         self.redis = redis
         self.rabbitmq = rabbitmq
         self.postgresql = postgresql
+        self.api = api

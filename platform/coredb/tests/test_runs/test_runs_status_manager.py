@@ -22,7 +22,6 @@ from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
 from coredb.managers.statuses import new_run_status
-from coredb.models.owners import Owner
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polycommon.events.registry import run as run_events
 
@@ -31,8 +30,7 @@ class TestRunStatusManager(TestCase):
     def setUp(self):
         super().setUp()
         self.user = UserFactory()
-        self.owner = Owner.objects.filter(name=self.user.username).last()
-        self.project = ProjectFactory(owner_id=self.owner.id)
+        self.project = ProjectFactory()
         self.run = RunFactory(project=self.project)
 
     @patch("polycommon.auditor.record")

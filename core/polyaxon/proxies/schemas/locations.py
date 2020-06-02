@@ -23,6 +23,7 @@ location /static/ {{
     autoindex on;
     expires                   30d;
     add_header                Cache-Control private;
+    gzip_static on;
 }}
 """
 

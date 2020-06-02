@@ -17,8 +17,8 @@
 from django.test import TestCase
 from mock import MagicMock, patch
 
+from coredb import executor
 from coredb.executor.handlers.run import (
-    handle_run_cleaned_triggered,
     handle_run_created,
     handle_run_stopped_triggered,
 )
@@ -44,6 +44,7 @@ class TestExecutorRecord(TestCase):
         from polycommon.events import auditor_subscriptions  # noqa
         from coredb.executor import subscriptions  # noqa
 
+        executor.validate_and_setup()
         auditor.validate_and_setup()
         self.user = MagicMock(id=1)
         self.owner = MagicMock(id=1, name="owner")
@@ -88,18 +89,6 @@ class TestExecutorHandlers(TestCase):
         event = MagicMock(data=data)
         handle_run_created(DummyWorkers, event=event)
         assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
-
-    def test_clean_run_handler_non_managed_run(self):
-        States.workers = None
-        event = MagicMock(data={"is_managed": False})
-        handle_run_cleaned_triggered(None, event=event)
-        assert States.workers is None
-
-    def test_clean_run_handler_managed_run(self):
-        States.workers = None
-        event = MagicMock(data={"id": 1, "is_managed": True})
-        handle_run_cleaned_triggered(DummyWorkers, event=event)
-        assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_CLEAN
 
     def test_stop_run_handler_managed_run(self):
         States.workers = None

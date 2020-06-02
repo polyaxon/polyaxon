@@ -10,7 +10,7 @@ tags:
 sidebar: "setup"
 ---
 
-> If you are looking for the open-source setup, please check this [guide](/docs/setup/platform/open-source/).
+<blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
 ## Polyaxon EE Control Plane
 
@@ -28,11 +28,20 @@ user:
   password: "rootpassword"
 ```
 
+## Add your organization key
+
+```yaml
+api:
+  organizationKey: ...
+```
+
 ## Disable agent services
 
 Since some services will be managed by Polyaxon Agents on each cluster/namespace you don't need the default agent deployed:
 
 ```yaml
+agent:
+  enabled: false
 operator:
   enabled: false
 streams:

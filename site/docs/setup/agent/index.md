@@ -13,8 +13,6 @@ sidebar: "setup"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-> If you are looking for the open-source setup, please check this [guide](/docs/setup/platform/open-source/).
-
 If you are here, it means that you access to a Polyaxon EE Control Plane or Polyaxon Cloud.
 
 ## Create a namespace for the agent

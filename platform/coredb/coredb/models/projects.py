@@ -14,43 +14,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf import settings
+import uuid
+
+from django.core.validators import validate_slug
 from django.db import models
 
-from coredb.abstracts.deleted import DeletedModel
-from coredb.abstracts.describable import DescribableModel
-from coredb.abstracts.diff import DiffModel
-from coredb.abstracts.nameable import RequiredNameableModel
-from coredb.abstracts.readme import ReadmeModel
-from coredb.abstracts.tag import TagModel
-from coredb.abstracts.uid import UuidModel
+from coredb.abstracts.projects import BaseProject
+from polycommon.validation.blacklist import validate_blacklist_name
 
 
-class Project(
-    UuidModel,
-    RequiredNameableModel,
-    DiffModel,
-    DescribableModel,
-    TagModel,
-    ReadmeModel,
-    DeletedModel,
-):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="projects",
-    )
-    owner = models.ForeignKey(
-        "coredb.Owner", on_delete=models.CASCADE, related_name="projects"
-    )
-    is_public = models.BooleanField(
-        default=True, help_text="If project is public or private."
+class Owner:
+    name = "polyaxon"
+    uuid = uuid.UUID("9b0a3806e3f84ea1959a7842e34129ed")
+    id = 1
+
+
+class Actor:
+    username = "polyaxon"
+    id = 1
+
+
+class Project(BaseProject):
+    name = models.CharField(
+        max_length=150, unique=True, validators=[validate_slug, validate_blacklist_name]
     )
 
     class Meta:
         app_label = "coredb"
         db_table = "db_project"
-        unique_together = (("owner", "name"),)
         indexes = [models.Index(fields=["name"])]
+
+    @property
+    def owner(self):
+        return Owner
+
+    @property
+    def owner_id(self):
+        return Owner.id
+
+    @property
+    def actor(self):
+        return Actor

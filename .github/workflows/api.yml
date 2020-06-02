@@ -1,0 +1,23 @@
+name: Polyaxon Api
+
+on: [push]
+
+jobs:
+  api:
+#    if: github.event.comment.body == 'test platform'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: build
+      run: |
+        cmd/rebuild/npm-base
+        cmd/rebuild/api
+    - name: test-polycommon
+      run: |
+        cmd/test/api platform/polycommon module
+    - name: test-coredb
+      run: |
+        cmd/test/api platform/coredb module --create-db
+    - name: test-coreapi
+      run: |
+        cmd/test/api platform/coreapi

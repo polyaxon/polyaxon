@@ -17,12 +17,12 @@
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
+from coredb.abstracts.getter import get_run_model
 from coredb.api.base.cloning import CloningMixin
 from coredb.api.base.is_managed import IsManagedMixin
 from coredb.api.base.settings import SettingsMixin
 from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import create_run
-from coredb.models.runs import Run
 from polyaxon.polyaxonfile import OperationSpecification
 
 
@@ -34,7 +34,7 @@ class RunSerializer(serializers.ModelSerializer, CloningMixin, SettingsMixin):
     settings = fields.SerializerMethodField()
 
     class Meta:
-        model = Run
+        model = get_run_model()
         fields = (
             "uuid",
             "name",
@@ -65,7 +65,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
     uuid = fields.UUIDField(format="hex", read_only=True)
 
     class Meta:
-        model = Run
+        model = get_run_model()
         fields = (
             "uuid",
             "name",
@@ -91,6 +91,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                 "Managed runs require a content with valid specification"
             )
 
+        user = validated_data.get("user")
         if is_managed:
             try:
                 op_spec = OperationSpecification.read(content)
@@ -98,7 +99,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                 raise ValidationError(e)
             return compile_operation_run(
                 project_id=validated_data["project"].id,
-                user_id=validated_data["user"].id,
+                user_id=user.id if user else None,
                 op_spec=op_spec,
                 name=validated_data.get("name"),
                 description=validated_data.get("description"),
@@ -107,7 +108,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
         else:
             return create_run(
                 project_id=validated_data["project"].id,
-                user_id=validated_data["user"].id,
+                user_id=user.id if user else None,
                 name=validated_data.get("name"),
                 description=validated_data.get("description"),
                 tags=validated_data.get("tags"),

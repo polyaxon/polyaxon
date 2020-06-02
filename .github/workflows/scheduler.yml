@@ -1,0 +1,17 @@
+name: Polyaxon scheduler
+
+on: [push]
+
+jobs:
+  scheduler:
+#    if: github.event.comment.body == 'test platform'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: build
+      run: |
+        cmd/rebuild/npm-base
+        cmd/rebuild/scheduler
+    - name: test-scheduler
+      run: |
+        cmd/test/scheduler platform/core-scheduler

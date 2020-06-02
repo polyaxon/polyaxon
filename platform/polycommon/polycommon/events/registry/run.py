@@ -25,11 +25,10 @@ from polycommon.events.registry.attributes import (
 
 RUN_CREATED = "{}.{}".format(event_subjects.RUN, event_actions.CREATED)
 RUN_DELETED = "{}.{}".format(event_subjects.RUN, event_actions.DELETED)
-RUN_CLEANED = "{}.{}".format(event_subjects.RUN, event_actions.CLEANED)
 RUN_STOPPED = "{}.{}".format(event_subjects.RUN, event_actions.STOPPED)
 RUN_SKIPPED = "{}.{}".format(event_subjects.RUN, event_actions.SKIPPED)
 RUN_NEW_STATUS = "{}.{}".format(event_subjects.RUN, event_actions.NEW_STATUS)
-RUN_NEW_METRIC = "{}.{}".format(event_subjects.RUN, event_actions.NEW_METRIC)
+RUN_NEW_ARTIFACTS = "{}.{}".format(event_subjects.RUN, event_actions.NEW_ARTIFACTS)
 RUN_SUCCEEDED = "{}.{}".format(event_subjects.RUN, event_actions.SUCCEEDED)
 RUN_FAILED = "{}.{}".format(event_subjects.RUN, event_actions.FAILED)
 RUN_DONE = "{}.{}".format(event_subjects.RUN, event_actions.DONE)
@@ -65,12 +64,11 @@ RUN_SKIPPED_ACTOR = "{}.{}.{}".format(
 EVENTS = {
     RUN_CREATED,
     RUN_DELETED,
-    RUN_CLEANED,
     RUN_STOPPED,
     RUN_RESUMED,
     RUN_SKIPPED,
     RUN_NEW_STATUS,
-    RUN_NEW_METRIC,
+    RUN_NEW_ARTIFACTS,
     RUN_SUCCEEDED,
     RUN_FAILED,
     RUN_DONE,
@@ -96,11 +94,6 @@ class RunDeletedEvent(Event):
     attributes = (Attribute("uuid", is_uuid=True),)
 
 
-class RunCleanedEvent(Event):
-    event_type = RUN_CLEANED
-    attributes = (Attribute("id"),)
-
-
 class RunStoppedEvent(Event):
     event_type = RUN_STOPPED
     attributes = PROJECT_RESOURCE_ATTRIBUTES
@@ -124,9 +117,9 @@ class RunNewStatusEvent(Event):
     )
 
 
-class RunNewMetricEvent(Event):
-    event_type = RUN_NEW_METRIC
-    attributes = PROJECT_RESOURCE_ATTRIBUTES
+class RunNewArtifactsEvent(Event):
+    event_type = RUN_NEW_ARTIFACTS
+    attributes = PROJECT_RESOURCE_ATTRIBUTES + (Attribute("artifacts", attr_type=list),)
 
 
 class RunSucceededEvent(Event):

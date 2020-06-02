@@ -4,7 +4,9 @@ rbac:
 ingress:
   enabled: false
 
-serviceType: NodePort
+gateway:
+  service:
+    type: NodePort
 
 ssl:
   enabled: true

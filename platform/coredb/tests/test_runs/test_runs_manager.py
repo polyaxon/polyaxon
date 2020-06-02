@@ -23,7 +23,6 @@ from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
 from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import copy_run, restart_run, resume_run
-from coredb.models.owners import Owner
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1CloningKind
@@ -36,8 +35,7 @@ class TestRunManager(TestCase):
         super().setUp()
         self.user = UserFactory()
         self.user2 = UserFactory()
-        self.owner = Owner.objects.filter(name=self.user.username).last()
-        self.project = ProjectFactory(owner_id=self.owner.id)
+        self.project = ProjectFactory()
         op_spec = OperationSpecification.read(values=get_fxt_job_with_inputs())
         self.run = compile_operation_run(
             project_id=self.project.id, op_spec=op_spec, user_id=self.user.id

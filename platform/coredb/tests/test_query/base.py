@@ -19,13 +19,11 @@ from django.test import TestCase
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
-from coredb.models.owners import Owner
 
 
 class BaseTestQuery(TestCase):
     def setUp(self):
         super().setUp()
         self.user = UserFactory()
-        self.owner = Owner.objects.filter(name=self.user.username).last()
-        self.project = ProjectFactory(owner_id=self.owner.id)
+        self.project = ProjectFactory()
         self.run = RunFactory(project=self.project)

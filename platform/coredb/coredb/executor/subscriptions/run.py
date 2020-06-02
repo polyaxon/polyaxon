@@ -19,6 +19,7 @@ from polycommon.events.registry import run
 
 executor.subscribe(run.RunCreatedEvent)
 executor.subscribe(run.RunResumedActorEvent)
-executor.subscribe(run.RunCleanedEvent)
 executor.subscribe(run.RunStoppedActorEvent)
 executor.subscribe(run.RunDoneEvent)
+executor.subscribe(run.RunDeletedActorEvent)
+executor.subscribe(run.RunNewArtifactsEvent)

@@ -54,7 +54,7 @@ def configure():
         WORKERS_BACKEND=None,
         EXECUTOR_BACKEND=None,
         WORKERS_SERVICE=None,
-        EXECUTOR_SERVICE=None,
+        EXECUTOR_SERVICE="coredb.executor",
         DEFAULT_DB_ENGINE="django.db.backends.postgresql",
         DATABASES={
             "default": {

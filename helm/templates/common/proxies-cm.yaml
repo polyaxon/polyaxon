@@ -21,11 +21,13 @@ data:
   POLYAXON_PROXY_STREAMS_HOST: {{ template "streams.host" . }}
   POLYAXON_PROXY_API_PORT: "{{ template "api.port" . }}"
   POLYAXON_PROXY_API_HOST: {{ template "api.host" . }}
+  {{- if (not (empty .Values.auth)) }}
   POLYAXON_PROXY_AUTH_ENABLED: {{ .Values.auth.enabled | quote }}
   {{- if .Values.auth.external }}
   POLYAXON_PROXY_AUTH_EXTERNAL: {{ .Values.auth.external | quote }}
   {{- end }}
   POLYAXON_PROXY_AUTH_USE_RESOLVER: {{ .Values.auth.useResolver | quote }}
+  {{- end }}
   # DNS
   POLYAXON_DNS_USE_RESOLVER: "true"
   {{- if .Values.dns.backend }}

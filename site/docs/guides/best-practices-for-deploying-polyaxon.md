@@ -58,7 +58,7 @@ this way you won't impact the stability of these components if one of the runs h
 ## Database high availability
 
 If you are running Polyaxon in production mode, we suggest that you keep your database "safe" and highly available. 
-We provide a reference document on how to achieve High Available Database on Polyaxon in this [guide](/configuration/postgresql-ha/).
+We provide a reference document on how to achieve High Available Database on Polyaxon in this [guide](/docs/setup/platform/postgresql-ha/).
 
 Stateful application are very hard to setup correctly on a Kubernetes cluster, so to achieve Postgres HA, we suggest that to look at setting an external Database with Polyaxon.
 
@@ -68,18 +68,13 @@ We also recommend users to take snapshots and backups before going through a mig
 
 If you are running Polyaxon in production mode and using a cloud provider, you might think about using a managed version of one or several dependencies. please check:
 
- * [redis](/configuration/redis-ha/).
- * [rabbitmq](/configuration/rabbitmq-ha/).
- * [docker-registry](/configuration/docker-registry-ha/).
+ * [redis](/docs/setup/platform/redis-ha/).
+ * [rabbitmq](/docs/setup/platform/rabbitmq-ha/).
 
 ## Storages
 
 Your experiments and jobs outputs/artifacts and logs are stored by default in temporary storages, in order to enable durable, i.e. available after a node failure, we recommend that you read the following guides:
-  * [for outputs](/configuration/custom-outputs-storage/)
-  * [for logs](/configuration/custom-logs-storage/)
-
-If you are storing code references on Polyaxon, i.e. you managing code repos in-cluster, we also recommend a durable storage for repos:
-  * [for repos](/configuration/custom-repos-storage/)
+  * [artifacts store](/docs/setup/connections/artifacts/)
 
 ## SSL
 
