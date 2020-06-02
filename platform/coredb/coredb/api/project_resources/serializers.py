@@ -19,19 +19,19 @@ from rest_framework.exceptions import ValidationError
 
 from coredb.api.base.cloning import CloningMixin
 from coredb.api.base.is_managed import IsManagedMixin
+from coredb.api.base.settings import SettingsMixin
 from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import create_run
 from coredb.models.runs import Run
 from polyaxon.polyaxonfile import OperationSpecification
 
 
-class RunSerializer(
-    serializers.ModelSerializer, CloningMixin,
-):
+class RunSerializer(serializers.ModelSerializer, CloningMixin, SettingsMixin):
     uuid = fields.UUIDField(format="hex", read_only=True)
     original = fields.SerializerMethodField()
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
+    settings = fields.SerializerMethodField()
 
     class Meta:
         model = Run
@@ -53,6 +53,7 @@ class RunSerializer(
             "outputs",
             "tags",
             "deleted",
+            "settings",
         )
         extra_kwargs = {
             "is_managed": {"read_only": True},

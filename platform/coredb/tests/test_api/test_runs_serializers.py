@@ -16,24 +16,23 @@
 
 import pytest
 
-from coredb.api.runs.serializers import (
-    RunDetailSerializer,
-    RunSerializer,
-    RunStatusSerializer,
-)
+from coredb.api.runs.serializers import RunDetailSerializer, RunStatusSerializer
 from coredb.factories.runs import RunFactory
 from coredb.managers.statuses import new_run_status, new_run_stop_status
 from coredb.models.runs import Run
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyflow import V1CloningKind
+from polycommon import conf
+from polycommon.options.registry.k8s import K8S_NAMESPACE
 from tests.test_api.base import BaseTestRunSerializer
 
 
 @pytest.mark.serializers_mark
-class TestRunSerializer(BaseTestRunSerializer):
-    serializer_class = RunSerializer
+class TestRunDetailSerializer(BaseTestRunSerializer):
     model_class = Run
     factory_class = RunFactory
+    query = Run.objects
+    serializer_class = RunDetailSerializer
     expected_keys = {
         "uuid",
         "name",
@@ -52,8 +51,11 @@ class TestRunSerializer(BaseTestRunSerializer):
         "tags",
         "inputs",
         "outputs",
+        "deleted",
+        "settings",
+        "readme",
+        "content",
     }
-    query = Run.objects
 
     def create_one(self):
         return self.factory_class(project=self.project, user=self.user)
@@ -70,7 +72,6 @@ class TestRunSerializer(BaseTestRunSerializer):
 
     def test_serialize_one(self):
         obj1 = self.create_one_with_related()
-
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
@@ -81,37 +82,7 @@ class TestRunSerializer(BaseTestRunSerializer):
             "name": obj1.original.name,
             "kind": obj1.cloning_kind,
         }
-        data.pop("created_at")
-        data.pop("updated_at")
-        data.pop("started_at", None)
-        data.pop("finished_at", None)
-
-        for k, v in data.items():
-            assert getattr(obj1, k) == v
-
-
-@pytest.mark.serializers_mark
-class TestRunDetailSerializer(TestRunSerializer):
-    serializer_class = RunDetailSerializer
-    model_class = Run
-    factory_class = RunFactory
-    expected_keys = TestRunSerializer.expected_keys | {
-        "readme",
-        "content",
-    }
-
-    def test_serialize_one(self):
-        obj1 = self.create_one_with_related()
-        data = self.serializer_class(obj1).data
-
-        assert set(data.keys()) == self.expected_keys
-        assert data.pop("uuid") == obj1.uuid.hex
-        assert data.pop("project") == obj1.project.name
-        assert data.pop("original") == {
-            "uuid": obj1.original.uuid.hex,
-            "name": obj1.original.name,
-            "kind": obj1.cloning_kind,
-        }
+        assert data.pop("settings") == {"namespace": conf.get(K8S_NAMESPACE)}
         data.pop("created_at")
         data.pop("updated_at")
         data.pop("started_at", None)
@@ -124,7 +95,7 @@ class TestRunDetailSerializer(TestRunSerializer):
 
 
 @pytest.mark.serializers_mark
-class TestRunStatusSerializer(TestRunSerializer):
+class TestRunStatusSerializer(TestRunDetailSerializer):
     serializer_class = RunStatusSerializer
     model_class = Run
     factory_class = RunFactory

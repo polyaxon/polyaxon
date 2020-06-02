@@ -18,7 +18,7 @@ from django.db import IntegrityError
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
-from coredb.api.base.tags import TagsSerializerMixin
+from coredb.api.base.tags import TagsMixin
 from coredb.models.projects import Project
 
 
@@ -45,7 +45,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         )
 
 
-class ProjectDetailSerializer(ProjectSerializer, TagsSerializerMixin):
+class ProjectDetailSerializer(ProjectSerializer, TagsMixin):
     class Meta(ProjectSerializer.Meta):
         fields = ProjectSerializer.Meta.fields + ("readme",)
 

@@ -24,6 +24,8 @@ from coredb.factories.runs import RunFactory
 from coredb.models.runs import Run
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow import V1CloningKind
+from polycommon import conf
+from polycommon.options.registry.k8s import K8S_NAMESPACE
 from tests.test_api.base import BaseTestRunSerializer
 
 
@@ -49,6 +51,7 @@ class TestRunSerializer(BaseTestRunSerializer):
         "tags",
         "inputs",
         "outputs",
+        "settings",
         "deleted",
     }
     query = Run.objects
@@ -77,6 +80,7 @@ class TestRunSerializer(BaseTestRunSerializer):
             "name": obj1.original.name,
             "kind": obj1.cloning_kind,
         }
+        assert data.pop("settings") == {"namespace": conf.get(K8S_NAMESPACE)}
         data.pop("created_at")
         data.pop("updated_at")
         data.pop("started_at", None)

@@ -16,10 +16,10 @@
 
 from rest_framework import fields, serializers
 
-from coredb.api.base.cloning import CloningMixin
 from coredb.api.base.is_managed import IsManagedMixin
 from coredb.api.base.project import ProjectMixin
-from coredb.api.base.tags import TagsSerializerMixin
+from coredb.api.base.tags import TagsMixin
+from coredb.api.project_resources.serializers import RunSerializer
 from coredb.models.runs import Run
 
 
@@ -38,47 +38,13 @@ class RunStatusSerializer(serializers.ModelSerializer):
         }
 
 
-class RunSerializer(
-    serializers.ModelSerializer, ProjectMixin, CloningMixin,
-):
-    uuid = fields.UUIDField(format="hex", read_only=True)
-    original = fields.SerializerMethodField()
+class RunDetailSerializer(RunSerializer, ProjectMixin, IsManagedMixin, TagsMixin):
     project = fields.SerializerMethodField()
-    started_at = fields.DateTimeField(read_only=True)
-    finished_at = fields.DateTimeField(read_only=True)
-
-    class Meta:
-        model = Run
-        fields = (
-            "uuid",
-            "name",
-            "project",
-            "description",
-            "created_at",
-            "updated_at",
-            "started_at",
-            "finished_at",
-            "run_time",
-            "kind",
-            "meta_info",
-            "status",
-            "original",
-            "is_managed",
-            "inputs",
-            "outputs",
-            "tags",
-        )
-        extra_kwargs = {
-            "is_managed": {"read_only": True},
-        }
-
-
-class RunDetailSerializer(RunSerializer, IsManagedMixin, TagsSerializerMixin):
     merge = fields.BooleanField(write_only=True, required=False)
     content = fields.SerializerMethodField()
 
     class Meta(RunSerializer.Meta):
-        fields = RunSerializer.Meta.fields + ("readme", "content", "merge",)
+        fields = RunSerializer.Meta.fields + ("project", "readme", "content", "merge",)
 
     def validate(self, attrs):
         attrs = super().validate(attrs)

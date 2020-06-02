@@ -14,22 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, List, Optional
+from rest_framework import serializers
+
+from polycommon import conf
+from polycommon.options.registry.k8s import K8S_NAMESPACE
 
 
-class TagsMixin:
-    @staticmethod
-    def validated_tags(validated_data: Dict, tags: Optional[List[str]]):
-        new_tags = validated_data.get("tags")
+class SettingsMixin:
+    settings = serializers.SerializerMethodField()
 
-        if new_tags:
-            new_tags = list(set(new_tags))
-            validated_data["tags"] = new_tags
-
-        if not validated_data.get("merge") or not tags or not new_tags:
-            # This is the default behavior
-            return validated_data
-
-        new_tags = tags + [tag for tag in new_tags if tag not in tags]
-        validated_data["tags"] = new_tags
-        return validated_data
+    def get_settings(self, obj):
+        return {"namespace": conf.get(K8S_NAMESPACE)}

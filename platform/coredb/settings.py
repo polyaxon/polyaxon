@@ -45,6 +45,7 @@ def configure():
         INSTALLED_APPS=INSTALLED_APPS,
         SECRET_KEY="secret",
         CONF_BACKEND="polycommon.conf.service.ConfService",
+        K8S_NAMESPACE="test",
         CONF_CHECK_OWNERSHIP=False,
         STORE_OPTION="env",
         OPERATIONS_BACKEND=None,
