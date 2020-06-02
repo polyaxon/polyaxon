@@ -200,8 +200,6 @@ class ComposeOperator(CmdOperator):
                 "POLYAXON_ADMIN_VIEW_ENABLED", config.admin_view_enabled or False
             )
         )
-        if config.admin_models:
-            env.append(template.format("POLYAXON_ADMIN_MODELS", config.admin_models))
         if config.timezone:
             env.append(template.format("POLYAXON_TIMEZONE", config.timezone or False))
         env += cls._generate_worker_env(config)
