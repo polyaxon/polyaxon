@@ -73,8 +73,6 @@ class ConfigManager(BaseConfigManager):
         self._chart_version = self.get_string(
             "POLYAXON_CHART_VERSION", is_optional=True, default="1.0.9"
         )
-        self._version = "1.0.9"
-
         self._redis_protocol = self.get_string(
             "POLYAXON_REDIS_PROTOCOL", is_optional=True, default="redis"
         )
@@ -95,10 +93,6 @@ class ConfigManager(BaseConfigManager):
     @property
     def chart_version(self) -> str:
         return self._chart_version
-
-    @property
-    def version(self) -> str:
-        return self._version
 
     @property
     def service(self) -> str:
