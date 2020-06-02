@@ -145,7 +145,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     >>> params:
     >>>   loss:
     >>>     value: MeanSquaredError
-    >>>   preprocess
+    >>>   preprocess:
     >>>     value: true
     >>>   accuracy:
     >>>     value: 0.1
