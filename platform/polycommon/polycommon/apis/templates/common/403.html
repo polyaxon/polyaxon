@@ -1,0 +1,19 @@
+{% extends "common/error_index.html" %}
+{% load static %}
+
+{% block index %}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="jumbotron jumbotron-action">
+                <div class="text-center">
+                    <img src="{% static 'images/403.svg' %}?version={{ version }}" alt="403" height="300">
+                </div>
+                <div id="main">
+                    <h1>Unauthorized </h1>
+                    <p>You don't have authorisation to view this page.</p>
+                    <h3><a href="/" title="home" class="brand">Polyaxon</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
