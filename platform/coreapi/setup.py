@@ -64,7 +64,7 @@ setup(
     ],
     install_requires=[
         "celery==4.4.2",
-        "Django==3.0.6",
+        "Django==3.0.7",
         "django-cors-headers==3.2.1",
         "djangorestframework==3.11.0",
         "psycopg2-binary==2.8.3",

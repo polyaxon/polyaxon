@@ -2,7 +2,7 @@
 
 celery==4.4.2
 cryptography==2.7
-Django==3.0.5
+Django==3.0.7
 django-picklefield==2.0
 djangorestframework==3.11.0
 psycopg2-binary==2.8.3
