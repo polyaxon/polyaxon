@@ -1,10 +1,15 @@
 [![License: Apache 2](https://img.shields.io/badge/License-apache2-green.svg)](LICENSE)
+[![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://polyaxon.com/slack/)
+[![Docs](https://img.shields.io/badge/docs-stable-brightgreen.svg?style=flat)](https://polyaxon.com/docs/)
+[![Release](https://img.shields.io/badge/release-1.0.93-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/1.0.93)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/90c05b6b112548c1a88b950beceacb69)](https://www.codacy.com/app/polyaxon/polyaxon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon&amp;utm_campaign=Badge_Grade)
+[![GitHub](https://img.shields.io/badge/issue_tracker-github-blue?logo=github)](https://github.com/polyaxon/polyaxon/issues)
+[![GitHub](https://img.shields.io/badge/roadmap-github-blue?logo=github)](https://github.com/polyaxon/polyaxon/milestones)
+
 [![Polyaxon Operator](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Operator/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Operator%22)
 [![Polyaxon Core](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Core/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Core%22)
-[![Docs](https://img.shields.io/badge/docs-0.6.1-brightgreen.svg?style=flat)](https://polyaxon.com/docs/)
-[![Release](https://img.shields.io/badge/release-0.6.1-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/0.6.1)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/90c05b6b112548c1a88b950beceacb69)](https://www.codacy.com/app/polyaxon/polyaxon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon&amp;utm_campaign=Badge_Grade)
-[![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://polyaxon.com/slack/)
+[![Polyaxon Api](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Api/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Api%22)
+[![Polyaxon scheduler](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20scheduler/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Scheduler%22)
 
 # Polyaxon
 
