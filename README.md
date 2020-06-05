@@ -13,7 +13,7 @@
 
 # Polyaxon
 
-Welcome to , a platform for building, training, and monitoring large scale deep learning applications.
+Welcome to Polyaxon, a platform for building, training, and monitoring large scale deep learning applications.
 We are making a system to solve reproducibility, automation, and scalability for machine learning applications.
 
 Polyaxon deploys into any data center, cloud provider, or can be hosted and managed by Polyaxon, and it supports all the major deep learning frameworks such as Tensorflow, MXNet, Caffe, Torch, etc.
