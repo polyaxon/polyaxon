@@ -85,7 +85,7 @@ or check the [command reference](/docs/core/cli/ops/)
 
 ## Start experiments
 
-We will interactively run some experiments inside the notebook:
+We will programmatically run some experiments inside the notebook:
 
 ```python
 from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager

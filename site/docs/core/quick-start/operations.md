@@ -74,7 +74,7 @@ in that case it will make sense to push more information to the component.
 
 ## Referencing a component
 
-Sine operations don't define a runtime, but just know how to execute components, they need to reference components.
+Since operations don't define a runtime, they need to reference components to run.
 
 Operations can reference components in several ways:
 
