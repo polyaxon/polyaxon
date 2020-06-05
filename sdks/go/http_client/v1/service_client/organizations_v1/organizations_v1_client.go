@@ -51,6 +51,8 @@ type ClientService interface {
 
 	GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error)
 
+	GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error)
+
 	ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error)
 
 	ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error)
@@ -61,9 +63,13 @@ type ClientService interface {
 
 	PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error)
 
+	PatchOrganizationSettings(params *PatchOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationSettingsOK, *PatchOrganizationSettingsNoContent, error)
+
 	UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error)
 
 	UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error)
+
+	UpdateOrganizationSettings(params *UpdateOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationSettingsOK, *UpdateOrganizationSettingsNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -285,6 +291,42 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 }
 
 /*
+  GetOrganizationSettings gets organization settings
+*/
+func (a *Client) GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationSettingsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetOrganizationSettings",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetOrganizationSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetOrganizationSettingsOK:
+		return value, nil, nil
+	case *GetOrganizationSettingsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetOrganizationSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   ListOrganizationMembers gets organization members
 */
 func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error) {
@@ -465,6 +507,42 @@ func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, 
 }
 
 /*
+  PatchOrganizationSettings patches oranization settings
+*/
+func (a *Client) PatchOrganizationSettings(params *PatchOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationSettingsOK, *PatchOrganizationSettingsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchOrganizationSettingsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchOrganizationSettings",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/orgs/{owner}/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &PatchOrganizationSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *PatchOrganizationSettingsOK:
+		return value, nil, nil
+	case *PatchOrganizationSettingsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchOrganizationSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   UpdateOrganization updates organization
 */
 func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error) {
@@ -533,6 +611,42 @@ func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateOrganizationMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateOrganizationSettings updates organization settings
+*/
+func (a *Client) UpdateOrganizationSettings(params *UpdateOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationSettingsOK, *UpdateOrganizationSettingsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateOrganizationSettingsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UpdateOrganizationSettings",
+		Method:             "PUT",
+		PathPattern:        "/api/v1/orgs/{owner}/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UpdateOrganizationSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateOrganizationSettingsOK:
+		return value, nil, nil
+	case *UpdateOrganizationSettingsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateOrganizationSettingsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

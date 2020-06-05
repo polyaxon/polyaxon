@@ -1,3 +1,3 @@
 -r ../../requirements/base.txt
 
-polyaxon-sdk==1.0.93
+polyaxon-sdk==1.0.94

@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.0.93";
+        version: "1.0.94";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -1399,6 +1399,29 @@ service OrganizationsV1 {
             delete: "/api/v1/orgs/{owner}/members/{user}"
         };
     }
+
+  // Get organization settings
+  rpc GetOrganizationSettings(OrganizationBodyRequest) returns (Organization) {
+      option (google.api.http) = {
+          get: "/api/v1/orgs/{owner}/settings"
+      };
+  }
+
+  // Update organization settings
+  rpc UpdateOrganizationSettings(OrganizationBodyRequest) returns (Organization) {
+      option (google.api.http) = {
+          put: "/api/v1/orgs/{owner}/settings"
+          body: "organization"
+      };
+  }
+
+  // Patch oranization settings
+  rpc PatchOrganizationSettings(OrganizationBodyRequest) returns (Organization) {
+      option (google.api.http) = {
+          patch: "/api/v1/orgs/{owner}/settings"
+          body: "organization"
+      };
+  }
 }
 
 

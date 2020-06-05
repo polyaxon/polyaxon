@@ -1,1 +1,1 @@
-polyaxon==1.0.93
+polyaxon==1.0.94

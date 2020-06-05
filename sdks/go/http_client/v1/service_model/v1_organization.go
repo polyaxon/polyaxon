@@ -44,6 +44,9 @@ type V1Organization struct {
 	// Current user's role in this org
 	Role string `json:"role,omitempty"`
 
+	// Settings
+	Settings interface{} `json:"settings,omitempty"`
+
 	// Optional last time the entity was updated
 	// Format: date-time
 	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`

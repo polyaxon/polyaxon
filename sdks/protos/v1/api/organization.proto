@@ -18,6 +18,7 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 // Organization specification
@@ -42,6 +43,9 @@ message Organization {
 
     // Current user's role in this org
     string role = 7;
+
+    // Settings
+    google.protobuf.Struct settings = 8;
 }
 
  // Request data to update organizations

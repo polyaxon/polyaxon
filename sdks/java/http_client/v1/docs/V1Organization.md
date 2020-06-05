@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **role** | **String** |  |  [optional]
+**settings** | [**Object**](.md) |  |  [optional]
 
 
 
