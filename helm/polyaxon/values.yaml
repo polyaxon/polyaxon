@@ -272,7 +272,7 @@ postgresql:
   # To use an external postgres instance:
   #  * set enabled to False, to disable the in-cluster deployment
   #  * configure external postgresql required attributes in services.postgresql
-  enabled: false
+  enabled: true
   connMaxAge: 60
   postgresqlUsername: polyaxon
   postgresqlPassword: polyaxon

@@ -46,6 +46,15 @@ data:
   POLYAXON_SSL_PATH:  {{ .Values.ssl.path | quote }}
   {{- end }}
   {{- end }}
-  # Services
-  POLYAXON_PROXY_SERVICES_PORT: {{ .Values.services.port | quote }}
   POLYAXON_K8S_IN_CLUSTER: "true"
+  # Services
+  {{- if (not (empty .Values.services)) }}
+  POLYAXON_PROXY_SERVICES_PORT: {{ .Values.services.port | quote }}
+  {{- end }}
+  # UI
+  {{- if (not (empty .Values.jsOffline)) }}
+  POLYAXON_JS_OFFLINE: {{ .Values.jsOffline | quote }}
+  {{- end }}
+  {{- if (not (empty .Values.uiEnabled)) }}
+  POLYAXON_UI_ENABLED: {{ .Values.uiEnabled | quote }}
+  {{- end }}

@@ -226,6 +226,8 @@ class DeploymentSchema(BaseCamelSchema):
     debug_mode = fields.Bool(allow_none=True)
     organization_key = fields.Str(allow_none=True)
     auth = fields.Nested(AuthSchema, allow_none=True)
+    js_offline = fields.Bool(allow_none=True)
+    ui_enabled = fields.Bool(allow_none=True)
 
     # Pending validation
     dns = fields.Raw(allow_none=True)
@@ -339,6 +341,8 @@ class DeploymentConfig(BaseConfig):
         auth=None,
         organization_key=None,
         dns=None,
+        js_offline=None,
+        ui_enabled=None
     ):
         validate_deployment_chart(
             deployment_chart=deployment_chart, agent=agent, environment=environment,
@@ -355,7 +359,7 @@ class DeploymentConfig(BaseConfig):
         )
         validate_gateway(gateway)
         self.deployment_type = deployment_type
-        self.deployment_chart = deployment_chart
+        self.deployment_chart = deployment_chart or DeploymentCharts.PLATFORM
         self.deployment_version = deployment_version
         self.namespace = namespace
         self.rbac = rbac
@@ -409,6 +413,8 @@ class DeploymentConfig(BaseConfig):
         self.debug_mode = debug_mode
         self.auth = auth
         self.organization_key = organization_key
+        self.js_offline = js_offline
+        self.ui_enabled = ui_enabled
         if self.deployment_chart == DeploymentCharts.AGENT:
             wrong_agent_deployment_keys(
                 polyaxon_secret=polyaxon_secret,
