@@ -4,7 +4,7 @@ about: Suggest an enhancement of an existing feature
 
 ---
 
-## Current behavior
+### Current behavior
 
 <!-- Describe the current behavior and how is limiting. -->
 
