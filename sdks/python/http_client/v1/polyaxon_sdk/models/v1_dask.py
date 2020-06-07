@@ -50,36 +50,51 @@ class V1Dask(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'kind': 'str',
-        'threads': 'int',
-        'scale': 'int',
-        'adapt_min': 'int',
-        'adapt_max': 'int',
-        'adapt_interval': 'str',
-        'environment': 'V1Environment',
-        'connections': 'list[str]',
-        'volumes': 'list[V1Volume]',
-        'init': 'list[V1Init]',
-        'sidecars': 'list[V1Container]',
-        'container': 'V1Container'
+        "kind": "str",
+        "threads": "int",
+        "scale": "int",
+        "adapt_min": "int",
+        "adapt_max": "int",
+        "adapt_interval": "str",
+        "environment": "V1Environment",
+        "connections": "list[str]",
+        "volumes": "list[V1Volume]",
+        "init": "list[V1Init]",
+        "sidecars": "list[V1Container]",
+        "container": "V1Container",
     }
 
     attribute_map = {
-        'kind': 'kind',
-        'threads': 'threads',
-        'scale': 'scale',
-        'adapt_min': 'adapt_min',
-        'adapt_max': 'adapt_max',
-        'adapt_interval': 'adapt_interval',
-        'environment': 'environment',
-        'connections': 'connections',
-        'volumes': 'volumes',
-        'init': 'init',
-        'sidecars': 'sidecars',
-        'container': 'container'
+        "kind": "kind",
+        "threads": "threads",
+        "scale": "scale",
+        "adapt_min": "adapt_min",
+        "adapt_max": "adapt_max",
+        "adapt_interval": "adapt_interval",
+        "environment": "environment",
+        "connections": "connections",
+        "volumes": "volumes",
+        "init": "init",
+        "sidecars": "sidecars",
+        "container": "container",
     }
 
-    def __init__(self, kind='dask', threads=None, scale=None, adapt_min=None, adapt_max=None, adapt_interval=None, environment=None, connections=None, volumes=None, init=None, sidecars=None, container=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        kind="dask",
+        threads=None,
+        scale=None,
+        adapt_min=None,
+        adapt_max=None,
+        adapt_interval=None,
+        environment=None,
+        connections=None,
+        volumes=None,
+        init=None,
+        sidecars=None,
+        container=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1Dask - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -385,18 +400,20 @@ class V1Dask(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

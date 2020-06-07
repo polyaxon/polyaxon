@@ -342,7 +342,7 @@ class DeploymentConfig(BaseConfig):
         organization_key=None,
         dns=None,
         js_offline=None,
-        ui_enabled=None
+        ui_enabled=None,
     ):
         validate_deployment_chart(
             deployment_chart=deployment_chart, agent=agent, environment=environment,

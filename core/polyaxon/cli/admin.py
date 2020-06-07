@@ -87,7 +87,9 @@ def deploy(config_file, manager_path, check, dry_run):
         config=config, filepath=config_file, manager_path=manager_path, dry_run=dry_run
     )
     exception = None
-    Printer.print_success("Polyaxon `{}` deployment file is valid.".format(config.deployment_chart))
+    Printer.print_success(
+        "Polyaxon `{}` deployment file is valid.".format(config.deployment_chart)
+    )
     if check:
         try:
             manager.check()
@@ -141,7 +143,9 @@ def upgrade(config_file, manager_path, check, dry_run):
         config=config, filepath=config_file, manager_path=manager_path, dry_run=dry_run
     )
     exception = None
-    Printer.print_success("Polyaxon `{}` deployment file is valid.".format(config.deployment_chart))
+    Printer.print_success(
+        "Polyaxon `{}` deployment file is valid.".format(config.deployment_chart)
+    )
     if check:
         try:
             manager.check()

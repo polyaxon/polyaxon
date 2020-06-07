@@ -35,10 +35,7 @@ import re  # noqa: F401
 import six
 
 from polyaxon_sdk.api_client import ApiClient
-from polyaxon_sdk.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from polyaxon_sdk.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class SearchesV1Api(object):
@@ -75,7 +72,7 @@ class SearchesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.create_search_with_http_info(owner, body, **kwargs)  # noqa: E501
 
     def create_search_with_http_info(self, owner, body, **kwargs):  # noqa: E501
@@ -105,41 +102,46 @@ class SearchesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'body'
-        ]
+        all_params = ["owner", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_search" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `create_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `create_search`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `create_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `create_search`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
 
@@ -149,34 +151,42 @@ class SearchesV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/searches', 'POST',
+            "/api/v1/orgs/{owner}/searches",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Search',  # noqa: E501
+            response_type="V1Search",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_search(self, owner, uuid, **kwargs):  # noqa: E501
         """Delete search  # noqa: E501
@@ -200,7 +210,7 @@ class SearchesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.delete_search_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def delete_search_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
@@ -230,43 +240,48 @@ class SearchesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'uuid'
-        ]
+        all_params = ["owner", "uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_search" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `delete_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `delete_search`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `uuid` when calling `delete_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "uuid" not in local_var_params
+            or local_var_params["uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `uuid` when calling `delete_search`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'uuid' in local_var_params:
-            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "uuid" in local_var_params:
+            path_params["uuid"] = local_var_params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -277,14 +292,16 @@ class SearchesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/searches/{uuid}', 'DELETE',
+            "/api/v1/orgs/{owner}/searches/{uuid}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -293,11 +310,14 @@ class SearchesV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_search(self, owner, uuid, **kwargs):  # noqa: E501
         """Get search  # noqa: E501
@@ -321,7 +341,7 @@ class SearchesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.get_search_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def get_search_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
@@ -351,43 +371,48 @@ class SearchesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'uuid'
-        ]
+        all_params = ["owner", "uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_search" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `get_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `get_search`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `uuid` when calling `get_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "uuid" not in local_var_params
+            or local_var_params["uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `uuid` when calling `get_search`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'uuid' in local_var_params:
-            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "uuid" in local_var_params:
+            path_params["uuid"] = local_var_params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -398,27 +423,32 @@ class SearchesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/searches/{uuid}', 'GET',
+            "/api/v1/orgs/{owner}/searches/{uuid}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Search',  # noqa: E501
+            response_type="V1Search",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_search_names(self, owner, **kwargs):  # noqa: E501
         """List search names  # noqa: E501
@@ -445,7 +475,7 @@ class SearchesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_search_names_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_search_names_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -478,50 +508,56 @@ class SearchesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_search_names" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_search_names`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_search_names`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -530,27 +566,32 @@ class SearchesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/searches/names', 'GET',
+            "/api/v1/orgs/{owner}/searches/names",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListSearchesResponse',  # noqa: E501
+            response_type="V1ListSearchesResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_searches(self, owner, **kwargs):  # noqa: E501
         """List searches  # noqa: E501
@@ -577,7 +618,7 @@ class SearchesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_searches_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_searches_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -610,50 +651,56 @@ class SearchesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_searches" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_searches`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_searches`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -662,27 +709,32 @@ class SearchesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/searches', 'GET',
+            "/api/v1/orgs/{owner}/searches",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListSearchesResponse',  # noqa: E501
+            response_type="V1ListSearchesResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def patch_search(self, owner, search_uuid, body, **kwargs):  # noqa: E501
         """Patch search  # noqa: E501
@@ -707,10 +759,14 @@ class SearchesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.patch_search_with_http_info(owner, search_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.patch_search_with_http_info(
+            owner, search_uuid, body, **kwargs
+        )  # noqa: E501
 
-    def patch_search_with_http_info(self, owner, search_uuid, body, **kwargs):  # noqa: E501
+    def patch_search_with_http_info(
+        self, owner, search_uuid, body, **kwargs
+    ):  # noqa: E501
         """Patch search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -738,48 +794,56 @@ class SearchesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'search_uuid',
-            'body'
-        ]
+        all_params = ["owner", "search_uuid", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_search" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `patch_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `patch_search`"
+            )  # noqa: E501
         # verify the required parameter 'search_uuid' is set
-        if self.api_client.client_side_validation and ('search_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['search_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `search_uuid` when calling `patch_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "search_uuid" not in local_var_params
+            or local_var_params["search_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `search_uuid` when calling `patch_search`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `patch_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `patch_search`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'search_uuid' in local_var_params:
-            path_params['search.uuid'] = local_var_params['search_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "search_uuid" in local_var_params:
+            path_params["search.uuid"] = local_var_params["search_uuid"]  # noqa: E501
 
         query_params = []
 
@@ -789,34 +853,42 @@ class SearchesV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/searches/{search.uuid}', 'PATCH',
+            "/api/v1/orgs/{owner}/searches/{search.uuid}",
+            "PATCH",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Search',  # noqa: E501
+            response_type="V1Search",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def update_search(self, owner, search_uuid, body, **kwargs):  # noqa: E501
         """Update search  # noqa: E501
@@ -841,10 +913,14 @@ class SearchesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.update_search_with_http_info(owner, search_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.update_search_with_http_info(
+            owner, search_uuid, body, **kwargs
+        )  # noqa: E501
 
-    def update_search_with_http_info(self, owner, search_uuid, body, **kwargs):  # noqa: E501
+    def update_search_with_http_info(
+        self, owner, search_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -872,48 +948,56 @@ class SearchesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'search_uuid',
-            'body'
-        ]
+        all_params = ["owner", "search_uuid", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_search" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `update_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `update_search`"
+            )  # noqa: E501
         # verify the required parameter 'search_uuid' is set
-        if self.api_client.client_side_validation and ('search_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['search_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `search_uuid` when calling `update_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "search_uuid" not in local_var_params
+            or local_var_params["search_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `search_uuid` when calling `update_search`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `update_search`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `update_search`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'search_uuid' in local_var_params:
-            path_params['search.uuid'] = local_var_params['search_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "search_uuid" in local_var_params:
+            path_params["search.uuid"] = local_var_params["search_uuid"]  # noqa: E501
 
         query_params = []
 
@@ -923,31 +1007,39 @@ class SearchesV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/searches/{search.uuid}', 'PUT',
+            "/api/v1/orgs/{owner}/searches/{search.uuid}",
+            "PUT",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Search',  # noqa: E501
+            response_type="V1Search",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

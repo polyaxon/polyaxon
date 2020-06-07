@@ -71,7 +71,33 @@ class V1ArtifactKind(object):
     TENSORBOARD = "tensorboard"
     CURVE = "curve"
 
-    allowable_values = [MODEL, AUDIO, VIDEO, HISTOGRAM, IMAGE, TENSOR, DATAFRAME, CHART, CSV, TSV, PSV, SSV, METRIC, ENV, HTML, TEXT, FILE, DIR, DOCKERFILE, DOCKER_IMAGE, DATA, CODEREF, TABLE, TENSORBOARD, CURVE]  # noqa: E501
+    allowable_values = [
+        MODEL,
+        AUDIO,
+        VIDEO,
+        HISTOGRAM,
+        IMAGE,
+        TENSOR,
+        DATAFRAME,
+        CHART,
+        CSV,
+        TSV,
+        PSV,
+        SSV,
+        METRIC,
+        ENV,
+        HTML,
+        TEXT,
+        FILE,
+        DIR,
+        DOCKERFILE,
+        DOCKER_IMAGE,
+        DATA,
+        CODEREF,
+        TABLE,
+        TENSORBOARD,
+        CURVE,
+    ]  # noqa: E501
 
     """
     Attributes:
@@ -80,11 +106,9 @@ class V1ArtifactKind(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    openapi_types = {
-    }
+    openapi_types = {}
 
-    attribute_map = {
-    }
+    attribute_map = {}
 
     def __init__(self, local_vars_configuration=None):  # noqa: E501
         """V1ArtifactKind - a model defined in OpenAPI"""  # noqa: E501
@@ -100,18 +124,20 @@ class V1ArtifactKind(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

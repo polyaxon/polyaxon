@@ -27,7 +27,7 @@
 """
 
 
-from setuptools import setup, find_packages  # noqa: H301
+from setuptools import find_packages, setup  # noqa: H301
 
 NAME = "polyaxon-sdk"
 VERSION = "1.0.94"
@@ -47,11 +47,15 @@ setup(
     author="Polyaxon sdk",
     author_email="contact@polyaxon.com",
     url="",
-    keywords=["OpenAPI", "OpenAPI-Generator", "Polyaxon SDKs and REST API specification."],
+    keywords=[
+        "OpenAPI",
+        "OpenAPI-Generator",
+        "Polyaxon SDKs and REST API specification.",
+    ],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description="""\
     Polyaxon SDKs and REST API specification.  # noqa: E501
-    """
+    """,
 )

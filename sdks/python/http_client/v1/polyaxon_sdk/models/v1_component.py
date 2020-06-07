@@ -50,38 +50,54 @@ class V1Component(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'version': 'float',
-        'kind': 'str',
-        'name': 'str',
-        'description': 'str',
-        'tags': 'list[str]',
-        'profile': 'str',
-        'queue': 'str',
-        'cache': 'V1Cache',
-        'termination': 'V1Termination',
-        'plugins': 'V1Plugins',
-        'inputs': 'list[V1IO]',
-        'outputs': 'list[V1IO]',
-        'run': 'object'
+        "version": "float",
+        "kind": "str",
+        "name": "str",
+        "description": "str",
+        "tags": "list[str]",
+        "profile": "str",
+        "queue": "str",
+        "cache": "V1Cache",
+        "termination": "V1Termination",
+        "plugins": "V1Plugins",
+        "inputs": "list[V1IO]",
+        "outputs": "list[V1IO]",
+        "run": "object",
     }
 
     attribute_map = {
-        'version': 'version',
-        'kind': 'kind',
-        'name': 'name',
-        'description': 'description',
-        'tags': 'tags',
-        'profile': 'profile',
-        'queue': 'queue',
-        'cache': 'cache',
-        'termination': 'termination',
-        'plugins': 'plugins',
-        'inputs': 'inputs',
-        'outputs': 'outputs',
-        'run': 'run'
+        "version": "version",
+        "kind": "kind",
+        "name": "name",
+        "description": "description",
+        "tags": "tags",
+        "profile": "profile",
+        "queue": "queue",
+        "cache": "cache",
+        "termination": "termination",
+        "plugins": "plugins",
+        "inputs": "inputs",
+        "outputs": "outputs",
+        "run": "run",
     }
 
-    def __init__(self, version=None, kind=None, name=None, description=None, tags=None, profile=None, queue=None, cache=None, termination=None, plugins=None, inputs=None, outputs=None, run=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        name=None,
+        description=None,
+        tags=None,
+        profile=None,
+        queue=None,
+        cache=None,
+        termination=None,
+        plugins=None,
+        inputs=None,
+        outputs=None,
+        run=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1Component - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -409,18 +425,20 @@ class V1Component(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 
