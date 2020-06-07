@@ -16,7 +16,6 @@ metadata:
     app.kubernetes.io/component: {{ .Values.types.config }}
     app.kubernetes.io/managed-by: "helm"
 data:
-  POLYAXON_K8S_IN_CLUSTER: "false"
   # Cluster
   {{- if .Values.allowedHosts }}
   POLYAXON_ALLOWED_HOSTS: {{ toJson .Values.allowedHosts | quote }}
@@ -27,6 +26,7 @@ data:
   POLYAXON_PASSWORD_LENGTH: {{ default "6" .Values.passwordLength | quote }}
   POLYAXON_ADMIN_VIEW_ENABLED: {{ default "false" .Values.adminViewEnabled | quote }}
   # Email
+  {{- if .Values.email.enabled }}
   {{- if .Values.email.from }}
   POLYAXON_EMAIL_FROM: {{ .Values.email.from | quote }}
   {{- end }}
@@ -42,11 +42,24 @@ data:
   {{- if .Values.email.backend }}
   POLYAXON_EMAIL_BACKEND: {{ .Values.email.backend | quote }}
   {{- end }}
+  {{- end }}
+  {{- if .Values.scheduler.enabled }}
   POLYAXON_SCHEDULER_ENABLED: {{ .Values.scheduler.enabled | quote }}
+  {{ if ( .Values.broker ) and eq .Values.broker "redis" -}}
+  POLYAXON_BROKER_BACKEND: {{ .Values.broker }}
+  POLYAXON_REDIS_CELERY_BROKER_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/0
+  POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/1
+  POLYAXON_REDIS_HOST: "{{ template "redis.host" . }}"
+  POLYAXON_REDIS_PORT: "{{ template "redis.port" . }}"
+  {{- else }}
+  POLYAXON_AMQP_URL: "{{ template "rabbitmq.host" . }}:{{ template "rabbitmq.port" . }}"
+  POLYAXON_RABBITMQ_USER: "{{ template "rabbitmq.user" . }}"
+  {{- end }}
   # Queues
   POLYAXON_INTERVALS_RUNS_SCHEDULER: {{ .Values.intervals.runsScheduler | quote }}
   POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operationsDefaultRetryDelay | quote }}
   POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY: {{ .Values.intervals.operationsMaxRetryDelay | quote }}
+  {{- end }}
   # DB
   POLYAXON_DB_USER: {{ template "pgsql.user" . }}
   POLYAXON_DB_NAME: {{ template "pgsql.database" . }}
@@ -54,25 +67,14 @@ data:
   POLYAXON_DB_CONN_MAX_AGE: "{{ template "pgsql.connMaxAge" . }}"
   POLYAXON_DB_HOST: "{{ template "pgsql.host" . }}"
   # Broker
-  {{ if ( .Values.broker ) and eq .Values.broker "redis" -}}
-  POLYAXON_BROKER_BACKEND: {{ .Values.broker }}
-  POLYAXON_REDIS_CELERY_BROKER_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/0
-  {{- else }}
-  POLYAXON_AMQP_URL: {{ template "rabbitmq.host" . }}:{{ template "rabbitmq.port" . }}
-  POLYAXON_RABBITMQ_USER: {{ template "rabbitmq.user" . }}
-  {{- end }}
-  # REDIS
-  POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/1
-  POLYAXON_REDIS_SESSIONS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/5
-  POLYAXON_REDIS_HEARTBEAT_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/8
-  POLYAXON_REDIS_HOST: "{{ template "redis.host" . }}"
-  POLYAXON_REDIS_PORT: "{{ template "redis.port" . }}"
   # Security Context
   {{- if and .Values.securityContext.enabled }}
   POLYAXON_SECURITY_CONTEXT_USER: {{ .Values.securityContext.user | quote }}
   POLYAXON_SECURITY_CONTEXT_GROUP: {{ .Values.securityContext.group | quote }}
   {{- end }}
+  {{- if .Values.tracker }}
   POLYAXON_TRACKER_BACKEND: {{ default "noop" .Values.trackerBackend | quote }}
+  {{- end }}
   # Auth
   {{- if .Values.ldap.enabled }}
   POLYAXON_AUTH_LDAP: "true"

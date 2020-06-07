@@ -485,6 +485,7 @@ roles:
   dashboard: "polyaxon-dashboard"
 
 email:
+  enabled: false
   host: smtp
   port: 25
   useTls: false

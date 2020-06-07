@@ -17,6 +17,7 @@ Platform envFrom
 - configMapRef:
     name: {{ template "polyaxon.fullname" . }}-platform-config
 {{- if (not .Values.organizationKey) }}
+- configMapRef:
     name: {{ template "polyaxon.fullname" . }}-agent-config
 {{- end }}
 {{- end -}}
@@ -25,15 +26,20 @@ Platform envFrom
 secrets config
 */}}
 {{- define "config.envs" -}}
+{{- if (index .Values "rabbitmq-ha").enabled }}
 - name: POLYAXON_RABBITMQ_PASSWORD
   valueFrom:
     secretKeyRef:
-{{- if (index .Values "rabbitmq-ha").enabled }}
       name: {{ template "rabbitmq.fullname" . }}
-{{- else }}
-      name: {{ template "polyaxon.fullname" . }}-rabbitmq-secret
-{{- end }}
       key: rabbitmq-password
+{{- end }}
+{{- if and (not (index .Values "rabbitmq-ha").enabled) .Values.scheduler.enabled (eq (.Values.broker | default "rabbitmq") "rabbitmq") }}
+- name: POLYAXON_RABBITMQ_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-rabbitmq-secret
+      key: rabbitmq-password
+{{- end }}
 {{- if and .Values.redis.enabled .Values.redis.usePassword }}
 - name: POLYAXON_REDIS_PASSWORD
   valueFrom:
