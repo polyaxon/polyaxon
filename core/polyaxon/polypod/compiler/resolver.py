@@ -31,8 +31,9 @@ def resolve(
     compiled_operation: V1CompiledOperation,
     params: Optional[Dict[str, Dict]],
     run=None,
-    resolver_cls=CoreResolver,
+    resolver_cls=None,
 ):
+    resolver_cls = resolver_cls or CoreResolver
     run_kind = compiled_operation.get_run_kind()
     if run_kind not in resolver_cls.KINDS:
         raise PolyaxonCompilerError(
