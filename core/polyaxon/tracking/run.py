@@ -1172,5 +1172,5 @@ class Run(RunClient):
         Called automatically if track_env is set to True.
         """
         env_data = get_run_env()
-        with open(os.path.join(self._outputs_path, ".polyaxon"), "w") as env_file:
+        with open(os.path.join(self._outputs_path, "env.json"), "w") as env_file:
             env_file.write(ujson.dumps(env_data))
