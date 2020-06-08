@@ -21,6 +21,7 @@ from tests.utils import BaseTestCase
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1BucketConnection, V1ClaimConnection
 from polyaxon.containers.containers import V1PolyaxonInitContainer
+from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.containers.names import INIT_ARTIFACTS_CONTAINER
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
@@ -30,9 +31,8 @@ from polyaxon.polypod.init.artifacts import (
     get_artifacts_store_args,
     init_artifact_context_args,
 )
-from polyaxon.polypod.init.store import get_base_store_container
-from polyaxon.schemas.types import V1ConnectionType
-from polyaxon.utils.path_utils import get_path
+from polyaxon.polypod.init.store import get_base_store_container, get_volume_args
+from polyaxon.schemas.types import V1ArtifactsType, V1ConnectionType
 
 
 @pytest.mark.polypod_mark
@@ -50,7 +50,7 @@ class TestInitOutputsStore(BaseTestCase):
                 polyaxon_init=V1PolyaxonInitContainer(),
                 artifacts_store=None,
                 run_path="",
-                clean=None,
+                auto_resume=True,
             )
 
     def test_get_artifacts_path_container_with_bucket_store(self):
@@ -65,7 +65,16 @@ class TestInitOutputsStore(BaseTestCase):
             ),
             artifacts_store=store,
             run_path="run_uid",
-            clean=False,
+            auto_resume=True,
+        )
+
+        init_args = init_artifact_context_args("run_uid")
+        init_args.append(
+            get_volume_args(
+                store=store,
+                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                artifacts=V1ArtifactsType(dirs=["run_uid"]),
+            )
         )
 
         assert container == get_base_store_container(
@@ -78,8 +87,7 @@ class TestInitOutputsStore(BaseTestCase):
             env=[],
             env_from=[],
             volume_mounts=[get_artifacts_context_mount()],
-            args=[" ".join(init_artifact_context_args("run_uid"))],
-            is_artifact_store=True,
+            args=[" ".join(init_args)],
         )
 
     def test_get_artifacts_path_container_with_managed_mount_store(self):
@@ -94,13 +102,15 @@ class TestInitOutputsStore(BaseTestCase):
             ),
             artifacts_store=store,
             run_path="run_uid",
-            clean=True,
+            auto_resume=True,
         )
 
         init_args = init_artifact_context_args("run_uid")
         init_args.append(
-            get_artifacts_store_args(
-                artifacts_path=get_path(store.store_path, "run_uid"), clean=True
+            get_volume_args(
+                store=store,
+                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                artifacts=V1ArtifactsType(dirs=["run_uid"]),
             )
         )
 
@@ -115,7 +125,6 @@ class TestInitOutputsStore(BaseTestCase):
             env_from=[],
             volume_mounts=[get_artifacts_context_mount()],
             args=[" ".join(init_args)],
-            is_artifact_store=True,
         )
 
     def test_get_artifacts_path_container_with_non_managed_mount_store(self):
@@ -130,15 +139,18 @@ class TestInitOutputsStore(BaseTestCase):
             ),
             artifacts_store=store,
             run_path="run_uid",
-            clean=True,
+            auto_resume=True,
         )
 
         init_args = init_artifact_context_args("run_uid")
         init_args.append(
-            get_artifacts_store_args(
-                artifacts_path=get_path(store.store_path, "run_uid"), clean=True
+            get_volume_args(
+                store=store,
+                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                artifacts=V1ArtifactsType(dirs=["run_uid"]),
             )
         )
+
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="init"),
             container_name=INIT_ARTIFACTS_CONTAINER.format("default"),
@@ -150,7 +162,6 @@ class TestInitOutputsStore(BaseTestCase):
             env_from=[],
             volume_mounts=[get_artifacts_context_mount()],
             args=[" ".join(init_args)],
-            is_artifact_store=True,
         )
 
         container = get_artifacts_path_container(
@@ -159,15 +170,10 @@ class TestInitOutputsStore(BaseTestCase):
             ),
             artifacts_store=store,
             run_path="run_uid",
-            clean=False,
+            auto_resume=False,
         )
 
         init_args = init_artifact_context_args("run_uid")
-        init_args.append(
-            get_artifacts_store_args(
-                artifacts_path=get_path(store.store_path, "run_uid"), clean=False
-            )
-        )
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="init"),
             container_name=INIT_ARTIFACTS_CONTAINER.format("default"),
@@ -179,5 +185,4 @@ class TestInitOutputsStore(BaseTestCase):
             env_from=[],
             volume_mounts=[get_artifacts_context_mount()],
             args=[" ".join(init_args)],
-            is_artifact_store=True,
         )

@@ -196,6 +196,7 @@ class BaseAgent:
                 run_name=run_name,
                 run_uuid=run_uuid,
                 content=content,
+                default_auth=True,
             )
         except PolypodException as e:
             self.log_run_failed(

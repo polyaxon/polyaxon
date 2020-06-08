@@ -13,10 +13,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.logger import clean_outputs
+from polyaxon.managers.client import ClientConfigManager
+from polyaxon.utils.formatting import Printer
 
 
 @click.command()
@@ -52,6 +56,19 @@ def port_forward(port, namespace, release):
         "svc/{}-polyaxon-gateway".format(release),
         "{}:80".format(port),
     ]
-    print("Polyaxon will be available at: localhost:{}".format(port))
+
+    try:
+        _config = ClientConfigManager.get_config_or_default()
+    except Exception as e:
+        handle_cli_error(e, message="Polyaxon load configuration.")
+        Printer.print_header(
+            "You can reset your config by running: polyaxon config purge"
+        )
+        sys.exit(1)
+
+    _config.host = "http://localhost:{}".format(port)
+    ClientConfigManager.set_config(_config)
+    Printer.print_header("Client configuration is updated!")
+    Printer.print_success("Polyaxon will be available at: {}".format(_config.host))
     stdout = kubectl.execute(args=args, is_json=False)
     click.echo(stdout)

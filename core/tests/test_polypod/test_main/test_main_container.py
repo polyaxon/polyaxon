@@ -517,6 +517,7 @@ class TestMainContainer(BaseTestCase):
             collect_logs=True,
             collect_artifacts=True,
             collect_resources=True,
+            auto_resume=True,
             sync_statuses=True,
         )
 

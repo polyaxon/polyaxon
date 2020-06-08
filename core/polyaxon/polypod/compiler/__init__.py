@@ -29,6 +29,7 @@ def make(
     compiled_operation: V1CompiledOperation,
     params: Optional[Dict],
     internal_auth: bool = False,
+    default_auth: bool = False,
 ):
     resolver_obj, compiled_operation = resolver.resolve(
         compiled_operation=compiled_operation,
@@ -55,4 +56,5 @@ def make(
         config_maps=resolver_obj.config_maps,
         polyaxon_sidecar=resolver_obj.polyaxon_sidecar,
         polyaxon_init=resolver_obj.polyaxon_init,
+        default_auth=default_auth,
     )

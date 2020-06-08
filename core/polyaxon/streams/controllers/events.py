@@ -72,11 +72,15 @@ async def process_operation_event(
 
 
 async def get_archived_operation_resource(
-    run_uuid: str, event_kind: str, event_name: str, orient: str = V1Events.ORIENT_CSV
+    run_uuid: str,
+    event_kind: str,
+    event_name: str,
+    orient: str = V1Events.ORIENT_CSV,
+    check_cache: bool = True,
 ) -> Optional[Dict]:
 
     subpath = get_resource_path(run_path=run_uuid, kind=event_kind, name=event_name)
-    events_path = await download_file(subpath)
+    events_path = await download_file(subpath, check_cache=check_cache)
 
     return await process_operation_event(
         events_path=events_path,
@@ -87,11 +91,15 @@ async def get_archived_operation_resource(
 
 
 async def get_archived_operation_event(
-    run_uuid: str, event_kind: str, event_name: str, orient: str = V1Events.ORIENT_CSV
+    run_uuid: str,
+    event_kind: str,
+    event_name: str,
+    orient: str = V1Events.ORIENT_CSV,
+    check_cache: bool = True,
 ) -> Optional[Dict]:
 
     subpath = get_event_path(run_path=run_uuid, kind=event_kind, name=event_name)
-    events_path = await download_file(subpath)
+    events_path = await download_file(subpath, check_cache=check_cache)
 
     return await process_operation_event(
         events_path=events_path,
@@ -106,6 +114,7 @@ async def get_archived_operation_resources(
     event_kind: str,
     event_names: Set[str],
     orient: str = V1Events.ORIENT_CSV,
+    check_cache: bool = True,
 ) -> List[Dict]:
     events = []
     if not event_names:
@@ -117,6 +126,7 @@ async def get_archived_operation_resources(
             event_kind=event_kind,
             event_name=event_name,
             orient=orient,
+            check_cache=check_cache,
         )
         if event:
             events.append(event)
@@ -128,6 +138,7 @@ async def get_archived_operation_events(
     event_kind: str,
     event_names: Set[str],
     orient: str = V1Events.ORIENT_CSV,
+    check_cache: bool = True,
 ) -> List[Dict]:
     events = []
     for event_name in event_names:
@@ -136,6 +147,7 @@ async def get_archived_operation_events(
             event_kind=event_kind,
             event_name=event_name,
             orient=orient,
+            check_cache=check_cache,
         )
         if event:
             events.append(event)
@@ -147,6 +159,7 @@ async def get_archived_operations_events(
     run_uuids: Set[str],
     event_names: Set[str],
     orient: str = V1Events.ORIENT_CSV,
+    check_cache: bool = True,
 ) -> Dict[str, List]:
     events = {}
     for run_uuid in run_uuids:
@@ -155,6 +168,7 @@ async def get_archived_operations_events(
             event_kind=event_kind,
             event_names=event_names,
             orient=orient,
+            check_cache=check_cache,
         )
         events[run_uuid] = run_events
     return events

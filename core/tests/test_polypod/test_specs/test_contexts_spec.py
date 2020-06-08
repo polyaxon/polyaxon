@@ -67,8 +67,16 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.sync_statuses is True
 
     def test_get_from_empty_env(self):
-        spec = PluginsContextsSpec.from_config(V1Plugins())
+        spec = PluginsContextsSpec.from_config(V1Plugins(), default_auth=True)
         assert spec.auth is True
+        assert spec.docker is False
+        assert spec.shm is True
+        assert spec.collect_artifacts is True
+        assert spec.collect_logs is True
+        assert spec.sync_statuses is True
+
+        spec = PluginsContextsSpec.from_config(V1Plugins())
+        assert spec.auth is False
         assert spec.docker is False
         assert spec.shm is True
         assert spec.collect_artifacts is True

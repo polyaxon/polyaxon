@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **collectLogs** | **Boolean** |  |  [optional]
 **collectResources** | **String** |  |  [optional]
 **syncStatuses** | **Boolean** |  |  [optional]
+**autoResume** | **Boolean** |  |  [optional]
 **logLevel** | **String** |  |  [optional]
 **notifications** | [**List&lt;V1Notification&gt;**](V1Notification.md) |  |  [optional]
 

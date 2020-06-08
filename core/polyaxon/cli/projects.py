@@ -164,7 +164,17 @@ def ls(owner, limit, offset):
     objects = list_dicts_to_tabulate(
         [o.to_dict() for o in response.results],
         humanize_values=True,
-        exclude_attrs=["uuid", "description"],
+        exclude_attrs=[
+            "uuid",
+            "readme",
+            "description",
+            "is_deleted",
+            "owner",
+            "user_email",
+            "teams",
+            "role",
+            "settings",
+        ],
     )
     if objects:
         Printer.print_header("Projects:")

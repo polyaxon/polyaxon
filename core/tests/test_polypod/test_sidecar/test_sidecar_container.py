@@ -98,7 +98,7 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=213,
             ),
             artifacts_store=None,
-            contexts=PluginsContextsSpec.from_config(None),
+            contexts=PluginsContextsSpec.from_config(None, default_auth=True),
             run_path=None,
         )
         assert sidecar is None
@@ -125,7 +125,7 @@ class TestSidecarContainer(BaseTestCase):
             ),
             artifacts_store=mount_non_managed_store,
             contexts=PluginsContextsSpec.from_config(
-                V1Plugins(collect_logs=False, collect_artifacts=False)
+                V1Plugins(collect_logs=False, collect_artifacts=False, auth=True)
             ),
             run_path=None,
         )
@@ -152,7 +152,7 @@ class TestSidecarContainer(BaseTestCase):
             ),
             artifacts_store=bucket_non_managed_store,
             contexts=PluginsContextsSpec.from_config(
-                V1Plugins(collect_logs=False, collect_artifacts=False)
+                V1Plugins(collect_logs=False, collect_artifacts=False, auth=True)
             ),
             run_path=None,
         )
@@ -251,7 +251,7 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=bucket_managed_store,
-            contexts=PluginsContextsSpec.from_config(None),
+            contexts=PluginsContextsSpec.from_config(None, default_auth=True),
             run_path="test",
         )
 
@@ -290,7 +290,7 @@ class TestSidecarContainer(BaseTestCase):
             ),
             artifacts_store=bucket_managed_store,
             contexts=PluginsContextsSpec.from_config(
-                V1Plugins(collect_artifacts=False)
+                V1Plugins(collect_artifacts=False, auth=True)
             ),
             run_path="test",
         )
@@ -328,7 +328,9 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=bucket_managed_store,
-            contexts=PluginsContextsSpec.from_config(V1Plugins(collect_logs=False)),
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(collect_logs=False, auth=True)
+            ),
             run_path="test",
         )
 
@@ -387,7 +389,7 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=bucket_managed_store,
-            contexts=PluginsContextsSpec.from_config(None),
+            contexts=PluginsContextsSpec.from_config(None, default_auth=True),
             run_path="test",
         )
 
@@ -427,7 +429,7 @@ class TestSidecarContainer(BaseTestCase):
             ),
             artifacts_store=bucket_managed_store,
             contexts=PluginsContextsSpec.from_config(
-                V1Plugins(collect_artifacts=False)
+                V1Plugins(collect_artifacts=False, auth=True)
             ),
             run_path="test",
         )
@@ -466,7 +468,9 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=bucket_managed_store,
-            contexts=PluginsContextsSpec.from_config(V1Plugins(collect_logs=False)),
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(collect_logs=False, auth=True)
+            ),
             run_path="test",
         )
 
@@ -522,7 +526,7 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=bucket_managed_store,
-            contexts=PluginsContextsSpec.from_config(None),
+            contexts=PluginsContextsSpec.from_config(None, default_auth=True),
             run_path="test",
         )
 
@@ -561,7 +565,7 @@ class TestSidecarContainer(BaseTestCase):
             ),
             artifacts_store=bucket_managed_store,
             contexts=PluginsContextsSpec.from_config(
-                V1Plugins(collect_artifacts=False)
+                V1Plugins(collect_artifacts=False, auth=True)
             ),
             run_path="test",
         )
@@ -599,7 +603,9 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=bucket_managed_store,
-            contexts=PluginsContextsSpec.from_config(V1Plugins(collect_logs=False)),
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(collect_logs=False, auth=True)
+            ),
             run_path="test",
         )
 
@@ -649,7 +655,7 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=mount_managed_store,
-            contexts=PluginsContextsSpec.from_config(None),
+            contexts=PluginsContextsSpec.from_config(None, default_auth=True),
             run_path="test",
         )
 
@@ -687,7 +693,7 @@ class TestSidecarContainer(BaseTestCase):
             ),
             artifacts_store=mount_managed_store,
             contexts=PluginsContextsSpec.from_config(
-                V1Plugins(collect_artifacts=False)
+                V1Plugins(collect_artifacts=False, auth=True)
             ),
             run_path="test",
         )
@@ -724,7 +730,9 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=mount_managed_store,
-            contexts=PluginsContextsSpec.from_config(V1Plugins(collect_logs=False)),
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(collect_logs=False, auth=True)
+            ),
             run_path="test",
         )
 
@@ -776,7 +784,7 @@ class TestSidecarContainer(BaseTestCase):
                 sync_interval=212,
             ),
             artifacts_store=blob_managed_store,
-            contexts=PluginsContextsSpec.from_config(None),
+            contexts=PluginsContextsSpec.from_config(None, default_auth=True),
             run_path="test",
         )
 
@@ -817,6 +825,7 @@ class TestSidecarContainer(BaseTestCase):
             collect_logs=True,
             collect_artifacts=True,
             collect_resources=True,
+            auto_resume=True,
             sync_statuses=True,
         )
 

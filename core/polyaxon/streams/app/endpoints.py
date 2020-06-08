@@ -55,6 +55,7 @@ async def get_logs(request):
     owner = request.path_params["owner"]
     project = request.path_params["project"]
     run_uuid = request.path_params["run_uuid"]
+    force = to_bool(request.query_params.get("force"), handle_none=True)
     resource_name = get_resource_name(run_uuid=run_uuid)
     operation = get_run_instance(owner=owner, project=project, run_uuid=run_uuid)
     last_time = QueryParams(request.url.query).get("last_time")
@@ -91,7 +92,7 @@ async def get_logs(request):
     else:
         last_time = None
         operation_logs, last_file = await get_archived_operation_logs(
-            run_uuid=run_uuid, last_file=last_file
+            run_uuid=run_uuid, last_file=last_file, check_cache=not force
         )
     if k8s_manager:
         await k8s_manager.close()
@@ -133,6 +134,7 @@ async def collect_logs(request):
 
 async def get_multi_runs_events(request):
     event_kind = request.path_params["event_kind"]
+    force = to_bool(request.query_params.get("force"), handle_none=True)
     if event_kind not in V1ArtifactKind.allowable_values:
         raise HTTPException(
             detail="received an unrecognisable event {}.".format(event_kind),
@@ -149,6 +151,7 @@ async def get_multi_runs_events(request):
         event_kind=event_kind,
         event_names=event_names,
         orient=orient,
+        check_cache=not force,
     )
     return UJSONResponse({"data": events})
 
@@ -156,6 +159,7 @@ async def get_multi_runs_events(request):
 async def get_run_events(request):
     run_uuid = request.path_params["run_uuid"]
     event_kind = request.path_params["event_kind"]
+    force = to_bool(request.query_params.get("force"), handle_none=True)
     if event_kind not in V1ArtifactKind.allowable_values:
         raise HTTPException(
             detail="received an unrecognisable event {}.".format(event_kind),
@@ -166,7 +170,11 @@ async def get_run_events(request):
     orient = orient or V1Events.ORIENT_DICT
     event_names = {e for e in event_names.split(",") if e} if event_names else set([])
     events = await get_archived_operation_events(
-        run_uuid=run_uuid, event_kind=event_kind, event_names=event_names, orient=orient
+        run_uuid=run_uuid,
+        event_kind=event_kind,
+        event_names=event_names,
+        orient=orient,
+        check_cache=not force,
     )
     return UJSONResponse({"data": events})
 
@@ -175,6 +183,7 @@ async def get_run_resources(request):
     run_uuid = request.path_params["run_uuid"]
     event_names = request.query_params.get("names")
     orient = request.query_params.get("orient")
+    force = to_bool(request.query_params.get("force"), handle_none=True)
     orient = orient or V1Events.ORIENT_DICT
     event_names = {e for e in event_names.split(",") if e} if event_names else set([])
     events = await get_archived_operation_resources(
@@ -182,6 +191,7 @@ async def get_run_resources(request):
         event_kind=V1ArtifactKind.METRIC,
         event_names=event_names,
         orient=orient,
+        check_cache=not force,
     )
     return UJSONResponse({"data": events})
 
@@ -253,13 +263,14 @@ async def download_artifact(request):
     run_uuid = request.path_params["run_uuid"]
     filepath = request.query_params.get("path", "")
     stream = to_bool(request.query_params.get("stream"), handle_none=True)
+    force = to_bool(request.query_params.get("force"), handle_none=True)
     if not filepath:
         return Response(
             content="A `path` query param is required to stream a file content",
             status_code=status.HTTP_400_BAD_REQUEST,
         )
     subpath = "{}/{}".format(run_uuid, filepath).rstrip("/")
-    archived_path = await download_file(subpath=subpath)
+    archived_path = await download_file(subpath=subpath, check_cache=not force)
     if not archived_path:
         return Response(
             content="Artifact not found: filepath={}".format(archived_path),

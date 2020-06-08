@@ -152,3 +152,6 @@ imagePullSecrets: []
 artifactsStore:
 connections: []
 notificationConnections: []
+
+# Include helm chart release revision
+includeChartRevision: false

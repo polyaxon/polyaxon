@@ -140,40 +140,38 @@ def get_base_store_container(
     env_from: List[k8s_schemas.V1EnvFromSource],
     volume_mounts: List[k8s_schemas.V1VolumeMount],
     args: List[str],
-    is_artifact_store: Optional[bool] = False,
 ) -> Optional[k8s_schemas.V1Container]:
     env = env or []
     env_from = env_from or []
     volume_mounts = volume_mounts or []
 
     # Artifact store needs to allow init the contexts as well, so the store is not required
-    if not is_artifact_store and not store:
+    if not store:
         raise PolypodException("Init store container requires a store")
     secret = None
     if store.is_bucket:
-        if not is_artifact_store:
-            secret = store.get_secret()
-            volume_mounts = volume_mounts + to_list(
-                get_mount_from_resource(resource=secret), check_none=True
-            )
-            env = env + to_list(get_items_from_secret(secret=secret), check_none=True)
-            env_from = env_from + to_list(
-                get_env_from_secret(secret=secret), check_none=True
-            )
-            env += to_list(
-                get_connection_env_var(connection=store, secret=secret), check_none=True
-            )
+        secret = store.get_secret()
+        volume_mounts = volume_mounts + to_list(
+            get_mount_from_resource(resource=secret), check_none=True
+        )
+        env = env + to_list(get_items_from_secret(secret=secret), check_none=True)
+        env_from = env_from + to_list(
+            get_env_from_secret(secret=secret), check_none=True
+        )
+        env += to_list(
+            get_connection_env_var(connection=store, secret=secret), check_none=True
+        )
 
-            config_map = store.get_config_map()
-            volume_mounts = volume_mounts + to_list(
-                get_mount_from_resource(resource=config_map), check_none=True
-            )
-            env = env + to_list(
-                get_items_from_config_map(config_map=config_map), check_none=True
-            )
-            env_from = env_from + to_list(
-                get_env_from_config_map(config_map=config_map), check_none=True
-            )
+        config_map = store.get_config_map()
+        volume_mounts = volume_mounts + to_list(
+            get_mount_from_resource(resource=config_map), check_none=True
+        )
+        env = env + to_list(
+            get_items_from_config_map(config_map=config_map), check_none=True
+        )
+        env_from = env_from + to_list(
+            get_env_from_config_map(config_map=config_map), check_none=True
+        )
     else:
         volume_mounts = volume_mounts + to_list(
             get_mount_from_store(store=store), check_none=True

@@ -30,6 +30,7 @@ class PluginsSchema(BaseCamelSchema):
     collect_logs = fields.Bool(allow_none=True)
     collect_resources = fields.Bool(allow_none=True)
     sync_statuses = fields.Bool(allow_none=True)
+    auto_resume = fields.Bool(allow_none=True)
     log_level = fields.Str(allow_none=True)
     notifications = fields.List(fields.Nested(NotificationSchema), allow_none=True)
 
@@ -53,6 +54,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         collect_artifacts: bool, optional, default: True
         collect_logs: bool, optional, default: True
         collect_resources: bool, optional, default: True
+        auto_resume: bool, optional, default: True
         sync_statuses: bool, optional, default: True
         log_level: str, optional
         notifications: List[[V1Notification](/docs/core/specification/notifications/)]
@@ -67,6 +69,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   collectArtifacts:
     >>>   collectLogs:
     >>>   collectResources:
+    >>>   autoResume:
     >>>   syncStatuses:
     >>>   logLevel:
     >>>   notifications:
@@ -83,6 +86,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>     collect_artifacts=False,
     >>>     collect_logs=False,
     >>>     collect_resources=False
+    >>>     auto_resume=False,
     >>>     sync_statuses=False,
     >>>     log_level="INFO",
     >>>     notifications=[V1Notification(...)]
@@ -222,6 +226,20 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   collectResources: false
     ```
 
+    ### autoResume
+
+    <blockquote class="light">This plugin is enabled by default.</blockquote>
+
+    By default Polyaxon will resume from collecting metrics/outputs/artifacts
+    if a run fails and retries or if the user resume a run.
+
+    To disable this plugin:
+
+    ```yaml
+    >>> plugins:
+    >>>   autoResume: false
+    ```
+
     ### syncStatuses
 
     <blockquote class="light">This plugin is enabled by default.</blockquote>
@@ -281,6 +299,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         "collectArtifacts",
         "collectLogs",
         "collectResources",
+        "autoResume",
         "syncStatuses",
         "logLevel",
         "notifications",

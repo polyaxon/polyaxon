@@ -131,6 +131,7 @@ def runs_start(run_id: int, run: Optional[BaseRun]):
                 run_kind=run.kind,
                 namespace=conf.get(K8S_NAMESPACE),
                 in_cluster=in_cluster,
+                default_auth=False,
             )
     except PolyaxonK8SError as e:
         condition = V1StatusCondition.get_condition(

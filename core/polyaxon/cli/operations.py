@@ -21,6 +21,8 @@ import click
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon import settings
+from polyaxon.api import SERVICES_V1
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.upload import upload
 from polyaxon.client import RunClient
@@ -30,6 +32,7 @@ from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_l
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.run import RunManager
+from polyaxon.polyflow import V1RunKind
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import (
     Printer,
@@ -179,9 +182,13 @@ def ls(ctx, io, query, sort, limit, offset):
                 "content",
                 "deleted",
                 "readme",
-                "kind",
                 "settings",
                 "meta_info",
+                "original",
+                "pipeline",
+                "role",
+                "status_conditions",
+                "is_helper",
             ],
         )
     else:
@@ -198,6 +205,11 @@ def ls(ctx, io, query, sort, limit, offset):
                 "outputs",
                 "settings",
                 "meta_info",
+                "original",
+                "pipeline",
+                "role",
+                "status_conditions",
+                "is_helper",
             ],
         )
     if objects:
@@ -694,3 +706,64 @@ def artifacts(ctx):
         )
         sys.exit(1)
     Printer.print_success("Files downloaded.")
+
+
+@ops.command()
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
+@click.option(
+    "--external",
+    is_flag=True,
+    default=False,
+    help="Open the dashboard on a service URL and not on the dashboard URL.",
+)
+@click.option(
+    "--url", is_flag=True, default=False, help="Print the url of the dashboard."
+)
+@click.pass_context
+@clean_outputs
+def service(ctx, yes, external, url):
+    owner, project_name, run_uuid = get_project_run_or_local(
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+    )
+    client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
+    client.refresh_data()
+    if client.run_data.kind != V1RunKind.SERVICE:
+        Printer.print_warning(
+            "Command expected a operations of "
+            "kind `service` received kind: {}!".format(client.run_data.kind)
+        )
+        sys.exit(1)
+    dashboard_url = settings.CLIENT_CONFIG.host
+
+    namespace = "polyaxon"
+    if client.run_data.settings:
+        namespace = client.run_data.settings.namespace
+
+    run_url = "{}/{}/{}/runs/{}/service".format(
+        dashboard_url, owner, project_name, run_uuid
+    )
+    external_run_url = "{}/{}/{}/{}/{}/runs/{}/".format(
+        dashboard_url, SERVICES_V1, namespace, owner, project_name, run_uuid
+    )
+    if url:
+        Printer.print_header("The service will be available at: {}".format(run_url))
+        Printer.print_header(
+            "You can also view it in an external link at: {}".format(external_run_url)
+        )
+        sys.exit(0)
+    if not yes:
+        click.confirm(
+            "Dashboard page will now open in your browser. Continue?",
+            abort=True,
+            default=True,
+        )
+    if external:
+        click.launch(external_run_url)
+    click.launch(run_url)

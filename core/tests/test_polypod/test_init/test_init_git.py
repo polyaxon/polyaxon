@@ -112,7 +112,7 @@ class TestInitGit(BaseTestCase):
         container = get_git_init_container(
             polyaxon_init=V1PolyaxonInitContainer(image="foo", image_tag=""),
             connection=connection,
-            contexts=PluginsContextsSpec.from_config(V1Plugins()),
+            contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
         assert container.name == INIT_GIT_CONTAINER.format(connection.name)
         assert container.image == "foo"
@@ -135,7 +135,7 @@ class TestInitGit(BaseTestCase):
                 image="init/init", image_tag="", image_pull_policy="IfNotPresent"
             ),
             connection=connection,
-            contexts=PluginsContextsSpec.from_config(V1Plugins()),
+            contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
         assert container.name == INIT_GIT_CONTAINER.format(connection.name)
         assert container.image == "init/init"
@@ -167,7 +167,7 @@ class TestInitGit(BaseTestCase):
             ),
             connection=connection,
             mount_path="/somepath",
-            contexts=PluginsContextsSpec.from_config(V1Plugins()),
+            contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
         assert container.name == INIT_GIT_CONTAINER.format(connection.name)
         assert container.image == "init/init"

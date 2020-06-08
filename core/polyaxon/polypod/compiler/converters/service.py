@@ -33,11 +33,11 @@ class ServiceConverter(ServiceMixin, BaseConverter):
         connection_by_names: Dict[str, V1ConnectionType],
         secrets: Optional[Iterable[V1K8sResourceType]],
         config_maps: Optional[Iterable[V1K8sResourceType]],
-        is_resume: bool = False,
+        default_auth: bool = False,
     ) -> Dict:
         service = compiled_operation.run  # type: V1Service
         plugins = compiled_operation.plugins or V1Plugins()
-        contexts = PluginsContextsSpec.from_config(plugins)
+        contexts = PluginsContextsSpec.from_config(plugins, default_auth=default_auth)
         replica_spec = self.get_replica_resource(
             plugins=plugins,
             contexts=contexts,
@@ -52,7 +52,6 @@ class ServiceConverter(ServiceMixin, BaseConverter):
             secrets=secrets,
             config_maps=config_maps,
             ports=service.ports,
-            is_resume=is_resume,
         )
         return get_service_custom_resource(
             namespace=self.namespace,

@@ -22,7 +22,12 @@ from polyaxon.polypod.compiler.converters import PLATFORM_CONVERTERS
 
 
 def convert(
-    owner_name: str, project_name: str, run_name: str, run_uuid: str, content: str
+    owner_name: str,
+    project_name: str,
+    run_name: str,
+    run_uuid: str,
+    content: str,
+    default_auth: bool,
 ) -> Dict:
     polypod_config = PolypodConfig()
     compiled_operation = CompiledOperationSpecification.read(content)
@@ -43,4 +48,5 @@ def convert(
         secrets=polypod_config.secrets,
         config_maps=polypod_config.config_maps,
         converters=PLATFORM_CONVERTERS,
+        default_auth=default_auth,
     )

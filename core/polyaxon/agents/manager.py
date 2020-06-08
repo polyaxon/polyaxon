@@ -27,6 +27,7 @@ def start(
     run_uuid: str,
     namespace: str,
     in_cluster: bool = None,
+    default_auth: bool = False,
 ):
     resource = converter.convert(
         owner_name=owner_name,
@@ -34,6 +35,7 @@ def start(
         run_name=run_name,
         run_uuid=run_uuid,
         content=content,
+        default_auth=default_auth,
     )
     Spawner(namespace=namespace, in_cluster=in_cluster).create(
         run_uuid=run_uuid, run_kind=run_kind, resource=resource
@@ -49,6 +51,7 @@ def apply(
     run_uuid: str,
     namespace: str,
     in_cluster: bool = None,
+    default_auth: bool = False,
 ):
     resource = converter.convert(
         owner_name=owner_name,
@@ -56,6 +59,7 @@ def apply(
         run_name=run_name,
         run_uuid=run_uuid,
         content=content,
+        default_auth=default_auth,
     )
     Spawner(namespace=namespace, in_cluster=in_cluster).apply(
         run_uuid=run_uuid, run_kind=run_kind, resource=resource

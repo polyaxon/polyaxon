@@ -32,10 +32,12 @@ async def upload_logs(run_uuid: str, logs: List[V1Log]):
         )
     for c_logs in V1Logs.chunk_logs(logs):
         last_file = datetime.timestamp(c_logs.logs[-1].timestamp)
-        subpath = "{}/logs/{}".format(run_uuid, last_file)
+        subpath = "{}/plxlogs/{}".format(run_uuid, last_file)
         await upload_data(subpath=subpath, data=c_logs.to_dict(dump=True))
 
 
-async def download_logs_file(run_uuid: str, last_file: str) -> str:
-    subpath = "{}/logs/{}".format(run_uuid, last_file)
-    return await download_file(subpath)
+async def download_logs_file(
+    run_uuid: str, last_file: str, check_cache: bool = True
+) -> str:
+    subpath = "{}/plxlogs/{}".format(run_uuid, last_file)
+    return await download_file(subpath, check_cache=check_cache)

@@ -18,6 +18,7 @@ import os
 import shutil
 
 from concurrent import futures
+from typing import List
 
 from polyaxon.logger import logger
 from polyaxon.stores.base_store import StoreMixin
@@ -89,7 +90,13 @@ class LocalStore(StoreMixin):
         copy_file(filename=filename, path_to=path_to, use_basename=use_basename)
 
     def upload_dir(
-        self, dirname, path_to, use_basename=True, workers=0, last_time=None
+        self,
+        dirname,
+        path_to,
+        use_basename=True,
+        workers=0,
+        last_time=None,
+        exclude: List[str] = None,
     ):
         if use_basename:
             path_to = append_basename(path_to, dirname)
@@ -102,7 +109,7 @@ class LocalStore(StoreMixin):
 
         # Turn the path to absolute paths
         dirname = os.path.abspath(dirname)
-        with get_files_in_path_context(dirname) as files:
+        with get_files_in_path_context(dirname, exclude=exclude) as files:
             for f in files:
 
                 # If last time is provided we check if we should re-upload the file

@@ -28,6 +28,7 @@ from polyaxon.logger import logger
 from polyaxon.utils import constants
 
 # noqa
+from polyaxon.utils.list_utils import to_list
 
 
 def get_path(store_path: str, entity_path: str) -> str:
@@ -114,9 +115,12 @@ def get_files_by_paths(file_type, filepaths):
         f[1][1].close()
 
 
-def get_files_in_path(path: str) -> List[str]:
+def get_files_in_path(path: str, exclude: List[str] = None) -> List[str]:
     result_files = []
-    for root, dirs, files in os.walk(path):
+    for root, dirs, files in os.walk(path, topdown=True):
+        exclude = to_list(exclude, check_none=True)
+        if exclude:
+            dirs[:] = [d for d in dirs if d not in exclude]
         logger.debug("Root:%s, Dirs:%s", root, dirs)
         for file_name in files:
             result_files.append(os.path.join(root, file_name))
@@ -130,17 +134,18 @@ def get_dirs_under_path(path: str) -> List[str]:
 
 
 @contextmanager
-def get_files_in_path_context(path: str):
+def get_files_in_path_context(path: str, exclude: List[str] = None):
     """
     Gets all the files under a certain path.
 
     Args:
         path: `str`. The path to traverse for collecting files.
+        exclude: `list`. List of paths to excludes.
 
     Returns:
          list of files collected under the path.
     """
-    yield get_files_in_path(path)
+    yield get_files_in_path(path, exclude=exclude)
 
 
 def unix_style_path(path):

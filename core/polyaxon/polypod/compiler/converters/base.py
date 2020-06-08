@@ -312,7 +312,6 @@ class BaseConverter(ConverterAbstract):
         init_connections: List[V1Init],
         init_containers: List[k8s_schemas.V1Container],
         connection_by_names: Dict[str, V1ConnectionType],
-        is_resume: bool = False,
     ) -> List[k8s_schemas.V1Container]:
         init_containers = init_containers or []
         init_connections = init_connections or []
@@ -333,7 +332,7 @@ class BaseConverter(ConverterAbstract):
                     polyaxon_init=polyaxon_init,
                     artifacts_store=artifacts_store,
                     run_path=self.run_path,
-                    clean=not is_resume,
+                    auto_resume=contexts.auto_resume,
                 ),
                 check_none=True,
             )
@@ -369,7 +368,6 @@ class BaseConverter(ConverterAbstract):
         secrets: Optional[Iterable[V1K8sResourceType]],
         config_maps: Optional[Iterable[V1K8sResourceType]],
         ports: List[int] = None,
-        is_resume: bool = False,
         num_replicas: int = None,
     ) -> ReplicaSpec:
         volumes = volumes or []
@@ -397,7 +395,6 @@ class BaseConverter(ConverterAbstract):
             init_connections=init_connections,
             init_containers=self.filter_containers_from_init(init=init),
             connection_by_names=connection_by_names,
-            is_resume=is_resume,
         )
 
         sidecar_containers = self.get_sidecar_containers(

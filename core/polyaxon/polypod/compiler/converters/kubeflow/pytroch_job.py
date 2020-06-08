@@ -40,7 +40,7 @@ class PytorchJobConverter(PytorchJobMixin, BaseConverter):
         connection_by_names: Dict[str, V1ConnectionType],
         secrets: Optional[Iterable[V1K8sResourceType]],
         config_maps: Optional[Iterable[V1K8sResourceType]],
-        is_resume: bool = False,
+        default_auth: bool = False,
     ) -> Dict:
         job = compiled_operation.run  # type: V1PytorchJob
 
@@ -60,12 +60,11 @@ class PytorchJobConverter(PytorchJobMixin, BaseConverter):
                 connection_by_names=connection_by_names,
                 secrets=secrets,
                 config_maps=config_maps,
-                is_resume=is_resume,
                 num_replicas=replica.replicas,
             )
 
         plugins = compiled_operation.plugins or V1Plugins()
-        contexts = PluginsContextsSpec.from_config(plugins)
+        contexts = PluginsContextsSpec.from_config(plugins, default_auth=default_auth)
         master = _get_replica(job.master)
         worker = _get_replica(job.worker)
         labels = self.get_labels(version=pkg.VERSION, labels={})

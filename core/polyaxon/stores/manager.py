@@ -17,7 +17,7 @@
 import os
 
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 
 from polyaxon import settings
 from polyaxon.connections.getter import get_connection_from_type
@@ -77,6 +77,7 @@ def upload_file_or_dir(
     workers: int = 0,
     last_time: datetime = None,
     connection_type: V1ConnectionType = None,
+    exclude: List[str] = None,
 ):
     connection_type = connection_type or get_artifacts_connection()
 
@@ -87,7 +88,12 @@ def upload_file_or_dir(
         store_manager.upload_file(path_from, path_to, use_basename=False)
     else:
         store_manager.upload_dir(
-            path_from, path_to, use_basename=False, workers=workers, last_time=last_time
+            path_from,
+            path_to,
+            use_basename=False,
+            workers=workers,
+            last_time=last_time,
+            exclude=exclude,
         )
 
 

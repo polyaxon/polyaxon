@@ -27,6 +27,7 @@ data:
   POLYAXON_ADMIN_VIEW_ENABLED: {{ default "false" .Values.adminViewEnabled | quote }}
   # Email
   {{- if .Values.email.enabled }}
+  EMAIL_ENABLED: {{ .Values.enabled | quote }}
   {{- if .Values.email.from }}
   POLYAXON_EMAIL_FROM: {{ .Values.email.from | quote }}
   {{- end }}
@@ -45,10 +46,12 @@ data:
   {{- end }}
   {{- if .Values.scheduler.enabled }}
   POLYAXON_SCHEDULER_ENABLED: {{ .Values.scheduler.enabled | quote }}
-  {{ if ( .Values.broker ) and eq .Values.broker "redis" -}}
+  {{- if ( .Values.broker ) and eq .Values.broker "redis" }}
   POLYAXON_BROKER_BACKEND: {{ .Values.broker }}
   POLYAXON_REDIS_CELERY_BROKER_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/0
   POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/1
+  POLYAXON_REDIS_SESSIONS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/2
+  POLYAXON_REDIS_HEARTBEAT_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/3
   POLYAXON_REDIS_HOST: "{{ template "redis.host" . }}"
   POLYAXON_REDIS_PORT: "{{ template "redis.port" . }}"
   {{- else }}

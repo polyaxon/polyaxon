@@ -23,17 +23,20 @@ from polyaxon.polyflow import V1Plugins
 class PluginsContextsSpec(
     namedtuple(
         "PluginsContextsSpec",
-        "auth docker shm collect_logs collect_artifacts collect_resources sync_statuses",
+        "auth docker shm collect_logs collect_artifacts collect_resources auto_resume sync_statuses",
     )
 ):
     @classmethod
-    def from_config(cls, config: V1Plugins) -> "PluginsContextsSpec":
-        auth = True
+    def from_config(
+        cls, config: V1Plugins, default_auth: bool = False
+    ) -> "PluginsContextsSpec":
+        auth = default_auth
         docker = False
         shm = True
         collect_logs = True
         collect_artifacts = True
         collect_resources = True
+        auto_resume = True
         sync_statuses = True
         if config:
             if config.collect_logs is not None:
@@ -42,6 +45,8 @@ class PluginsContextsSpec(
                 collect_artifacts = config.collect_artifacts
             if config.collect_resources is not None:
                 collect_resources = config.collect_resources
+            if config.auto_resume is not None:
+                auto_resume = config.auto_resume
             if config.sync_statuses is not None:
                 sync_statuses = config.sync_statuses
             if config.auth is not None:
@@ -54,6 +59,7 @@ class PluginsContextsSpec(
             auth = False
             collect_logs = False
             collect_artifacts = False
+            auto_resume = False
 
         return cls(
             auth=auth,
@@ -62,5 +68,6 @@ class PluginsContextsSpec(
             collect_logs=collect_logs,
             collect_artifacts=collect_artifacts,
             collect_resources=collect_resources,
+            auto_resume=auto_resume,
             sync_statuses=sync_statuses,
         )

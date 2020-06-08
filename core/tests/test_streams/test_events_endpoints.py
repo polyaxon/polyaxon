@@ -15,6 +15,7 @@
 # limitations under the License.
 import os
 import pandas as pd
+import shutil
 
 from tests.test_streams.base import get_streams_client, set_store
 from tests.utils import BaseTestCase
@@ -87,6 +88,56 @@ class TestEventsEndpoints(BaseTestCase):
         with open("{}/{}.plx".format(event_kind_path, name), "+w") as f:
             f.write(events.get_csv_header())
             f.write(events.get_csv_events())
+
+    def test_download_events_cached(self):
+        filepath1 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root, "uuid", "events", "text", "text1.plx"
+        )
+        filepath2 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root, "uuid", "events", "text", "text2.plx"
+        )
+        assert os.path.exists(filepath1) is False
+        assert os.path.exists(filepath2) is False
+        response = self.client.get(self.base_url + "/text?names=text1,text2&orient=csv")
+        assert response.status_code == 200
+        assert os.path.exists(filepath1) is True
+        assert os.path.exists(filepath2) is True
+
+        shutil.rmtree(self.run_events)
+        response = self.client.get(self.base_url + "/text?names=text1,text2&orient=csv")
+        assert response.status_code == 200
+        assert os.path.exists(filepath1) is True
+        assert os.path.exists(filepath2) is True
+
+        shutil.rmtree(
+            os.path.join(settings.CLIENT_CONFIG.archive_root, "uuid", "events")
+        )
+        response = self.client.get(self.base_url + "/text?names=text1,text2&orient=csv")
+        assert response.status_code == 200
+        assert os.path.exists(filepath1) is False
+        assert os.path.exists(filepath2) is False
+
+    def test_download_events_cached_force(self):
+        filepath1 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root, "uuid", "events", "text", "text1.plx"
+        )
+        filepath2 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root, "uuid", "events", "text", "text2.plx"
+        )
+        assert os.path.exists(filepath1) is False
+        assert os.path.exists(filepath2) is False
+        response = self.client.get(self.base_url + "/text?names=text1,text2&orient=csv")
+        assert response.status_code == 200
+        assert os.path.exists(filepath1) is True
+        assert os.path.exists(filepath2) is True
+
+        shutil.rmtree(self.run_events)
+        response = self.client.get(
+            self.base_url + "/text?names=text1,text2&orient=csv&force=true"
+        )
+        assert response.status_code == 200
+        assert os.path.exists(filepath1) is False
+        assert os.path.exists(filepath2) is False
 
     def test_download_text_events_as_csv(self):
         filepath1 = os.path.join(
@@ -366,6 +417,119 @@ class TestMultiRunsEventsEndpoints(BaseTestCase):
         with open("{}/{}.plx".format(event_kind_path, name), "+w") as f:
             f.write(events.get_csv_header())
             f.write(events.get_csv_events())
+
+    def test_download_multi_metric_events_cached(self):
+        filepath11 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root,
+            "uuid1",
+            "events",
+            "metric",
+            "metric1.plx",
+        )
+        filepath12 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root,
+            "uuid1",
+            "events",
+            "metric",
+            "metric2.plx",
+        )
+        filepath21 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root,
+            "uuid2",
+            "events",
+            "metric",
+            "metric1.plx",
+        )
+        filepath22 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root,
+            "uuid2",
+            "events",
+            "metric",
+            "metric2.plx",
+        )
+
+        response = self.client.get(
+            self.base_url + "/metric?names=metric1,metric2&runs=uuid1,uuid2&orient=dict"
+        )
+        assert response.status_code == 200
+        assert os.path.exists(filepath11) is True
+        assert os.path.exists(filepath12) is True
+        assert os.path.exists(filepath21) is True
+        assert os.path.exists(filepath22) is True
+
+        shutil.rmtree(self.run1_path)
+        shutil.rmtree(self.run2_path)
+
+        response = self.client.get(
+            self.base_url + "/metric?names=metric1,metric2&runs=uuid1,uuid2&orient=dict"
+        )
+        assert response.status_code == 200
+        assert os.path.exists(filepath11) is True
+        assert os.path.exists(filepath12) is True
+        assert os.path.exists(filepath21) is True
+        assert os.path.exists(filepath22) is True
+
+        shutil.rmtree(os.path.join(settings.CLIENT_CONFIG.archive_root, "uuid1"))
+        response = self.client.get(
+            self.base_url + "/metric?names=metric1,metric2&runs=uuid1,uuid2&orient=dict"
+        )
+        assert response.status_code == 200
+        assert os.path.exists(filepath11) is False
+        assert os.path.exists(filepath12) is False
+        assert os.path.exists(filepath21) is True
+        assert os.path.exists(filepath22) is True
+
+    def test_download_multi_metric_events_cached_force(self):
+        filepath11 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root,
+            "uuid1",
+            "events",
+            "metric",
+            "metric1.plx",
+        )
+        filepath12 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root,
+            "uuid1",
+            "events",
+            "metric",
+            "metric2.plx",
+        )
+        filepath21 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root,
+            "uuid2",
+            "events",
+            "metric",
+            "metric1.plx",
+        )
+        filepath22 = os.path.join(
+            settings.CLIENT_CONFIG.archive_root,
+            "uuid2",
+            "events",
+            "metric",
+            "metric2.plx",
+        )
+
+        response = self.client.get(
+            self.base_url + "/metric?names=metric1,metric2&runs=uuid1,uuid2&orient=dict"
+        )
+        assert response.status_code == 200
+        assert os.path.exists(filepath11) is True
+        assert os.path.exists(filepath12) is True
+        assert os.path.exists(filepath21) is True
+        assert os.path.exists(filepath22) is True
+
+        shutil.rmtree(self.run1_path)
+        shutil.rmtree(self.run2_path)
+
+        response = self.client.get(
+            self.base_url
+            + "/metric?names=metric1,metric2&runs=uuid1,uuid2&orient=dict&force=true"
+        )
+        assert response.status_code == 200
+        assert os.path.exists(filepath11) is False
+        assert os.path.exists(filepath12) is False
+        assert os.path.exists(filepath21) is False
+        assert os.path.exists(filepath22) is False
 
     def test_download_multi_metric_events_as_dict(self):
         filepath11 = os.path.join(

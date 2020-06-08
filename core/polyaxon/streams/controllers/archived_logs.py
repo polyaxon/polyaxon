@@ -27,7 +27,7 @@ from polyaxon.streams.tasks.logs import download_logs_file
 
 @functools.lru_cache(maxsize=30)
 def get_logs_files(run_uuid: str) -> List[str]:
-    files = list_files(subpath="{}/logs".format(run_uuid))
+    files = list_files(subpath="{}/plxlogs".format(run_uuid))
     if not files["files"]:
         return []
     return sorted([f for f in files["files"].keys()])
@@ -53,7 +53,7 @@ async def get_next_file(run_uuid: str, last_file: str = None) -> Optional[str]:
 
 
 async def get_archived_operation_logs(
-    run_uuid: str, last_file: Optional[str]
+    run_uuid: str, last_file: Optional[str], check_cache: bool = True
 ) -> Tuple[List[V1Log], Optional[str]]:
 
     logs = []
@@ -61,7 +61,9 @@ async def get_archived_operation_logs(
     if not last_file:
         return logs, last_file
 
-    logs_path = await download_logs_file(run_uuid=run_uuid, last_file=last_file)
+    logs_path = await download_logs_file(
+        run_uuid=run_uuid, last_file=last_file, check_cache=check_cache
+    )
 
     if not os.path.exists(logs_path):
         return logs, last_file

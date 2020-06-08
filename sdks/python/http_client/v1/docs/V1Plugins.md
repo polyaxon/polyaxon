@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **collect_logs** | **bool** |  | [optional] 
 **collect_resources** | **str** |  | [optional] 
 **sync_statuses** | **bool** |  | [optional] 
+**auto_resume** | **bool** |  | [optional] 
 **log_level** | **str** |  | [optional] 
 **notifications** | [**list[V1Notification]**](V1Notification.md) |  | [optional] 
 

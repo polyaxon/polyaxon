@@ -17,7 +17,7 @@ import logging
 import os
 
 from concurrent import futures
-from typing import Optional
+from typing import List, Optional
 
 from azure.core.exceptions import HttpResponseError
 from azure.storage.blob import BlobServiceClient
@@ -235,6 +235,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
         use_basename=True,
         workers=0,
         last_time=None,
+        exclude: List[str] = None,
     ):
         """
         Uploads a local directory to Azure Blob service.
@@ -244,7 +245,9 @@ class AzureBlobStoreService(AzureService, StoreMixin):
             blob: `str`. blob to upload to.
             container_name: `str`. the name of the container.
             use_basename: `bool`. whether or not to use the basename of the directory.
-            last_time: `datetime`. if provided, it will only upload the file if changed after last_time.
+            last_time: `datetime`. if provided,
+                        it will only upload the file if changed after last_time.
+            exclude: `list`. List of paths to exclude.
         """
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
@@ -256,7 +259,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
         # Turn the path to absolute paths
         dirname = os.path.abspath(dirname)
-        with get_files_in_path_context(dirname) as files:
+        with get_files_in_path_context(dirname, exclude=exclude) as files:
             for f in files:
 
                 # If last time is provided we check if we should re-upload the file

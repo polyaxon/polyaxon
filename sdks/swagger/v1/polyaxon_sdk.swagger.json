@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.94",
+    "version": "1.0.95",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -15308,6 +15308,11 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional flag to tell Polyaxon to sync statuses"
+        },
+        "auto_resume": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Auto resume a run's artifacts (applies to resume and retries), works if collects_artifacts is enabled"
         },
         "log_level": {
           "type": "string",

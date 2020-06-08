@@ -69,6 +69,26 @@ class TestFiles(BaseTestCase):
         with open(fpath3, "w") as f:
             f.write("data3")
 
+        dirname3 = tempfile.mkdtemp(prefix=dirname + "/")
+        fpath4 = dirname3 + "/test4.txt"
+        with open(fpath4, "w") as f:
+            f.write("data1")
+
+        fpath5 = dirname3 + "/test5.txt"
+        with open(fpath5, "w") as f:
+            f.write("data2")
+
+        dirname4 = tempfile.mkdtemp(prefix=dirname3 + "/")
+        fpath6 = dirname4 + "/test6.txt"
+        with open(fpath6, "w") as f:
+            f.write("data3")
+
         with get_files_in_path_context(dirname) as files:
+            assert len(files) == 6
+            assert set(files) == {fpath1, fpath2, fpath3, fpath4, fpath5, fpath6}
+
+        with get_files_in_path_context(
+            dirname, exclude=[dirname3.split("/")[-1]]
+        ) as files:
             assert len(files) == 3
             assert set(files) == {fpath1, fpath2, fpath3}

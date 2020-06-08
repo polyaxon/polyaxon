@@ -53,6 +53,7 @@ def get_notifier_operation(
                 collect_logs=False,
                 collect_artifacts=False,
                 collect_resources=False,
+                auto_resume=False,
                 sync_statuses=False,
             ),
             inputs=[

@@ -37,7 +37,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon-coredb",
-    version="1.0.94",
+    version="1.0.95",
     description="Core db models for Polyaxon.",
     maintainer="Polyaxon, Inc.",
     maintainer_email="contact@polyaxon.com",

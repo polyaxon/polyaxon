@@ -18,14 +18,16 @@ from typing import List, Optional
 
 from polyaxon.constants import DEFAULT
 from polyaxon.containers.containers import V1PolyaxonInitContainer
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
+from polyaxon.containers.contexts import (
+    CONTEXT_MOUNT_ARTIFACTS,
+    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
+)
 from polyaxon.containers.names import INIT_ARTIFACTS_CONTAINER
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.mounts import get_artifacts_context_mount
-from polyaxon.polypod.init.store import get_base_store_container
-from polyaxon.schemas.types import V1ConnectionType
-from polyaxon.utils.path_utils import get_path
+from polyaxon.polypod.init.store import get_base_store_container, get_volume_args
+from polyaxon.schemas.types import V1ArtifactsType, V1ConnectionType
 
 
 def get_artifacts_store_args(artifacts_path: str, clean: bool) -> str:
@@ -56,16 +58,19 @@ def get_artifacts_path_container(
     polyaxon_init: V1PolyaxonInitContainer,
     artifacts_store: V1ConnectionType,
     run_path: str,
-    clean: bool = True,
+    auto_resume: bool,
 ) -> Optional[k8s_schemas.V1Container]:
     if not artifacts_store:
         raise PolypodException("Init artifacts container requires a store.")
 
     init_args = init_artifact_context_args(run_path=run_path)
-    if not artifacts_store.is_bucket:
-        artifacts_path = get_path(artifacts_store.store_path, run_path)
+    if auto_resume:
         init_args.append(
-            get_artifacts_store_args(artifacts_path=artifacts_path, clean=clean)
+            get_volume_args(
+                store=artifacts_store,
+                mount_path=CONTEXT_MOUNT_ARTIFACTS,
+                artifacts=V1ArtifactsType(dirs=[run_path]),
+            )
         )
 
     container_name = INIT_ARTIFACTS_CONTAINER.format(DEFAULT)
@@ -82,5 +87,4 @@ def get_artifacts_path_container(
         # If we are dealing with a volume we need to make sure the path exists for the user
         # We also clean the path if this is not a resume run
         args=[" ".join(init_args)],
-        is_artifact_store=True,
     )

@@ -17,6 +17,7 @@
 import os
 
 from concurrent import futures
+from typing import List
 
 from google.api_core.exceptions import GoogleAPIError, NotFound
 
@@ -223,6 +224,7 @@ class GCSService(GCPService, StoreMixin):
         use_basename=True,
         workers=0,
         last_time=None,
+        exclude: List[str] = None,
     ):
         """
         Uploads a local directory to Google Cloud Storage.
@@ -232,7 +234,9 @@ class GCSService(GCPService, StoreMixin):
             blob: `str`. blob to upload to.
             bucket_name: `str`. the name of the bucket.
             use_basename: `bool`. whether or not to use the basename of the directory.
-            last_time: `datetime`. if provided, it will only upload the file if changed after last_time.
+            last_time: `datetime`. if provided,
+                        it will only upload the file if changed after last_time.
+            exclude: `list`. List of paths to exclude.
         """
         if not bucket_name:
             bucket_name, blob = self.parse_gcs_url(blob)
@@ -244,7 +248,7 @@ class GCSService(GCPService, StoreMixin):
 
         # Turn the path to absolute paths
         dirname = os.path.abspath(dirname)
-        with get_files_in_path_context(dirname) as files:
+        with get_files_in_path_context(dirname, exclude=exclude) as files:
             for f in files:
 
                 # If last time is provided we check if we should re-upload the file

@@ -45,7 +45,7 @@ class TestInitDockerfile(BaseTestCase):
             polyaxon_init=V1PolyaxonInitContainer(image="foo", image_tag=""),
             dockerfile_args=dockerfile_args,
             env=None,
-            contexts=PluginsContextsSpec.from_config(V1Plugins()),
+            contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
             run_path="test",
         )
         assert INIT_DOCKERFILE_CONTAINER.format("") in container.name
@@ -82,7 +82,7 @@ class TestInitDockerfile(BaseTestCase):
             env=[],
             dockerfile_args=dockerfile_args,
             mount_path="/somepath",
-            contexts=PluginsContextsSpec.from_config(V1Plugins()),
+            contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
             run_path="test",
         )
         assert INIT_DOCKERFILE_CONTAINER.format("") in container.name

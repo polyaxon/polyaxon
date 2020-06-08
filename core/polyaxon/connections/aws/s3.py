@@ -18,6 +18,7 @@ import os
 
 from concurrent import futures
 from io import BytesIO
+from typing import List
 
 from botocore.exceptions import ClientError
 
@@ -412,6 +413,7 @@ class S3Service(AWSService, StoreMixin):
         use_basename=True,
         workers=0,
         last_time=None,
+        exclude: List[str] = None,
     ):
         """
         Uploads a local directory to S3.
@@ -427,7 +429,9 @@ class S3Service(AWSService, StoreMixin):
                 by S3 and will be stored in an encrypted form while at rest in S3.
             acl: `str`. ACL to use for uploading, e.g. "public-read".
             use_basename: `bool`. whether or not to use the basename of the directory.
-            last_time: `datetime`. if provided, it will only upload the file if changed after last_time.
+            last_time: `datetime`. if provided,
+                        it will only upload the file if changed after last_time.
+            exclude: `list`. List of paths to excludes.
         """
         if not bucket_name:
             bucket_name, key = self.parse_s3_url(key)
@@ -439,7 +443,7 @@ class S3Service(AWSService, StoreMixin):
 
         # Turn the path to absolute paths
         dirname = os.path.abspath(dirname)
-        with get_files_in_path_context(dirname) as files:
+        with get_files_in_path_context(dirname, exclude=exclude) as files:
             for f in files:
 
                 # If last time is provided we check if we should re-upload the file

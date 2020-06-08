@@ -35,6 +35,9 @@ type V1Plugins struct {
 	// Optional flag to tell Polyaxon if it should set an auth context for the run, default true
 	Auth bool `json:"auth,omitempty"`
 
+	// Auto resume a run's artifacts (applies to resume and retries), works if collects_artifacts is enabled
+	AutoResume bool `json:"auto_resume,omitempty"`
+
 	// Optional flag to tell Polyaxon to collect articats and outputs
 	CollectArtifacts bool `json:"collect_artifacts,omitempty"`
 

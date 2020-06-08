@@ -38,6 +38,7 @@ def sync_artifacts(last_check: Optional[datetime], run_uuid: str):
             workers=5,
             last_time=last_check,
             connection_type=connection_type,
+            exclude=["plxlogs"],
         )
 
     return new_check

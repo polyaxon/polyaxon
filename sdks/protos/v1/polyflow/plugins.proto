@@ -58,9 +58,12 @@ message Plugins {
     // Optional flag to tell Polyaxon to sync statuses
     bool sync_statuses = 7;
 
+    // Auto resume a run's artifacts (applies to resume and retries), works if collects_artifacts is enabled
+    bool auto_resume = 8;
+
     // Optional log level
-    string log_level = 8;
+    string log_level = 9;
 
     // Option Notifications
-    repeated Notification notifications = 9;
+    repeated Notification notifications = 10;
 }

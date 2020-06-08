@@ -59,9 +59,12 @@ async def download_file(subpath: str, check_cache=True) -> Optional[str]:
     path_from = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
 
-    if check_cache and os.path.exists(path_to):
-        # file already exists
-        return path_to
+    if os.path.exists(path_to):
+        if check_cache:
+            # file already exists
+            return path_to
+        else:
+            os.remove(path_to)
 
     check_or_create_path(path_to, is_dir=False)
     try:
