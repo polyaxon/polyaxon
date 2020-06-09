@@ -46,6 +46,11 @@ class CorePlatformResolver(CoreResolver):
             }
 
     def resolve_state(self):
+        if (
+            self.compiled_operation.is_service_run
+            and self.compiled_operation.run.rewrite_path
+        ):
+            self.run.meta_info["rewrite_path"] = True
         self.run.save(update_fields=["content", "inputs", "outputs", "meta_info"])
 
 

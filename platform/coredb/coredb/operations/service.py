@@ -52,7 +52,11 @@ class OperationsService(Service):
     def get_meta_info(
         compiled_operation: V1CompiledOperation, kind: str, meta_kind: str
     ) -> Tuple[str, Dict]:
-        return kind, {"meta_kind": meta_kind}
+        meta = {"meta_kind": meta_kind}
+        if compiled_operation.is_service_run:
+            if compiled_operation.run.rewrite_path:
+                meta["rewrite_path"] = True
+        return kind, meta
 
     @staticmethod
     def sanitize_kwargs(**kwargs):

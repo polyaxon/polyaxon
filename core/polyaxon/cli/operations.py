@@ -795,7 +795,7 @@ def service(ctx, yes, external, url):
         dashboard_url, owner, project_name, run_uuid
     )
     service_endpoint = SERVICES_V1
-    if client.run_data.meta_info.get("is_rewrite", False):
+    if client.run_data.meta_info.get("rewrite_path", False):
         service_endpoint = REWRITE_SERVICES_V1
     external_run_url = "{}/{}/{}/{}/{}/runs/{}/".format(
         dashboard_url, service_endpoint, namespace, owner, project_name, run_uuid
