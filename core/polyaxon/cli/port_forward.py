@@ -17,6 +17,7 @@ import sys
 
 import click
 
+from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.client import ClientConfigManager
@@ -70,5 +71,7 @@ def port_forward(port, namespace, release):
     ClientConfigManager.set_config(_config)
     Printer.print_header("Client configuration is updated!")
     Printer.print_success("Polyaxon will be available at: {}".format(_config.host))
-    stdout = kubectl.execute(args=args, is_json=False)
+    stdout = kubectl.execute(
+        args=args, is_json=False, stream=settings.CLIENT_CONFIG.debug
+    )
     click.echo(stdout)

@@ -18,6 +18,7 @@ import shutil
 
 import click
 
+from polyaxon import settings
 from polyaxon.client.transport import Transport
 from polyaxon.deploy.operators.compose import ComposeOperator
 from polyaxon.deploy.operators.docker import DockerOperator
@@ -175,14 +176,18 @@ class DeployManager(object):
     def _get_or_create_namespace(self):
         click.echo("Checking {} namespace ...".format(self.deployment_namespace))
         stdout = self.kubectl.execute(
-            args=["get", "namespace", self.deployment_namespace], is_json=True,
+            args=["get", "namespace", self.deployment_namespace],
+            is_json=True,
+            stream=settings.CLIENT_CONFIG.debug,
         )
         if stdout:
             return
         # Create a namespace
         click.echo("Creating {} namespace ...".format(self.deployment_namespace))
         stdout = self.kubectl.execute(
-            args=["create", "namespace", self.deployment_namespace], is_json=False,
+            args=["create", "namespace", self.deployment_namespace],
+            is_json=False,
+            stream=settings.CLIENT_CONFIG.debug,
         )
         click.echo(stdout)
 
@@ -204,7 +209,7 @@ class DeployManager(object):
             args += ["--debug", "--dry-run"]
 
         click.echo("Running install command ...")
-        stdout = self.helm.execute(args=args)
+        stdout = self.helm.execute(args=args, stream=settings.CLIENT_CONFIG.debug)
         click.echo(stdout)
         Printer.print_success("Deployment finished.")
 
@@ -280,7 +285,7 @@ class DeployManager(object):
         if self.dry_run:
             args += ["--debug", "--dry-run"]
         click.echo("Running upgrade command ...")
-        stdout = self.helm.execute(args=args)
+        stdout = self.helm.execute(args=args, stream=settings.CLIENT_CONFIG.debug)
         click.echo(stdout)
         Printer.print_success("Deployment upgraded.")
 
