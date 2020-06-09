@@ -3,7 +3,9 @@ kind: component
 name: vscode
 
 run:
-  kind: job
+  kind: service
+  ports: [8080]
+  rewritePath: true
   container:
     image: codercom/code-server
     args: ["--auth", "none"]
