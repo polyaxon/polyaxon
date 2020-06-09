@@ -735,6 +735,9 @@ def dashboard(ctx, yes, external, url):
     run_url = "{}/{}/{}/runs/{}/service".format(
         dashboard_url, owner, project_name, run_uuid
     )
+    if url:
+        Printer.print_header("The dashboard is available at: {}".format(run_url))
+        sys.exit(0)
     if not yes:
         click.confirm(
             "Dashboard page will now open in your browser. Continue?",
@@ -814,4 +817,5 @@ def service(ctx, yes, external, url):
         )
     if external:
         click.launch(external_run_url)
+        sys.exit(0)
     click.launch(run_url)
