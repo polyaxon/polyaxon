@@ -1,0 +1,35 @@
+- name: dockerizer
+  versions:
+  - latest.yaml
+  - 1.0.9.yaml
+- name: jupyter-lab
+  versions:
+  - latest.yaml
+  - all-spark.yaml
+  - pyspark.yaml
+  - scipy.yaml
+  - tensorflow.yaml
+- name: jupyter-notebook
+  versions:
+  - latest.yaml
+  - all-spark.yaml
+  - pyspark.yaml
+  - scipy.yaml
+  - tensorflow.yaml
+- name: kaniko
+  versions:
+  - latest.yaml
+  - 0.19.0.yaml
+- name: papermill
+  versions:
+  - latest.yaml
+- name: tensorboard
+  versions:
+  - multi-runs.yaml
+  - path.yaml
+  - search.yaml
+  - single-run.yaml
+- name: vscode
+  versions:
+  - latest.yaml
+  - 3.4.0.yaml
