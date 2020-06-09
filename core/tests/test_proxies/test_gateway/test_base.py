@@ -94,7 +94,7 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
     
     
     rewrite_log on;
-    rewrite ^/services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
+    rewrite ^/rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
     proxy_pass http://plx-operation-$4.$1.svc.cluster.local;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -215,7 +215,7 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
 
     resolver coredns.kube-system.svc.cluster.local valid=5s;
     rewrite_log on;
-    rewrite ^/services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
+    rewrite ^/rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
     proxy_pass http://plx-operation-$4.$1.svc.cluster.local;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;

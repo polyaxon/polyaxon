@@ -80,7 +80,7 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
     {auth}
     {resolver}
     rewrite_log on;
-    rewrite ^/services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
+    rewrite ^/rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
     proxy_pass http://plx-operation-$4.$1.svc.{dns_cluster_with_port};
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
