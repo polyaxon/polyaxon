@@ -41,7 +41,14 @@ handler403 = Handler403View.as_view()
 handler500 = _handler500
 
 
-def get_urlpatterns(app_patterns: List):
+def get_ui_urlpatterns(ui_urlpatterns):
+    return [
+        re_path(pattern, ensure_csrf_cookie(IndexView.as_view()), name="index",)
+        for pattern in ui_urlpatterns
+    ]
+
+
+def get_urlpatterns(app_patterns: List, ui_urlpatterns: List):
     if conf.get(ADMIN_VIEW_ENABLED):
         app_patterns += [re_path(r"^_admin/", admin.site.urls)]
 
@@ -50,7 +57,7 @@ def get_urlpatterns(app_patterns: List):
         re_path(r"^50x.html$", Handler50xView.as_view(), name="50x"),
         re_path(r"^permission.html$", Handler403View.as_view(), name="permission"),
         re_path(r"^404.html$", Handler404View.as_view(), name="404"),
-        re_path(r"^.*?", ensure_csrf_cookie(IndexView.as_view()), name="index",),
     ]
+    urlpatterns += get_ui_urlpatterns(ui_urlpatterns)
 
     return urlpatterns

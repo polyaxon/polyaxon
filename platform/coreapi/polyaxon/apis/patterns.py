@@ -14,10 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.urls import include
+from django.urls import include, re_path
 
 from polyaxon.api import API_V1
-from polycommon.apis.index import *
+from polycommon.apis.index import get_urlpatterns, handler403, handler404, handler500
+from polycommon.apis.regex import OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
 
 api_patterns = [
     re_path(r"", include(("apis.versions.urls", "versions"), namespace="versions")),
@@ -36,11 +37,27 @@ api_patterns += [
     re_path(r"", include(("apis.projects.urls", "projects"), namespace="projects")),
 ]
 
-urlpatterns = [
+app_urlpatterns = [
     re_path(r"^{}/".format(API_V1), include((api_patterns, "v1"), namespace="v1")),
+]
+
+# UI
+projects_urls = "{}/{}".format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN)
+orgs_urls = "orgs/{}".format(OWNER_NAME_PATTERN)
+ui_urlpatterns = [
+    r"^$",
+    r"^{}/?".format(orgs_urls),
+    r"^{}/projects/?".format(orgs_urls),
+    r"^{}/?$".format(projects_urls),
+    r"^{}/runs.*/?".format(projects_urls),
+    r"^{}/jobs.*/?".format(projects_urls),
+    r"^{}/services.*/?".format(projects_urls),
+    r"^{}/cli.*/?".format(projects_urls),
+    r"^{}/settings/?".format(projects_urls),
+    r"^{}/new.*/?".format(projects_urls),
 ]
 
 handler404 = handler404
 handler403 = handler403
 handler500 = handler500
-urlpatterns = get_urlpatterns(urlpatterns)
+urlpatterns = get_urlpatterns(app_urlpatterns, ui_urlpatterns)
