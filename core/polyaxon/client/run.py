@@ -47,6 +47,7 @@ from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.hashing import hash_value
+from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.validation import validate_tags
 
@@ -523,19 +524,57 @@ class RunClient:
         except (ApiException, HTTPError) as e:
             raise PolyaxonClientException("Api error: %s" % e) from e
 
+    def _wait_for_condition(self, statuses: List[str] = None):
+        statuses = to_list(statuses, check_none=True)
+
+        def condition():
+            if statuses:
+                return last_status in statuses
+            return LifeCycle.is_done(last_status)
+
+        last_status = None
+        while not condition():
+            if last_status:
+                time.sleep(settings.CLIENT_CONFIG.watch_interval)
+            last_status, _conditions = self.get_statuses(last_status)
+            yield last_status, _conditions
+
     @check_no_op
     @check_offline
-    def watch_statuses(self):
-        """Watches run statuses."""
+    def wait_for_condition(
+        self, statuses: List[str] = None, print_status: bool = False
+    ):
+        """Waits for the run's last status to meet a condition.
 
-        def watch_run_statuses() -> Tuple[str, Iterator]:
-            last_status = None
-            while not LifeCycle.is_done(last_status):
-                last_status, _conditions = self.get_statuses(last_status)
-                yield last_status, _conditions
-                time.sleep(settings.CLIENT_CONFIG.watch_interval)
+        If statuses is passed the it will wait for a condition:
+         * last status is one of the statuses passed.
+        Otherwise, it will wait until the user interrupts it or reaches a final status.
 
-        for status, conditions in watch_run_statuses():
+        N.B. if you want to watch statuses and and receive a the status/conditions,
+        please use watch_statuses instead which yields the results.
+        """
+        for status, conditions in self._wait_for_condition(statuses):
+            self._run_data.status = status
+            if print_status:
+                print("Last received status: {}\n".format(status))
+
+    @check_no_op
+    @check_offline
+    def watch_statuses(self, statuses: List[str] = None):
+        """Watches run statuses.
+
+        If statuses is passed the watch will wait for a condition:
+         * last status is one of the statuses passed.
+        Otherwise, it will watch until the user interrupts it or reaches a final status.
+
+        N.B. if you just wait for a status condition without expecting a yield,
+        please use wait_for_condition instead
+
+        Yields:
+            Tuple[status, List[conditions]]:
+                This function will yield the last status and condition for every check.
+        """
+        for status, conditions in self._wait_for_condition(statuses):
             self._run_data.status = status
             yield status, conditions
 

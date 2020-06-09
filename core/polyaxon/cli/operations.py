@@ -22,7 +22,7 @@ from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon import settings
-from polyaxon.api import SERVICES_V1
+from polyaxon.api import REWRITE_SERVICES_V1, SERVICES_V1
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.upload import upload
 from polyaxon.client import RunClient
@@ -30,6 +30,7 @@ from polyaxon.client.run import get_run_logs
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import PolyaxonClientException
+from polyaxon.lifecycle import V1Statuses
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.run import RunManager
 from polyaxon.polyflow import V1RunKind
@@ -718,17 +719,59 @@ def artifacts(ctx):
     'Assume "yes" as answer to all prompts and run non-interactively.',
 )
 @click.option(
-    "--external",
+    "--url",
     is_flag=True,
     default=False,
-    help="Open the dashboard on a service URL and not on the dashboard URL.",
+    help="Print the url of the dashboard or external service.",
+)
+@click.pass_context
+@clean_outputs
+def dashboard(ctx, yes, external, url):
+    """Open this operation's dashboard details in browser."""
+    owner, project_name, run_uuid = get_project_run_or_local(
+        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+    )
+    dashboard_url = settings.CLIENT_CONFIG.host
+    run_url = "{}/{}/{}/runs/{}/service".format(
+        dashboard_url, owner, project_name, run_uuid
+    )
+    if not yes:
+        click.confirm(
+            "Dashboard page will now open in your browser. Continue?",
+            abort=True,
+            default=True,
+        )
+    click.launch(run_url)
+
+
+@ops.command()
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
 )
 @click.option(
-    "--url", is_flag=True, default=False, help="Print the url of the dashboard."
+    "--external", is_flag=True, default=False, help="Open the external service URL.",
+)
+@click.option(
+    "--url",
+    is_flag=True,
+    default=False,
+    help="Print the url of the dashboard or external service.",
 )
 @click.pass_context
 @clean_outputs
 def service(ctx, yes, external, url):
+    """Open the operation service in browser.
+
+    N.B. The operation must have a run kind service, otherwise it will raise an error.
+
+    You can open the service embedded in Polyaxon UI or using the real service URL,
+    please use the `--external` flag.
+    """
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
@@ -742,15 +785,20 @@ def service(ctx, yes, external, url):
         sys.exit(1)
     dashboard_url = settings.CLIENT_CONFIG.host
 
-    namespace = "polyaxon"
-    if client.run_data.settings:
-        namespace = client.run_data.settings.namespace
+    Printer.print_header("Waiting for running condition ...")
+    client.wait_for_condition(statuses=[V1Statuses.RUNNING], print_status=True)
+
+    client.refresh_data()
+    namespace = client.run_data.settings.namespace
 
     run_url = "{}/{}/{}/runs/{}/service".format(
         dashboard_url, owner, project_name, run_uuid
     )
+    service_endpoint = SERVICES_V1
+    if client.run_data.meta_info.get("is_rewrite", False):
+        service_endpoint = REWRITE_SERVICES_V1
     external_run_url = "{}/{}/{}/{}/{}/runs/{}/".format(
-        dashboard_url, SERVICES_V1, namespace, owner, project_name, run_uuid
+        dashboard_url, service_endpoint, namespace, owner, project_name, run_uuid
     )
     if url:
         Printer.print_header("The service will be available at: {}".format(run_url))
