@@ -48,11 +48,11 @@ gateway:
   replicas: 1
   resources:
     limits:
-      cpu: 1000m
+      cpu: 500m
       memory: 2000Mi
     requests:
       cpu: 128m
-      memory: 300Mi
+      memory: 100Mi
 
   service:
     name: gateway
@@ -128,8 +128,8 @@ init:
       cpu: 1000m
       memory: 2000Mi
     requests:
-      cpu: 128m
-      memory: 300Mi
+      cpu: 100m
+      memory: 100Mi
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
@@ -142,26 +142,26 @@ sidecar:
       cpu: 1000m
       memory: 2000Mi
     requests:
-      cpu: 128m
-      memory: 300Mi
+      cpu: 100m
+      memory: 100Mi
 
 agent:
   token:
   instance:
-  enabled: false
+  enabled: true
   image: polyaxon/polyaxon-agent
   imageTag: 1.0.9
   imagePullPolicy: Always
   resources:
     limits:
-      cpu: 1000m
+      cpu: 500m
       memory: 2000Mi
     requests:
-      cpu: 128m
-      memory: 300Mi
+      cpu: 100m
+      memory: 100Mi
 
 operator:
-  enabled: false
+  enabled: true
   image: polyaxon/polyaxon-operator
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -171,7 +171,7 @@ operator:
       memory: 256Mi
     requests:
       cpu: 100m
-      memory: 20Mi
+      memory: 50Mi
 
 scheduler:
   enabled: false

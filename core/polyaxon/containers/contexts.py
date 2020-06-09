@@ -28,6 +28,7 @@ def polyaxon_user_path():
 
 
 CONTEXT_ROOT = os.environ.get(POLYAXON_KEYS_CONTEXT_ROOT, "/plx-context")
+CONTEXT_MOUNT_GC = "{}/.gc/gc-secret.json".format(CONTEXT_ROOT)
 CONTEXT_MOUNT_CONFIGS = "{}/.configs".format(CONTEXT_ROOT)
 CONTEXT_MOUNT_AUTH = "{}/.polyaxonauth".format(CONTEXT_MOUNT_CONFIGS)
 CONTEXT_MOUNT_ARTIFACTS = "{}/artifacts".format(CONTEXT_ROOT)

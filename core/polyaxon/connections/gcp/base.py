@@ -26,9 +26,9 @@ import google.oauth2.service_account
 from google.cloud.storage.client import Client
 from google.oauth2.service_account import Credentials
 
-from polyaxon import settings
 from polyaxon.connections.base import BaseService
 from polyaxon.connections.reader import get_connection_context_path, read_keys
+from polyaxon.containers.contexts import CONTEXT_MOUNT_GC
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.logger import logger
 from polyaxon.utils.path_utils import create_polyaxon_tmp
@@ -51,7 +51,7 @@ def get_project_id(
 def get_key_path(
     keys: Optional[Union[str, List[str]]] = None, context_path: Optional[str] = None
 ):
-    keys = keys or ["GC_KEY_PATH", "GOOGLE_KEY_PATH"]
+    keys = keys or ["GC_KEY_PATH", "GOOGLE_KEY_PATH", "GOOGLE_APPLICATION_CREDENTIALS"]
     return read_keys(context_path=context_path, keys=keys)
 
 
@@ -83,6 +83,11 @@ def get_gc_credentials(
         scopes = [s.strip() for s in scopes.split(",")]
     else:
         scopes = DEFAULT_SCOPES
+
+    if not key_path and not keyfile_dict:
+        # Look for default GC path
+        if os.path.exists(CONTEXT_MOUNT_GC):
+            key_path = CONTEXT_MOUNT_GC
 
     if not key_path and not keyfile_dict:
         logger.info(
@@ -206,8 +211,8 @@ class GCPService(BaseService):
             os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self._key_path
         elif self._keyfile_dict:
             create_polyaxon_tmp()
-            with open(settings.TMP_AUTH_GCS_ACCESS_PATH, "w") as outfile:
+            with open(CONTEXT_MOUNT_GC, "w") as outfile:
                 json.dump(self._keyfile_dict, outfile)
             os.environ[
                 "GOOGLE_APPLICATION_CREDENTIALS"
-            ] = settings.TMP_AUTH_GCS_ACCESS_PATH
+            ] = CONTEXT_MOUNT_GC

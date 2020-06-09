@@ -49,7 +49,7 @@ You can use host paths to define storage connections:
 
 Users should be aware as well, that by losing the node where the host path is defined, all data will be lost as well.
 
-### Example usage in the default artifactsStore
+### Example usage as the default artifactsStore
 
 ```yaml
 artifactsStore:
@@ -82,7 +82,7 @@ You can use a [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/p
   * mountPath: path where to mount the volume content in the container
   * readOnly: if th volume should be mounted in read only mode.
 
-### Example in the default artifactsStore
+### Example usage as the default artifactsStore
 
 ```yaml
 artifactsStore:
@@ -125,7 +125,7 @@ and providing the secret name.
     * bucket: the bucket you want to expose in this connection.
 
 
-### Example in the default artifactsStore
+### Example usage as the default artifactsStore
 
 ```yaml
 artifactsStore:

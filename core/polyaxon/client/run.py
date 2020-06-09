@@ -19,7 +19,7 @@ import sys
 import time
 
 from collections import Mapping
-from typing import Dict, Iterator, List, Sequence, Tuple, Union
+from typing import Dict, List, Sequence, Union
 
 import click
 import polyaxon_sdk

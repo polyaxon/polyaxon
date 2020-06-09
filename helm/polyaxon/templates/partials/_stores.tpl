@@ -2,11 +2,11 @@
 Config artifacts store secrets/configmap
 */}}
 {{- define "config.artifactsStore.envFrom" -}}
-{{- if and .Values.artifactsStore .Values.artifactsStore.secret }}
+{{- if and .Values.artifactsStore .Values.artifactsStore.secret (empty .Values.artifactsStore.secret.mountPath) }}
 - secretRef:
     name: {{ .Values.artifactsStore.secret.name | quote }}
 {{- end }} {{- /* endif */ -}}
-{{- if and .Values.artifactsStore .Values.artifactsStore.configMap }}
+{{- if and .Values.artifactsStore .Values.artifactsStore.configMap (empty .Values.artifactsStore.configMap.mountPath) }}
 - configMapRef:
     name: {{ .Values.artifactsStore.configMap.name | quote }}
 {{- end }} {{- /* endif */ -}}
@@ -20,6 +20,16 @@ Config artifacts store secrets/configmap
   subPath: {{ .Values.artifactsStore.schema.subPath | quote }}
   {{- end }}
 {{- end }}
+{{- if and .Values.artifactsStore .Values.artifactsStore.secret .Values.artifactsStore.secret.mountPath }}
+- mountPath: {{ .Values.artifactsStore.secret.mountPath | quote }}
+  name: {{ .Values.artifactsStore.secret.name | quote }}
+  readOnly: true
+{{- end }}
+{{- if and .Values.artifactsStore .Values.artifactsStore.configMap .Values.artifactsStore.configMap.mountPath }}
+- mountPath: {{ .Values.artifactsStore.configMap.mountPath | quote }}
+  name: {{ .Values.artifactsStore.configMap.name | quote }}
+  readOnly: true
+{{- end }}
 {{- end -}}  {{- /* end def artifactsStore volume mounts */ -}}
 
 {{- define "config.artifactsStore.volume" -}}
@@ -32,5 +42,15 @@ Config artifacts store secrets/configmap
   hostPath:
     path: {{ .Values.artifactsStore.schema.hostPath | quote }}
 {{- end }} {{- /* end store check */ -}}
+{{- end }}
+{{- if and .Values.artifactsStore .Values.artifactsStore.secret .Values.artifactsStore.secret.mountPath }}
+- name: {{ .Values.artifactsStore.secret.name | quote }}
+  secret:
+    secretName: {{ .Values.artifactsStore.secret.name | quote }}
+{{- end }}
+{{- if and .Values.artifactsStore .Values.artifactsStore.configMap .Values.artifactsStore.configMap.mountPath }}
+- name: {{ .Values.artifactsStore.configMap.name | quote }}
+  configMap:
+    name: {{ .Values.artifactsStore.configMap.name | quote }}
 {{- end }}
 {{- end -}}  {{- /* end def artifactsStore volume mounts */ -}}

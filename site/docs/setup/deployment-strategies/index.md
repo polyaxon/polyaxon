@@ -112,11 +112,11 @@ Each Agent deployment, on  the different namespaces, can also take advantage of 
 
 With these different deployment strategies you can achieve several type of setups for isolation, replication, and scale.
 
-Polyaxon offer solutions that adapt with your need and requirements, and you can achieve massive scale:
+Polyaxon offers solutions that adapt with your need and requirements, and you can achieve massive scale:
  
  * The control plane can easily scale horizontally using replicas for the API and the scheduler, and you can deploy Celery with a rabbitmq/redis as broker.
  * The agents can be deployed on as many Kubernetes clusters that you need or have access to.
  * You can use one or more artifacts stores of your choice to store unlimited artifacts and access large datasets.
  * You can define complex [scheduling and routing strategies](/docs/core/scheduling-strategies/).
- * You can scale and automate your workflows using [distributed jobs](/docs/experimentation/distributed/), [parallel executions, dag definition, and hyperaparameter tuning](/docs/automation/).
+ * You can scale and automate your workflows using [distributed jobs](/docs/experimentation/distributed/), [parallel executions, dags and workflows, and hyperaparameter tuning](/docs/automation/).
  * You can gain unparalleled collaboration, agility, and speed using the [experimentation](/docs/experimentation/) and [management](/docs/management/) tools

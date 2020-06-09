@@ -242,7 +242,7 @@ class AgentConfig(BaseConfig):
         for c in self._all_connections:
             if c.config_map and c.config_map.name not in config_map_names:
                 config_map_names.add(c.config_map.name)
-                config_maps.append(c.config_map.get_config_map())
+                config_maps.append(c.get_config_map())
         self._config_maps = config_maps
         return self._config_maps
 

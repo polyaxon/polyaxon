@@ -22,7 +22,6 @@ from polyaxon.utils.bool_utils import to_bool
 MIN_TIMEOUT = 1
 LONG_REQUEST_TIMEOUT = 3600
 HEALTH_CHECK_INTERVAL = 60
-TMP_AUTH_GCS_ACCESS_PATH = "/tmp/.polyaxon/.gcsaccess.json"
 
 AUTH_CONFIG = None
 CLIENT_CONFIG = None

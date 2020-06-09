@@ -31,15 +31,15 @@ gateway:
   replicas: 1
   resources:
     limits:
-      cpu: 1000m
+      cpu: 500m
       memory: 2000Mi
     requests:
       cpu: 128m
-      memory: 300Mi
+      memory: 100Mi
 
   service:
     name: gateway
-    type: LoadBalancer
+    type: ClusterIP
     port: 80
     targetPort: 80
     nodePort: 31833
@@ -82,8 +82,8 @@ init:
       cpu: 1000m
       memory: 2000Mi
     requests:
-      cpu: 128m
-      memory: 300Mi
+      cpu: 100m
+      memory: 100Mi
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
@@ -96,8 +96,8 @@ sidecar:
       cpu: 1000m
       memory: 2000Mi
     requests:
-      cpu: 128m
-      memory: 300Mi
+      cpu: 100m
+      memory: 100Mi
 
 agent:
   token:
@@ -108,11 +108,11 @@ agent:
   imagePullPolicy: Always
   resources:
     limits:
-      cpu: 1000m
+      cpu: 500m
       memory: 2000Mi
     requests:
-      cpu: 128m
-      memory: 300Mi
+      cpu: 100m
+      memory: 100Mi
 
 operator:
   enabled: true
@@ -125,7 +125,7 @@ operator:
       memory: 256Mi
     requests:
       cpu: 100m
-      memory: 20Mi
+      memory: 50Mi
 
 securityContext:
   enabled: false
