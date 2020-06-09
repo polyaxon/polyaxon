@@ -58,11 +58,11 @@ persistence:
 
 ## Update/Install Polyaxon deployment
 
-You can now [install](/setup/kubernetes/)/[upgrade](/setup/kubernetes/#upgrade-polyaxon) Polyaxon with access the outputs on GCS.
+You can [deploy](/docs/setup/connections/) Polyaxon with access the outputs on GCS.
 
 ## Storing outputs and artifacts in your experiments/jobs
 
-You can use [polyaxon-client](/references/polyaxon-client-python/) to access the outputs in your jobs/experiments.
+You can use [polyaxon-client](/docs/core/python-library/) to access the outputs in your jobs/experiments.
 
 Polyaxon client does not bundle by default the google cloud storage requirements to keep the client lightweight:
 

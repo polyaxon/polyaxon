@@ -76,4 +76,4 @@ persistence:
 
 ## Update/Install Polyaxon deployment
 
-You can now [install](/setup/kubernetes/)/[upgrade](/setup/kubernetes/#upgrade-polyaxon) Polyaxon with access the outputs on S3.
+You can [deploy](/docs/setup/connections/) Polyaxon with access the outputs on S3.

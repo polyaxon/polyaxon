@@ -17,7 +17,7 @@ it allows you to manage your cluster, projects, and experiments.
 
 ## Installation
 
-To install Polyaxon CLI please refer to the [installation documentation](/setup/cli/).
+To install Polyaxon CLI please refer to the [installation documentation](/docs/setup/cli/).
 
 
 ## Help

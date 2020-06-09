@@ -167,7 +167,7 @@ Note that when using minikube, the IP address of the application is given by `mi
 
 These notes are important for setting the CLI, and getting access to the dashboard.
 
-Next step you need the [Polyaxon CLI installed](/setup/cli/), and you need to configure 
+Next step you need the [Polyaxon CLI installed](/docs/setup/cli/), and you need to configure 
 the host and the ports based on these notes.
 
 ## Upgrade Polyaxon

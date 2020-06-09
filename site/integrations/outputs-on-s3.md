@@ -78,11 +78,11 @@ persistence:
 
 ## Update/Install Polyaxon deployment
 
-You can now [install](/setup/kubernetes/)/[upgrade](/setup/kubernetes/#upgrade-polyaxon) Polyaxon with access the outputs on S3.
+You can [deploy](/docs/setup/connections/) Polyaxon with access the outputs on S3.
 
 ## Storing outputs and artifacts in your experiments/jobs
 
-You can use [polyaxon-client](/references/polyaxon-client-python/) to access the outputs in your jobs/experiments.
+You can use [polyaxon-client](/docs/core/python-library/) to access the outputs in your jobs/experiments.
 
 Polyaxon client does not bundle by default the S3 storage requirements to keep the client lightweight:
 

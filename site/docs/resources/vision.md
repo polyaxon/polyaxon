@@ -9,18 +9,18 @@ tags:
     - reference
 ---
 
-Polyaxon's master plan is to replace disparate tools and applications with a [Single Platform](/resources/one-platform/) 
-pre-configured to work by default across the entire [Machine Learning lifecycle](/resources/machine-learning-lifecycle/).
+Polyaxon's master plan is to replace disparate tools and applications with a [Single Platform](/docs/resources/one-platform/) 
+pre-configured to work by default across the entire [Machine Learning lifecycle](/docs/resources/machine-learning-lifecycle/).
 
 Today, Polyaxon gives you a simple interface to access data, train experiments, and manage models.
 
 What most people don't know is that our long-term vision is to create an enterprise grade platform that makes it faster, easier, and more efficient to develop machine learning and deep learning applications, 
-in every [industry](/resources/machine-learning-usecases/), in every organization, in every country, and not just the ones working at the half-dozen tech companies. 
+in every [industry](/docs/resources/machine-learning-usecases/), in every organization, in every country, and not just the ones working at the half-dozen tech companies. 
 We believe that by using the power of machine learning, individuals and organizations will change the world. We want to help and simplify this technological transition, 
-and we want to enable the innovations needed in [transportation, health care, energy, communication, space travel, etc.](/resources/machine-learning-usecases/)
+and we want to enable the innovations needed in [transportation, health care, energy, communication, space travel, etc.](/docs/resources/machine-learning-usecases/)
 
 
-The process of creating Machine learning is still poor, duplicative, manual, and [single-player](/resources/machine-learning-personas/). Every machine learning project is about integrating components of variable quality developed mostly in isolation, with a high chance of failure. 
+The process of creating Machine learning is still poor, duplicative, manual, and [single-player](/docs/resources/machine-learning-personas/). Every machine learning project is about integrating components of variable quality developed mostly in isolation, with a high chance of failure. 
 We want to solve this problem, by developing a platform that enables:
 
  * Easier on-boarding.
