@@ -28,6 +28,7 @@ WORKERS_SERVICE = "polycommon.workers"
 EXECUTOR_SERVICE = "coredb.executor"
 OPERATIONS_BACKEND = None
 PLATFORM_VERSION = pkg.VERSION
+PLATFORM_DIST = "ce"
 CONF_BACKEND = "polycommon.conf.service.ConfService"
 STORE_OPTION = "env"
 AUTH_USER_MODEL = "coredb.User"

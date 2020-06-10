@@ -27,6 +27,7 @@ from polyaxon.cli.version import (
     get_current_version,
     get_log_handler,
     get_server_versions,
+    session_expired,
 )
 from polyaxon.client import PolyaxonClient
 from polyaxon.logger import clean_outputs, logger
@@ -140,6 +141,12 @@ def whoami():
     try:
         polyaxon_client = PolyaxonClient()
         user = polyaxon_client.users_v1.get_user()
+    except ApiException as e:
+        if e.status == 403:
+            session_expired()
+            sys.exit(1)
+        handle_cli_error(e, message="Could not get the user info.")
+        sys.exit(1)
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not load user info.")
         sys.exit(1)

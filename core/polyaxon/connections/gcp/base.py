@@ -213,6 +213,4 @@ class GCPService(BaseService):
             create_polyaxon_tmp()
             with open(CONTEXT_MOUNT_GC, "w") as outfile:
                 json.dump(self._keyfile_dict, outfile)
-            os.environ[
-                "GOOGLE_APPLICATION_CREDENTIALS"
-            ] = CONTEXT_MOUNT_GC
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = CONTEXT_MOUNT_GC

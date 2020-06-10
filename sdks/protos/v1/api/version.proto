@@ -32,9 +32,10 @@ message Version {
 
 message Versions {
     string platform_version = 1;
-    Version cli = 2;
-    Version platform = 3;
-    Version agent = 4;
+    string platform_dist = 2;
+    Version cli = 3;
+    Version platform = 4;
+    Version agent = 5;
 }
 
 message LogHandler {

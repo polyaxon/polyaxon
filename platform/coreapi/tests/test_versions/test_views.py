@@ -20,14 +20,12 @@ from rest_framework import status
 
 from polyaxon.api import API_V1
 from polycommon import conf
-from polycommon.options.registry.installation import PLATFORM_VERSION
+from polycommon.options.registry.installation import PLATFORM_DIST, PLATFORM_VERSION
 from tests.base.case import BaseTest
 
 
 @pytest.mark.versions_mark
-class TestVersionViewsV1(BaseTest):
-    HAS_AUTH = False
-
+class TestInstallationVersionViewsV1(BaseTest):
     def setUp(self):
         super().setUp()
         self.installation_version = "/{}/version/".format(API_V1)
@@ -36,4 +34,5 @@ class TestVersionViewsV1(BaseTest):
         resp = self.client.get(self.installation_version)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["platform_version"] == conf.get(PLATFORM_VERSION)
-        assert set(resp.data.keys()) == {"platform_version"}
+        assert resp.data["platform_dist"] == conf.get(PLATFORM_DIST)
+        assert set(resp.data.keys()) == {"platform_version", "platform_dist"}

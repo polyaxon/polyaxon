@@ -89,15 +89,15 @@ def get_log_handler(polyaxon_client=None):
         sys.exit(1)
 
 
-def check_cli_version():
+def check_cli_version(server_versions=None, current_version=None):
     """Check if the current cli version satisfies the server requirements"""
     if not CliConfigManager.should_check():
         return
 
     from distutils.version import LooseVersion  # pylint:disable=import-error
 
-    server_versions = get_server_versions()
-    current_version = get_current_version()
+    server_versions = server_versions or get_server_versions()
+    current_version = current_version or get_current_version()
     cli_config = CliConfigManager.reset(
         current_version=current_version, server_versions=server_versions.to_dict()
     )
@@ -144,14 +144,17 @@ def check_cli_version():
 
 
 @click.command()
+@click.option("--check", is_flag=True, default=False, help="Check versions.")
 @clean_outputs
-def version():
+def version(check):
     """Print the current version of the cli and platform."""
     server_versions = get_server_versions()
-    cli_version = get_current_version()
-    Printer.print_header("Current cli version: {}.".format(cli_version))
+    current_version = get_current_version()
+    Printer.print_header("Current cli version: {}.".format(current_version))
     Printer.print_header("Supported versions:")
     dict_tabulate(server_versions.to_dict())
+    if check:
+        check_cli_version(server_versions, current_version)
 
 
 @click.command()
@@ -162,10 +165,3 @@ def upgrade():
         pip_upgrade(PROJECT_CLI_NAME)
     except Exception as e:
         logger.error(e)
-
-
-@click.command()
-@clean_outputs
-def check():
-    """Checks the polyaxon cli version."""
-    check_cli_version()

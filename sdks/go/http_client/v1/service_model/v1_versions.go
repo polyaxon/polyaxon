@@ -39,6 +39,9 @@ type V1Versions struct {
 	// platform
 	Platform *V1Version `json:"platform,omitempty"`
 
+	// platform dist
+	PlatformDist string `json:"platform_dist,omitempty"`
+
 	// platform version
 	PlatformVersion string `json:"platform_version,omitempty"`
 }

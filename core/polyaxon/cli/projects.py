@@ -22,6 +22,7 @@ from polyaxon_sdk import V1Project
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.init import init as init_project
 from polyaxon.client import ProjectClient
@@ -109,7 +110,12 @@ def create(ctx, name, owner, description, tags, private, init):
         project_config = V1Project(
             name=name, description=description, tags=tags, is_public=not private
         )
-        _project = ProjectClient(owner=owner).create(project_config)
+        polyaxon_client = ProjectClient(owner=owner)
+        _project = polyaxon_client.create(project_config)
+        config = polyaxon_client.client.sanitize_for_serialization(
+            _project.project_data
+        )
+        cache.cache(config_manager=ProjectManager, config=config)
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not create project `{}`.".format(name))
         sys.exit(1)
@@ -308,3 +314,37 @@ def update(ctx, name, description, private):
 
     Printer.print_success("Project updated.")
     get_project_details(response)
+
+
+@project.command()
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
+@click.option(
+    "--url",
+    is_flag=True,
+    default=False,
+    help="Print the url of the dashboard for this project.",
+)
+@click.pass_context
+@clean_outputs
+def dashboard(ctx, yes, url):
+    """Open this operation's dashboard details in browser."""
+    owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
+    dashboard_url = settings.CLIENT_CONFIG.host
+    project_url = "{}/{}/{}/".format(dashboard_url, owner, project_name)
+    if url:
+        Printer.print_header("The dashboard is available at: {}".format(run_url))
+        sys.exit(0)
+    if not yes:
+        click.confirm(
+            "Dashboard page will now open in your browser. Continue?",
+            abort=True,
+            default=True,
+        )
+    click.launch(project_url)

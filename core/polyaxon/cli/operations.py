@@ -722,19 +722,17 @@ def artifacts(ctx):
     "--url",
     is_flag=True,
     default=False,
-    help="Print the url of the dashboard or external service.",
+    help="Print the url of the dashboard for this run.",
 )
 @click.pass_context
 @clean_outputs
-def dashboard(ctx, yes, external, url):
+def dashboard(ctx, yes, url):
     """Open this operation's dashboard details in browser."""
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     dashboard_url = settings.CLIENT_CONFIG.host
-    run_url = "{}/{}/{}/runs/{}/service".format(
-        dashboard_url, owner, project_name, run_uuid
-    )
+    run_url = "{}/{}/{}/runs/{}/".format(dashboard_url, owner, project_name, run_uuid)
     if url:
         Printer.print_header("The dashboard is available at: {}".format(run_url))
         sys.exit(0)

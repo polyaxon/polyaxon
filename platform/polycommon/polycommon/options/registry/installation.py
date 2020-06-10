@@ -19,12 +19,14 @@ from polycommon.options.option import Option, OptionScope, OptionStores
 
 POLYAXON_ENVIRONMENT = "POLYAXON_ENVIRONMENT"
 PLATFORM_VERSION = "PLATFORM_VERSION"
+PLATFORM_DIST = "PLATFORM_DIST"
 CHART_VERSION = "CHART_VERSION"
 ORGANIZATION_KEY = "ORGANIZATION_KEY"
 
 OPTIONS = {
     POLYAXON_ENVIRONMENT,
     PLATFORM_VERSION,
+    PLATFORM_DIST,
     CHART_VERSION,
     ORGANIZATION_KEY,
 }
@@ -44,6 +46,18 @@ class PlatformEnvironmentVersion(Option):
 
 class PlatformVersion(Option):
     key = PLATFORM_VERSION
+    scope = OptionScope.GLOBAL
+    is_secret = False
+    is_optional = True
+    is_list = False
+    typing = types.STR
+    store = OptionStores.SETTINGS
+    default = None
+    options = None
+
+
+class PlatformDist(Option):
+    key = PLATFORM_DIST
     scope = OptionScope.GLOBAL
     is_secret = False
     is_optional = True

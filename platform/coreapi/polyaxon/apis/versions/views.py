@@ -18,10 +18,13 @@ from rest_framework.response import Response
 
 from polycommon import conf
 from polycommon.endpoints.base import BaseEndpoint, RetrieveEndpoint
-from polycommon.options.registry.installation import PLATFORM_VERSION
+from polycommon.options.registry.installation import PLATFORM_DIST, PLATFORM_VERSION
 
 
 class VersionView(BaseEndpoint, RetrieveEndpoint):
     def retrieve(self, request, *args, **kwargs):
-        versions = {"platform_version": conf.get(PLATFORM_VERSION)}
+        versions = {
+            "platform_version": conf.get(PLATFORM_VERSION),
+            "platform_dist": conf.get(PLATFORM_DIST),
+        }
         return Response(versions)
