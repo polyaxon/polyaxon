@@ -63,9 +63,12 @@ to learn about the component specification and <a href="/docs/management/compone
 
 Each component can have one runtime that it's specified in the [run section of a component](/docs/core/specification/component/#run).
 Polyaxon supports several runtimes:
+ * Jobs
+ * Distributed Jobs
+ * Services
+ * DAGs
 
-
-#### Job
+### Job
 
 A `job` is the execution of your code with data/connections and the provided parameters on the Kubernetes cluster.
 
@@ -91,7 +94,7 @@ Polyaxon supports distributed jobs for model training or data processing via sev
 
 <blockquote class="light">Please refer to <a href="/docs/experimentation/distributed/">experimentation/distrbuted-jobs</a> for more details.</blockquote>
 
-#### Service
+### Service
 
 A `service` allows to run dashboards, apps, and apis.
 
@@ -105,7 +108,7 @@ A service can be:
 
 <blockquote class="light">Please refer to <a href="/docs/experimentation/services">experimentation/services</a> for more details.</blockquote>
 
-#### DAG
+### DAG
 
 A `DAG` is a powerful tool to describe dependencies between operations, 
 it allows to author a directed acyclic graph of operation with first class support for states and artifacts dependencies.

@@ -5,6 +5,8 @@
       link: /docs/core/introduction/
     - title: Features
       link: /docs/core/introduction/features/
+    - title: Architecture
+      link: /docs/core/introduction/architecture/
     - title: Core concepts
       link: /docs/core/introduction/concepts/
   - group: Quick Start
