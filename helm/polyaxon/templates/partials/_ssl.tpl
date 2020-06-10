@@ -5,7 +5,7 @@ SSL volume mount
 {{- if and .Values.ssl.enabled .Values.ssl.secretName }}
 - name: polyaxon-ssl-volume
   readOnly: true
-  mountPath: {{ default "/etc/ssl" .Values.ssl.path | quote }}
+  mountPath: {{ .Values.ssl.path | default "/etc/ssl" | quote }}
 {{- end }}
 {{- end -}}  {{- /* end def ssl volume mounts */ -}}
 
