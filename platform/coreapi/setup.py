@@ -63,12 +63,12 @@ setup(
         "reinforcement-learning",
     ],
     install_requires=[
-        "celery==4.4.2",
+        "celery==4.4.5",
         "Django==3.0.7",
         "django-cors-headers==3.2.1",
         "djangorestframework==3.11.0",
-        "psycopg2-binary==2.8.3",
-        "redis==3.3.8",
+        "psycopg2-binary==2.8.5",
+        "redis==3.5.3",
     ],
     classifiers=[
         "Programming Language :: Python",

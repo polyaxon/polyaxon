@@ -66,10 +66,10 @@ setup(
     install_requires=[
         "click<8.0",
         "click-completion<0.6",
-        "tabulate>=0.8.2",
+        "tabulate<=0.8.7",
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
-        "marshmallow==3.4.0",
+        "marshmallow>=3.4.0,<=3.6.1",
         "polyaxon-sdk==1.0.96",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
