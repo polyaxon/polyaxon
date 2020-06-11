@@ -1,6 +1,6 @@
 click<8.0
 click-completion<0.6
-tabulate==0.8.2
+tabulate==0.8.7
 Jinja2>=2.10.3
 kubernetes>=10.0.1
 marshmallow==3.4.0
