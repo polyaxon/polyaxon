@@ -1,6 +1,7 @@
 ---
 title: "Polyaxon experimentation tools"
 sub_link: ""
+is_index: true
 meta_title: "Polyaxon experimentation tools: jobs, experiments, dashboards, notebooks, visualizations - Polyaxon Experimentation"
 meta_description: "Polyaxon experimentation tools to record and visualize every detail of your research process, collaborate easily, and get aster results."
 visibility: public

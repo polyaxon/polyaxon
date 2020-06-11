@@ -1,6 +1,7 @@
 ---
 title: "Connections"
 title_link: "Connections"
+is_index: true
 sub_link: "connections"
 meta_title: "How to install Polyaxon Agent on Kubernetes"
 meta_description: "Connections are how Polyaxon connects several types of external system and resources to your operations."

@@ -1,6 +1,7 @@
 ---
 title: "Runs dashboard"
 sub_link: "runs-dashboard"
+is_index: true
 meta_title: "Polyaxon management tools and UI - Runs dashboard"
 meta_description: "Polyaxon runs dashboard for Machine learning experiment tracking and visualizations."
 tags:

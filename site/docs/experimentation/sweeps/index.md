@@ -1,6 +1,7 @@
 ---
 title: "Hyperparameter tuning"
 sub_link: "sweep/introduction"
+is_index: true
 meta_title: "Hyperparameter tuning and sweeps - Experimentation"
 meta_description: "Polytune is a library to dynamically find the best set of hyperparameter values that will minimize or maximize a particular metric."
 visibility: public

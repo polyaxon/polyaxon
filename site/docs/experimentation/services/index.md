@@ -1,6 +1,7 @@
 ---
 title: "Services Introduction"
 sub_link: "services"
+is_index: true
 meta_title: "Polyaxon Services - Experimentation"
 meta_description: "A Service is the execution of your container with a service."
 tags:

@@ -1,6 +1,7 @@
 ---
 title: "Jobs Introduction"
 sub_link: "jobs"
+is_index: true
 meta_title: "Polyaxon Jobs - Experimentation"
 meta_description: "A Job is the execution of your model with data and the provided parameters on the cluster."
 tags:

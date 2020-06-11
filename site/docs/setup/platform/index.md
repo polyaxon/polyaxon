@@ -1,6 +1,7 @@
 ---
 title: "Install Polyaxon on Kubernetes"
 title_link: "Install Polyaxon on Kubernetes"
+is_index: true
 sub_link: "platform"
 date: "2018-10-01"
 meta_title: "How to install Polyaxon on Kubernetes"

@@ -1,6 +1,7 @@
 ---
 title: "Management tools"
 sub_link: ""
+is_index: true
 meta_title: "Polyaxon management tools and UI"
 meta_description: "Polyaxon UI is a tool for managing organizations, teams, projects, agents, runs..."
 tags:

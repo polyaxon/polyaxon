@@ -1,6 +1,7 @@
 ---
 title: "Model Registry"
 sub_link: "models-registry"
+is_index: true
 meta_title: "Polyaxon management - Model Registry"
 meta_description: "Polyaxon Model Registry is a powerful models store and a system to manage versioning, logging, staging, and production."
 tags:

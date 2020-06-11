@@ -1,6 +1,7 @@
 ---
 title: "Deployment Strategies"
 sub_link: "deployment-strategies"
+is_index: true
 title_link: "Deployment Strategies"
 meta_title: "How to deploy and scale Polyaxon on Kubernetes"
 meta_description: "This is a guide to assist you through the process and strategies of deploying and scaling a Polyaxon."
