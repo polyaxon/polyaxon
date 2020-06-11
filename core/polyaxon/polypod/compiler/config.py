@@ -41,7 +41,7 @@ class PolypodConfig:
     ):
         agent_config = agent_config or settings.AGENT_CONFIG
         if not agent_config:
-            raise PolyaxonCompilerError("Polypod is not configured.")
+            raise PolyaxonCompilerError("Polypod configuration not found or agent not configured.")
 
         self._resolve_run_connections(
             compiled_operation=compiled_operation, agent_config=agent_config
