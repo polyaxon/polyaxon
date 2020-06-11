@@ -5,5 +5,5 @@ cryptography==2.7
 Django==3.0.7
 django-picklefield==2.0
 djangorestframework==3.11.0
-psycopg2-binary==2.8.3
+psycopg2-binary==2.8.5
 redis==3.3.8
