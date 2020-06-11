@@ -2,7 +2,8 @@
 title: "Component Hub"
 sub_link: "components-hub"
 meta_title: "Polyaxon management UI - Agents"
-meta_description: "Polyaxon Agent is the tool that allows to orchestrate runs on user's clusters."
+meta_description: "Polyaxon Component Hub is a product for managing versioned and reusable components, 
+each component: Can have multiple versions, Can be published publicly or privately within your organization, Can define team level permissions."
 tags:
     - concepts
     - polyaxon
