@@ -113,6 +113,7 @@ class ProjectClient:
             V1Project, project instance from the response.
         """
         self._project_data = self.client.projects_v1.create_project(self.owner, data)
+        self._project_data.owner = self.owner
         self._project = self._project_data.name
         return self._project_data
 
