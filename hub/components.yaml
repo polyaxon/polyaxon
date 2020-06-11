@@ -1,7 +1,24 @@
+- name: aws
+  versions:
+  - latest.yaml
+  - 2.0.21.yaml
+- name: azure
+  versions:
+  - latest.yaml
+  - custom.yaml
+  - python-sdk.yaml
+- name: buildah
+  versions:
+  - latest.yaml
+  - 1.14.8.yaml
 - name: dockerizer
   versions:
   - latest.yaml
   - 1.0.9.yaml
+- name: gcloud
+  versions:
+  - latest.yaml
+  - custom.yaml
 - name: jupyter-lab
   versions:
   - latest.yaml
@@ -23,6 +40,7 @@
 - name: papermill
   versions:
   - latest.yaml
+  - custom.yaml
 - name: tensorboard
   versions:
   - multi-runs.yaml

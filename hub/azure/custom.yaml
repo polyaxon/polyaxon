@@ -1,0 +1,24 @@
+version: 1.1
+kind: component
+name: az
+description: Performs operations on Microsoft Azure resources using az.
+tags: [cloud]
+
+
+inputs:
+- name: image
+  isOptional: true
+  type: str
+  value: mcr.microsoft.com/azure-cli:latest
+- name: args
+  type: str
+  isOptional: true
+  isList: true
+  value: []
+
+run:
+  kind: job
+  container:
+    image: "{{ image }}"
+    command: [az]
+    args: "{{ args }}"

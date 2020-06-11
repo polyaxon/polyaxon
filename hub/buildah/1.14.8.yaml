@@ -1,0 +1,48 @@
+version: 1.1
+kind: component
+name: buildah
+description: Builds source into a container image using Project Atomic's Buildah build tool.
+tags: ["build"]
+
+inputs:
+- name: context
+  description: A directory containing a Dockerfile which kaniko will use to build your image, default is artifacts path.
+  isOptional: true
+  type: str
+- name: storage_drive
+  description: Set buildah storage driver
+  isOptional: true
+  value: overlay
+- name: dockerfile
+  description: Path to the Dockerfile to build.
+  default: Dockerfile
+- name: tls_verify
+  description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
+  default: "true"
+- name: format
+  description: The format of the built container, oci or docker
+  default: "oci"
+
+outputs:
+- name: destination
+  type: image
+
+run:
+  kind: job
+  connections: ["{{ destination.connection }}"]
+  volumes:
+  - name: varlibcontainers
+    emptyDir: {}
+  environment:
+    securityContext:
+      privileged: true
+  container:
+    image: quay.io/buildah/stable:v1.14.8
+    args: [
+      "buildah --storage-driver={{ storage_drive }} bud --format={{ format }} --tls-verify={{ tls-verify }} --no-cache -f ./{{ dockerfile }} -t {{ destination.name }} .",
+      "buildah --storage-driver={{ storage_drive }} push --tls-verify={{ tls-verify }} --digestfile ./image-digest {{ destination.name }} docker://{{ destination.name }}"]
+    ]
+    workingDir: "{{ context or globals.artifacts_path }}"
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers

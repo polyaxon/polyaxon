@@ -4,6 +4,10 @@ name: papermill
 tags: ["notebook"]
 
 inputs:
+- name: image
+  isOptional: true
+  type: str
+  value: polyaxon/polyaxon-contrib
 - name: nb_input
   description: The source notebook
   type: path
@@ -28,7 +32,7 @@ outputs:
 run:
   kind: job
   container:
-    image: polyaxon/polyaxon-contrib
+    image: "{{ image }}"
     command: papermill
     args: [
       "{{ nb_input }}",

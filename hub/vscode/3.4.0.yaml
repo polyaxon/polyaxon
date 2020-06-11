@@ -7,5 +7,5 @@ run:
   ports: [8080]
   rewritePath: true
   container:
-    image: codercom/code-server
+    image: codercom/code-server:3.4.1
     args: ["--auth", "none"]

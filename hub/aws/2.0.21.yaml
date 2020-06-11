@@ -1,0 +1,23 @@
+version: 1.1
+kind: component
+name: aws
+description: Performs operations on Amazon Web Services resources using aws.
+tags: [cloud]
+
+
+inputs:
+- name: image
+  isOptional: true
+  type: str
+  value: amazon/aws-cli:2.0.21
+- name: args
+  type: str
+  isOptional: true
+  isList: true
+  value: ["--version"]
+
+run:
+  kind: job
+  container:
+    image: "{{ image }}"
+    args: "{{ args }}"

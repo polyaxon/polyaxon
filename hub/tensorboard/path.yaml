@@ -7,7 +7,7 @@ inputs:
 - name: image
   isOptional: true
   type: str
-  value: "tensorflow/tensorflow:1.4.1-py3"
+  value: tensorflow/tensorflow:1.4.1-py3
 - name: path
   isOptional: true
   type: str

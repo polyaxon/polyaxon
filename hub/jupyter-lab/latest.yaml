@@ -5,7 +5,7 @@ inputs:
 - name: image
   isOptional: true
   type: str
-  value: "jupyter/tensorflow-notebook"
+  value: jupyter/tensorflow-notebook
 - name: port
   isOptional: true
   type: int

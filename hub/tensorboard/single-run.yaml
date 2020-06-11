@@ -6,7 +6,7 @@ inputs:
 - name: image
   isOptional: true
   type: str
-  value: "tensorflow/tensorflow:2.0.1-py3"
+  value: tensorflow/tensorflow:2.0.1-py3
 - name: run_uuid
   isOptional: true
   type: str

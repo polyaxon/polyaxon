@@ -1,0 +1,17 @@
+version: 1.1
+kind: component
+name: gcloud
+description: Performs operations on Google Cloud Platform resources using gcloud.
+
+inputs:
+- name: args
+  type: str
+  isOptional: true
+  isList: true
+  value: ["--version"]
+
+run:
+  kind: job
+  container:
+    image: amazon/aws-cli:latest
+    args: "{{ args }}"
