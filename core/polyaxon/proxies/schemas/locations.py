@@ -19,7 +19,7 @@ from polyaxon.proxies.schemas.base import get_config
 
 STATIC_LOCATION_OPTIONS = """
 location /static/ {{
-    alias /polyaxon/static/;
+    alias {static_root};
     autoindex on;
     expires                   30d;
     add_header                Cache-Control private;
@@ -29,7 +29,11 @@ location /static/ {{
 
 
 def get_static_location_config():
-    return get_config(options=STATIC_LOCATION_OPTIONS, indent=0)
+    return get_config(
+        options=STATIC_LOCATION_OPTIONS,
+        indent=0,
+        static_root=settings.PROXIES_CONFIG.static_root.rstrip("/") + "/",
+    )
 
 
 TMP_LOCATION_OPTIONS = """

@@ -15,6 +15,7 @@
 # limitations under the License.
 import pytest
 
+from polyaxon import settings
 from tests.utils import BaseTestCase
 
 from polyaxon.proxies.schemas.locations import get_api_locations_config
@@ -27,7 +28,7 @@ class TestApiSchemas(BaseTestCase):
     def test_api_locations(self):
         expected = """
 location /static/ {
-    alias /polyaxon/static/;
+    alias /static/;
     autoindex on;
     expires                   30d;
     add_header                Cache-Control private;

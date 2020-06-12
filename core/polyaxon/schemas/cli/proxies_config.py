@@ -40,7 +40,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_PROXY_SSL_PATH,
     POLYAXON_KEYS_PROXY_STREAMS_HOST,
     POLYAXON_KEYS_PROXY_STREAMS_PORT,
-)
+    POLYAXON_KEYS_STATIC_ROOT)
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 
@@ -88,6 +88,7 @@ class ProxiesSchema(BaseSchema):
         allow_none=True, data_key=POLYAXON_KEYS_NGINX_INDENT_WIDTH
     )
     archive_root = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_ARCHIVE_ROOT)
+    static_root = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_STATIC_ROOT)
 
     @staticmethod
     def schema_config():
@@ -121,6 +122,7 @@ class ProxiesConfig(BaseConfig):
         POLYAXON_KEYS_K8S_NAMESPACE,
         POLYAXON_KEYS_LOG_LEVEL,
         POLYAXON_KEYS_ARCHIVE_ROOT,
+        POLYAXON_KEYS_STATIC_ROOT,
     ]
 
     def __init__(
@@ -146,6 +148,7 @@ class ProxiesConfig(BaseConfig):
         ssl_enabled=None,
         ssl_path=None,
         archive_root=None,
+        static_root=None,
         **kwargs
     ):
         self.namespace = namespace
@@ -170,6 +173,7 @@ class ProxiesConfig(BaseConfig):
         self.log_level = self.log_level.lower()
         self.ssl_path = ssl_path or "/etc/ssl/polyaxon"
         self.archive_root = archive_root or CONTEXT_ARCHIVE_ROOT
+        self.static_root = static_root or "/static"
 
     @property
     def default_serving_port(self):

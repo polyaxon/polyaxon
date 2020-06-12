@@ -15,6 +15,7 @@
 # limitations under the License.
 import pytest
 
+from polyaxon import settings
 from tests.utils import BaseTestCase
 
 from polyaxon.proxies.schemas.api.base import get_base_config
@@ -70,7 +71,7 @@ error_page 404 /404.html;
 
 
 location /static/ {
-    alias /polyaxon/static/;
+    alias /static/;
     autoindex on;
     expires                   30d;
     add_header                Cache-Control private;

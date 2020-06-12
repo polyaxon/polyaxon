@@ -65,6 +65,6 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
         {
             "BACKEND": "django.template.backends.django.DjangoTemplates",
             "APP_DIRS": True,
-            "OPTIONS": {"debug": template_debug, "context_processors": processors,},
+            "OPTIONS": {"debug": template_debug, "context_processors": processors},
         }
     ]
