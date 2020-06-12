@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import functools
+
 import os
 
 from typing import List, Optional, Tuple
@@ -25,7 +25,6 @@ from polyaxon.stores.manager import list_files
 from polyaxon.streams.tasks.logs import download_logs_file
 
 
-@functools.lru_cache(maxsize=30)
 def get_logs_files(run_uuid: str) -> List[str]:
     files = list_files(subpath="{}/plxlogs".format(run_uuid))
     if not files["files"]:
