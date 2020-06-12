@@ -41,6 +41,10 @@
   versions:
   - latest.yaml
   - custom.yaml
+- name: streamlit
+  versions:
+  - latest.yaml
+  - custom.yaml
 - name: tensorboard
   versions:
   - multi-runs.yaml

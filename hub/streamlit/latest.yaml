@@ -1,0 +1,21 @@
+version: 1.1
+kind: component
+name: streamlit
+tags: ["notebook"]
+
+inputs:
+- name: app
+  description: The entrypoint app to run
+  type: app.py
+- name: context
+  description: The directory containing the app, defaults to the whre
+  isOptional: true
+  type: str
+
+run:
+  kind: job
+  container:
+    image: polyaxon/polyaxon-contrib
+    workingDir: "{{ context or globals.artifacts_path }}"
+    command: [streamlit, run]
+    args: ["{{ app }}"]
