@@ -40,7 +40,8 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_PROXY_SSL_PATH,
     POLYAXON_KEYS_PROXY_STREAMS_HOST,
     POLYAXON_KEYS_PROXY_STREAMS_PORT,
-    POLYAXON_KEYS_STATIC_ROOT)
+    POLYAXON_KEYS_STATIC_ROOT,
+)
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 

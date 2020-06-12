@@ -15,9 +15,9 @@
 # limitations under the License.
 import pytest
 
-from polyaxon import settings
 from tests.utils import BaseTestCase
 
+from polyaxon import settings
 from polyaxon.proxies.schemas.locations import get_api_locations_config
 
 

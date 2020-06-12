@@ -57,31 +57,31 @@ spec:
 {{ include "config.debugMode" . | indent 8 }}
         volumeMounts:
 {{ include "ssl.mount" . | indent 8}}
-#        livenessProbe:
-#          failureThreshold: 10
-#          httpGet:
-#            path: /healthz/
-#            port: {{ .Values.gateway.service.targetPort }}
-#            scheme: {{ .Values.gateway.service.scheme | default "HTTP" }}
-#          initialDelaySeconds: 150
-#          periodSeconds: 30
-#          successThreshold: 1
-#          timeoutSeconds: 2
-#        readinessProbe:
-#          failureThreshold: 30
-#          httpGet:
-#            path: /healthz/
-#            port: {{ .Values.gateway.service.targetPort }}
-#            scheme: {{ .Values.gateway.service.scheme | default "HTTP" }}
-#            {{- if .Values.allowedHosts }}
-#            httpHeaders:
-#              - name: Host
-#                value: {{ template "polyaxon.fullname" . }}-gateway
-#            {{- end }}
-#          initialDelaySeconds: 150
-#          periodSeconds: 30
-#          successThreshold: 1
-#          timeoutSeconds: 2
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /healthz/
+            port: {{ .Values.gateway.service.targetPort }}
+            scheme: {{ .Values.gateway.service.scheme | default "HTTP" }}
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
+        readinessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /healthz/
+            port: {{ .Values.gateway.service.targetPort }}
+            scheme: {{ .Values.gateway.service.scheme | default "HTTP" }}
+            {{- if .Values.allowedHosts }}
+            httpHeaders:
+              - name: Host
+                value: {{ template "polyaxon.fullname" . }}-gateway
+            {{- end }}
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
         resources:
           requests:
 {{ toYaml .Values.gateway.resources.requests | indent 12 }}

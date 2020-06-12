@@ -24,6 +24,7 @@ from polyaxon.proxies.schemas.gateway.auth import (
     get_auth_location_config,
 )
 from polyaxon.proxies.schemas.gateway.dns import get_resolver
+from polyaxon.proxies.schemas.gateway.healthz import get_healthz_location_config
 from polyaxon.proxies.schemas.gateway.services import get_services_location_config
 from polyaxon.proxies.schemas.gateway.ssl import get_ssl_config
 from polyaxon.proxies.schemas.gateway.streams import get_streams_location_config
@@ -46,6 +47,7 @@ def get_base_config():
         get_buffering_config(),
         get_timeout_config(),
         get_error_page_config(),
+        get_healthz_location_config(),
         get_auth_location_config(resolver=resolver),
         get_streams_location_config(resolver=resolver, auth=auth),
         get_services_location_config(resolver=resolver, auth=auth, rewrite=False),

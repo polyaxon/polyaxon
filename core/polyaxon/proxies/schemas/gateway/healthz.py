@@ -14,15 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon import pkg
+from polyaxon.proxies.schemas.base import get_config
 
-VERSION_V1 = "v1"
-API_V1 = "api/{}".format(VERSION_V1)
-STREAMS_V1 = "streams/{}".format(VERSION_V1)
-SERVICES_V1 = "services/{}".format(VERSION_V1)
-REWRITE_SERVICES_V1 = "rewrite-services/{}".format(VERSION_V1)
-WS_V1 = "ws/{}".format(VERSION_V1)
-AUTH_V1 = "auth/{}".format(VERSION_V1)
-POLYAXON_CLOUD = "cloud.polyaxon.com"
-POLYAXON_CLOUD_HOST = "https://cloud.polyaxon.com"
-POLYAXON_VERSIONS_HOST = "https://versions.polyaxon.com/?v={}".format(pkg.VERSION)
+HEALTHZ_LOCATION_OPTIONS = """
+location /healthz/ {{
+    access_log off;
+    return 200 "healthy";
+}}
+"""
+
+
+def get_healthz_location_config():
+    return get_config(options=HEALTHZ_LOCATION_OPTIONS, indent=0,)
