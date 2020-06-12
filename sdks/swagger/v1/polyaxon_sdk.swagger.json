@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.96",
+    "version": "1.0.97",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -10754,6 +10754,14 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "force",
+            "description": "Force query param.",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -10939,6 +10947,14 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "force",
+            "description": "Force query param.",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -11018,6 +11034,14 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "force",
+            "description": "Force query param.",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -11164,6 +11188,14 @@
           {
             "name": "tail",
             "description": "Query param flag to tail the values.",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
+          },
+          {
+            "name": "force",
+            "description": "Force query param.",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -11531,6 +11563,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "force",
+            "description": "Whether to force reload.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -11601,6 +11640,13 @@
           {
             "name": "stream",
             "description": "Whether to stream the file.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "force",
+            "description": "Whether to force reload.",
             "in": "query",
             "required": false,
             "type": "boolean"

@@ -678,7 +678,8 @@ let kind = "kind_example"; // String | The artifact kind
 let opts = {
   'names': "names_example", // String | Names query param.
   'runs': "runs_example", // String | Runs query param.
-  'orient': "orient_example" // String | Orient query param.
+  'orient': "orient_example", // String | Orient query param.
+  'force': true // Boolean | Force query param.
 };
 apiInstance.getMultiRunEvents(namespace, owner, project, kind, opts, (error, data, response) => {
   if (error) {
@@ -701,6 +702,7 @@ Name | Type | Description  | Notes
  **names** | **String**| Names query param. | [optional] 
  **runs** | **String**| Runs query param. | [optional] 
  **orient** | **String**| Orient query param. | [optional] 
+ **force** | **Boolean**| Force query param. | [optional] 
 
 ### Return type
 
@@ -793,7 +795,8 @@ let project = "project_example"; // String | Project where the experiement will 
 let uuid = "uuid_example"; // String | Unique integer identifier of the entity
 let opts = {
   'path': "path_example", // String | Artifact filepath.
-  'stream': true // Boolean | Whether to stream the file.
+  'stream': true, // Boolean | Whether to stream the file.
+  'force': true // Boolean | Whether to force reload.
 };
 apiInstance.getRunArtifact(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
@@ -815,6 +818,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Unique integer identifier of the entity | 
  **path** | **String**| Artifact filepath. | [optional] 
  **stream** | **Boolean**| Whether to stream the file. | [optional] 
+ **force** | **Boolean**| Whether to force reload. | [optional] 
 
 ### Return type
 
@@ -912,7 +916,8 @@ let owner = "owner_example"; // String | Owner of the namespace
 let project = "project_example"; // String | Project where the experiement will be assigned
 let uuid = "uuid_example"; // String | Unique integer identifier of the entity
 let opts = {
-  'path': "path_example" // String | Artifact filepath.
+  'path': "path_example", // String | Artifact filepath.
+  'force': true // Boolean | Whether to force reload.
 };
 apiInstance.getRunArtifacts(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
@@ -933,6 +938,7 @@ Name | Type | Description  | Notes
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
  **path** | **String**| Artifact filepath. | [optional] 
+ **force** | **Boolean**| Whether to force reload. | [optional] 
 
 ### Return type
 
@@ -1158,7 +1164,8 @@ let uuid = "uuid_example"; // String | Uuid identifier of the entity
 let kind = "kind_example"; // String | The artifact kind
 let opts = {
   'names': "names_example", // String | Names query param.
-  'orient': "orient_example" // String | Orient query param.
+  'orient': "orient_example", // String | Orient query param.
+  'force': true // Boolean | Force query param.
 };
 apiInstance.getRunEvents(namespace, owner, project, uuid, kind, opts, (error, data, response) => {
   if (error) {
@@ -1181,6 +1188,7 @@ Name | Type | Description  | Notes
  **kind** | **String**| The artifact kind | 
  **names** | **String**| Names query param. | [optional] 
  **orient** | **String**| Orient query param. | [optional] 
+ **force** | **Boolean**| Force query param. | [optional] 
 
 ### Return type
 
@@ -1220,7 +1228,8 @@ let project = "project_example"; // String | Project where the run will be assig
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
 let opts = {
   'last_time': new Date("2013-10-20T19:20:30+01:00"), // Date | last time.
-  'last_file': "last_file_example" // String | last file.
+  'last_file': "last_file_example", // String | last file.
+  'force': true // Boolean | Force query param.
 };
 apiInstance.getRunLogs(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
@@ -1242,6 +1251,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Uuid identifier of the entity | 
  **last_time** | **Date**| last time. | [optional] 
  **last_file** | **String**| last file. | [optional] 
+ **force** | **Boolean**| Force query param. | [optional] 
 
 ### Return type
 
@@ -1334,7 +1344,8 @@ let project = "project_example"; // String | Project where the run will be assig
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
 let opts = {
   'names': "names_example", // String | Names query param.
-  'tail': true // Boolean | Query param flag to tail the values.
+  'tail': true, // Boolean | Query param flag to tail the values.
+  'force': true // Boolean | Force query param.
 };
 apiInstance.getRunResources(namespace, owner, project, uuid, opts, (error, data, response) => {
   if (error) {
@@ -1356,6 +1367,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Uuid identifier of the entity | 
  **names** | **String**| Names query param. | [optional] 
  **tail** | **Boolean**| Query param flag to tail the values. | [optional] 
+ **force** | **Boolean**| Force query param. | [optional] 
 
 ### Return type
 

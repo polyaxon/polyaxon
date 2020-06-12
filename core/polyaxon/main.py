@@ -49,7 +49,7 @@ click_completion.init()
     "-v", "--verbose", is_flag=True, default=False, help="Turn on debug logging"
 )
 @click.option(
-    "-c", "--check", is_flag=True, default=False, help="Turn on version check"
+    "-c", "--check-version", is_flag=True, default=False, help="Turn on version check"
 )
 @click.option(
     "--offline",
@@ -60,7 +60,7 @@ click_completion.init()
 )
 @click.pass_context
 @clean_outputs
-def cli(context, verbose, check, offline):
+def cli(context, verbose, check_version, offline):
     """ Polyaxon CLI tool to:
 
         * Parse, Validate, and Check Polyaxonfiles.
@@ -98,7 +98,7 @@ def cli(context, verbose, check, offline):
     if offline:
         os.environ["POLYAXON_IS_OFFLINE"] = "true"
         settings.CLIENT_CONFIG.is_offline = True
-    if check and not (
+    if check_version and not (
         context.invoked_subcommand in non_check_cmds
         or offline
         or settings.CLIENT_CONFIG.no_api

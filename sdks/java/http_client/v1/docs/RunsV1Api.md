@@ -885,7 +885,7 @@ null (empty response body)
 
 <a name="getMultiRunEvents"></a>
 # **getMultiRunEvents**
-> V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, names, runs, orient)
+> V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, force)
 
 Get multi runs events
 
@@ -918,8 +918,9 @@ public class Example {
     String names = "names_example"; // String | Names query param.
     String runs = "runs_example"; // String | Runs query param.
     String orient = "orient_example"; // String | Orient query param.
+    Boolean force = true; // Boolean | Force query param.
     try {
-      V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient);
+      V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, force);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getMultiRunEvents");
@@ -943,6 +944,7 @@ Name | Type | Description  | Notes
  **names** | **String**| Names query param. | [optional]
  **runs** | **String**| Runs query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
+ **force** | **Boolean**| Force query param. | [optional]
 
 ### Return type
 
@@ -1043,7 +1045,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifact"></a>
 # **getRunArtifact**
-> String getRunArtifact(namespace, owner, project, uuid, path, stream)
+> String getRunArtifact(namespace, owner, project, uuid, path, stream, force)
 
 Get run artifact
 
@@ -1075,8 +1077,9 @@ public class Example {
     String uuid = "uuid_example"; // String | Unique integer identifier of the entity
     String path = "path_example"; // String | Artifact filepath.
     Boolean stream = true; // Boolean | Whether to stream the file.
+    Boolean force = true; // Boolean | Whether to force reload.
     try {
-      String result = apiInstance.getRunArtifact(namespace, owner, project, uuid, path, stream);
+      String result = apiInstance.getRunArtifact(namespace, owner, project, uuid, path, stream, force);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunArtifact");
@@ -1099,6 +1102,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Unique integer identifier of the entity |
  **path** | **String**| Artifact filepath. | [optional]
  **stream** | **Boolean**| Whether to stream the file. | [optional]
+ **force** | **Boolean**| Whether to force reload. | [optional]
 
 ### Return type
 
@@ -1202,7 +1206,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifacts"></a>
 # **getRunArtifacts**
-> String getRunArtifacts(namespace, owner, project, uuid, path)
+> String getRunArtifacts(namespace, owner, project, uuid, path, force)
 
 Get run artifacts
 
@@ -1233,8 +1237,9 @@ public class Example {
     String project = "project_example"; // String | Project where the experiement will be assigned
     String uuid = "uuid_example"; // String | Unique integer identifier of the entity
     String path = "path_example"; // String | Artifact filepath.
+    Boolean force = true; // Boolean | Whether to force reload.
     try {
-      String result = apiInstance.getRunArtifacts(namespace, owner, project, uuid, path);
+      String result = apiInstance.getRunArtifacts(namespace, owner, project, uuid, path, force);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunArtifacts");
@@ -1256,6 +1261,7 @@ Name | Type | Description  | Notes
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
  **path** | **String**| Artifact filepath. | [optional]
+ **force** | **Boolean**| Whether to force reload. | [optional]
 
 ### Return type
 
@@ -1525,7 +1531,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunEvents"></a>
 # **getRunEvents**
-> V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, names, orient)
+> V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, names, orient, force)
 
 Get run events
 
@@ -1558,8 +1564,9 @@ public class Example {
     String kind = "kind_example"; // String | The artifact kind
     String names = "names_example"; // String | Names query param.
     String orient = "orient_example"; // String | Orient query param.
+    Boolean force = true; // Boolean | Force query param.
     try {
-      V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, names, orient);
+      V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, names, orient, force);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunEvents");
@@ -1583,6 +1590,7 @@ Name | Type | Description  | Notes
  **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve]
  **names** | **String**| Names query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
+ **force** | **Boolean**| Force query param. | [optional]
 
 ### Return type
 
@@ -1608,7 +1616,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunLogs"></a>
 # **getRunLogs**
-> V1Logs getRunLogs(namespace, owner, project, uuid, lastTime, lastFile)
+> V1Logs getRunLogs(namespace, owner, project, uuid, lastTime, lastFile, force)
 
 Get run logs
 
@@ -1640,8 +1648,9 @@ public class Example {
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     OffsetDateTime lastTime = new OffsetDateTime(); // OffsetDateTime | last time.
     String lastFile = "lastFile_example"; // String | last file.
+    Boolean force = true; // Boolean | Force query param.
     try {
-      V1Logs result = apiInstance.getRunLogs(namespace, owner, project, uuid, lastTime, lastFile);
+      V1Logs result = apiInstance.getRunLogs(namespace, owner, project, uuid, lastTime, lastFile, force);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunLogs");
@@ -1664,6 +1673,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Uuid identifier of the entity |
  **lastTime** | **OffsetDateTime**| last time. | [optional]
  **lastFile** | **String**| last file. | [optional]
+ **force** | **Boolean**| Force query param. | [optional]
 
 ### Return type
 
@@ -1764,7 +1774,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunResources"></a>
 # **getRunResources**
-> V1EventsResponse getRunResources(namespace, owner, project, uuid, names, tail)
+> V1EventsResponse getRunResources(namespace, owner, project, uuid, names, tail, force)
 
 Get run resources events
 
@@ -1796,8 +1806,9 @@ public class Example {
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     String names = "names_example"; // String | Names query param.
     Boolean tail = true; // Boolean | Query param flag to tail the values.
+    Boolean force = true; // Boolean | Force query param.
     try {
-      V1EventsResponse result = apiInstance.getRunResources(namespace, owner, project, uuid, names, tail);
+      V1EventsResponse result = apiInstance.getRunResources(namespace, owner, project, uuid, names, tail, force);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#getRunResources");
@@ -1820,6 +1831,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Uuid identifier of the entity |
  **names** | **String**| Names query param. | [optional]
  **tail** | **Boolean**| Query param flag to tail the values. | [optional]
+ **force** | **Boolean**| Force query param. | [optional]
 
 ### Return type
 

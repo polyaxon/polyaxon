@@ -25,7 +25,7 @@ from polyaxon.logger import logger
 from polyaxon.schemas.base import BaseConfig
 
 
-class BaseConfigManager(object):
+class BaseConfigManager:
     """Base class for managing a configuration file."""
 
     IS_GLOBAL = False

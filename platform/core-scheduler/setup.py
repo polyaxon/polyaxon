@@ -40,7 +40,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon-scheduler",
-    version="1.0.96",
+    version="1.0.97",
     description="Polyaxon's core scheduler.",
     long_description=read_readme(),
     maintainer="Polyaxon, Inc.",

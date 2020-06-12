@@ -112,9 +112,7 @@ def create(ctx, name, owner, description, tags, private, init):
         )
         polyaxon_client = ProjectClient(owner=owner)
         _project = polyaxon_client.create(project_config)
-        config = polyaxon_client.client.sanitize_for_serialization(
-            _project
-        )
+        config = polyaxon_client.client.sanitize_for_serialization(_project)
         cache.cache(config_manager=ProjectManager, config=config)
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not create project `{}`.".format(name))

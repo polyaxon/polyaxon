@@ -234,6 +234,9 @@ message RunEventRequest {
 
     // Orient query param
     string orient = 7;
+
+    // Force query param
+    bool force = 8;
 }
 
 // Request data to get/delete runs' events
@@ -258,6 +261,9 @@ message RunEventsRequest {
 
     // Orient query param
     string orient = 7;
+
+    // Force query param
+    bool force = 8;
 }
 
 // Request data to get/delete run resources
@@ -279,4 +285,7 @@ message RunResourcesRequest {
 
     // Query param flag to tail the values
     bool tail = 6;
+
+    // Force query param
+    bool force = 7;
 }

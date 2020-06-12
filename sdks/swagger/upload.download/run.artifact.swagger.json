@@ -219,6 +219,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "force",
+            "description": "Whether to force reload.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
@@ -289,6 +296,13 @@
           {
             "name": "stream",
             "description": "Whether to stream the file.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "force",
+            "description": "Whether to force reload.",
             "in": "query",
             "required": false,
             "type": "boolean"

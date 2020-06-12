@@ -29,7 +29,7 @@ from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.utils.list_utils import to_list
 
 
-class ConfigSpec(object):
+class ConfigSpec:
     def __init__(self, value, config_type=None, check_if_exists=True):
         self.value = value
         self.config_type = config_type

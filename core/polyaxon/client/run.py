@@ -608,13 +608,20 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def get_events(self, kind: V1ArtifactKind, names: List[str], orient: str = None):
+    def get_events(
+        self,
+        kind: V1ArtifactKind,
+        names: List[str],
+        orient: str = None,
+        force: bool = False,
+    ):
         """Gets the run's events
 
         Args:
             kind: str, a valid `V1ArtifactKind`.
             names: List[str], list of events to return.
             orient: str, csv or dict.
+            force: bool, force reload the events.
         """
         return self.client.runs_v1.get_run_events(
             self.namespace,
@@ -624,6 +631,7 @@ class RunClient:
             kind=kind,
             names=names,
             orient=orient,
+            force=force,
         )
 
     @check_no_op
@@ -634,6 +642,7 @@ class RunClient:
         runs: List[str],
         names: List[str],
         orient: str = None,
+        force: bool = False,
     ):
         """Gets multi-runs events.
 
@@ -642,6 +651,7 @@ class RunClient:
             runs: List[str], list of run uuids to return events for.
             names: List[str], list of events to return.
             orient: str, csv or dict.
+            force: bool, force reload the events.
         """
         return self.client.runs_v1.get_multi_run_events(
             self.namespace,
@@ -651,16 +661,18 @@ class RunClient:
             names=names,
             runs=runs,
             orient=orient,
+            force=force,
         )
 
     @check_no_op
     @check_offline
-    def get_artifact(self, path: str, stream: bool = True):
+    def get_artifact(self, path: str, stream: bool = True, force: bool = False):
         """Gets the run's artifact.
 
         Args:
             path: str, the relative path of the artifact to return.
             stream: bool, optional, default: True, whether to stream the artifact content.
+            force: bool, force reload the artifact.
 
         Returns:
             str.
@@ -672,16 +684,18 @@ class RunClient:
             uuid=self.run_uuid,
             path=path,
             stream=stream,
+            force=force,
             _preload_content=True,
         )
 
     @check_no_op
     @check_offline
-    def download_artifact(self, path: str):
+    def download_artifact(self, path: str, force: bool = False):
         """Downloads run artifact.
 
         Args:
             path: str, the relative path of the artifact to return.
+            force: bool, force reload the artifact.
 
         Returns:
             str
@@ -693,8 +707,10 @@ class RunClient:
             project=self.project,
             uuid=self.run_uuid,
         )
+        if force:
+            url = "{}?force=true".format(url)
 
-        return PolyaxonStore(client=self).download_file(url=url, path=path)
+        return PolyaxonStore(client=self).download_file(url=url, path=path, force=force)
 
     @check_no_op
     @check_offline

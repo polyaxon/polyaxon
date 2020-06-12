@@ -28,6 +28,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewGetRunArtifactsParams creates a new GetRunArtifactsParams object
@@ -74,6 +75,11 @@ for the get run artifacts operation typically these are written to a http.Reques
 */
 type GetRunArtifactsParams struct {
 
+	/*Force
+	  Whether to force reload.
+
+	*/
+	Force *bool
 	/*Namespace
 	  namespace
 
@@ -138,6 +144,17 @@ func (o *GetRunArtifactsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithForce adds the force to the get run artifacts params
+func (o *GetRunArtifactsParams) WithForce(force *bool) *GetRunArtifactsParams {
+	o.SetForce(force)
+	return o
+}
+
+// SetForce adds the force to the get run artifacts params
+func (o *GetRunArtifactsParams) SetForce(force *bool) {
+	o.Force = force
+}
+
 // WithNamespace adds the namespace to the get run artifacts params
 func (o *GetRunArtifactsParams) WithNamespace(namespace string) *GetRunArtifactsParams {
 	o.SetNamespace(namespace)
@@ -200,6 +217,22 @@ func (o *GetRunArtifactsParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
+
+	if o.Force != nil {
+
+		// query param force
+		var qrForce bool
+		if o.Force != nil {
+			qrForce = *o.Force
+		}
+		qForce := swag.FormatBool(qrForce)
+		if qForce != "" {
+			if err := r.SetQueryParam("force", qForce); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param namespace
 	if err := r.SetPathParam("namespace", o.Namespace); err != nil {

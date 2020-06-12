@@ -68,6 +68,9 @@ message RunLogsRequest {
 
     // last file
     string last_file = 6;
+
+    // Force query param
+    bool force = 7;
 }
 
 // Request collect logs for a run

@@ -28,6 +28,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewGetMultiRunEventsParams creates a new GetMultiRunEventsParams object
@@ -74,6 +75,11 @@ for the get multi run events operation typically these are written to a http.Req
 */
 type GetMultiRunEventsParams struct {
 
+	/*Force
+	  Force query param.
+
+	*/
+	Force *bool
 	/*Kind
 	  The artifact kind
 
@@ -146,6 +152,17 @@ func (o *GetMultiRunEventsParams) WithHTTPClient(client *http.Client) *GetMultiR
 // SetHTTPClient adds the HTTPClient to the get multi run events params
 func (o *GetMultiRunEventsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithForce adds the force to the get multi run events params
+func (o *GetMultiRunEventsParams) WithForce(force *bool) *GetMultiRunEventsParams {
+	o.SetForce(force)
+	return o
+}
+
+// SetForce adds the force to the get multi run events params
+func (o *GetMultiRunEventsParams) SetForce(force *bool) {
+	o.Force = force
 }
 
 // WithKind adds the kind to the get multi run events params
@@ -232,6 +249,22 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		return err
 	}
 	var res []error
+
+	if o.Force != nil {
+
+		// query param force
+		var qrForce bool
+		if o.Force != nil {
+			qrForce = *o.Force
+		}
+		qForce := swag.FormatBool(qrForce)
+		if qForce != "" {
+			if err := r.SetQueryParam("force", qForce); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param kind
 	if err := r.SetPathParam("kind", o.Kind); err != nil {

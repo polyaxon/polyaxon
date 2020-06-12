@@ -75,6 +75,11 @@ for the get run artifact operation typically these are written to a http.Request
 */
 type GetRunArtifactParams struct {
 
+	/*Force
+	  Whether to force reload.
+
+	*/
+	Force *bool
 	/*Namespace
 	  namespace
 
@@ -142,6 +147,17 @@ func (o *GetRunArtifactParams) WithHTTPClient(client *http.Client) *GetRunArtifa
 // SetHTTPClient adds the HTTPClient to the get run artifact params
 func (o *GetRunArtifactParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithForce adds the force to the get run artifact params
+func (o *GetRunArtifactParams) WithForce(force *bool) *GetRunArtifactParams {
+	o.SetForce(force)
+	return o
+}
+
+// SetForce adds the force to the get run artifact params
+func (o *GetRunArtifactParams) SetForce(force *bool) {
+	o.Force = force
 }
 
 // WithNamespace adds the namespace to the get run artifact params
@@ -217,6 +233,22 @@ func (o *GetRunArtifactParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 		return err
 	}
 	var res []error
+
+	if o.Force != nil {
+
+		// query param force
+		var qrForce bool
+		if o.Force != nil {
+			qrForce = *o.Force
+		}
+		qForce := swag.FormatBool(qrForce)
+		if qForce != "" {
+			if err := r.SetQueryParam("force", qForce); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param namespace
 	if err := r.SetPathParam("namespace", o.Namespace); err != nil {

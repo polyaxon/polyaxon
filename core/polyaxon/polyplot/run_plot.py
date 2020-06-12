@@ -33,15 +33,20 @@ class RunPlot(RunClient):
         self.metric_names = set([])
 
     @check_no_op
-    def refresh_data(self):
+    def refresh_data(self, force: bool = False):
         super().refresh_data()
         if self.metrics:
-            self.get_metrics(self.metric_names)
+            self.get_metrics(self.metric_names, force)
 
     @check_no_op
-    def get_metrics(self, names: Union[Set[str], List[str]]) -> Dict:
+    def get_metrics(
+        self, names: Union[Set[str], List[str]], force: bool = False
+    ) -> Dict:
         events = self.get_events(
-            kind=V1ArtifactKind.METRIC, names=names, orient=V1Events.ORIENT_DICT,
+            kind=V1ArtifactKind.METRIC,
+            names=names,
+            orient=V1Events.ORIENT_DICT,
+            force=force,
         ).data
         for e in events:
             self.metrics[e["name"]] = e
@@ -120,9 +125,14 @@ class MultiRunPlot(RunClient):
                 self.get_metrics(self.metric_names)
 
     @check_no_op
-    def get_metrics(self, names: Union[Set[str], List[str]]) -> Dict:
+    def get_metrics(
+        self, names: Union[Set[str], List[str]], force: bool = False
+    ) -> Dict:
         events = self.get_events(
-            kind=V1ArtifactKind.METRIC, names=names, orient=V1Events.ORIENT_DICT,
+            kind=V1ArtifactKind.METRIC,
+            names=names,
+            orient=V1Events.ORIENT_DICT,
+            force=force,
         ).data
         for e in events:
             self.metrics[e["name"]] = e

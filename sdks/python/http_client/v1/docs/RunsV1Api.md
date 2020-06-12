@@ -840,7 +840,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_multi_run_events**
-> V1EventsResponse get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient)
+> V1EventsResponse get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient, force=force)
 
 Get multi runs events
 
@@ -873,10 +873,11 @@ kind = 'kind_example' # str | The artifact kind
 names = 'names_example' # str | Names query param. (optional)
 runs = 'runs_example' # str | Runs query param. (optional)
 orient = 'orient_example' # str | Orient query param. (optional)
+force = True # bool | Force query param. (optional)
 
     try:
         # Get multi runs events
-        api_response = api_instance.get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient)
+        api_response = api_instance.get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient, force=force)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_multi_run_events: %s\n" % e)
@@ -893,6 +894,7 @@ Name | Type | Description  | Notes
  **names** | **str**| Names query param. | [optional] 
  **runs** | **str**| Runs query param. | [optional] 
  **orient** | **str**| Orient query param. | [optional] 
+ **force** | **bool**| Force query param. | [optional] 
 
 ### Return type
 
@@ -990,7 +992,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifact**
-> str get_run_artifact(namespace, owner, project, uuid, path=path, stream=stream)
+> str get_run_artifact(namespace, owner, project, uuid, path=path, stream=stream, force=force)
 
 Get run artifact
 
@@ -1022,10 +1024,11 @@ project = 'project_example' # str | Project where the experiement will be assign
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
 path = 'path_example' # str | Artifact filepath. (optional)
 stream = True # bool | Whether to stream the file. (optional)
+force = True # bool | Whether to force reload. (optional)
 
     try:
         # Get run artifact
-        api_response = api_instance.get_run_artifact(namespace, owner, project, uuid, path=path, stream=stream)
+        api_response = api_instance.get_run_artifact(namespace, owner, project, uuid, path=path, stream=stream, force=force)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_artifact: %s\n" % e)
@@ -1041,6 +1044,7 @@ Name | Type | Description  | Notes
  **uuid** | **str**| Unique integer identifier of the entity | 
  **path** | **str**| Artifact filepath. | [optional] 
  **stream** | **bool**| Whether to stream the file. | [optional] 
+ **force** | **bool**| Whether to force reload. | [optional] 
 
 ### Return type
 
@@ -1141,7 +1145,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifacts**
-> str get_run_artifacts(namespace, owner, project, uuid, path=path)
+> str get_run_artifacts(namespace, owner, project, uuid, path=path, force=force)
 
 Get run artifacts
 
@@ -1172,10 +1176,11 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
 path = 'path_example' # str | Artifact filepath. (optional)
+force = True # bool | Whether to force reload. (optional)
 
     try:
         # Get run artifacts
-        api_response = api_instance.get_run_artifacts(namespace, owner, project, uuid, path=path)
+        api_response = api_instance.get_run_artifacts(namespace, owner, project, uuid, path=path, force=force)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_artifacts: %s\n" % e)
@@ -1190,6 +1195,7 @@ Name | Type | Description  | Notes
  **project** | **str**| Project where the experiement will be assigned | 
  **uuid** | **str**| Unique integer identifier of the entity | 
  **path** | **str**| Artifact filepath. | [optional] 
+ **force** | **bool**| Whether to force reload. | [optional] 
 
 ### Return type
 
@@ -1448,7 +1454,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_events**
-> V1EventsResponse get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient)
+> V1EventsResponse get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient, force=force)
 
 Get run events
 
@@ -1481,10 +1487,11 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 kind = 'kind_example' # str | The artifact kind
 names = 'names_example' # str | Names query param. (optional)
 orient = 'orient_example' # str | Orient query param. (optional)
+force = True # bool | Force query param. (optional)
 
     try:
         # Get run events
-        api_response = api_instance.get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient)
+        api_response = api_instance.get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient, force=force)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_events: %s\n" % e)
@@ -1501,6 +1508,7 @@ Name | Type | Description  | Notes
  **kind** | **str**| The artifact kind | 
  **names** | **str**| Names query param. | [optional] 
  **orient** | **str**| Orient query param. | [optional] 
+ **force** | **bool**| Force query param. | [optional] 
 
 ### Return type
 
@@ -1527,7 +1535,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_logs**
-> V1Logs get_run_logs(namespace, owner, project, uuid, last_time=last_time, last_file=last_file)
+> V1Logs get_run_logs(namespace, owner, project, uuid, last_time=last_time, last_file=last_file, force=force)
 
 Get run logs
 
@@ -1559,10 +1567,11 @@ project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 last_time = '2013-10-20T19:20:30+01:00' # datetime | last time. (optional)
 last_file = 'last_file_example' # str | last file. (optional)
+force = True # bool | Force query param. (optional)
 
     try:
         # Get run logs
-        api_response = api_instance.get_run_logs(namespace, owner, project, uuid, last_time=last_time, last_file=last_file)
+        api_response = api_instance.get_run_logs(namespace, owner, project, uuid, last_time=last_time, last_file=last_file, force=force)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_logs: %s\n" % e)
@@ -1578,6 +1587,7 @@ Name | Type | Description  | Notes
  **uuid** | **str**| Uuid identifier of the entity | 
  **last_time** | **datetime**| last time. | [optional] 
  **last_file** | **str**| last file. | [optional] 
+ **force** | **bool**| Force query param. | [optional] 
 
 ### Return type
 
@@ -1675,7 +1685,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_resources**
-> V1EventsResponse get_run_resources(namespace, owner, project, uuid, names=names, tail=tail)
+> V1EventsResponse get_run_resources(namespace, owner, project, uuid, names=names, tail=tail, force=force)
 
 Get run resources events
 
@@ -1707,10 +1717,11 @@ project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 names = 'names_example' # str | Names query param. (optional)
 tail = True # bool | Query param flag to tail the values. (optional)
+force = True # bool | Force query param. (optional)
 
     try:
         # Get run resources events
-        api_response = api_instance.get_run_resources(namespace, owner, project, uuid, names=names, tail=tail)
+        api_response = api_instance.get_run_resources(namespace, owner, project, uuid, names=names, tail=tail, force=force)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->get_run_resources: %s\n" % e)
@@ -1726,6 +1737,7 @@ Name | Type | Description  | Notes
  **uuid** | **str**| Uuid identifier of the entity | 
  **names** | **str**| Names query param. | [optional] 
  **tail** | **bool**| Query param flag to tail the values. | [optional] 
+ **force** | **bool**| Force query param. | [optional] 
 
 ### Return type
 

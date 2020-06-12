@@ -28,6 +28,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewGetRunLogsParams creates a new GetRunLogsParams object
@@ -74,6 +75,11 @@ for the get run logs operation typically these are written to a http.Request
 */
 type GetRunLogsParams struct {
 
+	/*Force
+	  Force query param.
+
+	*/
+	Force *bool
 	/*LastFile
 	  last file.
 
@@ -138,6 +144,17 @@ func (o *GetRunLogsParams) WithHTTPClient(client *http.Client) *GetRunLogsParams
 // SetHTTPClient adds the HTTPClient to the get run logs params
 func (o *GetRunLogsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithForce adds the force to the get run logs params
+func (o *GetRunLogsParams) WithForce(force *bool) *GetRunLogsParams {
+	o.SetForce(force)
+	return o
+}
+
+// SetForce adds the force to the get run logs params
+func (o *GetRunLogsParams) SetForce(force *bool) {
+	o.Force = force
 }
 
 // WithLastFile adds the lastFile to the get run logs params
@@ -213,6 +230,22 @@ func (o *GetRunLogsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 		return err
 	}
 	var res []error
+
+	if o.Force != nil {
+
+		// query param force
+		var qrForce bool
+		if o.Force != nil {
+			qrForce = *o.Force
+		}
+		qForce := swag.FormatBool(qrForce)
+		if qForce != "" {
+			if err := r.SetQueryParam("force", qForce); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if o.LastFile != nil {
 

@@ -75,6 +75,11 @@ for the get run resources operation typically these are written to a http.Reques
 */
 type GetRunResourcesParams struct {
 
+	/*Force
+	  Force query param.
+
+	*/
+	Force *bool
 	/*Names
 	  Names query param.
 
@@ -142,6 +147,17 @@ func (o *GetRunResourcesParams) WithHTTPClient(client *http.Client) *GetRunResou
 // SetHTTPClient adds the HTTPClient to the get run resources params
 func (o *GetRunResourcesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithForce adds the force to the get run resources params
+func (o *GetRunResourcesParams) WithForce(force *bool) *GetRunResourcesParams {
+	o.SetForce(force)
+	return o
+}
+
+// SetForce adds the force to the get run resources params
+func (o *GetRunResourcesParams) SetForce(force *bool) {
+	o.Force = force
 }
 
 // WithNames adds the names to the get run resources params
@@ -217,6 +233,22 @@ func (o *GetRunResourcesParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
+
+	if o.Force != nil {
+
+		// query param force
+		var qrForce bool
+		if o.Force != nil {
+			qrForce = *o.Force
+		}
+		qForce := swag.FormatBool(qrForce)
+		if qForce != "" {
+			if err := r.SetQueryParam("force", qForce); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if o.Names != nil {
 
