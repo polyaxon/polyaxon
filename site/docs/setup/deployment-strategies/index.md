@@ -77,7 +77,7 @@ In the following section we will go over several deployment options:
 ### Single node deployment
 
 This is the simplest deployment strategy possible, it consists of deploying Polyaxon to a single Kubernetes cluster with one single node.
-This deployment strategy is mostly used for trying out Polyaxon open-source on a user's laptop with [minikube](https://github.com/kubernetes/minikube) or [microk8s](https://microk8s.io/).
+This deployment strategy is mostly used for trying out Polyaxon Community Edition on a user's laptop with [minikube](https://github.com/kubernetes/minikube) or [microk8s](https://microk8s.io/).
 
 > If you are using Polyaxon cloud or Polyaxon EE, you can also turn your local laptop into a worker node using Polyaxon agent. 
 By deploying Polyaxon agents to your laptop and your team members' laptops, you can use those agents for 

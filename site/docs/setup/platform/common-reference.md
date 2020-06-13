@@ -15,7 +15,14 @@ tags:
 sidebar: "setup"
 ---
 
-This is the common Helm chart reference for both [Polyaxon EE Control Plane](/docs/setup/platform/control-plane/) and [Polyaxon Open-Source](/docs/setup/platform/open-source/).
+This is the common Helm chart reference for both [Enterprise Edition Control Plane](/docs/setup/platform/enterprise-control-plane/) and [Polyaxon Community Edition](/docs/setup/platform/community-edition/).
+
+## deploymentChart
+
+| Parameter                       | Description                                      | Default
+| --------------------------------| -----------------------------------------------  | ----------------------------------------------------------
+| `deploymentChart`               | The deployment chart to use, default is platform | `platform`
+
 
 ## deploymentVersion
 
@@ -43,6 +50,14 @@ This is the common Helm chart reference for both [Polyaxon EE Control Plane](/do
 The gateway is the service fronting the traffic to/from Polyaxon. By default it's deployed with `ClusterIP`.
 
 You can use port forwarding to access the api and dashboard on localhost:
+
+By running Polyaxon CLI, you will automatically auto-configure the cli and clients:
+
+```bash
+polyaxon port-forward
+```
+
+Or using kubectl: 
 
 ```bash
 kubectl port-forward -n polyaxon svc/polyaxon-polyaxon-gateway 8000:80

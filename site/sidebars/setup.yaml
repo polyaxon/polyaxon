@@ -9,10 +9,10 @@
     items:
     - title: Setup
       link: /docs/setup/platform/
-    - title: Open-Source Reference
-      link: /docs/setup/platform/open-source/
-    - title: Control Plane Reference
-      link: /docs/setup/platform/control-plane/
+    - title: Community Edition Reference
+      link: /docs/setup/platform/community-edition/
+    - title: Enterprise Control Plane Reference
+      link: /docs/setup/platform/enterprise-control-plane/
     - title: Common Helm Reference
       link: /docs/setup/platform/common-reference/
     - title: PostgreSQL HA
@@ -27,6 +27,8 @@
       link: /docs/setup/platform/broker/
     - title: Distributed Task Queue
       link: /docs/setup/platform/celery/
+    - title: Root user
+      link: /docs/setup/platform/root-user/
     - title: Encryption
       link: /docs/setup/platform/encryption/
   - group: Connections

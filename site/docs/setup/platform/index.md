@@ -13,19 +13,17 @@ tags:
 sidebar: "setup"
 ---
 
-<blockquote class="warning">
-The open-source distribution for this version is not published yet! Please join the <a href="/slack/">chat</a> for more details.
-</blockquote>
-
 If you are here, it means that you have a Kubernetes cluster and [helm](/docs/guides/setup-helm/) setup.
 
 This section include guides to deploy:
- * Polyaxon [Open Source](/docs/setup/platform/open-source/).
- * Polyaxon [EE Control Plane](/docs/setup/platform/control-plane/).
+ * Polyaxon [Community Edition](/docs/setup/platform/community-edition/).
+ * Polyaxon [Enterprise Edition Control Plane](/docs/setup/platform/enterprise-control-plane/).
  
-Both deployments share some [common Helm options](/docs/setup/platform/common-reference/). 
+Both deployments share some [common Helm options](/docs/setup/platform/common-reference/).
 
-Please consider reading the other configuration sections to have a deeper knowledge about how to configure and customize Polyaxon to your need..
+This guide is reference with commands to deploy, upgrade, and teardown a cluster.
+
+Please consider reading the other configuration sections to have a deeper knowledge about how to configure and customize Polyaxon to your need.
 
 If you are deploying Polyaxon in production mode, you should take some time to read about some [best practices](/docs/guides/best-practices-for-deploying-polyaxon/) when deploying Polyaxon.
 
@@ -33,7 +31,7 @@ If you are deploying Polyaxon in production mode, you should take some time to r
 
 ## Create a namespace for Polyaxon
 
-Polyaxon is deployed and uses a namespace to run operations
+Polyaxon is deployed on and uses a namespace to run operations
 independently of other applications running on your cluster, we recommend using `polyaxon`.
 
 ```bash
@@ -47,7 +45,7 @@ If you would like to use a different value, you must keep im mind to update the 
 ## Configuration
 
 This section will help you create a configuration file to deploy Polyaxon.
-Polyaxon ships with [default values](/docs/setup/platform/reference/), however and depending on your use case
+Polyaxon ships with [default values](/docs/setup/platform/common-reference/), however and depending on your use case
 you might need to override some of these values.
 To do so, you need to create a configuration file and we recommend to save it somewhere safe so that you can reuse it in the future.
 
@@ -93,7 +91,9 @@ polyaxon admin deploy -f config.yaml --dry_run
 
 ### Deploy
 
-Now you can install Polyaxon with your `config.yml` file
+Now you can install Polyaxon with your `config.yml` file.
+
+> **Note**: it's important to know that there's an initial delay before you can access Polyaxon API, and before some pods will turn green, which is set to 2 minutes. 
 
 You can use Polyaxon CLI to manage the deployment
 
@@ -153,10 +153,16 @@ these note will be different depending on your configuration (the service type u
 NOTES: ...
 ```
 
-These notes are important for setting the CLI, and getting access to the dashboard.
+These notes are important for setting the CLI, and getting access to the dashboard. 
 
 Next step you need the [Polyaxon CLI installed](/setup/cli/), and you need to configure 
 the host and the ports based on these notes.
+
+## Port forward
+
+If you are deploying Polyaxon Community Edition and you don't want to deal with securing your load balancer or ingress, 
+you can use the default values and the command `polyaxon port-forward`. this command will expose the Polyaxon API 
+and dashboard on your localhost and auto-configure the cli.
 
 ## Upgrade Polyaxon
 

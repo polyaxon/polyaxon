@@ -69,7 +69,7 @@ notificationConnections:
 
 ## ArtifactsStore
 
-Every time you deploy Polyaxon open-source platform or a Polyaxon agent, 
+Every time you deploy Polyaxon Community Edition platform or a Polyaxon Agent, 
 you will have to configure at least one connection, it's called the artifacts store.
 
 This artifacts store is the default volume or blob storage that Polyaxon will use to save your runs' outputs and logs.

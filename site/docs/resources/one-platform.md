@@ -13,7 +13,7 @@ tags:
 
 Polyaxon is a single platform that does everything from accessing data to managing machine learning models. This provides more results, happier developers and data scientists, improved cycle times, and a great return on investment.
 
-Other solutions currently in market offer a kit plane you have to assemble yourself, or lock-in solution with rigid approach, Polyaxon is an open-source end-to-end opinionated platform with flexible and extensible interfaces.
+Other solutions currently in market offer a kit plane you have to assemble yourself, or lock-in solution with rigid approach, Polyaxon is based on an open-source end-to-end opinionated platform with flexible and extensible interfaces.
 
 ## One access interface
 

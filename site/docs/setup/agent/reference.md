@@ -32,6 +32,13 @@ in which case you need to provide some volumes with `ReadWriteMany` or cloud buc
 - Kubernetes
 - helm
 
+## deploymentChart
+
+| Parameter                       | Description                  | Default
+| --------------------------------| ---------------------------- | ----------------------------------------------------------
+| `deploymentChart`               | The deployment chart to use  | `agent`
+
+
 ## deploymentVersion
 
 | Parameter                       | Description                                                                                                                                             | Default
