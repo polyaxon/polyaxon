@@ -26,3 +26,10 @@ AUTH_V1 = "auth/{}".format(VERSION_V1)
 POLYAXON_CLOUD = "cloud.polyaxon.com"
 POLYAXON_CLOUD_HOST = "https://cloud.polyaxon.com"
 POLYAXON_VERSIONS_HOST = "https://versions.polyaxon.com/?v={}".format(pkg.VERSION)
+REGISTER = (
+    "{url}&cid={cluster_uuid}&t=pageview&"
+    "dp=%2Fplatform"
+    "%2F{created_at}%2F{version}&"
+    "ds=app&z={cluster_uuid}&"
+    "an=polyaxon&aid=com.polyaxon.app&av={version}"
+)

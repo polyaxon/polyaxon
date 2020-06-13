@@ -131,13 +131,15 @@ if settings.CLIENT_CONFIG.is_ops:
     from polyaxon.cli.components.initializer import initializer
     from polyaxon.cli.components.notifier import notify
     from polyaxon.cli.components.proxies import proxy
+    from polyaxon.cli.components.register import register
     from polyaxon.cli.components.sidecar import sidecar
     from polyaxon.cli.components.tuner import tuner
 
     cli.add_command(agent)
     cli.add_command(docker)
     cli.add_command(initializer)
-    cli.add_command(sidecar)
-    cli.add_command(proxy)
     cli.add_command(notify)
+    cli.add_command(proxy)
+    cli.add_command(register)
+    cli.add_command(sidecar)
     cli.add_command(tuner)
