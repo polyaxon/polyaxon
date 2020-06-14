@@ -40,7 +40,7 @@ class TestResolveContexts(BaseTestCase):
                     "collectArtifacts": False,
                     "collectResources": False,
                 },
-                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"},},
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
             }
         )
         spec = resolve_contexts(
@@ -185,7 +185,6 @@ class TestResolveContexts(BaseTestCase):
                 "uuid": "uuid",
                 "run_info": "user.project.runs.uuid",
                 "context_path": "/plx-context",
-                "artifacts_path": "/plx-context/artifacts/test",
                 "artifacts_path": "/plx-context/artifacts",
                 "run_artifacts_path": "/plx-context/artifacts/test",
                 "run_outputs_path": "/plx-context/artifacts/test/outputs",

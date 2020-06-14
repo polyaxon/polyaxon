@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import uuid
 
 from collections import namedtuple
@@ -237,8 +238,9 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
     ### contextOnly
 
-    A flag to signal to Polyaxon that this param should not be validated against the inputs / outputs,
-    and it's only used to resolve some information and inject it to the context.
+    A flag to signal to Polyaxon that this param should not be validated
+    against the inputs / outputs, and it's only used to resolve some
+    information and inject it to the context.
 
     ```yaml
     >>> params:

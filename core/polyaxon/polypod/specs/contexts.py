@@ -23,7 +23,14 @@ from polyaxon.polyflow import V1Plugins
 class PluginsContextsSpec(
     namedtuple(
         "PluginsContextsSpec",
-        "auth docker shm collect_logs collect_artifacts collect_resources auto_resume sync_statuses",
+        "auth "
+        "docker "
+        "shm "
+        "collect_logs "
+        "collect_artifacts "
+        "collect_resources "
+        "auto_resume "
+        "sync_statuses",
     )
 ):
     @classmethod

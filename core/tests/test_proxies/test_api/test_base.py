@@ -17,7 +17,6 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon import settings
 from polyaxon.proxies.schemas.api.base import get_base_config
 
 

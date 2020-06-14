@@ -57,6 +57,7 @@ class TestProjectCreateViewV1(BaseTest):
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == num_objects + 1
         last_obj = self.model_class.objects.last()
+        assert last_obj.name == "new_project"
 
 
 @pytest.mark.projects_mark

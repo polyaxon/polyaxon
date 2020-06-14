@@ -310,8 +310,9 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
       * `ei`: Expected Improvement
       * `poi`: Probability of Improvement
 
-    When using `ucb` as acquisition function, a tunable parameter `kappa` is also required, to balance exploitation
-    against exploration, increasing kappa will make the optimized hyperparameters pursuing exploration.
+    When using `ucb` as acquisition function, a tunable parameter `kappa`
+    is also required, to balance exploitation against exploration, increasing kappa
+    will make the optimized hyperparameters pursuing exploration.
 
     When using `ei` or `poi` as acquisition function, a tunable parameter `eps` is also required,
     to balance exploitation against exploration, increasing epsilon will

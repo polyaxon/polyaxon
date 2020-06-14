@@ -151,7 +151,8 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     This name can be a `slug`, a `slug:tag`, `org/slug`, or `org/slug:slug`.
 
     This name will be passed as the default value to all operations using this component,
-    unless the operations override the name or a `--name` is passed as an argument to the cli/client.
+    unless the operations override the name or a `--name`
+    is passed as an argument to the cli/client.
 
     ```yaml
     >>> component:

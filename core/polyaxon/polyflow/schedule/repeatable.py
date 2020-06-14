@@ -64,7 +64,8 @@ class V1RepeatableSchedule(BaseConfig, polyaxon_sdk.V1RepeatableSchedule):
 
     ### kind
 
-    The kind signals to the CLI, client, and other tools that this schedule is a repeatable schedule.
+    The kind signals to the CLI, client, and other tools that
+    this schedule is a repeatable schedule.
 
     If you are using the python client to create the schedule,
     this field is not required and is set by default.

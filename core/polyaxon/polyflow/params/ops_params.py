@@ -65,7 +65,7 @@ def validate_params(
 
     def validate_matrix(io: V1IO) -> bool:
         if isinstance(matrix, V1Mapping):
-            return matrix.has_key(io.name)
+            return matrix.has_key(io.name)  # noqa
         elif io.name in matrix.params:
             matrix.params[io.name].validate_io(io)
             return True

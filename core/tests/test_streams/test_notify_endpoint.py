@@ -15,7 +15,7 @@
 # limitations under the License.
 from asyncio import Future
 
-from mock import MagicMock, patch
+from mock import patch
 from polyaxon_sdk import V1StatusCondition
 from tests.test_streams.base import get_streams_client, set_store
 from tests.utils import BaseTestCase

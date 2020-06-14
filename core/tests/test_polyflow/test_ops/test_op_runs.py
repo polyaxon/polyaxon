@@ -595,7 +595,7 @@ class TestCompiledOperationsConfigs(BaseTestCase):
         config_dict = {
             "schedule": {"kind": "exact_time", "startAt": now().isoformat()},
             "termination": {"timeout": 2},
-            "run": {"kind": V1RunKind.JOB, "container": {"image": "test"},},
+            "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
         }
         V1CompiledOperation.from_dict(config_dict)
 
@@ -636,7 +636,7 @@ class TestCompiledOperationsConfigs(BaseTestCase):
             },
             "schedule": {"kind": "exact_time", "startAt": now().isoformat()},
             "termination": {"timeout": 1000},
-            "run": {"kind": V1RunKind.JOB, "container": {"image": "test"},},
+            "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
         }
         config = V1CompiledOperation.from_dict(config_dict)
         config_to_light = config.to_light_dict()

@@ -24,7 +24,7 @@ def get_fxt_mapping_with_inputs_outputs():
         "kind": "operation",
         "name": "run",
         "tags": ["key1", "value1"],
-        "params": {"image": {"value": "test"}, "lr": {"value": 0.001},},
+        "params": {"image": {"value": "test"}, "lr": {"value": 0.001}},
         "matrix": {
             "kind": V1MatrixKind.MAPPING,
             "values": [
@@ -37,7 +37,7 @@ def get_fxt_mapping_with_inputs_outputs():
             "description": "experiment to predict something",
             "tags": ["key", "value"],
             "inputs": [
-                {"name": "lr", "type": "float", "value": 0.1, "isOptional": True,},
+                {"name": "lr", "type": "float", "value": 0.1, "isOptional": True},
                 {"name": "image", "type": "str"},
                 {"name": "param1", "type": "str"},
                 {"name": "param2", "type": "int"},

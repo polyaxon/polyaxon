@@ -338,7 +338,7 @@ def dashboard(ctx, yes, url):
     dashboard_url = settings.CLIENT_CONFIG.host
     project_url = "{}/{}/{}/".format(dashboard_url, owner, project_name)
     if url:
-        Printer.print_header("The dashboard is available at: {}".format(run_url))
+        Printer.print_header("The dashboard is available at: {}".format(project_url))
         sys.exit(0)
     if not yes:
         click.confirm(

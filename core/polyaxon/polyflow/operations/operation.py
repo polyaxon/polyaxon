@@ -156,7 +156,9 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ## Python usage
 
     ```python
-    >>> from polyaxon.polyflow import V1Cache, V1Component, V1Param, V1Plugins, V1Operation, V1Termination
+    >>> from polyaxon.polyflow import (
+    >>>     V1Cache, V1Component, V1Param, V1Plugins, V1Operation, V1Termination
+    >>> )
     >>> operation = V1Operation(
     >>>     name="test",
     >>>     description="test",

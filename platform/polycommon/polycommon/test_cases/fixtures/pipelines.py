@@ -248,7 +248,7 @@ def get_fxt_pipeline_params_env_termination():
                         "name": "job-template",
                         "inputs": [{"name": "param1", "type": "str"}],
                         "termination": {"maxRetries": 1},
-                        "run": {"kind": V1RunKind.JOB, "container": {"image": "test"},},
+                        "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
                     },
                     {
                         "name": "build-template",

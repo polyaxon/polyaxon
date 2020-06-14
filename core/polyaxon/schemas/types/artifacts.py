@@ -75,7 +75,8 @@ class V1ArtifactsType(BaseConfig, polyaxon_sdk.V1ArtifactsType):
     >>>   dataset1: {value: {connection: "s3-dataset", init: True}}
     ```
 
-    The first param will be just a list of files definition that the user should know how to handle in their program.
+    The first param will be just a list of files definition that
+    the user should know how to handle in their program.
 
     The second param, Polyaxon will load only that directory path from connection "foo".
     This connection could be any bycket or volume.

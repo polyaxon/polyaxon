@@ -38,7 +38,7 @@ class TestPluginsContextsSpec(BaseTestCase):
                     "collectArtifacts": False,
                     "syncStatuses": False,
                 },
-                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"},},
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
             }
         )
         spec = PluginsContextsSpec.from_config(compiled_operation.plugins)

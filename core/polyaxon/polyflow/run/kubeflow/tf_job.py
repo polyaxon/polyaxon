@@ -105,7 +105,8 @@ class V1TFJob(BaseConfig, polyaxon_sdk.V1TFJob):
 
     ### chief
 
-    The chief is responsible for orchestrating training and performing tasks like checkpointing the model.
+    The chief is responsible for orchestrating training and performing
+    tasks like checkpointing the model.
 
     ```yaml
     >>> run:

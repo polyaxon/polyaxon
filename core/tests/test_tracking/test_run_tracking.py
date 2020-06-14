@@ -28,6 +28,8 @@ import pytest
 
 from bokeh.plotting import figure
 from plotly import figure_factory
+
+from polyaxon.constants import DEFAULT
 from tests.test_tracking.test_events.test_event_values import tensor_np
 from tests.utils import TestEnvVarsCase
 
@@ -140,8 +142,9 @@ class TestRunTracking(TestEnvVarsCase):
         with self.assertRaises(PolyaxonClientException):
             Run()
 
-        with self.assertRaises(PolyaxonClientException):
-            Run(project="test")
+        # Uses default as owner
+        run = Run(project="test")
+        assert run.owner == DEFAULT
 
         run = Run(owner="owner-test", project="test")
         assert run.owner == "owner-test"
@@ -155,8 +158,9 @@ class TestRunTracking(TestEnvVarsCase):
         with self.assertRaises(PolyaxonClientException):
             Run()
 
-        with self.assertRaises(PolyaxonClientException):
-            Run(project="test")
+        # Uses default as owner
+        run = Run(project="test")
+        assert run.owner == DEFAULT
 
         os.environ[POLYAXON_KEYS_RUN_INSTANCE] = "user.project_bar.runs.uid"
         run = Run()

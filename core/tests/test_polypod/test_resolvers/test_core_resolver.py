@@ -51,7 +51,7 @@ class TestResolver(BaseTestCase):
                     "collectArtifacts": False,
                     "collectResources": False,
                 },
-                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"},},
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
             }
         )
 

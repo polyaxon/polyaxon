@@ -90,7 +90,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "name": "C",
                     "description": "description C",
                     "tags": ["tag31", "tag32"],
-                    "params": {"param2": {"value": 12.34}, "param3": {"value": False},},
+                    "params": {"param2": {"value": 12.34}, "param3": {"value": False}},
                     "termination": {"maxRetries": 5},
                     "runPatch": {
                         "kind": V1RunKind.JOB,
@@ -193,7 +193,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             "operations": [
                 {
                     "name": "experiment-template",
-                    "params": {"input1": {"value": 1.1}, "input2": {"value": False},},
+                    "params": {"input1": {"value": 1.1}, "input2": {"value": False}},
                     "termination": {"maxRetries": 2},
                     "runPatch": {
                         "kind": V1RunKind.JOB,
@@ -268,7 +268,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                 {
                     "dagRef": "my-template",
                     "name": "C",
-                    "params": {"param2": {"value": 12.34}, "param3": {"value": False},},
+                    "params": {"param2": {"value": 12.34}, "param3": {"value": False}},
                 },
                 {
                     "pathRef": "./relative/path/to/my-template.yaml",

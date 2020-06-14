@@ -623,7 +623,7 @@ class TestComponentsConfigs(BaseTestCase):
         config_dict = {
             "kind": "component",
             "termination": {"timeout": 1000},
-            "run": {"kind": V1RunKind.JOB, "container": {"image": "test"},},
+            "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
         }
         config = V1Component.from_dict(config_dict)
         assert config.to_dict() == config_dict

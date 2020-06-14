@@ -17,7 +17,6 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon import settings
 from polyaxon.proxies.schemas.locations import get_api_locations_config
 
 

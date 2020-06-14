@@ -29,7 +29,7 @@ class TestMapping(BaseTestCase):
 
     def test_get_suggestions(self):
         config = V1Mapping.from_dict(
-            {"concurrency": 2, "values": [{"a": 1, "b": 2}, {"a": 1.3, "b": 3}],}
+            {"concurrency": 2, "values": [{"a": 1, "b": 2}, {"a": 1.3, "b": 3}]}
         )
         assert len(MappingManager(config).get_suggestions()) == 2
 
@@ -37,9 +37,9 @@ class TestMapping(BaseTestCase):
             {
                 "concurrency": 2,
                 "values": [
-                    {"feature1": 1, "feature2": 1, "feature3": 1,},
-                    {"feature1": 2, "feature2": 2, "feature3": 2,},
-                    {"feature1": 3, "feature2": 3, "feature3": 3,},
+                    {"feature1": 1, "feature2": 1, "feature3": 1},
+                    {"feature1": 2, "feature2": 2, "feature3": 2},
+                    {"feature1": 3, "feature2": 3, "feature3": 3},
                 ],
             }
         )

@@ -119,7 +119,8 @@ class V1Dask(BaseConfig, polyaxon_sdk.V1Dask):
 
     ### kind
 
-    The kind signals to the CLI, client, and other tools that this component's runtime is a dask job.
+    The kind signals to the CLI, client, and other tools that
+    this component's runtime is a dask job.
 
     If you are using the python client to create the runtime,
     this field is not required and is set by default.
