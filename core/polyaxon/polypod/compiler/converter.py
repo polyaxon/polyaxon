@@ -42,6 +42,7 @@ def convert(
     config_maps: Optional[Iterable[V1K8sResourceType]],
     polyaxon_sidecar: V1PolyaxonSidecarContainer = None,
     polyaxon_init: V1PolyaxonInitContainer = None,
+    default_sa: str = None,
     converters: Dict[str, Any] = CORE_CONVERTERS,
     internal_auth: bool = False,
     default_auth: bool = False,
@@ -77,6 +78,7 @@ def convert(
             connection_by_names=connection_by_names,
             secrets=secrets,
             config_maps=config_maps,
+            default_sa=default_sa,
             default_auth=default_auth,
         )
         api = k8s_client.ApiClient()

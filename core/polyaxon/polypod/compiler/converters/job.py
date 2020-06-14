@@ -33,6 +33,7 @@ class JobConverter(JobMixin, BaseConverter):
         connection_by_names: Dict[str, V1ConnectionType],
         secrets: Optional[Iterable[V1K8sResourceType]],
         config_maps: Optional[Iterable[V1K8sResourceType]],
+        default_sa: str = None,
         default_auth: bool = False,
     ) -> Dict:
         job = compiled_operation.run  # type: V1Job
@@ -51,6 +52,7 @@ class JobConverter(JobMixin, BaseConverter):
             connection_by_names=connection_by_names,
             secrets=secrets,
             config_maps=config_maps,
+            default_sa=default_sa,
         )
         return get_job_custom_resource(
             namespace=self.namespace,

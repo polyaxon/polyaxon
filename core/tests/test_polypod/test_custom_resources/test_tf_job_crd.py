@@ -99,7 +99,7 @@ class TestTFJobCRD(BaseKubeflowCRDTestCase):
             },
             "collectLogs": True,
             "syncStatuses": True,
-            "notifications": [n.to_dict() for n in notifications],
+            "notifications": [n.to_operator() for n in notifications],
         }
 
         expected_crd = get_custom_object(

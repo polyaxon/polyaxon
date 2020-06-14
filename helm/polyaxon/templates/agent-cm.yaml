@@ -22,7 +22,11 @@ data:
   {{- if .Values.agent.instance }}
   POLYAXON_AGENT_INSTANCE: {{ .Values.agent.instance | quote }}
   {{- end }}
+  {{- if .Values.artifactsStore }}
   POLYAXON_AGENT_ARTIFACTS_STORE: {{ toJson .Values.artifactsStore | quote }}
+  {{- else }}
+  POLYAXON_AGENT_ARTIFACTS_STORE: {{ toJson .Values.defaultArtifactsStore | quote }}
+  {{- end }}
   {{- if .Values.connections }}
   POLYAXON_AGENT_CONNECTIONS: {{ toJson .Values.connections | quote }}
   {{- end }}
@@ -31,5 +35,7 @@ data:
   {{- end }}
   POLYAXON_AGENT_SIDECAR: {{ toJson .Values.sidecar | quote }}
   POLYAXON_AGENT_INIT: {{ toJson .Values.init | quote }}
-  POLYAXON_AGENT_SECRET_NAME: {{ template "polyaxon.fullname" . }}-agent-secret
   POLYAXON_AGENT_RUNS_SA: {{ template "polyaxon.fullname" . }}-runs-sa
+  {{- if .Values.agent.token }}
+  POLYAXON_AGENT_SECRET_NAME: {{ template "polyaxon.fullname" . }}-agent-secret
+  {{- end }}

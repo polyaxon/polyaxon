@@ -33,7 +33,7 @@ type V1TruncationStoppingPolicy struct {
 	// Interval/Frequency for applying the policy.
 	EvaluationInterval int32 `json:"evaluation_interval,omitempty"`
 
-	// Flag to include or not the succeeded runs in the claculation
+	// Flag to include or not the succeeded runs in the calculation
 	IncludeSucceeded bool `json:"include_succeeded,omitempty"`
 
 	// Kind of this stopping policy, should be equal to "truncation"

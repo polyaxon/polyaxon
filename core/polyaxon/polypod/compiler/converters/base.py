@@ -367,6 +367,7 @@ class BaseConverter(ConverterAbstract):
         connection_by_names: Dict[str, V1ConnectionType],
         secrets: Optional[Iterable[V1K8sResourceType]],
         config_maps: Optional[Iterable[V1K8sResourceType]],
+        default_sa: str = None,
         ports: List[int] = None,
         num_replicas: int = None,
     ) -> ReplicaSpec:
@@ -375,6 +376,9 @@ class BaseConverter(ConverterAbstract):
         sidecars = sidecars or []
         connections = connections or []
         environment = environment or V1Environment()
+        environment.service_account_name = (
+            environment.service_account_name or default_sa
+        )
 
         init_connections = self.filter_connections_from_init(init=init)
 

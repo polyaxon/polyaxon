@@ -92,7 +92,7 @@ api:
     maxpods: 4
 
 streams:
-  enabled: false
+  enabled: true
   image: polyaxon/polyaxon-streams
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -148,7 +148,7 @@ sidecar:
 agent:
   token:
   instance:
-  enabled: true
+  enabled: false
   image: polyaxon/polyaxon-agent
   imageTag: 1.0.9
   imagePullPolicy: Always
@@ -409,6 +409,10 @@ metrics:
     selector:
       prometheus: kube-prometheus
 
+defaultArtifactsStore:
+  name: default-artifacts-store
+  kind: host_path
+  schema: {"hostPath": "/tmp/artifactsStore", "mountPath": "/artifactsStore"}
 artifactsStore:
 connections: []
 notificationConnections: []

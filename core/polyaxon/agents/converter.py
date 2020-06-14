@@ -47,6 +47,7 @@ def convert(
         connection_by_names=polypod_config.connection_by_names,
         secrets=polypod_config.secrets,
         config_maps=polypod_config.config_maps,
+        default_sa=polypod_config.default_sa,
         converters=PLATFORM_CONVERTERS,
         default_auth=default_auth,
     )

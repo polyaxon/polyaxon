@@ -114,7 +114,7 @@ func (r *OperationReconciler) reconcileJobStatus(instance *operationv1.Operation
 
 	newJobCond := job.Status.Conditions[len(job.Status.Conditions)-1]
 
-	if job.Status.Active == 0 && job.Status.Succeeded > 0 && managers.IsJobSucceded(newJobCond) {
+	if job.Status.Active == 0 && job.Status.Succeeded > 0 && managers.IsJobSucceeded(newJobCond) {
 		if updated := instance.LogSucceeded(); updated {
 			instance.Status.CompletionTime = &now
 			log.V(1).Info("Job Logging Status Succeeded")

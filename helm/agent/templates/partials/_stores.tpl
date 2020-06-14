@@ -1,8 +1,8 @@
 {{- /*
-Config artifacts store secrets/configmap
+Config artifacts store volumes/mounts/secrets/configmap
 */}}
 {{- define "config.artifactsStore.envFrom" -}}
-{{- if and .Values.artifactsStore }}
+{{- if .Values.artifactsStore }}
 {{- if .Values.artifactsStore.secret }}
 {{- if (empty .Values.artifactsStore.secret.mountPath) }}
 - secretRef:
@@ -41,11 +41,14 @@ Config artifacts store secrets/configmap
   readOnly: true
 {{- end }}
 {{- end }}
+{{- else }} {{- /* else default artifactsStore */ -}}
+- mountPath: {{ .Values.defaultArtifactsStore.schema.mountPath | quote }}
+  name: {{ .Values.defaultArtifactsStore.name | quote }}
 {{- end }} {{- /* endif artifactsStore */ -}}
 {{- end -}} {{- /* end def artifactsStore volume mounts */ -}}
 
 {{- define "config.artifactsStore.volume" -}}
-{{- if and .Values.artifactsStore }}
+{{- if .Values.artifactsStore }}
 {{- if or (eq .Values.artifactsStore.kind "host_path") (eq .Values.artifactsStore.kind "volume_claim") }}
 - name: {{ .Values.artifactsStore.name }}
 {{- if eq .Values.artifactsStore.kind "volume_claim" }}
@@ -70,5 +73,9 @@ Config artifacts store secrets/configmap
     name: {{ .Values.artifactsStore.configMap.name | quote }}
 {{- end }}
 {{- end }}
+{{- else }} {{- /* else default artifactsStore */ -}}
+- name: {{ .Values.defaultArtifactsStore.name | quote }}
+  hostPath:
+    path: {{ .Values.defaultArtifactsStore.schema.hostPath | quote }}
 {{- end }} {{- /* endif artifactsStore */ -}}
 {{- end -}}  {{- /* end def artifactsStore volume mounts */ -}}

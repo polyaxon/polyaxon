@@ -34,6 +34,7 @@ class PolypodConfig:
         self.config_maps = None
         self.connection_by_names = {}
         self.artifacts_store = None
+        self.default_sa = None
         self.internal_auth = internal_auth
 
     def resolve(
@@ -45,6 +46,7 @@ class PolypodConfig:
                 "Polypod configuration not found or agent not configured."
             )
 
+        self.default_sa = agent_config.runs_sa
         self._resolve_run_connections(
             compiled_operation=compiled_operation, agent_config=agent_config
         )

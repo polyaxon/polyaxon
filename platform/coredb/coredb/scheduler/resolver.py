@@ -46,6 +46,7 @@ class CorePlatformResolver(CoreResolver):
             }
 
     def resolve_state(self):
+        self.run.content = self.compiled_operation.to_dict(dump=True)
         if (
             self.compiled_operation.is_service_run
             and self.compiled_operation.run.rewrite_path

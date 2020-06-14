@@ -20,17 +20,18 @@ from django.core.validators import validate_slug
 from django.db import models
 
 from coredb.abstracts.projects import BaseProject
+from polyaxon.constants import DEFAULT
 from polycommon.validation.blacklist import validate_blacklist_name
 
 
 class Owner:
-    name = "polyaxon"
+    name = DEFAULT
     uuid = uuid.UUID("9b0a3806e3f84ea1959a7842e34129ed")
     id = 1
 
 
 class Actor:
-    username = "polyaxon"
+    username = DEFAULT
     id = 1
 
 

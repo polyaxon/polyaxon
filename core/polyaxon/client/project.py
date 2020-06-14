@@ -20,6 +20,7 @@ import polyaxon_sdk
 from polyaxon import settings
 from polyaxon.client import PolyaxonClient
 from polyaxon.client.decorators import check_no_op, check_offline
+from polyaxon.constants import DEFAULT
 from polyaxon.env_vars.getters import get_project_full_name, get_project_info
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.utils.query_params import get_query_params
@@ -73,7 +74,7 @@ class ProjectClient:
         if not (self.client or settings.CLIENT_CONFIG.is_offline):
             self.client = PolyaxonClient()
 
-        self._owner = owner
+        self._owner = owner or DEFAULT
         self._project = project
         self._project_data = polyaxon_sdk.V1Project()
 

@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import os
+
 import click
 
 from polyaxon.logger import clean_outputs
@@ -40,7 +41,7 @@ def register():
         url=decode(url),
         created_at=datetime.datetime.strftime(datetime.datetime.now(), "%Y%m%d-%H-%M"),
         cluster_uuid=cluster_uuid,
-        version=pkg.VERSION
+        version=pkg.VERSION,
     )
 
     try:

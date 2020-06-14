@@ -16,6 +16,7 @@
 
 import sys
 
+from polyaxon.constants import DEFAULT
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.project import ProjectManager
@@ -52,6 +53,9 @@ def get_project_or_local(project=None, is_cli: bool = False):
     else:
         project = ProjectManager.get_config()
         owner, project_name = project.owner, project.name
+
+    if not owner:
+        owner = DEFAULT
 
     if not all([owner, project_name]):
         if is_cli:

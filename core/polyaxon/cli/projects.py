@@ -26,6 +26,7 @@ from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.init import init as init_project
 from polyaxon.client import ProjectClient
+from polyaxon.constants import DEFAULT
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.auth import AuthConfigManager
@@ -96,7 +97,7 @@ def create(ctx, name, owner, description, tags, private, init):
     \b
     $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
     """
-    owner = owner or AuthConfigManager.get_value("username")
+    owner = owner or AuthConfigManager.get_value("username") or DEFAULT
     tags = validate_tags(tags)
 
     if not owner:
@@ -142,7 +143,7 @@ def ls(owner, limit, offset):
 
     Uses /docs/core/cli/#caching
     """
-    owner = owner or AuthConfigManager.get_value("username")
+    owner = owner or AuthConfigManager.get_value("username") or DEFAULT
     if not owner:
         Printer.print_error(
             "Please login first or provide a valid owner --owner. "

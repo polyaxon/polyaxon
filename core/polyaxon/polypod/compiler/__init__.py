@@ -28,6 +28,7 @@ def make(
     run_path: str,
     compiled_operation: V1CompiledOperation,
     params: Optional[Dict],
+    default_sa: str = None,
     internal_auth: bool = False,
     default_auth: bool = False,
 ):
@@ -56,5 +57,6 @@ def make(
         config_maps=resolver_obj.config_maps,
         polyaxon_sidecar=resolver_obj.polyaxon_sidecar,
         polyaxon_init=resolver_obj.polyaxon_init,
+        default_sa=default_sa,
         default_auth=default_auth,
     )

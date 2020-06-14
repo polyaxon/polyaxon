@@ -112,7 +112,7 @@ class TestServiceCRD(BaseTestCase):
                 "serviceSpec": custom_object,
                 "collectLogs": False,
                 "syncStatuses": False,
-                "notifications": [n.to_dict() for n in notifications],
+                "notifications": [n.to_operator() for n in notifications],
             },
         )
 

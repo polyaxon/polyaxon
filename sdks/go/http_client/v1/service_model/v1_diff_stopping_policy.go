@@ -39,7 +39,7 @@ type V1DiffStoppingPolicy struct {
 	// Min interval (e.g steps) before starting the process
 	MinInterval int32 `json:"min_interval,omitempty"`
 
-	// Min samples runs succeded before starting the process
+	// Min samples runs succeeded before starting the process
 	MinSamples int32 `json:"min_samples,omitempty"`
 
 	// The diff factor, if not given than a zero tolerance policy is applied

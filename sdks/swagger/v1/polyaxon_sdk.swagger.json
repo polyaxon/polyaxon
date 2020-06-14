@@ -12786,7 +12786,7 @@
         "min_samples": {
           "type": "integer",
           "format": "int32",
-          "title": "Min samples runs succeded before starting the process"
+          "title": "Min samples runs succeeded before starting the process"
         }
       },
       "description": "Early stopping with diff factor stopping, this policy computes checks runs against the best run\nand stops those whose performance is worse than the best by the factor defined by the user."
@@ -14922,7 +14922,7 @@
         "min_samples": {
           "type": "integer",
           "format": "int32",
-          "title": "Min samples runs succeded before starting the process"
+          "title": "Min samples runs succeeded before starting the process"
         }
       },
       "description": "Early stopping with median stopping, this policy computes running medians across\nall runs and stops those whose best performance is worse than the median\nof the running runs."
@@ -16727,12 +16727,12 @@
         "min_samples": {
           "type": "integer",
           "format": "int32",
-          "title": "Min samples runs succeded before starting the process"
+          "title": "Min samples runs succeeded before starting the process"
         },
         "include_succeeded": {
           "type": "boolean",
           "format": "boolean",
-          "title": "Flag to include or not the succeeded runs in the claculation"
+          "title": "Flag to include or not the succeeded runs in the calculation"
         }
       },
       "description": "Early stopping with truncation stopping, this policy stops a percentage of\nall running runs at every evaluation."

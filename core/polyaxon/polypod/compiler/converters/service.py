@@ -33,6 +33,7 @@ class ServiceConverter(ServiceMixin, BaseConverter):
         connection_by_names: Dict[str, V1ConnectionType],
         secrets: Optional[Iterable[V1K8sResourceType]],
         config_maps: Optional[Iterable[V1K8sResourceType]],
+        default_sa: str = None,
         default_auth: bool = False,
     ) -> Dict:
         service = compiled_operation.run  # type: V1Service
@@ -51,6 +52,7 @@ class ServiceConverter(ServiceMixin, BaseConverter):
             connection_by_names=connection_by_names,
             secrets=secrets,
             config_maps=config_maps,
+            default_sa=default_sa,
             ports=service.ports,
         )
         return get_service_custom_resource(

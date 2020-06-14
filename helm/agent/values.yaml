@@ -149,6 +149,10 @@ affinity:
 
 imagePullSecrets: []
 
+defaultArtifactsStore:
+  name: default-artifacts-store
+  kind: host_path
+  schema: {"hostPath": "/tmp/artifactsStore", "mountPath": "/artifactsStore"}
 artifactsStore:
 connections: []
 notificationConnections: []

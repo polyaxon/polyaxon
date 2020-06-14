@@ -66,6 +66,7 @@ def run(
                 run_path=run_name,
                 compiled_operation=compiled_operation,
                 params=op_spec.params,
+                default_sa=settings.AGENT_CONFIG.runs_sa,
             )
             Spawner(namespace=settings.AGENT_CONFIG.namespace).create(
                 run_uuid=run_name,

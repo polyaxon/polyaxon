@@ -65,8 +65,8 @@ func CopyJobFields(from, to *batchv1.Job) bool {
 	return requireUpdate
 }
 
-// IsJobSucceded return true if job is running
-func IsJobSucceded(jc batchv1.JobCondition) bool {
+// IsJobSucceeded return true if job is running
+func IsJobSucceeded(jc batchv1.JobCondition) bool {
 	return jc.Type == batchv1.JobComplete && jc.Status == corev1.ConditionTrue
 }
 

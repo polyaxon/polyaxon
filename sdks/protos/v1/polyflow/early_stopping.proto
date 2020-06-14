@@ -35,7 +35,7 @@ message MedianStoppingPolicy {
     // Min interval (e.g steps) before starting the process
     int32 min_interval = 3;
 
-    // Min samples runs succeded before starting the process
+    // Min samples runs succeeded before starting the process
     int32 min_samples = 4;
 }
 
@@ -54,7 +54,7 @@ message DiffStoppingPolicy {
     // Min interval (e.g steps) before starting the process
     int32 min_interval = 4;
 
-    // Min samples runs succeded before starting the process
+    // Min samples runs succeeded before starting the process
     int32 min_samples = 5;
 
 }
@@ -75,10 +75,10 @@ message TruncationStoppingPolicy {
     // Min interval (e.g steps) before starting the process
     int32 min_interval = 4;
 
-    // Min samples runs succeded before starting the process
+    // Min samples runs succeeded before starting the process
     int32 min_samples = 5;
 
-    // Flag to include or not the succeeded runs in the claculation
+    // Flag to include or not the succeeded runs in the calculation
     bool include_succeeded = 6;
 }
 
