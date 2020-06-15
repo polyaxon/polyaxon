@@ -40,17 +40,21 @@ def get_artifacts_by_keys(
                 state = m.get_state(namespace)
             else:
                 state = run.uuid
+        elif not isinstance(state, uuid.UUID):
+            try:
+                state = uuid.UUID(state)
+            except (ValueError, KeyError):
+                state = uuid.uuid5(namespace, state)
         results[(m.name, state)] = m
 
     return results
 
 
 def set_run_lineage(run: BaseRun, artifacts_by_keys: Dict, query: Any):
-    artifacts_to_link = (
-        get_artifact_model().objects.filter(query).only("id", "name", "state")
-    )
+    artifacts_to_link = get_artifact_model().objects.filter(query).only("id", "name", "state")
+    lineage_model = get_lineage_model()
     for m in artifacts_to_link:
-        get_lineage_model().objects.get_or_create(
+        lineage_model.objects.get_or_create(
             artifact_id=m.id,
             run_id=run.id,
             is_input=artifacts_by_keys[(m.name, m.state)].is_input,
