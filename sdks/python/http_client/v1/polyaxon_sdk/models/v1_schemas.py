@@ -50,66 +50,96 @@ class V1Schemas(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'operation_cond': 'V1OperationCond',
-        'early_stopping': 'V1EarlyStopping',
-        'matrix': 'V1Matrix',
-        'run': 'V1RunSchema',
-        'operation': 'V1Operation',
-        'compiled_operation': 'V1CompiledOperation',
-        'schedule': 'V1Schedule',
-        'connection_schema': 'V1ConnectionSchema',
-        'hp_params': 'V1HpParams',
-        'reference': 'V1Reference',
-        'artifacts_mount': 'V1ArtifactsMount',
-        'polyaxon_sidecar_container': 'V1PolyaxonSidecarContainer',
-        'polyaxon_init_container': 'V1PolyaxonInitContainer',
-        'artifacs': 'V1ArtifactsType',
-        'wasb': 'V1WasbType',
-        'gcs': 'V1GcsType',
-        's3': 'V1S3Type',
-        'autg': 'V1AuthType',
-        'dockerfile': 'V1DockerfileType',
-        'git': 'V1GitType',
-        'uri': 'V1UriType',
-        'k8s_resource': 'V1K8sResourceType',
-        'connection': 'V1ConnectionType',
-        'image': 'V1ImageType',
-        'event_type': 'V1EventType',
-        'event': 'V1Event',
-        'matrix_kind': 'V1MatrixKind'
+        "operation_cond": "V1OperationCond",
+        "early_stopping": "V1EarlyStopping",
+        "matrix": "V1Matrix",
+        "run": "V1RunSchema",
+        "operation": "V1Operation",
+        "compiled_operation": "V1CompiledOperation",
+        "schedule": "V1Schedule",
+        "connection_schema": "V1ConnectionSchema",
+        "hp_params": "V1HpParams",
+        "reference": "V1Reference",
+        "artifacts_mount": "V1ArtifactsMount",
+        "polyaxon_sidecar_container": "V1PolyaxonSidecarContainer",
+        "polyaxon_init_container": "V1PolyaxonInitContainer",
+        "artifacs": "V1ArtifactsType",
+        "wasb": "V1WasbType",
+        "gcs": "V1GcsType",
+        "s3": "V1S3Type",
+        "autg": "V1AuthType",
+        "dockerfile": "V1DockerfileType",
+        "git": "V1GitType",
+        "uri": "V1UriType",
+        "k8s_resource": "V1K8sResourceType",
+        "connection": "V1ConnectionType",
+        "image": "V1ImageType",
+        "event_type": "V1EventType",
+        "event": "V1Event",
+        "matrix_kind": "V1MatrixKind",
     }
 
     attribute_map = {
-        'operation_cond': 'operation_cond',
-        'early_stopping': 'early_stopping',
-        'matrix': 'matrix',
-        'run': 'run',
-        'operation': 'operation',
-        'compiled_operation': 'compiled_operation',
-        'schedule': 'schedule',
-        'connection_schema': 'connection_schema',
-        'hp_params': 'hp_params',
-        'reference': 'reference',
-        'artifacts_mount': 'artifacts_mount',
-        'polyaxon_sidecar_container': 'polyaxon_sidecar_container',
-        'polyaxon_init_container': 'polyaxon_init_container',
-        'artifacs': 'artifacs',
-        'wasb': 'wasb',
-        'gcs': 'gcs',
-        's3': 's3',
-        'autg': 'autg',
-        'dockerfile': 'dockerfile',
-        'git': 'git',
-        'uri': 'uri',
-        'k8s_resource': 'k8s_resource',
-        'connection': 'connection',
-        'image': 'image',
-        'event_type': 'event_type',
-        'event': 'event',
-        'matrix_kind': 'matrix_kind'
+        "operation_cond": "operation_cond",
+        "early_stopping": "early_stopping",
+        "matrix": "matrix",
+        "run": "run",
+        "operation": "operation",
+        "compiled_operation": "compiled_operation",
+        "schedule": "schedule",
+        "connection_schema": "connection_schema",
+        "hp_params": "hp_params",
+        "reference": "reference",
+        "artifacts_mount": "artifacts_mount",
+        "polyaxon_sidecar_container": "polyaxon_sidecar_container",
+        "polyaxon_init_container": "polyaxon_init_container",
+        "artifacs": "artifacs",
+        "wasb": "wasb",
+        "gcs": "gcs",
+        "s3": "s3",
+        "autg": "autg",
+        "dockerfile": "dockerfile",
+        "git": "git",
+        "uri": "uri",
+        "k8s_resource": "k8s_resource",
+        "connection": "connection",
+        "image": "image",
+        "event_type": "event_type",
+        "event": "event",
+        "matrix_kind": "matrix_kind",
     }
 
-    def __init__(self, operation_cond=None, early_stopping=None, matrix=None, run=None, operation=None, compiled_operation=None, schedule=None, connection_schema=None, hp_params=None, reference=None, artifacts_mount=None, polyaxon_sidecar_container=None, polyaxon_init_container=None, artifacs=None, wasb=None, gcs=None, s3=None, autg=None, dockerfile=None, git=None, uri=None, k8s_resource=None, connection=None, image=None, event_type=None, event=None, matrix_kind=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        operation_cond=None,
+        early_stopping=None,
+        matrix=None,
+        run=None,
+        operation=None,
+        compiled_operation=None,
+        schedule=None,
+        connection_schema=None,
+        hp_params=None,
+        reference=None,
+        artifacts_mount=None,
+        polyaxon_sidecar_container=None,
+        polyaxon_init_container=None,
+        artifacs=None,
+        wasb=None,
+        gcs=None,
+        s3=None,
+        autg=None,
+        dockerfile=None,
+        git=None,
+        uri=None,
+        k8s_resource=None,
+        connection=None,
+        image=None,
+        event_type=None,
+        event=None,
+        matrix_kind=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1Schemas - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -773,18 +803,20 @@ class V1Schemas(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

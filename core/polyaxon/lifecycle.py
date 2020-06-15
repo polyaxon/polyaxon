@@ -118,7 +118,7 @@ class LifeCycle:
         V1Statuses.RETRYING,
     }
     RUNNING_VALUES = {V1Statuses.STARTING, V1Statuses.RUNNING}
-    ON_K8s_VALUES = RUNNING_VALUES | WARNING_VALUES | {V1Statuses.UNKNOWN}
+    ON_K8S_VALUES = RUNNING_VALUES | WARNING_VALUES | {V1Statuses.UNKNOWN}
     DONE_VALUES = {
         V1Statuses.FAILED,
         V1Statuses.UPSTREAM_FAILED,
@@ -180,7 +180,7 @@ class LifeCycle:
     @classmethod
     def is_k8s_stoppable(cls, status: str) -> bool:
         """Checks if a run with this status is scheduled on k8s and is stoppable."""
-        return status in cls.ON_K8s_VALUES
+        return status in cls.ON_K8S_VALUES
 
     @classmethod
     def is_stoppable(cls, status: str) -> bool:

@@ -102,4 +102,3 @@ class V1Notification(BaseConfig, polyaxon_sdk.V1Notification):
     def to_operator(self):
         self.trigger = self.trigger.capitalize()
         return super().to_dict()
-

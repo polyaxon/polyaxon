@@ -50,40 +50,57 @@ class V1Event(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'timestamp': 'datetime',
-        'step': 'int',
-        'metric': 'float',
-        'image': 'V1EventImage',
-        'histogram': 'V1EventHistogram',
-        'audio': 'V1EventAudio',
-        'video': 'V1EventVideo',
-        'html': 'str',
-        'text': 'str',
-        'chart': 'V1EventChart',
-        'model': 'V1EventModel',
-        'artifact': 'V1EventArtifact',
-        'dataframe': 'V1EventDataframe',
-        'curve': 'V1EventCurve'
+        "timestamp": "datetime",
+        "step": "int",
+        "metric": "float",
+        "image": "V1EventImage",
+        "histogram": "V1EventHistogram",
+        "audio": "V1EventAudio",
+        "video": "V1EventVideo",
+        "html": "str",
+        "text": "str",
+        "chart": "V1EventChart",
+        "model": "V1EventModel",
+        "artifact": "V1EventArtifact",
+        "dataframe": "V1EventDataframe",
+        "curve": "V1EventCurve",
     }
 
     attribute_map = {
-        'timestamp': 'timestamp',
-        'step': 'step',
-        'metric': 'metric',
-        'image': 'image',
-        'histogram': 'histogram',
-        'audio': 'audio',
-        'video': 'video',
-        'html': 'html',
-        'text': 'text',
-        'chart': 'chart',
-        'model': 'model',
-        'artifact': 'artifact',
-        'dataframe': 'dataframe',
-        'curve': 'curve'
+        "timestamp": "timestamp",
+        "step": "step",
+        "metric": "metric",
+        "image": "image",
+        "histogram": "histogram",
+        "audio": "audio",
+        "video": "video",
+        "html": "html",
+        "text": "text",
+        "chart": "chart",
+        "model": "model",
+        "artifact": "artifact",
+        "dataframe": "dataframe",
+        "curve": "curve",
     }
 
-    def __init__(self, timestamp=None, step=None, metric=None, image=None, histogram=None, audio=None, video=None, html=None, text=None, chart=None, model=None, artifact=None, dataframe=None, curve=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        timestamp=None,
+        step=None,
+        metric=None,
+        image=None,
+        histogram=None,
+        audio=None,
+        video=None,
+        html=None,
+        text=None,
+        chart=None,
+        model=None,
+        artifact=None,
+        dataframe=None,
+        curve=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1Event - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -437,18 +454,20 @@ class V1Event(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

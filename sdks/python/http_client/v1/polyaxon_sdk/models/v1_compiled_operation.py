@@ -50,52 +50,75 @@ class V1CompiledOperation(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'version': 'float',
-        'kind': 'str',
-        'name': 'str',
-        'description': 'str',
-        'tags': 'list[str]',
-        'profile': 'str',
-        'queue': 'str',
-        'cache': 'V1Cache',
-        'schedule': 'object',
-        'events': 'list[object]',
-        'matrix': 'object',
-        'dependencies': 'list[str]',
-        'trigger': 'V1TriggerPolicy',
-        'conditions': 'list[object]',
-        'skip_on_upstream_skip': 'bool',
-        'termination': 'V1Termination',
-        'plugins': 'V1Plugins',
-        'inputs': 'list[V1IO]',
-        'outputs': 'list[V1IO]',
-        'run': 'object'
+        "version": "float",
+        "kind": "str",
+        "name": "str",
+        "description": "str",
+        "tags": "list[str]",
+        "profile": "str",
+        "queue": "str",
+        "cache": "V1Cache",
+        "schedule": "object",
+        "events": "list[object]",
+        "matrix": "object",
+        "dependencies": "list[str]",
+        "trigger": "V1TriggerPolicy",
+        "conditions": "list[object]",
+        "skip_on_upstream_skip": "bool",
+        "termination": "V1Termination",
+        "plugins": "V1Plugins",
+        "inputs": "list[V1IO]",
+        "outputs": "list[V1IO]",
+        "run": "object",
     }
 
     attribute_map = {
-        'version': 'version',
-        'kind': 'kind',
-        'name': 'name',
-        'description': 'description',
-        'tags': 'tags',
-        'profile': 'profile',
-        'queue': 'queue',
-        'cache': 'cache',
-        'schedule': 'schedule',
-        'events': 'events',
-        'matrix': 'matrix',
-        'dependencies': 'dependencies',
-        'trigger': 'trigger',
-        'conditions': 'conditions',
-        'skip_on_upstream_skip': 'skip_on_upstream_skip',
-        'termination': 'termination',
-        'plugins': 'plugins',
-        'inputs': 'inputs',
-        'outputs': 'outputs',
-        'run': 'run'
+        "version": "version",
+        "kind": "kind",
+        "name": "name",
+        "description": "description",
+        "tags": "tags",
+        "profile": "profile",
+        "queue": "queue",
+        "cache": "cache",
+        "schedule": "schedule",
+        "events": "events",
+        "matrix": "matrix",
+        "dependencies": "dependencies",
+        "trigger": "trigger",
+        "conditions": "conditions",
+        "skip_on_upstream_skip": "skip_on_upstream_skip",
+        "termination": "termination",
+        "plugins": "plugins",
+        "inputs": "inputs",
+        "outputs": "outputs",
+        "run": "run",
     }
 
-    def __init__(self, version=None, kind=None, name=None, description=None, tags=None, profile=None, queue=None, cache=None, schedule=None, events=None, matrix=None, dependencies=None, trigger=None, conditions=None, skip_on_upstream_skip=None, termination=None, plugins=None, inputs=None, outputs=None, run=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        name=None,
+        description=None,
+        tags=None,
+        profile=None,
+        queue=None,
+        cache=None,
+        schedule=None,
+        events=None,
+        matrix=None,
+        dependencies=None,
+        trigger=None,
+        conditions=None,
+        skip_on_upstream_skip=None,
+        termination=None,
+        plugins=None,
+        inputs=None,
+        outputs=None,
+        run=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1CompiledOperation - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -591,18 +614,20 @@ class V1CompiledOperation(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

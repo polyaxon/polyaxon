@@ -501,27 +501,45 @@ def log_code_ref():
 log_code_ref.__doc__ = Run.log_code_ref.__doc__
 
 
-def log_data_ref(name: str, hash: str = None, path: str = None, content=None):
+def log_data_ref(
+    name: str, hash: str = None, path: str = None, content=None, is_input: bool = True
+):
     global TRACKING_RUN
-    TRACKING_RUN.log_data_ref(name=name, content=content, hash=hash, path=path)
+    TRACKING_RUN.log_data_ref(
+        name=name, content=content, hash=hash, path=path, is_input=is_input
+    )
 
 
 log_data_ref.__doc__ = Run.log_data_ref.__doc__
 
 
-def log_file_ref(path: str, hash: str = None, content=None):
+def log_file_ref(
+    path: str,
+    name: str = None,
+    hash: str = None,
+    content=None,
+    is_input: bool = True,
+    rel_path: str = None,
+):
     global TRACKING_RUN
     TRACKING_RUN.log_file_ref(
-        path=path, hash=hash, content=content,
+        path=path,
+        name=name,
+        hash=hash,
+        content=content,
+        is_input=is_input,
+        rel_path=rel_path,
     )
 
 
 log_file_ref.__doc__ = Run.log_file_ref.__doc__
 
 
-def log_dir_ref(path: str):
+def log_dir_ref(
+    path: str, name: str = None, is_input: bool = False, rel_path: str = None
+):
     global TRACKING_RUN
-    TRACKING_RUN.log_dir_ref(path=path)
+    TRACKING_RUN.log_dir_ref(path=path, name=name, is_input=is_input, rel_path=rel_path)
 
 
 log_dir_ref.__doc__ = Run.log_dir_ref.__doc__

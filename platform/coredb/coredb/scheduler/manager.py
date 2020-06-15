@@ -160,7 +160,10 @@ def runs_stop(
         return True
 
     stopped = True
-    if run.is_managed and LifeCycle.is_k8s_stoppable(run.status):
+    should_stop = (
+        LifeCycle.is_k8s_stoppable(run.status) or run.status == V1Statuses.STOPPING
+    )
+    if run.is_managed and should_stop:
         in_cluster = conf.get(K8S_IN_CLUSTER)
         if in_cluster and (run.is_service or run.is_job):
             stopped = manager.stop(

@@ -14,16 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.contrib.admin import site
-from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin
+from coredb.administration.utils import DiffModelAdmin
 
-from coredb.abstracts.getter import get_artifact_model, get_project_model, get_run_model
-from coredb.administration.artifacts import ArtifactAdmin
-from coredb.administration.projects import ProjectAdmin
-from coredb.administration.runs import RunLightAdmin
 
-site.register(get_user_model(), UserAdmin)
-site.register(get_artifact_model(), ArtifactAdmin)
-site.register(get_project_model(), ProjectAdmin)
-site.register(get_run_model(), RunLightAdmin)
+class ArtifactAdmin(DiffModelAdmin):
+    list_display = (
+        "name",
+        "kind",
+        "state",
+    )
+    list_display_links = (
+        "name",
+        "kind",
+        "state",
+    )
+    readonly_fields = DiffModelAdmin.readonly_fields + ("name",)
+    fields = ("name", "kind", "created_at", "updated_at")

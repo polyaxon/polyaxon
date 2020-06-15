@@ -35,10 +35,7 @@ import re  # noqa: F401
 import six
 
 from polyaxon_sdk.api_client import ApiClient
-from polyaxon_sdk.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from polyaxon_sdk.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class QueuesV1Api(object):
@@ -76,8 +73,10 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.create_queue_with_http_info(owner, agent, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.create_queue_with_http_info(
+            owner, agent, body, **kwargs
+        )  # noqa: E501
 
     def create_queue_with_http_info(self, owner, agent, body, **kwargs):  # noqa: E501
         """Create queue  # noqa: E501
@@ -107,48 +106,56 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'agent',
-            'body'
-        ]
+        all_params = ["owner", "agent", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_queue" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `create_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `create_queue`"
+            )  # noqa: E501
         # verify the required parameter 'agent' is set
-        if self.api_client.client_side_validation and ('agent' not in local_var_params or  # noqa: E501
-                                                        local_var_params['agent'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `agent` when calling `create_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "agent" not in local_var_params
+            or local_var_params["agent"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `agent` when calling `create_queue`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `create_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `create_queue`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'agent' in local_var_params:
-            path_params['agent'] = local_var_params['agent']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "agent" in local_var_params:
+            path_params["agent"] = local_var_params["agent"]  # noqa: E501
 
         query_params = []
 
@@ -158,34 +165,42 @@ class QueuesV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/agents/{agent}/queues', 'POST',
+            "/api/v1/orgs/{owner}/agents/{agent}/queues",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Agent',  # noqa: E501
+            response_type="V1Agent",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
         """Delete queue  # noqa: E501
@@ -210,8 +225,10 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_queue_with_http_info(owner, agent, uuid, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.delete_queue_with_http_info(
+            owner, agent, uuid, **kwargs
+        )  # noqa: E501
 
     def delete_queue_with_http_info(self, owner, agent, uuid, **kwargs):  # noqa: E501
         """Delete queue  # noqa: E501
@@ -241,50 +258,58 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'agent',
-            'uuid'
-        ]
+        all_params = ["owner", "agent", "uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_queue" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `delete_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `delete_queue`"
+            )  # noqa: E501
         # verify the required parameter 'agent' is set
-        if self.api_client.client_side_validation and ('agent' not in local_var_params or  # noqa: E501
-                                                        local_var_params['agent'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `agent` when calling `delete_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "agent" not in local_var_params
+            or local_var_params["agent"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `agent` when calling `delete_queue`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `uuid` when calling `delete_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "uuid" not in local_var_params
+            or local_var_params["uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `uuid` when calling `delete_queue`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'agent' in local_var_params:
-            path_params['agent'] = local_var_params['agent']  # noqa: E501
-        if 'uuid' in local_var_params:
-            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "agent" in local_var_params:
+            path_params["agent"] = local_var_params["agent"]  # noqa: E501
+        if "uuid" in local_var_params:
+            path_params["uuid"] = local_var_params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -295,14 +320,16 @@ class QueuesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}', 'DELETE',
+            "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -311,11 +338,14 @@ class QueuesV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
         """Get queue  # noqa: E501
@@ -340,7 +370,7 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.get_queue_with_http_info(owner, agent, uuid, **kwargs)  # noqa: E501
 
     def get_queue_with_http_info(self, owner, agent, uuid, **kwargs):  # noqa: E501
@@ -371,50 +401,58 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'agent',
-            'uuid'
-        ]
+        all_params = ["owner", "agent", "uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_queue" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `get_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `get_queue`"
+            )  # noqa: E501
         # verify the required parameter 'agent' is set
-        if self.api_client.client_side_validation and ('agent' not in local_var_params or  # noqa: E501
-                                                        local_var_params['agent'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `agent` when calling `get_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "agent" not in local_var_params
+            or local_var_params["agent"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `agent` when calling `get_queue`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `uuid` when calling `get_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "uuid" not in local_var_params
+            or local_var_params["uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `uuid` when calling `get_queue`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'agent' in local_var_params:
-            path_params['agent'] = local_var_params['agent']  # noqa: E501
-        if 'uuid' in local_var_params:
-            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "agent" in local_var_params:
+            path_params["agent"] = local_var_params["agent"]  # noqa: E501
+        if "uuid" in local_var_params:
+            path_params["uuid"] = local_var_params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -425,27 +463,32 @@ class QueuesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}', 'GET',
+            "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Queue',  # noqa: E501
+            response_type="V1Queue",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_organization_queue_names(self, owner, **kwargs):  # noqa: E501
         """List organization level queues names  # noqa: E501
@@ -472,10 +515,14 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_organization_queue_names_with_http_info(owner, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_organization_queue_names_with_http_info(
+            owner, **kwargs
+        )  # noqa: E501
 
-    def list_organization_queue_names_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def list_organization_queue_names_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List organization level queues names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -505,50 +552,56 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_organization_queue_names" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_organization_queue_names`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_organization_queue_names`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -557,27 +610,32 @@ class QueuesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/queues/names', 'GET',
+            "/api/v1/orgs/{owner}/queues/names",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListQueuesResponse',  # noqa: E501
+            response_type="V1ListQueuesResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_organization_queues(self, owner, **kwargs):  # noqa: E501
         """List organization level queues  # noqa: E501
@@ -604,8 +662,10 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_organization_queues_with_http_info(owner, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_organization_queues_with_http_info(
+            owner, **kwargs
+        )  # noqa: E501
 
     def list_organization_queues_with_http_info(self, owner, **kwargs):  # noqa: E501
         """List organization level queues  # noqa: E501
@@ -637,50 +697,56 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_organization_queues" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_organization_queues`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_organization_queues`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -689,27 +755,32 @@ class QueuesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/queues', 'GET',
+            "/api/v1/orgs/{owner}/queues",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListQueuesResponse',  # noqa: E501
+            response_type="V1ListQueuesResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_queue_names(self, owner, agent, **kwargs):  # noqa: E501
         """List queues names  # noqa: E501
@@ -737,8 +808,10 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_queue_names_with_http_info(owner, agent, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_queue_names_with_http_info(
+            owner, agent, **kwargs
+        )  # noqa: E501
 
     def list_queue_names_with_http_info(self, owner, agent, **kwargs):  # noqa: E501
         """List queues names  # noqa: E501
@@ -771,57 +844,66 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'agent',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "agent", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_queue_names" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_queue_names`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_queue_names`"
+            )  # noqa: E501
         # verify the required parameter 'agent' is set
-        if self.api_client.client_side_validation and ('agent' not in local_var_params or  # noqa: E501
-                                                        local_var_params['agent'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `agent` when calling `list_queue_names`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "agent" not in local_var_params
+            or local_var_params["agent"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `agent` when calling `list_queue_names`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'agent' in local_var_params:
-            path_params['agent'] = local_var_params['agent']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "agent" in local_var_params:
+            path_params["agent"] = local_var_params["agent"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -830,27 +912,32 @@ class QueuesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/agents/{agent}/queues/names', 'GET',
+            "/api/v1/orgs/{owner}/agents/{agent}/queues/names",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListQueuesResponse',  # noqa: E501
+            response_type="V1ListQueuesResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_queues(self, owner, agent, **kwargs):  # noqa: E501
         """List queues  # noqa: E501
@@ -878,7 +965,7 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_queues_with_http_info(owner, agent, **kwargs)  # noqa: E501
 
     def list_queues_with_http_info(self, owner, agent, **kwargs):  # noqa: E501
@@ -912,57 +999,66 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'agent',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "agent", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_queues" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_queues`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_queues`"
+            )  # noqa: E501
         # verify the required parameter 'agent' is set
-        if self.api_client.client_side_validation and ('agent' not in local_var_params or  # noqa: E501
-                                                        local_var_params['agent'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `agent` when calling `list_queues`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "agent" not in local_var_params
+            or local_var_params["agent"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `agent` when calling `list_queues`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'agent' in local_var_params:
-            path_params['agent'] = local_var_params['agent']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "agent" in local_var_params:
+            path_params["agent"] = local_var_params["agent"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -971,27 +1067,32 @@ class QueuesV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/agents/{agent}/queues', 'GET',
+            "/api/v1/orgs/{owner}/agents/{agent}/queues",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListQueuesResponse',  # noqa: E501
+            response_type="V1ListQueuesResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def patch_queue(self, owner, queue_agent, queue_uuid, body, **kwargs):  # noqa: E501
         """Patch queue  # noqa: E501
@@ -1017,10 +1118,14 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.patch_queue_with_http_info(owner, queue_agent, queue_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.patch_queue_with_http_info(
+            owner, queue_agent, queue_uuid, body, **kwargs
+        )  # noqa: E501
 
-    def patch_queue_with_http_info(self, owner, queue_agent, queue_uuid, body, **kwargs):  # noqa: E501
+    def patch_queue_with_http_info(
+        self, owner, queue_agent, queue_uuid, body, **kwargs
+    ):  # noqa: E501
         """Patch queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1049,55 +1154,66 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'queue_agent',
-            'queue_uuid',
-            'body'
-        ]
+        all_params = ["owner", "queue_agent", "queue_uuid", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_queue" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `patch_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `patch_queue`"
+            )  # noqa: E501
         # verify the required parameter 'queue_agent' is set
-        if self.api_client.client_side_validation and ('queue_agent' not in local_var_params or  # noqa: E501
-                                                        local_var_params['queue_agent'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `queue_agent` when calling `patch_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "queue_agent" not in local_var_params
+            or local_var_params["queue_agent"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `queue_agent` when calling `patch_queue`"
+            )  # noqa: E501
         # verify the required parameter 'queue_uuid' is set
-        if self.api_client.client_side_validation and ('queue_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['queue_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `queue_uuid` when calling `patch_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "queue_uuid" not in local_var_params
+            or local_var_params["queue_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `queue_uuid` when calling `patch_queue`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `patch_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `patch_queue`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'queue_agent' in local_var_params:
-            path_params['queue.agent'] = local_var_params['queue_agent']  # noqa: E501
-        if 'queue_uuid' in local_var_params:
-            path_params['queue.uuid'] = local_var_params['queue_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "queue_agent" in local_var_params:
+            path_params["queue.agent"] = local_var_params["queue_agent"]  # noqa: E501
+        if "queue_uuid" in local_var_params:
+            path_params["queue.uuid"] = local_var_params["queue_uuid"]  # noqa: E501
 
         query_params = []
 
@@ -1107,36 +1223,46 @@ class QueuesV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}', 'PATCH',
+            "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
+            "PATCH",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Queue',  # noqa: E501
+            response_type="V1Queue",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def update_queue(self, owner, queue_agent, queue_uuid, body, **kwargs):  # noqa: E501
+    def update_queue(
+        self, owner, queue_agent, queue_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1160,10 +1286,14 @@ class QueuesV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.update_queue_with_http_info(owner, queue_agent, queue_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.update_queue_with_http_info(
+            owner, queue_agent, queue_uuid, body, **kwargs
+        )  # noqa: E501
 
-    def update_queue_with_http_info(self, owner, queue_agent, queue_uuid, body, **kwargs):  # noqa: E501
+    def update_queue_with_http_info(
+        self, owner, queue_agent, queue_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update queue  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1192,55 +1322,66 @@ class QueuesV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'queue_agent',
-            'queue_uuid',
-            'body'
-        ]
+        all_params = ["owner", "queue_agent", "queue_uuid", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_queue" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `update_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `update_queue`"
+            )  # noqa: E501
         # verify the required parameter 'queue_agent' is set
-        if self.api_client.client_side_validation and ('queue_agent' not in local_var_params or  # noqa: E501
-                                                        local_var_params['queue_agent'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `queue_agent` when calling `update_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "queue_agent" not in local_var_params
+            or local_var_params["queue_agent"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `queue_agent` when calling `update_queue`"
+            )  # noqa: E501
         # verify the required parameter 'queue_uuid' is set
-        if self.api_client.client_side_validation and ('queue_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['queue_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `queue_uuid` when calling `update_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "queue_uuid" not in local_var_params
+            or local_var_params["queue_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `queue_uuid` when calling `update_queue`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `update_queue`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `update_queue`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'queue_agent' in local_var_params:
-            path_params['queue.agent'] = local_var_params['queue_agent']  # noqa: E501
-        if 'queue_uuid' in local_var_params:
-            path_params['queue.uuid'] = local_var_params['queue_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "queue_agent" in local_var_params:
+            path_params["queue.agent"] = local_var_params["queue_agent"]  # noqa: E501
+        if "queue_uuid" in local_var_params:
+            path_params["queue.uuid"] = local_var_params["queue_uuid"]  # noqa: E501
 
         query_params = []
 
@@ -1250,31 +1391,39 @@ class QueuesV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}', 'PUT',
+            "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
+            "PUT",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Queue',  # noqa: E501
+            response_type="V1Queue",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

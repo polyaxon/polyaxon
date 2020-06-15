@@ -28,12 +28,11 @@ import pytest
 
 from bokeh.plotting import figure
 from plotly import figure_factory
-
-from polyaxon.constants import DEFAULT
 from tests.test_tracking.test_events.test_event_values import tensor_np
 from tests.utils import TestEnvVarsCase
 
 from polyaxon import settings
+from polyaxon.constants import DEFAULT
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,

@@ -35,10 +35,7 @@ import re  # noqa: F401
 import six
 
 from polyaxon_sdk.api_client import ApiClient
-from polyaxon_sdk.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from polyaxon_sdk.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class ProjectDashboardsV1Api(object):
@@ -76,10 +73,14 @@ class ProjectDashboardsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.create_project_dashboard_with_http_info(owner, project, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.create_project_dashboard_with_http_info(
+            owner, project, body, **kwargs
+        )  # noqa: E501
 
-    def create_project_dashboard_with_http_info(self, owner, project, body, **kwargs):  # noqa: E501
+    def create_project_dashboard_with_http_info(
+        self, owner, project, body, **kwargs
+    ):  # noqa: E501
         """Create project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -107,48 +108,56 @@ class ProjectDashboardsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'project',
-            'body'
-        ]
+        all_params = ["owner", "project", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_project_dashboard" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `create_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `create_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `create_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "project" not in local_var_params
+            or local_var_params["project"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `project` when calling `create_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `create_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `create_project_dashboard`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "project" in local_var_params:
+            path_params["project"] = local_var_params["project"]  # noqa: E501
 
         query_params = []
 
@@ -158,34 +167,42 @@ class ProjectDashboardsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/dashboards', 'POST',
+            "/api/v1/{owner}/{project}/dashboards",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Dashboard',  # noqa: E501
+            response_type="V1Dashboard",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_project_dashboard(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Delete project dashboard  # noqa: E501
@@ -210,10 +227,14 @@ class ProjectDashboardsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_project_dashboard_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.delete_project_dashboard_with_http_info(
+            owner, project, uuid, **kwargs
+        )  # noqa: E501
 
-    def delete_project_dashboard_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
+    def delete_project_dashboard_with_http_info(
+        self, owner, project, uuid, **kwargs
+    ):  # noqa: E501
         """Delete project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -241,50 +262,58 @@ class ProjectDashboardsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'project',
-            'uuid'
-        ]
+        all_params = ["owner", "project", "uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_project_dashboard" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `delete_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `delete_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `delete_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "project" not in local_var_params
+            or local_var_params["project"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `project` when calling `delete_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `uuid` when calling `delete_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "uuid" not in local_var_params
+            or local_var_params["uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `uuid` when calling `delete_project_dashboard`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-        if 'uuid' in local_var_params:
-            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "project" in local_var_params:
+            path_params["project"] = local_var_params["project"]  # noqa: E501
+        if "uuid" in local_var_params:
+            path_params["uuid"] = local_var_params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -295,14 +324,16 @@ class ProjectDashboardsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/dashboards/{uuid}', 'DELETE',
+            "/api/v1/{owner}/{project}/dashboards/{uuid}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -311,11 +342,14 @@ class ProjectDashboardsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_project_dashboard(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get project dashboard  # noqa: E501
@@ -340,10 +374,14 @@ class ProjectDashboardsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_project_dashboard_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_project_dashboard_with_http_info(
+            owner, project, uuid, **kwargs
+        )  # noqa: E501
 
-    def get_project_dashboard_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
+    def get_project_dashboard_with_http_info(
+        self, owner, project, uuid, **kwargs
+    ):  # noqa: E501
         """Get project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -371,50 +409,58 @@ class ProjectDashboardsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'project',
-            'uuid'
-        ]
+        all_params = ["owner", "project", "uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_project_dashboard" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `get_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `get_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `get_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "project" not in local_var_params
+            or local_var_params["project"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `project` when calling `get_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `uuid` when calling `get_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "uuid" not in local_var_params
+            or local_var_params["uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `uuid` when calling `get_project_dashboard`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-        if 'uuid' in local_var_params:
-            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "project" in local_var_params:
+            path_params["project"] = local_var_params["project"]  # noqa: E501
+        if "uuid" in local_var_params:
+            path_params["uuid"] = local_var_params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -425,27 +471,32 @@ class ProjectDashboardsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/dashboards/{uuid}', 'GET',
+            "/api/v1/{owner}/{project}/dashboards/{uuid}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Dashboard',  # noqa: E501
+            response_type="V1Dashboard",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_project_dashboard_names(self, owner, project, **kwargs):  # noqa: E501
         """List project dashboard  # noqa: E501
@@ -473,10 +524,14 @@ class ProjectDashboardsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_project_dashboard_names_with_http_info(owner, project, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_project_dashboard_names_with_http_info(
+            owner, project, **kwargs
+        )  # noqa: E501
 
-    def list_project_dashboard_names_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def list_project_dashboard_names_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """List project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -507,57 +562,66 @@ class ProjectDashboardsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'project',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "project", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_project_dashboard_names" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_project_dashboard_names`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_project_dashboard_names`"
+            )  # noqa: E501
         # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `list_project_dashboard_names`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "project" not in local_var_params
+            or local_var_params["project"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `project` when calling `list_project_dashboard_names`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "project" in local_var_params:
+            path_params["project"] = local_var_params["project"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -566,27 +630,32 @@ class ProjectDashboardsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/dashboards/names', 'GET',
+            "/api/v1/{owner}/{project}/dashboards/names",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListDashboardsResponse',  # noqa: E501
+            response_type="V1ListDashboardsResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_project_dashboards(self, owner, project, **kwargs):  # noqa: E501
         """List project dashboards  # noqa: E501
@@ -614,10 +683,14 @@ class ProjectDashboardsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_project_dashboards_with_http_info(owner, project, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_project_dashboards_with_http_info(
+            owner, project, **kwargs
+        )  # noqa: E501
 
-    def list_project_dashboards_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def list_project_dashboards_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """List project dashboards  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -648,57 +721,66 @@ class ProjectDashboardsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'project',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "project", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_project_dashboards" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_project_dashboards`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_project_dashboards`"
+            )  # noqa: E501
         # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `list_project_dashboards`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "project" not in local_var_params
+            or local_var_params["project"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `project` when calling `list_project_dashboards`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "project" in local_var_params:
+            path_params["project"] = local_var_params["project"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -707,29 +789,36 @@ class ProjectDashboardsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/dashboards', 'GET',
+            "/api/v1/{owner}/{project}/dashboards",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListDashboardsResponse',  # noqa: E501
+            response_type="V1ListDashboardsResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def patch_project_dashboard(self, owner, project, dashboard_uuid, body, **kwargs):  # noqa: E501
+    def patch_project_dashboard(
+        self, owner, project, dashboard_uuid, body, **kwargs
+    ):  # noqa: E501
         """Patch project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -753,10 +842,14 @@ class ProjectDashboardsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.patch_project_dashboard_with_http_info(owner, project, dashboard_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.patch_project_dashboard_with_http_info(
+            owner, project, dashboard_uuid, body, **kwargs
+        )  # noqa: E501
 
-    def patch_project_dashboard_with_http_info(self, owner, project, dashboard_uuid, body, **kwargs):  # noqa: E501
+    def patch_project_dashboard_with_http_info(
+        self, owner, project, dashboard_uuid, body, **kwargs
+    ):  # noqa: E501
         """Patch project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -785,55 +878,68 @@ class ProjectDashboardsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'project',
-            'dashboard_uuid',
-            'body'
-        ]
+        all_params = ["owner", "project", "dashboard_uuid", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_project_dashboard" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `patch_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `patch_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `patch_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "project" not in local_var_params
+            or local_var_params["project"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `project` when calling `patch_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'dashboard_uuid' is set
-        if self.api_client.client_side_validation and ('dashboard_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['dashboard_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `dashboard_uuid` when calling `patch_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dashboard_uuid" not in local_var_params
+            or local_var_params["dashboard_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `dashboard_uuid` when calling `patch_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `patch_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `patch_project_dashboard`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-        if 'dashboard_uuid' in local_var_params:
-            path_params['dashboard.uuid'] = local_var_params['dashboard_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "project" in local_var_params:
+            path_params["project"] = local_var_params["project"]  # noqa: E501
+        if "dashboard_uuid" in local_var_params:
+            path_params["dashboard.uuid"] = local_var_params[
+                "dashboard_uuid"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -843,36 +949,46 @@ class ProjectDashboardsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}', 'PATCH',
+            "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}",
+            "PATCH",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Dashboard',  # noqa: E501
+            response_type="V1Dashboard",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def promote_project_dashboard(self, owner, project, dashboard_uuid, **kwargs):  # noqa: E501
+    def promote_project_dashboard(
+        self, owner, project, dashboard_uuid, **kwargs
+    ):  # noqa: E501
         """Promote project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -895,10 +1011,14 @@ class ProjectDashboardsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.promote_project_dashboard_with_http_info(owner, project, dashboard_uuid, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.promote_project_dashboard_with_http_info(
+            owner, project, dashboard_uuid, **kwargs
+        )  # noqa: E501
 
-    def promote_project_dashboard_with_http_info(self, owner, project, dashboard_uuid, **kwargs):  # noqa: E501
+    def promote_project_dashboard_with_http_info(
+        self, owner, project, dashboard_uuid, **kwargs
+    ):  # noqa: E501
         """Promote project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -926,50 +1046,60 @@ class ProjectDashboardsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'project',
-            'dashboard_uuid'
-        ]
+        all_params = ["owner", "project", "dashboard_uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method promote_project_dashboard" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `promote_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `promote_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `promote_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "project" not in local_var_params
+            or local_var_params["project"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `project` when calling `promote_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'dashboard_uuid' is set
-        if self.api_client.client_side_validation and ('dashboard_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['dashboard_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `dashboard_uuid` when calling `promote_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dashboard_uuid" not in local_var_params
+            or local_var_params["dashboard_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `dashboard_uuid` when calling `promote_project_dashboard`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-        if 'dashboard_uuid' in local_var_params:
-            path_params['dashboard.uuid'] = local_var_params['dashboard_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "project" in local_var_params:
+            path_params["project"] = local_var_params["project"]  # noqa: E501
+        if "dashboard_uuid" in local_var_params:
+            path_params["dashboard.uuid"] = local_var_params[
+                "dashboard_uuid"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -980,29 +1110,36 @@ class ProjectDashboardsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote', 'POST',
+            "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Dashboard',  # noqa: E501
+            response_type="V1Dashboard",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def update_project_dashboard(self, owner, project, dashboard_uuid, body, **kwargs):  # noqa: E501
+    def update_project_dashboard(
+        self, owner, project, dashboard_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1026,10 +1163,14 @@ class ProjectDashboardsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.update_project_dashboard_with_http_info(owner, project, dashboard_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.update_project_dashboard_with_http_info(
+            owner, project, dashboard_uuid, body, **kwargs
+        )  # noqa: E501
 
-    def update_project_dashboard_with_http_info(self, owner, project, dashboard_uuid, body, **kwargs):  # noqa: E501
+    def update_project_dashboard_with_http_info(
+        self, owner, project, dashboard_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1058,55 +1199,68 @@ class ProjectDashboardsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'project',
-            'dashboard_uuid',
-            'body'
-        ]
+        all_params = ["owner", "project", "dashboard_uuid", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_project_dashboard" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `update_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `update_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `update_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "project" not in local_var_params
+            or local_var_params["project"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `project` when calling `update_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'dashboard_uuid' is set
-        if self.api_client.client_side_validation and ('dashboard_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['dashboard_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `dashboard_uuid` when calling `update_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dashboard_uuid" not in local_var_params
+            or local_var_params["dashboard_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `dashboard_uuid` when calling `update_project_dashboard`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `update_project_dashboard`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `update_project_dashboard`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-        if 'dashboard_uuid' in local_var_params:
-            path_params['dashboard.uuid'] = local_var_params['dashboard_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "project" in local_var_params:
+            path_params["project"] = local_var_params["project"]  # noqa: E501
+        if "dashboard_uuid" in local_var_params:
+            path_params["dashboard.uuid"] = local_var_params[
+                "dashboard_uuid"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -1116,31 +1270,39 @@ class ProjectDashboardsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}', 'PUT',
+            "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}",
+            "PUT",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Dashboard',  # noqa: E501
+            response_type="V1Dashboard",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

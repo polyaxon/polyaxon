@@ -39,6 +39,7 @@ from polyaxon.env_vars.getters import (
 )
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.lifecycle import LifeCycle, V1StatusCondition
+from polyaxon.logger import logger
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.logging.handler import get_logs_handler
@@ -1009,12 +1010,13 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def log_code_ref(self, code_ref: Dict = None):
+    def log_code_ref(self, code_ref: Dict = None, is_input: bool = True):
         """Logs code reference.
 
         Args:
             code_ref: dict, optional, if not provided,
                 Polyaxon will detect the code reference from the git repo in the current path.
+            is_input: bool, if the code reference is an input or outputs.
         """
         code_ref = code_ref or get_code_reference()
         if code_ref and "commit" in code_ref:
@@ -1022,13 +1024,31 @@ class RunClient:
                 name=code_ref.get("commit"),
                 kind=V1ArtifactKind.CODEREF,
                 summary=code_ref,
-                is_input=True,
+                is_input=is_input,
             )
             self.log_artifact_lineage(body=artifact_run)
 
+    def _get_rel_asset_path(self, path: str = None, rel_path: str = None):
+        if not path or rel_path:
+            return rel_path
+        if hasattr(self, "_artifacts_path"):
+            try:
+                return os.path.relpath(path, self._artifacts_path)
+            except Exception as e:
+                logger.debug("could not calculate relative path %s", e)
+
+        return rel_path or path
+
     @check_no_op
     @check_offline
-    def log_data_ref(self, name: str, hash: str = None, path: str = None, content=None):
+    def log_data_ref(
+        self,
+        name: str,
+        hash: str = None,
+        path: str = None,
+        content=None,
+        is_input: bool = True,
+    ):
         """Logs data reference.
 
         Args:
@@ -1036,6 +1056,7 @@ class RunClient:
             hash: str, optional, default = None, the hash version of the data,
                 if not provided it will be calculated based on the data in the content.
             path: str, optional, path of where the data is coming from.
+            is_input: bool, if the data reference is an input or outputs.
             content: the data content.
         """
         summary = {}
@@ -1047,13 +1068,25 @@ class RunClient:
             summary["path"] = path
         if name:
             artifact_run = V1RunArtifact(
-                name=name, kind=V1ArtifactKind.DATA, summary=summary, is_input=True,
+                name=name,
+                kind=V1ArtifactKind.DATA,
+                path=path,
+                summary=summary,
+                is_input=is_input,
             )
             self.log_artifact_lineage(body=artifact_run)
 
     @check_no_op
     @check_offline
-    def log_file_ref(self, path: str, name: str = None, hash: str = None, content=None):
+    def log_file_ref(
+        self,
+        path: str,
+        name: str = None,
+        hash: str = None,
+        content=None,
+        is_input: bool = False,
+        rel_path: str = None,
+    ):
         """Logs file reference.
 
         Args:
@@ -1062,6 +1095,8 @@ class RunClient:
             hash: str, optional, default = None, the hash version of the file,
                 if not provided it will be calculated based on the file content.
             content: the file content.
+            is_input: bool, if the file reference is an input or outputs.
+            rel_path: str, optional relative path to the run artifacts path.
         """
         summary = {"path": path}
         if hash:
@@ -1069,45 +1104,66 @@ class RunClient:
         elif content is not None:
             summary["hash"] = hash_value(content)
         name = name or os.path.basename(path)
+        rel_path = self._get_rel_asset_path(path=path, asset_rel_path=rel_path)
         if name:
             artifact_run = V1RunArtifact(
-                name=name, kind=V1ArtifactKind.FILE, summary=summary, is_input=True,
+                name=name,
+                kind=V1ArtifactKind.FILE,
+                path=rel_path,
+                summary=summary,
+                is_input=is_input,
             )
             self.log_artifact_lineage(body=artifact_run)
 
     @check_no_op
     @check_offline
-    def log_dir_ref(self, path: str, name: str = None):
+    def log_dir_ref(
+        self, path: str, name: str = None, is_input: bool = False, rel_path: str = None,
+    ):
         """Logs dir reference.
 
         Args:
             path: str, dir path, the name is extracted from the path.
             name: str, if the name is passed it will be used instead of the dirname from the path.
+            is_input: bool, if the dir reference is an input or outputs.
+            rel_path: str, optional relative path to the run artifacts path.
         """
         name = name or os.path.basename(path)
+        rel_path = self._get_rel_asset_path(path=path, asset_rel_path=rel_path)
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
                 kind=V1ArtifactKind.DIR,
+                path=rel_path,
                 summary={"path": path},
-                is_input=True,
+                is_input=is_input,
             )
             self.log_artifact_lineage(body=artifact_run)
 
     @check_no_op
     @check_offline
-    def log_tensorboard_ref(self, path: str, name: str = "tensorboard"):
+    def log_tensorboard_ref(
+        self,
+        path: str,
+        name: str = "tensorboard",
+        is_input: bool = False,
+        rel_path: str = None,
+    ):
         """Logs dir reference.
 
         Args:
             path: str, path to the tensorboard logdir.
             name: str, if the name is passed it will be used instead of the dirname from the path.
+            is_input: bool, if the tensorboard reference is an input or outputs
+            rel_path: str, optional relative path to run the artifacts path.
         """
+        rel_path = self._get_rel_asset_path(path=path, asset_rel_path=rel_path)
         artifact_run = V1RunArtifact(
             name=name,
             kind=V1ArtifactKind.TENSORBOARD,
+            path=rel_path,
             summary={"path": path},
-            is_input=True,
+            is_input=is_input,
         )
         self.log_artifact_lineage(body=artifact_run)
         self._log_meta(has_tensorboard=True)

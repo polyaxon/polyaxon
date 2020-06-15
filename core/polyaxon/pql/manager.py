@@ -21,7 +21,7 @@ from polyaxon.pql.builder import QueryCondSpec
 from polyaxon.pql.parser import parse_field, tokenize_query
 
 
-class PQLManager(object):
+class PQLManager:
     NAME = None
     FIELDS_USE_UUID = None
     FIELDS_PROXY = {}
