@@ -40,7 +40,7 @@ type V1MedianStoppingPolicy struct {
 	// Min interval (e.g steps) before starting the process
 	MinInterval int32 `json:"min_interval,omitempty"`
 
-	// Min samples runs succeded before starting the process
+	// Min samples runs succeeded before starting the process
 	MinSamples int32 `json:"min_samples,omitempty"`
 }
 
