@@ -230,7 +230,7 @@ beat:
       memory: 128Mi
 
 hooks:
-  image: polyaxon/polyaxon-manage
+  image: polyaxon/polyaxon-api
   imageTag: 1.0.9
   imagePullPolicy: Always
 
