@@ -6,13 +6,9 @@ inputs:
   isOptional: true
   type: str
   value: jupyter/tensorflow-notebook
-- name: port
-  isOptional: true
-  type: int
-  value: 8888
 run:
   kind: service
-  ports: ["{{port}}"]
+  ports: [8888]
   container:
     image: "{{image}}"
     command: ["jupyter", "notebook"]

@@ -70,7 +70,7 @@ class TestInitStore(BaseTestCase):
             "if [ -f /foo ]; then cp /foo /bar; fi"
         )
         assert cp_copy_args(path_from="/foo", path_to="/bar", is_file=False) == (
-            "if [ -d /foo ]; then cp -r /foo/* /bar; fi"
+            'if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -r /foo/* /bar; fi'
         )
 
     def test_files_cp_gcs_args(self):

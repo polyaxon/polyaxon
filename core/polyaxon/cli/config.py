@@ -20,8 +20,11 @@ import click
 
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.logger import clean_outputs
+from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.client import ClientConfigManager
+from polyaxon.managers.project import ProjectManager
+from polyaxon.managers.run import RunManager
 from polyaxon.utils.formatting import Printer, dict_tabulate
 
 
@@ -120,6 +123,8 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 def purge():
     """Purge the global config values."""
     ClientConfigManager.purge()
-    Printer.print_success("Config was removed.")
-    # Reset cli config
     CliConfigManager.purge()
+    AuthConfigManager.purge()
+    ProjectManager.purge()
+    RunManager.purge()
+    Printer.print_success("Config was removed.")

@@ -1,3 +1,0 @@
--r requirements-base.txt
-
-polyaxon==1.0.99

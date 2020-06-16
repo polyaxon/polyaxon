@@ -427,7 +427,7 @@ user:
 
 # Time zone
 timezone: 'UTC'
-adminViewEnabled: true
+adminViewEnabled: false
 encryptionSecret:
 
 # Include helm chart release revision

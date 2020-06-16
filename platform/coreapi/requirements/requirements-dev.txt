@@ -1,4 +1,4 @@
--r requirements-base.txt
+-r requirements.txt
 
 django-debug-toolbar
 

@@ -51,8 +51,12 @@ def cp_copy_args(path_from, path_to, is_file: bool) -> str:
         return "if [ -f {path_from} ]; then cp {path_from} {path_to}; fi".format(
             path_from=path_from, path_to=path_to
         )
-    return "if [ -d {path_from} ]; then cp -r {path_from}/* {path_to}; fi".format(
-        path_from=path_from, path_to=path_to
+    'if [ -d {path} ] && [ "$(ls -A {path})" ]; '
+    return (
+        'if [ -d {path_from} ] && [ "$(ls -A {path_from})" ]; '
+        "then cp -r {path_from}/* {path_to}; fi".format(
+            path_from=path_from, path_to=path_to
+        )
     )
 
 

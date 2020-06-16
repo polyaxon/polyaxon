@@ -24,6 +24,7 @@ from polyaxon.polyflow.environment import EnvironmentSchema
 from polyaxon.polyflow.init import InitSchema
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.fields.swagger import SwaggerField
 
 
@@ -39,8 +40,8 @@ class ServiceSchema(BaseCamelSchema):
         defaults={"name": MAIN_JOB_CONTAINER},
         allow_none=True,
     )
-    ports = fields.List(fields.Int(), allow_none=True)
-    rewrite_path = fields.Bool(allow_none=True)
+    ports = RefOrObject(fields.List(fields.Int(), allow_none=True))
+    rewrite_path = RefOrObject(fields.Bool(allow_none=True))
 
     @staticmethod
     def schema_config():

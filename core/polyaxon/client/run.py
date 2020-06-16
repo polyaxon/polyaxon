@@ -31,6 +31,7 @@ from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import PolyaxonClient
 from polyaxon.client.decorators import check_no_op, check_offline
+from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.env_vars.getters import (
     get_project_full_name,
     get_project_or_local,
@@ -1031,9 +1032,9 @@ class RunClient:
     def _get_rel_asset_path(self, path: str = None, rel_path: str = None):
         if not path or rel_path:
             return rel_path
-        if hasattr(self, "_artifacts_path"):
+        if CONTEXT_MOUNT_ARTIFACTS in path:
             try:
-                return os.path.relpath(path, self._artifacts_path)
+                return os.path.relpath(path, CONTEXT_MOUNT_ARTIFACTS)
             except Exception as e:
                 logger.debug("could not calculate relative path %s", e)
 
@@ -1104,7 +1105,7 @@ class RunClient:
         elif content is not None:
             summary["hash"] = hash_value(content)
         name = name or os.path.basename(path)
-        rel_path = self._get_rel_asset_path(path=path, asset_rel_path=rel_path)
+        rel_path = self._get_rel_asset_path(path=path, rel_path=rel_path)
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
@@ -1129,7 +1130,7 @@ class RunClient:
             rel_path: str, optional relative path to the run artifacts path.
         """
         name = name or os.path.basename(path)
-        rel_path = self._get_rel_asset_path(path=path, asset_rel_path=rel_path)
+        rel_path = self._get_rel_asset_path(path=path, rel_path=rel_path)
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
@@ -1157,7 +1158,7 @@ class RunClient:
             is_input: bool, if the tensorboard reference is an input or outputs
             rel_path: str, optional relative path to run the artifacts path.
         """
-        rel_path = self._get_rel_asset_path(path=path, asset_rel_path=rel_path)
+        rel_path = self._get_rel_asset_path(path=path, rel_path=rel_path)
         artifact_run = V1RunArtifact(
             name=name,
             kind=V1ArtifactKind.TENSORBOARD,
