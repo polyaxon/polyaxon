@@ -158,4 +158,4 @@ connections: []
 notificationConnections: []
 
 # Include helm chart release revision
-includeChartRevision: false
+includeChartRevision: true

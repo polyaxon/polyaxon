@@ -51,7 +51,9 @@ def get_artifacts_by_keys(
 
 
 def set_run_lineage(run: BaseRun, artifacts_by_keys: Dict, query: Any):
-    artifacts_to_link = get_artifact_model().objects.filter(query).only("id", "name", "state")
+    artifacts_to_link = (
+        get_artifact_model().objects.filter(query).only("id", "name", "state")
+    )
     lineage_model = get_lineage_model()
     for m in artifacts_to_link:
         lineage_model.objects.get_or_create(

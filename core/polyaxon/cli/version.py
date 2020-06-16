@@ -148,12 +148,12 @@ def check_cli_version(server_versions=None, current_version=None):
 @clean_outputs
 def version(check):
     """Print the current version of the cli and platform."""
-    server_versions = get_server_versions()
     current_version = get_current_version()
     Printer.print_header("Current cli version: {}.".format(current_version))
-    Printer.print_header("Supported versions:")
-    dict_tabulate(server_versions.to_dict())
     if check:
+        server_versions = get_server_versions()
+        Printer.print_header("Supported versions:")
+        dict_tabulate(server_versions.to_dict())
         check_cli_version(server_versions, current_version)
 
 

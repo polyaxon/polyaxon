@@ -431,7 +431,7 @@ adminViewEnabled: true
 encryptionSecret:
 
 # Include helm chart release revision
-includeChartRevision: false
+includeChartRevision: true
 
 # N.B. this is in beta
 securityContext:

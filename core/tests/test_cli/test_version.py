@@ -36,6 +36,6 @@ class TestCliVersion(BaseCommandTestCase):
     @patch("polyaxon_sdk.VersionsV1Api.get_versions")
     @patch("polyaxon.cli.version.dict_tabulate")
     def test_versions(self, dict_tabulate, get_versions):
-        self.runner.invoke(version)
+        self.runner.invoke(version, ["--check"])
         get_versions.assert_called_once()
         dict_tabulate.assert_called_once()
