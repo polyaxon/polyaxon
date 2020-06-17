@@ -62,7 +62,7 @@ func init() {
 }
 
 func (m V1HyperoptAlgorithms) validateV1HyperoptAlgorithmsEnum(path, location string, value V1HyperoptAlgorithms) error {
-	if err := validate.Enum(path, location, value, v1HyperoptAlgorithmsEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1HyperoptAlgorithmsEnum, true); err != nil {
 		return err
 	}
 	return nil

@@ -58,7 +58,7 @@ func init() {
 }
 
 func (m V1ResourceType) validateV1ResourceTypeEnum(path, location string, value V1ResourceType) error {
-	if err := validate.Enum(path, location, value, v1ResourceTypeEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1ResourceTypeEnum, true); err != nil {
 		return err
 	}
 	return nil

@@ -61,7 +61,7 @@ func init() {
 }
 
 func (m V1SparkType) validateV1SparkTypeEnum(path, location string, value V1SparkType) error {
-	if err := validate.Enum(path, location, value, v1SparkTypeEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1SparkTypeEnum, true); err != nil {
 		return err
 	}
 	return nil

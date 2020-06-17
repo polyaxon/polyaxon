@@ -67,7 +67,7 @@ func init() {
 }
 
 func (m V1TriggerPolicy) validateV1TriggerPolicyEnum(path, location string, value V1TriggerPolicy) error {
-	if err := validate.Enum(path, location, value, v1TriggerPolicyEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1TriggerPolicyEnum, true); err != nil {
 		return err
 	}
 	return nil

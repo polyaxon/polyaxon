@@ -57,7 +57,7 @@ func init() {
 }
 
 func (m ProtobufNullValue) validateProtobufNullValueEnum(path, location string, value ProtobufNullValue) error {
-	if err := validate.Enum(path, location, value, protobufNullValueEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, protobufNullValueEnum, true); err != nil {
 		return err
 	}
 	return nil

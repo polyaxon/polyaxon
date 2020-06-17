@@ -120,18 +120,30 @@ generate-html-openapi:
 
 clean:
 	# Clean current generated code.
-	rm -rf go/$(HTTP_CLIENT)/$(VERSION)/*
-	rm -rf go/$(PB_CLIENT)/$(VERSION)/*
-	rm -rf python/$(HTTP_CLIENT)/$(VERSION)/*
-	rm -rf python/$(PB_CLIENT)/$(VERSION)/*
-	rm -rf js/$(HTTP_CLIENT)/$(VERSION)/*
-	rm -rf js/$(PB_CLIENT)/$(VERSION)/*
-	rm -rf ts/$(HTTP_CLIENT)/$(VERSION)/*
-	rm -rf ts/$(PB_CLIENT)/$(VERSION)/*
-	rm -rf java/$(HTTP_CLIENT)/$(VERSION)/*
-	rm -rf java/$(PB_CLIENT)/$(VERSION)/*
-	rm -rf swagger/$(VERSION)/*
-	rm -rf openapi-html/$(VERSION)/*
+	rm -rf go/$(HTTP_CLIENT)/$(VERSION)
+	mkdir go/$(HTTP_CLIENT)/$(VERSION)
+	rm -rf go/$(PB_CLIENT)/$(VERSION)
+	mkdir go/$(PB_CLIENT)/$(VERSION)
+	rm -rf python/$(HTTP_CLIENT)/$(VERSION)
+	mkdir python/$(HTTP_CLIENT)/$(VERSION)
+	rm -rf python/$(PB_CLIENT)/$(VERSION)
+	mkdir python/$(PB_CLIENT)/$(VERSION)
+	rm -rf js/$(HTTP_CLIENT)/$(VERSION)
+	mkdir js/$(HTTP_CLIENT)/$(VERSION)
+	rm -rf js/$(PB_CLIENT)/$(VERSION)
+	mkdir js/$(PB_CLIENT)/$(VERSION)
+	rm -rf ts/$(HTTP_CLIENT)/$(VERSION)
+	mkdir ts/$(HTTP_CLIENT)/$(VERSION)
+	rm -rf ts/$(PB_CLIENT)/$(VERSION)
+	mkdir ts/$(PB_CLIENT)/$(VERSION)
+	rm -rf java/$(HTTP_CLIENT)/$(VERSION)
+	mkdir java/$(HTTP_CLIENT)/$(VERSION)
+	rm -rf java/$(PB_CLIENT)/$(VERSION)
+	mkdir java/$(PB_CLIENT)/$(VERSION)
+	rm -rf swagger/$(VERSION)
+	mkdir swagger/$(VERSION)
+	rm -rf openapi-html/$(VERSION)
+	mkdir openapi-html/$(VERSION)
 
 swagger-generate: generate-go-swagger \
 	generate-js-swagger \

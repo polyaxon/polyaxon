@@ -70,7 +70,7 @@ func init() {
 }
 
 func (m V1MatrixKind) validateV1MatrixKindEnum(path, location string, value V1MatrixKind) error {
-	if err := validate.Enum(path, location, value, v1MatrixKindEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1MatrixKindEnum, true); err != nil {
 		return err
 	}
 	return nil

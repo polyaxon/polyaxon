@@ -178,7 +178,7 @@ func init() {
 }
 
 func (m V1ConnectionKind) validateV1ConnectionKindEnum(path, location string, value V1ConnectionKind) error {
-	if err := validate.Enum(path, location, value, v1ConnectionKindEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1ConnectionKindEnum, true); err != nil {
 		return err
 	}
 	return nil

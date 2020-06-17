@@ -62,7 +62,7 @@ func init() {
 }
 
 func (m V1EventChartKind) validateV1EventChartKindEnum(path, location string, value V1EventChartKind) error {
-	if err := validate.Enum(path, location, value, v1EventChartKindEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1EventChartKindEnum, true); err != nil {
 		return err
 	}
 	return nil

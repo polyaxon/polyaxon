@@ -58,7 +58,7 @@ func init() {
 }
 
 func (m V1Optimization) validateV1OptimizationEnum(path, location string, value V1Optimization) error {
-	if err := validate.Enum(path, location, value, v1OptimizationEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1OptimizationEnum, true); err != nil {
 		return err
 	}
 	return nil

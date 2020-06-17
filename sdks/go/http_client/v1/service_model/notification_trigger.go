@@ -61,7 +61,7 @@ func init() {
 }
 
 func (m NotificationTrigger) validateNotificationTriggerEnum(path, location string, value NotificationTrigger) error {
-	if err := validate.Enum(path, location, value, notificationTriggerEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, notificationTriggerEnum, true); err != nil {
 		return err
 	}
 	return nil

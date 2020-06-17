@@ -55,7 +55,7 @@ func init() {
 }
 
 func (m V1PipelineKind) validateV1PipelineKindEnum(path, location string, value V1PipelineKind) error {
-	if err := validate.Enum(path, location, value, v1PipelineKindEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1PipelineKindEnum, true); err != nil {
 		return err
 	}
 	return nil

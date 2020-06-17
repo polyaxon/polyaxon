@@ -97,7 +97,7 @@ func init() {
 }
 
 func (m V1RunKind) validateV1RunKindEnum(path, location string, value V1RunKind) error {
-	if err := validate.Enum(path, location, value, v1RunKindEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1RunKindEnum, true); err != nil {
 		return err
 	}
 	return nil

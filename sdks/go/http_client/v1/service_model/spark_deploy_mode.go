@@ -58,7 +58,7 @@ func init() {
 }
 
 func (m SparkDeployMode) validateSparkDeployModeEnum(path, location string, value SparkDeployMode) error {
-	if err := validate.Enum(path, location, value, sparkDeployModeEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, sparkDeployModeEnum, true); err != nil {
 		return err
 	}
 	return nil

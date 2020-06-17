@@ -62,7 +62,7 @@ func init() {
 }
 
 func (m V1EventCurveKind) validateV1EventCurveKindEnum(path, location string, value V1EventCurveKind) error {
-	if err := validate.Enum(path, location, value, v1EventCurveKindEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1EventCurveKindEnum, true); err != nil {
 		return err
 	}
 	return nil

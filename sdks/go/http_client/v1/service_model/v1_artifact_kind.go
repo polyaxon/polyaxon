@@ -150,7 +150,7 @@ func init() {
 }
 
 func (m V1ArtifactKind) validateV1ArtifactKindEnum(path, location string, value V1ArtifactKind) error {
-	if err := validate.Enum(path, location, value, v1ArtifactKindEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1ArtifactKindEnum, true); err != nil {
 		return err
 	}
 	return nil

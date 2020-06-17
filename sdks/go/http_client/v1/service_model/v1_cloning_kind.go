@@ -61,7 +61,7 @@ func init() {
 }
 
 func (m V1CloningKind) validateV1CloningKindEnum(path, location string, value V1CloningKind) error {
-	if err := validate.Enum(path, location, value, v1CloningKindEnum); err != nil {
+	if err := validate.EnumCase(path, location, value, v1CloningKindEnum, true); err != nil {
 		return err
 	}
 	return nil
