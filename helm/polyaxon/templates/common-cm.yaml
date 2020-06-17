@@ -33,9 +33,7 @@ data:
   {{- end }}
   POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
   POLYAXON_K8S_APP_SECRET_NAME: {{ template "polyaxon.fullname" . }}-secret
-  {{- if .Values.logLevel }}
-  POLYAXON_LOG_LEVEL: {{ default "WARNING" .Values.logLevel | quote }}
-  {{- end }}
+  POLYAXON_LOG_LEVEL: {{ default "WARN" .Values.logLevel | quote }}
   POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
   POLYAXON_TIME_ZONE: {{ .Values.timezone | quote }}
   # Versions
