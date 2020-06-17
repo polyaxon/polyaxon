@@ -7,7 +7,7 @@ jobs:
 #    if: github.event.comment.body == 'test platform'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2.3.0
     - name: build
       run: |
         cmd/rebuild/npm-base
