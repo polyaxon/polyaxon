@@ -11,7 +11,19 @@
 [![Polyaxon Api](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Api/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Api%22)
 [![Polyaxon scheduler](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20scheduler/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Scheduler%22)
 
-# Polyaxon
+<br>
+<p align="center">
+  <p align="center">
+    <a href="https://polyaxon.com/?utm_source=github&utm_medium=logo" target="_blank">
+      <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/logo/vector/primary-white-default-monochrome.svg" alt="polyaxon" height="100">
+    </a>
+  </p>
+  <p align="center">
+    Reproduce, Automate, Scale your data science.
+  </p>
+</p>
+<br>
+
 
 Welcome to Polyaxon, a platform for building, training, and monitoring large scale deep learning applications.
 We are making a system to solve reproducibility, automation, and scalability for machine learning applications.
@@ -19,6 +31,14 @@ We are making a system to solve reproducibility, automation, and scalability for
 Polyaxon deploys into any data center, cloud provider, or can be hosted and managed by Polyaxon, and it supports all the major deep learning frameworks such as Tensorflow, MXNet, Caffe, Torch, etc.
 
 Polyaxon makes it faster, easier, and more efficient to develop deep learning applications by managing workloads with smart container and node management. And it turns GPU servers into shared, self-service resources for your team or organization.
+
+<br>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/compare.png" alt="compare" width="400">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/dashboards.png" alt="dashboards" width="400">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/tensorboard.png" alt="tensorboard" width="400">
+</p>
+<br>
 
 # Install
 
@@ -153,13 +173,6 @@ To start the dashboard, just run the following command in your terminal
 ```bash
 $ polyaxon dashboard -y
 ```
-
-![compare](artifacts/compare.png)
-
-![dashboards](artifacts/dashboards.png)
-
-![tensorboard](artifacts/tensorboard.png)
-
 
 # Project status
 
