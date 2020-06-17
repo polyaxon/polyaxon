@@ -42,9 +42,13 @@ def set_celery(context, config: ConfigManager, routes: Dict):
         "POLYAXON_INTERNAL_EXCHANGE", is_optional=True, default="internal"
     )
 
-    context["CELERY_RESULT_BACKEND"] = config.get_redis_url(
-        "POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL"
+    result_bucked = config.get_string(
+        "POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL", is_optional=True,
     )
+    if result_bucked:
+        context["CELERY_RESULT_BACKEND"] = config.get_redis_url(
+            "POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL"
+        )
 
     context["CELERY_WORKER_PREFETCH_MULTIPLIER"] = config.get_int(
         "POLYAXON_CELERY_WORKER_PREFETCH_MULTIPLIER", is_optional=True, default=4
