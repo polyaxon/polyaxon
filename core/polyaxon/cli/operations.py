@@ -24,7 +24,6 @@ from urllib3.exceptions import HTTPError
 from polyaxon import settings
 from polyaxon.api import REWRITE_SERVICES_V1, SERVICES_V1
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.cli.upload import upload
 from polyaxon.client import RunClient
 from polyaxon.client.run import get_run_logs
 from polyaxon.config_reader.spec import ConfigSpec
@@ -418,12 +417,9 @@ def stop(ctx, yes):
     type=click.Path(exists=True),
     help="The polyaxonfiles to update with.",
 )
-@click.option(
-    "-u", is_flag=True, default=False, help="To upload the repo before restarting."
-)
 @click.pass_context
 @clean_outputs
-def restart(ctx, copy, polyaxonfile, u):
+def restart(ctx, copy, polyaxonfile):
     """Restart run.
 
     Uses /docs/core/cli/#caching
@@ -436,10 +432,6 @@ def restart(ctx, copy, polyaxonfile, u):
     content = None
     if polyaxonfile:
         content = "{}".format(ConfigSpec.read_from(polyaxonfile))
-
-    # Check if we need to upload
-    if u:
-        ctx.invoke(upload, sync=False)
 
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
@@ -468,12 +460,9 @@ def restart(ctx, copy, polyaxonfile, u):
     type=click.Path(exists=True),
     help="The polyaxonfiles to update with.",
 )
-@click.option(
-    "-u", is_flag=True, default=False, help="To upload the repo before resuming."
-)
 @click.pass_context
 @clean_outputs
-def resume(ctx, polyaxonfile, u):
+def resume(ctx, polyaxonfile):
     """Resume run.
 
     Uses /docs/core/cli/#caching
@@ -486,10 +475,6 @@ def resume(ctx, polyaxonfile, u):
     content = None
     if polyaxonfile:
         content = "{}".format(ConfigSpec.read_from(polyaxonfile))
-
-    # Check if we need to upload
-    if u:
-        ctx.invoke(upload, sync=False)
 
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,

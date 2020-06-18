@@ -16,7 +16,7 @@
 
 import sys
 
-from typing import Callable, List
+from typing import List
 
 import click
 
@@ -27,7 +27,6 @@ from urllib3.exceptions import HTTPError
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.operations import logs as run_logs
 from polyaxon.cli.operations import statuses
-from polyaxon.cli.upload import upload as upload_cmd
 from polyaxon.client import PolyaxonClient
 from polyaxon.managers.run import RunManager
 from polyaxon.polyflow import V1Operation
@@ -43,10 +42,8 @@ def run(
     description: str,
     tags: List[str],
     op_spec: V1Operation,
-    upload: Callable,
     log: bool,
     watch: bool,
-    can_upload: bool,
 ):
     def create_run():
         click.echo("Creating a run.")
@@ -65,18 +62,6 @@ def run(
         except (ApiException, HTTPError) as e:
             handle_cli_error(e, message="Could not create a run.")
             sys.exit(1)
-
-    # Check if we need to upload
-    if upload:
-        if can_upload:
-            Printer.print_error(
-                "Uploading is not supported when switching project context!"
-            )
-            click.echo(
-                "Please, either omit the `-u` option or `-p` / `--project=` option."
-            )
-            sys.exit(1)
-        ctx.invoke(upload_cmd, sync=False)
 
     create_run()
 

@@ -66,13 +66,6 @@ from polyaxon.utils.validation import validate_tags
 @click.option("--tags", type=str, help="Tags of this run, comma separated values.")
 @click.option("--description", type=str, help="The description to give to this run.")
 @click.option(
-    "--upload",
-    "-u",
-    is_flag=True,
-    default=False,
-    help="To upload the repo before running.",
-)
-@click.option(
     "--log",
     "-l",
     is_flag=True,
@@ -120,7 +113,6 @@ def run(
     name,
     tags,
     description,
-    upload,
     log,
     watch,
     local,
@@ -137,15 +129,10 @@ def run(
     \b
     $ polyaxon run -f file -f file_override ...
 
-    Upload before running
-
-    \b
-    $ polyaxon run -f file -u
-
     Run and set description and tags for this run
 
     \b
-    $ polyaxon run -f file -u --description="Description of the current run" --tags="foo, bar, moo"
+    $ polyaxon run -f file --description="Description of the current run" --tags="foo, bar, moo"
 
     Run and set a unique name for this run
 
@@ -219,9 +206,7 @@ def run(
             description=description,
             tags=tags,
             op_spec=op_spec,
-            upload=upload,
             log=log,
-            can_upload=all([upload, project]),
         )
     else:
         platform_run(
@@ -232,8 +217,6 @@ def run(
             description=description,
             tags=tags,
             op_spec=op_spec,
-            upload=upload,
             log=log,
             watch=watch,
-            can_upload=all([upload, project]),
         )

@@ -33,7 +33,6 @@ from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
 from polyaxon.cli.run import run
-from polyaxon.cli.upload import upload
 from polyaxon.cli.version import check_cli_version, upgrade, version
 from polyaxon.logger import clean_outputs, configure_logger
 from polyaxon.managers.client import ClientConfigManager
@@ -118,7 +117,6 @@ cli.add_command(check)
 cli.add_command(init)
 cli.add_command(project)
 cli.add_command(ops)
-cli.add_command(upload)
 cli.add_command(run)
 cli.add_command(dashboard)
 cli.add_command(admin)

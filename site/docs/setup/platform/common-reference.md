@@ -1,8 +1,8 @@
 ---
 title: "Common Helm Reference"
 sub_link: "platform/reference"
-meta_title: "Polyaxon Agent Helm Reference - Polyaxon References"
-meta_description: "Polyaxon Agent chart is a Helm chart for creating reproducible and maintainable deployments of Polyaxon with Kubernetes."
+meta_title: "Common Helm Reference For Polyaxon CE and EE - Polyaxon References"
+meta_description: "Polyaxon Common Helm Reference For Polyaxon CE and EE charts."
 visibility: public
 status: published
 tags:

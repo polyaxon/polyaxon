@@ -14,31 +14,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
 
-import click
-
-from polyaxon.cli.errors import handle_cli_error
-from polyaxon.client import PolyaxonClient
-from polyaxon.exceptions import (
-    PolyaxonClientException,
-    PolyaxonHTTPError,
-    PolyaxonShouldExitError,
-)
-from polyaxon.logger import clean_outputs
-from polyaxon.managers.ignore import IgnoreManager
-from polyaxon.managers.project import ProjectManager
-from polyaxon.utils.formatting import Printer
-from polyaxon.utils.path_utils import create_project_tarfile, get_files_by_paths
-
-
-@click.command()
-@clean_outputs
-def upload(sync=True):  # pylint:disable=assign-to-new-keyword
+def upload():
     """N.B. This is not available in all distributions.
 
     Upload code of the current directory while respecting the .polyaxonignore file.
     """
+    import sys
+
+    from polyaxon.cli.errors import handle_cli_error
+    from polyaxon.client import PolyaxonClient
+    from polyaxon.exceptions import (
+        PolyaxonClientException,
+        PolyaxonHTTPError,
+        PolyaxonShouldExitError,
+    )
+    from polyaxon.managers.ignore import IgnoreManager
+    from polyaxon.managers.project import ProjectManager
+    from polyaxon.utils.formatting import Printer
+    from polyaxon.utils.path_utils import create_project_tarfile, get_files_by_paths
+
     project = ProjectManager.get_config_or_raise()
     files = IgnoreManager.get_unignored_filepaths()
     try:

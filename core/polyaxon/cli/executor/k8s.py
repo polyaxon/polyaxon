@@ -16,7 +16,7 @@
 
 import sys
 
-from typing import Callable, List
+from typing import List
 
 import click
 
@@ -44,9 +44,7 @@ def run(
     description: str,
     tags: List[str],
     op_spec: V1Operation,
-    upload: Callable,
     log: bool,
-    can_upload: bool,
 ):
     if not settings.CLIENT_CONFIG.set_polypod:
         Printer.print_warning("Polypod not configured!")
