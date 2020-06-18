@@ -17,6 +17,7 @@
 import os
 
 from collections import Mapping
+from typing import Callable, Optional
 
 import ujson
 
@@ -28,11 +29,36 @@ from polyaxon.schemas.base import BaseConfig
 class BaseConfigManager:
     """Base class for managing a configuration file."""
 
-    IS_GLOBAL = False
+    VISIBILITY_GLOBAL = "global"
+    VISIBILITY_LOCAL = "local"
+    VISIBILITY_ALL = "all"
+    VISIBILITY_PATH = "path"
+
+    VISIBILITY = None
     IS_POLYAXON_DIR = False
     CONFIG_PATH = None
     CONFIG_FILE_NAME = None
     CONFIG = None
+
+    @classmethod
+    def is_global(cls, visibility=None):
+        visibility = visibility or cls.VISIBILITY
+        return visibility == cls.VISIBILITY_GLOBAL
+
+    @classmethod
+    def is_local(cls, visibility=None):
+        visibility = visibility or cls.VISIBILITY
+        return visibility == cls.VISIBILITY_LOCAL
+
+    @classmethod
+    def is_all_visibility(cls, visibility=None):
+        visibility = visibility or cls.VISIBILITY
+        return visibility == cls.VISIBILITY_ALL
+
+    @classmethod
+    def is_path_visibility(cls, visibility=None):
+        visibility = visibility or cls.VISIBILITY
+        return visibility == cls.VISIBILITY_PATH
 
     @staticmethod
     def _create_dir(dir_path):
@@ -45,37 +71,96 @@ class BaseConfigManager:
                 logger.error("Could not create config directory `%s`", dir_path)
 
     @classmethod
-    def get_config_filepath(cls, create=True):
-        if not cls.IS_GLOBAL:
-            # local to this directory
+    def create_config_filepath(cls, visibility=None):
+        if cls.is_local(visibility):
+            # Local to this directory
             base_path = os.path.join(".")
             if cls.IS_POLYAXON_DIR:
                 # Add it to the current "./.polyaxon"
                 base_path = os.path.join(base_path, ".polyaxon")
-                if create:
-                    cls._create_dir(base_path)
-        elif cls.CONFIG_PATH:  # Custom path
-            base_path = cls.CONFIG_PATH
-        else:
-            base_path = polyaxon_user_path()
-            if create:
                 cls._create_dir(base_path)
-
-        return os.path.join(base_path, cls.CONFIG_FILE_NAME)
+        elif cls.CONFIG_PATH:  # Custom path
+            pass
+        else:  # Handle both global and all cases
+            base_path = polyaxon_user_path()
+            cls._create_dir(base_path)
 
     @classmethod
-    def init_config(cls):
+    def get_local_config_path(cls) -> str:
+        # local to this directory
+        base_path = os.path.join(".")
+        if cls.IS_POLYAXON_DIR:
+            # Add it to the current "./.polyaxon"
+            base_path = os.path.join(base_path, ".polyaxon")
+        config_path = os.path.join(base_path, cls.CONFIG_FILE_NAME)
+        return config_path
+
+    @staticmethod
+    def _get_and_check_path(fct: Callable) -> Optional[str]:
+        config_path = fct()
+        if config_path and os.path.exists(config_path):
+            return config_path
+        return None
+
+    @classmethod
+    def check_local_config_path(cls) -> Optional[str]:
+        return cls._get_and_check_path(cls.get_local_config_path)
+
+    @classmethod
+    def get_global_config_path(cls) -> str:
+        base_path = polyaxon_user_path()
+        config_path = os.path.join(base_path, cls.CONFIG_FILE_NAME)
+        return config_path
+
+    @classmethod
+    def check_global_config_path(cls) -> Optional[str]:
+        return cls._get_and_check_path(cls.get_global_config_path)
+
+    @classmethod
+    def get_custom_config_path(cls) -> str:
+        config_path = os.path.join(cls.CONFIG_PATH, cls.CONFIG_FILE_NAME)
+        return config_path
+
+    @classmethod
+    def check_custom_config_path(cls) -> Optional[str]:
+        return cls._get_and_check_path(cls.get_custom_config_path)
+
+    @classmethod
+    def get_config_filepath(cls, create=True, visibility=None):
+        if create:
+            cls.create_config_filepath(visibility=visibility)
+
+        if cls.is_local(visibility):
+            return cls.get_local_config_path()
+        if cls.is_path_visibility(visibility):
+            return cls.get_custom_config_path()
+        if cls.is_global(visibility):
+            return cls.get_global_config_path()
+        if cls.is_all_visibility(visibility):
+            config_path = cls.check_local_config_path()
+            if config_path:
+                return config_path
+            return cls.get_global_config_path()
+
+        return None
+
+    @classmethod
+    def init_config(cls, visibility=None):
         config = cls.get_config()
-        cls.set_config(config, init=True)
+        cls.set_config(config, init=True, visibility=visibility)
+
+    @classmethod
+    def is_locally_initialized(cls):
+        return cls.check_local_config_path()
 
     @classmethod
     def is_initialized(cls):
-        config_filepath = cls.get_config_filepath(False)
-        return os.path.isfile(config_filepath)
+        config_filepath = cls.get_config_filepath(create=False)
+        return config_filepath and os.path.isfile(config_filepath)
 
     @classmethod
-    def set_config(cls, config, init=False):
-        config_filepath = cls.get_config_filepath()
+    def set_config(cls, config, init=False, visibility=None):
+        config_filepath = cls.get_config_filepath(visibility=visibility)
 
         if os.path.isfile(config_filepath) and init:
             logger.debug(
@@ -130,10 +215,26 @@ class BaseConfigManager:
         return None
 
     @classmethod
-    def purge(cls):
-        config_filepath = cls.get_config_filepath()
+    def purge(cls, visibility=None):
+        def _purge():
+            if config_filepath and os.path.isfile(config_filepath):
+                os.remove(config_filepath)
 
-        if not os.path.isfile(config_filepath):
-            return
-
-        os.remove(config_filepath)
+        if cls.is_all_visibility():
+            if visibility:
+                config_filepath = cls.get_config_filepath(
+                    create=False, visibility=visibility
+                )
+                _purge()
+            else:
+                config_filepath = cls.get_config_filepath(
+                    create=False, visibility=cls.VISIBILITY_LOCAL
+                )
+                _purge()
+                config_filepath = cls.get_config_filepath(
+                    create=False, visibility=cls.VISIBILITY_GLOBAL
+                )
+                _purge()
+        else:
+            config_filepath = cls.get_config_filepath(create=False)
+            _purge()

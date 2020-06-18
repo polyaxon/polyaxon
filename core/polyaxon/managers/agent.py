@@ -29,7 +29,7 @@ from polyaxon.schemas.cli.agent_config import AgentConfig
 class AgentManager(BaseConfigManager):
     """Manages agent configuration .agent file."""
 
-    IS_GLOBAL = True
+    VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL
     CONFIG_FILE_NAME = ".agent"
     CONFIG = AgentConfig
 

@@ -26,10 +26,10 @@ from polyaxon.schemas.cli.client_config import ClientConfig
 
 
 class ClientConfigManager(BaseConfigManager):
-    """Manages client configuration .polyaxonclient file."""
+    """Manages client configuration .client file."""
 
-    IS_GLOBAL = True
-    CONFIG_FILE_NAME = ".polyaxonclient"
+    VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL
+    CONFIG_FILE_NAME = ".client"
     CONFIG = ClientConfig
 
     @classmethod

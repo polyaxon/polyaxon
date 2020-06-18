@@ -25,7 +25,7 @@ from polyaxon.schemas.cli.agent_config import AgentConfig
 @pytest.mark.managers_mark
 class TestAgentConfigManager(BaseTestCase):
     def test_default_props(self):
-        assert AgentManager.IS_GLOBAL is True
+        assert AgentManager.is_global() is True
         assert AgentManager.CONFIG_PATH is None
         assert AgentManager.IS_POLYAXON_DIR is False
         assert AgentManager.CONFIG_FILE_NAME == ".agent"

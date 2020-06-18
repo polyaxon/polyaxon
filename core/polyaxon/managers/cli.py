@@ -21,10 +21,10 @@ from polyaxon.schemas.cli.cli_config import CliConfigurationConfig
 
 
 class CliConfigManager(BaseConfigManager):
-    """Manages access cli configuration .polyaxoncli file."""
+    """Manages access cli configuration .cli file."""
 
-    IS_GLOBAL = True
-    CONFIG_FILE_NAME = ".polyaxoncli"
+    VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL
+    CONFIG_FILE_NAME = ".cli"
     CONFIG = CliConfigurationConfig
     FREQUENCY = 3
 

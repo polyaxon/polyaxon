@@ -31,9 +31,7 @@ from polyaxon.schemas.cli.client_config import ClientConfig
 class TestPolyaxonClient(BaseTestCase):
     def setUp(self):
         super().setUp()
-        settings.CONTEXT_AUTH_TOKEN_PATH = "{}/{}".format(
-            tempfile.mkdtemp(), ".polyaxonauth"
-        )
+        settings.CONTEXT_AUTH_TOKEN_PATH = "{}/{}".format(tempfile.mkdtemp(), ".auth")
 
     def test_client_services(self):
         settings.AUTH_CONFIG.token = None

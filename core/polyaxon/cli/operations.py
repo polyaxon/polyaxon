@@ -253,7 +253,9 @@ def get(ctx):
         config = polyaxon_client.client.sanitize_for_serialization(
             polyaxon_client.run_data
         )
-        cache.cache(config_manager=RunManager, config=config)
+        cache.cache(
+            config_manager=RunManager, config=config, owner=owner, project=project_name
+        )
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not load run `{}` info.".format(run_uuid))
         sys.exit(1)

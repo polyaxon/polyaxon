@@ -28,7 +28,7 @@ class TestIgnoreManager(BaseTestCase):
     """Mock the config ignore file."""
 
     def test_default_props(self):
-        assert IgnoreManager.IS_GLOBAL is False
+        assert IgnoreManager.is_global() is False
         assert IgnoreManager.IS_POLYAXON_DIR is False
         assert IgnoreManager.CONFIG_FILE_NAME == ".polyaxonignore"
         assert IgnoreManager.CONFIG is None

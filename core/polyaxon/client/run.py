@@ -288,6 +288,7 @@ class RunClient:
         )
         self._create(data=data, async_req=False)
         self._post_create()
+        return self.run_data
 
     @check_no_op
     @check_offline

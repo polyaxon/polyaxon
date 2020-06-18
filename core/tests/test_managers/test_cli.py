@@ -29,9 +29,9 @@ from polyaxon.schemas.cli.cli_config import CliConfigurationConfig
 @pytest.mark.managers_mark
 class TestCliConfigManager(BaseTestCase):
     def test_default_props(self):
-        assert CliConfigManager.IS_GLOBAL is True
+        assert CliConfigManager.is_global() is True
         assert CliConfigManager.IS_POLYAXON_DIR is False
-        assert CliConfigManager.CONFIG_FILE_NAME == ".polyaxoncli"
+        assert CliConfigManager.CONFIG_FILE_NAME == ".cli"
         assert CliConfigManager.CONFIG == CliConfigurationConfig
         assert CliConfigManager.FREQUENCY == 3
 

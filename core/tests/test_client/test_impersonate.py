@@ -32,7 +32,7 @@ class TestImpersonate(BaseTestCase):
     def test_create_context_auth(self):
         token = uuid.uuid4().hex
         context_mount = tempfile.mkdtemp()
-        context_mount_auth = "{}/.polyaxonauth".format(context_mount)
+        context_mount_auth = "{}/.auth".format(context_mount)
 
         # Login without updating the token and without persistence
         if os.path.exists(context_mount_auth):

@@ -23,11 +23,11 @@ from polyaxon.utils.formatting import Printer
 
 
 class RunManager(BaseConfigManager):
-    """Manages run configuration .polyaxonrun file."""
+    """Manages run configuration .run file."""
 
-    IS_GLOBAL = True
+    VISIBILITY = BaseConfigManager.VISIBILITY_ALL
     IS_POLYAXON_DIR = True
-    CONFIG_FILE_NAME = ".polyaxonrun"
+    CONFIG_FILE_NAME = ".run"
     CONFIG = V1Run
 
     @classmethod

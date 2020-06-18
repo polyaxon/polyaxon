@@ -25,7 +25,8 @@ from polyaxon.schemas.api.authentication import AccessTokenConfig
 @pytest.mark.managers_mark
 class TestAuthConfigManager(BaseTestCase):
     def test_default_props(self):
-        assert AuthConfigManager.IS_GLOBAL is True
+        assert AuthConfigManager.is_global() is True
+        assert AuthConfigManager.is_local() is False
         assert AuthConfigManager.IS_POLYAXON_DIR is False
-        assert AuthConfigManager.CONFIG_FILE_NAME == ".polyaxonauth"
+        assert AuthConfigManager.CONFIG_FILE_NAME == ".auth"
         assert AuthConfigManager.CONFIG == AccessTokenConfig

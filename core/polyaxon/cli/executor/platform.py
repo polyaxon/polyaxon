@@ -20,14 +20,13 @@ from typing import List
 
 import click
 
-from polyaxon_sdk import V1OperationBody
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.operations import logs as run_logs
 from polyaxon.cli.operations import statuses
-from polyaxon.client import PolyaxonClient
+from polyaxon.client import RunClient
 from polyaxon.managers.run import RunManager
 from polyaxon.polyflow import V1Operation
 from polyaxon.utils import cache
@@ -47,17 +46,18 @@ def run(
 ):
     def create_run():
         click.echo("Creating a run.")
-        body = V1OperationBody(
-            name=name,
-            description=description,
-            tags=tags,
-            content=op_spec.to_dict(dump=True),
-        )
         try:
-            polyaxon_client = PolyaxonClient()
-            response = polyaxon_client.runs_v1.create_run(owner, project_name, body)
-            config = polyaxon_client.sanitize_for_serialization(response)
-            cache.cache(config_manager=RunManager, config=config)
+            polyaxon_client = RunClient(owner=owner, project=project_name)
+            response = polyaxon_client.create(
+                name=name, description=description, tags=tags, content=op_spec
+            )
+            config = polyaxon_client.client.sanitize_for_serialization(response)
+            cache.cache(
+                config_manager=RunManager,
+                config=config,
+                owner=owner,
+                project=project_name,
+            )
             Printer.print_success("A new run `{}` was created".format(response.uuid))
         except (ApiException, HTTPError) as e:
             handle_cli_error(e, message="Could not create a run.")

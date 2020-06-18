@@ -23,7 +23,7 @@ from polyaxon.schemas.cli.proxies_config import ProxiesConfig
 class ProxiesManager(BaseConfigManager):
     """Manages proxies configuration file."""
 
-    IS_GLOBAL = True
+    VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL
     CONFIG_FILE_NAME = ".proxies"
     CONFIG = ProxiesConfig
 

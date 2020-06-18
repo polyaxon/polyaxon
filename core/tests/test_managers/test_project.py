@@ -25,7 +25,7 @@ from polyaxon.managers.project import ProjectManager
 @pytest.mark.managers_mark
 class TestProjectManager(BaseTestCase):
     def test_default_props(self):
-        assert ProjectManager.IS_GLOBAL is True
+        assert ProjectManager.is_all_visibility() is True
         assert ProjectManager.IS_POLYAXON_DIR is True
-        assert ProjectManager.CONFIG_FILE_NAME == ".polyaxonproject"
+        assert ProjectManager.CONFIG_FILE_NAME == ".project"
         assert ProjectManager.CONFIG == V1Project

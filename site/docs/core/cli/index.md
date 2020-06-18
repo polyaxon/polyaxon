@@ -58,11 +58,11 @@ you can always specify the values for these options, example:
  * `$ polyaxon ops --project=user_1/project_10 --uid=UUID get`
 
 
-Polyaxon CLI allows also you to omit these options, i.e. project, experiment group, experiment, and job, the CLI does the following:
+Polyaxon CLI allows also you to omit these options for project and runs, the CLI does the following:
 
- 1. When a username is missing, the username of the logged-in user is used.
+ 1. When an username is missing, the username of the logged-in user is used, if no use is found the default owner is used.
  2. When a project name is missing, the name of the currently initialized project is used.
- 3. When an experiment group, experiment, or job is missing, the last value is used.
+ 3. When a run is missing, the last value is used.
  4. If no values are found, the CLI will show an error.
 
 All commands and sub-command of `project` and `ops` support caching:
@@ -73,6 +73,18 @@ All commands and sub-command of `project` and `ops` support caching:
  * `$ polyaxon ops get`
  * `$ polyaxon ops logs`
  * ...
+ 
+## Caching visibility
+
+By default Polyaxon will cache all information on the global path, if you want to enable caching on local project folder(s), you can se the init command:
+
+```bash
+$ polyaxon init PROJECT_NAME
+``` 
+
+This will create a local cache folder for the project and it's runs.
+
+Anytime you use the cli, it will look first locally, then default to global path.
 
 ## Switching context
 

@@ -23,7 +23,7 @@ from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.client import PolyaxonClient
+from polyaxon.client import ProjectClient
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.ignore import IgnoreManager
@@ -96,8 +96,8 @@ def init(project, polyaxonfile, purge):
     """Initialize a new polyaxonfile specification."""
     owner, project_name = get_project_or_local(project, is_cli=True)
     try:
-        polyaxon_client = PolyaxonClient()
-        project_config = polyaxon_client.projects_v1.get_project(owner, project_name)
+        polyaxon_client = ProjectClient(owner=owner, project=project_name)
+        polyaxon_client.refresh_data()
     except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Make sure you have a project with this name `{}`".format(project)
@@ -130,9 +130,13 @@ def init(project, polyaxonfile, purge):
         init_project = True
 
     if init_project:
-        ProjectManager.purge()
-        config = polyaxon_client.sanitize_for_serialization(project_config)
-        ProjectManager.set_config(config, init=True)
+        ProjectManager.purge(visibility=ProjectManager.VISIBILITY_LOCAL)
+        config = polyaxon_client.client.sanitize_for_serialization(
+            polyaxon_client.project_data
+        )
+        ProjectManager.set_config(
+            config, init=True, visibility=ProjectManager.VISIBILITY_LOCAL
+        )
         Printer.print_success("Project was initialized")
     else:
         Printer.print_header("Project config was not changed.")

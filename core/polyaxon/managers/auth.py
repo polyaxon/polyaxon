@@ -27,10 +27,10 @@ from polyaxon.schemas.api.authentication import AccessTokenConfig
 
 
 class AuthConfigManager(BaseConfigManager):
-    """Manages access token configuration .polyaxonauth file."""
+    """Manages access token configuration .auth file."""
 
-    IS_GLOBAL = True
-    CONFIG_FILE_NAME = ".polyaxonauth"
+    VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL
+    CONFIG_FILE_NAME = ".auth"
     CONFIG = AccessTokenConfig
 
     @classmethod

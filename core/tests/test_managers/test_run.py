@@ -25,7 +25,7 @@ from polyaxon.managers.run import RunManager
 @pytest.mark.managers_mark
 class TestRunManager(BaseTestCase):
     def test_default_props(self):
-        assert RunManager.IS_GLOBAL is True
+        assert RunManager.is_all_visibility() is True
         assert RunManager.IS_POLYAXON_DIR is True
-        assert RunManager.CONFIG_FILE_NAME == ".polyaxonrun"
+        assert RunManager.CONFIG_FILE_NAME == ".run"
         assert RunManager.CONFIG == V1Run

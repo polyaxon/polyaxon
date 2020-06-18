@@ -108,9 +108,9 @@ def translate(pat):
 
 
 class IgnoreManager(BaseConfigManager):
-    """Manages .plxignore file in the current directory"""
+    """Manages .polyaxonignore file in the current directory"""
 
-    IS_GLOBAL = False
+    VISIBILITY = BaseConfigManager.VISIBILITY_LOCAL
     CONFIG_FILE_NAME = ".polyaxonignore"
 
     @staticmethod

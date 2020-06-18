@@ -20,7 +20,7 @@ from polyaxon.managers.base import BaseConfigManager
 class ComposeConfigManager(BaseConfigManager):
     """Manages access cli configuration .compose file."""
 
-    IS_GLOBAL = True
+    VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL
     CONFIG_FILE_NAME = ".compose/.env"
     FREQUENCY = 3
 
