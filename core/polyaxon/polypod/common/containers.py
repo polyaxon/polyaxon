@@ -16,6 +16,7 @@
 
 from typing import List
 
+from polyaxon.containers.names import generate_container_name
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.container_resources import sanitize_resources
 from polyaxon.utils.list_utils import to_list
@@ -63,4 +64,16 @@ def patch_container(
     if container.args:
         container.args = [c for c in to_list(container.args, check_none=True) if c]
 
+    return container
+
+
+def ensure_container_name(
+    container: k8s_schemas.V1Container, prefix: str = None
+) -> k8s_schemas.V1Container:
+    if not container:
+        return container
+
+    name = container.name
+    if not name:
+        container.name = generate_container_name(prefix=prefix)
     return container

@@ -20,7 +20,10 @@ from typing import List, Optional
 
 from polyaxon.containers.containers import V1PolyaxonInitContainer
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
-from polyaxon.containers.names import INIT_ARTIFACTS_CONTAINER
+from polyaxon.containers.names import (
+    INIT_ARTIFACTS_CONTAINER_PREFIX,
+    generate_container_name,
+)
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
@@ -206,7 +209,9 @@ def get_store_container(
     env: List[k8s_schemas.V1EnvVar] = None,
     mount_path: str = None,
 ) -> Optional[k8s_schemas.V1Container]:
-    container_name = INIT_ARTIFACTS_CONTAINER.format(connection.name)
+    container_name = generate_container_name(
+        INIT_ARTIFACTS_CONTAINER_PREFIX, connection.name
+    )
     if not container:
         container = k8s_schemas.V1Container(name=container_name)
 

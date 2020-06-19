@@ -25,11 +25,13 @@ from polyaxon.containers.containers import (
     V1PolyaxonInitContainer,
     V1PolyaxonSidecarContainer,
 )
+from polyaxon.containers.names import INIT_PREFIX, SIDECAR_PREFIX
 from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_API
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.k8s.custom_resources.operation import get_resource_name, get_run_instance
 from polyaxon.polyflow import V1Environment, V1Init, V1Plugins
+from polyaxon.polypod.common.containers import ensure_container_name
 from polyaxon.polypod.common.env_vars import get_env_var, get_service_env_vars
 from polyaxon.polypod.common.mounts import get_mounts
 from polyaxon.polypod.init.artifacts import get_artifacts_path_container
@@ -221,6 +223,10 @@ class BaseConverter(ConverterAbstract):
         artifacts_store: V1ConnectionType,
         sidecar_containers: List[k8s_schemas.V1Container],
     ) -> List[k8s_schemas.V1Container]:
+        sidecar_containers = [
+            ensure_container_name(container=c, prefix=SIDECAR_PREFIX)
+            for c in to_list(sidecar_containers, check_none=True)
+        ]
         polyaxon_sidecar_container = get_sidecar_container(
             polyaxon_sidecar=polyaxon_sidecar,
             env=self.get_polyaxon_sidecar_service_env_vars(),
@@ -229,7 +235,7 @@ class BaseConverter(ConverterAbstract):
             run_path=self.run_path,
         )
         containers = to_list(polyaxon_sidecar_container, check_none=True)
-        containers += to_list(sidecar_containers, check_none=True)
+        containers += sidecar_containers
         return containers
 
     def handle_init_connections(
@@ -314,8 +320,11 @@ class BaseConverter(ConverterAbstract):
         init_containers: List[k8s_schemas.V1Container],
         connection_by_names: Dict[str, V1ConnectionType],
     ) -> List[k8s_schemas.V1Container]:
-        init_containers = init_containers or []
-        init_connections = init_connections or []
+        init_containers = [
+            ensure_container_name(container=c, prefix=INIT_PREFIX)
+            for c in to_list(init_containers, check_none=True)
+        ]
+        init_connections = to_list(init_connections, check_none=True)
         containers = []
 
         # Add auth context

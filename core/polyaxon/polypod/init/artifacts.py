@@ -22,7 +22,10 @@ from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS,
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
 )
-from polyaxon.containers.names import INIT_ARTIFACTS_CONTAINER
+from polyaxon.containers.names import (
+    INIT_ARTIFACTS_CONTAINER_PREFIX,
+    generate_container_name,
+)
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.mounts import get_artifacts_context_mount
@@ -73,7 +76,7 @@ def get_artifacts_path_container(
             )
         )
 
-    container_name = INIT_ARTIFACTS_CONTAINER.format(DEFAULT)
+    container_name = generate_container_name(INIT_ARTIFACTS_CONTAINER_PREFIX, DEFAULT)
     container = k8s_schemas.V1Container(name=container_name)
 
     return get_base_store_container(

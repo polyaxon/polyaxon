@@ -14,13 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
-
 import polyaxon_sdk
 
 from marshmallow import ValidationError, fields, validates_schema
 
-from polyaxon.containers.names import INIT_CONTAINER
+from polyaxon.containers.names import generate_container_name, POLYAXON_INIT_PREFIX
 from polyaxon.k8s import k8s_schemas
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.swagger import SwaggerField
@@ -39,7 +37,7 @@ class InitSchema(BaseCamelSchema):
     path = fields.Str(allow_none=True)
     container = SwaggerField(
         cls=k8s_schemas.V1Container,
-        defaults={"name": INIT_CONTAINER.format(random.randint(1, 100))},
+        defaults={"name": generate_container_name(prefix=POLYAXON_INIT_PREFIX)},
         allow_none=True,
     )
 

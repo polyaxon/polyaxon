@@ -29,7 +29,10 @@ from polyaxon.connections.schemas import (
 )
 from polyaxon.containers.containers import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
-from polyaxon.containers.names import INIT_ARTIFACTS_CONTAINER
+from polyaxon.containers.names import (
+    INIT_ARTIFACTS_CONTAINER_PREFIX,
+    generate_container_name,
+)
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
@@ -479,7 +482,9 @@ class TestInitStore(BaseTestCase):
             artifacts=None,
         )
         mount_path = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(store.name)
-        assert container.name == INIT_ARTIFACTS_CONTAINER.format(store.name)
+        assert container.name == generate_container_name(
+            INIT_ARTIFACTS_CONTAINER_PREFIX, store.name
+        )
         assert container.image == "foo/foo:foo"
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["/bin/sh", "-c"]
@@ -518,7 +523,9 @@ class TestInitStore(BaseTestCase):
             artifacts=None,
             mount_path=mount_path,
         )
-        assert container.name == INIT_ARTIFACTS_CONTAINER.format(store.name)
+        assert container.name == generate_container_name(
+            INIT_ARTIFACTS_CONTAINER_PREFIX, store.name
+        )
         assert container.image == "foo/foo"
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["/bin/sh", "-c"]

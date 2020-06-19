@@ -18,7 +18,7 @@ from typing import List, Optional
 
 from polyaxon.containers.containers import V1PolyaxonInitContainer
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
-from polyaxon.containers.names import INIT_GIT_CONTAINER
+from polyaxon.containers.names import INIT_GIT_CONTAINER_PREFIX, generate_container_name
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
@@ -72,7 +72,7 @@ def get_git_init_container(
         raise PolypodException("A connection is required to create a repo context.")
     if not container:
         container = k8s_schemas.V1Container(
-            name=INIT_GIT_CONTAINER.format(connection.name)
+            name=generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name),
         )
 
     volume_name = (
@@ -120,7 +120,7 @@ def get_git_init_container(
     )
     return patch_container(
         container=container,
-        name=INIT_GIT_CONTAINER.format(connection.name),
+        name=generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name),
         image=polyaxon_init.get_image(),
         image_pull_policy=polyaxon_init.image_pull_policy,
         command=["polyaxon", "initializer", "git"],

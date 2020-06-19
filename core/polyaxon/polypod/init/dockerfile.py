@@ -23,7 +23,10 @@ from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS,
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
 )
-from polyaxon.containers.names import INIT_DOCKERFILE_CONTAINER
+from polyaxon.containers.names import (
+    INIT_DOCKERFILE_CONTAINER_PREFIX,
+    generate_container_name,
+)
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
 from polyaxon.polypod.common.env_vars import get_run_instance_env_var
@@ -61,7 +64,7 @@ def get_dockerfile_init_container(
         volume_mounts.append(get_auth_context_mount(read_only=True))
 
     return k8s_schemas.V1Container(
-        name=INIT_DOCKERFILE_CONTAINER.format(random.randint(1, 100)),
+        name=generate_container_name(INIT_DOCKERFILE_CONTAINER_PREFIX),
         image=polyaxon_init.get_image(),
         image_pull_policy=polyaxon_init.image_pull_policy,
         command=["polyaxon", "docker", "generate"],

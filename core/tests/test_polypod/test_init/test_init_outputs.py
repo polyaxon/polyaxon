@@ -22,7 +22,10 @@ from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1BucketConnection, V1ClaimConnection
 from polyaxon.containers.containers import V1PolyaxonInitContainer
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
-from polyaxon.containers.names import INIT_ARTIFACTS_CONTAINER
+from polyaxon.containers.names import (
+    INIT_ARTIFACTS_CONTAINER_PREFIX,
+    generate_container_name,
+)
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.mounts import get_artifacts_context_mount
@@ -79,7 +82,9 @@ class TestInitOutputsStore(BaseTestCase):
 
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="default"),
-            container_name=INIT_ARTIFACTS_CONTAINER.format("default"),
+            container_name=generate_container_name(
+                INIT_ARTIFACTS_CONTAINER_PREFIX, "default"
+            ),
             polyaxon_init=V1PolyaxonInitContainer(
                 image="init", image_pull_policy="IfNotPresent"
             ),
@@ -116,7 +121,9 @@ class TestInitOutputsStore(BaseTestCase):
 
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="default"),
-            container_name=INIT_ARTIFACTS_CONTAINER.format("default"),
+            container_name=generate_container_name(
+                INIT_ARTIFACTS_CONTAINER_PREFIX, "default"
+            ),
             polyaxon_init=V1PolyaxonInitContainer(
                 image="init", image_pull_policy="IfNotPresent"
             ),
@@ -153,7 +160,9 @@ class TestInitOutputsStore(BaseTestCase):
 
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="init"),
-            container_name=INIT_ARTIFACTS_CONTAINER.format("default"),
+            container_name=generate_container_name(
+                INIT_ARTIFACTS_CONTAINER_PREFIX, "default"
+            ),
             polyaxon_init=V1PolyaxonInitContainer(
                 image="init", image_pull_policy="IfNotPresent"
             ),
@@ -176,7 +185,9 @@ class TestInitOutputsStore(BaseTestCase):
         init_args = init_artifact_context_args("run_uid")
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="init"),
-            container_name=INIT_ARTIFACTS_CONTAINER.format("default"),
+            container_name=generate_container_name(
+                INIT_ARTIFACTS_CONTAINER_PREFIX, "default"
+            ),
             polyaxon_init=V1PolyaxonInitContainer(
                 image="init", image_pull_policy="IfNotPresent"
             ),

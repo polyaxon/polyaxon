@@ -23,7 +23,7 @@ from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS,
     CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
 )
-from polyaxon.containers.names import INIT_DOCKERFILE_CONTAINER
+from polyaxon.containers.names import INIT_DOCKERFILE_CONTAINER_PREFIX
 from polyaxon.polyflow import V1Plugins
 from polyaxon.polypod.common import constants
 from polyaxon.polypod.common.env_vars import get_run_instance_env_var
@@ -48,7 +48,7 @@ class TestInitDockerfile(BaseTestCase):
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
             run_path="test",
         )
-        assert INIT_DOCKERFILE_CONTAINER.format("") in container.name
+        assert INIT_DOCKERFILE_CONTAINER_PREFIX in container.name
         assert container.image == "foo"
         assert container.image_pull_policy is None
         assert container.command == ["polyaxon", "docker", "generate"]
@@ -85,7 +85,7 @@ class TestInitDockerfile(BaseTestCase):
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
             run_path="test",
         )
-        assert INIT_DOCKERFILE_CONTAINER.format("") in container.name
+        assert INIT_DOCKERFILE_CONTAINER_PREFIX in container.name
         assert container.image == "init/init"
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["polyaxon", "docker", "generate"]

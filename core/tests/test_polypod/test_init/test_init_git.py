@@ -22,7 +22,7 @@ from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1GitConnection
 from polyaxon.containers.containers import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
-from polyaxon.containers.names import INIT_GIT_CONTAINER
+from polyaxon.containers.names import INIT_GIT_CONTAINER_PREFIX, generate_container_name
 from polyaxon.exceptions import PolypodException
 from polyaxon.polyflow import V1Plugins
 from polyaxon.polypod.common import constants
@@ -114,7 +114,9 @@ class TestInitGit(BaseTestCase):
             connection=connection,
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
-        assert container.name == INIT_GIT_CONTAINER.format(connection.name)
+        assert container.name == generate_container_name(
+            INIT_GIT_CONTAINER_PREFIX, connection.name
+        )
         assert container.image == "foo"
         assert container.image_pull_policy is None
         assert container.command == ["polyaxon", "initializer", "git"]
@@ -137,7 +139,9 @@ class TestInitGit(BaseTestCase):
             connection=connection,
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
-        assert container.name == INIT_GIT_CONTAINER.format(connection.name)
+        assert container.name == generate_container_name(
+            INIT_GIT_CONTAINER_PREFIX, connection.name
+        )
         assert container.image == "init/init"
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["polyaxon", "initializer", "git"]
@@ -169,7 +173,9 @@ class TestInitGit(BaseTestCase):
             mount_path="/somepath",
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
-        assert container.name == INIT_GIT_CONTAINER.format(connection.name)
+        assert container.name == generate_container_name(
+            INIT_GIT_CONTAINER_PREFIX, connection.name
+        )
         assert container.image == "init/init"
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["polyaxon", "initializer", "git"]
