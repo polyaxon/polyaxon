@@ -22,6 +22,7 @@ import ujson
 from marshmallow import RAISE, Schema, ValidationError, post_dump, post_load
 from marshmallow.utils import EXCLUDE
 
+from polyaxon import pkg
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.utils import to_camel_case
@@ -57,7 +58,7 @@ class BaseCamelSchema(BaseSchema):
         field_obj.data_key = to_camel_case(field_obj.data_key or field_name)
 
 
-class BaseConfig(object):
+class BaseConfig:
     """Base for config classes."""
 
     SCHEMA = None
@@ -98,9 +99,22 @@ class BaseConfig(object):
             return ujson.dumps(obj_dict)
         return obj_dict
 
-    def to_dict(self, humanize_values=False, unknown=None, dump=False):
+    def to_dict(
+        self,
+        humanize_values=False,
+        unknown=None,
+        dump=False,
+        include_kind=False,
+        include_version=False,
+    ):
         unknown = unknown or self.UNKNOWN_BEHAVIOUR
-        obj = self.obj_to_dict(self, humanize_values=humanize_values, unknown=unknown)
+        obj = self.obj_to_dict(
+            self,
+            humanize_values=humanize_values,
+            unknown=unknown,
+            include_kind=include_kind,
+            include_version=include_version,
+        )
         if dump:
             return ujson.dumps(obj)
         return obj
@@ -120,12 +134,25 @@ class BaseConfig(object):
         return humanized_attrs
 
     @classmethod
-    def obj_to_dict(cls, obj, humanize_values=False, unknown=None):
+    def obj_to_dict(
+        cls,
+        obj,
+        humanize_values=False,
+        unknown=None,
+        include_kind=False,
+        include_version=False,
+    ):
         unknown = unknown or cls.UNKNOWN_BEHAVIOUR
         humanized_attrs = cls.humanize_attrs(obj) if humanize_values else {}
         data_dict = cls.SCHEMA(unknown=unknown).dump(  # pylint: disable=not-callable
             obj
         )
+
+        if include_kind and "kind" not in data_dict and hasattr(obj, "kind"):
+            data_dict["kind"] = obj.IDENTIFIER
+
+        if include_version and "version" not in data_dict:
+            data_dict["version"] = pkg.SCHEMA_VERSION
 
         for k, v in humanized_attrs.items():
             data_dict[k] = v

@@ -56,16 +56,16 @@ class ConfigSpec:
         if isinstance(self.value, Mapping):
             return self.value
 
-        if os.path.isfile(self.value):
-            return _read_from_file(self.value, self.config_type)
-
         # try a python file
         if isinstance(self.value, str) and (
-            self.config_type == "py" or ".py" in self.value
+            self.config_type == ".py" or ".py" in self.value
         ):
             _f_path, _f_module = _get_python_file_def(self.value)
             if _f_path and _f_module:
                 return _read_from_python(_f_path, _f_module)
+
+        if os.path.isfile(self.value):
+            return _read_from_file(self.value, self.config_type)
 
         # try reading a stream of yaml or json
         if not self.config_type or self.config_type in (".json", ".yml", ".yaml"):
@@ -153,7 +153,7 @@ def _read_from_stream(stream):
 
 
 def _get_python_file_def(f_path):
-    if isinstance(f_path, str) and ".py" in f_path:
+    if not isinstance(f_path, str) or ".py" not in f_path:
         return None, None
     results = f_path.split(":")
 

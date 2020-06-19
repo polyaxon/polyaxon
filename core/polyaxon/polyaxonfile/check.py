@@ -126,8 +126,12 @@ def check_polyaxonfile(
 
         if not hub or (public_hub and eager_hub):
             if python_module:
-                path_context = python_module[0]
-                plx_file = ConfigSpec.get_from(python_module, config_type=".py").read()
+                path_context = python_module
+                plx_file = (
+                    ConfigSpec.get_from(python_module, config_type=".py")
+                    .read()
+                    .to_dict(include_kind=True, include_version=True)
+                )
 
             elif url:
                 plx_file = ConfigSpec.get_from(url, "url").read()

@@ -8,6 +8,7 @@ V1PodDNSConfig = client.V1PodDNSConfig
 V1Toleration = client.V1Toleration
 V1HostAlias = client.V1HostAlias
 V1Container = client.V1Container
+V1Container.name = "patch"
 V1EnvVar = client.V1EnvVar
 V1VolumeMount = client.V1VolumeMount
 V1ContainerPort = client.V1ContainerPort
