@@ -241,6 +241,7 @@ class BaseConverter(ConverterAbstract):
     def handle_init_connections(
         self,
         polyaxon_init: V1PolyaxonInitContainer,
+        artifacts_store: V1ConnectionType,
         init_connections: List[V1Init],
         connection_by_names: Dict[str, V1ConnectionType],
         contexts: PluginsContextsSpec,
@@ -253,7 +254,7 @@ class BaseConverter(ConverterAbstract):
                 connection_spec = connection_by_names.get(init_connection.connection)
                 if init_connection.git:  # Update the default schema
                     connection_spec.schema.patch(init_connection.git)
-                if connection_spec.kind == V1ConnectionKind.GIT:
+                if V1ConnectionKind.is_git(connection_spec.kind):
                     containers.append(
                         get_git_init_container(
                             polyaxon_init=polyaxon_init,
@@ -277,6 +278,18 @@ class BaseConverter(ConverterAbstract):
                         )
                     )
             else:
+                # artifacts init without connection should default to the artifactsStore
+                if init_connection.artifacts:
+                    containers.append(
+                        get_store_container(
+                            polyaxon_init=polyaxon_init,
+                            connection=artifacts_store,
+                            artifacts=init_connection.artifacts,
+                            container=init_connection.container,
+                            env=self.get_init_service_env_vars(),
+                            mount_path=init_connection.path,
+                        )
+                    )
                 # git init without connection
                 if init_connection.git:
                     git_name = init_connection.git.get_name()
@@ -349,6 +362,7 @@ class BaseConverter(ConverterAbstract):
 
         containers += self.handle_init_connections(
             polyaxon_init=polyaxon_init,
+            artifacts_store=artifacts_store,
             init_connections=init_connections,
             connection_by_names=connection_by_names,
             contexts=contexts,
