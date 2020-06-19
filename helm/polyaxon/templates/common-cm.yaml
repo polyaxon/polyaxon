@@ -19,18 +19,19 @@ data:
   # Cluster
   POLYAXON_DEPLOYMENT_TYPE: {{ default "kubernetes" .Values.deploymentType | quote }}
   {{- if .Values.ingress.enabled }}
-  POLYAXON_API_HOST: {{ .Values.ingress.hostName | quote }}
+  POLYAXON_PLATFORM_HOST: {{ .Values.ingress.hostName | quote }}
   {{- else }}
   {{- if .Values.hostName }}
-  POLYAXON_API_HOST: {{ .Values.hostName | quote }}
+  POLYAXON_PLATFORM_HOST: {{ .Values.hostName | quote }}
   {{- else }}
   {{- if eq .Values.gateway.service.type "NodePort" }}
-  POLYAXON_API_HOST: http://{{ template "polyaxon.fullname" . }}-gateway:{{ .Values.gateway.service.nodePort }}
+  POLYAXON_PLATFORM_HOST: http://{{ template "polyaxon.fullname" . }}-gateway:{{ .Values.gateway.service.nodePort }}
   {{- else }}
-  POLYAXON_API_HOST: http://{{ template "polyaxon.fullname" . }}-gateway:{{ .Values.gateway.service.port }}
+  POLYAXON_PLATFORM_HOST: http://{{ template "polyaxon.fullname" . }}-gateway:{{ .Values.gateway.service.port }}
   {{- end }}
   {{- end }}
   {{- end }}
+  POLYAXON_API_HOST: "http://{{ template "api.host" . }}:{{ template "api.port" . }}"
   POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
   POLYAXON_K8S_APP_SECRET_NAME: {{ template "polyaxon.fullname" . }}-secret
   POLYAXON_LOG_LEVEL: {{ default "WARN" .Values.logLevel | quote }}

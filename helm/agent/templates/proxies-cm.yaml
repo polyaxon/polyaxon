@@ -17,10 +17,10 @@ metadata:
     app.kubernetes.io/managed-by: "helm"
 data:
   # Cluster
-  POLYAXON_PROXY_STREAMS_PORT: "{{ template "streams.port" . }}"
-  POLYAXON_PROXY_STREAMS_HOST: {{ template "streams.host" . }}
-  POLYAXON_PROXY_API_PORT: "{{ template "api.port" . }}"
-  POLYAXON_PROXY_API_HOST: {{ template "api.host" . }}
+  POLYAXON_PROXY_STREAMS_PORT: "{{ template "proxies.streams.port" . }}"
+  POLYAXON_PROXY_STREAMS_HOST: {{ template "proxies.streams.host" . }}
+  POLYAXON_PROXY_API_PORT: "{{ template "proxies.api.port" . }}"
+  POLYAXON_PROXY_API_HOST: {{ template "proxies.api.host" . }}
   {{- if (not (empty .Values.auth)) }}
   POLYAXON_PROXY_AUTH_ENABLED: {{ .Values.auth.enabled | quote }}
   {{- if .Values.auth.external }}
