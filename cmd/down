@@ -4,6 +4,6 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose -f docker-compose.yml -f docker-compose.testing.yml down
+    docker-compose -f docker-compose.yml down
     docker-compose down
 fi
