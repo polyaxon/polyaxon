@@ -39,6 +39,7 @@ from polyaxon.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate,
 )
+from polyaxon.utils.http_utils import clean_host
 from polyaxon.utils.validation import validate_tags
 
 
@@ -340,7 +341,7 @@ def update(ctx, name, description, private):
 def dashboard(ctx, yes, url):
     """Open this operation's dashboard details in browser."""
     owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
-    dashboard_url = settings.CLIENT_CONFIG.host
+    dashboard_url = clean_host(settings.CLIENT_CONFIG.host)
     project_url = "{}/{}/{}/".format(dashboard_url, owner, project_name)
     if url:
         Printer.print_header("The dashboard is available at: {}".format(project_url))

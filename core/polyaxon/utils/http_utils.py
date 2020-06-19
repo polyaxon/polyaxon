@@ -18,6 +18,10 @@ from typing import Any, Optional
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 
+def clean_host(host: str):
+    return host.rstrip("/")
+
+
 def absolute_uri(url: str, api_host: str = None, protocol: str = None) -> Optional[str]:
     if not url:
         return None
@@ -26,7 +30,7 @@ def absolute_uri(url: str, api_host: str = None, protocol: str = None) -> Option
         return url
     protocol = protocol or "http"
 
-    url = urljoin(api_host.rstrip("/") + "/", url.lstrip("/"))
+    url = urljoin(clean_host(api_host) + "/", url.lstrip("/"))
     return f"{protocol}://{url}"
 
 

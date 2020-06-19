@@ -42,6 +42,7 @@ from polyaxon.utils.formatting import (
     get_runs_with_keys,
     list_dicts_to_tabulate,
 )
+from polyaxon.utils.http_utils import clean_host
 from polyaxon.utils.validation import validate_tags
 
 
@@ -718,7 +719,7 @@ def dashboard(ctx, yes, url):
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
-    dashboard_url = settings.CLIENT_CONFIG.host
+    dashboard_url = clean_host(settings.CLIENT_CONFIG.host)
     run_url = "{}/{}/{}/runs/{}/".format(dashboard_url, owner, project_name, run_uuid)
     if url:
         Printer.print_header("The dashboard is available at: {}".format(run_url))
@@ -771,7 +772,7 @@ def service(ctx, yes, external, url):
             "kind `service` received kind: {}!".format(client.run_data.kind)
         )
         sys.exit(1)
-    dashboard_url = settings.CLIENT_CONFIG.host
+    dashboard_url = clean_host(settings.CLIENT_CONFIG.host)
 
     Printer.print_header("Waiting for running condition ...")
     client.wait_for_condition(statuses=[V1Statuses.RUNNING], print_status=True)

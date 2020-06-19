@@ -49,6 +49,7 @@ from polyaxon.stores.polyaxon_store import PolyaxonStore
 from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.hashing import hash_value
+from polyaxon.utils.http_utils import clean_host
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.query_params import get_logs_params, get_query_params
 from polyaxon.utils.validation import validate_tags
@@ -704,7 +705,7 @@ class RunClient:
             str
         """
         url = "{host}/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact".format(
-            host=self.client.config.host,
+            host=clean_host(self.client.config.host),
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,
@@ -738,7 +739,7 @@ class RunClient:
             str.
         """
         url = "{host}/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts".format(
-            host=self.client.config.host,
+            host=clean_host(self.client.config.host),
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,

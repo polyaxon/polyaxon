@@ -35,6 +35,7 @@ from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
 from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
+from polyaxon.utils.http_utils import clean_host
 
 
 @click.command()
@@ -73,7 +74,7 @@ def login(token, username, password):
             return
     else:
         if not token:
-            token_url = "{}/app/token".format(polyaxon_client.config.host)
+            token_url = "{}/app/token".format(clean_host(polyaxon_client.config.host))
             click.confirm(
                 "Authentication token page will now open in your browser. Continue?",
                 abort=True,

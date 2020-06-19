@@ -45,6 +45,7 @@ from polyaxon.polypod.specs.replica import ReplicaSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 from polyaxon.services.auth import AuthenticationTypes
 from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
+from polyaxon.utils.http_utils import clean_host
 from polyaxon.utils.list_utils import to_list
 
 
@@ -456,7 +457,7 @@ class PlatformConverterMixin(ConverterAbstract):
             include_agent_token=include_agent_token,
             polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
-            api_host=settings.CLIENT_CONFIG.host,
+            api_host=clean_host(settings.CLIENT_CONFIG.host),
             api_version=VERSION_V1,
         )
 

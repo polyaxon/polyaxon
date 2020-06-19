@@ -22,7 +22,7 @@ from polyaxon.exceptions import PolyaxonNotificationException
 from polyaxon.logger import logger
 from polyaxon.notifiers.spec import NotificationSpec
 from polyaxon.parser import parser
-from polyaxon.utils.http_utils import add_notification_referrer_param
+from polyaxon.utils.http_utils import add_notification_referrer_param, clean_host
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.urls_utils import validate_url
 
@@ -41,7 +41,9 @@ class BaseNotifier:
     @staticmethod
     def get_url():
         return add_notification_referrer_param(
-            settings.CLIENT_CONFIG.host, provider="polyaxon", is_absolute=False
+            clean_host(settings.CLIENT_CONFIG.host),
+            provider="polyaxon",
+            is_absolute=False,
         )
 
     @classmethod

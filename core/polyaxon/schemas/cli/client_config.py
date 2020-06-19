@@ -61,6 +61,7 @@ from polyaxon.pkg import VERSION
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.services.auth import AuthenticationTypes
 from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
+from polyaxon.utils.http_utils import clean_host
 
 
 class ClientSchema(BaseSchema):
@@ -202,7 +203,7 @@ class ClientConfig(BaseConfig):
         **kwargs
     ):
 
-        self.host = host or POLYAXON_CLOUD_HOST
+        self.host = clean_host(host or POLYAXON_CLOUD_HOST)
         self.token = token
         self.debug = self._get_bool(debug, False)
         self.log_level = log_level
@@ -245,7 +246,7 @@ class ClientConfig(BaseConfig):
 
     @property
     def base_url(self):
-        return self.BASE_URL.format(self.host, self.version)
+        return self.BASE_URL.format(clean_host(self.host), self.version)
 
     def set_cli_header(self):
         self.header = PolyaxonServiceHeaders.get_header(PolyaxonServiceHeaders.SERVICE)
@@ -276,7 +277,7 @@ class ClientConfig(BaseConfig):
 
         config = polyaxon_sdk.Configuration()
         config.debug = self.debug
-        config.host = self.host
+        config.host = clean_host(self.host)
         config.verify_ssl = self.verify_ssl
         config.ssl_ca_cert = self.ssl_ca_cert
         config.cert_file = self.cert_file
