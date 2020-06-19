@@ -54,11 +54,11 @@ class TestCreateRunManager(TestCase):
         compiled_operation = CompiledOperationSpecification.apply_params(
             compiled_operation
         )
-        CompiledOperationSpecification.apply_run_contexts(compiled_operation,)
+        CompiledOperationSpecification.apply_operation_contexts(compiled_operation)
         # Check job
         job_spec = CompiledOperationSpecification.read(run.content)
         assert job_spec.run.container.image == "test"
-        job_spec = CompiledOperationSpecification.apply_context(job_spec)
+        job_spec = CompiledOperationSpecification.apply_run_context(job_spec)
         assert job_spec.run.container.image == "test"
 
     def test_create_run_with_templated_job_spec(self):
@@ -75,15 +75,15 @@ class TestCreateRunManager(TestCase):
         compiled_operation = CompiledOperationSpecification.apply_params(
             compiled_operation, params=spec.params
         )
-        compiled_operation = CompiledOperationSpecification.apply_context(
+        compiled_operation = CompiledOperationSpecification.apply_run_context(
             compiled_operation
         )
-        CompiledOperationSpecification.apply_run_contexts(compiled_operation,)
+        CompiledOperationSpecification.apply_operation_contexts(compiled_operation)
         run.content = compiled_operation.to_dict(dump=True)
         run.save(update_fields=["content"])
         job_spec = CompiledOperationSpecification.read(run.content)
         assert job_spec.run.container.image == "{{ image }}"
-        job_spec = CompiledOperationSpecification.apply_run_contexts(job_spec)
+        job_spec = CompiledOperationSpecification.apply_operation_contexts(job_spec)
         assert job_spec.run.container.image == "foo/bar"
 
     def test_create_run_with_service_spec(self):
@@ -115,12 +115,12 @@ class TestCreateRunManager(TestCase):
         compiled_operation = CompiledOperationSpecification.apply_params(
             compiled_operation, params=spec.params
         )
-        compiled_operation = CompiledOperationSpecification.apply_context(
+        compiled_operation = CompiledOperationSpecification.apply_run_context(
             compiled_operation
         )
-        CompiledOperationSpecification.apply_run_contexts(compiled_operation,)
+        CompiledOperationSpecification.apply_operation_contexts(compiled_operation)
         run.content = compiled_operation.to_dict(dump=True)
         run.save(update_fields=["content"])
         job_spec = CompiledOperationSpecification.read(run.content)
-        job_spec = CompiledOperationSpecification.apply_run_contexts(job_spec)
+        job_spec = CompiledOperationSpecification.apply_operation_contexts(job_spec)
         assert job_spec.run.container.image == "foo/bar"

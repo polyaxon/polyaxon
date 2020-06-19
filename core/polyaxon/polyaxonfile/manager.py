@@ -95,5 +95,5 @@ def get_op_specification(
         run_config.validate_params(params=params, is_template=False)
         if run_config.is_dag_run:
             run_config.run.set_path_context(path_context)
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
     return config

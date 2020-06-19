@@ -18,24 +18,16 @@ from marshmallow import ValidationError
 
 from coredb.abstracts.runs import BaseRun
 from polyaxon.exceptions import PolyaxonCompilerError, PolyaxonSchemaError
-from polyaxon.polyaxonfile import CompiledOperationSpecification
 from polyaxon.polyflow import V1CompiledOperation
 from polyaxon.polypod.compiler import resolver
-from polyaxon.polypod.compiler.resolvers import CoreResolver
 from polycommon.exceptions import AccessNotAuthorized, AccessNotFound
 
 
-class CorePlatformResolver(CoreResolver):
+class CorePlatformResolver(resolver.BaseResolver):
     def resolve_params(self):
-        params = self.run.params or {}
-        self.compiled_operation = CompiledOperationSpecification.apply_params(
-            config=self.compiled_operation, params=params, context=self.globals,
-        )
+        self.params = self.run.params or {}
 
     def resolve_io(self):
-        self.run.content = self.compiled_operation.to_dict(
-            dump=True
-        )  # TODO: check if this needed or not
         if self.compiled_operation.inputs:
             self.run.inputs = {
                 io.name: io.value for io in self.compiled_operation.inputs

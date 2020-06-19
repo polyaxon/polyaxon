@@ -18,7 +18,7 @@ from typing import Dict, Optional
 
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyflow import V1CompiledOperation
-from polyaxon.polypod.compiler.resolvers import CoreResolver
+from polyaxon.polypod.compiler.resolver.base import BaseResolver
 
 
 def resolve(
@@ -33,7 +33,7 @@ def resolve(
     run=None,
     resolver_cls=None,
 ):
-    resolver_cls = resolver_cls or CoreResolver
+    resolver_cls = resolver_cls or BaseResolver
     run_kind = compiled_operation.get_run_kind()
     if run_kind not in resolver_cls.KINDS:
         raise PolyaxonCompilerError(

@@ -55,10 +55,10 @@ class Parser(object):
 
     @classmethod
     def parse(
-        cls, config, params: Dict[str, ParamSpec]
+        cls, config, param_spec: Dict[str, ParamSpec]
     ):  # pylint:disable=too-many-branches
-        params = params or {}
-        parsed_params = {param: params[param].display_value for param in params}
+        param_spec = param_spec or {}
+        parsed_params = {param: param_spec[param].display_value for param in param_spec}
 
         parsed_data = {Sections.VERSION: config.version, Sections.KIND: config.kind}
 
@@ -108,9 +108,9 @@ class Parser(object):
         return parsed_data
 
     @classmethod
-    def parse_run(cls, parsed_data, params: Dict[str, ParamSpec]):
+    def parse_run(cls, parsed_data, param_spec: Dict[str, ParamSpec]):
         config_section = cls.parse_section(
-            parsed_data.get(Sections.RUN), params=params, parse_params=True
+            parsed_data.get(Sections.RUN), param_spec=param_spec, parse_params=True
         )
         if config_section:
             parsed_data[Sections.RUN] = config_section
@@ -118,13 +118,15 @@ class Parser(object):
 
     @classmethod
     def parse_section(
-        cls, config_section, params: Dict[str, ParamSpec], parse_params: bool = True
+        cls, config_section, param_spec: Dict[str, ParamSpec], parse_params: bool = True
     ):
-        params = params or {}
+        param_spec = param_spec or {}
         if parse_params:
-            params = {param: params[param].display_value for param in params}
+            param_spec = {
+                param: param_spec[param].display_value for param in param_spec
+            }
         if config_section:
-            return cls.parse_expression(config_section, params)
+            return cls.parse_expression(config_section, param_spec)
         return config_section
 
     @classmethod

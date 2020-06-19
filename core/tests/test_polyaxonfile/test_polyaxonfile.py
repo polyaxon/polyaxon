@@ -113,7 +113,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert run_config.tags is None
         assert len(run_config.run.volumes) == 1
@@ -148,7 +148,7 @@ class TestPolyaxonfiles(BaseTestCase):
         )
 
         with self.assertRaises(ValidationError):
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.inputs[0].value is None
         assert run_config.inputs[1].value is None
         run_config.apply_params(
@@ -156,8 +156,8 @@ class TestPolyaxonfiles(BaseTestCase):
         )
         assert run_config.inputs[0].value == "some-loss"
         assert run_config.inputs[1].value is True
-        run_config = CompiledOperationSpecification.apply_context(run_config)
-        run_config = CompiledOperationSpecification.apply_run_contexts(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         assert run_config.version == 1.1
         assert run_config.tags == ["foo", "bar"]
         assert run_config.run.container.image == "my_image"
@@ -182,7 +182,7 @@ class TestPolyaxonfiles(BaseTestCase):
                 {"kind": "compiled_operation"},
             ]
         )
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert isinstance(run_config.plugins, V1Plugins)
         assert run_config.plugins.log_level == "INFO"
@@ -209,7 +209,7 @@ class TestPolyaxonfiles(BaseTestCase):
                 {"kind": "compiled_operation"},
             ]
         )
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert isinstance(run_config.termination, V1Termination)
         assert run_config.termination.max_retries == 5
@@ -224,7 +224,7 @@ class TestPolyaxonfiles(BaseTestCase):
                 {"kind": "compiled_operation"},
             ]
         )
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert isinstance(run_config.run.environment, V1Environment)
         assert run_config.run.environment.node_selector == {"polyaxon.com": "core"}
@@ -258,7 +258,7 @@ class TestPolyaxonfiles(BaseTestCase):
             is_cli=False,
         )
         run_config = OperationSpecification.compile_operation(plx_file)
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert isinstance(run_config.matrix, V1Hyperband)
         assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
@@ -302,7 +302,7 @@ class TestPolyaxonfiles(BaseTestCase):
         # Get compiled_operation data
         run_config = OperationSpecification.compile_operation(plx_file)
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert isinstance(run_config.matrix, V1GridSearch)
         assert isinstance(run_config.matrix.params["param1"], V1HpChoice)
@@ -331,7 +331,7 @@ class TestPolyaxonfiles(BaseTestCase):
         # Get compiled_operation data
         run_config = OperationSpecification.compile_operation(plx_file)
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert isinstance(run_config.matrix, V1RandomSearch)
         assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
@@ -362,7 +362,7 @@ class TestPolyaxonfiles(BaseTestCase):
         # Get compiled_operation data
         config_run = OperationSpecification.compile_operation(plx_file)
 
-        config_run = CompiledOperationSpecification.apply_context(config_run)
+        config_run = CompiledOperationSpecification.apply_run_context(config_run)
         assert config_run.version == 1.1
         assert isinstance(config_run.matrix, V1Mapping)
         assert config_run.matrix.values == [
@@ -383,7 +383,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert run_config.termination is not None
         assert run_config.termination.ttl == 12
@@ -411,7 +411,7 @@ class TestPolyaxonfiles(BaseTestCase):
                 {"kind": "compiled_operation"},
             ]
         )
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
 
         assert run_config.termination is not None
@@ -446,7 +446,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert run_config.is_mpi_job_run
         assert run_config.termination is None
@@ -480,7 +480,7 @@ class TestPolyaxonfiles(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         expected_run = {
             "kind": V1RunKind.JOB,
             "container": {
@@ -492,5 +492,5 @@ class TestPolyaxonfiles(BaseTestCase):
         }
         assert run_config.run.to_dict() == expected_run
         run_config = V1CompiledOperation.read(run_config.to_dict())
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.run.to_dict() == expected_run

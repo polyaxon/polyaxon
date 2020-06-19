@@ -78,7 +78,7 @@ class TestSpecifications(BaseTestCase):
             },
         }
         config = V1CompiledOperation.read(content)
-        config = CompiledOperationSpecification.apply_context(config)
+        config = CompiledOperationSpecification.apply_run_context(config)
         assert config.to_dict() == content
 
         # Add params
@@ -126,7 +126,7 @@ class TestSpecifications(BaseTestCase):
 
         # Raise because required inputs are not met
         with self.assertRaises(ValidationError):
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
 
         # Validation for template should pass
         validated_params = run_config.validate_params()
@@ -176,7 +176,7 @@ class TestSpecifications(BaseTestCase):
         run_config = V1CompiledOperation.read(content)
         # no params
         with self.assertRaises(ValidationError):
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
 
         params = {"lr": {"value": 0.1}, "num_steps": {"value": 100}}
 
@@ -188,7 +188,7 @@ class TestSpecifications(BaseTestCase):
         assert run_config.inputs[0].value == 0.1
         assert run_config.inputs[1].value == 100
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         updated_content = {
             "version": 1.1,
             "kind": "compiled_operation",
@@ -248,7 +248,7 @@ class TestSpecifications(BaseTestCase):
         run_config = V1CompiledOperation.read(content)
         # no params
         with self.assertRaises(ValidationError):
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
 
         params = {
             "docker_image": {
@@ -266,9 +266,9 @@ class TestSpecifications(BaseTestCase):
         assert params == {p.name: p.param.to_dict() for p in validated_params}
         assert run_config.inputs[0].value.connection == "docker-registry"
         assert run_config.inputs[1].value.connection == "repo-connection"
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         run_config = CompiledOperationSpecification.apply_params(run_config)
-        run_config = CompiledOperationSpecification.apply_run_contexts(run_config)
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         assert run_config.run.connections == ["docker-registry"]
 
     def test_patch_experiment_with_optional_inputs(self):
@@ -296,7 +296,7 @@ class TestSpecifications(BaseTestCase):
         config = V1CompiledOperation.read(content)
         assert config.inputs[0].value == 0.6
         assert config.inputs[1].value == 16
-        config = CompiledOperationSpecification.apply_context(config)
+        config = CompiledOperationSpecification.apply_run_context(config)
         validated_params = config.validate_params()
         assert {"lr": 0.6, "num_steps": 16} == {
             p.name: p.param.value for p in validated_params

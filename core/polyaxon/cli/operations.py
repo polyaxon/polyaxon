@@ -29,7 +29,7 @@ from polyaxon.client.run import get_run_logs
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.lifecycle import V1Statuses, LifeCycle
+from polyaxon.lifecycle import LifeCycle, V1Statuses
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.run import RunManager
 from polyaxon.polyflow import V1RunKind
@@ -776,8 +776,7 @@ def service(ctx, yes, external, url):
 
     Printer.print_header("Waiting for running condition ...")
     client.wait_for_condition(
-        statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES,
-        print_status=True
+        statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES, print_status=True
     )
 
     client.refresh_data()

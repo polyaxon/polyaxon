@@ -14,5 +14,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polypod.compiler.resolvers.base import BaseResolver
-from polyaxon.polypod.compiler.resolvers.core import CoreResolver
+from polyaxon.polypod.compiler.resolver.base import BaseResolver
+from polyaxon.polypod.compiler.resolver.resolver import resolve

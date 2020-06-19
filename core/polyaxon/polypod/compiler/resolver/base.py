@@ -13,17 +13,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from typing import Dict, Optional
 
+from polyaxon import settings
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyaxonfile import CompiledOperationSpecification
-from polyaxon.polyflow import V1CompiledOperation
+from polyaxon.polyflow import V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.config import PolypodConfig
 from polyaxon.polypod.contexts import resolve_contexts, resolve_globals_contexts
 
 
 class BaseResolver:
-    KINDS = set()
+    KINDS = {
+        V1RunKind.JOB,
+        V1RunKind.SERVICE,
+        V1RunKind.MPIJOB,
+        V1RunKind.TFJOB,
+        V1RunKind.PYTORCHJOB,
+        V1RunKind.NOTIFIER,
+    }
 
     def __init__(
         self,
@@ -44,8 +53,9 @@ class BaseResolver:
         self.owner_name = owner_name
         self.project_name = project_name
         self.project_uuid = project_uuid
+        self.project_uuid = project_uuid or project_name
         self.run_name = run_name
-        self.run_uuid = run_uuid
+        self.run_uuid = run_uuid or run_name
         self.run_path = run_path
         self.params = params or {}
         self.connection_by_names = {}
@@ -59,11 +69,16 @@ class BaseResolver:
         self.agent_config = None
         self.contexts = {}
         self.globals = {}
+        self._param_spec = {}
+
+    @property
+    def param_spec(self):
+        return self._param_spec
 
     def resolve_edges(self):
         pass
 
-    def resolve_globals(self):
+    def resolve_globals_contexts(self):
         self.globals = resolve_globals_contexts(
             namespace=self.namespace,
             owner_name=self.owner_name,
@@ -76,12 +91,22 @@ class BaseResolver:
         )
 
     def resolve_params(self):
-        raise NotImplementedError
+        pass
+
+    def apply_params(self):
+        self.compiled_operation = CompiledOperationSpecification.apply_params(
+            config=self.compiled_operation, params=self.params, context=self.globals,
+        )
+        self._param_spec = CompiledOperationSpecification.calculate_context_spec(
+            config=self.compiled_operation,
+            contexts=self.globals,
+            should_be_resolved=True,
+        )
 
     def resolve_connections_params(self):
         self.compiled_operation = CompiledOperationSpecification.apply_run_connections_params(
             config=self.compiled_operation,
-            artifact_store=self.artifacts_store.name if self.artifacts_store else None,
+            artifact_store=self.agent_config.artifacts_store.name if self.agent_config else None,
             contexts=self.globals,
         )
 
@@ -89,15 +114,17 @@ class BaseResolver:
         pass
 
     def resolve_agent(self):
-        pass
+        self.agent_config = settings.AGENT_CONFIG
 
     def patch(self):
         pass
 
-    def apply_content(self):
+    def apply_run_context(self):
         try:
-            self.compiled_operation = CompiledOperationSpecification.apply_context(
-                self.compiled_operation
+            self.compiled_operation = CompiledOperationSpecification.apply_run_context(
+                self.compiled_operation,
+                param_spec=self._param_spec,
+                contexts=self.globals,
             )
         except Exception as e:
             raise PolyaxonCompilerError(
@@ -123,7 +150,7 @@ class BaseResolver:
         self.connection_by_names = polypod_config.connection_by_names
         self.artifacts_store = polypod_config.artifacts_store
 
-    def resolve_contexts(self):
+    def resolve_full_contexts(self):
         self.contexts = resolve_contexts(
             namespace=self.namespace,
             owner_name=self.owner_name,
@@ -138,8 +165,8 @@ class BaseResolver:
             iteration=self.iteration,
         )
 
-    def apply_contexts(self):
-        self.compiled_operation = CompiledOperationSpecification.apply_run_contexts(
+    def apply_operation_contexts(self):
+        self.compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
             self.compiled_operation, contexts=self.contexts
         )
 
@@ -148,17 +175,18 @@ class BaseResolver:
 
     def resolve(self) -> V1CompiledOperation:
         self.resolve_edges()
-        self.resolve_globals()
+        self.resolve_globals_contexts()
         self.resolve_params()
+        self.apply_params()
         self.resolve_profile()
         self.resolve_agent()
         self.resolve_connections_params()
         self.patch()
-        self.apply_content()
+        self.apply_run_context()
         self.resolve_io()
         self.resolve_access()
         self.resolve_connections()
-        self.resolve_contexts()
-        self.apply_contexts()
+        self.resolve_full_contexts()
+        self.apply_operation_contexts()
         self.resolve_state()
         return self.compiled_operation

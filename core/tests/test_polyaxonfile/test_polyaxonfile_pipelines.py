@@ -48,7 +48,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
         with self.assertRaises(PolyaxonSchemaError):
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
 
     def test_pipeline_with_no_components_raises(self):
         run_config = V1CompiledOperation.read(
@@ -60,7 +60,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
         with self.assertRaises(PolyaxonSchemaError):
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
 
     def test_pipeline_ops_not_corresponding_to_components(self):
         run_config = V1CompiledOperation.read(
@@ -72,7 +72,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
         with self.assertRaises(PolyaxonSchemaError):
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
 
     def test_cyclic_pipeline_raises(self):
         run_config = V1CompiledOperation.read(
@@ -84,7 +84,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         assert run_config.is_dag_run is True
         assert run_config.has_pipeline is True
         with self.assertRaises(PolyaxonSchemaError):
-            CompiledOperationSpecification.apply_context(run_config)
+            CompiledOperationSpecification.apply_run_context(run_config)
 
     def test_cron_pipeline(self):
         plx_file = check_polyaxonfile(
@@ -97,7 +97,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         # Get compiled_operation data
         run_config = OperationSpecification.compile_operation(plx_file)
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.run is not None
         assert len(run_config.run.operations) == 1
         assert run_config.run.operations[0].name == "cron-task"
@@ -119,7 +119,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
                 inputs=[V1IO(name="str-input", iotype="str")],
                 run=V1Job(container=V1Container(name="test")),
             ).to_dict()
-            compiled_op = CompiledOperationSpecification.apply_context(run_config)
+            compiled_op = CompiledOperationSpecification.apply_run_context(run_config)
         assert compiled_op.run is not None
         assert len(compiled_op.run.operations) == 2
         assert compiled_op.run.operations[0].name == "ref-path-op"
@@ -136,7 +136,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         # Get compiled_operation data
         run_config = OperationSpecification.compile_operation(plx_file)
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.run is not None
         assert len(run_config.run.operations) == 1
         assert run_config.run.operations[0].name == "recurrent-task"
@@ -157,7 +157,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.run is not None
         assert len(run_config.run.operations) == 4
         assert run_config.run.operations[0].name == "job1"
@@ -186,7 +186,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert len(run_config.run.operations) == 4
         assert run_config.run.operations[0].name == "job1"
         assert run_config.run.operations[0].dependencies is None
@@ -214,7 +214,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert len(run_config.run.operations) == 5
         assert run_config.run.operations[0].name == "job1"
         assert run_config.run.operations[1].name == "experiment1"
@@ -245,7 +245,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert len(run_config.run.operations) == 2
         assert run_config.run.operations[0].name == "build"
         assert run_config.run.operations[1].name == "run"
@@ -284,8 +284,8 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         }
         run_config = OperationSpecification.compile_operation(job_config)
         run_config.apply_params({"image": {"value": "foo"}, "lr": {"value": 0.001}})
-        run_config = CompiledOperationSpecification.apply_context(run_config)
-        run_config = CompiledOperationSpecification.apply_run_contexts(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         assert run_config.termination.to_dict() == {"maxRetries": 2}
         assert run_config.run.to_dict() == {
             "kind": V1RunKind.JOB,
@@ -313,7 +313,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.run is not None
         assert run_config.is_dag_run is True
         assert run_config.has_pipeline is True
@@ -351,7 +351,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
                 {"kind": "compiled_operation"},
             ]
         )
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert run_config.is_dag_run is True
         assert run_config.has_pipeline is True
@@ -402,7 +402,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             ]
         )
 
-        run_config = CompiledOperationSpecification.apply_context(run_config)
+        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         assert run_config.version == 1.1
         assert run_config.is_dag_run is True
         assert run_config.has_pipeline is True

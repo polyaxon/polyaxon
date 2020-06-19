@@ -31,7 +31,7 @@ from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.managers.agent import AgentManager
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyflow import V1CompiledOperation, V1RunKind
-from polyaxon.polypod.compiler.resolvers import CoreResolver
+from polyaxon.polypod.compiler.resolver import BaseResolver
 from polyaxon.schemas.cli.agent_config import AgentConfig
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 
@@ -56,11 +56,14 @@ class TestResolver(BaseTestCase):
         )
 
     def test_core_resolver_instance(self):
-        resolver = CoreResolver(
+        resolver = BaseResolver(
+            run=None,
             compiled_operation=self.compiled_operation,
             owner_name="user",
             project_name="p1",
+            project_uuid=None,
             run_name="j1",
+            run_uuid=None,
             run_path="test",
             params=None,
         )
@@ -68,7 +71,8 @@ class TestResolver(BaseTestCase):
         assert resolver.project_uuid == resolver.project_name
         assert resolver.run_uuid == resolver.run_name
 
-        resolver = CoreResolver(
+        resolver = BaseResolver(
+            run=None,
             compiled_operation=self.compiled_operation,
             owner_name="user",
             project_name="p1",
@@ -83,11 +87,14 @@ class TestResolver(BaseTestCase):
 
     def test_resolve_connections_with_no_config(self):
         settings.AGENT_CONFIG = None
-        resolver = CoreResolver(
+        resolver = BaseResolver(
+            run=None,
             compiled_operation=self.compiled_operation,
             owner_name="user",
             project_name="p1",
+            project_uuid=None,
             run_name="j1",
+            run_uuid=None,
             run_path="test",
             params=None,
         )
@@ -96,11 +103,14 @@ class TestResolver(BaseTestCase):
 
     def test_resolve_without_compiled_operation(self):
         with self.assertRaises(PolyaxonCompilerError):
-            CoreResolver(
+            BaseResolver(
+                run=None,
                 compiled_operation=None,
                 owner_name="user",
                 project_name="p1",
+                project_uuid=None,
                 run_name="j1",
+                run_uuid=None,
                 run_path="test",
                 params=None,
             )
@@ -142,11 +152,14 @@ class TestResolver(BaseTestCase):
             connections=[connection2, connection3],
         )
 
-        resolver = CoreResolver(
+        resolver = BaseResolver(
+            run=None,
             compiled_operation=self.compiled_operation,
             owner_name="user",
             project_name="p1",
+            project_uuid=None,
             run_name="j1",
+            run_uuid=None,
             run_path="test",
             params=None,
         )
@@ -177,11 +190,14 @@ class TestResolver(BaseTestCase):
                 },
             }
         )
-        resolver = CoreResolver(
+        resolver = BaseResolver(
+            run=None,
             compiled_operation=compiled_operation,
             owner_name="user",
             project_name="p1",
+            project_uuid=None,
             run_name="j1",
+            run_uuid=None,
             run_path="test",
             params=None,
         )
@@ -219,11 +235,14 @@ class TestResolver(BaseTestCase):
                 },
             }
         )
-        resolver = CoreResolver(
+        resolver = BaseResolver(
+            run=None,
             compiled_operation=compiled_operation,
             owner_name="user",
             project_name="p1",
+            project_uuid=None,
             run_name="j1",
+            run_uuid=None,
             run_path="test",
             params=None,
         )
