@@ -23,6 +23,48 @@ auth:
   external:
   useResolver: true
 
+ingress:
+  enabled: false
+  hostName:
+  # Default path is `/`
+  path:
+  # Extra paths to prepend to every host configuration. This is useful when configuring custom actions with
+  # [AWS ALB Ingress Controller](https://kubernetes-sigs.github.io/aws-alb-ingress-controller/guide/ingress/annotation/#actions).
+  extraPaths: []
+  # - path: /*
+  #   backend:
+  #     serviceName: ssl-redirect
+  #     servicePort: use-annotation
+  # Ingress TLS configuration
+  # Secrets must be manually created in the namespace
+  tls: []
+  # - secretName: polyaxon.cluster.local-tls
+  #   hosts:
+  #     - polyaxon.cluster.local
+
+  # Ingress extra labels
+  labels:
+
+  # Default annotation, some of these values allow uploading large files to the API
+  # if you are using a different ingress other than nginx, you need to adapt the annotations.
+  annotations:
+
+  #  ingress.kubernetes.io/ssl-redirect: "false"
+  #  ingress.kubernetes.io/rewrite-target: /
+  #  ingress.kubernetes.io/add-base-url: "true"
+  #  ingress.kubernetes.io/proxy-connect-timeout: "600"
+  #  ingress.kubernetes.io/proxy-read-timeout: "600"
+  #  ingress.kubernetes.io/proxy-send-timeout: "600"
+  #  ingress.kubernetes.io/send-timeout: "600"
+  #  ingress.kubernetes.io/proxy-body-size: 4G
+
+  # kubernetes.io/tls-acme: 'true'
+
+# To set ssl and serve https with Polyaxon deployed with NodePort service
+ssl: {}
+
+dns: {}
+
 gateway:
   enabled: true
   image: polyaxon/polyaxon-gateway

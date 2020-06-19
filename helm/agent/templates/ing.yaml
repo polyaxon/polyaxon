@@ -20,6 +20,9 @@ metadata:
     app.kubernetes.io/part-of: {{ .Values.types.core }}
     app.kubernetes.io/component: {{ .Values.roles.api }}
     app.kubernetes.io/managed-by: "helm"
+    {{- with .Values.ingress.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
   annotations:
 {{ toYaml .Values.ingress.annotations | indent 4 }}
 spec:
@@ -31,6 +34,12 @@ spec:
         backend:
           serviceName: {{ $fullName }}-gateway
           servicePort: {{ $.Values.gateway.service.port }}
+      {{- range .Values.ingress.extraPaths }}
+      - path: {{ .path | quote }}
+        backend:
+          serviceName: {{ .backend.serviceName }}
+          servicePort: {{ .backend.servicePort }}
+      {{- end }}
   {{- if (not (empty .Values.ingress.tls)) }}
   tls:
     {{ toYaml .Values.ingress.tls | nindent 4 }}
