@@ -1,29 +1,24 @@
 version: 1.1
 kind: component
 name: tensorboard
+description: Creates a tensorboard based on an absolute path.
 
 inputs:
 - name: image
   isOptional: true
   type: str
   value: tensorflow/tensorflow:2.0.1-py3
-- name: run_uuid
-  isOptional: true
-  type: str
-- name: run_path
-  isOptional: true
+- name: path
   type: str
 
 run:
   kind: service
   ports: [6006]
-  init:
-    - artifacts: {"dirs": ["{{run_path  or (run_uuid + '/outputs')}}"]}
   container:
     image: "{{ image }}"
     command: ["tensorboard"]
     args: [
-      "--logdir={{run_path or (globals.artifacts_path + '/' + run_uuid + '/outputs')}}",
+      "--logdir={{path}}",
       "--port={{globals.ports[0]}}",
       "--path_prefix={{globals.base_url}}",
       "--host=0.0.0.0",

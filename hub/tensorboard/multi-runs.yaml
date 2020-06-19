@@ -16,8 +16,7 @@ run:
   kind: service
   ports: [6006]
   init:
-    - connection: azure
-      artifacts: {"dirs":  "{% for run_uuid in run_uuids %}{{ run_uuid + '/outputs' }}{% endfor %} | join(',')"}
+    - artifacts: {"dirs":  "{% for run_uuid in run_uuids %}{{ run_uuid + '/outputs' }}{% endfor %} | join(',')"}
   container:
     image: "{{ image }}"
     command: ["tensorboard"]

@@ -49,7 +49,9 @@
   versions:
   - multi-runs.yaml
   - path.yaml
-  - search.yaml
+  - s3-path.yaml
+  - gcs-path.yaml
+  - wasb-path.yaml
   - single-run.yaml
 - name: vscode
   versions:

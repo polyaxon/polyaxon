@@ -29,7 +29,7 @@ from polyaxon.client.run import get_run_logs
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.lifecycle import V1Statuses
+from polyaxon.lifecycle import V1Statuses, LifeCycle
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.run import RunManager
 from polyaxon.polyflow import V1RunKind
@@ -775,9 +775,19 @@ def service(ctx, yes, external, url):
     dashboard_url = clean_host(settings.CLIENT_CONFIG.host)
 
     Printer.print_header("Waiting for running condition ...")
-    client.wait_for_condition(statuses=[V1Statuses.RUNNING], print_status=True)
+    client.wait_for_condition(
+        statuses={V1Statuses.RUNNING} | LifeCycle.DONE_VALUES,
+        print_status=True
+    )
 
     client.refresh_data()
+    if LifeCycle.is_done(client.run_data.status):
+        Printer.print_header("The operations reached a done statuses.")
+        latest_status = Printer.add_status_color(
+            {"status": client.run_data.status}, status_key="status"
+        )
+        click.echo("{}\n".format(latest_status["status"]))
+
     namespace = client.run_data.settings.namespace
 
     run_url = "{}/{}/{}/runs/{}/service".format(
