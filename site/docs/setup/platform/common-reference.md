@@ -72,6 +72,7 @@ kubectl port-forward -n polyaxon svc/polyaxon-polyaxon-gateway 8000:80
 | `ingress.hostName`           | Kubernetes ingress hostName                                         | ``
 | `ingress.tls`                | Use Ingress TLS (Secrets must be manually created in the namespace) | `[]`
 | `ingress.annotations`        | Ingress annotations                                                 | `{}`
+| `gateway.service.type`       | Gateway Service type                                                | `ClusterIP`
 | `gateway.service.annotations`| Gateway Service annotations                                         | `{}`
 
 
@@ -162,7 +163,9 @@ Polyaxon's helm chart comes with an ingress resource that you can use with an in
  2. Add the tls configuration to Polyaxon's Ingress values. (**Do not use CluserIP on GKE**)
  
     ```yaml
-    serviceType: ClusterIP
+    gateway:
+      service:
+        type: ClusterIP
     ingress:
       enabled: true
       hostName: polyaxon.acme.com
