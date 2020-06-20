@@ -34,4 +34,7 @@ message User {
 
     // Theme
     int32 theme = 4;
+
+    // Default organization
+    string organization = 5;
 }

@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.99",
+    "version": "1.0.99-rc5",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -16790,6 +16790,10 @@
           "type": "integer",
           "format": "int32",
           "title": "Theme"
+        },
+        "organization": {
+          "type": "string",
+          "title": "Default organization"
         }
       },
       "title": "Auth specification"

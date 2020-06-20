@@ -48,7 +48,7 @@ class CorePlatformResolver(resolver.BaseResolver):
         self.run.save(update_fields=["content", "inputs", "outputs", "meta_info"])
 
 
-def resolve(run: BaseRun, compiled_at: datetime, resolver_cls=None):
+def resolve(run: BaseRun, compiled_at: datetime = None, resolver_cls=None):
     resolver_cls = resolver_cls or CorePlatformResolver
     try:
         project = run.project

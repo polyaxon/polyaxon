@@ -8,5 +8,6 @@ Name | Type | Description | Notes
 **email** | **String** |  | [optional] 
 **name** | **String** |  | [optional] 
 **theme** | **Number** |  | [optional] 
+**organization** | **String** |  | [optional] 
 
 

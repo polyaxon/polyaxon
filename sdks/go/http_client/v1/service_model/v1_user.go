@@ -35,6 +35,9 @@ type V1User struct {
 	// Name
 	Name string `json:"name,omitempty"`
 
+	// Default organization
+	Organization string `json:"organization,omitempty"`
+
 	// Theme
 	Theme int32 `json:"theme,omitempty"`
 
