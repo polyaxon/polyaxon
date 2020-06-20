@@ -29,7 +29,7 @@ except ImportError:
 def get_timezone(tz=None):
     from polyaxon import settings
 
-    tz = tz or settings.CLIENT_CONFIG.timezone or "UTC"
+    tz = tz or settings.CLIENT_CONFIG.timezone
     if tz:
         return pytz.timezone(tz)
     return tzlocal()
