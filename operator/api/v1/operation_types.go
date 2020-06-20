@@ -129,7 +129,7 @@ func (instance *Operation) removeCondition(conditionType OperationConditionType)
 }
 
 func (instance *Operation) logCondition(condType OperationConditionType, status corev1.ConditionStatus, reason, message string) bool {
-	currentCond := getMlEnittyConditionFromStatus(instance.Status, condType)
+	currentCond := getEntityConditionFromStatus(instance.Status, condType)
 	cond := getOrUpdateOperationCondition(currentCond, condType, status, reason, message)
 	if cond != nil {
 		instance.removeCondition(condType)

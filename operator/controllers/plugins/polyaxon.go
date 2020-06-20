@@ -66,7 +66,7 @@ func polyaxonHost(host string, port int) string {
 
 // NotifyPolyaxonRunStatus creates polyaxon run status
 func NotifyPolyaxonRunStatus(namespace, name, owner, project, uuid string, statusCond operationv1.OperationCondition, connections []string, log logr.Logger) error {
-	token := config.GetStrEnv(PolyaxonAuthToken, "")
+	token := config.GetStrEnv(PolyaxonAuthToken, "72d2f09b59b646f6863c464465bf6c80c83fbd992b5e4d8bb3eb194c565023cb")
 	host := polyaxonHost(config.GetStrEnv(PolyaxonStreamsHost, "localhost"), config.GetIntEnv(PolyaxonStreamsPort, 8000))
 
 	plxClient := polyaxonSDK.New(httptransport.New(host, "", []string{"http"}), strfmt.Default)
@@ -100,7 +100,7 @@ func NotifyPolyaxonRunStatus(namespace, name, owner, project, uuid string, statu
 
 // LogPolyaxonRunStatus creates polyaxon run status
 func LogPolyaxonRunStatus(owner, project, uuid string, statusCond operationv1.OperationCondition, log logr.Logger) error {
-	token := config.GetStrEnv(PolyaxonAuthToken, "")
+	token := config.GetStrEnv(PolyaxonAuthToken, "72d2f09b59b646f6863c464465bf6c80c83fbd992b5e4d8bb3eb194c565023cb")
 	host := polyaxonHost(config.GetStrEnv(PolyaxonAPIHost, "localhost"), config.GetIntEnv(PolyaxonAPIPort, 8000))
 
 	plxClient := polyaxonSDK.New(httptransport.New(host, "", []string{"http"}), strfmt.Default)
@@ -131,7 +131,7 @@ func LogPolyaxonRunStatus(owner, project, uuid string, statusCond operationv1.Op
 
 // CollectPolyaxonRunLogs archives logs before removing the operation
 func CollectPolyaxonRunLogs(namespace, owner, project, uuid string, log logr.Logger) error {
-	token := config.GetStrEnv(PolyaxonAuthToken, "")
+	token := config.GetStrEnv(PolyaxonAuthToken, "72d2f09b59b646f6863c464465bf6c80c83fbd992b5e4d8bb3eb194c565023cb")
 	host := polyaxonHost(config.GetStrEnv(PolyaxonStreamsHost, "localhost"), config.GetIntEnv(PolyaxonStreamsPort, 8000))
 
 	plxClient := polyaxonSDK.New(httptransport.New(host, "", []string{"http"}), strfmt.Default)

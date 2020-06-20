@@ -124,8 +124,8 @@ func (r *OperationReconciler) reconcileDeployment(ctx context.Context, instance 
 		if err != nil {
 			return err
 		}
+		r.instanceSyncStatus(instance)
 	}
-	r.instanceSyncStatus(instance)
 
 	return nil
 }

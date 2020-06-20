@@ -110,8 +110,8 @@ func getOrUpdateOperationCondition(currentCond *OperationCondition, conditionTyp
 	return &newCond
 }
 
-// getMlEnittyConditionFromStatus returns the condition with the specific type form status.conditions
-func getMlEnittyConditionFromStatus(status OperationStatus, condType OperationConditionType) *OperationCondition {
+// getEntityConditionFromStatus returns the condition with the specific type form status.conditions
+func getEntityConditionFromStatus(status OperationStatus, condType OperationConditionType) *OperationCondition {
 	for _, condition := range status.Conditions {
 		if condition.Type == condType {
 			return &condition
@@ -122,8 +122,17 @@ func getMlEnittyConditionFromStatus(status OperationStatus, condType OperationCo
 
 // hasOperationCondition checks if a status has a specific condition type
 func hasOperationCondition(status OperationStatus, condType OperationConditionType) bool {
-	cond := getMlEnittyConditionFromStatus(status, condType)
+	cond := getEntityConditionFromStatus(status, condType)
 	if cond != nil && cond.Status == corev1.ConditionTrue {
+		return true
+	}
+	return false
+}
+
+// hasOperationCondition checks if a status's last codition is of a specific type
+func hasLastOperationCondition(status OperationStatus, condType OperationConditionType) bool {
+	cond := status.Conditions[len(status.Conditions)-1]
+	if cond.Type == condType && cond.Status == corev1.ConditionTrue {
 		return true
 	}
 	return false
@@ -131,17 +140,17 @@ func hasOperationCondition(status OperationStatus, condType OperationConditionTy
 
 // isOperationStarting checks if an ml operation status is in starting condition
 func isOperationStarting(status OperationStatus) bool {
-	return hasOperationCondition(status, OperationStarting)
+	return hasLastOperationCondition(status, OperationStarting)
 }
 
 // isOperationRunning checks if an ml operation status is in running condition
 func isOperationRunning(status OperationStatus) bool {
-	return hasOperationCondition(status, OperationRunning)
+	return hasLastOperationCondition(status, OperationRunning)
 }
 
 // isOperationWarning checks if an ml operation status is in warning condition
 func isOperationWarning(status OperationStatus) bool {
-	return hasOperationCondition(status, OperationWarning)
+	return hasLastOperationCondition(status, OperationWarning)
 }
 
 // isOperationSucceeded checks if an ml operation status is succeeded
