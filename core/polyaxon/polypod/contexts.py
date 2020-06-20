@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from datetime import datetime
 from typing import Dict
 
 from polyaxon.api import REWRITE_SERVICES_V1, SERVICES_V1
@@ -36,6 +36,8 @@ def resolve_contexts(
     artifacts_store: V1ConnectionType,
     connection_by_names: Dict[str, V1ConnectionType],
     iteration: int,
+    created_at: datetime,
+    compiled_at: datetime,
 ) -> Dict:
 
     resolved_contexts = {
@@ -51,6 +53,8 @@ def resolve_contexts(
             "iteration": iteration,
             "context_path": contexts.CONTEXT_ROOT,
             "artifacts_path": contexts.CONTEXT_MOUNT_ARTIFACTS,
+            "created_at": created_at,
+            "compiled_at": compiled_at,
         },
         "init": {},
         "connections": {},
@@ -109,6 +113,8 @@ def resolve_globals_contexts(
     run_name: str,
     run_path: str,
     iteration: int,
+    created_at: datetime,
+    compiled_at: datetime,
 ) -> Dict:
 
     resolved_contexts = {
@@ -130,6 +136,8 @@ def resolve_globals_contexts(
             "run_outputs_path": contexts.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(
                 run_path
             ),
+            "created_at": created_at,
+            "compiled_at": compiled_at,
         }
     }
 

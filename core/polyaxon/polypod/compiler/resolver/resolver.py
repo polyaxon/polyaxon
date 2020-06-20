@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from datetime import datetime
 from typing import Dict, Optional
 
 from polyaxon.exceptions import PolyaxonCompilerError
@@ -32,6 +32,7 @@ def resolve(
     params: Optional[Dict[str, Dict]],
     run=None,
     resolver_cls=None,
+    compiled_at: datetime = None,
 ):
     resolver_cls = resolver_cls or BaseResolver
     run_kind = compiled_operation.get_run_kind()
@@ -52,6 +53,8 @@ def resolve(
         run_path=run_path,
         run_uuid=run_uuid,
         params=params,
+        created_at=run.created_at,
+        compiled_at=compiled_at,
     )
     if resolver:
         return resolver, resolver.resolve()

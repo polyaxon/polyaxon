@@ -18,6 +18,8 @@ import logging
 
 from typing import Dict, List, Optional
 
+from django.utils.timezone import now
+
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
 from coredb.managers.artifacts import set_artifacts
@@ -33,13 +35,24 @@ from polycommon.options.registry.k8s import K8S_IN_CLUSTER, K8S_NAMESPACE
 _logger = logging.getLogger("polyaxon.scheduler")
 
 
-def get_run(run_id: int, run: BaseRun) -> Optional[BaseRun]:
-    run_model = get_run_model()
+def get_run(
+    run_id: int,
+    run: Optional[BaseRun],
+    use_all: bool = False,
+    only: List[str] = None,
+    defer: List[str] = None,
+) -> Optional[BaseRun]:
     if run:
         return run
+    run_model = get_run_model()
+    query = run_model.all if use_all else run_model.objects
+    if only:
+        query = query.only(*only)
+    if defer:
+        query = query.only(*defer)
 
     try:
-        return run_model.objects.get(id=run_id)
+        return query.get(id=run_id)
     except run_model.DoesNotExist:
         _logger.info(
             "Something went wrong, " "the run `%s` does not exist anymore.", run_id
@@ -70,7 +83,8 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False):
         return None
 
     try:
-        _, compiled_operation = resolver.resolve(run=run)
+        compiled_at = now()
+        _, compiled_operation = resolver.resolve(run=run, compiled_at=compiled_at)
     except PolyaxonCompilerError as e:
         condition = V1StatusCondition.get_condition(
             type=V1Statuses.FAILED,
@@ -86,6 +100,7 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False):
         status="True",
         reason="PolyaxonRunCompiler",
         message="Run is compiled",
+        last_update_time=compiled_at,
     )
     new_run_status(run=run, condition=condition)
 

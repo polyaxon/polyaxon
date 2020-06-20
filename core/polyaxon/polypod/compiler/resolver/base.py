@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from datetime import datetime
 from typing import Dict, Optional
 
 from polyaxon import settings
@@ -45,6 +45,8 @@ class BaseResolver:
         run_uuid: str,
         run_path: str,
         params: Optional[Dict],
+        created_at: datetime = None,
+        compiled_at: datetime = None,
     ):
         if not compiled_operation:
             raise PolyaxonCompilerError("A run spec is required for resolution.")
@@ -69,6 +71,8 @@ class BaseResolver:
         self.agent_config = None
         self.contexts = {}
         self.globals = {}
+        self.created_at = created_at
+        self.compiled_at = compiled_at
         self._param_spec = {}
 
     @property
@@ -88,6 +92,8 @@ class BaseResolver:
             run_path=self.run_path,
             run_uuid=self.run_uuid,
             iteration=self.iteration,
+            created_at=self.created_at,
+            compiled_at=self.compiled_at,
         )
 
     def resolve_params(self):
@@ -165,6 +171,8 @@ class BaseResolver:
             connection_by_names=self.connection_by_names,
             artifacts_store=self.artifacts_store,
             iteration=self.iteration,
+            created_at=self.created_at,
+            compiled_at=self.compiled_at,
         )
 
     def apply_operation_contexts(self):

@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from datetime import datetime
 
 from marshmallow import ValidationError
 
@@ -47,7 +48,7 @@ class CorePlatformResolver(resolver.BaseResolver):
         self.run.save(update_fields=["content", "inputs", "outputs", "meta_info"])
 
 
-def resolve(run: BaseRun, resolver_cls=None):
+def resolve(run: BaseRun, compiled_at: datetime, resolver_cls=None):
     resolver_cls = resolver_cls or CorePlatformResolver
     try:
         project = run.project
@@ -62,6 +63,7 @@ def resolve(run: BaseRun, resolver_cls=None):
             run_path=run.subpath,
             resolver_cls=resolver_cls,
             params=None,
+            compiled_at=compiled_at,
         )
     except (
         AccessNotAuthorized,

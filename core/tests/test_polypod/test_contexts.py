@@ -24,6 +24,7 @@ from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyflow import V1CompiledOperation, V1RunKind
 from polyaxon.polypod.contexts import resolve_contexts
 from polyaxon.schemas.types import V1ConnectionType
+from polyaxon.utils.tz_utils import now
 
 
 @pytest.mark.polypod_mark
@@ -55,6 +56,8 @@ class TestResolveContexts(BaseTestCase):
             artifacts_store=None,
             connection_by_names={},
             iteration=None,
+            created_at=None,
+            compiled_at=None,
         )
         assert spec == {
             "globals": {
@@ -69,6 +72,8 @@ class TestResolveContexts(BaseTestCase):
                 "uuid": "uuid",
                 "namespace": "test",
                 "iteration": None,
+                "created_at": None,
+                "compiled_at": None,
             },
             "init": {},
             "connections": {},
@@ -102,6 +107,7 @@ class TestResolveContexts(BaseTestCase):
                 },
             }
         )
+        date_value = now()
         spec = resolve_contexts(
             namespace="test",
             owner_name="user",
@@ -114,6 +120,8 @@ class TestResolveContexts(BaseTestCase):
             artifacts_store=store,
             connection_by_names={store.name: store},
             iteration=12,
+            created_at=date_value,
+            compiled_at=date_value,
         )
         assert spec == {
             "globals": {
@@ -130,6 +138,8 @@ class TestResolveContexts(BaseTestCase):
                 "namespace": "test",
                 "iteration": 12,
                 "run_info": "user.project.runs.uuid",
+                "created_at": date_value,
+                "compiled_at": date_value,
             },
             "init": {"test_claim": store.schema.to_dict()},
             "connections": {"test_claim": store.schema.to_dict()},
@@ -174,6 +184,8 @@ class TestResolveContexts(BaseTestCase):
             artifacts_store=store,
             connection_by_names={store.name: store},
             iteration=12,
+            created_at=None,
+            compiled_at=None,
         )
         assert spec == {
             "globals": {
@@ -190,6 +202,8 @@ class TestResolveContexts(BaseTestCase):
                 "run_outputs_path": "/plx-context/artifacts/test/outputs",
                 "namespace": "test",
                 "iteration": 12,
+                "created_at": None,
+                "compiled_at": None,
             },
             "init": {"test_claim": store.schema.to_dict()},
             "connections": {"test_claim": store.schema.to_dict()},
@@ -226,6 +240,8 @@ class TestResolveContexts(BaseTestCase):
             artifacts_store=None,
             connection_by_names={},
             iteration=12,
+            created_at=None,
+            compiled_at=None,
         )
         assert spec == {
             "globals": {
@@ -244,6 +260,8 @@ class TestResolveContexts(BaseTestCase):
                 "iteration": 12,
                 "ports": [1212, 1234],
                 "base_url": "/services/v1/test/user/project/runs/uuid",
+                "created_at": None,
+                "compiled_at": None,
             },
             "init": {},
             "connections": {},
