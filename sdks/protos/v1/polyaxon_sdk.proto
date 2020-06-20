@@ -94,6 +94,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 };
 
 
+// Service to manage runs
 service RunsV1 {
     // List bookmarked runs for user
     rpc ListBookmarkedRuns(UserResourceListRequest) returns (ListRunsResponse) {

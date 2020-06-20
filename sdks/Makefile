@@ -20,7 +20,7 @@ PYTHON := $(DOCKER_RUN) python
 GO := $(DOCKER_RUN) go
 SWAGGER := $(DOCKER_RUN) swagger
 DOCKER_PATH_AUTOGEN := /usr/local/bin/autogen/autogen
-PATH_SWAGGER_CLI := ~/bin/openapi-generator-cli-4.3.0.jar
+PATH_SWAGGER_CLI := ~/bin/openapi-generator-cli-4.3.1.jar
 LICENSE_OWNER := "Polyaxon, Inc."
 
 # Client
@@ -28,7 +28,8 @@ PB_CLIENT := pb_client
 HTTP_CLIENT := http_client
 
 # Flags
-INCLUDE_FLAGS := -I/usr/local/include -I. -I/gopath/pkg/mod -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.14.3/third_party/googleapis/ -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.14.3
+INCLUDE_FLAGS := -I/usr/local/include -I. -I/gopath/pkg/mod -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.14.6/third_party/googleapis/ -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.14.6
+API_FLAGS := --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=simple_operation_ids=true,logtostderr=true,allow_delete_body=true:swagger
 PROTO_PATH := --proto_path=protos/
 
 # Proto files
@@ -65,12 +66,12 @@ compile-go:
 
 compile-swagger:
 	# Compile the *.proto files into *.swagger.json (swagger specification).
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_SDK)
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_API)
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_POLYFLOW)
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_POLYBOARD)
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_SCHEMAS)
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_TYPES)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) $(API_FLAGS) $(PROTO_SDK)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) $(API_FLAGS) $(PROTO_API)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) $(API_FLAGS) $(PROTO_POLYFLOW)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) $(API_FLAGS) $(PROTO_POLYBOARD)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) $(API_FLAGS) $(PROTO_SCHEMAS)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) $(API_FLAGS) $(PROTO_TYPES)
 
 
 compile-js:
