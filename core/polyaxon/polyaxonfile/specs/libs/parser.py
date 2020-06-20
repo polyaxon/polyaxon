@@ -23,6 +23,7 @@ from typing import Dict
 
 from polyaxon.config_reader.utils import deep_update
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.polyaxonfile.specs.libs.engine import get_engine
 from polyaxon.polyaxonfile.specs.sections import Sections
 from polyaxon.polyflow import ParamSpec
 
@@ -35,7 +36,7 @@ except (ImportError, ModuleNotFoundError):
 class Parser(object):
     """Parses the Polyaxonfile."""
 
-    env = jinja2.Environment()
+    engine = get_engine()
 
     @staticmethod
     def _get_section_data(section_data):
@@ -181,7 +182,7 @@ class Parser(object):
 
     @classmethod
     def _evaluate_expression(cls, expression, params, check_operators):
-        result = cls.env.from_string(expression).render(**params)
+        result = cls.engine.from_string(expression).render(**params)
         if result == expression:
             try:
                 return ast.literal_eval(result)

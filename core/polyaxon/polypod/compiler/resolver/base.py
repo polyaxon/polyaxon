@@ -106,7 +106,9 @@ class BaseResolver:
     def resolve_connections_params(self):
         self.compiled_operation = CompiledOperationSpecification.apply_run_connections_params(
             config=self.compiled_operation,
-            artifact_store=self.agent_config.artifacts_store.name if self.agent_config else None,
+            artifact_store=self.agent_config.artifacts_store.name
+            if self.agent_config
+            else None,
             contexts=self.globals,
         )
 
