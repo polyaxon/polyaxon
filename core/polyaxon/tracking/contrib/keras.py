@@ -18,12 +18,12 @@ from polyaxon import tracking
 from polyaxon.exceptions import PolyaxonClientException
 
 try:
-    from keras.callbacks import Callback
-    from keras.callbacks import ModelCheckpoint
+    from tensorflow.keras.callbacks import Callback
+    from tensorflow.python.keras.callbacks import ModelCheckpoint
 except ImportError:
     try:
-        from tensorflow.keras.callbacks import Callback
-        from tensorflow.python.keras.callbacks import ModelCheckpoint
+        from keras.callbacks import Callback
+        from keras.callbacks import ModelCheckpoint
     except ImportError:
         raise PolyaxonClientException(
             "Keras is required to use PolyaxonKerasCallback/PolyaxonKerasModelCheckpoint"
