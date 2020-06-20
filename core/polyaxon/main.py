@@ -33,6 +33,7 @@ from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
 from polyaxon.cli.run import run
+from polyaxon.cli.upload import upload
 from polyaxon.cli.version import check_cli_version, upgrade, version
 from polyaxon.logger import clean_outputs, configure_logger
 from polyaxon.managers.client import ClientConfigManager
@@ -122,6 +123,7 @@ cli.add_command(dashboard)
 cli.add_command(admin)
 cli.add_command(port_forward)
 cli.add_command(completion)
+cli.add_command(upload)
 if settings.CLIENT_CONFIG.is_ops:
 
     from polyaxon.cli.components.agent import agent
