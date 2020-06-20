@@ -11,7 +11,7 @@ RUN apt-get -y update && \
 
 # Install Go
 RUN mkdir -p /goroot && \
-  curl https://dl.google.com/go/go1.13.8.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
+  curl https://dl.google.com/go/go1.13.12.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
 
 # Set environment variables.
 ENV GOROOT /goroot
@@ -26,18 +26,18 @@ RUN mv protoc3/bin/* /usr/bin/
 RUN mv protoc3/include/* /usr/local/include/
 
 # Go Deps
-RUN go mod init sdks
+VOLUME /sdks
+COPY . /sdks
+WORKDIR /sdks
 RUN go get -u github.com/golang/protobuf/protoc-gen-go
 RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.14.6
 RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.14.6
 RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
 
 # HTML openapi
-RUN npm install -g bootprint
-RUN npm install -g bootprint-openapi
-RUN npm -g install html-inline
+#RUN npm install -g bootprint
+#RUN npm install -g bootprint-openapi
+#RUN npm -g install html-inline
 
 # Install Python gRPC tools.
 RUN python -m pip install grpcio grpcio-tools
-
-WORKDIR /sdks
