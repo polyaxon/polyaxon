@@ -99,7 +99,7 @@ def generate(
         try:
             compiled_operation = specification.compile_operation()
             compiled_operation.apply_params(params=specification.config.params)
-            compiled_operation = CompiledOperationSpecification.apply_run_context(
+            compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
                 compiled_operation
             )
         except PolyaxonSchemaError:

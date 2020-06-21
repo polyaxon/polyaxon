@@ -75,6 +75,7 @@ class BaseConverter(ConverterAbstract):
     K8S_LABELS_NAME = None
     K8S_LABELS_COMPONENT = None
     K8S_LABELS_PART_OF = None
+    MAIN_CONTAINER_ID = None
 
     def __init__(
         self,
@@ -200,6 +201,7 @@ class BaseConverter(ConverterAbstract):
         )
 
         return get_main_container(
+            container_id=self.MAIN_CONTAINER_ID,
             main_container=main_container,
             volume_mounts=volume_mounts,
             log_level=log_level,
@@ -228,6 +230,7 @@ class BaseConverter(ConverterAbstract):
             for c in to_list(sidecar_containers, check_none=True)
         ]
         polyaxon_sidecar_container = get_sidecar_container(
+            container_id=self.MAIN_CONTAINER_ID,
             polyaxon_sidecar=polyaxon_sidecar,
             env=self.get_polyaxon_sidecar_service_env_vars(),
             artifacts_store=artifacts_store,

@@ -23,6 +23,7 @@ from polyaxon.containers.containers import (
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyflow import V1CompiledOperation, V1Init
 from polyaxon.schemas.cli.agent_config import AgentConfig
+from polyaxon.utils.list_utils import to_list
 
 
 class PolypodConfig:
@@ -69,6 +70,12 @@ class PolypodConfig:
 
         if compiled_operation.is_job_run or compiled_operation.is_service_run:
             self._resolve_replica_connections(
+                init=compiled_operation.run.init,
+                connections=compiled_operation.run.connections,
+                agent_config=agent_config,
+            )
+        if compiled_operation.is_distributed_run:
+            self._resolve_distributed_connections(
                 compiled_operation=compiled_operation, agent_config=agent_config
             )
         if compiled_operation.is_dag_run:
@@ -81,10 +88,6 @@ class PolypodConfig:
                 connections=compiled_operation.run.connections,
                 agent_config=agent_config,
             )
-
-    def _get_init_connections(self, init: List[V1Init]):
-        init = init or []
-        return [i.connection for i in init if i.connection]
 
     def _resolve_connections(self, connections: List[str], agent_config: AgentConfig):
         if connections:
@@ -104,12 +107,34 @@ class PolypodConfig:
             self.connection_by_names.update(connection_by_names)
 
     def _resolve_replica_connections(
+        self, connections: List[str], init: List[V1Init], agent_config: AgentConfig
+    ):
+        connections = to_list(connections, check_none=True)
+        self._resolve_connections(connections=connections, agent_config=agent_config)
+        init = to_list(init, check_none=True)
+        init = [i.connection for i in init if i.connection]
+        self._resolve_connections(connections=init, agent_config=agent_config)
+
+    def _resolve_distributed_connections(
         self, compiled_operation: V1CompiledOperation, agent_config: AgentConfig
     ):
-        self._resolve_connections(
-            connections=compiled_operation.run.connections, agent_config=agent_config
-        )
-        init_connections = self._get_init_connections(compiled_operation.run.init)
-        self._resolve_connections(
-            connections=init_connections, agent_config=agent_config
-        )
+        def _resolve_replica(replica):
+            if not replica:
+                return
+            self._resolve_replica_connections(
+                init=replica.init,
+                connections=replica.connections,
+                agent_config=agent_config,
+            )
+
+        if compiled_operation.is_mpi_job_run:
+            _resolve_replica(compiled_operation.run.launcher)
+            _resolve_replica(compiled_operation.run.worker)
+        if compiled_operation.is_tf_job_run:
+            _resolve_replica(compiled_operation.run.chief)
+            _resolve_replica(compiled_operation.run.worker)
+            _resolve_replica(compiled_operation.run.ps)
+            _resolve_replica(compiled_operation.run.evaluator)
+        if compiled_operation.is_pytorch_job_run:
+            _resolve_replica(compiled_operation.run.master)
+            _resolve_replica(compiled_operation.run.worker)

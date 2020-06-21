@@ -29,6 +29,7 @@ from polyaxon.containers.containers import (
     V1PolyaxonSidecarContainer,
     get_sidecar_resources,
 )
+from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.exceptions import PolypodException
 from polyaxon.polyflow import V1Plugins
 from polyaxon.polypod.common.env_vars import (
@@ -43,7 +44,6 @@ from polyaxon.polypod.common.mounts import (
     get_mount_from_resource,
     get_mount_from_store,
 )
-from polyaxon.polypod.main.container import MAIN_JOB_CONTAINER
 from polyaxon.polypod.sidecar.container import (
     SIDECAR_CONTAINER,
     get_sidecar_args,
@@ -59,6 +59,7 @@ class TestSidecarContainer(BaseTestCase):
     def assert_artifacts_store_raises(self, store, run_path=None):
         with self.assertRaises(PolypodException):
             get_sidecar_container(
+                container_id=MAIN_JOB_CONTAINER,
                 contexts=PluginsContextsSpec.from_config(
                     V1Plugins(collect_logs=True, collect_artifacts=False)
                 ),
@@ -90,6 +91,7 @@ class TestSidecarContainer(BaseTestCase):
 
     def test_get_sidecar_container_without_an_artifacts_store(self):
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=None,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -116,6 +118,7 @@ class TestSidecarContainer(BaseTestCase):
             ),
         )
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -143,6 +146,7 @@ class TestSidecarContainer(BaseTestCase):
             schema=V1BucketConnection(bucket="s3//:foo"),
         )
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -178,6 +182,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # Default auth is included
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -202,6 +207,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # Nno auth
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -242,6 +248,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # Both logs/outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -266,7 +273,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -280,6 +287,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # logs and no outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -306,7 +314,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -319,6 +327,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # outputs and no logs
         sidecar = get_sidecar_container(
+            container_id="test",
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -339,13 +348,11 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.image_pull_policy == "IfNotPresent"
         assert sidecar.command == ["/bin/bash", "-c"]
         assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
+            get_sidecar_args(container_id="test", sleep_interval=213, sync_interval=212)
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id="test",
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -380,6 +387,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # Both logs and outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -404,7 +412,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -419,6 +427,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # logs and no outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -445,7 +454,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -459,6 +468,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # outputs and no logs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -485,7 +495,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -517,6 +527,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # both logs and outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -541,7 +552,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -555,6 +566,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # logs and no outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -581,7 +593,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -594,6 +606,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # outputs and no logs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -620,7 +633,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=bucket_managed_store.name,
         ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
             connection=bucket_managed_store, secret=resource1
@@ -646,6 +659,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # logs and outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -670,7 +684,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=mount_managed_store.name,
         ) + get_connection_env_var(connection=mount_managed_store, secret=None)
         assert sidecar.env_from == []
@@ -683,6 +697,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # logs and no outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -709,7 +724,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=mount_managed_store.name,
         ) + get_connection_env_var(connection=mount_managed_store, secret=None)
         assert sidecar.env_from == []
@@ -721,6 +736,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # outputs and no logs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -747,7 +763,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=mount_managed_store.name,
         ) + get_connection_env_var(connection=mount_managed_store, secret=None)
         assert sidecar.env_from == []
@@ -775,6 +791,7 @@ class TestSidecarContainer(BaseTestCase):
 
         # logs and outputs
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             env=env_vars,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="sidecar/sidecar",
@@ -799,7 +816,7 @@ class TestSidecarContainer(BaseTestCase):
         ]
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
-            job_container_name=MAIN_JOB_CONTAINER,
+            container_id=MAIN_JOB_CONTAINER,
             artifacts_store_name=blob_managed_store.name,
         ) + get_connection_env_var(connection=blob_managed_store, secret=resource1)
         assert sidecar.env_from == [get_env_from_secret(secret=resource1)]
@@ -830,6 +847,7 @@ class TestSidecarContainer(BaseTestCase):
         )
 
         sidecar = get_sidecar_container(
+            container_id=MAIN_JOB_CONTAINER,
             polyaxon_sidecar=V1PolyaxonSidecarContainer(
                 image="foo",
                 image_pull_policy="sdf",

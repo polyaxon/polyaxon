@@ -13,7 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Dict
+import copy
+
+from typing import Dict, List
 
 from polyaxon import types
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
@@ -25,8 +27,8 @@ from polyaxon.polyflow import (  # noqa
     V1Dag,
     V1Init,
     V1Param,
-    V1RunKind,
 )
+from polyaxon.utils.list_utils import to_list
 
 
 class CompiledOperationSpecification(BaseSpecification):
@@ -68,7 +70,7 @@ class CompiledOperationSpecification(BaseSpecification):
             for p_spec in param_spec:
                 if not p_spec.param.is_literal:
                     raise PolyaxonfileError(
-                        "apply_run_context received a non-resolved "
+                        "calculate_context_spec received a non-resolved "
                         "ref param `{}` with value `{}`".format(
                             p_spec.name, p_spec.param.to_dict()
                         )
@@ -78,7 +80,7 @@ class CompiledOperationSpecification(BaseSpecification):
         return param_spec
 
     @classmethod
-    def _apply_run_context(
+    def _apply_operation_contexts(
         cls,
         config: V1CompiledOperation,
         param_spec: Dict[str, ParamSpec] = None,
@@ -97,7 +99,7 @@ class CompiledOperationSpecification(BaseSpecification):
         return config
 
     @classmethod
-    def apply_run_context(
+    def apply_operation_contexts(
         cls,
         config: V1CompiledOperation,
         param_spec: Dict[str, ParamSpec] = None,
@@ -106,9 +108,67 @@ class CompiledOperationSpecification(BaseSpecification):
         if config.is_dag_run:
             return cls._apply_dag_context(config)
         else:
-            return cls._apply_run_context(
+            return cls._apply_operation_contexts(
                 config=config, param_spec=param_spec, contexts=contexts
             )
+
+    @classmethod
+    def _apply_connections_params(
+        cls,
+        connections: List[str],
+        init: List[V1Init],
+        artifact_store: str = None,
+        param_spec: Dict[str, ParamSpec] = None,
+    ):
+        if connections:
+            connections = Parser.parse_section(
+                connections, param_spec=param_spec, parse_params=True
+            )
+        _init = []
+        if init:
+            for i in init:
+                if i.artifacts and not i.connection:
+                    i.connection = artifact_store
+                resolved_i = V1Init.from_dict(
+                    Parser.parse_section(
+                        i.to_dict(), param_spec=param_spec, parse_params=True
+                    )
+                )
+                _init.append(resolved_i)
+        return _init, connections
+
+    @classmethod
+    def _apply_distributed_run_connections_params(
+        cls,
+        config: V1CompiledOperation,
+        artifact_store: str = None,
+        param_spec: Dict[str, ParamSpec] = None,
+    ):
+        def _resolve_replica(replica):
+            if not replica:
+                return
+            init, connections = cls._apply_connections_params(
+                init=replica.init,
+                connections=replica.connections,
+                artifact_store=artifact_store,
+                param_spec=param_spec,
+            )
+            replica.init = init
+            replica.connections = connections
+            return replica
+
+        if config.is_mpi_job_run:
+            config.run.launcher = _resolve_replica(config.run.launcher)
+            config.run.worker = _resolve_replica(config.run.worker)
+        if config.is_tf_job_run:
+            config.run.chief = _resolve_replica(config.run.chief)
+            config.run.worker = _resolve_replica(config.run.worker)
+            config.run.ps = _resolve_replica(config.run.ps)
+            config.run.evaluator = _resolve_replica(config.run.evaluator)
+        if config.is_pytorch_job_run:
+            config.run.master = _resolve_replica(config.run.master)
+            config.run.worker = _resolve_replica(config.run.worker)
+        return config
 
     @classmethod
     def apply_run_connections_params(
@@ -120,23 +180,20 @@ class CompiledOperationSpecification(BaseSpecification):
     ) -> V1CompiledOperation:
         if not param_spec:
             param_spec = cls.calculate_context_spec(config=config, contexts=contexts)
-        if config.run.kind in {V1RunKind.JOB, V1RunKind.SERVICE}:
-            if config.run.connections:
-                config.run.connections = Parser.parse_section(
-                    config.run.connections, param_spec=param_spec, parse_params=True
-                )
-            if config.run.init:
-                init = []
-                for i in config.run.init:
-                    if i.artifacts and not i.connection:
-                        i.connection = artifact_store
-                    resolved_i = V1Init.from_dict(
-                        Parser.parse_section(
-                            i.to_dict(), param_spec=param_spec, parse_params=True
-                        )
-                    )
-                    init.append(resolved_i)
-                config.run.init = init
+        if config.is_job_run or config.is_service_run:
+            init, connections = cls._apply_connections_params(
+                init=config.run.init,
+                connections=config.run.connections,
+                artifact_store=artifact_store,
+                param_spec=param_spec,
+            )
+            config.run.init = init
+            config.run.connections = connections
+            return config
+        if config.is_distributed_run:
+            return cls._apply_distributed_run_connections_params(
+                config=config, artifact_store=artifact_store, param_spec=param_spec,
+            )
         return config
 
     @classmethod
@@ -160,18 +217,54 @@ class CompiledOperationSpecification(BaseSpecification):
         return Parser.parse_section(section, param_spec)
 
     @classmethod
-    def apply_operation_contexts(
+    def _apply_runtime_contexts(
         cls,
         config: V1CompiledOperation,
         contexts: Dict = None,
         param_spec: Dict[str, ParamSpec] = None,
-    ):
+    ) -> V1CompiledOperation:
+        if not param_spec:
+            param_spec = cls.calculate_context_spec(
+                config=config, contexts=contexts, should_be_resolved=True
+            )
+        parsed_data = Parser.parse_runtime(config.to_dict(), param_spec)
+        return cls.CONFIG.read(parsed_data)
+
+    @classmethod
+    def _apply_distributed_runtime_contexts(
+        cls,
+        config: V1CompiledOperation,
+        contexts: Dict = None,
+        param_spec: Dict[str, ParamSpec] = None,
+    ) -> V1CompiledOperation:
+        if not param_spec:
+            # Calculate the param_space once with empty contexts
+            replica_param_spec = cls.calculate_context_spec(
+                config=config, contexts=None, should_be_resolved=True
+            )
+            param_spec = {}
+            for k in contexts:
+                param_spec[k] = copy.copy(replica_param_spec)
+                param_spec[k].update(cls.dict_to_param_spec(contexts=contexts[k]))
+        parsed_data = Parser.parse_distributed_runtime(config.to_dict(), param_spec)
+        return cls.CONFIG.read(parsed_data)
+
+    @classmethod
+    def apply_runtime_contexts(
+        cls,
+        config: V1CompiledOperation,
+        contexts: Dict = None,
+        param_spec: Dict[str, ParamSpec] = None,
+    ) -> V1CompiledOperation:
         if config.has_pipeline:
             raise PolyaxonSchemaError(
                 "This method is not allowed on this specification."
             )
-        if not param_spec:
-            param_spec = cls.calculate_context_spec(config=config, contexts=contexts)
-
-        parsed_data = Parser.parse_run(config.to_dict(), param_spec)
-        return cls.CONFIG.read(parsed_data)
+        if config.is_distributed_run:
+            return cls._apply_distributed_runtime_contexts(
+                config=config, contexts=contexts, param_spec=param_spec,
+            )
+        else:
+            return cls._apply_runtime_contexts(
+                config=config, contexts=contexts, param_spec=param_spec,
+            )

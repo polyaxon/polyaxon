@@ -33,7 +33,7 @@ from polyaxon.polypod.sidecar.env_vars import get_sidecar_env_vars
 class TestSidecarUtils(BaseTestCase):
     def test_get_sidecar_env_vars(self):
         sidecar_env_vars = get_sidecar_env_vars(
-            env_vars=None, job_container_name="foo", artifacts_store_name="name"
+            env_vars=None, container_id="foo", artifacts_store_name="name"
         )
 
         assert sidecar_env_vars == [
@@ -47,7 +47,7 @@ class TestSidecarUtils(BaseTestCase):
             get_env_var(name="key2", value="value2"),
         ]
         sidecar_env_vars = get_sidecar_env_vars(
-            env_vars=env_vars, job_container_name="foo", artifacts_store_name="name"
+            env_vars=env_vars, container_id="foo", artifacts_store_name="name"
         )
 
         assert sidecar_env_vars == env_vars + [
@@ -57,7 +57,7 @@ class TestSidecarUtils(BaseTestCase):
 
         # Outputs Path
         sidecar_env_vars = get_sidecar_env_vars(
-            env_vars=None, job_container_name="foo", artifacts_store_name="name"
+            env_vars=None, container_id="foo", artifacts_store_name="name"
         )
 
         assert sidecar_env_vars == [

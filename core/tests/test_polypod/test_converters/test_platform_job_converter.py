@@ -51,6 +51,7 @@ from polyaxon.services.headers import PolyaxonServices
 class DummyConverter(PlatformJobConverter):
     SPEC_KIND = "dumy"
     K8S_LABELS_NAME = "dummy-name"
+    MAIN_CONTAINER_ID = "dummy"
 
 
 class TestJobConverter(BaseTestCase):
@@ -394,6 +395,7 @@ class TestJobConverter(BaseTestCase):
             ),
         ) == [
             get_sidecar_container(
+                container_id="dummy",
                 contexts=contexts,
                 env=self.converter.get_polyaxon_sidecar_service_env_vars(),
                 polyaxon_sidecar=V1PolyaxonSidecarContainer(
@@ -425,6 +427,7 @@ class TestJobConverter(BaseTestCase):
             sidecar_containers=[],
         ) == [
             get_sidecar_container(
+                container_id="dummy",
                 contexts=contexts,
                 env=self.converter.get_polyaxon_sidecar_service_env_vars(),
                 polyaxon_sidecar=polyaxon_sidecar,
@@ -464,6 +467,7 @@ class TestJobConverter(BaseTestCase):
             ports=None,
         )
         expected_container = get_main_container(
+            container_id="dummy",
             main_container=main_container,
             contexts=contexts,
             volume_mounts=get_mounts(

@@ -22,7 +22,7 @@ from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1ClaimConnection
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyflow import V1CompiledOperation, V1RunKind
-from polyaxon.polypod.contexts import resolve_contexts
+from polyaxon.polypod.compiler.contexts import resolve_contexts
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.tz_utils import now
 

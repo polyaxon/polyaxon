@@ -57,7 +57,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
 
         # Inputs don't have delayed validation by default
         with self.assertRaises(ValidationError):
-            CompiledOperationSpecification.apply_run_context(run_config)
+            CompiledOperationSpecification.apply_operation_contexts(run_config)
 
         run_config = V1CompiledOperation.read(
             [
@@ -66,7 +66,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
             ]
         )
         # Outputs have delayed validation by default
-        CompiledOperationSpecification.apply_run_context(run_config)
+        CompiledOperationSpecification.apply_operation_contexts(run_config)
 
     def test_validation_for_required_inputs_outputs_raises(self):
         # Get compiled_operation data
@@ -98,7 +98,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         )
 
         with self.assertRaises(ValidationError):
-            CompiledOperationSpecification.apply_run_context(run_config)
+            CompiledOperationSpecification.apply_operation_contexts(run_config)
 
         assert run_config.inputs[0].value is None
         assert run_config.inputs[1].value is None
@@ -107,8 +107,8 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         )
         assert run_config.inputs[0].value == "bar"
         assert run_config.inputs[1].value is False
-        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        run_config = CompiledOperationSpecification.apply_runtime_contexts(run_config)
         assert run_config.version == 1.1
         assert run_config.tags == ["foo", "bar"]
         assert run_config.run.container.image == "my_image"
@@ -129,8 +129,8 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         )
         assert run_config.inputs[0].value == "bar"
         assert run_config.inputs[1].value is True
-        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        run_config = CompiledOperationSpecification.apply_runtime_contexts(run_config)
         assert run_config.version == 1.1
         assert run_config.tags == ["foo", "bar"]
         assert run_config.run.container.image == "my_image"
@@ -172,7 +172,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         # Get compiled_operation data
         run_config = OperationSpecification.compile_operation(plxfile)
 
-        run_config = CompiledOperationSpecification.apply_run_context(run_config)
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         assert run_config.version == 1.1
         assert run_config.has_pipeline
         assert run_config.is_dag_run is False
@@ -202,7 +202,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         # Get compiled_operation data
         run_config = OperationSpecification.compile_operation(plxfile)
 
-        run_config = CompiledOperationSpecification.apply_run_context(run_config)
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         assert run_config.version == 1.1
         assert isinstance(run_config.matrix.params["param1"], V1HpChoice)
         assert isinstance(run_config.matrix.params["param2"], V1HpChoice)
@@ -236,7 +236,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
             is_cli=False,
         )
         run_config = OperationSpecification.compile_operation(plx_file)
-        run_config = CompiledOperationSpecification.apply_run_context(run_config)
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         assert run_config.version == 1.1
         assert isinstance(run_config.matrix, V1Hyperband)
         assert isinstance(run_config.matrix.params["lr"], V1HpLinSpace)
@@ -272,7 +272,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
             "num_masks": V1Param(value=None),
         } == {p.name: p.param for p in validated_params}
         with self.assertRaises(ValidationError):
-            CompiledOperationSpecification.apply_run_context(run_config)
+            CompiledOperationSpecification.apply_operation_contexts(run_config)
 
         validated_params = run_config.validate_params(
             params={"num_masks": {"value": 100}}
@@ -289,11 +289,11 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
 
         with self.assertRaises(ValidationError):
             # Applying context before applying params
-            CompiledOperationSpecification.apply_run_context(run_config)
+            CompiledOperationSpecification.apply_operation_contexts(run_config)
 
         run_config.apply_params(params={"num_masks": {"value": 100}})
-        run_config = CompiledOperationSpecification.apply_run_context(run_config)
         run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        run_config = CompiledOperationSpecification.apply_runtime_contexts(run_config)
         assert run_config.version == 1.1
         assert run_config.tags == ["foo", "bar"]
         container = run_config.run.container

@@ -31,7 +31,6 @@ from polyaxon.polypod.common.mounts import (
     get_mount_from_store,
     get_mounts,
 )
-from polyaxon.polypod.main.container import MAIN_JOB_CONTAINER
 from polyaxon.polypod.sidecar.env_vars import get_sidecar_env_vars
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType
@@ -50,6 +49,7 @@ def get_sidecar_args(container_id: str, sleep_interval: int, sync_interval: int)
 
 
 def get_sidecar_container(
+    container_id: str,
     polyaxon_sidecar: V1PolyaxonSidecarContainer,
     env: List[k8s_schemas.V1EnvVar],
     artifacts_store: V1ConnectionType,
@@ -74,7 +74,7 @@ def get_sidecar_container(
 
     env = get_sidecar_env_vars(
         env_vars=env,
-        job_container_name=MAIN_JOB_CONTAINER,
+        container_id=container_id,
         artifacts_store_name=artifacts_store.name,
     )
 
@@ -86,7 +86,7 @@ def get_sidecar_container(
     )
 
     sidecar_args = get_sidecar_args(
-        container_id=MAIN_JOB_CONTAINER,
+        container_id=container_id,
         sleep_interval=polyaxon_sidecar.sleep_interval,
         sync_interval=polyaxon_sidecar.sync_interval,
     )

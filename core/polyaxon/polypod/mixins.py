@@ -14,6 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from polyaxon.containers.names import (
+    MAIN_JOB_CONTAINER,
+    PYTORCHJOBS_CONTAINER,
+    TFJOBS_CONTAINER,
+)
 from polyaxon.k8s.custom_resources import operation
 from polyaxon.polyflow import V1RunKind
 
@@ -29,31 +34,37 @@ class BaseMixin:
 class JobMixin(BaseMixin):
     K8S_LABELS_NAME = V1RunKind.JOB
     K8S_LABELS_COMPONENT = "polyaxon-jobs"
+    MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class NotifierMixin(BaseMixin):
     K8S_LABELS_NAME = V1RunKind.NOTIFIER
     K8S_LABELS_COMPONENT = "polyaxon-notifiers"
+    MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class ServiceMixin(BaseMixin):
     K8S_LABELS_NAME = V1RunKind.SERVICE
     K8S_LABELS_COMPONENT = "polyaxon-services"
+    MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class TFJobMixin(BaseMixin):
     K8S_LABELS_NAME = V1RunKind.TFJOB
     K8S_LABELS_COMPONENT = "polyaxon-tfjobs"
+    MAIN_CONTAINER_ID = TFJOBS_CONTAINER
 
 
 class PytorchJobMixin(BaseMixin):
     K8S_LABELS_NAME = V1RunKind.PYTORCHJOB
     K8S_LABELS_COMPONENT = "polyaxon-pytorch-jobs"
+    MAIN_CONTAINER_ID = PYTORCHJOBS_CONTAINER
 
 
 class MPIJobMixin(BaseMixin):
     K8S_LABELS_NAME = V1RunKind.MPIJOB
     K8S_LABELS_COMPONENT = "polyaxon-mpi-jobs"
+    MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 MIXIN_MAPPING = {

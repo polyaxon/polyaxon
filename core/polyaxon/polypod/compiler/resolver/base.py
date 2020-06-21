@@ -21,7 +21,10 @@ from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyaxonfile import CompiledOperationSpecification
 from polyaxon.polyflow import V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.config import PolypodConfig
-from polyaxon.polypod.contexts import resolve_contexts, resolve_globals_contexts
+from polyaxon.polypod.compiler.contexts import (
+    resolve_contexts,
+    resolve_globals_contexts,
+)
 
 
 class BaseResolver:
@@ -69,7 +72,6 @@ class BaseResolver:
         self.polyaxon_init = None
         self.iteration = None
         self.agent_config = None
-        self.contexts = {}
         self.globals = {}
         self.created_at = created_at
         self.compiled_at = compiled_at
@@ -127,9 +129,9 @@ class BaseResolver:
     def patch(self):
         pass
 
-    def apply_run_context(self):
+    def apply_operation_contexts(self):
         try:
-            self.compiled_operation = CompiledOperationSpecification.apply_run_context(
+            self.compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
                 self.compiled_operation,
                 param_spec=self._param_spec,
                 contexts=self.globals,
@@ -158,8 +160,8 @@ class BaseResolver:
         self.connection_by_names = polypod_config.connection_by_names
         self.artifacts_store = polypod_config.artifacts_store
 
-    def resolve_full_contexts(self):
-        self.contexts = resolve_contexts(
+    def _apply_runtime_contexts(self):
+        contexts = resolve_contexts(
             namespace=self.namespace,
             owner_name=self.owner_name,
             project_name=self.project_name,
@@ -174,11 +176,18 @@ class BaseResolver:
             created_at=self.created_at,
             compiled_at=self.compiled_at,
         )
-
-    def apply_operation_contexts(self):
-        self.compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
-            self.compiled_operation, contexts=self.contexts
+        return CompiledOperationSpecification.apply_runtime_contexts(
+            self.compiled_operation, contexts=contexts
         )
+
+    def _apply_pipeline_contexts(self):
+        raise NotImplementedError()
+
+    def apply_runtime_contexts(self):
+        if self.compiled_operation.has_pipeline:
+            self.compiled_operation = self._apply_pipeline_contexts()
+        else:
+            self.compiled_operation = self._apply_runtime_contexts()
 
     def resolve_state(self):
         pass
@@ -192,11 +201,10 @@ class BaseResolver:
         self.resolve_agent()
         self.resolve_connections_params()
         self.patch()
-        self.apply_run_context()
+        self.apply_operation_contexts()
         self.resolve_io()
         self.resolve_access()
         self.resolve_connections()
-        self.resolve_full_contexts()
-        self.apply_operation_contexts()
+        self.apply_runtime_contexts()
         self.resolve_state()
         return self.compiled_operation

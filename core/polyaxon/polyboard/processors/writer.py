@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import os
 import queue
 import threading
@@ -23,11 +24,11 @@ from typing import Dict, List, Union  # noqa
 from polyaxon.polyboard.events import LoggedEventSpec, get_asset_path, get_event_path
 from polyaxon.polyboard.events.paths import get_resource_path
 from polyaxon.polyboard.events.schemas import LoggedEventListSpec
-from polyaxon.tracking.events.gpu_processor import (
+from polyaxon.polyboard.processors.gpu_processor import (
     can_log_gpu_resources,
     get_gpu_metrics,
 )
-from polyaxon.tracking.events.psutil_processor import (
+from polyaxon.polyboard.processors.psutil_processor import (
     can_log_psutil_resources,
     get_psutils_metrics,
 )

@@ -109,10 +109,27 @@ class Parser(object):
         return parsed_data
 
     @classmethod
-    def parse_run(cls, parsed_data, param_spec: Dict[str, ParamSpec]):
+    def parse_runtime(cls, parsed_data, param_spec: Dict[str, ParamSpec]):
         config_section = cls.parse_section(
             parsed_data.get(Sections.RUN), param_spec=param_spec, parse_params=True
         )
+        if config_section:
+            parsed_data[Sections.RUN] = config_section
+        return parsed_data
+
+    @classmethod
+    def parse_distributed_runtime(
+        cls, parsed_data, param_spec: Dict[str, Dict[str, ParamSpec]]
+    ):
+        run_section = parsed_data.get(Sections.RUN)
+        config_section = {}
+        for k in run_section:
+            if k in param_spec:
+                config_section[k] = cls.parse_section(
+                    run_section[k], param_spec=param_spec[k], parse_params=True
+                )
+            else:
+                config_section[k] = run_section[k]
         if config_section:
             parsed_data[Sections.RUN] = config_section
         return parsed_data

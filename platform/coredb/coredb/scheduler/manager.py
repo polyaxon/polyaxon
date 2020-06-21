@@ -15,10 +15,12 @@
 # limitations under the License.
 
 import logging
+import traceback
 
 from typing import Dict, List, Optional
 
 from django.utils.timezone import now
+from kubernetes.client.rest import ApiException
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
@@ -26,7 +28,11 @@ from coredb.managers.artifacts import set_artifacts
 from coredb.managers.statuses import new_run_status, new_run_stop_status
 from coredb.scheduler import resolver
 from polyaxon.agents import manager
-from polyaxon.exceptions import PolyaxonCompilerError, PolyaxonK8SError
+from polyaxon.exceptions import (
+    PolyaxonCompilerError,
+    PolyaxonK8SError,
+    PolypodException,
+)
 from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
 from polyaxon.polyboard.artifacts import V1RunArtifact
 from polycommon import conf
@@ -55,7 +61,7 @@ def get_run(
         return query.get(id=run_id)
     except run_model.DoesNotExist:
         _logger.info(
-            "Something went wrong, " "the run `%s` does not exist anymore.", run_id
+            "Something went wrong, the run `%s` does not exist anymore.", run_id
         )
 
 
@@ -134,6 +140,17 @@ def runs_start(run_id: int, run: Optional[BaseRun]):
     )
     new_run_status(run=run, condition=condition)
 
+    def _log_error(exc: Exception, message: str = None):
+        message = message or "Could not start the operation.\n"
+        message += "error: {}\n{}".format(repr(exc), traceback.format_exc())
+        cond = V1StatusCondition.get_condition(
+            type=V1Statuses.FAILED,
+            status="True",
+            reason="PolyaxonRunFailed",
+            message=message,
+        )
+        new_run_status(run=run, condition=cond)
+
     try:
         in_cluster = conf.get(K8S_IN_CLUSTER)
         if in_cluster and (run.is_service or run.is_job):
@@ -148,14 +165,13 @@ def runs_start(run_id: int, run: Optional[BaseRun]):
                 in_cluster=in_cluster,
                 default_auth=False,
             )
-    except PolyaxonK8SError as e:
-        condition = V1StatusCondition.get_condition(
-            type=V1Statuses.FAILED,
-            status="True",
-            reason="PolyaxonRunFailed",
-            message="Could not start the job {}".format(e),
-        )
-        new_run_status(run=run, condition=condition)
+        return
+    except (PolyaxonK8SError, ApiException) as e:
+        _log_error(exc=e, message="Kubernetes manager could not start the operation.\n")
+    except PolypodException as e:
+        _log_error(exc=e, message="Failed converting the run manifest.\n")
+    except Exception as e:
+        _log_error(exc=e, message="Failed with unknown exception.\n")
 
 
 def runs_set_artifacts(run_id: int, run: Optional[BaseRun], artifacts: List[Dict]):
@@ -181,12 +197,20 @@ def runs_stop(
     if run.is_managed and should_stop:
         in_cluster = conf.get(K8S_IN_CLUSTER)
         if in_cluster and (run.is_service or run.is_job):
-            stopped = manager.stop(
-                run_uuid=run.uuid.hex,
-                run_kind=run.kind,
-                namespace=conf.get(K8S_NAMESPACE),
-                in_cluster=in_cluster,
-            )
+            try:
+                stopped = manager.stop(
+                    run_uuid=run.uuid.hex,
+                    run_kind=run.kind,
+                    namespace=conf.get(K8S_NAMESPACE),
+                    in_cluster=in_cluster,
+                )
+            except (PolyaxonK8SError, ApiException) as e:
+                _logger.warning(
+                    "Something went wrong, the run `%s` could not be stopped, error %s",
+                    run.uuid,
+                    e,
+                )
+                return False
 
     if not stopped:
         return False

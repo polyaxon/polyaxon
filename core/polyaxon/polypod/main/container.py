@@ -16,7 +16,6 @@
 
 from typing import Dict, Iterable, List, Optional
 
-from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Init
@@ -34,6 +33,7 @@ from polyaxon.utils.list_utils import to_list
 
 
 def get_main_container(
+    container_id: str,
     main_container: k8s_schemas.V1Container,
     volume_mounts: List[k8s_schemas.V1VolumeMount],
     contexts: PluginsContextsSpec,
@@ -104,7 +104,7 @@ def get_main_container(
 
     return patch_container(
         container=main_container,
-        name=MAIN_JOB_CONTAINER,
+        name=container_id,
         env=env,
         env_from=env_from,
         volume_mounts=volume_mounts,

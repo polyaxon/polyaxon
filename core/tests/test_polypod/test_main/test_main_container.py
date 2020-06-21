@@ -35,7 +35,7 @@ from polyaxon.polypod.common.mounts import (
     get_auth_context_mount,
     get_mounts,
 )
-from polyaxon.polypod.main.container import MAIN_JOB_CONTAINER, get_main_container
+from polyaxon.polypod.main.container import get_main_container
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 
@@ -107,6 +107,7 @@ class TestMainContainer(BaseTestCase):
     def assert_artifacts_store_raises(self, store, run_path):
         with self.assertRaises(PolypodException):
             get_main_container(
+                container_id="test",
                 main_container=None,
                 contexts=PluginsContextsSpec.from_config(
                     V1Plugins(collect_artifacts=True, collect_logs=False)
@@ -142,6 +143,7 @@ class TestMainContainer(BaseTestCase):
 
     def test_get_main_container_with_none_values(self):
         container = get_main_container(
+            container_id="test",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=None,
             volume_mounts=None,
@@ -158,7 +160,7 @@ class TestMainContainer(BaseTestCase):
             run_path=None,
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "test"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -180,6 +182,7 @@ class TestMainContainer(BaseTestCase):
             limits={"cpu": "1", "memory": "256Mi"},
         )
         container = get_main_container(
+            container_id="new-name",
             main_container=k8s_schemas.V1Container(
                 name="main",
                 image="job_docker_image",
@@ -203,7 +206,7 @@ class TestMainContainer(BaseTestCase):
             run_path=None,
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "new-name"
         assert container.image == "job_docker_image"
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["cmd", "-p", "-c"]
@@ -218,6 +221,7 @@ class TestMainContainer(BaseTestCase):
 
     def test_get_main_container_with_mounted_artifacts_store(self):
         container = get_main_container(
+            container_id="test",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=None,
             volume_mounts=None,
@@ -234,7 +238,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "test"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -245,6 +249,7 @@ class TestMainContainer(BaseTestCase):
         assert len(container.volume_mounts) == 1
 
         container = get_main_container(
+            container_id="",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=None,
             volume_mounts=None,
@@ -261,7 +266,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "main"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -272,6 +277,7 @@ class TestMainContainer(BaseTestCase):
         assert len(container.volume_mounts) == 2
 
         container = get_main_container(
+            container_id="main-job",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=PluginsContextsSpec.from_config(
                 V1Plugins(
@@ -292,7 +298,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "main-job"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -305,6 +311,7 @@ class TestMainContainer(BaseTestCase):
 
     def test_get_main_container_with_bucket_artifacts_store(self):
         container = get_main_container(
+            container_id="main",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=PluginsContextsSpec.from_config(
                 V1Plugins(
@@ -325,7 +332,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "main"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -337,6 +344,7 @@ class TestMainContainer(BaseTestCase):
         assert len(container.volume_mounts) == 1  # mount context
 
         container = get_main_container(
+            container_id="main1",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=PluginsContextsSpec.from_config(
                 V1Plugins(
@@ -360,7 +368,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "main1"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -373,6 +381,7 @@ class TestMainContainer(BaseTestCase):
         assert len(container.volume_mounts) == 1  # one mount resource
 
         container = get_main_container(
+            container_id="main1",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=PluginsContextsSpec.from_config(
                 V1Plugins(
@@ -393,7 +402,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "main1"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -406,6 +415,7 @@ class TestMainContainer(BaseTestCase):
         assert len(container.volume_mounts) == 2  # one mount resource
 
         container = get_main_container(
+            container_id="tensorflow",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=PluginsContextsSpec.from_config(
                 V1Plugins(
@@ -426,7 +436,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "tensorflow"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -438,6 +448,7 @@ class TestMainContainer(BaseTestCase):
         assert len(container.volume_mounts) == 1  # outputs context
 
         container = get_main_container(
+            container_id="pytorch",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=PluginsContextsSpec.from_config(
                 V1Plugins(
@@ -458,7 +469,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "pytorch"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -471,6 +482,7 @@ class TestMainContainer(BaseTestCase):
 
     def test_get_main_container(self):
         container = get_main_container(
+            container_id="test",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=None,
             volume_mounts=None,
@@ -495,7 +507,7 @@ class TestMainContainer(BaseTestCase):
             run_path="run_path",
         )
 
-        assert container.name == MAIN_JOB_CONTAINER
+        assert container.name == "test"
         assert container.image is None
         assert container.image_pull_policy is None
         assert container.command is None
@@ -537,6 +549,7 @@ class TestMainContainer(BaseTestCase):
         )
 
         container = get_main_container(
+            container_id="test",
             main_container=k8s_schemas.V1Container(name="main"),
             contexts=PluginsContextsSpec.from_config(
                 V1Plugins(collect_artifacts=True, collect_logs=True)

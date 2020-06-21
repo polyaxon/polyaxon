@@ -10,7 +10,8 @@ run:
     - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
     container:
       image: tensorflow/tensorflow:1.10.0-gpu
-      command: ["python", "-u", "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/kubeflow/tfjob/run.py"]
+      workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/kubeflow/tfjob"
+      command: ["python", "-u", "run.py"]
       imagePullPolicy: "Always"
       resources:
         limits:

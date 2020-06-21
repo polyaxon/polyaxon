@@ -13,10 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from typing import Dict, List
 
 from polyaxon import logger
-from polyaxon.tracking.events.events_processors import metrics_dict_to_list
+from polyaxon.polyboard.processors.events_processors import metrics_dict_to_list
 
 try:
     import psutil

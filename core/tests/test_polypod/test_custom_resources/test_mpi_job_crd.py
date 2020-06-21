@@ -35,7 +35,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
             restart_policy="never",
         )
         custom_object = {
-            "mpiJobSpec": {"cleanPodPolicy": "All"},
+            "mpiJobSpec": {"cleanPodPolicy": "All", "replicaSpecs": {}},
             "termination": {
                 "backoffLimit": termination.max_retries,
                 "activeDeadlineSeconds": termination.timeout,
@@ -87,8 +87,10 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
         template_spec = {
             "cleanPodPolicy": "Running",
             "slotsPerWorker": 12,
-            "Launcher": launcher_replica_template,
-            "Worker": worker_replica_template,
+            "replicaSpecs": {
+                "Launcher": launcher_replica_template,
+                "Worker": worker_replica_template,
+            },
         }
         custom_object = {
             "mpiJobSpec": template_spec,

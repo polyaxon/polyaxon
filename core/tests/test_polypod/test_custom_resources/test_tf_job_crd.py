@@ -35,7 +35,7 @@ class TestTFJobCRD(BaseKubeflowCRDTestCase):
             restart_policy="never",
         )
         custom_object = {
-            "tfJobSpec": {"cleanPodPolicy": "All"},
+            "tfJobSpec": {"cleanPodPolicy": "All", "replicaSpecs": {}},
             "termination": {
                 "backoffLimit": termination.max_retries,
                 "activeDeadlineSeconds": termination.timeout,
@@ -87,8 +87,10 @@ class TestTFJobCRD(BaseKubeflowCRDTestCase):
         worker, worker_replica_template = self.get_replica(environment)
         template_spec = {
             "cleanPodPolicy": "Running",
-            "Chief": chief_replica_template,
-            "Worker": worker_replica_template,
+            "replicaSpecs": {
+                "Chief": chief_replica_template,
+                "Worker": worker_replica_template,
+            },
         }
         custom_object = {
             "tfJobSpec": template_spec,

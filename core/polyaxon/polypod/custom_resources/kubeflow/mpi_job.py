@@ -61,6 +61,7 @@ def get_mpi_job_custom_resource(
         labels=labels,
         template_spec=template_spec,
     )
+    template_spec = {"replicaSpecs": template_spec}
 
     template_spec = set_clean_pod_policy(
         template_spec=template_spec, clean_pod_policy=clean_pod_policy

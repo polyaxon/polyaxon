@@ -39,8 +39,8 @@ from polyaxon.env_vars.getters import (
 )
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import LoggedEventSpec, V1Event, get_asset_path
-from polyaxon.tracking.events import EventFileWriter, events_processors
-from polyaxon.tracking.events.writer import ResourceFileWriter
+from polyaxon.polyboard.processors import events_processors
+from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
 from polyaxon.utils.env import get_run_env
 from polyaxon.utils.path_utils import get_path_extension
 

@@ -28,8 +28,7 @@ import pytest
 
 from bokeh.plotting import figure
 from plotly import figure_factory
-from tests.test_tracking.test_events.test_event_values import tensor_np
-from tests.utils import TestEnvVarsCase
+from tests.utils import TestEnvVarsCase, tensor_np
 
 from polyaxon import settings
 from polyaxon.constants import DEFAULT
@@ -48,8 +47,7 @@ from polyaxon.env_vars.keys import (
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events, get_asset_path, get_event_path
-from polyaxon.tracking.events import EventFileWriter
-from polyaxon.tracking.events.writer import ResourceFileWriter
+from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
 from polyaxon.tracking.run import TEMP_RUN_ARTIFACTS, Run
 from polyaxon.utils.path_utils import create_path
 

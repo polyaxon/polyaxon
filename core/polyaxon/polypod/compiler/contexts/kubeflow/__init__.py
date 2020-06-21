@@ -14,21 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-def get_container_statuses_by_name(statuses):
-    return {
-        container_status["name"]: {
-            "ready": container_status["ready"],
-            "state": container_status["state"],
-        }
-        for container_status in statuses
-    }
-
-
-def get_container_status(statuses, container_ids):
-    job_container_status = None
-    for container_id in container_ids:
-        job_container_status = statuses.get(container_id)
-        if job_container_status:
-            break
-    return job_container_status
+from polyaxon.polypod.compiler.contexts.kubeflow.mpi_job import MPIJobContextsManager
+from polyaxon.polypod.compiler.contexts.kubeflow.pytroch_job import (
+    PytorchJobContextsManager,
+)
+from polyaxon.polypod.compiler.contexts.kubeflow.tf_job import TfJobContextsManager

@@ -26,7 +26,7 @@ from polyaxon.polyboard.events.schemas import (
     V1Event,
     V1Events,
 )
-from polyaxon.tracking.events.writer import (
+from polyaxon.polyboard.processors.writer import (
     EventAsyncManager,
     EventFileWriter,
     EventWriter,

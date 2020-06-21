@@ -23,9 +23,9 @@ import pytest
 from bokeh.plotting import figure
 from PIL import Image
 from plotly import figure_factory
-from tests.utils import BaseTestCase
+from tests.utils import BaseTestCase, tensor_np
 
-from polyaxon.tracking.events.events_processors import (
+from polyaxon.polyboard.processors.events_processors import (
     audio,
     bokeh_chart,
     convert_to_HWC,
@@ -36,10 +36,6 @@ from polyaxon.tracking.events.events_processors import (
     prepare_video,
     video,
 )
-
-
-def tensor_np(shape, dtype=float):
-    return np.arange(np.prod(shape), dtype=dtype).reshape(shape)
 
 
 @pytest.mark.tracking_mark

@@ -178,7 +178,7 @@ def run(
     if local:
         try:
             compiled_operation = OperationSpecification.compile_operation(op_spec)
-            compiled_operation = CompiledOperationSpecification.apply_run_context(
+            compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
                 compiled_operation
             )
         except (PolyaxonSchemaError, ValidationError):

@@ -44,6 +44,6 @@ def get_kf_replicas_template(
 
     template_spec[replica_name] = {
         "replicas": replica.num_replicas,
-        "restartPolicy": pod_spec.restart_policy,
+        "restartPolicy": pod_spec.restart_policy or "Never",
         "template": get_pod_template_spec(metadata=metadata, pod_spec=pod_spec),
     }

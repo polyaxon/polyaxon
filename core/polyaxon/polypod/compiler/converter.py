@@ -49,12 +49,14 @@ def convert(
 ) -> Dict:
     if compiled_operation.has_pipeline:
         raise PolyaxonCompilerError(
+            "Converter Error. "
             "Specification with matrix/dag section is not supported in this function."
         )
 
     run_kind = compiled_operation.get_run_kind()
     if run_kind not in converters:
         raise PolyaxonCompilerError(
+            "Converter Error. "
             "Specification with run kind: {} is not supported in this deployment version.".format(
                 run_kind
             )

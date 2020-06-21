@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import numpy as np
 import os
 import tempfile
 
@@ -137,3 +138,7 @@ class TestEnvVarsCase(BaseTestCase):
         os.environ[key] = value
         expected_value = expected_value or value
         assert expected_function() == expected_value
+
+
+def tensor_np(shape, dtype=float):
+    return np.arange(np.prod(shape), dtype=dtype).reshape(shape)

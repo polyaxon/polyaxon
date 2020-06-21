@@ -234,9 +234,7 @@ class BaseAgent:
             )
         except ApiException as e:
             if e.status == 409:
-                logger.info(
-                    "Run already running running, triggering an apply mechanism."
-                )
+                logger.info("Run already running, triggering an apply mechanism.")
                 self.apply_run(run_data=run_data)
             else:
                 logger.info("Run submission error.")

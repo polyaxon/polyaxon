@@ -38,6 +38,7 @@ def resolve(
     run_kind = compiled_operation.get_run_kind()
     if run_kind not in resolver_cls.KINDS:
         raise PolyaxonCompilerError(
+            "Resolver Error. "
             "Specification with run kind: {} is not supported in this deployment version.".format(
                 run_kind
             )

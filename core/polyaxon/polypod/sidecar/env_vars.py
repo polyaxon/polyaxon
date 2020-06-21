@@ -26,15 +26,11 @@ from polyaxon.utils.list_utils import to_list
 
 
 def get_sidecar_env_vars(
-    env_vars: List[k8s_schemas.V1EnvVar],
-    job_container_name: str,
-    artifacts_store_name: str,
+    env_vars: List[k8s_schemas.V1EnvVar], container_id: str, artifacts_store_name: str,
 ) -> List[k8s_schemas.V1EnvVar]:
 
     env_vars = to_list(env_vars, check_none=True)[:]
-    env_vars.append(
-        get_env_var(name=POLYAXON_KEYS_CONTAINER_ID, value=job_container_name)
-    )
+    env_vars.append(get_env_var(name=POLYAXON_KEYS_CONTAINER_ID, value=container_id))
     env_vars.append(
         get_env_var(name=POLYAXON_KEYS_ARTIFACTS_STORE_NAME, value=artifacts_store_name)
     )

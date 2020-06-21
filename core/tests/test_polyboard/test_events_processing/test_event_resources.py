@@ -18,7 +18,7 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.tracking.events.events_processors import metrics_dict_to_list
+from polyaxon.polyboard.processors.events_processors import metrics_dict_to_list
 
 
 @pytest.mark.tracking_mark

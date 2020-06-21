@@ -120,6 +120,30 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - kubeflow.org
+  resources:
+  - tfjobs
+  - pytorchjobs
+  - mpijobs
+  verbs:
+  - get
+  - watch
+  - list
+  - create
+  - delete
+  - patch
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+  - watch
+  - list
+  - create
+  - delete
+  - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
