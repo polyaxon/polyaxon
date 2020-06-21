@@ -57,3 +57,18 @@ data:
   {{- if (not (empty .Values.uiEnabled)) }}
   POLYAXON_UI_ENABLED: {{ .Values.uiEnabled | quote }}
   {{- end }}
+  {{- if .Values.istio.enabled }}
+  POLYAXON_ISTIO_ENABLED
+  {{- end }}
+  {{- if .Values.istio.gateway }}
+  POLYAXON_ISTIO_GATEWAY
+  {{- end }}
+  {{- if .Values.istio.tlsMode }}
+  POLYAXON_ISTIO_TLS_MODE
+  {{- end }}
+  {{- if .Values.istio.prefix }}
+  POLYAXON_ISTIO_PREFIX
+  {{- end }}
+  {{- if .Values.istio.timeout }}
+  POLYAXON_ISTIO_TIMEOUT
+  {{- end }}

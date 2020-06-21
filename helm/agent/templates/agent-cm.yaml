@@ -39,3 +39,15 @@ data:
   {{- if .Values.agent.token }}
   POLYAXON_AGENT_SECRET_NAME: {{ template "polyaxon.fullname" . }}-agent-secret
   {{- end }}
+  {{- if .Values.operators.tfjob }}
+  POLYAXON_TFJOB_ENABLED: "true"
+  {{- end }}
+  {{- if .Values.operators.pytorchjob }}
+  POLYAXON_PYTORCH_JOB_ENABLED: "true"
+  {{- end }}
+  {{- if .Values.operators.mpijob }}
+  POLYAXON_MPIJOB_ENABLED: "true"
+  {{- end }}
+  {{- if .Values.operators.sparkjob }}
+  POLYAXON_SPARK_JOB_ENABLED: "true"
+  {{- end }}

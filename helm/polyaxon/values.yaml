@@ -528,3 +528,6 @@ auth:
   enabled: false
   external:
   useResolver: true
+
+istio: {}
+operators: {}

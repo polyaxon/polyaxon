@@ -205,3 +205,5 @@ notificationConnections: []
 
 # Include helm chart release revision
 includeChartRevision: true
+istio: {}
+operators: {}

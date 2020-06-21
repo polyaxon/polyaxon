@@ -21,6 +21,7 @@ from polyaxon.deploy.schemas.deployment_types import DeploymentCharts, Deploymen
 from polyaxon.deploy.schemas.email import EmailSchema
 from polyaxon.deploy.schemas.ingress import IngressSchema
 from polyaxon.deploy.schemas.intervals import IntervalsSchema
+from polyaxon.deploy.schemas.operators import OperatorsSchema
 from polyaxon.deploy.schemas.rbac import RBACSchema
 from polyaxon.deploy.schemas.root_user import RootUserSchema
 from polyaxon.deploy.schemas.security_context import SecurityContextSchema
@@ -229,7 +230,8 @@ class DeploymentSchema(BaseCamelSchema):
     js_offline = fields.Bool(allow_none=True)
     ui_enabled = fields.Bool(allow_none=True)
     include_chart_revision = fields.Bool(allow_none=True)
-
+    operators = fields.Nested(OperatorsSchema, allow_none=True)
+    istio = fields.Dict(allow_none=True)
     # Pending validation
     dns = fields.Raw(allow_none=True)
 
@@ -344,6 +346,8 @@ class DeploymentConfig(BaseConfig):
         dns=None,
         js_offline=None,
         ui_enabled=None,
+        operators=None,
+        istio=None,
         include_chart_revision=None,
     ):
         validate_deployment_chart(
@@ -417,6 +421,8 @@ class DeploymentConfig(BaseConfig):
         self.organization_key = organization_key
         self.js_offline = js_offline
         self.ui_enabled = ui_enabled
+        self.operators = operators
+        self.istio = istio
         self.include_chart_revision = include_chart_revision
         if self.deployment_chart == DeploymentCharts.AGENT:
             wrong_agent_deployment_keys(
