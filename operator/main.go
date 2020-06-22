@@ -29,7 +29,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	// mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
+	// mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1"
 	// pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
 	// tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
 
@@ -49,6 +49,16 @@ func init() {
 	_ = corev1.AddToScheme(scheme)
 	_ = appsv1.AddToScheme(scheme)
 	_ = batchv1.AddToScheme(scheme)
+
+	// if config.GetBoolEnv(config.TFJobEnabled, false) {
+	// 	_ = tfjobv1.AddToScheme(scheme)
+	// }
+	// if config.GetBoolEnv(config.PytorchJobEnabled, false) {
+	// 	_ = pytorchjobv1.AddToScheme(scheme)
+	// }
+	// if config.GetBoolEnv(config.MPIJobEnabled, false) {
+	// 	_ = mpijobv1.AddToScheme(scheme)
+	// }
 
 	_ = operationv1.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme

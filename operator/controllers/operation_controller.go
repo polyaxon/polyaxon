@@ -20,7 +20,9 @@ import (
 	"context"
 
 	"github.com/go-logr/logr"
+	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
+	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -48,6 +50,16 @@ type OperationReconciler struct {
 // +kubebuilder:rbac:groups=core,resources=services/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=apps,resources=deployments/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=kubeflow.org,resources=tfjobs,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=kubeflow.org,resources=tfjobs/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=kubeflow.org,resources=pytorchjobs,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=kubeflow.org,resources=pytorchjobs/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=kubeflow.org,resources=mpijobs,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=kubeflow.org,resources=mpijobs/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=networking.istio.io,resources=virtualservices,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=networking.istio.io,resources=virtualservices/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=networking.istio.io,resources=destinationrules,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=networking.istio.io,resources=destinationrules/status,verbs=get;update;patch
 
 // Reconcile logic for OperationReconciler
 func (r *OperationReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
@@ -76,7 +88,7 @@ func (r *OperationReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 		return r.cleanUpOperation(ctx, instance)
 	}
 
-	// Reconcile the underlaying job
+	// Reconcile the underlaying runtime
 	return r.reconcileOperation(ctx, instance)
 }
 
@@ -114,6 +126,8 @@ func (r *OperationReconciler) cleanUpOperation(ctx context.Context, instance *op
 func (r *OperationReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	controllerManager := ctrl.NewControllerManagedBy(mgr).For(&operationv1.Operation{})
 	controllerManager.Owns(&batchv1.Job{})
+	controllerManager.Owns(&appsv1.Deployment{})
+	controllerManager.Owns(&corev1.Service{})
 
 	if config.GetBoolEnv(config.TFJobEnabled, false) {
 		tfJob := &unstructured.Unstructured{}
