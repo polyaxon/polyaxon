@@ -1,12 +1,17 @@
-# How to contribute
+## Overview
 
 Polyaxon project would love to welcome your contributions. There are several ways to help out:
 
-* Create an [issue](https://github.com/polyaxon/polyaxon/issues) on GitHub, if you have found a bug
-* Write test cases for open bug issues
-* Write patches for open bug/feature issues, preferably with test cases included
-* Contribute to the documentation
-* Blog about different ways you are using Polyaxon
+* Help other Polyaxon's users on [the community channel](https://polyaxon.com/slack/).
+* Testing and quality assurance
+* Contribute and help us improve the [documentation](https://github.com/polyaxon/polyaxon/tree/master/site)
+* Create an [issue](https://github.com/polyaxon/polyaxon/issues) on GitHub, if you have found a bug.
+* Create [guides and tutorials](/docs/guides/).
+* Author [plugins and integrations](https://polyaxon.com/integrations/).
+* Author [public reusable components](https://github.com/polyaxon/polyaxon-hub/).
+* Write test cases for open bug issues.
+* Write patches for open bug/feature issues, preferably with test cases included.
+* Blog about different ways you are using Polyaxon and promote Polyaxon to others.
 
 There are a few guidelines that we need contributors to follow so that we have a chance of keeping on top of things.
 
@@ -23,15 +28,38 @@ When reporting issues, please include your host OS (Ubuntu 14.04, CentOS 7, etc)
 
 Please also include the steps required to reproduce the problem if possible and applicable. This information will help us review and fix your issue faster.
 
-## Contributing
+## Development guide
+
+If you're a developer looking to help, but you're not sure where to begin:
+Check out the [good first issue](https://github.com/polyaxon/polyaxon/labels/good%20first%20issue) label on Github,
+which contains small piece of work that have been specifically flagged as being friendly to new contributors.
+
+Or, if you're looking for something a little more challenging, there's a broader [help wanted](https://github.com/polyaxon/polyaxon/labels/help%20wanted) label.
+
+## Contribution Workflow
 
 Before you contribute to Polyaxon, there are a few things that you'll need to do
 
-* Make sure you have a [GitHub account](https://github.com/signup/free).
-* Submit an [issue](https://github.com/polyaxon/polyaxon/issues), assuming one does not already exist.
-  * Clearly describe the issue including steps to reproduce when it is a bug.
-  * Make sure you fill in the earliest version that you know has the issue.
-* Fork the repository on GitHub.
+1. Make sure you have a [GitHub account](https://github.com/signup/free).
+2. Submit an [issue](https://github.com/polyaxon/polyaxon/issues), assuming one does not already exist.
+3. Clearly describe the issue/feature:
+    * Steps to reproduce if it is a bug (Make sure you fill in the earliest version that you know has the issue).
+    * Use case and current alternative if it's a feature request.
+4. Make sure to coordinate the effort and ensure that feature is approved and is not being worked on.
+5. Fork the repository on GitHub and create a pull request.
+
+### Areas
+
+ * Tracking module: this module is purely based on Python and Polyaxon's APIs. 
+   if you have knowledge about a particular framework and you would like to contribute a callback or an auto-logging module, 
+   we would be more than grateful.
+ * Programmatic visualizations: this module is also purely based on Python and leverages some known plotting libraries,
+   if you would like to provide/improve a backend for driving programmatic visualizations, 
+   or for helping out with templates for driving insights using Python (or another language) please feel free to reach out.
+ * Public components: Polyaxon allows users to package information about their runs to ensure reproducibility and portability. 
+   This abstraction allows to packages reusable components and enable users to use them in a simple way using Polyaxon CLI/Client/API.
+ * Platform (API/Scheduler), Compiler, Polyaxonfile: if you would like to contribute to one of the areas that require long term compatibility and maintenance,
+   please make sure that the feature request is approved, before investing any time. For some features that are quite involved, they can only be developed internally.
 
 ### Making Changes
 
