@@ -67,7 +67,7 @@ The following information can be accessed by all Polyaxon components:
  * `{{ globals.run_artifacts_path }}`: This where this specific run will store its artifacts, including those created and managed by Polyaxon `/plx_context/artifacts/run_uuid`.
  * `{{ globals.run_outputs_path }}`: Since the run artifacts will host artifacts and assets that are automatically created by Polyaxon, `/plx_context/artifacts/run_uuid/outputs` is a subpath that the user can use to store anything manually.
  * `{{ globals.created_at }}`: Datetime when the operation was created.
- * `{{ globals.compiled_At }}`: Datetime when the operation was compiled.
+ * `{{ globals.compiled_at }}`: Datetime when the operation was compiled.
  * `{{ globals.iteration }}`
 
 ## Services
@@ -110,3 +110,8 @@ run:
       "--param3={{ connections[some-git-connection].url }}"
     ]
 ```
+
+## Distributed jobs
+
+If your Polyaxonfile defines a distributed job, each replica will receive a context with information from the `globals` level augmented with 
+information about he connections and init sections specific to each replica.  

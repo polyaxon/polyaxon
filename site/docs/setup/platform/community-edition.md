@@ -79,3 +79,10 @@ you can disable the UI:
 ```yaml
 uiEnabled: false
 ```
+
+
+## Auth
+
+Polyaxon will deploy by default using a ClusterIp service, and provides a command to port-forward the traffic to localhost in a secure way. 
+If you decide to deploy Polyaxon CE using a LoadBalancer or an Ingress, 
+we strongly recommend that users only use environments they control by locking the deployment down at the network level. 
