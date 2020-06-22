@@ -18,7 +18,7 @@ tags:
 
 Polyaxon is an open source software, and we would be happy to welcome your contributions.
 
-There's many ways to contribute to the project, you can check this [page](/docs/resources/contributing/) for more detailed information
+There's many ways to contribute to the project, you can check this [page](https://github.com/polyaxon/polyaxon/blob/master/CONTRIBUTING.md) for more detailed information
 
 Contributions to this project must be accompanied by a Contributor License Agreement.
 This simply gives us permission to use and redistribute your contributions as part of the project.

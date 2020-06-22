@@ -96,11 +96,11 @@ environment:
             ...
 ```
 
-## Spot instance / Preemptible VMs
+## Spot instances / Preemptible VMs
 
-If you are using a cloud provider, you can leverage spot instance to reduce your ML training cost.
+If you are using a cloud provider, you can leverage spot instances to reduce your ML training cost.
 
-Configuring spot instances and preemptible VMs should follow similar guides provided by your cloud provider.
+Configuring spot instances or preemptible VMs should follow similar guides provided by your cloud provider.
 
 For example, following this guide from [GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms), 
 we can configure Polyaxon operations to use a preemptible VMs node pool.
