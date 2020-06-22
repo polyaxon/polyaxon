@@ -33,7 +33,8 @@ Polyaxon provides several tools to:
 
 There are several distinct features involved in the scheduling strategies feature:
 
- * [Node scheduling](/docs/core/scheduling-strategies/node-scheduling/): A feature that leverages the Kubernetes API.
+ * [Node scheduling](/docs/core/scheduling-strategies/node-scheduling/): A feature that leverages the Kubernetes API to select nodes for running your operations.
+ * [Resources scheduling](/docs/core/scheduling-strategies/resources-scheduling/): A feature that leverages the Kubernetes API to enable GPU/TPU, or other special resources for your operations.
  * [Queue priority](/docs/core/scheduling-strategies/queue-routing/#priority): A feature to prioritize operations on a queue.
  * [Queue concurrency](/docs/core/scheduling-strategies/queue-routing/#concurrency): A feature to throttle the number of operations on a queue.
  * [Queue agent](/docs/core/scheduling-strategies/queue-routing/#agent): A feature to route operations on a queue to a namespace or cluster. 

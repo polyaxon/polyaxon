@@ -14,7 +14,7 @@ tags:
 sidebar: "core"
 ---
 
-Polyaxon provides a list of options to select which nodes should be used for  the operations it runs.
+Polyaxon provides a list of options to select which nodes should be used for running operations.
 
 Every component in Polyaxon can set an [environment section](/docs/core/specification/environment/) 
 which exposes many pod level options. 
@@ -94,4 +94,59 @@ environment:
         - weight: 100
           podAffinityTerm:
             ...
+```
+
+## Spot instance / Preemptible VMs
+
+If you are using a cloud provider, you can leverage spot instance to reduce your ML training cost.
+
+Configuring spot instances and preemptible VMs should follow similar guides provided by your cloud provider.
+
+For example, following this guide from [GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms), 
+we can configure Polyaxon operations to use a preemptible VMs node pool.
+
+```yaml
+...
+environment:
+  nodeSelector:
+    cloud.google.com/gke-preemptible: "true"
+...
+```
+
+In Python
+
+```python
+from polyaxon.polyflow import V1Environment
+
+environment = V1Environment(annotations={"cloud.google.com/gke-preemptible": "true"})
+```
+
+Additionally if you have a tainted node for preemptible VMs, you can configure a toleration to schedule to that node.
+
+```yaml
+...
+environment:
+  nodeSelector:
+    cloud.google.com/gke-preemptible: "true"
+  tolerations:
+    - key: cloud.google.com/gke-preemptible
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+...
+```
+In Python
+
+```python
+from polyaxon.polyflow import V1Environment
+
+environment = V1Environment(
+    annotations={"cloud.google.com/gke-preemptible": "true"},
+    tolerations=[{
+        "key": "cloud.google.com/gke-preemptible",
+        "operator": "Equal",
+        "value": "true",
+        "effect": "NoSchedule",
+    }],
+)
 ```

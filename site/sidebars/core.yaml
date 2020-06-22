@@ -105,6 +105,8 @@
       link: /docs/core/scheduling-strategies/
     - title: Node Scheduling
       link: /docs/core/scheduling-strategies/node-scheduling/
+    - title: Resources Scheduling
+      link: /docs/core/scheduling-strategies/resources-scheduling/
     - title: Routing with Queues
       link: /docs/core/scheduling-strategies/queue-routing/
     - title: Run profiles
