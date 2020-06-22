@@ -52,7 +52,7 @@ To do so, you need to create a configuration file and we recommend to save it so
 Create a config file `config.yaml` or `polyaxon_config.yaml`,
 and set up all information you want to override in the default config.
 
-Example, adding database persistence
+Example, adding database persistence:
 
 ```yaml
 postgresql:
