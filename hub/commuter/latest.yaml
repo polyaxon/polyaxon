@@ -1,0 +1,15 @@
+version: 1.1
+kind: component
+name: commuter
+inputs:
+- name: image
+  type: str
+- name: path
+  type: str
+  description: "path where notebooks are hosted"
+run:
+  kind: service
+  ports: [4000]
+  container:
+    image: "{{image}}"
+    env: {COMMUTER_LOCAL_STORAGE_BASEDIRECTORY: "{{path}}"}

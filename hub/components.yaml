@@ -11,6 +11,11 @@
   versions:
   - latest.yaml
   - 1.14.8.yaml
+- name: commuter
+  versions:
+  - latest.yaml
+  - gcs.yaml
+  - s3.yaml
 - name: dockerizer
   versions:
   - latest.yaml

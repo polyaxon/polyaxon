@@ -1,0 +1,14 @@
+version: 1.1
+kind: operation
+name: nteract-commuter
+params:
+  destination:
+    value:
+      name: polyaxon/polyaxon-commuter
+      connection: docker-connection
+  context:
+    value: "{{globals.artifacts_path}}/polyaxon/hub/commuter"
+runPatch:
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon"}
+hubRef: kaniko
