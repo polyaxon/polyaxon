@@ -115,7 +115,7 @@ def set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
     retries = 0
     while retries < 2:
         try:
-            _set_artifacts(run=run, artifacts=artifacts)
+            return _set_artifacts(run=run, artifacts=artifacts)
         except IntegrityError:
             retries += 1
             time.sleep(0.01)
