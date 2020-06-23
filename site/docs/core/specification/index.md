@@ -21,8 +21,8 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
 
 The main primitives that the user will be interacting with are: 
 
- * [Component](/docs/specification/component/): A discrete, repeatable, and self-contained action that defines an environment and a runtime.
- * [Operation](/docs/specification/operation/): This is how Polyaxon operationalizes and executes a component by passing parameters, connections, and possibly patch the run environment.
+ * [Component](/docs/core/specification/component/): A discrete, repeatable, and self-contained action that defines an environment and a runtime.
+ * [Operation](/docs/core/specification/operation/): This is how Polyaxon operationalizes and executes a component by passing parameters, connections, and possibly patch the run environment.
 
 Polyaxon can resolve the content of a Polyaxonfile based on 2 information:
 
