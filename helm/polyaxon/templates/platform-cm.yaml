@@ -78,6 +78,11 @@ data:
   {{- if .Values.tracker }}
   POLYAXON_TRACKER_BACKEND: {{ default "noop" .Values.trackerBackend | quote }}
   {{- end }}
+  # Metrics
+  {{- if .Values.metrics.enabled }}
+  POLYAXON_STATS_BACKEND: "statsd"
+  POLYAXON_STATS_OPTIONS: {{ include "config.stats" . | fromJson | toJson | quote }}
+  {{- end }}
   # Auth
   {{- if .Values.ldap.enabled }}
   POLYAXON_AUTH_LDAP: "true"
