@@ -13,14 +13,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import time
 import uuid
 
 from functools import reduce
 from operator import or_
 from typing import Any, Dict, List, Set
 
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 
 from coredb.abstracts.getter import get_artifact_model, get_lineage_model
@@ -74,8 +74,7 @@ def update_artifacts(to_update: Set, artifacts_by_keys: Dict):
     get_artifact_model().objects.bulk_update(updated, ["kind", "path", "summary"])
 
 
-@transaction.atomic
-def set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
+def _set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
     if not artifacts:
         return
 
@@ -109,3 +108,14 @@ def set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
 
     update_artifacts(to_update=to_update, artifacts_by_keys=artifacts_by_keys)
     set_run_lineage(run=run, artifacts_by_keys=artifacts_by_keys, query=query)
+
+
+@transaction.atomic
+def set_artifacts(run: BaseRun, artifacts: List[V1RunArtifact]):
+    retries = 0
+    while retries < 2:
+        try:
+            _set_artifacts(run=run, artifacts=artifacts)
+        except IntegrityError:
+            retries += 1
+            time.sleep(0.01)

@@ -1,0 +1,30 @@
+version: 1.1
+kind: component
+tags: [examples, tensorflow, kubeflow]
+
+inputs:
+- {name: conv1_size, type: int, value: 32, isOptional: true}
+- {name: conv2_size, type: int, value: 64, isOptional: true}
+- {name: dropout, type: float, value: 0.2, isOptional: true}
+- {name: hidden1_size, type: int, value: 64, isOptional: true}
+- {name: conv_activation, type: str, value: relu, isOptional: true}
+- {name: dense_activation, type: str, value: relu, isOptional: true}
+- {name: optimizer, type: str, value: adam, isOptional: true}
+- {name: learning_rate, type: float, value: 0.001, isOptional: true}
+- {name: epochs, type: int, value: 10, isOptional: true}
+outputs:
+- {name: loss, type: float}
+- {name: accuracy, type: float}
+
+run:
+  kind: tfjob
+  worker:
+    replicas: 2
+    init:
+    - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+    container:
+      image: polyaxon/polyaxon-examples
+      workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/kubeflow/tfjob"
+      command: ["python", "-u", "run.py"]
+      imagePullPolicy: "Always"
+

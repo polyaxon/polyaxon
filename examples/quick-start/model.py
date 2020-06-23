@@ -59,7 +59,7 @@ def create_model(
     model.add(Dense(num_classes, activation='softmax'))
 
     model.compile(
-        optimizer=OPTIMIZERS[optimizer](lr=learning_rate),
+        optimizer=OPTIMIZERS[optimizer](learning_rate=learning_rate),
         loss=loss,
         metrics=['accuracy'],
     )

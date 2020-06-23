@@ -17,7 +17,7 @@ run:
     runPatch:
       init:
       - dockerfile:
-          image: "tensorflow/tensorflow:2.0.1-py3"
+          image: "tensorflow/tensorflow:2.2.0"
           run:
           - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
           langEnv: 'en_US.UTF-8'

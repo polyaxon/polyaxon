@@ -1,209 +1,194 @@
-# Copyright 2015 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the 'License');
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an 'AS IS' BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-"""A simple MNIST classifier which displays summaries in TensorBoard.
-This is an unimpressive MNIST model, but it is a good example of using
-tf.name_scope to make a graph legible in the TensorBoard graph explorer, and of
-naming summary tags so that they are grouped meaningfully in TensorBoard.
-It demonstrates the functionality of every TensorBoard dashboard.
-"""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+"""An example of multi-worker training with Keras model using Strategy API."""
+
+from __future__ import absolute_import, division, print_function
 
 import argparse
+import json
 import os
-import sys
 
 import tensorflow as tf
+import tensorflow_datasets as tfds
+from tensorflow.keras import layers, models
+from tensorflow.keras import optimizers
 
-from tensorflow.examples.tutorials.mnist import input_data
+from polyaxon import tracking
+from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback, PolyaxonKerasModelCheckpoint
 
-FLAGS = None
+
+OPTIMIZERS = {
+    'adam': optimizers.Adam,
+    'rmsprop': optimizers.RMSprop,
+    'sgd': optimizers.SGD,
+}
 
 
-def train():
-  # Import data
-  mnist = input_data.read_data_sets(FLAGS.data_dir,
-                                    one_hot=True,
-                                    fake_data=FLAGS.fake_data)
+def make_datasets_unbatched():
+    BUFFER_SIZE = 10000
 
-  # Create a multilayer model.
+    # Scaling MNIST data from (0, 255] to (0., 1.]
+    def scale(image, label):
+        image = tf.cast(image, tf.float32)
+        image /= 255
+        return image, label
 
-  # Input placeholders
-  with tf.name_scope('input'):
-    x = tf.placeholder(tf.float32, [None, 784], name='x-input')
-    y_ = tf.placeholder(tf.float32, [None, 10], name='y-input')
+    datasets, info = tfds.load(name='mnist', with_info=True, as_supervised=True)
 
-  with tf.name_scope('input_reshape'):
-    image_shaped_input = tf.reshape(x, [-1, 28, 28, 1])
-    tf.summary.image('input', image_shaped_input, 10)
+    return datasets['train'].map(scale).cache().shuffle(BUFFER_SIZE)
 
-  # We can't initialize these variables to 0 - the network will get stuck.
-  def weight_variable(shape):
-    """Create a weight variable with appropriate initialization."""
-    initial = tf.truncated_normal(shape, stddev=0.1)
-    return tf.Variable(initial)
 
-  def bias_variable(shape):
-    """Create a bias variable with appropriate initialization."""
-    initial = tf.constant(0.1, shape=shape)
-    return tf.Variable(initial)
+def get_model(args):
+    model = models.Sequential()
+    model.add(
+        layers.Conv2D(args.conv1_size, (3, 3), activation=args.conv_activation, input_shape=(28, 28, 1)))
+    model.add(layers.MaxPooling2D((2, 2)))
+    model.add(layers.Conv2D(args.conv2_size, (3, 3), activation=args.conv_activation))
+    model.add(layers.MaxPooling2D((2, 2)))
+    model.add(layers.Conv2D(64, (3, 3), activation=args.conv_activation))
+    model.add(layers.Dropout(args.dropout))
+    model.add(layers.Flatten())
+    model.add(layers.Dense(args.hidden1_size, activation=args.dense_activation))
+    model.add(layers.Dense(10, activation='softmax'))
 
-  def variable_summaries(var):
-    """Attach a lot of summaries to a Tensor (for TensorBoard visualization)."""
-    with tf.name_scope('summaries'):
-      mean = tf.reduce_mean(var)
-      tf.summary.scalar('mean', mean)
-      with tf.name_scope('stddev'):
-        stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
-      tf.summary.scalar('stddev', stddev)
-      tf.summary.scalar('max', tf.reduce_max(var))
-      tf.summary.scalar('min', tf.reduce_min(var))
-      tf.summary.histogram('histogram', var)
+    model.summary()
 
-  def nn_layer(input_tensor, input_dim, output_dim, layer_name, act=tf.nn.relu):
-    """Reusable code for making a simple neural net layer.
-    It does a matrix multiply, bias add, and then uses ReLU to nonlinearize.
-    It also sets up name scoping so that the resultant graph is easy to read,
-    and adds a number of summary ops.
-    """
-    # Adding a name scope ensures logical grouping of the layers in the graph.
-    with tf.name_scope(layer_name):
-      # This Variable will hold the state of the weights for the layer
-      with tf.name_scope('weights'):
-        weights = weight_variable([input_dim, output_dim])
-        variable_summaries(weights)
-      with tf.name_scope('biases'):
-        biases = bias_variable([output_dim])
-        variable_summaries(biases)
-      with tf.name_scope('Wx_plus_b'):
-        preactivate = tf.matmul(input_tensor, weights) + biases
-        tf.summary.histogram('pre_activations', preactivate)
-      activations = act(preactivate, name='activation')
-      tf.summary.histogram('activations', activations)
-      return activations
+    model.compile(optimizer=OPTIMIZERS[args.optimizer](learning_rate=args.learning_rate),
+                  loss=args.loss,
+                  metrics=['accuracy'])
 
-  hidden1 = nn_layer(x, 784, 500, 'layer1')
+    return model
 
-  with tf.name_scope('dropout'):
-    keep_prob = tf.placeholder(tf.float32)
-    tf.summary.scalar('dropout_keep_probability', keep_prob)
-    dropped = tf.nn.dropout(hidden1, keep_prob)
 
-  # Do not apply softmax activation yet, see below.
-  y = nn_layer(dropped, 500, 10, 'layer2', act=tf.identity)
-
-  with tf.name_scope('cross_entropy'):
-    # The raw formulation of cross-entropy,
-    #
-    # tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(tf.softmax(y)),
-    #                               reduction_indices=[1]))
-    #
-    # can be numerically unstable.
-    #
-    # So here we use tf.nn.softmax_cross_entropy_with_logits on the
-    # raw outputs of the nn_layer above, and then average across
-    # the batch.
-    diff = tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y)
-    with tf.name_scope('total'):
-      cross_entropy = tf.reduce_mean(diff)
-  tf.summary.scalar('cross_entropy', cross_entropy)
-
-  with tf.name_scope('train'):
-    train_step = tf.train.AdamOptimizer(FLAGS.learning_rate).minimize(
-        cross_entropy)
-
-  with tf.name_scope('accuracy'):
-    with tf.name_scope('correct_prediction'):
-      correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-    with tf.name_scope('accuracy'):
-      accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-  tf.summary.scalar('accuracy', accuracy)
-
-  # Merge all the summaries and write them out to
-  # /tmp/tensorflow/mnist/logs/mnist_with_summaries (by default)
-  merged = tf.summary.merge_all()
-
-  def feed_dict(train):
-    """Make a TensorFlow feed_dict: maps data onto Tensor placeholders."""
-    if train or FLAGS.fake_data:
-      xs, ys = mnist.train.next_batch(100, fake_data=FLAGS.fake_data)
-      k = FLAGS.dropout
+def decay(epoch):
+    if epoch < 3:
+        return 1e-3
+    elif epoch >= 3 and epoch < 7:
+        return 1e-4
     else:
-      xs, ys = mnist.test.images, mnist.test.labels
-      k = 1.0
-    return {x: xs, y_: ys, keep_prob: k}
-
-  sess = tf.InteractiveSession()
-  train_writer = tf.summary.FileWriter(FLAGS.log_dir + '/train', sess.graph)
-  test_writer = tf.summary.FileWriter(FLAGS.log_dir + '/test')
-  tf.global_variables_initializer().run()
-  # Train the model, and also write summaries.
-  # Every 10th step, measure test-set accuracy, and write test summaries
-  # All other steps, run train_step on training data, & add training summaries
+        return 1e-5
 
 
-  for i in range(FLAGS.max_steps):
-    if i % 10 == 0:  # Record summaries and test-set accuracy
-      summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
-      test_writer.add_summary(summary, i)
-      print('Accuracy at step %s: %s' % (i, acc))
-    else:  # Record train set summaries, and train
-      if i % 100 == 99:  # Record execution stats
-        run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
-        run_metadata = tf.RunMetadata()
-        summary, _ = sess.run([merged, train_step],
-                              feed_dict=feed_dict(True),
-                              options=run_options,
-                              run_metadata=run_metadata)
-        train_writer.add_run_metadata(run_metadata, 'step%03d' % i)
-        train_writer.add_summary(summary, i)
-        print('Adding run metadata for', i)
-      else:  # Record a summary
-        summary, _ = sess.run([merged, train_step], feed_dict=feed_dict(True))
-        train_writer.add_summary(summary, i)
-  train_writer.close()
-  test_writer.close()
+def main(args):
+    # MultiWorkerMirroredStrategy creates copies of all variables in the model's
+    # layers on each device across all workers
+    # if your GPUs don't support NCCL, replace "communication" with another
+    strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy(
+        communication=tf.distribute.experimental.CollectiveCommunication.NCCL)
 
+    BATCH_SIZE_PER_REPLICA = 64
+    BATCH_SIZE = BATCH_SIZE_PER_REPLICA * strategy.num_replicas_in_sync
 
-def main(_):
-  train()
+    with strategy.scope():
+        ds_train = make_datasets_unbatched().batch(BATCH_SIZE).repeat()
+        options = tf.data.Options()
+        options.experimental_distribute.auto_shard_policy = \
+            tf.data.experimental.AutoShardPolicy.DATA
+        ds_train = ds_train.with_options(options)
+        # Model building/compiling need to be within `strategy.scope()`.
+        multi_worker_model = get_model(args)
+
+    # Function for decaying the learning rate.
+    # You can define any decay function you need.
+    # Callback for printing the LR at the end of each epoch.
+    class PrintLR(tf.keras.callbacks.Callback):
+
+        def on_epoch_end(self, epoch, logs=None):
+            print('\nLearning rate for epoch {} is {}'.format(
+                epoch + 1, multi_worker_model.optimizer.lr.numpy()))
+    callbacks = [
+        PrintLR(),
+        tf.keras.callbacks.LearningRateScheduler(decay),
+    ]
+
+    # Polyaxon
+    if TASK_INDEX == 0:
+        plx_callback = PolyaxonKerasCallback()
+        plx_model_callback = PolyaxonKerasModelCheckpoint(save_weights_only=True)
+        log_dir = tracking.get_tensorboard_path()
+        callbacks = [
+            tf.keras.callbacks.TensorBoard(log_dir=log_dir),
+            plx_model_callback,
+            plx_callback,
+        ]
+
+    # Keras' `model.fit()` trains the model with specified number of epochs and
+    # number of steps per epoch. Note that the numbers here are for demonstration
+    # purposes only and may not sufficiently produce a model with good quality.
+    multi_worker_model.fit(ds_train,
+                           epochs=args.epochs,
+                           steps_per_epoch=70,
+                           callbacks=callbacks)
+
+    multi_worker_model.save("/tmp/model")
+
+    if TASK_INDEX == 0:
+        tracking.log_model(path="/tmp/model", framework="tensorflow")
 
 
 if __name__ == '__main__':
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--fake_data', nargs='?', const=True, type=bool,
-                      default=False,
-                      help='If true, uses fake data for unit testing.')
-  parser.add_argument('--max_steps', type=int, default=1000,
-                      help='Number of steps to run trainer.')
-  parser.add_argument('--learning_rate', type=float, default=0.001,
-                      help='Initial learning rate')
-  parser.add_argument('--dropout', type=float, default=0.9,
-                      help='Keep probability for training dropout.')
-  parser.add_argument(
-      '--data_dir',
-      type=str,
-      default=os.path.join(os.getenv('TEST_TMPDIR', '/tmp'),
-                           'tensorflow/input_data'),
-      help='Directory for storing input data')
-  parser.add_argument(
-      '--log_dir',
-      type=str,
-      default=os.path.join(os.getenv('TEST_TMPDIR', '/tmp'),
-                           'tensorflow/logs'),
-      help='Summaries log directory')
-  FLAGS, unparsed = parser.parse_known_args()
-  tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+    os.environ['NCCL_DEBUG'] = 'INFO'
+
+    tfds.disable_progress_bar()
+
+    # to decide if a worker is chief, get TASK_INDEX in Cluster info
+    tf_config = json.loads(os.environ.get('TF_CONFIG') or '{}')
+    TASK_INDEX = tf_config['task']['index']
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        '--conv1_size',
+        type=int,
+        default=32)
+    parser.add_argument(
+        '--conv2_size',
+        type=int,
+        default=64
+    )
+    parser.add_argument(
+        '--dropout',
+        type=float,
+        default=0.2
+    )
+    parser.add_argument(
+        '--hidden1_size',
+        type=int,
+        default=64
+    )
+    parser.add_argument(
+        '--conv_activation',
+        type=str,
+        default="relu"
+    )
+    parser.add_argument(
+        '--dense_activation',
+        type=str,
+        default="relu"
+    )
+    parser.add_argument(
+        '--optimizer',
+        type=str,
+        default='adam'
+    )
+    parser.add_argument(
+        '--learning_rate',
+        type=float,
+        default=0.001
+    )
+    parser.add_argument(
+        '--epochs',
+        type=int,
+        default=10
+    )
+    parser.add_argument(
+        '--loss',
+        type=str,
+        default="sparse_categorical_crossentropy"
+    )
+
+    args = parser.parse_args()
+
+    # Polyaxon
+    if TASK_INDEX == 0:
+        tracking.init()
+
+    main(args)

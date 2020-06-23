@@ -4,16 +4,18 @@ name: build
 params:
   destination:
     value:
-      name: polyaxon/polyaxon-quick-start
+      name: polyaxon/polyaxon-examples
       connection: docker-connection
 runPatch:
   init:
   - dockerfile:
-      image: "tensorflow/tensorflow:2.0.1-py3"
+      image: "tensorflow/tensorflow:2.2.0"
       run:
       - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
       - pip3 install mxnet
       - pip3 install scikit-learn
       - pip3 install xgboost
+      - pip3 install keras
+      - pip3 install tensorflow_datasets
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko
