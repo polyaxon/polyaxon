@@ -12,6 +12,8 @@ tags:
 sidebar: "core"
 ---
 
+![polyaxonfile architecture](../../../../content/images/references/specification/polyaxonfile.png)
+
 In order to schedule runs on Polyaxon, users need to create polyaxonfiles. 
 These files use a specification to describe how jobs, distributed jobs, services, parallel executions, and pipelines should run on Polyaxon.
 

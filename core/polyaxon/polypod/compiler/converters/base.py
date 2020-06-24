@@ -31,7 +31,10 @@ from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.k8s.custom_resources.operation import get_resource_name, get_run_instance
 from polyaxon.polyflow import V1Environment, V1Init, V1Plugins
-from polyaxon.polypod.common.containers import ensure_container_name
+from polyaxon.polypod.common.containers import (
+    ensure_container_name,
+    sanitize_container_command_args,
+)
 from polyaxon.polypod.common.env_vars import get_env_var, get_service_env_vars
 from polyaxon.polypod.common.mounts import get_mounts
 from polyaxon.polypod.init.artifacts import get_artifacts_path_container
@@ -239,7 +242,7 @@ class BaseConverter(ConverterAbstract):
         )
         containers = to_list(polyaxon_sidecar_container, check_none=True)
         containers += sidecar_containers
-        return containers
+        return [sanitize_container_command_args(c) for c in containers]
 
     def handle_init_connections(
         self,
@@ -370,7 +373,8 @@ class BaseConverter(ConverterAbstract):
             connection_by_names=connection_by_names,
             contexts=contexts,
         )
-        return containers + init_containers
+        init_containers = containers + init_containers
+        return [sanitize_container_command_args(c) for c in init_containers]
 
     def filter_containers_from_init(
         self, init: List[V1Init]

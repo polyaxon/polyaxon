@@ -56,15 +56,8 @@ def patch_container(
     if not any([container.command, container.args]):
         container.command = command
         container.args = args
-    # Sanitize container command/args
-    if container.command:
-        container.command = [
-            c for c in to_list(container.command, check_none=True) if c
-        ]
-    if container.args:
-        container.args = [c for c in to_list(container.args, check_none=True) if c]
 
-    return container
+    return sanitize_container_command_args(container)
 
 
 def ensure_container_name(
@@ -76,4 +69,18 @@ def ensure_container_name(
     name = container.name
     if not name:
         container.name = generate_container_name(prefix=prefix)
+    return container
+
+
+def sanitize_container_command_args(
+    container: k8s_schemas.V1Container,
+) -> k8s_schemas.V1Container:
+    # Sanitize container command/args
+    if container.command:
+        container.command = [
+            str(c) for c in to_list(container.command, check_none=True) if c
+        ]
+    if container.args:
+        container.args = [str(c) for c in to_list(container.args, check_none=True) if c]
+
     return container
