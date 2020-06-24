@@ -12,4 +12,4 @@ run:
   ports: [4000]
   container:
     image: "{{image}}"
-    env: {COMMUTER_LOCAL_STORAGE_BASEDIRECTORY: "{{path}}"}
+    env: {COMMUTER_BUCKET: "{{bucket}}"}
