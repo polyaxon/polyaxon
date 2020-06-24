@@ -361,6 +361,48 @@ class TestDeploymentConfig(BaseTestCase):
             "port": 111,
         }
 
+    def test_read_deploy_config_monitoring_values(self):
+        config = reader.read("tests/fixtures/deployment/external_redis_values.yml")
+        assert isinstance(config, DeploymentConfig)
+        assert config.namespace is None
+        assert config.rbac.enabled is True
+        assert config.admin_view_enabled is None
+        assert config.timezone is None
+        assert config.environment == "staging"
+        assert config.ingress is None
+        assert config.gateway.service.get("type") == "ClusterIP"
+        assert config.user.to_dict() == {"password": "root"}
+        assert config.node_selector is None
+        assert config.tolerations is None
+        assert config.affinity is None
+        assert config.limit_resources is None
+        assert config.global_replicas is None
+        assert config.global_concurrency is None
+        assert config.api is None
+        assert config.scheduler is None
+        assert config.worker is None
+        assert config.beat is None
+        assert config.hooks is None
+        assert config.email is None
+        assert config.host_name is None
+        assert config.allowed_hosts is None
+        assert config.intervals is None
+        assert config.artifacts_store.name == "test"
+        assert config.artifacts_store.kind == "host_path"
+        assert config.connections is None
+        assert config.ldap is None
+        assert config.postgresql is None
+        assert config.rabbitmq is None
+        assert config.redis.enabled is False
+        assert config.external_services.postgresql is None
+        assert config.external_services.rabbitmq is None
+        assert config.external_services.redis.to_dict() == {
+            "usePassword": True,
+            "password": "polyaxon",
+            "host": "35.226.163.84",
+            "port": 111,
+        }
+
     def test_read_deploy_config_wrong_values1(self):
         with self.assertRaises(ValidationError):
             reader.read("tests/fixtures/deployment/wrong_values2.yml")

@@ -58,17 +58,17 @@ data:
   POLYAXON_UI_ENABLED: {{ .Values.uiEnabled | quote }}
   {{- end }}
   {{- if .Values.istio.enabled }}
-  POLYAXON_ISTIO_ENABLED
+  POLYAXON_ISTIO_ENABLED: "true"
   {{- end }}
   {{- if .Values.istio.gateway }}
-  POLYAXON_ISTIO_GATEWAY
+  POLYAXON_ISTIO_GATEWAY: {{ .Values.istio.gateway  | quote }}
   {{- end }}
   {{- if .Values.istio.tlsMode }}
-  POLYAXON_ISTIO_TLS_MODE
+  POLYAXON_ISTIO_TLS_MODE: {{ .Values.istio.tlsMode  | quote }}
   {{- end }}
   {{- if .Values.istio.prefix }}
-  POLYAXON_ISTIO_PREFIX
+  POLYAXON_ISTIO_PREFIX: {{ .Values.istio.prefix  | quote }}
   {{- end }}
   {{- if .Values.istio.timeout }}
-  POLYAXON_ISTIO_TIMEOUT
+  POLYAXON_ISTIO_TIMEOUT: {{ .Values.istio.timeout  | quote }}
   {{- end }}

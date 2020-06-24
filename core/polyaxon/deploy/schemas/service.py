@@ -503,11 +503,40 @@ class ExternalService(BaseConfig):
         self.conn_max_age = conn_max_age
 
 
+class ExternalBackendSchema(BaseCamelSchema):
+    enabled = fields.Bool(allow_none=True)
+    backend = fields.Str(allow_none=True)
+    options = fields.Dict(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return ExternalBackend
+
+
+class ExternalBackend(BaseConfig):
+    SCHEMA = ExternalBackendSchema
+    REDUCED_ATTRIBUTES = [
+        "enabled",
+        "backend",
+        "options",
+    ]
+
+    def __init__(
+        self, enabled=None, backend=None, options=None,
+    ):
+        self.enabled = enabled
+        self.backend = backend
+        self.options = options
+
+
 class ExternalServicesSchema(BaseCamelSchema):
     redis = fields.Nested(ExternalServiceSchema, allow_none=True)
     rabbitmq = fields.Nested(ExternalServiceSchema, allow_none=True)
     postgresql = fields.Nested(ExternalServiceSchema, allow_none=True)
     api = fields.Nested(ExternalServiceSchema, allow_none=True)
+    metrics = fields.Nested(ExternalBackendSchema, allow_none=True)
+    errors = fields.Nested(ExternalBackendSchema, allow_none=True)
+    tracing = fields.Nested(ExternalBackendSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -516,10 +545,30 @@ class ExternalServicesSchema(BaseCamelSchema):
 
 class ExternalServicesConfig(BaseConfig):
     SCHEMA = ExternalServicesSchema
-    REDUCED_ATTRIBUTES = ["redis", "rabbitmq", "postgresql", "api"]
+    REDUCED_ATTRIBUTES = [
+        "redis",
+        "rabbitmq",
+        "postgresql",
+        "api",
+        "metrics",
+        "errors",
+        "tracing",
+    ]
 
-    def __init__(self, redis=None, rabbitmq=None, postgresql=None, api=None):
+    def __init__(
+        self,
+        redis=None,
+        rabbitmq=None,
+        postgresql=None,
+        api=None,
+        metrics=None,
+        errors=None,
+        tracing=None,
+    ):
         self.redis = redis
         self.rabbitmq = rabbitmq
         self.postgresql = postgresql
         self.api = api
+        self.metrics = metrics
+        self.errors = errors
+        self.tracing = tracing

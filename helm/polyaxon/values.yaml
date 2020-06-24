@@ -276,6 +276,21 @@ externalServices:
     host:
     port:
 
+  metrics:
+    enabled: false
+    backend:
+    options:
+
+  errors:
+    enabled: false
+    backend:
+    options:
+
+  tracing:
+    enabled: false
+    backend:
+    options:
+
 broker:
 
 postgresql:

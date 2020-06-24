@@ -80,8 +80,19 @@ data:
   {{- end }}
   # Metrics
   {{- if .Values.metrics.enabled }}
-  POLYAXON_STATS_BACKEND: "statsd"
-  POLYAXON_STATS_OPTIONS: {{ include "config.stats" . | fromJson | toJson | quote }}
+  POLYAXON_METRICS_BACKEND: "statsd"
+  POLYAXON_METRICS_OPTIONS: {{ include "config.metrics.options" . | fromJson | toJson | quote }}
+  {{- else if .Values.externalServices.metrics.enabled }}
+  POLYAXON_METRICS_BACKEND: {{ .Values.externalServices.metrics.backend | quote }}
+  POLYAXON_METRICS_OPTIONS: {{ toJson .Values.externalServices.metrics.options | quote }}
+  {{- end }}
+  {{- if .Values.externalServices.errors.enabled }}
+  POLYAXON_ERRORS_BACKEND: {{ .Values.externalServices.errors.backend | quote }}
+  POLYAXON_ERRORS_OPTIONS: {{ toJson .Values.externalServices.errors.options | quote }}
+  {{- end }}
+  {{- if .Values.externalServices.tracing.enabled }}
+  POLYAXON_TRACING_BACKEND: {{ .Values.externalServices.tracing.backend | quote }}
+  POLYAXON_TRACING_OPTIONS: {{ toJson .Values.externalServices.tracing.options | quote }}
   {{- end }}
   # Auth
   {{- if .Values.ldap.enabled }}
