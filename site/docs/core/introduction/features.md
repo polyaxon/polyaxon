@@ -13,6 +13,8 @@ tags:
 sidebar: "core"
 ---
 
+![polyaxonfile architecture](../../../../content/images/references/specification/features.png)
+
 Polyaxon comes with powerful features built directly into the core software which can be customised and configured based on the needs of each individual deployment.
 
 Here's a quick overview of the core features you'll probably be interested in as you're getting started. This isn't an exhaustive list, just some highlights.

@@ -18,12 +18,15 @@ If you are here, it means that you have access to a Polyaxon EE Control Plane or
 
 ## Overview 
 
-Polyaxon Agent is a the technology that allows Polyaxon to orchestrate runs on a specific namespace.
+![polyaxon agent](../../../../content/images/references/agent/agent-operator.png)
+
  * Agents interact with Polyaxon Control Plane to check the queues that they manage for operations to start, stop, or update.
  * Agents can deploy different artifacts store and connections to ensure isolation, it's also possible to deploy similar configurations on different clusters to enable access to new resources, e.g. on-prem GPU and GKE for TPUs. 
  * Agents can be used to only deploy jobs / distributed jobs workload, and they can also deploy and expose services.
 
 It's important to note that Polyaxon Agent is an important piece in Polyaxon architecture to enable a complete isolation and a hybrid execution.
+
+![polyaxon agent](../../../../content/images/references/agent/agent-execution.png)
 
 ## Create a namespace for the agent
 
@@ -151,18 +154,47 @@ These notes are important for setting the CLI, and getting access to the dashboa
 Next step you need the [Polyaxon CLI installed](/setup/cli/), and you need to configure 
 the host and the ports based on these notes.
 
-## Upgrade Polyaxon
+## Upgrade Polyaxon Agent
 
 To upgrade Polyaxon to a newer version, you can simply run the following command using Polyaxon CLI:
 
 ```bash
-helm update
 polyaxon admin deploy -f config.yml --upgrade
 ```
 
 Or using Helm
 
 ```bash
-helm update
 helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
+```
+
+## Turn off a Polyaxon Agent
+
+When you are done with an agent, you can turn off the deployment,
+and depending on your persistence configuration you can keep all your data saved for future deployments.
+
+You can also decide to completely turn off Polyaxon and remove the namespace and computational resources.
+
+`polyaxon admin teardown -f config.yml`
+
+Or
+
+`helm del --purge polyaxon`
+
+You can also delete the [agent from the dashboard](/docs/management/ui/agents/).
+
+### Delete the namespace
+
+Delete the namespace the agent was installed in.
+This deletes any disks that may have been created to store user’s logs,
+and any IP addresses that may have been provisioned.
+
+```bash
+$ kubectl delete namespace <your-namespace>
+```
+
+If you used the default values, the command should be,
+
+```bash
+$ kubectl delete namespace polyaxon
 ```

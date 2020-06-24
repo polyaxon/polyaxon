@@ -175,14 +175,12 @@ the host and the ports based on these notes.
 To upgrade Polyaxon to a newer version, you can simply run the following command using Polyaxon CLI:
 
 ```bash
-helm update
 polyaxon admin upgrade -f config.yml
 ```
 
 Or using Helm
 
 ```bash
-helm update
 helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
 ```
 

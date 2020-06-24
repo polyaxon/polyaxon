@@ -89,6 +89,11 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
      * Put an operation on a schedule.
      * Subscribe a component to events to trigger executions automatically.
 
+    After resolution and compilation, Polyaxon will prepare an executable
+    that will be scheduled on Kubernetes:
+
+    ![polyaxonfile operation](../../../../content/images/references/specification/operation.png)
+
     Args:
         version: str
         kind: str, should be equal to `operation`
