@@ -247,11 +247,11 @@ class RunClient:
         if you run a component/operation from the CLI/UI an instance will be created automatically.
 
         This is a generic create function, you can check other methods for creating runs:
-          * from yaml
-          * from hub
-          * from url
+          * from yaml: `create_from_polyaxonfile`
+          * from url: `create_from_url`
+          * from hub: `create_from_hub`
 
-        Note that if you don't pass data, the creation will pass,
+        > Note that if you don't pass `content`, the creation will pass,
         and the run will be marked as non-managed.
 
         [Run API](/docs/api/#operation/CreateRun)
@@ -550,12 +550,13 @@ class RunClient:
     ):
         """Waits for the run's last status to meet a condition.
 
-        If statuses is passed the it will wait for a condition:
+        If statuses is passed the it will wait for the condition:
          * last status is one of the statuses passed.
-        Otherwise, it will wait until the user interrupts it or reaches a final status.
+
+        Otherwise, it will wait until the user interrupts the function or reaches a final status.
 
         N.B. if you want to watch statuses and and receive a the status/conditions,
-        please use watch_statuses instead which yields the results.
+        please use `watch_statuses` instead which yields the results.
         """
         for status, conditions in self._wait_for_condition(statuses):
             self._run_data.status = status
@@ -569,10 +570,11 @@ class RunClient:
 
         If statuses is passed the watch will wait for a condition:
          * last status is one of the statuses passed.
+
         Otherwise, it will watch until the user interrupts it or reaches a final status.
 
         N.B. if you just wait for a status condition without expecting a yield,
-        please use wait_for_condition instead
+        please use `wait_for_condition` instead
 
         Yields:
             Tuple[status, List[conditions]]:
