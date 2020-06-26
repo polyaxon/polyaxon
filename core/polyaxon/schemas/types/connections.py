@@ -78,15 +78,15 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
     to automatically connect and load information.
 
     Using connections you can define the boilerplate required
-    to connect a volume or a blob storage once,
-    and end users, e.g. data scientist, can just reference the name of the connection to use it
+    to connect a volume, a blob storage once, secret definition for loading data from a data source.
+    Rnd users, e.g. data scientist, can just reference the name of the connection to use it
     without dealing with the configuration every time.
 
     Connections are not required to mount secrets or configurations,
     in fact users can also mount secrets and volumes the Kubernetes way,
     but this mean you are exposing the service to very few team members who have
-    the Kubernetes know-how,
-    in some advance use-cases, you will have to leverage the low level Kubernetes API,
+    the Kubernetes know-how, in some advance use-cases,
+    you will have to leverage the low level Kubernetes API,
     but for most interactions, using the connection specification is much simpler,
     similar to how easy it is to define service accounts or image pull secrets instead of
     defining all the volumes and mounting them to the containers manually.
@@ -163,10 +163,10 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
 
     ### kind
 
-    the kind of the connection. Apart from the fact that the Polyaxon
+    the kind of the connection. Apart from the fact that Polyaxon
     has built-in handlers for several connections, user can build their own handlers,
     for example you can create a handler for pulling data from a database
-    ora data lake based on a specific kind.
+    or a data lake based on a specific kind.
 
     Polyaxon will show a small connection logo for some types in the
     dashboard and analytics about the connection usage.
@@ -185,11 +185,9 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
 
     ### schema
 
-     In order to leverage some built-in functionalities in Polyaxon,
-    e.g. automatic management of outputs,
-    initializers for cloning code from git repos,
-    loading data from S3/GCS/Azure/Volumes/Paths,
-    or pushing container images to a registry,
+    In order to leverage some built-in functionalities in Polyaxon,
+    e.g. automatic management of outputs, initializers for cloning code from git repos,
+    loading data from S3/GCS/Azure/Volumes/Paths, or pushing container images to a registry,
     the schema is how Polyaxon knows how to authenticate the containers that will handle that logic.
 
     If you opt-out of using those functionalities, you can leave this field empty or
@@ -201,12 +199,13 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
         * [docker registry connections](/docs/setup/connections/registry/)
 
     ### secret
+
     We assume that each connection will only need to access to at most one secret.
     If you are building a specific handler for a connection,
     this is where you will need to expose the necessary paths or environment variables needed
     to make the http/grpc connection.
 
-    In many cases you might not need to expose any secret, for instance for volumes and hot paths.
+    In many cases you might not need to expose any secret, for instance for volumes and host paths.
 
     The connection secret schema has 3 fields:
 

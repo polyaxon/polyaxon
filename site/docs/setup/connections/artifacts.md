@@ -22,18 +22,18 @@ You can connect as many datasets, volumes, and artifacts stores in Polyaxon.
 It's better to set a connection for each datasets, or artifacts store, or volume path holding some data, 
 to get more visibility and granular control over who is using that connection and how often.
 
-Exposing each datasets or artifacts as a connection also give the possibility to 
-effectively version you data, and expose information about the changes from one dataset version to another in the description.
+Exposing each datasets or artifacts as a connection also gives you the possibility to 
+effectively version your data, and expose information about the changes from one dataset version to another in the description.
 By using connections you can also migrate and find jobs that use a dataset, and take necessary actions.
 
 Using multiple connections is also very useful for large teams who need either to scale or
-to have different teams to access different volumes and storage backends.
+to have different teams access different volumes and storage backends.
 
 This section tries to explain how Polyaxon mounts these volumes for experiments and jobs.
 
 ## Default behaviour
 
-When the user does not provide any connection, the default behaviour is to use a local path on the host node for storing outputs and logs. 
+When no connection is provided, the default behaviour is to use a local path on the host node for storing outputs and logs. 
 Oftentimes this default behaviour is sufficient for users who are just trying the platform, and don't want to deal with configuration steps.
 
 ## Host paths
@@ -47,7 +47,7 @@ You can use host paths to define storage connections:
   * mountPath: path where to mount the volume content in the container
   * readOnly: if th volume should be mounted in read only mode.
 
-Users should be aware as well, that by losing the node where the host path is defined, all data will be lost as well.
+> **Note**: If you the node where the host path is defined is lost, all data will be lost as well.
 
 ### Example usage as the default artifactsStore
 
@@ -74,7 +74,7 @@ connections:
 
 ## Persistent Volumes
 
-You can use a [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) to store your outputs and artifacts, or to connect a dataset(s):
+You can use a [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) to store your outputs and artifacts, or to connect datasets:
 
 ### Schema Fields
 
@@ -114,15 +114,16 @@ Please refer to [this section](https://kubernetes.io/docs/concepts/storage/persi
 ## Cloud stores
 
 In order to mount a cloud storage, 
-users need to provide authentication access to Polyaxon for the storage needed during the scheduling.
+you need to provide authentication access to Polyaxon for the storage needed during the scheduling.
 
 The way to do that is by creating a secret of your cloud storage access, 
 and providing the secret name. 
-(You can use the same k8s secret to manage multiple storage access auth).
+
+> **Tip**: You can use the same k8s secret to configure multiple connections.
 
 ### Schema Fields
 
-    * bucket: the bucket you want to expose in this connection.
+  * bucket: the bucket you want to expose in this connection.
 
 
 ### Example usage as the default artifactsStore

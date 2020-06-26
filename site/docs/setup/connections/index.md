@@ -35,6 +35,8 @@ Every Polyaxon Agent deployment can configure:
  
 All these configurations follow similar [specification](/docs/setup/connections/specification/).
 
+> **Note**: the artifacts store definition will be added by default to the connections list.
+
 ## Example configuration
 
 ```yaml
@@ -74,7 +76,7 @@ you will have to configure at least one connection, it's called the artifacts st
 
 This artifacts store is the default volume or blob storage that Polyaxon will use to save your runs' outputs and logs.
 
-The default `artifactsStore` must be of kind: 
+The `artifactsStore` must be of kind: 
 `host_path`, `volume_claim`, `gcs`, `s3`, or `wasb`.
 
 For more details please check the [artifacts store section](/docs/setup/connections/artifacts/).
@@ -93,19 +95,22 @@ these connections can be multiple
 [data volumes as well as cloud storages](/docs/setup/connections/artifacts/), 
 [git repos](/docs/setup/connections/git/), 
 [docker containers](/docs/setup/connections/registry/), database accesses, ...
-this connections catalog makes it very easy to organize access to several external systems and resources, 
+this catalog of connections makes it very easy to organize access to several external systems and resources, 
 and there's no limitation on the number of connections you can define in this catalog.
+
+You can define a custom catalog of connections per namespace if you want to isolate accessible resources by your users/teams, 
+or you can duplicate some or all connections in some namespaces and clusters.
 
 For more details please check the [connection specification](/docs/setup/connections/specification/). 
 
 ### Default behaviour
 
-By default this connections catalog is empty, and is not required for Polyaxon to function correctly.
+By default this catalog is empty, and is not required for Polyaxon to function correctly.
 
 ## NotificationConnections
 
 You can configure Polyaxon to send notifications to users about event changes in their runs.
 
-The `notificationConnections` catalog is only used for connections used for notifications and follows the same connection specification.
+The `notificationConnections` catalog is only used for connections used for notifications and uses the same [connection specification](/docs/setup/connections/specification/).
 
 For mode details please check the [notifications section](/docs/setup/connections/notifications/).

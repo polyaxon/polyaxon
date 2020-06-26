@@ -18,7 +18,7 @@ tags:
 sidebar: "setup"
 ---
 
-Polyaxon allows to pull and push images from private Container Registries.
+Polyaxon allows to pull and push images from private container registries.
 
 ## Pulling docker image
 
@@ -32,7 +32,7 @@ field in the environment section.
 
 ### url
 
-the url of the registry host.
+The url of the registry host.
 
 ```yaml
 name: docker-connection-kaniko
@@ -65,7 +65,7 @@ schema:
   url: https://myregistry.com/org/repo
 secret:
   name: docker-conf
-  mountPath: /root/.docke
+  mountPath: /root/.docker
 ```
 
 In both example we are mounting the same secret but to 2 different paths,
@@ -91,7 +91,7 @@ You need to create a secret containing docker credentials config, e.g.
 }
 ``` 
 
-Please see how you can integrate Polyaxon with different [cloud providers docker registries](/integrations/registry/).
+Please see how you can integrate Polyaxon with different [cloud providers docker registries](/integrations/registries/).
 
 ### Add the access information to your connections catalog
 

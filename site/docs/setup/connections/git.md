@@ -16,8 +16,9 @@ tags:
 sidebar: "setup"
 ---
 
-Polyaxon allows to use external git providers for code management. 
-Git connections are how you can authorize your jobs clone and pull code from different git providers such as Github, Gitlab, and Bitbucket.
+Polyaxon allows to use external git providers for code management.
+ 
+Git connections are how you can authorize your jobs to clone and pull code from different git providers such as Github, Gitlab, and Bitbucket.
 
 ## Schema Fields
 
@@ -54,7 +55,7 @@ params:
     init: true
 ```
 
-### Example usage is an init container
+### Example usage as an init container
 
 Usage with a custom init container
 
@@ -100,8 +101,8 @@ run:
 
 ## Connecting public repos
 
-To add a connection for a public repo, you don/t need set a secret, 
-for example let's see how we can use the `https://github.com/polyaxon/polyaxon-quick-start` github repo for code tracking:
+To add a connection for a public repo, you don't need set a secret, 
+for example we can clone `https://github.com/polyaxon/polyaxon-quick-start` github repo:
 
 ```yaml
 connections:
@@ -117,7 +118,7 @@ connections:
 ### Run an experiment
 
 
-You can create an polyaxonfile to run a job that uses a this git repo
+You can create a polyaxonfile to run a job that uses a this git repo
 
 
 ```yaml
@@ -136,10 +137,10 @@ run:
 
 ## Connecting private repos
 
-To use external private repos, you need first to create a secret with an access token or username/password with read access, 
-read more about some of the [supported platforms](/integrations/scm/).
+To use external private repos, you need first to create a secret with an access token or username/password with read access,
+to use for your git connection(s). 
 
-You can use that secret in your git connection(s)
+Read more about some of the [supported platforms](/integrations/scm/). 
 
 ```yaml
 connections:
