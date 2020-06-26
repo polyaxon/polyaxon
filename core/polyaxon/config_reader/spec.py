@@ -20,12 +20,13 @@ import sys
 import yaml
 
 from collections import Mapping
+from requests import HTTPError
 from yaml.parser import ParserError  # noqa
 from yaml.scanner import ScannerError  # noqa
 
 from polyaxon.config_reader.utils import deep_update
 from polyaxon.env_vars.keys import POLYAXON_KEYS_PUBLIC_REGISTRY
-from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.utils.list_utils import to_list
 
 
@@ -136,13 +137,24 @@ def _read_from_public_hub(hub: str):
     if len(hub_values) > 2:
         raise PolyaxonSchemaError("Received an invalid hub reference: `{}`".format(hub))
     if len(hub_values) == 2:
-        hub, version = hub_values
+        hub_name, version = hub_values
     else:
-        hub, version = hub_values[0], "latest"
+        hub_name, version = hub_values[0], "latest"
     version = version or "latest"
     registry = get_default_registry()
-    url = "{}/{}/{}.yaml".format(registry, hub, version)
-    return _read_from_url(url)
+    url = "{}/{}/{}.yaml".format(registry, hub_name, version)
+    try:
+        return _read_from_url(url)
+    except HTTPError as e:
+        if e.response.status_code == 404:
+            raise PolyaxonClientException(
+                "Component `{}` was not found, "
+                "please check that the name and tag are valid".format(hub)
+            )
+        raise PolyaxonClientException(
+            "Component `{}` could not be fetched, "
+            "an error was encountered".format(hub, e)
+        )
 
 
 def _read_from_stream(stream):

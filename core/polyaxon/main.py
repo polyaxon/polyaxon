@@ -28,6 +28,7 @@ from polyaxon.cli.check import check
 from polyaxon.cli.completion import completion
 from polyaxon.cli.config import config
 from polyaxon.cli.dashboard import dashboard
+from polyaxon.cli.hub import hub
 from polyaxon.cli.init import init
 from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
@@ -118,6 +119,7 @@ cli.add_command(check)
 cli.add_command(init)
 cli.add_command(project)
 cli.add_command(ops)
+cli.add_command(hub)
 cli.add_command(run)
 cli.add_command(dashboard)
 cli.add_command(admin)
