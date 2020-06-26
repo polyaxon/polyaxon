@@ -22,7 +22,8 @@ Integrate your Azure Container Registry ACR with Polyaxon to start your machine 
 
 ## Overview
 
-You can easily add many private registries to Polyaxon to pull private images and use them when scheduling your deep learning and machine learning experiments on Kubernetes using Polyaxon.
+You can easily add many private registries to Polyaxon.
+In order to push private docker images to ACR, you need to set access credentials.
 
 ## Create a service principle and ArcPush
 
@@ -115,19 +116,28 @@ base64.b64encode('principal_id:password}'.encode())
 kubectl create secret generic docker-conf --from-file=config.json=./config.json -n polyaxon
 ```
 
-## Add the secret to the k8s_secrets catalog in Stores
+## Add the secret to the connections catalog
 
-In order to use secret that you created before, in Polyaxon's Stores > Secrets, create a new secret entry, and set name and K8S Ref to "docker-conf".
-  
-## Make this access as default
+If you are using Kaniko
 
-After creating the access you need to mark it as default, so that Polyaxon uses it for scheduling builds. 
+```yaml
+  - name: docker-connection
+    kind: registry
+    schema:
+      url: destination
+    secret:
+      name: docker-conf
+      mountPath: /kaniko/.docker
+```
 
+If you are using dockerizer using the default root user:
 
-## Using the secret for pull only
-
-If you wish to only use this credential secret for pulling images and the in-cluster registry for pushing, you should leave the host field empty.
-
-## You can allow the docker process to pull from different registries
-
-To allow this access to pull from other registries, you can set as many other auths and credsStore.
+```yaml
+  - name: docker-connection-dockerizer
+    kind: registry
+    schema:
+      url: destination
+    secret:
+      name: docker-conf
+      mountPath: /root/.docker
+```

@@ -53,30 +53,32 @@ Or If you only want to allow Polyaxon read access please select:
 
 Select the token and copy it.
 
-## Update your private repos setting
-
-In the settings page, under private repos, set the access token:
+## Create a secret
 
 ```yaml
-TokenHash
+kubectl -n polyaxon create secret generic github-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="TokenHash"
 ```
 
-## Setting an external repo for code tracking
+## Add th repos you want to use to the connections catalog
 
-You need a project on polyaxon that it's not linked to a code repo yet:
-
-```bash
-polyaxon project create --name=project1
-```
-
-And then you need set the git url:
-
-```bash
-polyaxon project -p project1 git --url="https://gitlab.com/org/repo-name"
-```
-
-If the project is private you need to add `--private` to the command to indicate that the repo is private, i.e.
-
-```bash
-polyaxon project -p project1 git --url="https://gitlab.com/org/repo-name" --private
+```yaml
+connections:
+  - name: repo1
+    kind: git
+    schema:
+      url: https://github.com/org/repo1
+    secret:
+      name: "github-connection-1"
+  - name: repo2
+    kind: git
+    schema:
+      url: https://github.com/org/repo2
+    secret:
+      name: "github-connection-1"
+  - name: repo3
+    kind: git
+    schema:
+      url: https://github.com/org/repo3
+    secret:
+      name: "other-connection"
 ```

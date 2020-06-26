@@ -18,24 +18,12 @@ visibility: public
 status: published
 ---
 
-Integrate your secured, private, and internal docker registry with Polyaxon to start your machine learning and deep learning experiments on Kubernetes.
+Integrate your secure, private, and internal docker registry with Polyaxon to start your machine learning and deep learning experiments on Kubernetes.
 
 ## Overview
 
-You can easily add many private registries to Polyaxon to pull private images and use them when scheduling your deep learning and machine learning experiments on Kubernetes using Polyaxon.
+You can easily add many private registries to Polyaxon to pull and push private images and use them when scheduling your deep learning and machine learning experiments on Kubernetes using Polyaxon.
 
 ## Add your private docker registries credentials
 
-You need to create a secret containing docker credentials config, e.g.
-
-```json
-{
-    "auths": {
-        "localhost:5001": {
-            "auth": "YW11cmRhY2E6c3VwZXJzZWNyZXRwYXNzd29yZA==",
-            "email": "user@acme.com"
-        }
-    },
-    "credsStore": "secretservice"
-}
-``` 
+You should just follow your provider's documentation and create a secret and / or config map. 
