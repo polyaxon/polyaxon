@@ -32,16 +32,36 @@ Once the webhook is created, you can optionally customise the channel, name, and
 
 ![slack-integration2](../../content/images/integrations/slack/img2.png)
 
-## Add your Slack webhook to Polyaxon integrations settings
+## Configure your webhook
 
-Now you can add your slack webhook to the integrations' section, under settings integrations:
+Create a secret or a config map with your Slack webhook:
 
 ```yaml
-- url: https://hooks.slack.com/services/T6QR3FYN7/BC34VRP/7KRWJAtQWOxjxYgee
-- url: https://hooks.slack.com/services/FGDR3FD34/BC34VRP/7KRWDSFSD3xjxYgee
-  channel: channel12
+kubectl create secret generic  notification-secret --from-file=POLYAXON_INTEGRATIONS_WEBHOOKS_PAGE_DUTY=notification-secret.json -n polyaxon
+```
+
+The content of `notification-secret.json` should contain all the webhooks that you want to notify at the same time:
+
+```json
+[
+  {
+    "url": "https://hooks.slack.com/services/T6QR3FYN7/BC34VRP/7KRWJAtQWOxjxYgee"
+  }
+]
+```
+
+## Add your Slack connection to Polyaxon notification connections
+
+Now you can add your Slack's webhook to the integrations' section:
+
+```yaml
+notificationConnections:
+  - name: slack-connection1
+    kind: slack
+    secret:
+      name: notification-secret
 ```
 
 ## More automation with Zapier
 
-You can also go further and connect other popular Polyaxon integrations to your Slack team using Zapier.
+You can also go further and connect other popular Polyaxon integrations to Slack using Zapier.

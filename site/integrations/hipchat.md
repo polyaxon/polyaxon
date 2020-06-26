@@ -25,14 +25,36 @@ Notify Hipchat when an experiment, a job, or a build is finished so that your te
 First, you'll need to set up a new incoming webhook in your team's [Hipchat](https://www.hipchat.com/docs/apiv2/method/create_webhook?_ga=2.203509264.1443225380.1545584678-263232814.1545584678) configuration. 
 An incoming webhook is a method for Hipchat to receive incoming messages to be posted to your Hipchat team from external services.
 
-## Add your Hipchat webhook to Polyaxon integrations settings
+## Configure your webhook
 
-Now you can add your hipchat's webhook to the integrations' section, under settings integrations:
+Create a secret or a config map with your Hipchat webhook:
 
 ```yaml
-- url: https://hipchat.com/v2/room/room_id_or_name/webhook
+kubectl create secret generic  notification-secret --from-file=POLYAXON_INTEGRATIONS_WEBHOOKS_HIPCHAT=notification-secret.json -n polyaxon
+```
+
+The content of `notification-secret.json` should contain all the webhooks that you want to notify at the same time:
+
+```json
+[
+  {
+    "url": "https://hipchat.com/v2/room/room_id_or_name/webhook"
+  }
+]
+```
+
+## Add your Hipchat connection to Polyaxon notification connections
+
+Now you can add your Hipchat's webhook to the integrations' section:
+
+```yaml
+notificationConnections:
+  - name: hipchat-connection1
+    kind: hipchat
+    secret:
+      name: notification-secret
 ```
 
 ## More automation with Zapier
 
-You can also go further and connect other popular Polyaxon integrations to hipchat using Zapier.
+You can also go further and connect other popular Polyaxon integrations to Hipchat using Zapier.

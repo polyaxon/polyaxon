@@ -41,7 +41,7 @@ All resources mentioned in this guide can be deployed using the one-click button
 
 Once all entries are filled, you can click the Purchase button.
 
-You can now use this PostgreSQL server with you Polyaxon deployment:
+You can now use this PostgreSQL server with your Polyaxon deployment:
 
 ```yaml
 postgresql:

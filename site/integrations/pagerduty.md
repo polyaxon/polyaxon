@@ -25,15 +25,36 @@ Notify PagerDuty when an experiment, a job, or a build fails so that your team s
 First, you'll need to set up a new incoming webhook in your team's [PagerDuty](https://support.pagerduty.com/docs/webhooks) configuration. 
 An incoming webhook is a method for PagerDuty to receive incoming messages to be posted to your PagerDuty team from external services.
 
-## Add your PagerDuty webhook to Polyaxon integrations settings
+## Configure your webhook
 
-Now you can add your PagerDuty's webhook to the integrations' section, under settings integrations:
+Create a secret or a config map with your PagerDuty webhook:
 
 ```yaml
-- url: url1
-- url: url2
+kubectl create secret generic  notification-secret --from-file=POLYAXON_INTEGRATIONS_WEBHOOKS_PAGE_DUTY=notification-secret.json -n polyaxon
+```
+
+The content of `notification-secret.json` should contain all the webhooks that you want to notify at the same time:
+
+```json
+[
+  {
+    "url": "url1"
+  }
+]
+```
+
+## Add your PagerDuty connection to Polyaxon notification connections
+
+Now you can add your PagerDuty's webhook to the integrations' section:
+
+```yaml
+notificationConnections:
+  - name: pagerduty-connection1
+    kind: pager_duty
+    secret:
+      name: notification-secret
 ```
 
 ## More automation with Zapier
 
-You can also go further and connect other popular Polyaxon integrations to Pagerduty using Zapier.
+You can also go further and connect other popular Polyaxon integrations to PagerDuty using Zapier.
