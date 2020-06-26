@@ -12,8 +12,8 @@ author:
   github: "polyaxon"
 tags: 
   - scm
-  - repos
 featured: true
+popularity: 0
 visibility: public
 status: published
 ---

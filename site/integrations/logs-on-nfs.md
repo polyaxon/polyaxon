@@ -14,6 +14,7 @@ tags:
   - logging
   - storage
 featured: false
+popularity: 0
 visibility: public
 status: publish
 ---

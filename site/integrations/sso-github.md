@@ -13,8 +13,9 @@ author:
 tags: 
   - sso
 featured: false
+popularity: 0
 visibility: public
-status: published
+status: EE
 ---
 
 You can GitHub to manage your organization’s entire membership.

@@ -10,10 +10,11 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - data-store
   - storage
 featured: false
+popularity: 1
 visibility: public
 status: published
 ---

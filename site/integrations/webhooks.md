@@ -11,23 +11,27 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - notification
-featured: true
+  - notifications
+featured: false
+popularity: 0
 visibility: public
 status: published
 ---
 
-Notify a custom API when an experiment, a job, or a build is finished to extend your internal systems.
+Notify a custom API when an experiment, a job, or a service is finished to extend your internal systems.
 
 ## Update your webhook settings
 
-To send generic webhooks, you just need to set the urls that you want to send webhooks to and the http methods to use, 
-under settings integrations, update `INTEGRATIONS_WEBHOOKS:GENERIC`:
+To send generic webhooks, you just need to set the urls that you want to send webhooks to and the http methods to use:
 
 ```yaml
-- url: url1
-- url: url2
-  method: post
-- url: url2
-  method: get  # N.B. This is just for illustration, get method is not recommended
+notificationConnections:
+  - name: service1
+    kind: webhook
+    configMap:
+      name: "my-webhook-config"
+  - name: service2
+    kind: webhook
+    secret:
+      name: "service-with-url-token"
 ```

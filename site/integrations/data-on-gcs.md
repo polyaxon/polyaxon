@@ -14,6 +14,7 @@ tags:
   - data-store
   - storage
 featured: true
+popularity: 1
 visibility: public
 status: published
 ---

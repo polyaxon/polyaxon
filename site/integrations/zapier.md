@@ -14,8 +14,17 @@ tags:
   - automation
   - custom
 featured: false
+popularity: 0
 visibility: public
-status: coming-soon
+status: published
 ---
 
-### Zapier works with Triggers and Actions to build powerful automations. **coming soon**
+You can integrate Polyaxon with Zapier to gain full access to several other non-core integrations to Polyaxon.
+
+## Available events
+
+Polyaxon has some available [webhook events](/docs/references/polyaxon-webhooks/) that can be used to trigger Zaps. 
+
+## Usage
+
+Once set up, Zaps will run completely in the background without you needing to do anything else. 

@@ -4,11 +4,11 @@ sub_link: "connections/notifications"
 meta_title: "Notifications and events in Polyaxon - Configuration"
 meta_description: "You can configure Polyaxon to send notifications to users about event changes in the platform."
 tags:
-    - configuration
-    - polyaxon
-    - notifications
-    - events
-    - hooks
+  - configuration
+  - polyaxon
+  - notifications
+  - events
+  - hooks
 sidebar: "setup"
 ---
 

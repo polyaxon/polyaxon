@@ -13,21 +13,25 @@ author:
 tags: 
   - custom
 featured: false
+popularity: 1
 visibility: public
 status: published
 ---
 
-Polyaxon is open source, has an Json API, and webhooks, and can be integrated with just about any other app or service.
+Polyaxon core engine is open source, has an Json API, webhooks, and an abstraction for creating components, and can be integrated with just about any other app or service.
 
-## Scheduling
+## Components
 
-Polyaxon is in the process to abstract it's scheduling behaviour to allow different ways of scheduling workload, 
-as a user you can create your own scheduler for Polyaxon. 
+Polyaxon provides an interface for authoring reusable [components](/docs/core/specification/), 
+users can contribute to the public [components registry](https://github.com/polyaxon/polyaxon-hub/) 
+or create private components for their own internal use.
 
-## API+webhook integrations
+## Integrations with the API/SDKs
 
-Polyaxon also supports custom API integrations which can be authenticated with individual keys, and deliver outgoing webhooks based on particular events.
+Polyaxon provides a [Json API](/docs/api/) and a set of language [SDKs](/docs/references/#client-libraries) 
+that users can leverage for integrating Polyaxon with other systems or automation tools. 
 
-## Zapier integrations
+## API+Webhooks integrations
 
-Finally, custom integrations can be easily created using Zapier to build simple or complex integrations, depending on your needs.
+Polyaxon also supports custom API integrations which can be authenticated with individual keys, 
+and deliver outgoing [webhooks](/docs/references/polyaxon-webhooks/) based on particular events.

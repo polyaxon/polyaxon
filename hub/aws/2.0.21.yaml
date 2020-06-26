@@ -4,7 +4,6 @@ name: aws
 description: Performs operations on Amazon Web Services resources using aws.
 tags: [cloud]
 
-
 inputs:
 - name: image
   isOptional: true

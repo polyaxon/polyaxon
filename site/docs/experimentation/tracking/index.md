@@ -7,11 +7,11 @@ meta_description: "Polyaxon Tracking api is a high level api for logging paramet
 visibility: public
 status: published
 tags:
-    - tracking
-    - reference
-    - polyaxon
-    - client
-    - sdk
+  - tracking
+  - reference
+  - polyaxon
+  - client
+  - sdk
 sidebar: "experimentation"
 ---
 

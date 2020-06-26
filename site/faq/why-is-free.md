@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - privacy
+  - privacy
 ---
 
 We believe that the future of machine learning (ML) and deep learning (DL) will be based on a rich ecosystem of open source tools.

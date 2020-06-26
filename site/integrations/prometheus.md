@@ -13,6 +13,7 @@ author:
 tags: 
   - monitoring
 featured: false
+popularity: 0
 visibility: public
 status: coming-soon
 ---

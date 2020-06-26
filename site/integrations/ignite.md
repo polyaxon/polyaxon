@@ -12,8 +12,8 @@ author:
   github: "polyaxon"
 tags: 
   - tracking
-  - scheduling
 featured: false
+popularity: 1
 visibility: public
 status: published
 ---

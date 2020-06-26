@@ -11,9 +11,10 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - artifacts-store
+  - artifacts
   - storage
 featured: false
+popularity: 1
 visibility: public
 status: published
 ---

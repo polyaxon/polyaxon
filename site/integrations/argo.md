@@ -11,11 +11,37 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
+  - automation
   - pipelines
   - scheduling
   - dags
-  - automation
 featured: false
+popularity: 0
+class_name: instruction
 visibility: public
-status: coming-soon
+status: published
 ---
+
+You can easily use Polyaxon in your Argo workflows. 
+Argo is container native workflow engine, which means you can use Polyaxon as a step or in multiple steps in a Argo workflow. 
+
+
+## Polyaxon as an Argo step
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+spec:
+  entrypoint: polyaxon-job
+  templates:
+  - name: step1
+    ...
+  - name: step2
+    ...
+  - name: polyaxon-job
+    container:
+      image: polyaxon/polyaxon-cli
+      args: ["run", "-f", "path/to/polyaxonfile.yaml"]
+```
+
+> **Tip**: Polyaxon provides a native [DAG](/docs/automation/) runtime for managing your operations dependencies in a simple and efficient way.

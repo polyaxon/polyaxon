@@ -4,16 +4,16 @@ sub_link: "connections/artifacts"
 meta_title: "Connections for your dataset, artifacts, volumes and storage in Polyaxon - Configuration"
 meta_description: "Polyaxon allows to use volumes as well as cloud stores for storing outputs and artifacts, and connecting datasets."
 tags:
-    - configuration
-    - polyaxon
-    - kubernetes
-    - docker-compose
-    - environment
-    - orchestration
-    - volumes
-    - s3
-    - gcp
-    - azure-storage
+  - configuration
+  - polyaxon
+  - kubernetes
+  - docker-compose
+  - environment
+  - orchestration
+  - volumes
+  - s3
+  - gcp
+  - azure-storage
 sidebar: "setup"
 ---
 

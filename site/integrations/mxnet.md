@@ -10,11 +10,12 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
+  - operators
   - distributed-training
-  - tracking
   - scheduling
 featured: false
+popularity: 0
 visibility: public
 status: published
 ---

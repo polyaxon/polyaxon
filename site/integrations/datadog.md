@@ -10,9 +10,51 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
+  - setup
   - monitoring
 featured: false
+popularity: 0
 visibility: public
-status: coming-soon
+status: EE
 ---
+
+Polyaxon provides an abstraction called ‘stats’ which is used for internal monitoring, generally timings and various counters. The default backend `noop` simply discards them.
+This guide will help you setup to a [Datadog](https://www.datadoghq.com/) backend to sends these metrics.
+
+## Make sure the default Helm metrics deployment is disabled
+
+```yaml
+metrics:
+  enabled: false
+```
+
+## Set the external service
+
+Send Polyaxon metrics emitted to the Datadog REST API over HTTPS.
+
+```yaml
+externalServices:
+  metrics:
+    backend: datadog
+    options:
+      api_key:
+      app_key:
+      tags: {}
+```
+
+
+## Using the DogStatsD Backend
+
+Use the DogStatsD backend requires a [Datadog Agent](https://docs.datadoghq.com/agent/) to be running with the DogStatsD backend.
+
+```yaml
+externalServices:
+  metrics:
+    backend: datadog-statsd
+    options:
+      statsd_host:
+      statsd_port: 8125,
+      tags: {}
+```
+

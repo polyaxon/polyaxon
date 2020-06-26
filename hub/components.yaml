@@ -1,64 +1,181 @@
 - name: aws
+  title: AWS CLI
+  meta_title: AWS CLI
+  meta_description: This is a simple component to perform operations on AWS resources using the AWS CLI.
+  custom_excerpt: Performs operations on Google Cloud Platform resources using gcloud.
+  image: aws
+  tags: [aws]
+  popularity: 0
+  featured: false
+  is_service: false
   versions:
-  - latest.yaml
-  - 2.0.21.yaml
+  - latest
+  - 2.0.21
 - name: azure
+  title: Azure CLI
+  meta_title: azure CLI
+  meta_description: This is a simple component to perform operations on Microsoft Azure resources using az or azure CLI python.
+  custom_excerpt: Performs operations on Microsoft Azure resources using az.
+  image: azure
+  tags: [azure]
+  popularity: 0
+  featured: false
+  is_service: false
   versions:
-  - latest.yaml
-  - custom.yaml
-  - python-sdk.yaml
+  - latest
+  - custom
+  - python-sdk
 - name: buildah
+  title: Buildah
+  meta_title: buildah
+  meta_description: This is a simple component to build source into a container image using Project Atomic's Buildah build tool.
+  custom_excerpt: Builds source into a container image using Project Atomic's Buildah build tool.
+  image: buildah
+  tags: [containers]
+  popularity: 0
+  featured: false
+  is_service: false
   versions:
-  - latest.yaml
-  - 1.14.8.yaml
+  - latest
+  - 1.14.8
 - name: commuter
+  title: Commuter
+  meta_title: nteract Commuter
+  meta_description: Polyaxon makes it easy to view and read notebooks from a local directory or Amazon S3 using nteract - commuter.
+  custom_excerpt: Commuter reads notebooks from a local directory or Amazon S3, has a directory explorer to find notebooks, and provides a jupyter compatible version of the contents API. You determine where your notebooks should reside and where they should be shared. Flexibility and convenience.
+  image: nteract
+  tags: [services, dashboard]
+  popularity: 0
+  featured: false
+  is_service: true
   versions:
-  - latest.yaml
-  - gcs.yaml
-  - s3.yaml
+  - latest
+  - gcs
+  - s3
 - name: dockerizer
+  title: Dockerizer
+  meta_title: Native Docker Builedr
+  meta_description: Polyaxon allows users to build container images using the native builder project.
+  custom_excerpt: Polyaxon native builder is a Python library for building container using the Docker Engine API.
+  tags: [containers]
+  image: native-builder
+  popularity: 1
+  featured: false
+  is_service: false
   versions:
-  - latest.yaml
-  - 1.0.9.yaml
+  - latest
+  - 1.0.9
 - name: gcloud
+  title: GCloud CLI
+  meta_title: GCloud CLI
+  meta_description: This is a simple component to perform operations on Google Cloud Platform resources using gcloud.
+  custom_excerpt: Performs operations on Google Cloud Platform resources using gcloud.
+  image: gcp
+  tags: [gcp]
+  popularity: 0
+  featured: false
+  is_service: false
   versions:
-  - latest.yaml
-  - custom.yaml
+  - latest
+  - custom
 - name: jupyter-lab
+  title: JupyterLab
+  meta_title: JupyterLab
+  meta_description: Polyaxon makes it easy to start JupyterLab on your projects for you and your team members.
+  custom_excerpt: JupyterLab is an extensible environment for interactive and reproducible computing, based on the Jupyter Notebook and Architecture.
+  image: jupyter-lab
+  tags: [services, experimentation]
+  popularity: 3
+  featured: true
+  is_service: true
   versions:
-  - latest.yaml
-  - all-spark.yaml
-  - pyspark.yaml
-  - scipy.yaml
-  - tensorflow.yaml
+  - latest
+  - all-spark
+  - pyspark
+  - scipy
+  - tensorflow
 - name: jupyter-notebook
+  title: Jupyter Notebook
+  meta_title: Jupyter Notebook
+  meta_description: Polyaxon makes it easy to start Jupyter Notebooks on your projects for you and your team members.
+  custom_excerpt: The Jupyter Notebook is an incredibly powerful tool for interactively developing and presenting data science projects. A notebook integrates code and its output into a single document that combines visualisations, narrative text, mathematical equations, and other rich media.
+  image: jupyter-notebook
+  tags: [services, experimentation]
+  popularity: 3
+  featured: false
+  is_service: true
   versions:
-  - latest.yaml
-  - all-spark.yaml
-  - pyspark.yaml
-  - scipy.yaml
-  - tensorflow.yaml
+  - latest
+  - all-spark
+  - pyspark
+  - scipy
+  - tensorflow
 - name: kaniko
+  title: Kaniko
+  meta_title: Kaniko
+  meta_description: Polyaxon allows users to build container images using the Kaniko project.
+  custom_excerpt: kaniko is a tool to build container images from a Dockerfile, inside a container or Kubernetes cluster.
+  tags: [containers]
+  image: kaniko
+  popularity: 2
+  featured: true
+  is_service: false
   versions:
-  - latest.yaml
-  - 0.19.0.yaml
+  - latest
+  - 0.19.0
 - name: papermill
+  title: Papermill
+  meta_title: Papermill
+  meta_description: Polyaxon integrates with Papermill to run and publish parameterised Jupyter notebooks.
+  custom_excerpt: Papermill is a tool for parameterizing, executing, and analyzing Jupyter Notebooks.
+  tags: [services, experimentation]
+  image: papermill
+  popularity: 1
+  featured: false
+  is_service: true
   versions:
-  - latest.yaml
-  - custom.yaml
+  - latest
+  - custom
 - name: streamlit
+  title: Streamlit
+  meta_title: Streamlit
+  meta_description: Polyaxon integrates with Streamlit to run and publish custom ML apps.
+  custom_excerpt: Streamlit’s open-source app framework is the easiest way for data scientists and machine learning engineers to create beautiful, performant apps in only a few hours!  All in pure Python.
+  tags: [services, dashboard]
+  image: streamlit
+  popularity: 1
+  featured: false
+  is_service: true
   versions:
-  - latest.yaml
-  - custom.yaml
+  - latest
+  - custom
 - name: tensorboard
+  title: Tensorboard
+  meta_title: Tensorboard
+  meta_description: Polyaxon integrates with Tensorboard to visualize and debug deep learning models. Polyaxon provides several ways for using Tensorboard.
+  custom_excerpt: "TensorBoard provides the visualization and tooling needed for machine learning experimentation: Tracking and visualizing metrics such as loss and accuracy Visualizing the model graph (ops and layers)."
+  tags: [services, dashboard]
+  image: tensorflow
+  popularity: 3
+  featured: true
+  is_service: true
   versions:
-  - multi-runs.yaml
-  - path.yaml
-  - s3-path.yaml
-  - gcs-path.yaml
-  - wasb-path.yaml
-  - single-run.yaml
+  - multi-runs
+  - path
+  - s3-path
+  - gcs-path
+  - wasb-path
+  - single-run
 - name: vscode
+  title: VScode
+  meta_title: VSCode
+  meta_description: Polyaxon makes it easy to start a VSCode session on a your GPU cluster.
+  custom_excerpt: Visual Studio Code is a free source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.
+  tags: [services, experimentation]
+  image: vscode
+  popularity: 1
+  featured: false
+  is_service: true
   versions:
-  - latest.yaml
-  - 3.4.0.yaml
+  - latest
+  - 3.4.0

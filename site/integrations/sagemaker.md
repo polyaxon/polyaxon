@@ -13,8 +13,8 @@ author:
 tags: 
   - serving
   - model
-  - tracking
 featured: false
+popularity: 0
 visibility: public
 status: coming-soon
 ---

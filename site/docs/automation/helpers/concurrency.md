@@ -6,12 +6,12 @@ meta_description: "Polyaxon manages concurrency on pipeline level and on queue l
 visibility: public
 status: published
 tags:
-    - specification
-    - api
-    - polyaxon
-    - yaml
-    - json
-    - python
+  - specification
+  - api
+  - polyaxon
+  - yaml
+  - json
+  - python
 sidebar: "automation"
 ---
 

@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - experimentation
+  - experimentation
 ---
 
 Yes, Polyaxon supports running Jupyter notebooks and Jupyter Labs.

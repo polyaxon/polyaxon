@@ -10,9 +10,22 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
-  - tracing
+tags:
+  - monitoring
+  - setup
 featured: false
+popularity: 0
 visibility: public
-status: coming-soon
+status: EE
 ---
+
+To enable tracing for Polyaxon EE Control Plane, you can use Jaeger, which is a popular choice for request tracing.
+
+## Enable the tracing service 
+
+```yaml
+externalServices:
+  tracing:
+    backend: jaeger
+    options:
+```

@@ -12,32 +12,34 @@ author:
   github: "polyaxon"
 tags: 
   - tracking
-  - scheduling
 featured: false
+popularity: 1
 visibility: public
 status: published
 ---
 
 Polyaxon allows to schedule Fastai experiments, and supports tracking metrics, outputs, and models.
 
-## Overview
+## Tracking API
 
 Polyaxon provides a [tracking API](/docs/experimentation/tracking/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard.
 
-## Tracking Fastai experiments
+You can use the tracking API to create custom tracking experience with Fastai.
+
+## Fastai Callback
 
 Polyaxon provides a Fastai callback. You can use this callback with your experiment to report metrics automatically:
 
 ### As a fit callback
 
 ```python
-from polyaxon_client.tracking import Experiment
-from polyaxon_client.tracking.contrib.fastai import PolyaxonFastai
+from polyaxon import tracking
+from polyaxon.tracking.contrib.fastai import PolyaxonFastai
 
 ...
-experiment = Experiment()
+tracking.init()
 ...
-learn.fit_one_cycle(1, 0.02, callbacks=[PolyaxonFastai(learn=learn, experiment=experiment, monitor='accuracy')])
+learn.fit_one_cycle(1, 0.02, callbacks=[PolyaxonFastai(learn=learn, monitor='accuracy')])
 ```
 
 ### As a partial function
@@ -45,11 +47,11 @@ learn.fit_one_cycle(1, 0.02, callbacks=[PolyaxonFastai(learn=learn, experiment=e
 ```python
 from functools import partial
 
-from polyaxon_client.tracking import Experiment
-from polyaxon_client.tracking.contrib.fastai import PolyaxonFastai
+from polyaxon import tracking
+from polyaxon.tracking.contrib.fastai import PolyaxonFastai
 
 ...
-experiment = Experiment()
+tracking.init()
 ...
-Learner(..., callback_fns=partial(PolyaxonFastai, experiment=experiment, ...), ...)
+Learner(..., callback_fns=partial(PolyaxonFastai, ...), ...)
 ```

@@ -2,7 +2,7 @@ version: 1.1
 kind: component
 name: buildah
 description: Builds source into a container image using Project Atomic's Buildah build tool.
-tags: ["build"]
+tags: [build]
 
 inputs:
 - name: context

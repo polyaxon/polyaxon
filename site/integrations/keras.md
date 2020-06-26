@@ -12,34 +12,36 @@ author:
   github: "polyaxon"
 tags: 
   - tracking
-  - scheduling
 featured: false
+popularity: 2
 visibility: public
 status: published
 ---
 
 Polyaxon allows to schedule Keras experiments, and supports tracking metrics, outputs, and models.
 
-## Overview
+## Tracking API
 
 Polyaxon provides a [tracking API](/docs/experimentation/tracking/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard.
 
-## Tracking Keras experiments
+You can use the tracking API to create custom tracking experience with Keras.
+
+## Keras Callbacks
 
 Polyaxon provides a Keras callback, you can use this callback with your experiment to report metrics automatically
 
 ```python
-from polyaxon_client.tracking import Experiment
-from polyaxon_client.tracking.contrib.keras import PolyaxonKeras
+from polyaxon import tracking
+from polyaxon.tracking.contrib.keras import PolyaxonKerasCallback, PolyaxonKerasModelCheckpoint
 
 ...
-experiment = Experiment()
+tracking.init()
 ...
 model.fit(x_train, y_train,
           batch_size=batch_size,
           epochs=epochs,
           validation_data=(x_test, y_test),
-          callbacks=[PolyaxonKeras(experiment=experiment)])
+          callbacks=[PolyaxonKerasCallback(), PolyaxonKerasModelCheckpoint()])
 ```
 
 ## Example

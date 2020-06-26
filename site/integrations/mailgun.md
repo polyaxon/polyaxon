@@ -11,9 +11,10 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - notification
+  - notifications
   - email
 featured: false
+popularity: 0
 visibility: public
 status: published
 ---

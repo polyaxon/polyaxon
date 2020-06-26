@@ -15,6 +15,7 @@ tags:
   - automation
   - streaming
 featured: false
+popularity: 0
 visibility: public
-status: coming-soon
+status: published
 ---

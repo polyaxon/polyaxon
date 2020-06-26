@@ -5,11 +5,11 @@ is_index: true
 meta_title: "Distributed Jobs in Polyaxon - Experimentation"
 meta_description: "Polyaxon supports distributed jobs for training or data processing via TF-Job, MPI-Job, Pytorch-Job, Spark-Job, Dask-Job."
 tags:
-    - concepts
-    - polyaxon
-    - experimentation
-    - experiments
-    - architecture
+  - concepts
+  - polyaxon
+  - experimentation
+  - experiments
+  - architecture
 sidebar: "experimentation"
 ---
 

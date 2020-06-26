@@ -6,9 +6,9 @@ meta_description: "Running pipelines is often important to optimize an build str
 visibility: public
 status: published
 tags:
-    - dags
-    - pipelines
-    - hyperparameter-optimization
+  - dags
+  - pipelines
+  - hyperparameter-optimization
 sidebar: "automation"
 ---
 

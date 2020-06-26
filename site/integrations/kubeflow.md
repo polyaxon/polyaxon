@@ -1,7 +1,7 @@
 ---
 title: "KubeFlow"
 meta_title: "KubeFlow"
-meta_description: "How to schedule, track, and mange KubeFlow operator on Polyaxon. Polyaxon can schedule and manage KubeFlow operator natively."
+meta_description: "How to schedule, track, and mange KubeFlow operators on Polyaxon. Polyaxon can schedule and manage KubeFlow operators natively."
 custom_excerpt: "The Kubeflow project is dedicated to making deployments of machine learning (ML) workflows on Kubernetes simple, portable and scalable."
 image: "../../content/images/integrations/kubeflow.png"
 author:
@@ -11,84 +11,38 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - scheduling
+  - operators
 featured: true
+popularity: 2
 visibility: public
-status: beta
+status: published
 ---
 
-Polyaxon can schedule and manage KubeFlow operator to run distributed experiments.
+Polyaxon provides native support for several KubeFlow components.
 
 ## Overview
 
-Polyaxon supports and simplifies distributed training. By default, when a user creates a distributed experiment, Polyaxon uses a native behaviour for creating, tracking, and monitoring these experiments.
-
-Starting from version v0.4.2, Polyaxon can create distributed experiments on Kubeflow.
-
-## Running distributed experiments on Kubeflow
-
-In order to use Kubeflow as backend for running distributed experiments, the user need to have a running Kubeflow deployment running.
-
-Depending on the framework you are using, you can easily switch the backend used for scheduling a distributed experiment from `native` to `kubeflow`:
-
-```yaml
-version: 1
-
-kind: experiment
-
-backend: kubeflow
-
-...
-```
-
-By setting the field `backend` to `kubeflow` in your polyaxonfile, Polyaxon will submit your experiment to the Kubeflow operators corresponding to the framework used, i.e.
-
-```yaml
-version: 1
-
-kind: experiment
-
-backend: kubeflow
-
-framework: tensorflow
-
-...
-```
-
-Will create a TFJob, to learn more about how to start a distributed Tensorflow experiment please check this [guide](/integrations/tensorflow/).
-
-
-```yaml
-version: 1
-
-kind: experiment
-
-backend: kubeflow
-
-framework: pytorch
-
-...
-```
-
-Will create a PytorchJob, to learn more about how to start a distributed Pytorch experiment please check this [guide](/integrations/pytorch/).
-
-We have an independent section for the [MPIJob integration](/integrations/mpi/).
- 
-Also, since Polyaxon already supports distributed experiments on MXNet and Horovod as well, 
-we intend to support the MXNetJob operator as well as other operators in the future to give the user the option to switch from native backend to kubeflow backend.
-
-The next sections will show you how to deploy the supported Kubeflow operators. 
-
+ 1. Kubeflow Operators:
+    Polyaxon can schedule and manage KubeFlow operators natively. Polyaxon provides uniform workflow for:
+     * Viewing logs and resources.
+     * Tracking metrics, outputs, and models.
+     * Comparing and driving insights.
+    All Kubeflow jobs can be compared and composed natively with other operations supported by Polyaxon.
+ 2. Kubeflow Pipelines:
+    Polyaxon support Kubeflow Pipeline components with very few changes.
+ 3. Kubeflow KFServing:
+    Polyaxon provides reusable components that can deploy models using KFServing.
+      
 ## Deploying Kubeflow operators
 
 For teams not running/using Kubeflow and want to use this integration, 
-Polyaxon provides [Helm charts](https://github.com/polyaxon/polyaxon-kubeflow) for the Kubeflow operators currently supported.
+Polyaxon provides [Helm charts](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow) for the Kubeflow operators currently supported.
 
 These Helm charts will be maintained and supported by Polyaxon to allow users to easily deploy and manage them in similar way they manage Polyaxon.
 
- * [TFJob](https://github.com/polyaxon/polyaxon-kubeflow/tree/master/tfjob)
- * [PytorchJob](https://github.com/polyaxon/polyaxon-kubeflow/tree/master/pytorchjob)
- * [MPIJob](https://github.com/polyaxon/polyaxon-kubeflow/tree/master/tfjob)
+ * [TFJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/tfjob)
+ * [PytorchJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/pytorchjob)
+ * [MPIJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/tfjob)
  
 These operators require Helm to be installed, you can have a look at this guide to [setup Helm](/docs/guides/setup-helm/)
 

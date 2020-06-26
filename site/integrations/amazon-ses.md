@@ -11,16 +11,17 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - notification
+  - notifications
   - email
 featured: false
+popularity: 0
 visibility: public
 status: published
 ---
 
 Integrate Polyaxon with Amazon SES to receive directly email notifications.
 
-## Amazon SES
+## Setup Amazon SES
 
 [Amazon SES](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-smtp.html) is one of the easiest ways to get an outgoing email working reliably. 
 

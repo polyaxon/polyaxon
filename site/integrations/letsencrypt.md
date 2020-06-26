@@ -10,9 +10,11 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
+  - setup
   - security
 featured: false
+popularity: 0
 visibility: public
 status: published
 ---

@@ -7,10 +7,10 @@ meta_description: "Hyperopt is a search algorithm that is backed by the Hyperopt
 visibility: public
 status: published
 tags:
-    - reference
-    - polyaxon
-    - experimentation
-    - hyperparameter-optimization
+  - reference
+  - polyaxon
+  - experimentation
+  - hyperparameter-optimization
 sidebar: "automation"
 ---
 

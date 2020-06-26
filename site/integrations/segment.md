@@ -13,12 +13,13 @@ author:
 tags: 
   - analytics
 featured: false
+popularity: 0
 visibility: public
-status: coming-soon
+status: EE
 ---
 
 Get in-depth metrics usage of your Polyaxon deployment, number of experiments, jobs, builds, and theirs statuses directly to Segment for further analysis. 
-[Segment](https://segment.com/) is one of the most powerful, advanced platforms collecting and analysing your on-premise Polyaxon deployment. 
+[Segment](https://segment.com/) is a platform for collecting and analysing your on-premise Polyaxon deployment. 
 
 ## Set up a new Segment source
 

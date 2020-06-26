@@ -34,15 +34,16 @@ You can follow this steps to setup a domain:
 
 ## 2. Update your deployment config
 
-  1. Specify your domain in the deployment config
-    ```yaml
-    gateway:
-      service:
-        type: ClusterIp
-    ingress:
-      enabled: false
-      hosts:
-        - <your-domain-name>
-    ```
-   
-  2. Apply the config changes by running `polyaxon deploy upgrade ...` or `helm upgrade ...`
+* Specify your domain in the deployment config
+
+```yaml
+gateway:
+  service:
+    type: ClusterIp
+ingress:
+  enabled: false
+  hosts:
+    - <your-domain-name>
+```
+
+* Apply the config changes by running `polyaxon deploy upgrade ...` or `helm upgrade ...`
