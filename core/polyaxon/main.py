@@ -62,13 +62,53 @@ click_completion.init()
 @click.pass_context
 @clean_outputs
 def cli(context, verbose, check_version, offline):
-    """ Polyaxon CLI tool to:
+    """Polyaxon - Cloud Native Machine Learning Automation & Experimentation tool.
 
-        * Parse, Validate, and Check Polyaxonfiles.
+    This CLI provides tools to:
 
-        * Interact with Polyaxon server.
+      - Parse, Validate, and Check Polyaxonfiles.
 
-        * Run and Monitor experiments.
+      - Interact with Polyaxon server.
+
+      - Run and Monitor experiments and jobs.
+
+    This CLI tool comes with a caching mechanism:
+
+      - You can initialize a project with: polyaxon init [project name]
+
+      - Otherwise Polyaxon will the default global path will be used for the cache.
+
+    You can check the version of you CLI by running:
+
+      - polyaxon version
+
+    To Enable debug mode, you can use the `-v` flag:
+
+      - polyaxon -v admin
+
+    Common commands:
+
+      - polyaxon project get
+
+      - polyaxon run [-f] [-l]
+
+      - polyaxon ops ls
+
+      - polyaxon ops get
+
+      - polyaxon config -l
+
+      - polyaxon config set ...
+
+    Admin deployment commands:
+
+      - polyaxon admin deploy [-f] [--check]
+
+      - polyaxon admin upgrade [-f] [--check]
+
+      - polyaxon admin teardown [-f]
+
+    For more information, please visit https://polyaxon.com/docs/core/cli/
 
     Check the help available for each command listed below.
     """
