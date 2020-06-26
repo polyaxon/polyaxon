@@ -22,8 +22,10 @@ Polyaxon core engine is open source, has an Json API, webhooks, and an abstracti
 
 ## Components
 
-Polyaxon provides an interface for authoring reusable [components](/docs/core/specification/), 
-users can contribute to the public [components registry](https://github.com/polyaxon/polyaxon-hub/) 
+Polyaxon provides an interface for authoring reusable [components](/docs/core/specification/),
+there's a growing ecosystem of components that can be used by other Polyaxon users, but it's a big world out there. 
+There are always useful integrations that don't yet exist, but should. 
+Users can contribute new components to the public [components registry](https://github.com/polyaxon/polyaxon-hub/) 
 or create private components for their own internal use.
 
 ## Integrations with the API/SDKs
