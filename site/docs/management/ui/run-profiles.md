@@ -15,11 +15,10 @@ sidebar: "management"
 
 Run profiles is a feature for injecting certain information into operations at compilation time to preset configuration for node scheduling,
 queue routing, resources requirements and definition, connections, and access level control.
-Every agent comes with a default queue.
 
 ## Create run profiles
 
-If you have access you can create a new run profiles.
+If you have admin access you can create new run profiles.
 
 ![queue-create](../../../../content/images/dashboard/run-profiles/create.png)
 
@@ -32,6 +31,6 @@ You can list, review, and manage all run profiles.
 
 ## Run profile settings
 
-You can updated or delete an run profile.
+You can update or delete an run profile.
 
 ![queue-settings](../../../../content/images/dashboard/run-profiles/settings.png)

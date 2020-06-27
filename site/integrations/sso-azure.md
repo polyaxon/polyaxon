@@ -12,6 +12,7 @@ author:
   github: "polyaxon"
 tags: 
   - sso
+  - azure
 featured: false
 popularity: 0
 visibility: public

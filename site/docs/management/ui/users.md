@@ -20,6 +20,6 @@ You can update your user profile settings as well as your dashboard theme prefer
 
 ![light-theme](../../../../content/images/dashboard/users/light-theme.png)
 
-Polyaxon UI comes in 2 themes: 
+Polyaxon UI comes in two themes: 
 
 ![dark-theme](../../../../content/images/dashboard/users/dark-theme.png)

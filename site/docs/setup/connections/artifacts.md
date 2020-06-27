@@ -11,9 +11,9 @@ tags:
   - environment
   - orchestration
   - volumes
-  - s3
+  - aws
   - gcp
-  - azure-storage
+  - azure
 sidebar: "setup"
 ---
 
@@ -159,8 +159,9 @@ connections:
       name: "gcs-secret"
 ```
 
-Please refer to this integration sections for more details:
+## Integrations guides
 
- * [Outputs on GCS](/integrations/outputs-on-gcs/)
- * [Outputs on AWS S3](/integrations/outputs-on-s3/)
- * [Outputs on Azure storage](/integrations/outputs-on-azure/)
+Please refer to this integration sections for more details on how to use:
+
+ * [artifactsStore](/integrations/artifacts/) with different providers and backends to manage artifacts, logs, and outputs.
+ * [connections](/integrations/data-stores/) with different providers and backends to mount datasets.

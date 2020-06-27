@@ -12,17 +12,17 @@ sidebar: "management"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-Polyaxon Agent is the tool that allows to orchestrate runs on user's clusters.
+Polyaxon Agent is the tool that allows to orchestrate runs on the remote clusters.
 
 Every organization comes with a default agent.
 
 ## Create agents
 
-If you have access you can create a new agents.
+If you have access you can create new agents.
 
 ![agent-create](../../../../content/images/dashboard/agents/create.png)
 
-Once you create an agent, you can processed to deploy it, please check the [agent setup](/docs/setup/agent/)
+Once you create an agent, you can proceed to deploy it, please check the [agent setup](/docs/setup/agent/)
 
 ## Manage agents
 
@@ -32,7 +32,7 @@ You can list, review, and manage all your agents.
 
 ## Agent settings
 
-You can updated or delete an agent.
+You can update or delete an agent.
 
 ![agent-settings](../../../../content/images/dashboard/agents/settings.png)
 

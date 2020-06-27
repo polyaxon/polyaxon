@@ -12,6 +12,7 @@ author:
   github: "polyaxon"
 tags: 
   - registries
+  - aws
 featured: false
 popularity: 0
 visibility: public

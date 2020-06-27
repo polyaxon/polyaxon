@@ -13,6 +13,7 @@ author:
 tags: 
   - setup
   - database
+  - gcp
 featured: false
 popularity: 0
 visibility: public

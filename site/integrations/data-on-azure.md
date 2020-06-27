@@ -1,7 +1,7 @@
 ---
 title: "Data on Azure Storage"
 meta_title: "Azure Storage"
-meta_description: "Using data on Azure Storage in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple blobs on Azure Storage to access data directly on you machine learning experiments and jobs."
+meta_description: "Using data on Azure Storage in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple blobs on Azure Storage to access data directly on your machine learning experiments and jobs."
 custom_excerpt: "Azure Storage is Microsoft's cloud storage solution. Azure Storage provides storage for data objects that is highly available, secure, durable, massively scalable cloud storage solution."
 image: "../../content/images/integrations/azure-storage.png"
 author:
@@ -11,148 +11,122 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags:
-  - data-store
+  - data-stores
   - storage
+  - azure
 featured: false
 popularity: 1
 visibility: public
 status: published
 ---
 
-Polyaxon allows users to connect to one or multiple blobs on Azure Storage to access data directly on you machine learning experiments and jobs.
+You can use one or multiple  blobs on Azure Storage to access data directly on your machine learning experiments and jobs.
 
 ## Create an Azure Storage account
 
-You should create a storage account (e.g. plx-storage) and a blob (e.g. data). 
-You should then create a file with your access information json object, e.g. `az-key.json`. 
-This file should include the following information:
+You should create a storage account (e.g. plx-storage) and a blob (e.g. data).
 
-```json
-{ 
-  "AZURE_ACCOUNT_NAME": "plx-storage",
-  "AZURE_ACCOUNT_KEY": "your key",
-  "AZURE_CONNECTION_STRING": "your connection string"
-}
+You need to expose information about how to connect to the blob storage, the standard way is to expose these keys:
+
+ * `AZURE_ACCOUNT_NAME`
+ * `AZURE_ACCOUNT_KEY`
+ * `AZURE_CONNECTION_STRING`
+ 
+## Create a secret or a config map for storing these keys
+
+We recommend using a secret to store your access information json object:
+
+```bash
+kubectl create secret -n polyaxon generic az-secret --from-literal=AZURE_ACCOUNT_NAME=account --from-literal=AZURE_ACCOUNT_KEY=hash-key
 ```
 
-## Create a secret on Kubernetes
+## Use the secret to add a connection
 
-You should then create a secret with this access keys information on Kubernetes on the same namespace as Polyaxon deployment:
+```yaml
+connections:
+- name: azure-dataset1
+  kind: wasb
+  schema:
+    bucket: "wasbs://dataset1@container.blob.core.windows.net/"
+  secret:
+    name: "az-secret"
+```
 
-`kubectl create secret generic az-secret --from-file=az-secret.json=path/to/az-key.json -n polyaxon`
-
-## Use the secret name and secret key in your data persistence definition
+If you want ot access multiple datasets using the same secret:
 
 ```yaml
 persistence:
-  data:
-    [DATA-NAME-TO-USE]:
-      store: azure
-      bucket: wasbs://[CONTAINER-NAME]@[ACCOUNT-NAME].blob.core.windows.net/
-      secret: [SECRET-NAME]
-      secretKey: [SECRET-KEY]
+- name: azure-dataset1
+  kind: wasb
+  schema:
+    bucket: "wasbs://dataset1@container.blob.core.windows.net/"
+  secret:
+    name: "az-secret"
+- name: azure-dataset2
+  kind: wasb
+  schema:
+    bucket: "wasbs://dataset2@container.blob.core.windows.net/"
+  secret:
+    name: "az-secret"
 ```
 
-e.g.
+## Update/Install Polyaxon CE or Polyaxon Agent deployment
+
+You can [deploy/upgrade](/docs/setup/) your Polyaxon CE or Polyaxon Agent deployment with access to data on Azure.
+
+## Access to the dataset in your experiments/jobs
+
+To expose the connection secret to one of the containers in your jobs or services:
 
 ```yaml
-persistence:
-  data:
-    azure-data1:
-      store: azure
-      bucket: wasbs://data1@account.blob.core.windows.net/
-      secret: az-secret
-      secretKey: az-secret.json
-    azure-data2:
-      store: azure
-      bucket: wasbs://data2@account.blob.core.windows.net/
-      secret: az-secret
-      secretKey: az-secret.json
+run:
+  kind: job
+  connections: [azure-dataset1]
 ```
 
-## Update/Install Polyaxon deployment
+Or
 
-You can [deploy](/docs/setup/connections/) Polyaxon with access to data on Azure.
+```yaml
+run:
+  kind: job
+  connections: [azure-dataset1, s3-dataset1]
+```
 
-## Access to data in your experiments/jobs
+## Use the initializer to load the dataset
 
-You can use [polyaxon-client](/docs/core/python-library/) to access the data in your jobs/experiments.
+To use the artifacts initializer to load the dataset
 
-Polyaxon client does not bundle by default the azure storage requirements to keep the client lightweight:
+```yaml
+run:
+  kind: job
+  init:
+   - artifacts: [dirs: [...], files: [...]]
+     connection: "azure-dataset1"
+```
+
+## Use Polyaxon to access the dataset
+
+This is optional, you can use any language or logic to interacts with Azure Storage.
+
+Polyaxon has some built-in logic that you can leverage if you want.
+
+To use that logic:  
 
 ```bash
-pip install polyaxon-client[azure]
+pip install polyaxon[azure]
 ``` 
-
-or to have more control over the version of azure storage:
-
-```bash
-pip install polyaxon-client
-pip install azure-storage
-``` 
-
-In your experiment/job definition, you can add this step to be available during the run:
-
-```yaml
-build:
-  ...
-  build_steps:
-    ...
-    - pip3 install polyaxon-client[azure]
-```
-
-## Schedule data for a job/experiment
-
-By default Polyaxon will schedule all data, volume, paths, and storages, to your experiments. If you want to control which data to be scheduled, update the environment section:
-
-```yaml
-environment:
-  data_refs: ['azure-data1']
-```
-
-Exposes only `azure-data1` to this run.
-
-
-```yaml
-environment:
-  data_refs: ['azure-data1', 'azure-data2', 'some-other-data-on-a-volume']
-```
-
-## Using the store manager to access data
-
-In your experiment/job, Polyaxon exposes all secrets related to the data as well as the data [paths](/docs/experimentation/tracking/in-cluster/#get-data-paths) scheduled for the run as an an env var,  
-and provides an interface to get an authenticated client for each one of these Paths.
-
-For every path in the data paths dictionary, you can create an authenticated store using the `StoreManager` 
-
-```python
-from polyaxon_client.tracking import Experiment, get_data_paths
-from polystores.stores.manager import StoreManager
-
-experiment = Experiment()
-print(experiment.get_experiment_info())
-# This is a dict: dataset name -> dataset info
-print("Data paths: {}".format(get_data_paths()))
-
-# e.g. one of datapaths is cifar-10
-# We will create an azure client for that path
-store = StoreManager(path=get_data_paths()['cifar-10'])
-
-# Downloading train data under this blob
-store.download_dir('/train')
-```
 
 All possible function to use:
 
 ```python
-from polystores.stores.manager import StoreManager
+from polyaxon.connections.azure.azure_blobstore import AzureBlobStoreService
 
-store = StoreManager(path=data_path)
+store = AzureBlobStoreService(...)
 
-store.delete(path)
-store.ls(path)
-store.upload_file(filename)
-store.upload_dir(dirname)
-store.download_file(filename, local_path)
-store.download_dir(dirname, local_path)
+store.delete()
+store.ls()
+store.upload_file()
+store.upload_dir()
+store.download_file()
+store.download_dir()
 ```

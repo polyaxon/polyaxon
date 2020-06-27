@@ -1,7 +1,7 @@
 ---
 title: "Data on NFS"
 meta_title: "NFS"
-meta_description: "Using data on an NFS server in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple NFS servers to access data directly on you machine learning experiments and jobs."
+meta_description: "Using data on an NFS server in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple NFS servers to access data directly on your machine learning experiments and jobs."
 custom_excerpt: "The Network File System (NFS) is a client/server application that lets a computer user view and optionally store and update files on a remote computer as though they were on the user's own computer."
 image: "../../content/images/integrations/nfs.png"
 author:
@@ -11,7 +11,7 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - data-store
+  - data-stores
   - storage
 featured: false
 popularity: 0
@@ -19,7 +19,7 @@ visibility: public
 status: published
 ---
 
-Polyaxon allows users to connect to one or multiple NFS servers to access data directly on you machine learning experiments and jobs
+You can use one or multiple  NFS servers to access data directly on your machine learning experiments and jobs
 
 ## Overview
 
@@ -97,22 +97,6 @@ Under the same namespace where you are deploying Polyaxon, e.g. `polyaxon`, crea
 kubectl create -f data-pvc.yml -n polyaxon
 ```
 
-## Now you can use this PVC to mount data to your experiments and jobs in Polyaxon
+## Use the PVC as an artifacts store in Polyaxon
 
-```yaml
-data:
-  plx-data:
-    existingClaim: polyaxon-pvc-data
-    mountPath: /plx-data
-```
-
-To mount the data read-only:
-
-
-```yaml
-data:
-  plx-data:
-    existingClaim: polyaxon-pvc-data
-    mountPath: /plx-data
-    readOnly: true
-```
+In order to use the PVC with Polyaxon, you can follow the [artifacts on Persistent Volume Claim](/integrations/data-on-pvc/).

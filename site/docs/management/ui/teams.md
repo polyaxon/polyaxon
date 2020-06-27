@@ -37,6 +37,6 @@ as an admin without having access to other project.
 
 ## Team settings
 
-You can updated or delete a team.
+You can update or delete a team.
 
 ![team-settings](../../../../content/images/dashboard/teams/settings.png)

@@ -14,6 +14,7 @@ tags:
   - components
   - serving
   - model
+  - azure
 featured: false
 popularity: 0
 visibility: public

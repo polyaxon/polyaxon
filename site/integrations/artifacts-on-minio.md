@@ -1,7 +1,7 @@
 ---
-title: "Data on Minio"
+title: "Artifacts on Minio"
 meta_title: "Minio"
-meta_description: "Using data on Minio in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple buckets on Minio to access data directly on your machine learning experiments."
+meta_description: "Using Minio buckets to organize your jobs outputs and experiment artifacts. Polyaxon allows users to connect to one or multiple buckets on Minio to store job outputs and experiment artifacts."
 custom_excerpt: "Minio is a high performance distributed object storage server, designed for large-scale private cloud infrastructure."
 image: "../../content/images/integrations/minio.png"
 author:
@@ -11,7 +11,7 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - data-stores
+  - artifacts
   - storage
 featured: false
 popularity: 1
@@ -19,17 +19,17 @@ visibility: public
 status: published
 ---
 
-You can use one or multiple buckets on Minio to access data directly on your machine learning experiments and jobs.
+You can use one or multiple buckets on Minio to store logs, job outputs, and experiment artifacts.
 
 ## Deploy Minio
 
-Before using Minio, you need to deployed it and create a bucket (or several) to host your data.
+Before using Minio, you need to deployed it and create a bucket to host your outputs.
 
-For that, you can use the Helm stable chart: `helm install stable/minio --name=plx-minio --namespace=polyaxon`
+For that you can use the Helm stable chart: `helm install stable/minio --name=plx-minio --namespace=polyaxon`
 
 ## Create a bucket on Minio
 
-You should create a bucket (e.g. plx-storage) where you will host your data. 
+You should create a bucket (e.g. plx-artifacts) where you will host your data. 
 
 ## Use the bucket in Polyaxon
 

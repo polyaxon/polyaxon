@@ -1,7 +1,7 @@
 ---
 title: "Data on GCS"
 meta_title: "Google GCS"
-meta_description: "Using data on Google Cloud Storage GCS in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage GCS to access data directly on you machine learning experiments and jobs."
+meta_description: "Using data on Google Cloud Storage GCS in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage GCS to access data directly on your machine learning experiments and jobs."
 custom_excerpt: "Google Cloud Storage is a RESTful online file storage web service for storing and accessing data on Google Cloud Platform infrastructure. The service combines the performance and scalability of Google's cloud with advanced security and sharing capabilities."
 image: "../../content/images/integrations/gcs.png"
 author:
@@ -11,15 +11,16 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - data-store
+  - data-stores
   - storage
+  - gcp
 featured: true
 popularity: 1
 visibility: public
 status: published
 ---
 
-Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage (GCS) to access data directly on you machine learning experiments and jobs.
+You can use one or multiple buckets on Google Cloud Storage (GCS) to access data directly on your machine learning experiments and jobs.
 
 ## Create an Google cloud storage bucket
 
@@ -29,122 +30,128 @@ Google cloud storage provide an easy way to download access key as json file. Yo
 
 ## Create a secret on Kubernetes
 
-You should then create a secret with this access keys information on Kubernetes on the same namespace as Polyaxon deployment:
+You can create a secret with an env var of the content of the gcs-key.json:
+ * `GC_KEYFILE_DICT` or `GOOGLE_KEYFILE_DICT`
+ 
+Or you can create secret to be mounted as a volume: 
 
-`kubectl create secret generic gcs-secret --from-file=gcs-secret.json=path/to/gcs-key.json -n polyaxon`
+ * `kubectl create secret generic gcs-secret --from-file=gcs-secret.json=path/to/gcs-key.json -n polyaxon`
 
 ## Use the secret name and secret key in your data persistence definition
 
+You can use the default mount path `/plx-context/.gc/gc-secret.json`.
+
 ```yaml
-persistence:
-  data:
-    [DATA-NAME-TO-USE]:
-      store: gcs
-      bucket: gs://[BACKET-NAME]
-      secret: [SECRET-NAME]
-      secretKey: [SECRET-KEY]
+connections:
+- name: gcs-dataset1
+  kind: gcs
+  schema:
+    bucket: "gs://gcs-datasets"
+  secret:
+    name: "gcs-secret"
+    mountPath: /plx-context/.gc/gc-secret.json
 ```
 
-e.g.
+You can also use a different mount path `/etc/gcs/gc-secret.json`, in which case you need to provide an env var to tell the SDK where to look:
+
+```bash
+kubectl create configmap gcs-key-path --from-literal GC_KEY_PATH="/etc/gcs/gcs-secret.json" -n polyaxon
+```
+
+```yaml
+connections:
+- name: gcs-dataset1
+  kind: gcs
+  schema:
+    bucket: "gs://gcs-datasets"
+  secret:
+    name: "gcs-secret"
+    mountPath: /etc/gcs
+  configMap:
+    name: gcs-key-path
+```
+
+If you want ot access multiple datasets using the same secret:
 
 ```yaml
 persistence:
-  data:
-    gcs-data1:
-      store: gcs
-      bucket: gs://data-bucket1
-      secret: gcs-secret
-      secretKey: gcs-key.json
-    gcs-data2:
-      store: gcs
-      bucket: gs://data-bucket2
-      secret: gcs-secret
-      secretKey: gcs-key.json
+- name: gcs-dataset1
+  kind: gcs
+  schema:
+    bucket: "gs://gcs-datasets/path1"
+  secret:
+    name: "gcs-secret"
+    mountPath: /etc/gcs
+  configMap:
+    name: gcs-key-path
+- name: gcs-dataset2
+  kind: gcs
+  schema:
+    bucket: "gs://gcs-datasets/path2"
+  secret:
+    name: "gcs-secret"
+    mountPath: /etc/gcs
+  configMap:
+    name: gcs-key-path
 ```
 
 ## Update/Install Polyaxon deployment
 
-You can [deploy](/docs/setup/connections/) Polyaxon with access to data on GCS.
+You can [deploy/upgrade](/docs/setup/) your Polyaxon CE or Polyaxon Agent deployment with access to data on GCS.
 
 ## Access to data in your experiments/jobs
 
-You can use [polyaxon-client](/docs/core/python-library/) to access the data in your jobs/experiments.
+To expose the connection secret to one of the containers in your jobs or services:
 
-Polyaxon client does not bundle by default the google cloud storage requirements to keep the client lightweight:
+```yaml
+run:
+  kind: job
+  connections: [gcs-dataset1]
+```
+
+Or
+
+```yaml
+run:
+  kind: job
+  connections: [gcs-dataset1, s3-dataset1]
+```
+
+## Use the initializer to load the dataset
+
+To use the artifacts initializer to load the dataset
+
+```yaml
+run:
+  kind: job
+  init:
+   - artifacts: [dirs: [...], files: [...]]
+     connection: "gcs-dataset1"
+```
+
+## Use Polyaxon to access the dataset
+
+This is optional, you can use any language or logic to interacts with Azure Storage.
+
+Polyaxon has some built-in logic that you can leverage if you want.
+
+To use that logic:  
 
 ```bash
-pip install polyaxon-client[gcs]
+pip install polyaxon[gcs]
 ``` 
-
-or to have more control over the version of GCS storage:
-
-```bash
-pip install polyaxon-client
-pip install google-cloud-storage
-``` 
-
-In your experiment/job definition, you can add this step to be available during the run:
-
-```yaml
-build:
-  ...
-  build_steps:
-    ...
-    - pip3 install polyaxon-client[gcs]
-```
-
-## Schedule data for a job/experiment
-
-By default Polyaxon will schedule all data, volume, paths, and storages, to your experiments. If you want to control which data to be scheduled, update the environment section:
-
-```yaml
-environment:
-  data_refs: ['gcs-data1']
-```
-
-Exposes only `gcs-data1` to this run.
-
-
-```yaml
-environment:
-  data_refs: ['gcs-data1', 'gcs-data2', 'some-other-data-on-a-volume']
-```
-
-## Using the store manager to access data
-
-In your experiment/job, Polyaxon exposes all secrets related to the data as well as the data [paths](/docs/exeperimentation/tracking/in-cluster/#get-data-paths) scheduled for the run as an an env var,  
-and provides an interface to get an authenticated client for each one of these Paths.
-
-For every path in the data paths dictionary, you can create an authenticated store using the `StoreManager` 
-
-```python
-from polyaxon_client.tracking import Experiment, get_data_paths
-from polystores.stores.manager import StoreManager
-
-experiment = Experiment()
-print(experiment.get_experiment_info())
-# This is a dict: dataset name -> dataset info
-print("Data paths: {}".format(get_data_paths()))
-
-# e.g. one of datapaths is cifar-10
-# We will create an azure client for that path
-store = StoreManager(path=get_data_paths()['cifar-10'])
-
-# Downloading train data under this blob
-store.download_dir('/train')
-```
 
 All possible function to use:
 
 ```python
-from polystores.stores.manager import StoreManager
+from polyaxon.connections.gcp.gcs import GCSService
 
-store = StoreManager(path=data_path)
+store = GCSService(...)
 
-store.delete(path)
-store.ls(path)
-store.upload_file(filename)
-store.upload_dir(dirname)
-store.download_file(filename, local_path)
-store.download_dir(dirname, local_path)
+store.delete()
+store.ls()
+store.upload_file()
+store.upload_dir()
+store.download_file()
+store.download_dir()
 ```

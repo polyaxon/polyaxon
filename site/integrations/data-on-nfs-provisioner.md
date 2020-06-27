@@ -11,7 +11,7 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
-  - data-store
+  - data-stores
   - storage
 featured: false
 popularity: 0
@@ -19,21 +19,21 @@ visibility: public
 status: published
 ---
 
-Polyaxon in-cluster NFS provisioner to simplify the creation of ReadWriteMany and ReadOnlyMany volumes.
+You can deploy an in-cluster NFS provisioner to simplify the creation of ReadWriteMany and ReadOnlyMany volumes.
 
 
 ## Overview
 
 This guide shows how to use the NFS provisioner to mount data to your jobs and experiments. 
 
-[polyaxon-nfs-provisioner](https://github.com/polyaxon/polyaxon-nfs-provisioner) provides a stable Helm chart, maintained and supported by Polyaxon, to easily deploy and spin NFS-volumes to use with Polyaxon. 
+The [nfs-provisioner chart](https://github.com/helm/charts/tree/master/stable/nfs-server-provisioner) provides a stable Helm chart, to easily deploy and spin NFS-volumes to use with Polyaxon. 
 
-## Install
+## Install Helm
 
 To install the nfs-provisioner, make sure you have helm installed, please see this [guide](/docs/guides/setup-helm/).
 
 
-## Namespace
+## Create Namespace
 
 If you are using this chart with Polyaxon, please install the chart on the same namespace where you installed Polyaxon.
 
@@ -43,50 +43,14 @@ $ kubectl create namespace polyaxon
 namespace "polyaxon" created
 ```
 
-## Polyaxon's charts repo
-
-You can add the Polyaxon helm repository to your helm, so you can install Polyaxon and other charts provided by Polyaxon from it. 
-This makes it easy to refer to the chart without having to use a long URL each time.
-
 ## Install the nfs provisioner
 
 ```yaml
-helm install polyaxon/nfs-provisioner --name=plx-nfs --namespace=polyaxon
+helm install stable/nfs-server-provisioner --name=plx-nfs --namespace=polyaxon
 ```
 
-## Configuration
+Create volumes to be used as [data store](https://github.com/helm/charts/tree/master/stable/nfs-server-provisioner#recommended-persistence-configuration-examples).
 
-To enable the data with default values:
+## Use the PVC to mount data to your experiments and jobs in Polyaxon
 
-```yaml
-data:
-  size: 100Gi
-  enabled: true
-```
-
-To enable the data with custom values:
-
-
-```yaml
-data:
-  enabled: true
-```
-
-Full reference:
-
-
-| Parameter             | Description                                       | Default
-| --------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `data.name`           | Name of the PVC to create                         | `polyaxon-pvc-data`
-| `data.size`           | Size of data volume                               | `10Gi`
-| `data.accessMode`     | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteMany`
-
-
-## Now you can use the PVC to mount data to your experiments and jobs in Polyaxon
-
-```yaml
-data:
-  plx-data:
-    existingClaim: polyaxon-pvc-data
-    mountPath: /plx-data
-```
+In order to use the PVC with Polyaxon, you can follow the [Data on Persistent Volume Claim](/integrations/data-on-pvc/).

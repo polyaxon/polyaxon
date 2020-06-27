@@ -18,9 +18,9 @@ it aims at organizing your efforts to solve a specific problem.
 To create a project, you can either use the Polyaxon Dashboard or the Polyaxon CLI.
 
 The projects consist of a required argument `--name`, an optional argument `--description`,
-and a flag `--private` with a default value set to `False`.
+and a flag `--private` with a default value set to `True`.
 
-The projects could be `public` (default behaviour) or `private`.
+The projects could be `private` (default behaviour) or `public`.
 
 
 ```bash
@@ -30,15 +30,15 @@ $ polyaxon project create --name=mnist --description='Classification of handwrit
 > For more details about this command please run `polyaxon project create --help`, 
 or check the [command reference](/references/polyaxon-cli/project/#create)
 
-The project is created by default `public`, to make it private please add `--private`
+The project is created by default `private`, to make it private please add `--public`
 
-Creating project with the UI
+To create projects with the UI
 
 ![project-create](../../../../content/images/dashboard/projects/create.png)
 
 ## Project overview
 
-Every project can manage jobs, services, dags, matrix executions.
+Every project can manage jobs, services, dags, and matrix executions.
 
 ![project-overview](../../../../content/images/dashboard/projects/overview.png)
 
@@ -48,7 +48,7 @@ The project settings page provides several tabs to manage accessible members, te
 
 ![project-settings-select](../../../../content/images/dashboard/projects/settings-select.png)
 
-The general settings page
+The general settings page lets you change the project's details
 
 ![project-settings](../../../../content/images/dashboard/projects/settings.png)
 

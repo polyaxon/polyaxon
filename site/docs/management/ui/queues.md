@@ -23,19 +23,19 @@ Every agent comes with a default queue.
 
 ## Create queues
 
-If you have access you can create a new queues.
+If you have admin access you can create new queues.
 
 ![queue-create](../../../../content/images/dashboard/queues/create.png)
 
 
 ## Manage queues
 
-You can list, review, and manage all queues on for each agent.
+You can list, review, and manage all queues for each agent.
 
 ![queue-manage](../../../../content/images/dashboard/queues/manage.png)
 
 ## Queue settings
 
-You can updated or delete an queue.
+You can update or delete an queue.
 
 ![queue-settings](../../../../content/images/dashboard/queues/settings.png)

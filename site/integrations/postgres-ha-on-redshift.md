@@ -12,8 +12,8 @@ author:
   github: "polyaxon"
 tags: 
   - setup
-  - aws
   - database
+  - aws
 featured: false
 popularity: 0
 visibility: public

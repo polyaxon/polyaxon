@@ -25,13 +25,13 @@ If you have access you can create a new organization.
 ## Selecting an organization
 
 Users can be members of multiple organizations, 
-you can visit your organization's dashboard throughout.
+you can visit your organization's dashboard to stay updated on recent activity and keep track of recent changes.
 
 ![organization-select](../../../../content/images/dashboard/orgs/select.png)
 
 ## Organization overview
 
-Every organization can manage Projects, Model Registry, and Component Hub.
+Every organization can manage Projects, a Model Registry, and a Component Hub.
 
 ![organization-overview](../../../../content/images/dashboard/orgs/overview.png)
 
@@ -41,7 +41,7 @@ The organization settings page provides several tabs to manage the account, memb
 
 ![organization-settings-select](../../../../content/images/dashboard/orgs/settings-select.png)
 
-The general settings page
+The general settings page lets you change the organization's details
 
 ![organization-settings](../../../../content/images/dashboard/orgs/settings.png)
 
@@ -49,7 +49,7 @@ The general settings page
 ## Organization members
 
 After creating an organization, 
-you can invite or remove members of the organization.
+you can invite or remove members of your organization.
 
 ![organization-invite](../../../../content/images/dashboard/orgs/invite.png)
 

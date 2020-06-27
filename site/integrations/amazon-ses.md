@@ -13,6 +13,7 @@ author:
 tags: 
   - notifications
   - email
+  - aws
 featured: false
 popularity: 0
 visibility: public

@@ -14,6 +14,7 @@ tags:
   - components
   - serving
   - model
+  - aws
 featured: false
 popularity: 0
 visibility: public
