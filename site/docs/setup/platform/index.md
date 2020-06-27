@@ -169,13 +169,13 @@ and dashboard on your localhost and auto-configure the cli.
 To upgrade Polyaxon to a newer version, you can simply run the following command using Polyaxon CLI:
 
 ```bash
-polyaxon admin deploy -f config.yml --upgrade
+polyaxon admin upgrade -f config.yml
 ```
 
 Or using Helm
 
 ```bash
-helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
+helm upgrade polyaxon polyaxon/polyaxon -f config.yml
 ```
 
 ## Applying configuration changes
@@ -184,7 +184,7 @@ The general method to modify your Kubernetes deployment is to:
 
  1. Make a change to the config.yml
  2. [Optional] run `polyaxon admin deploy -f config.yml --check`
- 2. Run a `polyaxon admin deploy -f config.yml --upgrade` or `helm upgrade`:
+ 2. Run a `polyaxon admin upgrade -f config.yml` or `helm upgrade`:
 
     ```bash
     $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yml

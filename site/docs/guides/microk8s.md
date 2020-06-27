@@ -180,7 +180,7 @@ polyaxon deploy -f config.yml --upgrade
 Or using Helm
 
 ```bash
-helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
+helm upgrade polyaxon polyaxon/polyaxon -f config.yml
 ```
 
 ## Applying configuration changes

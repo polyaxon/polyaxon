@@ -181,7 +181,7 @@ polyaxon admin upgrade -f config.yml
 Or using Helm
 
 ```bash
-helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
+helm upgrade polyaxon polyaxon/polyaxon -f config.yml
 ```
 
 ## Applying configuration changes
