@@ -80,7 +80,7 @@ You can use a [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/p
 
   * volumeClaim: volume claim name.
   * mountPath: path where to mount the volume content in the container
-  * readOnly: if th volume should be mounted in read only mode.
+  * readOnly: if the volume should be mounted in read only mode.
 
 ### Example usage as the default artifactsStore
 
