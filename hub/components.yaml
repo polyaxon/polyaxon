@@ -1,4 +1,4 @@
-- name: aws
+- name: aws-cli
   title: AWS CLI
   meta_title: AWS CLI
   meta_description: This is a simple component to perform operations on AWS resources using the AWS CLI.
@@ -11,7 +11,7 @@
   versions:
   - latest
   - 2.0.21
-- name: azure
+- name: azure-cli
   title: Azure CLI
   meta_title: azure CLI
   meta_description: This is a simple component to perform operations on Microsoft Azure resources using az or azure CLI python.
@@ -65,7 +65,7 @@
   versions:
   - latest
   - 1.0.9
-- name: gcloud
+- name: gcloud-cli
   title: GCloud CLI
   meta_title: GCloud CLI
   meta_description: This is a simple component to perform operations on Google Cloud Platform resources using gcloud.
