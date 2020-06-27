@@ -73,7 +73,7 @@ You need to configure the connection to authorize for the platform. Please check
 The community UI is an optional free tool that can be used to view information about your jobs and services, 
 it's enabled by default for all deployments. 
 
-If your main use of Polyaxon is to schedule jobs, use the packaging format, and interact with a the platform using the CLI/Client/APIs, 
+If your main use of Polyaxon is to schedule jobs, use the packaging format, and interact with the platform using the CLI/Client/APIs, 
 you can disable the UI:
 
 ```yaml
