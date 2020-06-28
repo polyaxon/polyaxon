@@ -51,7 +51,7 @@ def git(url, repo_path, revision, connection):
         repo_path=repo_path, url=url, revision=revision, connection=connection
     )
 
-    Printer.print_success("Git Repo is now initialized, path: `{}`".format(repo_path))
+    Printer.print_success("Git Repo is initialized, path: `{}`".format(repo_path))
 
 
 @initializer.command()
@@ -83,7 +83,7 @@ def s3(connection_name, path_from, path_to, is_file, workers):
         is_file=is_file,
     )
 
-    Printer.print_success("S3 path is now initialized, path: `{}`".format(path_to))
+    Printer.print_success("S3 path is initialized, path: `{}`".format(path_to))
 
 
 @initializer.command()
@@ -115,7 +115,7 @@ def gcs(connection_name, path_from, path_to, is_file, workers):
         is_file=is_file,
     )
 
-    Printer.print_success("GCS path is now initialized, path: `{}`".format(path_to))
+    Printer.print_success("GCS path is initialized, path: `{}`".format(path_to))
 
 
 @initializer.command()
@@ -147,4 +147,4 @@ def wasb(connection_name, path_from, path_to, is_file, workers):
         is_file=is_file,
     )
 
-    Printer.print_success("WASB path is now initialized, path: `{}`".format(path_to))
+    Printer.print_success("WASB path is initialized, path: `{}`".format(path_to))

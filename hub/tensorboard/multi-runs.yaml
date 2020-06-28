@@ -7,7 +7,7 @@ inputs:
   isOptional: true
   type: str
   value: tensorflow/tensorflow:2.0.1-py3
-- name: run_uuids
+- name: uuids
   isOptional: true
   isList: true
   type: str
@@ -16,7 +16,7 @@ run:
   kind: service
   ports: [6006]
   init:
-    - artifacts: {"dirs":  ["{{ run_uuids | map('map_format', '%s/outputs') | join(',') }}"]}
+    - artifacts: {"dirs":  ["{{ uuids | map('map_format', '%s/outputs') | join(',') }}"]}
   container:
     image: "{{ image }}"
     command: ["tensorboard"]

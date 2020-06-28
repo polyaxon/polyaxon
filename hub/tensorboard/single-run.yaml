@@ -7,10 +7,10 @@ inputs:
   isOptional: true
   type: str
   value: tensorflow/tensorflow:2.0.1-py3
-- name: run_uuid
+- name: uuid
   isOptional: true
   type: str
-- name: run_path
+- name: path
   isOptional: true
   type: str
 
@@ -18,12 +18,12 @@ run:
   kind: service
   ports: [6006]
   init:
-    - artifacts: {"dirs": ["{{run_path  or (run_uuid + '/outputs')}}"]}
+    - artifacts: {"dirs": ["{{path  or (uuid + '/outputs')}}"]}
   container:
     image: "{{ image }}"
     command: ["tensorboard"]
     args: [
-      "--logdir={{run_path or (globals.artifacts_path + '/' + run_uuid + '/outputs')}}",
+      "--logdir={{path or (globals.artifacts_path + '/' + uuid + '/outputs')}}",
       "--port={{globals.ports[0]}}",
       "--path_prefix={{globals.base_url}}",
       "--host=0.0.0.0",
