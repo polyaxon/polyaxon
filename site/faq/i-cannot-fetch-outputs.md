@@ -16,7 +16,7 @@ tags:
     - logging
 ---
 
-Polyaxon provides several ways for storing the [outputs](/configuration/custom-outputs-storage/), the default method uses a local path on the host node. 
+Polyaxon provides several ways for storing the [outputs](/docs/setup/connections/artifacts/), the default method uses a local path on the host node. 
 This is option is sufficient if you are trying the platform and don't want to deal with extra configuration steps, however, when using Polyaxon in a production mode, 
 you should definitely look at the other persistence strategies.
 
