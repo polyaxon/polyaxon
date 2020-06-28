@@ -171,11 +171,17 @@ def upgrade(config_file, manager_path, check, dry_run):
     type=click.Path(exists=True),
     help="The polyaxon deployment config file(s) to check.",
 )
+@click.option(
+    "--manager-path",
+    "--manager_path",
+    type=click.Path(exists=True),
+    help="The path of the deployment manager, e.g. local chart.",
+)
 @clean_outputs
-def teardown(config_file):
+def teardown(config_file, manager_path):
     """Teardown a polyaxon deployment given a config file."""
     config = read_deployment_config(config_file)
-    manager = DeployManager(config=config, filepath=config_file)
+    manager = DeployManager(config=config, filepath=config_file, manager_path=manager_path)
     exception = None
     try:
         if click.confirm("Would you like to execute pre-delete hooks?", default=True):

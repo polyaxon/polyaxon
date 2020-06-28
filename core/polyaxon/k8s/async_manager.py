@@ -56,13 +56,9 @@ class AsyncK8SManager:
     async def set_namespace(self, namespace):
         self.namespace = namespace
 
-    async def _list_namespace_resource(
-        self, labels, resource_api, reraise=False, **kwargs
-    ):
+    async def _list_namespace_resource(self, resource_api, reraise=False, **kwargs):
         try:
-            res = await resource_api(
-                namespace=self.namespace, label_selector=labels, **kwargs
-            )
+            res = await resource_api(namespace=self.namespace, **kwargs)
             return [p for p in res.items]
         except ApiException as e:
             logger.error("K8S error: {}".format(e))
@@ -70,42 +66,42 @@ class AsyncK8SManager:
                 raise PolyaxonK8SError("Connection error: %s" % e) from e
             return []
 
-    async def list_pods(self, labels, reraise=False):
+    async def list_pods(self, reraise=False, **kwargs):
         return await self._list_namespace_resource(
-            labels=labels,
-            resource_api=self.k8s_api.list_namespaced_pod,
-            reraise=reraise,
+            resource_api=self.k8s_api.list_namespaced_pod, reraise=reraise, **kwargs,
         )
 
-    async def list_jobs(self, labels, reraise=False):
+    async def list_jobs(self, reraise=False, **kwargs):
         return await self._list_namespace_resource(
-            labels=labels,
             resource_api=self.k8s_batch_api.list_namespaced_job,
             reraise=reraise,
+            **kwargs,
         )
 
-    async def list_custom_objects(self, labels, group, version, plural, reraise=False):
+    async def list_custom_objects(
+        self, group, version, plural, reraise=False, **kwargs
+    ):
         return await self._list_namespace_resource(
-            labels=labels,
             resource_api=self.k8s_custom_object_api.list_namespaced_custom_object,
             reraise=reraise,
             group=group,
             version=version,
             plural=plural,
+            **kwargs,
         )
 
-    async def list_services(self, labels, reraise=False):
+    async def list_services(self, reraise=False, **kwargs):
         return await self._list_namespace_resource(
-            labels=labels,
             resource_api=self.k8s_api.list_namespaced_service,
             reraise=reraise,
+            **kwargs,
         )
 
-    async def list_deployments(self, labels, reraise=False):
+    async def list_deployments(self, reraise=False, **kwargs):
         return await self._list_namespace_resource(
-            labels=labels,
             resource_api=self.k8s_beta_api.list_namespaced_deployment,
             reraise=reraise,
+            **kwargs,
         )
 
     async def create_custom_object(self, name, group, version, plural, body):

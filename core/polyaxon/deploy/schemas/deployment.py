@@ -203,6 +203,7 @@ class DeploymentSchema(BaseCamelSchema):
     init = fields.Nested(HelperServiceSchema, allow_none=True)
     sidecar = fields.Nested(HelperServiceSchema, allow_none=True)
     tables_hook = fields.Nested(ServiceSchema, allow_none=True)
+    clean_hooks = fields.Nested(ServiceSchema, allow_none=True)
     hooks = fields.Nested(HooksSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
     redis = fields.Nested(RedisSchema, allow_none=True)
@@ -321,6 +322,7 @@ class DeploymentConfig(BaseConfig):
         init=None,
         sidecar=None,
         tables_hook=None,
+        clean_hooks=None,
         hooks=None,
         postgresql=None,
         redis=None,
@@ -397,6 +399,7 @@ class DeploymentConfig(BaseConfig):
         self.init = init
         self.sidecar = sidecar
         self.tables_hook = tables_hook
+        self.clean_hooks = clean_hooks
         self.hooks = hooks
         self.postgresql = postgresql
         self.redis = redis

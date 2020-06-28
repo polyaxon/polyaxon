@@ -96,12 +96,14 @@ class K8SManager:
             if reraise:
                 raise PolyaxonK8SError("Connection error: %s" % e) from e
 
-    def _list_namespace_resource(self, labels, resource_api, reraise=False, **kwargs):
+    def _list_namespace_resource(self, resource_api, reraise=False, **kwargs):
         try:
-            res = resource_api(
-                namespace=self.namespace, label_selector=labels, **kwargs
-            )
-            return [p for p in res.items]
+            res = resource_api(namespace=self.namespace, **kwargs)
+            if isinstance(res, dict):
+                items = res["items"]
+            else:
+                items = res.items
+            return [p for p in items]
         except ApiException as e:
             logger.error("K8S error: {}".format(e))
             if reraise:
@@ -118,51 +120,47 @@ class K8SManager:
                 raise PolyaxonK8SError("Connection error: %s" % e) from e
             return []
 
-    def list_pods(self, labels, include_uninitialized=True, reraise=False):
+    def list_pods(self, include_uninitialized=True, reraise=False, **kwargs):
         return self._list_namespace_resource(
-            labels=labels,
-            resource_api=self.k8s_api.list_namespaced_pod,
-            reraise=reraise,
-            include_uninitialized=include_uninitialized,
+            resource_api=self.k8s_api.list_namespaced_pod, reraise=reraise, **kwargs,
         )
 
-    def list_jobs(self, labels, include_uninitialized=True, reraise=False):
+    def list_jobs(self, include_uninitialized=True, reraise=False, **kwargs):
         return self._list_namespace_resource(
-            labels=labels,
             resource_api=self.k8s_batch_api.list_namespaced_job,
             reraise=reraise,
-            include_uninitialized=include_uninitialized,
+            **kwargs,
         )
 
-    def list_custom_objects(self, labels, group, version, plural, reraise=False):
+    def list_custom_objects(self, group, version, plural, reraise=False, **kwargs):
         return self._list_namespace_resource(
-            labels=labels,
             resource_api=self.k8s_custom_object_api.list_namespaced_custom_object,
             reraise=reraise,
             group=group,
             version=version,
             plural=plural,
+            **kwargs,
         )
 
-    def list_services(self, labels, reraise=False):
+    def list_services(self, reraise=False, **kwargs):
         return self._list_namespace_resource(
-            labels=labels,
             resource_api=self.k8s_api.list_namespaced_service,
             reraise=reraise,
+            **kwargs,
         )
 
-    def list_deployments(self, labels, reraise=False):
+    def list_deployments(self, reraise=False, **kwargs):
         return self._list_namespace_resource(
-            labels=labels,
             resource_api=self.k8s_apps_api.list_namespaced_deployment,
             reraise=reraise,
+            **kwargs,
         )
 
-    def list_ingresses(self, labels, reraise=False):
+    def list_ingresses(self, reraise=False, **kwargs):
         return self._list_namespace_resource(
-            labels=labels,
             resource_api=self.networking_v1_beta1_api.list_namespaced_ingress,
             reraise=reraise,
+            **kwargs,
         )
 
     def update_node_labels(self, node, labels, reraise=False):
@@ -693,31 +691,31 @@ class K8SManager:
             else:
                 logger.debug("Ingress `{}` was not found".format(name))
 
-    def delete_pods(self, labels, include_uninitialized=True, reraise=False):
+    def delete_pods(self, include_uninitialized=True, reraise=False, **kwargs):
         objs = self.list_pods(
-            labels=labels, include_uninitialized=include_uninitialized, reraise=reraise
+            include_uninitialized=include_uninitialized, reraise=reraise, **kwargs
         )
         for obj in objs:
             self.delete_pod(name=obj.metadata.name, reraise=reraise)
 
-    def delete_jobs(self, labels, include_uninitialized=True, reraise=False):
+    def delete_jobs(self, include_uninitialized=True, reraise=False, **kwargs):
         objs = self.list_jobs(
-            labels=labels, include_uninitialized=include_uninitialized, reraise=reraise
+            include_uninitialized=include_uninitialized, reraise=reraise, **kwargs
         )
         for obj in objs:
             self.delete_job(name=obj.metadata.name, reraise=reraise)
 
-    def delete_services(self, labels, reraise=False):
-        objs = self.list_services(labels=labels, reraise=reraise)
+    def delete_services(self, reraise=False, **kwargs):
+        objs = self.list_services(reraise=reraise, **kwargs)
         for obj in objs:
             self.delete_service(name=obj.metadata.name, reraise=reraise)
 
-    def delete_deployments(self, labels, reraise=False):
-        objs = self.list_deployments(labels=labels, reraise=reraise)
+    def delete_deployments(self, reraise=False, **kwargs):
+        objs = self.list_deployments(reraise=reraise, **kwargs)
         for obj in objs:
             self.delete_deployment(name=obj.metadata.name, reraise=reraise)
 
-    def delete_ingresses(self, labels, reraise=False):
-        objs = self.list_services(labels=labels, reraise=reraise)
+    def delete_ingresses(self, reraise=False, **kwargs):
+        objs = self.list_services(reraise=reraise, **kwargs)
         for obj in objs:
             self.delete_ingress(name=obj.metadata.name, reraise=reraise)

@@ -46,7 +46,7 @@ async def get_k8s_operation_logs(
         params["tail_lines"] = V1Logs.CHUNK_SIZE
     logs = []
 
-    pods = await k8s_manager.list_pods(labels=get_label_selector(operation))
+    pods = await k8s_manager.list_pods(label_selector=get_label_selector(operation))
 
     async def handle_container_logs():
         resp = None

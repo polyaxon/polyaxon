@@ -169,6 +169,7 @@ cli.add_command(upload)
 if settings.CLIENT_CONFIG.is_ops:
 
     from polyaxon.cli.components.agent import agent
+    from polyaxon.cli.components.clean_ops import clean_ops
     from polyaxon.cli.components.docker import docker
     from polyaxon.cli.components.initializer import initializer
     from polyaxon.cli.components.notifier import notify
@@ -178,6 +179,7 @@ if settings.CLIENT_CONFIG.is_ops:
     from polyaxon.cli.components.tuner import tuner
 
     cli.add_command(agent)
+    cli.add_command(clean_ops)
     cli.add_command(docker)
     cli.add_command(initializer)
     cli.add_command(notify)
