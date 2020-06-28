@@ -11,12 +11,12 @@ Polyaxon is currently running:
     export POLYAXON_IP={{ .Values.ingress.hostName }}
     {{- end }}
     {{- if (not (empty .Values.ingress.tls)) }}
-    export POLYAXON_PORT=443
+    export POLYAXON_HOST=https://$POLYAXON_IP:443
     {{- else }}
-    export POLYAXON_PORT=80
+    export POLYAXON_HOST=http://$POLYAXON_IP:80
     {{- end }}
 
-    echo http://$POLYAXON_IP:$POLYAXON_PORT
+    echo $POLYAXON_HOST
 
 {{- else if contains "minikube" .Values.deploymentType }}
 
@@ -24,7 +24,9 @@ Polyaxon is currently running:
 
     export POLYAXON_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-gateway)
 
-    echo http://$POLYAXON_IP:$POLYAXON_PORT
+    export POLYAXON_HOST=http://$POLYAXON_IP:$POLYAXON_PORT
+
+    echo $POLYAXON_HOST
 
 {{- else }}
 
@@ -34,7 +36,9 @@ Polyaxon is currently running:
 
   export POLYAXON_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[1].address}")
 
-  echo http://$POLYAXON_IP:$POLYAXON_PORT
+  export POLYAXON_HOST=http://$POLYAXON_IP:$POLYAXON_PORT
+
+  echo $POLYAXON_HOST
 
 {{- else if contains "LoadBalancer" .Values.gateway.service.type }}
 
@@ -47,29 +51,32 @@ Polyaxon is currently running:
 
   export POLYAXON_PORT={{ .Values.gateway.service.port }}
 
-  echo http://$POLYAXON_IP:$POLYAXON_PORT
+  export POLYAXON_HOST=http://$POLYAXON_IP:$POLYAXON_PORT
 
-{{- else if contains "ClusterIP" .Values.gateway.service.type }}
-
-  export POLYAXON_IP=<YOUR HOSTNAME/IP>
-  export POLYAXON_PORT={{ .Values.gateway.service.port }}
-
-  echo http://$POLYAXON_IP:$POLYAXON_PORT
+  echo $POLYAXON_HOST
 
 {{- end }}
 {{- end }}
 
 2. Setup your cli by running theses commands:
 
-  {{- if (not (empty .Values.ingress.tls)) }}
-  polyaxon config set --host=$POLYAXON_IP --port=$POLYAXON_PORT --use_https=true
+   {{- if contains "ClusterIP" .Values.gateway.service.type }}
+
+   Please run:
+
+   polyaxon port-forward
+
+   Or:
+
+   polyaxon config set --host=http:localhost:8000
+   kubectl port-forward -n polyaxon svc/polyaxon-polyaxon-gateway 8000:80
+
+  {{- else if (not (empty .Values.ingress.tls)) }}
+
+  polyaxon config set --host=$POLYAXON_HOST --use_https=true
+
   {{- else }}
-  polyaxon config set --host=$POLYAXON_IP --port=$POLYAXON_PORT
+
+  polyaxon config set --host=$POLYAXON_HOST
+
   {{- end }}
-
-3. Log in with superuser
-
-  USER: {{ .Values.user.username }}
-  PASSWORD: Get login password with
-
-    kubectl get secret --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-secret -o jsonpath="{.data.POLYAXON_ADMIN_PASSWORD}" | base64 --decode
