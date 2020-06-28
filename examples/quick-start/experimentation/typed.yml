@@ -24,7 +24,8 @@ run:
   - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
   container:
     image: polyaxon/polyaxon-quick-start
-    command: [python3, "{{ globals.artifacts_path }}/polyaxon-quick-start/model.py"]
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
+    command: [python3, model.py]
     args: [
       "--conv1_size={{ conv1_size }}",
       "--conv2_size={{ conv2_size }}",
