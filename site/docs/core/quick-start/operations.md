@@ -70,7 +70,7 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/e
 Using the operation we will keep the options to use other resources or no resources at all, you can also patch the environment, init, sidecars ...
 
 Sometime you might want to create a component with predefined values or sometimes the values might not need to change often, 
-in that case it will make sense to push more information to the component.
+in that case it makes sense to push more information to the component.
 
 ## Referencing a component
 
