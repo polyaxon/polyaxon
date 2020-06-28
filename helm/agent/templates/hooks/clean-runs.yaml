@@ -37,9 +37,10 @@ spec:
       activeDeadlineSeconds: 360
       containers:
       - name: clean-runs
-        image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
-        imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
-        args: ["clean_runs"]
+        image: "{{ .Values.cleanHooks.image }}:{{ .Values.cleanHooks.imageTag }}"
+        imagePullPolicy: {{ .Values.cleanHooks.imagePullPolicy }}
+        command: ["polyaxon"]
+        args: ["clean-ops", "--namespace={{ .Values.namespace }}", "--in-cluster", "--delete"]
         envFrom:
 {{ include "config.envFrom.common" . | indent 8 }}
 {{ include "config.envFrom.secret" . | indent 8 }}
