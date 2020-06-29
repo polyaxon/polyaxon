@@ -30,16 +30,26 @@ Polyaxon provides a powerful and interactive workspace including:
 - A dashboard with visualisations and advanced insights
 - Possibility to create custom dashboards and visualisations
 - Advanced Query & search interface
-- Notebooks integration
-- Tensorboards integration
+- Uniform logs management and streaming for all operations 
+- Jupyter Notebook & Jupyter Lab integration
+- Matplotlib, Plotly, Bokeh, Altair, and Vega integrations
+- Tensorboard integration
+- VSCode integration
+- Streamlit, Voila, Papermill, Commuter integrations
+- Native Kubeflow scheduling
+- Celery executor
+- Built-in logic for building containers
+- Customizable interface
+- Unlimited scalability options
+- Auto-management of artifacts and lineage tracking
 - CI system for automating the training of your experiment based on different types of triggers.
 
 ## Reproducible results
 
 Polyaxon makes your experiments reproducible, portable, and repeatable while being language and framework agnostic. 
-It has a tracking api for source code, parameters, data, metrics, tags, and logs.
 
-
+- Powerful packaging format `Polyaxonfile`: A specification for packaging every aspect about dependencies, inputs, outputs, artifacts, environments, and runtime of an operation to schedule on Kubernetes.
+- Extensive tracking api for source code, parameters, data, metrics, tags, and logs.
 - You can see the full experiment history at a glance, including when, who and where.
 - Auto-document all experiments with statuses, metrics, hyperparams, source code, data, visualizations, artifacts and resources used in each experiment.
 - Advanced insights and comparison of experiments based on results, hyperparams, versions of training data and source code.
@@ -61,7 +71,13 @@ You can easily scale Polyaxon API and scheduler horizontally, and with Polyaxon 
 
 ## Built-in Flow engine
 
-Polyaxon exposes a flow engine that enables users to author workflows and DAGs. 
+Polyaxon exposes a flow engine that enables users to author workflows and DAGs with well-thought-out features:
+ * Queueing
+ * Routing
+ * Caching
+ * Concurrency and parallelism
+ * Native integration with team management, ACL, and RBAC rules
+ * Native support for ML workload: Kubeflow Operators, Hyperparameter tuning, Spark jobs, Dask Jobs...
 
 
 ## Built-in Optimization engine

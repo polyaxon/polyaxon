@@ -74,7 +74,7 @@ def login(token, username, password):
             return
     else:
         if not token:
-            token_url = "{}/app/token".format(clean_host(polyaxon_client.config.host))
+            token_url = "{}/profile/token".format(clean_host(polyaxon_client.config.host))
             click.confirm(
                 "Authentication token page will now open in your browser. Continue?",
                 abort=True,
