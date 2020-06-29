@@ -926,15 +926,25 @@ def _get_typed_list_value(
         base_types: the base types to check for conversion
     """
 
-    value = _get_typed_value(
-        key=key,
-        value=value,
-        target_type=list,
-        type_convert=json.loads,
-        is_optional=is_optional,
-        default=default,
-        options=options,
-    )
+    try:
+        value = _get_typed_value(
+            key=key,
+            value=value,
+            target_type=list,
+            type_convert=json.loads,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
+    except PolyaxonSchemaError:
+        # We try to parsing a list from a string
+        value = get_list(
+            key=key,
+            value=value,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
     if not value:
         return default
