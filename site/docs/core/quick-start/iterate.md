@@ -122,6 +122,26 @@ print(run_client.get_inputs())
 print(run_client.get_outputs())
 ```
 
+Get metrics for a specific run
+
+```python
+from polyaxon.polyplot import RunPlot
+run_client = RunPlot(run_uuid=run.uuid)
+run_client.get_metrics('loss,accuracy')
+```
+
+Tidy dataframe
+
+```python
+run_client.get_tidy_df()
+```
+
+Plot line chart
+
+```python
+run_client.line()
+```
+
 Example in notebook:
 
 ![run-dashboards-hiplot1](../../../../content/images/dashboard/runs/programmatic-plotly-tidy.png)
