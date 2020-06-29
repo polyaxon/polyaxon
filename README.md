@@ -43,6 +43,12 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
 # Install
 
 #### TL;DR;
+* Install CLI
+
+    ```bash
+    # Install Polyaxon CLI
+    $ pip install -U polyaxon
+    ```
 
  * Create a deployment
 
@@ -54,28 +60,13 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
     $ helm repo add polyaxon https://charts.polyaxon.com
 
     # Deploy Polyaxon
-    $ helm install polyaxon/polyaxon \
-        --name=polyaxon \
-        --namespace=polyaxon \
-        -f config.yaml
-    ```
+    $ polyaxon admin deploy -f config.yaml
 
- * Install CLI
-
-    ```bash
-    # Install Polyaxon CLI
-    $ pip install -U polyaxon
-
-    # Config Polyaxon CLI
-    $ polyaxon config ...
-
-    # Login to your account
-    $ polyaxon login
+    # Access API
+    $ polyaxon port-forward
     ```
 
 Please check [polyaxon installation guide](https://polyaxon.com/docs/setup/)
-
-> If you are looking for the documentation of Polyaxon v0.4, please [go here](https://v0-4.polyaxon.com/). 
 
 # Quick start
 
