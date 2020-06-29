@@ -95,13 +95,13 @@ from polyaxon.client import RunClient
 client = RunClient()
 
 grid_search_config = V1GridSearch(
-    params={"optimizer": V1HpChoice(value=["adam", "sgd", "rmsprop"]), "dropout": V1HpLinSpace(value={'num': 20, 'start': 0.1, 'stop': 0.5})},
+    params={"optimizer": V1HpChoice(value=["adam", "sgd", "rmsprop"]), "dropout": V1HpLinSpace(value={'num': 20, 'start': 0.1, 'stop': 0.5}), "epochs": V1HpChoice(value=[5, 10])},
     num_runs=5
 ) 
 
 suggestions = GridSearchManager(grid_search_config).get_suggestions()
 for suggesion in suggestions:
-    client.create_from_url(url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yml", params=suggesion)
+    client.create_from_url(url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml", params={k: {"value": v} for k, v in suggesion.items()})
 ```
 
 
@@ -136,7 +136,7 @@ from polyaxon.polyplot import MultiRunPlot
 client = MultiRunPlot()
 # This is an example of getting top 100 based on loss of all experiment 
 # that have one of the tags experiment or examples 
-hiplot_experiment = client.get_hiplot(query="metrics.tags:experiment|examples", sort="-metrics.loss", limit=100)
+hiplot_experiment = client.get_hiplot(query="tags:experiment|examples", sort="-metrics.loss", limit=100)
 hiplot_experiment.display()
 ```
 
