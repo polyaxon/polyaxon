@@ -65,36 +65,36 @@ class TestInitStore(BaseTestCase):
     def test_get_or_create_args(self):
         assert (
             get_or_create_args(path="/foo")
-            == 'if [ ! -d "/foo" ]; then mkdir -p /foo; fi'
+            == 'if [ ! -d "/foo" ]; then mkdir -m 0777 -p /foo; fi;'
         )
 
     def test_cp_copy_args(self):
         assert cp_copy_args(path_from="/foo", path_to="/bar", is_file=True) == (
-            "if [ -f /foo ]; then cp /foo /bar; fi"
+            "if [ -f /foo ]; then cp /foo /bar; fi;"
         )
         assert cp_copy_args(path_from="/foo", path_to="/bar", is_file=False) == (
-            'if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -r /foo/* /bar; fi'
+            'if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -r /foo/* /bar; fi;'
         )
 
     def test_files_cp_gcs_args(self):
         assert cp_gcs_args(path_from="gcs://foo", path_to="/local", is_file=True) == (
-            "polyaxon initializer gcs --path_from=gcs://foo --path_to=/local --is_file"
+            "polyaxon initializer gcs --path_from=gcs://foo --path_to=/local --is_file;"
         )
 
     def test_dirs_cp_gcs_args(self):
         assert cp_gcs_args(path_from="gcs://foo", path_to="/local", is_file=False) == (
-            "polyaxon initializer gcs --path_from=gcs://foo --path_to=/local "
+            "polyaxon initializer gcs --path_from=gcs://foo --path_to=/local ;"
         )
 
     def test_files_cp_wasb_args(self):
         assert cp_wasb_args(path_from="wasb://foo", path_to="/local", is_file=True) == (
-            "polyaxon initializer wasb --path_from=wasb://foo --path_to=/local --is_file"
+            "polyaxon initializer wasb --path_from=wasb://foo --path_to=/local --is_file;"
         )
 
     def test_cp_wasb_args(self):
         assert (
             cp_wasb_args(path_from="wasb://foo", path_to="/local", is_file=False)
-            == "polyaxon initializer wasb --path_from=wasb://foo --path_to=/local "
+            == "polyaxon initializer wasb --path_from=wasb://foo --path_to=/local ;"
         )
 
     def test_get_volume_args_s3(self):
@@ -105,7 +105,7 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path-to/"
         path_from = os.path.join(s3_store.store_path, "")
-        assert get_volume_args(s3_store, path_to, None) == "; ".join(
+        assert get_volume_args(s3_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
                 cp_s3_args(path_from=path_from, path_to=path_to, is_file=False),
@@ -124,7 +124,7 @@ class TestInitStore(BaseTestCase):
         path_from2 = os.path.join(s3_store.store_path, "path2")
         assert get_volume_args(
             s3_store, "/path/to", artifacts=V1ArtifactsType(files=["path1", "path2"])
-        ) == "; ".join(
+        ) == " ".join(
             [
                 get_or_create_args(path=base_path),
                 cp_s3_args(path_from=path_from1, path_to=path_to1, is_file=True),
@@ -141,7 +141,7 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path/to/"
         path_from = os.path.join(gcs_store.store_path, "")
-        assert get_volume_args(gcs_store, path_to, None) == "; ".join(
+        assert get_volume_args(gcs_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
                 cp_gcs_args(path_from=path_from, path_to=path_to, is_file=False),
@@ -161,7 +161,7 @@ class TestInitStore(BaseTestCase):
         path_from2 = os.path.join(gcs_store.store_path, "path2")
         assert get_volume_args(
             gcs_store, "/path/to", artifacts=V1ArtifactsType(dirs=["path1", "path2"])
-        ) == "; ".join(
+        ) == " ".join(
             [
                 get_or_create_args(path=base_path),
                 cp_gcs_args(path_from=path_from1, path_to=path_to1, is_file=False),
@@ -178,7 +178,7 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path/to/"
         path_from = os.path.join(az_store.store_path, "")
-        assert get_volume_args(az_store, path_to, None) == "; ".join(
+        assert get_volume_args(az_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
                 cp_wasb_args(path_from=path_from, path_to=path_to, is_file=False),
@@ -199,7 +199,7 @@ class TestInitStore(BaseTestCase):
             az_store,
             "/path/to",
             artifacts=V1ArtifactsType(files=["path1"], dirs=["path2"]),
-        ) == "; ".join(
+        ) == " ".join(
             [
                 get_or_create_args(path=base_path),
                 cp_wasb_args(path_from=path_from1, path_to=path_to1, is_file=True),
@@ -218,7 +218,7 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path/to/"
         path_from = os.path.join(claim_store.store_path, "")
-        assert get_volume_args(claim_store, path_to, None) == "; ".join(
+        assert get_volume_args(claim_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
                 cp_copy_args(path_from=path_from, path_to=path_to, is_file=False),
@@ -239,7 +239,7 @@ class TestInitStore(BaseTestCase):
         path_from2 = os.path.join(claim_store.store_path, "path2")
         assert get_volume_args(
             claim_store, "/path/to", artifacts=V1ArtifactsType(files=["path1", "path2"])
-        ) == "; ".join(
+        ) == " ".join(
             [
                 get_or_create_args(path=base_path),
                 cp_copy_args(path_from=path_from1, path_to=path_to1, is_file=True),
@@ -258,7 +258,7 @@ class TestInitStore(BaseTestCase):
         )
         path_to = "/path/to/"
         path_from = os.path.join(host_path_store.store_path, "")
-        assert get_volume_args(host_path_store, path_to, None) == "; ".join(
+        assert get_volume_args(host_path_store, path_to, None) == " ".join(
             [
                 get_or_create_args(path=path_to),
                 cp_copy_args(path_from=path_from, path_to=path_to, is_file=False),
@@ -281,7 +281,7 @@ class TestInitStore(BaseTestCase):
             host_path_store,
             "/path/to",
             artifacts=V1ArtifactsType(dirs=["path1", "path2"]),
-        ) == "; ".join(
+        ) == " ".join(
             [
                 get_or_create_args(path=base_path),
                 cp_copy_args(path_from=path_from1, path_to=path_to1, is_file=False),

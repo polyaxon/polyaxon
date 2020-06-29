@@ -32,6 +32,7 @@ def validate_params(
     is_template: bool = True,
     check_runs: bool = False,
     extra_info: str = None,
+    parse_values: bool = False,
 ) -> List[ParamSpec]:
     """
     Validates Params given inputs, and an optional context.
@@ -92,7 +93,9 @@ def validate_params(
             if param_spec.param.is_ref:
                 param_spec.validate_ref(context, is_template, check_runs)
             else:  # Plain value
-                param_spec.param.value = inp.validate_value(param_value.value)
+                parsed_value = inp.validate_value(param_value.value)
+                if parse_values:
+                    param_spec.param.value = parsed_value
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(inp.name)
@@ -126,7 +129,9 @@ def validate_params(
             if param_spec.param.is_ref:
                 param_spec.validate_ref(None, is_template=False, check_runs=check_runs)
             else:  # Plain value
-                param_spec.param.value = out.validate_value(param_value.value)
+                parsed_value = out.validate_value(param_value.value)
+                if parse_values:
+                    param_spec.param.value = parsed_value
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(out.name)

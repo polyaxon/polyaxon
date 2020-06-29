@@ -181,7 +181,9 @@ def upgrade(config_file, manager_path, check, dry_run):
 def teardown(config_file, manager_path):
     """Teardown a polyaxon deployment given a config file."""
     config = read_deployment_config(config_file)
-    manager = DeployManager(config=config, filepath=config_file, manager_path=manager_path)
+    manager = DeployManager(
+        config=config, filepath=config_file, manager_path=manager_path
+    )
     exception = None
     try:
         if click.confirm("Would you like to execute pre-delete hooks?", default=True):

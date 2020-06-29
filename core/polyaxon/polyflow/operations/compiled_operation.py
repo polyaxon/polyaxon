@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
+from typing import Dict, List
 
 import polyaxon_sdk
 
@@ -45,7 +45,12 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
         return self.run.kind if self.run else None
 
     def validate_params(
-        self, params=None, context=None, is_template=True, check_runs=False
+        self,
+        params: Dict = None,
+        context: Dict = None,
+        is_template: bool = True,
+        check_runs: bool = False,
+        parse_values: bool = False,
     ) -> List[ParamSpec]:
         return ops_params.validate_params(
             inputs=self.inputs,
@@ -55,6 +60,7 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
             context=context,
             is_template=is_template,
             check_runs=check_runs,
+            parse_values=parse_values,
         )
 
     def apply_params(self, params=None, context=None):

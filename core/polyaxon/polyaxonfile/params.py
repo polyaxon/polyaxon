@@ -22,7 +22,7 @@ from polyaxon.utils.formatting import Printer
 
 def parse_params(params, is_cli: bool = True):
     if isinstance(params, Mapping):
-        return params
+        return {k: {"value": v} for k, v in params.items()}
 
     parsed_params = {}
     for param in params:

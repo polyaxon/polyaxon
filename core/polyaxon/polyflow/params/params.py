@@ -349,7 +349,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
             else:
                 value_parts = self.value
 
-            value_parts = value_parts.split(".")
+            value_parts = [s.strip() for s in value_parts.split(".")]
             if len(value_parts) > 3:
                 raise ValidationError(
                     "Could not parse value `{}` for param `{}`.".format(

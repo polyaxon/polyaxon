@@ -42,7 +42,7 @@ from polyaxon.schemas.types import V1ArtifactsType, V1ConnectionType
 class TestInitOutputsStore(BaseTestCase):
     def test_get_artifacts_store_args(self):
         assert get_artifacts_store_args(artifacts_path="/some/path", clean=True) == (
-            'if [ ! -d "/some/path" ]; then mkdir -p /some/path; fi; '
+            'if [ ! -d "/some/path" ]; then mkdir -m 0777 -p /some/path; fi; '
             'if [ -d /some/path ] && [ "$(ls -A /some/path)" ]; '
             "then rm -r /some/path/*; fi;"
         )

@@ -65,7 +65,9 @@ class CompiledOperationSpecification(BaseSpecification):
         contexts: Dict = None,
         should_be_resolved: bool = False,
     ) -> Dict[str, ParamSpec]:
-        param_spec = config.validate_params(is_template=False, check_runs=True)
+        param_spec = config.validate_params(
+            is_template=False, check_runs=True, parse_values=True
+        )
         if should_be_resolved:
             for p_spec in param_spec:
                 if not p_spec.param.is_literal:

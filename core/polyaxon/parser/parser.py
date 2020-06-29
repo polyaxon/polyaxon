@@ -936,7 +936,7 @@ def _get_typed_list_value(
             default=default,
             options=options,
         )
-    except PolyaxonSchemaError:
+    except PolyaxonSchemaError as e:
         # We try to parsing a list from a string
         value = get_list(
             key=key,
@@ -945,6 +945,8 @@ def _get_typed_list_value(
             default=default,
             options=options,
         )
+        if len(value) <= 1:
+            raise e
 
     if not value:
         return default

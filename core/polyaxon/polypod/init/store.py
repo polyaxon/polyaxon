@@ -46,18 +46,17 @@ from polyaxon.utils.list_utils import to_list
 
 
 def get_or_create_args(path):
-    return 'if [ ! -d "{path}" ]; then mkdir -p {path}; fi'.format(path=path)
+    return 'if [ ! -d "{path}" ]; then mkdir -m 0777 -p {path}; fi;'.format(path=path)
 
 
 def cp_copy_args(path_from, path_to, is_file: bool) -> str:
     if is_file:
-        return "if [ -f {path_from} ]; then cp {path_from} {path_to}; fi".format(
+        return "if [ -f {path_from} ]; then cp {path_from} {path_to}; fi;".format(
             path_from=path_from, path_to=path_to
         )
-    'if [ -d {path} ] && [ "$(ls -A {path})" ]; '
     return (
         'if [ -d {path_from} ] && [ "$(ls -A {path_from})" ]; '
-        "then cp -r {path_from}/* {path_to}; fi".format(
+        "then cp -r {path_from}/* {path_to}; fi;".format(
             path_from=path_from, path_to=path_to
         )
     )
@@ -65,21 +64,21 @@ def cp_copy_args(path_from, path_to, is_file: bool) -> str:
 
 def cp_gcs_args(path_from: str, path_to: str, is_file: bool) -> str:
     file_flag = "--is_file" if is_file else ""
-    return "polyaxon initializer gcs --path_from={} --path_to={} {}".format(
+    return "polyaxon initializer gcs --path_from={} --path_to={} {};".format(
         path_from, path_to, file_flag
     )
 
 
 def cp_s3_args(path_from: str, path_to: str, is_file: bool) -> str:
     file_flag = "--is_file" if is_file else ""
-    return "polyaxon initializer s3 --path_from={} --path_to={} {}".format(
+    return "polyaxon initializer s3 --path_from={} --path_to={} {};".format(
         path_from, path_to, file_flag
     )
 
 
 def cp_wasb_args(path_from: str, path_to: str, is_file: bool) -> str:
     file_flag = "--is_file" if is_file else ""
-    return "polyaxon initializer wasb --path_from={} --path_to={} {}".format(
+    return "polyaxon initializer wasb --path_from={} --path_to={} {};".format(
         path_from, path_to, file_flag
     )
 
@@ -135,7 +134,7 @@ def get_volume_args(
         # We need to check that the path exists first
         _copy()
 
-    return "; ".join(args)
+    return " ".join(args)
 
 
 def get_base_store_container(
