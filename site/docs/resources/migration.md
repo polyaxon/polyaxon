@@ -33,17 +33,17 @@ The CLI and Client have also a single function for starting jobs, services, expe
 
 ## Customizable plugins
 
-Issues related to Tensorboard and Notebook, can be solved by users themselves without waiting for new releases. Polyaxon provides several public components, 
+Issues related to Tensorboard and Notebook can be solved by users themselves without waiting for new releases. Polyaxon provides several public components, 
 but users can customize them at any point.
 
 It's still possible to start Tensorboard and Notebook in a simple way, e.g.:
 
- * `polyaxon run --hub tensorboard`
+ * `polyaxon run --hub tensorboard:version`
 
 ## Helm & deployment
 
- * The built-in docker registry is removed: users can still deploy the in-cluster registry for managing docker images, 
-   but the behaviour is now standardize across all registry providers.
+ * The built-in docker registry is removed: users can still deploy an in-cluster registry for managing docker images, 
+   but the behaviour is now standardized across all registry providers.
  * Celery Scheduler is disabled by default: which means no dependency on Redis or Rabbitmq unless the scheduler is enabled, and only one dependency is required.
  * Git is managed through external providers by default: no volume for managing repos is required anymore.
  * Logs and outputs are managed through a single artifacts store: One artifacts store connection to manage logs, events, and outputs.
