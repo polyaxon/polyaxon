@@ -165,7 +165,7 @@ class TestRunTracking(TestEnvVarsCase):
         assert run.project == "project_bar"
         assert run.run_uuid == "uid"
 
-    def test_event_logger_from_non_manged_run(self):
+    def test_event_logger_from_non_managed_run(self):
         settings.CLIENT_CONFIG.is_managed = False
 
         run = Run(project="owner-test.test")
