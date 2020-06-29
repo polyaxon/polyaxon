@@ -10,10 +10,6 @@ tags:
 sidebar: "setup"
 ---
 
-<blockquote class="info">
-Polyaxon Community Edition distribution is currently in Beta! Please join the <a href="/slack/">chat</a> for more details.
-</blockquote>
-
 ## Overview
 
 Polyaxon Community Edition is based on Polyaxon's [open-source project](https://github.com/polyaxon/polyaxon), 

@@ -2,20 +2,20 @@
   - group: V1
     items:
     - title: V1.1
-      link: /docs/release-notes/1-1/
+      link: /docs/releases/1-1/
   - group: V0
     items:
     - title: V0.6
-      link: /docs/release-notes/0-6/
+      link: /docs/releases/0-6/
     - title: V0.5
-      link: /docs/release-notes/0-5/
+      link: /docs/releases/0-5/
     - title: V0.4
-      link: /docs/release-notes/0-4/
+      link: /docs/releases/0-4/
     - title: V0.3
-      link: /docs/release-notes/0-3/
+      link: /docs/releases/0-3/
     - title: V0.2
-      link: /docs/release-notes/0-2/
+      link: /docs/releases/0-2/
     - title: V0.1
-      link: /docs/release-notes/0-1/
+      link: /docs/releases/0-1/
     - title: V0.0
-      link: /docs/release-notes/0-0/
+      link: /docs/releases/0-0/
