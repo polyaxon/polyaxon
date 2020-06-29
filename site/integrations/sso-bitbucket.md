@@ -18,18 +18,4 @@ visibility: public
 status: EE
 ---
 
-You can use Bitbucket to manage your organization’s entire membership.
-
-## Register a Bitbucket application
-
-You need to register a [new application](https://confluence.atlassian.com/bitbucket/oauth-on-bitbucket-cloud-238027431.html) on Bitbucket.
-
-![bitbucket-integration1](../../content/images/integrations/sso/bitbucket.png)
-
-You should provide a callback URL: [Domain/IP]/oauth/bitbucket
-
-## Update Bitbucket configuration on the settings page
-
-You can now use your client id and secret token to set auth with Bitbucket. In Polyaxon's dashboard on the settings page under `Auth`, you can set the values for `Bitbucket`.
-
-![bitbucket-settings](../../content/images/integrations/sso/bitbucket-settings.png)
+Please reach out to us at: _**contact@polyaxon.com**_

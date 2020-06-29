@@ -18,18 +18,4 @@ visibility: public
 status: EE
 ---
 
-You can GitHub to manage your organization’s entire membership.
-
-## Register a GitHub application
-
-You need to register a [new application](https://github.com/settings/applications/new) on github.
-
-![github-integration1](../../content/images/integrations/sso/github.png)
-
-You should provide a callback URL: [Domain/IP]/oauth/github
-
-## Update Github configuration on the settings page
-
-You can now use your client id and secret token to set auth with Github. In Polyaxon's dashboard on the settings page under `Auth`, you can set the values for `Github`.
-
-![github-settings](../../content/images/integrations/sso/github-settings.png)
+Please reach out to us at: _**contact@polyaxon.com**_
