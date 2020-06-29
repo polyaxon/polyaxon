@@ -1,8 +1,8 @@
 ---
 title: "Migration to v1.x"
 sub_link: "migration"
-meta_title: "Migration to Polyaxon v0.5.x - Polyaxon Releases"
-meta_description: "Polyaxon Migration to Polyaxon v0.5.x."
+meta_title: "Migration to Polyaxon v1.x - Polyaxon Releases"
+meta_description: "Polyaxon Migration to Polyaxon v1.x."
 visibility: public
 status: published
 tags:
