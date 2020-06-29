@@ -23,7 +23,7 @@ queue routing, resources requirements and definition, connections, and access le
 ## Why using run profile
 
 It's possible to set for each operation an 
-[environment section](/docs/core/specification/environment/), a [queue](/docs/core/specification/queue/), a [container resources requirements](/docs/core/specification/container/), 
+[environment section](/docs/core/specification/environment/), a [queue](/docs/core/specification/operation/#queue), a [container resources requirements](https://kubernetes.io/docs/concepts/containers/), 
 a [termination](/docs/core/specification/termination/). But oftentimes, you might want to reuse some or all of these options 
 and apply them to a certain type of operations. 
 
@@ -32,7 +32,7 @@ either because a component should be generic or the component should be used acr
 
 Polyaxon provides a concept called RunProfile, that you can use to package several information about how to preset your operations.
 
-Users can just reference the profile in their [operations specification](/docs/core/specification/profile/) or using the CLI/CLIENT `polyaxon run ... profile=my-profile`
+Users can just reference the profile in their [operations specification](/docs/core/specification/operation/#profile) or using the CLI/CLIENT `polyaxon run ... profile=my-profile`
 
 ## Managing run profiles
 
