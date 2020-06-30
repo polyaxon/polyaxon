@@ -55,7 +55,7 @@ $ helm repo update
 
 ## Deploying/Deleting TFJob
 
-In order to use Kubeflow as backend for running [distributed Tensorflow experiments](/integrations/tensorflow/), 
+In order to use Kubeflow as backend for running [distributed Tensorflow experiments](/integrations/tfjob/), 
 you need to deploy TFJob on the same namespace where Polyaxon was deployed
 
 ```bash
@@ -68,7 +68,7 @@ helm install del plxtf --purge
   
 ## Deploying/Deleting PytorchJob
 
-In order to use Kubeflow as backend for running [distributed Pytorch experiments](/integrations/pytorch/), 
+In order to use Kubeflow as backend for running [distributed Pytorch experiments](/integrations/pytorchjob/), 
 you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
 
 ```bash
@@ -81,7 +81,7 @@ helm install del plxpytorch --purge
 
 ## Deploying/Deleting MpiJob
 
-In order to use Kubeflow as backend for running [distributed experiments using MPI](/integrations/mpi/), 
+In order to use Kubeflow as backend for running [distributed experiments using MPI](/integrations/mpijob/), 
 you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
 
 ```bash

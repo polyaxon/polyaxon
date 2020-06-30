@@ -27,15 +27,15 @@ To learn about this component definition or customize its behaviour, please chec
 
 ## Component info using Polyaxon CLI
 
-You can also use the CLI to learn about this component:
+You can use the CLI to learn about this component:
 
 ```bash
 polyaxon hub --name={{name}} get
 ```
 
-## Fetch component to current working dir
+## Fetch component to the current working dir
 
-You can also use the CLI to fetch the component to local file:
+You can use the CLI to fetch the component to local file:
 
 ```bash
 polyaxon hub --name={{name}} get --save
@@ -61,7 +61,7 @@ polyaxon run --hub {{name}}:[tag] -P ...
 
 ## View a running operation on the dashboard
 
-After running an operation with this component, you can view it on the Dashboard:
+After running an operation with this component, you can view it on the dashboard:
 
 ```bash
 polyaxon ops dashboard

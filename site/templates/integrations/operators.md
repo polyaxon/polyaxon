@@ -30,7 +30,7 @@ are deployed in your cluster.
 
 To be able to schedule distributed jobs with the {{title}} operator, you need to enable the operator in your deployment config.
 
-You need to enable the operator in Polyaxon CE deployment or Polyaxon Agent deployment:
+> You need to enable the operator in Polyaxon CE deployment or Polyaxon Agent deployment:
 
 ```yaml
 operators:
