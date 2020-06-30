@@ -1,0 +1,13 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=$DIR/..
+source $DIR/environment
+
+$DIR/check
+
+if [ $? -eq 0 ]; then
+    echo "Build platform deps"
+    helm dependency build charts/polyaxon
+    echo "Build platform deps"
+    helm dependency build charts/agent
+fi

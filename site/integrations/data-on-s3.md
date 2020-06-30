@@ -122,7 +122,7 @@ To use that logic:
 pip install polyaxon[s3]
 ``` 
 
-All possible function to use:
+All possible functions to use:
 
 ```python
 from polyaxon.connections.aws.s3 import S3Service

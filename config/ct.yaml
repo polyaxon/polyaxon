@@ -1,0 +1,6 @@
+chart-dirs:
+  - charts
+all: true
+chart-repos:
+  - stable=https://kubernetes-charts.storage.googleapis.com/
+helm-extra-args: --timeout 600s

@@ -116,7 +116,7 @@ To use that logic:
 pip install polyaxon[azure]
 ``` 
 
-All possible function to use:
+All possible functions to use:
 
 ```python
 from polyaxon.connections.azure.azure_blobstore import AzureBlobStoreService

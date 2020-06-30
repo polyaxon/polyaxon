@@ -212,3 +212,4 @@ notificationConnections: []
 includeChartRevision: true
 istio: {}
 operators: {}
+api: {}

@@ -535,7 +535,7 @@ email:
 # hostName: 159.203.150.212 or polyaxon.foo.com
 
 # White list of ip/hosts that can communicate with the api
-#allowedHosts:
+# allowedHosts:
 #  - 127.0.0.1
 #  - 159.203.150.212
 

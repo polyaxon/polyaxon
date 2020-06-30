@@ -141,7 +141,7 @@ To use that logic:
 pip install polyaxon[gcs]
 ``` 
 
-All possible function to use:
+All possible functions to use:
 
 ```python
 from polyaxon.connections.gcp.gcs import GCSService
