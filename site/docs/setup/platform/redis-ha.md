@@ -25,6 +25,8 @@ you need to disable the in-cluster redis, and provide the information needed to 
 
 
 ```yaml
+broker: redis
+
 redis:
   enabled: false
 
@@ -40,6 +42,8 @@ If your redis instance requires a password, you need to provide it as well:
 
 
 ```yaml
+broker: redis
+
 redis:
   enabled: false
 

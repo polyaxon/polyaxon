@@ -25,6 +25,8 @@ you need to disable the in-cluster Rabbitmq, and provide the information needed 
 
 
 ```yaml
+broker: rabbitmq
+
 rabbitmq-ha:
   enabled: false
 
