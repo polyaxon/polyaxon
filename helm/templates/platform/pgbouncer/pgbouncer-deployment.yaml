@@ -1,0 +1,111 @@
+{{- if .Values.externalServices.postgresql.pgbouncer }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-pgbouncer
+  annotations:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-pgbouncer
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.api }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-pgbouncer
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.api }}
+    app.kubernetes.io/managed-by: "helm"
+spec:
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0  # Avoid Terminating and ContainerCreating at the same time
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-pgbouncer
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+      labels:
+        app: {{ template "polyaxon.fullname" . }}-pgbouncer
+        release: "{{ .Release.Name }}"
+        type: {{ .Values.types.core }}
+        role: {{ .Values.roles.api }}
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-pgbouncer
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+{{ include "config.scheduling" . | indent 6 }}
+      containers:
+        - name: {{ .Chart.Name }}-pgbouncer
+          image: {{ .Values.externalServices.postgresql.pgbouncer.image | default "edoburu/pgbouncer:1.9.0" | quote }}
+          ports:
+            - containerPort: {{ template "pgsql.port" . }}
+          env:
+            - name: POOL_MODE
+              value: session
+            - name: SERVER_RESET_QUERY
+              value: DISCARD ALL
+            - name: DB_HOST
+              value: "127.0.0.1"
+            - name: DB_PORT
+              value: "{{ template "pgsql.port" . }}"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.platformSecret | quote }}
+                  key: POLYAXON_DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.platformSecret | quote }}
+                  key: POLYAXON_DB_PASSWORD
+            - name: MAX_CLIENT_CONN
+              value: {{ .Values.externalServices.postgresql.pgbouncer.maxClientConn | default "500" | quote }}
+            - name: DEFAULT_POOL_SIZE
+              value: {{ .Values.externalServices.postgresql.pgbouncer.defaultPoolSize | default "50" | quote }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ template "pgsql.port" . }}
+            periodSeconds: 60
+          lifecycle:
+            preStop:
+              exec:
+                # Allow existing queries clients to complete within 120 seconds
+                command: ["/bin/sh", "-c", "killall -INT pgbouncer && sleep 120"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ['all']
+          resources:
+            requests:
+              cpu: 150m
+              memory: 200Mi
+            limits:
+              cpu: 1000m
+              memory: 800Mi
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.09
+          command:
+            [
+              '/cloud_sql_proxy',
+              '--dir=/cloudsql',
+              '-instances={{ .Values.externalServices.postgresql.pgbouncer.instances | quote }}',
+              '-credential_file=/secrets/cloudsql/credentials.json',
+            ]
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+            - name: cloudsql
+              mountPath: /cloudsql
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+        - name: cloudsql
+          ? emptyDir
+{{- end }}

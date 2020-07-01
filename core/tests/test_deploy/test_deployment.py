@@ -263,6 +263,9 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.artifacts_store.name == "test"
         assert config.artifacts_store.kind == "host_path"
         assert config.connections is None
+        assert config.encryption_secret == "test"
+        assert config.agent_secret == "test"
+        assert config.platform_secret == "test"
         assert config.ldap is None
         assert config.rabbitmq is None
         assert config.redis is None
@@ -275,6 +278,7 @@ class TestDeploymentConfig(BaseTestCase):
             "database": "postgres",
             "host": "35.226.163.84",
             "port": 1111,
+            "pgbouncer": {"foo": "bar", "image": "test"},
         }
 
     def test_read_deploy_config_rabbitmq_values(self):

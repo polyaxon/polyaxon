@@ -13,6 +13,10 @@ user:
 postgresql:
   enabled: false
 
+encryptionSecret: test
+agentSecret: test
+platformSecret: test
+
 externalServices:
   postgresql:
     user: polyaxon
@@ -21,6 +25,9 @@ externalServices:
     host: 35.226.163.84
     port: 1111
     connMaxAge: null
+    pgbouncer:
+      foo: bar
+      image: test
 
 artifactsStore:
   name: test

@@ -181,6 +181,8 @@ class DeploymentSchema(BaseCamelSchema):
     password_length = fields.Int(allow_none=True)
     ssl = fields.Nested(SSLSchema, allow_none=True)
     encryption_secret = fields.Str(allow_none=True)
+    platform_secret = fields.Str(allow_none=True)
+    agent_secret = fields.Str(allow_none=True)
     admin_view_enabled = fields.Bool(allow_none=True)
     timezone = fields.Str(allow_none=True)
     environment = fields.Str(allow_none=True)
@@ -300,6 +302,8 @@ class DeploymentConfig(BaseConfig):
         password_length=None,
         ssl=None,
         encryption_secret=None,
+        platform_secret=None,
+        agent_secret=None,
         admin_view_enabled=None,
         timezone=None,
         environment=None,
@@ -377,6 +381,8 @@ class DeploymentConfig(BaseConfig):
         self.ssl = ssl
         self.dns = dns
         self.encryption_secret = encryption_secret
+        self.platform_secret = platform_secret
+        self.agent_secret = agent_secret
         self.admin_view_enabled = admin_view_enabled
         self.timezone = timezone
         self.environment = environment
@@ -432,6 +438,8 @@ class DeploymentConfig(BaseConfig):
                 polyaxon_secret=polyaxon_secret,
                 internal_token=internal_token,
                 password_length=password_length,
+                platform_secret=platform_secret,
+                encryption_secret=encryption_secret,
                 admin_view_enabled=admin_view_enabled,
                 user=user,
                 global_replicas=global_replicas,
