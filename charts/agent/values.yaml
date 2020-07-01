@@ -63,7 +63,13 @@ ingress:
 # To set ssl and serve https with Polyaxon deployed with NodePort service
 ssl: {}
 
+# Custom cluster dns setup
 dns: {}
+
+# To provide a secret name with all passwords and api keys instead of using the config.yaml deployment file
+# possible values:
+# * agent: key
+agentSecret:
 
 gateway:
   enabled: true

@@ -5,9 +5,7 @@ metadata:
   name: {{ template "polyaxon.fullname" . }}-beat
   annotations:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    checksum/common-config: {{ include (print $.Template.BasePath "/common-cm.yaml") . | sha256sum }}
-    checksum/platform-config: {{ include (print $.Template.BasePath "/platform-cm.yaml") . | sha256sum }}
-    checksum/platform-secrets: {{ include (print $.Template.BasePath "/platform-secrets.yaml") . | sha256sum }}
+{{ include "config.checksum.platform" . | indent 4 }}
   labels:
     app: {{ template "polyaxon.fullname" . }}-beat
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
@@ -31,9 +29,7 @@ spec:
     metadata:
       annotations:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-        checksum/common-config: {{ include (print $.Template.BasePath "/common-cm.yaml") . | sha256sum }}
-        checksum/platform-config: {{ include (print $.Template.BasePath "/platform-cm.yaml") . | sha256sum }}
-        checksum/platform-secrets: {{ include (print $.Template.BasePath "/platform-secrets.yaml") . | sha256sum }}
+{{ include "config.checksum.platform" . | indent 8 }}
       labels:
         app: {{ template "polyaxon.fullname" . }}-beat
         release: "{{ .Release.Name }}"

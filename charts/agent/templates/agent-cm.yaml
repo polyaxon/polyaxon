@@ -36,8 +36,12 @@ data:
   POLYAXON_AGENT_SIDECAR: {{ toJson .Values.sidecar | quote }}
   POLYAXON_AGENT_INIT: {{ toJson .Values.init | quote }}
   POLYAXON_AGENT_RUNS_SA: {{ template "polyaxon.fullname" . }}-runs-sa
+  {{- if .Values.agentSecret }}
+  POLYAXON_AGENT_SECRET_NAME: {{ .Values.agentSecret | quote }}
+  {{- else }}
   {{- if .Values.agent.token }}
   POLYAXON_AGENT_SECRET_NAME: {{ template "polyaxon.fullname" . }}-agent-secret
+  {{- end }}
   {{- end }}
   {{- if .Values.operators.tfjob }}
   POLYAXON_TFJOB_ENABLED: "true"

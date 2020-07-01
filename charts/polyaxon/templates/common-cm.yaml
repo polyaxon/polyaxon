@@ -33,7 +33,11 @@ data:
   {{- end }}
   POLYAXON_API_HOST: "http://{{ template "api.host" . }}:{{ template "api.port" . }}"
   POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
+  {{- if .Values.platformSecret }}
+  POLYAXON_K8S_APP_SECRET_NAME: {{ .Values.platformSecret | quote }}
+  {{- else }}
   POLYAXON_K8S_APP_SECRET_NAME: {{ template "polyaxon.fullname" . }}-secret
+  {{- end }}
   POLYAXON_LOG_LEVEL: {{ default "WARN" .Values.logLevel | quote }}
   POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
   POLYAXON_TIME_ZONE: {{ .Values.timezone | quote }}

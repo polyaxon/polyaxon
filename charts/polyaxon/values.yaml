@@ -49,9 +49,14 @@ ssl: {}
 # Custom cluster dns setup
 dns: {}
 
+# To provide a secret name with all passwords and api keys instead of using the config.yaml deployment file
+# provide only services used in your deployment.
+platformSecret:
+agentSecret:
+
 # If scheduler is enabled a broker must be set options: redis | rabbitmq, default: rabbitmq
 # If broker == rabbitmq: rabbitmq-ha or external rabbitmq must be enabled
-# If broker == redist: redis or external redis must be enabled
+# If broker == redis: redis or external redis must be enabled
 broker: rabbitmq
 
 # If you enable ingress, please set the gateway service type value to:
