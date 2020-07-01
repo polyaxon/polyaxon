@@ -6,37 +6,24 @@ metadata:
   annotations:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
   labels:
-    app: {{ template "polyaxon.fullname" . }}-pgbouncer
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.api }}
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-pgbouncer
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.api }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreHelpers" . | indent 4 }}
+{{ include "config.labels.apps.pgbouncer" . | indent 4 }}
 spec:
   strategy:
     rollingUpdate:
       maxUnavailable: 0  # Avoid Terminating and ContainerCreating at the same time
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-pgbouncer
-      app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "config.labels.apps.pgbouncer" . | indent 6 }}
   template:
     metadata:
       annotations:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
       labels:
-        app: {{ template "polyaxon.fullname" . }}-pgbouncer
-        release: "{{ .Release.Name }}"
-        type: {{ .Values.types.core }}
-        role: {{ .Values.roles.api }}
-        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-pgbouncer
-        app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "config.labels.common" . | indent 8 }}
+{{ include "config.labels.roles.coreHelpers" . | indent 8 }}
+{{ include "config.labels.apps.pgbouncer" . | indent 8 }}
     spec:
 {{ include "config.scheduling" . | indent 6 }}
       containers:

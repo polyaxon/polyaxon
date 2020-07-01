@@ -518,21 +518,6 @@ affinity:
 
 passwordLength: 8
 
-types:
-  core: "polyaxon-core"
-  runner: "polyaxon-runner"
-  config: "polyaxon-config"
-  metrics: "polyaxon-metrics"
-
-roles:
-  api: "polyaxon-api"
-  agent: "polyaxon-api"
-  log: "polyaxon-logs"
-  config: "polyaxon-config"
-  hooks: "polyaxon-hooks"
-  worker: "polyaxon-workers"
-  dashboard: "polyaxon-dashboard"
-
 email:
   enabled: false
   host: smtp

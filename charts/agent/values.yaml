@@ -6,13 +6,6 @@ limitResources: false
 rbac:
   enabled: true
 
-types:
-  agent: "polyaxon-agent"
-
-roles:
-  config: "polyaxon-config"
-  agent: "polyaxon-agent"
-
 externalServices:
   api:
     host:

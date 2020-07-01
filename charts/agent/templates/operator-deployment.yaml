@@ -7,36 +7,23 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 {{ include "config.checksum.agent" . | indent 4 }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-operator
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.agent }}
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.agent }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreAgent" . | indent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator
-      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       annotations:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 {{ include "config.checksum.agent" . | indent 8 }}
       labels:
-        app: {{ template "polyaxon.fullname" . }}-operator
-        release: "{{ .Release.Name }}"
-        type: {{ .Values.types.core }}
-        role: {{ .Values.roles.agent }}
         app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator
-        app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "config.labels.common" . | indent 8 }}
+{{ include "config.labels.roles.coreAgent" . | indent 8 }}
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}

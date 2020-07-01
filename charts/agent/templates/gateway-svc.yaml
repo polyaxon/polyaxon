@@ -4,18 +4,9 @@ kind: Service
 metadata:
   name: {{ template "polyaxon.fullname" . }}-gateway
   labels:
-    app: {{ template "polyaxon.fullname" . }}-gateway
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.api }}
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-gateway
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.api }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreApi" . | indent 4 }}
+{{ include "config.labels.apps.gateway" . | indent 4 }}
   {{- with .Values.gateway.service.annotations }}
   annotations:
   {{ toYaml . | nindent 4 }}
@@ -23,7 +14,7 @@ metadata:
 spec:
   type: {{ .Values.gateway.service.type }}
   selector:
-    app: {{ template "polyaxon.fullname" . }}-gateway
+{{ include "config.labels.apps.gateway" . | indent 4 }}
   ports:
   - port: {{ .Values.gateway.service.port }}
     targetPort: {{ .Values.gateway.service.targetPort }}

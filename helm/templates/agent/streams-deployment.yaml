@@ -8,24 +8,14 @@ metadata:
     checksum/proxies-config: {{ include (print $.Template.BasePath "/proxies-cm.yaml") . | sha256sum }}
 {{ include "config.checksum.agent" . | indent 4 }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-streams
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.api }}
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-streams
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.api }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.apps.streams" . | indent 4 }}
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreApi" . | indent 4 }}
 spec:
   replicas: {{ .Values.streams.replicas }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-streams
-      app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "config.labels.apps.streams" . | indent 6 }}
   template:
     metadata:
       annotations:
@@ -33,12 +23,9 @@ spec:
         checksum/proxies-config: {{ include (print $.Template.BasePath "/proxies-cm.yaml") . | sha256sum }}
 {{ include "config.checksum.agent" . | indent 8 }}
       labels:
-        app: {{ template "polyaxon.fullname" . }}-streams
-        release: "{{ .Release.Name }}"
-        type: {{ .Values.types.core }}
-        role: {{ .Values.roles.api }}
-        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-streams
-        app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "config.labels.apps.streams" . | indent 8 }}
+{{ include "config.labels.common" . | indent 8 }}
+{{ include "config.labels.roles.coreApi" . | indent 8 }}
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}

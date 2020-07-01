@@ -7,36 +7,23 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 {{ include "config.checksum.platform" . | indent 4 }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-scheduler
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.worker }}
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-scheduler
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.worker }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreWorker" . | indent 4 }}
 spec:
   replicas: {{ .Values.scheduler.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-scheduler
-      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       annotations:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 {{ include "config.checksum.platform" . | indent 4 }}
       labels:
-        app: {{ template "polyaxon.fullname" . }}-scheduler
-        release: "{{ .Release.Name }}"
-        type: {{ .Values.types.core }}
-        role: {{ .Values.roles.worker }}
         app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-scheduler
-        app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "config.labels.common" . | indent 8 }}
+{{ include "config.labels.roles.coreWorker" . | indent 8 }}
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}

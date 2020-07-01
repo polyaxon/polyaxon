@@ -4,18 +4,9 @@ kind: Job
 metadata:
   name: "{{ .Release.Name }}-load-fixtures"
   labels:
-    app: {{ template "polyaxon.fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.hooks }}
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-load-fixtures
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.hooks }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreHooks" . | indent 4 }}
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
@@ -27,8 +18,7 @@ spec:
     metadata:
       name: "{{ .Release.Name }}-load-fixtures"
       labels:
-        app: {{ template "polyaxon.fullname" . }}
-        release: "{{ .Release.Name }}"
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-load-fixtures
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}

@@ -4,18 +4,9 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "polyaxon.fullname" . }}-scheduler
   labels:
-    app: {{ template "polyaxon.fullname" . }}-scheduler
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.worker }}
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-scheduler
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.worker }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreWorker" . | indent 4 }}
 spec:
   scaleTargetRef:
     kind: Deployment

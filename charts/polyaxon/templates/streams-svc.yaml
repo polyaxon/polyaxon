@@ -4,18 +4,9 @@ kind: Service
 metadata:
   name: {{ template "polyaxon.fullname" . }}-streams
   labels:
-    app: {{ template "polyaxon.fullname" . }}-streams
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.api }}
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-streams
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.api }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.apps.streams" . | indent 4 }}
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreApi" . | indent 4 }}
   {{- with .Values.streams.service.annotations }}
   annotations:
   {{ toYaml . | nindent 4 }}
@@ -23,7 +14,7 @@ metadata:
 spec:
   type: {{ .Values.streams.service.type }}
   selector:
-    app: {{ template "polyaxon.fullname" . }}-streams
+{{ include "config.labels.apps.streams" . | indent 4 }}
   ports:
   - port: {{ .Values.streams.service.port }}
     targetPort: {{ .Values.streams.service.targetPort }}

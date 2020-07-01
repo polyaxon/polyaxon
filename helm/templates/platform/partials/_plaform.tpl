@@ -7,7 +7,7 @@ Secret envFrom
     name: {{ .Values.platformSecret }}
 {{- else }}
 - secretRef:
-    name: {{ template "polyaxon.fullname" . }}-secret
+    name: {{ template "polyaxon.fullname" . }}-platform-secret
 {{- if .Values.encryptionSecret }}
 - secretRef:
     name: {{ .Values.encryptionSecret }}

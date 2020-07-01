@@ -4,18 +4,9 @@ kind: Service
 metadata:
   name: {{ template "polyaxon.fullname" . }}-pgbouncer
   labels:
-    app: {{ template "polyaxon.fullname" . }}-pgbouncer
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.metrics }}
-    role: {{ .Values.roles.worker }}
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-pgbouncer
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.roles.worker }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreHelpers" . | indent 4 }}
+{{ include "config.labels.apps.pgbouncer" . | indent 4 }}
 spec:
   type: NodePort
   ports:
@@ -24,6 +15,5 @@ spec:
     protocol: TCP
     name: postgres
   selector:
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-pgbouncer
-    app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "config.labels.apps.pgbouncer" . | indent 4 }}
 {{- end }}

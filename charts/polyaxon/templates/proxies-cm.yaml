@@ -3,18 +3,9 @@ kind: ConfigMap
 metadata:
   name: {{ template "polyaxon.fullname" . }}-proxies-config
   labels:
-    app: {{ template "polyaxon.fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.config }}
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-proxies-config
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.core }}
-    app.kubernetes.io/component: {{ .Values.types.config }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreConfig" . | indent 4 }}
 data:
   # Cluster
   POLYAXON_PROXY_STREAMS_PORT: "{{ template "proxies.streams.port" . }}"

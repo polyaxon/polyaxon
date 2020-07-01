@@ -7,18 +7,9 @@ metadata:
   namespace: {{ .Values.metrics.serviceMonitor.namespace }}
   {{- end }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-metrics
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.metrics }}
-    role: {{ .Values.roles.log }}
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-metrics
-    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.metrics }}
-    app.kubernetes.io/component: {{ .Values.roles.log }}
-    app.kubernetes.io/managed-by: "helm"
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreHelpers" . | indent 4 }}
     {{- range $key, $value := .Values.metrics.serviceMonitor.selector }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
@@ -31,7 +22,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-metrics
-      app.kubernetes.io/instance: {{ .Release.Name }}
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}
