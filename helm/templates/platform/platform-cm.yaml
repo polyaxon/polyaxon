@@ -46,7 +46,7 @@ data:
   {{- end }}
   {{- if .Values.scheduler.enabled }}
   POLYAXON_SCHEDULER_ENABLED: {{ .Values.scheduler.enabled | quote }}
-  {{- if ( .Values.broker ) and eq .Values.broker "redis" }}
+  {{- if eq .Values.broker "redis" }}
   POLYAXON_BROKER_BACKEND: {{ .Values.broker }}
   POLYAXON_REDIS_CELERY_BROKER_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/0
   POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/1

@@ -1,4 +1,4 @@
-{{- if and .Values.scheduler.enabled (eq (.Values.broker | default "rabbitmq") "rabbitmq") -}}
+{{- if and .Values.scheduler.enabled (eq .Values.broker "rabbitmq") -}}
 apiVersion: batch/v1
 kind: Job
 metadata:

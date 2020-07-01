@@ -46,7 +46,13 @@ ingress:
 # To set ssl and serve https with Polyaxon deployed with NodePort service
 ssl: {}
 
+# Custom cluster dns setup
 dns: {}
+
+# If scheduler is enabled a broker must be set options: redis | rabbitmq, default: rabbitmq
+# If broker == rabbitmq: rabbitmq-ha or external rabbitmq must be enabled
+# If broker == redist: redis or external redis must be enabled
+broker: rabbitmq
 
 # If you enable ingress, please set the gateway service type value to:
 #    * ClusterIP or NodePort (on GKE you cannot use ClusterIP)
@@ -296,7 +302,6 @@ externalServices:
     backend:
     options:
 
-broker:
 
 postgresql:
   # Whether to deploy a postgres server in-cluster.

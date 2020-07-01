@@ -33,7 +33,7 @@ secrets config
       name: {{ template "rabbitmq.fullname" . }}
       key: rabbitmq-password
 {{- end }}
-{{- if and (not (index .Values "rabbitmq-ha").enabled) .Values.scheduler.enabled (eq (.Values.broker | default "rabbitmq") "rabbitmq") }}
+{{- if and (not (index .Values "rabbitmq-ha").enabled) .Values.scheduler.enabled (eq .Values.broker "rabbitmq") }}
 - name: POLYAXON_RABBITMQ_PASSWORD
   valueFrom:
     secretKeyRef:
