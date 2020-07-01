@@ -6,7 +6,7 @@ x-defaults: &defaults
 
 services:
   postgres:
-    image: postgres:11.5-alpine
+    image: postgres:12.3-alpine
     environment:
       POSTGRES_USER: "polyaxon"
       POSTGRES_PASSWORD: "polyaxon"
