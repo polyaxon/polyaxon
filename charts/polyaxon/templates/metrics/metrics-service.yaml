@@ -23,5 +23,4 @@ spec:
     name: statsd
   selector:
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-metrics
-    app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

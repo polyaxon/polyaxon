@@ -15,7 +15,7 @@ sidebar: "setup"
 
 If you are here, it means that you have a Kubernetes cluster and [helm](/docs/guides/setup-helm/) setup.
 
-This section include guides to deploy:
+This section includes guides to deploy:
  * Polyaxon [Community Edition](/docs/setup/platform/community-edition/).
  * Polyaxon [Enterprise Edition Control Plane](/docs/setup/platform/enterprise-control-plane/).
  

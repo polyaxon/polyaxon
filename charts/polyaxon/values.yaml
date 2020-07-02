@@ -218,7 +218,7 @@ scheduler:
 
 worker:
   enabled: false
-  image: polyaxon/worker
+  image:
   imageTag: 1.1.0
   imagePullPolicy: Always
   replicas: 1
@@ -239,7 +239,7 @@ worker:
 
 beat:
   enabled: false
-  image: polyaxon/polyaxon-beat
+  image:
   imageTag: 1.1.0
   imagePullPolicy: Always
   replicas: 1

@@ -12,15 +12,13 @@ sidebar: "setup"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-> This guide is for Polyaxon Enterprise Edition Control Plane Setup for Kubernetes.
-
 ## Overview
+
+This guide is for Polyaxon Enterprise Edition Control Plane Setup for Kubernetes.
 
 In order to deploy Polyaxon Enterprise Control Plane to manage agent deployments, you need to set some extra configuration.
 
 ## Set the EE License
-
-Set Up Polyaxon Enterprise License
 
 Running Polyaxon Enterprise Control Plane requires a valid license.
 
@@ -54,7 +52,7 @@ api:
 
 ## Use Polyaxon Enterprise Docker images
 
-You need to set you configuration file to use Polyaxon Enterprise Docker images.
+You need to set your configuration file to use Polyaxon Enterprise Docker images.
 
 ```yaml
 api:
@@ -82,9 +80,10 @@ streams:
 
 ## Enable the scheduler
 
-Polyaxon control plane requires the scheduler to be running:
+Polyaxon control plane requires the scheduler to be running. e.g. using redis:
 
 ```yaml
+borker: redis
 redis:
   enabled: true
 scheduler:

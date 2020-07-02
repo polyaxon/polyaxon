@@ -13,7 +13,7 @@ metadata:
 spec:
   type: {{ .Values.api.service.type }}
   selector:
-    app: {{ template "polyaxon.fullname" . }}-api
+{{ include "config.labels.apps.api" . | indent 4 }}
   ports:
   - port: {{ .Values.api.service.port }}
     targetPort: {{ .Values.api.service.targetPort }}
