@@ -26,7 +26,7 @@ from polyaxon.deploy.operators.helm import HelmOperator
 from polyaxon.deploy.operators.kubectl import KubectlOperator
 from polyaxon.deploy.schemas.deployment import DeploymentConfig
 from polyaxon.deploy.schemas.deployment_types import DeploymentCharts, DeploymentTypes
-from polyaxon.exceptions import PolyaxonException
+from polyaxon.exceptions import PolyaxonException, PolyaxonOperatorException
 from polyaxon.managers.compose import ComposeConfigManager
 from polyaxon.utils.formatting import Printer
 
@@ -175,11 +175,15 @@ class DeployManager(object):
 
     def _get_or_create_namespace(self):
         click.echo("Checking {} namespace ...".format(self.deployment_namespace))
-        stdout = self.kubectl.execute(
-            args=["get", "namespace", self.deployment_namespace],
-            is_json=True,
-            stream=settings.CLIENT_CONFIG.debug,
-        )
+        try:
+            stdout = self.kubectl.execute(
+                args=["get", "namespace", self.deployment_namespace],
+                is_json=True,
+                stream=settings.CLIENT_CONFIG.debug,
+            )
+        except PolyaxonOperatorException:
+            stdout = None
+
         if stdout:
             return
         # Create a namespace
