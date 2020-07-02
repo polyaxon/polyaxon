@@ -19,7 +19,7 @@ spec:
     metadata:
       annotations:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-{{ include "config.checksum.platform" . | indent 4 }}
+{{ include "config.checksum.platform" . | indent 8 }}
       labels:
         app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-scheduler
 {{ include "config.labels.common" . | indent 8 }}
