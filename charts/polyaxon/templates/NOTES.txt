@@ -64,12 +64,12 @@ Polyaxon is currently running:
 
    Please run:
 
-   polyaxon port-forward
+   polyaxon port-forward --namespace={{ .Release.Namespace }}
 
    Or:
 
    polyaxon config set --host=http:localhost:8000
-   kubectl port-forward -n polyaxon svc/polyaxon-polyaxon-gateway 8000:80
+   kubectl port-forward -n {{ .Release.Namespace }} svc/polyaxon-polyaxon-gateway 8000:80
 
   {{- else if (not (empty .Values.ingress.tls)) }}
 
