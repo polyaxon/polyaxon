@@ -36,7 +36,7 @@ pipeline {
     stages {
         stage('Submit') {
             steps {
-                sh 'polyaxon run -f path/to/polyaxonfile'
+                sh 'run -f path/to/polyaxonfile'
             }
         }
     }

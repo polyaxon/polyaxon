@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import os
-import sys
 
 import click
 
@@ -35,15 +34,12 @@ def read_deployment_config(filepaths):
     filepaths = to_list(filepaths)
     for filepath in filepaths:
         if not os.path.isfile(filepath):
-            Printer.print_error("`{}` must be a valid file".format(filepath))
-            sys.exit(1)
+            Printer.print_error("`{}` must be a valid file".format(filepath), sys_exit=True)
     try:
         deployment_config = reader.read(filepaths)
+        return deployment_config
     except Exception as e:
-        handle_cli_error(e, message="Polyaxon deployment file is not valid.")
-        sys.exit(1)
-
-    return deployment_config
+        handle_cli_error(e, message="Polyaxon deployment file is not valid.", sys_exit=True)
 
 
 @click.group()
@@ -94,8 +90,7 @@ def deploy(config_file, manager_path, check, dry_run):
         try:
             manager.check()
         except Exception as e:
-            handle_cli_error(e, message="Polyaxon deployment manager error.")
-            sys.exit(1)
+            handle_cli_error(e, message="Polyaxon deployment manager error.", sys_exit=True)
 
     else:
         try:
@@ -105,7 +100,7 @@ def deploy(config_file, manager_path, check, dry_run):
             exception = e
 
     if exception:
-        Printer.print_error("Error message: {}.".format(exception))
+        Printer.print_error("Error message: {}.".format(exception), sys_exit=True)
 
 
 @admin.command()
@@ -150,8 +145,7 @@ def upgrade(config_file, manager_path, check, dry_run):
         try:
             manager.check()
         except Exception as e:
-            handle_cli_error(e, message="Polyaxon deployment manager error.")
-            sys.exit(1)
+            handle_cli_error(e, message="Polyaxon deployment manager error.", sys_exit=True)
     else:
         try:
             manager.upgrade()
