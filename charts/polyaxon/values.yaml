@@ -251,6 +251,28 @@ beat:
       cpu: 50m
       memory: 128Mi
 
+flower:
+  enabled: false
+  image: mher/flower
+  imageTag: latest
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 300Mi
+    requests:
+      cpu: 130m
+      memory: 200Mi
+
+  service:
+    name: flower
+    type: NodePort
+    port: 8888
+    targetPort: 8888
+    nodePort: 30679
+    annotations: {}
+
 hooks:
   image: polyaxon/polyaxon-api
   imageTag: 1.1.0

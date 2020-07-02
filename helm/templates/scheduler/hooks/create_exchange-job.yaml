@@ -18,8 +18,7 @@ spec:
     metadata:
       name: "{{ .Release.Name }}-create-exchange"
       labels:
-        app: {{ template "polyaxon.fullname" . }}
-        release: "{{ .Release.Name }}"
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-create-exchange
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}

@@ -1,0 +1,52 @@
+{{- if .Values.flower.enabled }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-flower
+  annotations:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+{{ include "config.checksum.platform" . | indent 4 }}
+  labels:
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreHelpers" . | indent 4 }}
+{{ include "config.labels.apps.flower" . | indent 4 }}
+spec:
+  replicas: {{ .Values.flower.replicas }}
+  selector:
+    matchLabels:
+{{ include "config.labels.apps.pgbouncer" . | indent 6 }}
+  template:
+    metadata:
+      annotations:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+{{ include "config.checksum.platform" . | indent 8 }}
+      labels:
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreHelpers" . | indent 4 }}
+{{ include "config.labels.apps.flower" . | indent 4 }}
+    spec:
+{{ include "securityContext" . | indent 6 }}
+{{ include "config.scheduling" . | indent 6 }}
+{{ include "config.sa" . | indent 6 }}
+{{ include "config.imagePullSecrets" . | indent 6}}
+      containers:
+      - name: {{ .Chart.Name }}-flower
+        image: "{{ .Values.flower.image }}:{{ .Values.flower.imageTag }}"
+        imagePullPolicy: {{ .Values.flower.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.flower.service.port }}
+        envFrom:
+{{ include "config.envFrom.common" . | indent 8 }}
+{{ include "config.envFrom.secret" . | indent 8 }}
+{{ include "config.envFrom.platform" . | indent 8 }}
+        env:
+{{ include "config.envs" . | indent 8 }}
+        - name: CELERY_BROKER_URL
+          {{- if ( .Values.broker ) and eq .Values.broker "redis" }}
+          value: redis://{{ template "redis.host" . }}:{{ template "redis.port" . }}/0
+          {{- else }}
+          value: "amqp://polyaxon:polyaxon@{{ template "rabbitmq.host" . }}:{{ template "rabbitmq.port" . }}"
+          {{- end }}
+        - name: FLOWER_PORT
+          value: {{ .Values.flower.service.port | quote}}
+{{- end }}
