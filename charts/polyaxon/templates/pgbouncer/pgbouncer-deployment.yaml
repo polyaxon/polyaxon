@@ -54,9 +54,15 @@ spec:
               value: {{ .Values.externalServices.postgresql.pgbouncer.maxClientConn | default "500" | quote }}
             - name: DEFAULT_POOL_SIZE
               value: {{ .Values.externalServices.postgresql.pgbouncer.defaultPoolSize | default "50" | quote }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ template "pgsql.port" . }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
           livenessProbe:
             tcpSocket:
               port: {{ template "pgsql.port" . }}
+            initialDelaySeconds: 5
             periodSeconds: 60
           lifecycle:
             preStop:
