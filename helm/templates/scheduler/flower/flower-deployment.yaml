@@ -14,7 +14,7 @@ spec:
   replicas: {{ .Values.flower.replicas }}
   selector:
     matchLabels:
-{{ include "config.labels.apps.pgbouncer" . | indent 6 }}
+{{ include "config.labels.apps.flower" . | indent 6 }}
   template:
     metadata:
       annotations:

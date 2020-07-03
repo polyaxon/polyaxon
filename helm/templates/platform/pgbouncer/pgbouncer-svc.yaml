@@ -8,7 +8,7 @@ metadata:
 {{ include "config.labels.roles.coreHelpers" . | indent 4 }}
 {{ include "config.labels.apps.pgbouncer" . | indent 4 }}
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - port: {{ template "pgsql.port" . }}
     targetPort: {{ template "pgsql.port" . }}

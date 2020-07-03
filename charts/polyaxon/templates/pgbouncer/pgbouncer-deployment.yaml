@@ -28,7 +28,8 @@ spec:
 {{ include "config.scheduling" . | indent 6 }}
       containers:
         - name: {{ .Chart.Name }}-pgbouncer
-          image: {{ .Values.externalServices.postgresql.pgbouncer.image | default "edoburu/pgbouncer:1.9.0" | quote }}
+          image: "{{ .Values.externalServices.postgresql.pgbouncer.image }}:{{ .Values.externalServices.postgresql.pgbouncer.imageTag }}"
+          imagePullPolicy: {{ .Values.externalServices.postgresql.pgbouncer.imagePullPolicy | default "IfNotPresent" }}
           ports:
             - containerPort: {{ template "pgsql.port" . }}
           env:
@@ -37,19 +38,21 @@ spec:
             - name: SERVER_RESET_QUERY
               value: DISCARD ALL
             - name: DB_HOST
-              value: "127.0.0.1"
+              value: 127.0.0.1
             - name: DB_PORT
-              value: "{{ template "pgsql.port" . }}"
+              value: "5433"
             - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.platformSecret | quote }}
-                  key: POLYAXON_DB_USER
+              value: "{{ template "pgsql.user" . }}"
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.platformSecret | quote }}
+                {{- if .Values.platformSecret }}
+                  name: {{ .Values.platformSecret }}
                   key: POLYAXON_DB_PASSWORD
+                {{- else }}
+                  name: {{ template "polyaxon.fullname" . }}-postgresql-secret
+                  key: postgresql-password
+                {{- end }}
             - name: MAX_CLIENT_CONN
               value: {{ .Values.externalServices.postgresql.pgbouncer.maxClientConn | default "500" | quote }}
             - name: DEFAULT_POOL_SIZE
@@ -58,7 +61,7 @@ spec:
             tcpSocket:
               port: {{ template "pgsql.port" . }}
             initialDelaySeconds: 5
-            periodSeconds: 10
+            periodSeconds: 30
           livenessProbe:
             tcpSocket:
               port: {{ template "pgsql.port" . }}
@@ -81,24 +84,25 @@ spec:
               cpu: 1000m
               memory: 800Mi
         - name: cloudsql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.09
+          image: "{{ .Values.externalServices.postgresql.pgbouncer.proxyImage }}:{{ .Values.externalServices.postgresql.pgbouncer.proxyImageTag }}"
+          imagePullPolicy: {{ .Values.externalServices.postgresql.pgbouncer.proxyImagePullPolicy | default "IfNotPresent" }}
           command:
             [
               '/cloud_sql_proxy',
               '--dir=/cloudsql',
-              '-instances={{ .Values.externalServices.postgresql.pgbouncer.instances | quote }}',
+              '-instances={{ .Values.externalServices.postgresql.host }}',
               '-credential_file=/secrets/cloudsql/credentials.json',
             ]
           volumeMounts:
-            - name: cloudsql-instance-credentials
+            - name: cloudsql-credentials
               mountPath: /secrets/cloudsql
               readOnly: true
             - name: cloudsql
               mountPath: /cloudsql
       volumes:
-        - name: cloudsql-instance-credentials
+        - name: cloudsql-credentials
           secret:
-            secretName: cloudsql-instance-credentials
+            secretName: cloudsql-credentials
         - name: cloudsql
           ? emptyDir
 {{- end }}

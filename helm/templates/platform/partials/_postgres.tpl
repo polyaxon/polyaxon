@@ -6,6 +6,8 @@
 {{- define "pgsql.host" -}}
 {{- if .Values.postgresql.enabled -}}
 {{- template "pgsql.fullname" . }}
+{{- else if .Values.externalServices.postgresql.pgbouncer -}}
+{{- template "polyaxon.fullname" . }}-pgbouncer
 {{- else }}
 {{- .Values.externalServices.postgresql.host }}
 {{- end }}
@@ -38,7 +40,7 @@
 
 {{- define "pgsql.connMaxAge" -}}
 {{- if .Values.postgresql.enabled -}}
-{{- default "polyaxon" .Values.postgresql.connMaxAge -}}
+{{- default .Values.postgresql.connMaxAge -}}
 {{- else }}
 {{- .Values.externalServices.postgresql.connMaxAge }}
 {{- end }}

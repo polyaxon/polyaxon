@@ -29,7 +29,7 @@ app.kubernetes.io/component: "polyaxon-workers"
 Config labels roles core helpers
 */}}
 {{- define "config.labels.roles.coreHelpers" -}}
-app.kubernetes.io/part-of:"polyaxon-core"
+app.kubernetes.io/part-of: "polyaxon-core"
 app.kubernetes.io/component: "polyaxon-helpers"
 {{- end -}}
 
