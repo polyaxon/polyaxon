@@ -58,7 +58,6 @@ def admin():
 )
 @click.option(
     "--manager-path",
-    "--manager_path",
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
 )
@@ -69,7 +68,6 @@ def admin():
     help="Check if deployment file and other requirements are met.",
 )
 @click.option(
-    "--dry_run",
     "--dry-run",
     is_flag=True,
     default=False,
@@ -113,7 +111,6 @@ def deploy(config_file, manager_path, check, dry_run):
 )
 @click.option(
     "--manager-path",
-    "--manager_path",
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
 )
@@ -124,7 +121,6 @@ def deploy(config_file, manager_path, check, dry_run):
     help="Check if deployment file and other requirements are met.",
 )
 @click.option(
-    "--dry_run",
     "--dry-run",
     is_flag=True,
     default=False,
@@ -167,7 +163,6 @@ def upgrade(config_file, manager_path, check, dry_run):
 )
 @click.option(
     "--manager-path",
-    "--manager_path",
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
 )

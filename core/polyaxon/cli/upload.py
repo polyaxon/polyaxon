@@ -18,6 +18,7 @@
 import click
 
 from polyaxon.logger import clean_outputs
+from polyaxon.utils.formatting import Printer
 
 
 @click.command()
@@ -27,3 +28,4 @@ def upload():  # pylint:disable=assign-to-new-keyword
 
     > **Note**: Please note that this command has been temporarily disabled.
     """
+    Printer.print_warning("Please note that this command has been temporarily disabled.")

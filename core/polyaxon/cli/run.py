@@ -85,7 +85,6 @@ from polyaxon.utils.validation import validate_tags
     default=False,
     help="To start the run locally, with `docker` environment as default.",
 )
-@click.option("--conda_env", type=str, help="To start a local run with `conda`.")
 @click.option(
     "--params",
     "-P",
@@ -116,7 +115,6 @@ def run(
     log,
     watch,
     local,
-    conda_env,
     params,
     profile,
     queue,

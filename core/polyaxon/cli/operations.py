@@ -631,15 +631,15 @@ def statuses(ctx, watch):
     help="Stream logs after showing past logs.",
 )
 @click.option(
-    "--hide_time",
     "--hide-time",
+    "-h",
     is_flag=True,
     default=False,
     help="Whether or not to hide timestamps from the log stream.",
 )
 @click.option(
-    "--all_info",
     "--all-info",
+    "-a",
     is_flag=True,
     default=False,
     help="Whether to stream logs from all containers.",
