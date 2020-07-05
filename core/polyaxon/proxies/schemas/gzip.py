@@ -20,6 +20,7 @@ OPTIONS = """
 gzip                        on;
 gzip_disable                "msie6";
 gzip_types                  *;
+gzip_proxied                any;
 """
 
 
