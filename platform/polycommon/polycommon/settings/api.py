@@ -53,6 +53,9 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
         config.get_boolean("DJANGO_TEMPLATE_DEBUG", is_optional=True)
         or config.is_debug_mode
     )
+    context["ADMIN_VIEW_ENABLED"] = config.get_boolean(
+        "POLYAXON_ADMIN_VIEW_ENABLED", is_optional=True, default=False
+    )
     context["JS_OFFLINE"] = config.get_boolean(
         "POLYAXON_JS_OFFLINE", is_optional=True, default=False
     )
