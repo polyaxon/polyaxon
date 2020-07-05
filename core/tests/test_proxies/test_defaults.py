@@ -39,7 +39,7 @@ class TestSettings(BaseTestCase):
         assert settings.PROXIES_CONFIG.namespace is None
         assert settings.PROXIES_CONFIG.namespaces is None
         assert settings.PROXIES_CONFIG.log_level == "warn"
-        assert settings.PROXIES_CONFIG.nginx_timeout == 600
+        assert settings.PROXIES_CONFIG.nginx_timeout == 650
         assert settings.PROXIES_CONFIG.nginx_indent_char == " "
         assert settings.PROXIES_CONFIG.nginx_indent_width == 4
         assert settings.PROXIES_CONFIG.ssl_path == "/etc/ssl/polyaxon"

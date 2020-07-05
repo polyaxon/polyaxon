@@ -36,6 +36,7 @@ error_log /polyaxon/logs/error.log warn;
 gzip                        on;
 gzip_disable                "msie6";
 gzip_types                  *;
+gzip_proxied                any;
 
 
 charset utf-8;
@@ -47,12 +48,13 @@ client_body_in_file_only clean;
 sendfile on;
 
 
-send_timeout 600;
-keepalive_timeout 600;
-uwsgi_read_timeout 600;
-uwsgi_send_timeout 600;
-client_header_timeout 600;
-proxy_read_timeout 600;
+send_timeout 650;
+keepalive_timeout 650;
+uwsgi_read_timeout 650;
+uwsgi_send_timeout 650;
+client_header_timeout 650;
+proxy_read_timeout 650;
+keepalive_requests 10000;
 
 
 error_page 500 502 503 504 /50x.html;
@@ -141,6 +143,7 @@ error_log /polyaxon/logs/error.log warn;
 gzip                        on;
 gzip_disable                "msie6";
 gzip_types                  *;
+gzip_proxied                any;
 
 
 charset utf-8;
@@ -152,12 +155,13 @@ client_body_in_file_only clean;
 sendfile on;
 
 
-send_timeout 600;
-keepalive_timeout 600;
-uwsgi_read_timeout 600;
-uwsgi_send_timeout 600;
-client_header_timeout 600;
-proxy_read_timeout 600;
+send_timeout 650;
+keepalive_timeout 650;
+uwsgi_read_timeout 650;
+uwsgi_send_timeout 650;
+client_header_timeout 650;
+proxy_read_timeout 650;
+keepalive_requests 10000;
 
 
 error_page 500 502 503 504 /50x.html;

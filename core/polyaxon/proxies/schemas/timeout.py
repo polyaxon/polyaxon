@@ -24,6 +24,7 @@ uwsgi_read_timeout {timeout};
 uwsgi_send_timeout {timeout};
 client_header_timeout {timeout};
 proxy_read_timeout {timeout};
+keepalive_requests 10000;
 """
 
 

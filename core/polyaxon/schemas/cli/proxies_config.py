@@ -166,7 +166,7 @@ class ProxiesConfig(BaseConfig):
         self.dns_custom_cluster = dns_custom_cluster or "cluster.local"
         self.dns_backend = dns_backend or "kube-dns"
         self.dns_prefix = dns_prefix
-        self.nginx_timeout = nginx_timeout or 600
+        self.nginx_timeout = nginx_timeout or 650
         self.nginx_indent_char = nginx_indent_char or " "
         self.nginx_indent_width = nginx_indent_width or 4
         self.ssl_enabled = ssl_enabled or False

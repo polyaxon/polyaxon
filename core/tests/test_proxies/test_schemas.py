@@ -35,6 +35,7 @@ uwsgi_read_timeout 200;
 uwsgi_send_timeout 200;
 client_header_timeout 200;
 proxy_read_timeout 200;
+keepalive_requests 10000;
 """  # noqa
         settings.PROXIES_CONFIG.nginx_timeout = 200
         assert get_timeout_config() == expected
