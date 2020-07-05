@@ -18,6 +18,7 @@ auth:
 
 ingress:
   enabled: false
+  backend: gateway
   hostName:
   # Default path is `/`
   path:

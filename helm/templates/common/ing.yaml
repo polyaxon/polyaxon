@@ -1,5 +1,4 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "polyaxon.fullname" . -}}
 {{- $secretName := printf "%s-%s" .Release.Name "tls" -}}
 
 ---
@@ -23,9 +22,7 @@ spec:
     http:
       paths:
       - path: {{ default "/" .Values.ingress.path | quote }}
-        backend:
-          serviceName: {{ $fullName }}-gateway
-          servicePort: {{ $.Values.gateway.service.port }}
+{{ include "config.ingres.backend" . | indent 8 }}
       {{- range .Values.ingress.extraPaths }}
       - path: {{ .path | quote }}
         backend:

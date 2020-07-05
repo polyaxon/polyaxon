@@ -31,11 +31,10 @@ data:
   POLYAXON_DNS_PREFIX: {{ .Values.dns.prefix | quote }}
   {{- end }}
   # SSL
-  {{- if and .Values.ssl.enabled .Values.ssl.secretName }}
-  POLYAXON_SSL_ENABLED: "true"
-  {{- if .Values.ssl.path }}
+  POLYAXON_SSL_ENABLED: "{{ template "ssl.enabled" . }}"
+  POLYAXON_SSL_REDIRECT_ENABLED: "{{ template "ssl.redirect.enabled" . }}"
+  {{- if and .Values.ssl.enabled .Values.ssl.secretName .Values.ssl.path }}
   POLYAXON_SSL_PATH:  {{ .Values.ssl.path | quote }}
-  {{- end }}
   {{- end }}
   # Services
   {{- if (not (empty .Values.services)) }}

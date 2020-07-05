@@ -19,3 +19,25 @@ SSL Volume
     secretName: {{ .Values.ssl.secretName | quote }}
 {{- end }}
 {{- end -}}  {{- /* end def ssl volume mounts */ -}}
+
+{{- /*
+SSL Enabled
+*/}}
+{{- define "ssl.enabled" -}}
+{{- if or (and .Values.ssl.enabled .Values.ssl.secretName) .Values.ingress.tls }}
+{{- printf "true" -}}
+{{- else }}
+{{- printf "false" -}}
+{{- end }}
+{{- end -}}  {{- /* end def ssl volume mounts */ -}}
+
+{{- /*
+SSL redirect enabled
+*/}}
+{{- define "ssl.redirect.enabled" -}}
+{{- if and .Values.ssl.enabled .Values.ssl.secretName }}
+{{- printf "true" -}}
+{{- else }}
+{{- printf "false" -}}
+{{- end }}
+{{- end -}}  {{- /* end def ssl volume mounts */ -}}
