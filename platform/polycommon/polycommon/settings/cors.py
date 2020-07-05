@@ -39,13 +39,17 @@ def set_cors(context, config: ConfigManager):
     ssl_enabled = config.get_boolean(
         "POLYAXON_SSL_ENABLED", is_optional=True, default=False
     )
+    ssl_redirect_enabled = config.get_boolean(
+        "POLYAXON_SSL_REDIRECT_ENABLED", is_optional=True, default=False
+    )
     context["SSL_ENABLED"] = ssl_enabled
     context["PROTOCOL"] = "http"
     context["WS_PROTOCOL"] = "ws"
     if ssl_enabled:
         context["SESSION_COOKIE_SECURE"] = True
         context["CSRF_COOKIE_SECURE"] = True
-        context["SECURE_SSL_REDIRECT"] = True
         context["SECURE_PROXY_SSL_HEADER"] = ("HTTP_X_FORWARDED_PROTO", "https")
         context["PROTOCOL"] = "https"
         context["WS_PROTOCOL"] = "wss"
+    if ssl_redirect_enabled:
+        context["SECURE_SSL_REDIRECT"] = True
