@@ -1,0 +1,30 @@
+version: 1.1
+kind: component
+name: tensorboard
+
+inputs:
+- name: image
+  isOptional: true
+  type: str
+  value: tensorflow/tensorflow:2.0.1-py3
+- name: uuid
+  isOptional: true
+  type: str
+- name: path
+  isOptional: true
+  type: str
+
+run:
+  kind: service
+  ports: [6006]
+  init:
+    - artifacts: {"dirs": ["{{path  or (uuid + '/outputs')}}"]}
+  container:
+    image: "{{ image }}"
+    command: ["tensorboard"]
+    args: [
+      "--logdir={{path or (globals.artifacts_path + '/' + uuid + '/outputs')}}",
+      "--port={{globals.ports[0]}}",
+      "--path_prefix={{globals.base_url}}",
+      "--host=0.0.0.0",
+    ]

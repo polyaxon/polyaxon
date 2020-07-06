@@ -160,6 +160,7 @@
   featured: true
   is_service: true
   versions:
+  - latest
   - multi-runs
   - path
   - s3-path
