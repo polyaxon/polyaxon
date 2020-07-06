@@ -18,7 +18,7 @@ package kinds
 
 const (
 	// MPIJobAPIVersion mpijob api version
-	MPIJobAPIVersion = "kubeflow.org/v1alpha2"
+	MPIJobAPIVersion = "kubeflow.org/v1"
 
 	// MPIJobKind mpijob kind
 	MPIJobKind = "MPIJob"
