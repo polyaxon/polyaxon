@@ -64,7 +64,7 @@
   is_service: false
   versions:
   - latest
-  - 1.1.0
+  - 1.1
 - name: gcloud-cli
   title: GCloud CLI
   meta_title: GCloud CLI
