@@ -1,8 +1,8 @@
 {{- /*
-Operator service account
+service account
 */}}
-{{- define "config.operator.sa" -}}
-{{- if .Values.rbac.enabled }}
-serviceAccountName: {{ template "polyaxon.fullname" . }}-operator-sa
+{{- define "config.agent.sa" -}}
+{{- if and .Values.rbac.enabled (or .Values.agent.enabled (not .Values.organizationKey)) }}
+serviceAccountName: {{ template "polyaxon.fullname" . }}-agent-sa
 {{- end }}
 {{- end -}}

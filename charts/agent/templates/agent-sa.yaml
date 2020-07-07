@@ -1,11 +1,12 @@
+{{- if and .Values.rbac.enabled (or .Values.agent.enabled (not .Values.organizationKey)) }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-sa
+  name: {{ template "polyaxon.fullname" . }}-agent-sa
   namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-sa
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-sa
 {{ include "config.labels.common" . | indent 4 }}
 {{ include "config.labels.roles.coreConfig" . | indent 4 }}
 {{- if .Values.rbac.enabled }}
@@ -13,9 +14,9 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-clusterrole
+  name: {{ template "polyaxon.fullname" . }}-agent-clusterrole
   labels:
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-clusterrole
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-clusterrole
 {{ include "config.labels.common" . | indent 4 }}
 {{ include "config.labels.roles.coreConfig" . | indent 4 }}
 rules:
@@ -32,10 +33,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-role
+  name: {{ template "polyaxon.fullname" . }}-agent-role
   namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-role
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-role
 {{ include "config.labels.common" . | indent 4 }}
 {{ include "config.labels.roles.coreConfig" . | indent 4 }}
 rules:
@@ -70,35 +71,36 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-role-binding
+  name: {{ template "polyaxon.fullname" . }}-agent-role-binding
   namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-role-binding
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-role-binding
 {{ include "config.labels.common" . | indent 4 }}
 {{ include "config.labels.roles.coreConfig" . | indent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ template "polyaxon.fullname" . }}-role
+  name: {{ template "polyaxon.fullname" . }}-agent-role
 subjects:
   - kind: ServiceAccount
-    name: {{ template "polyaxon.fullname" . }}-sa
+    name: {{ template "polyaxon.fullname" . }}-agent-sa
     namespace: {{ .Values.namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-clusterrole-binding
+  name: {{ template "polyaxon.fullname" . }}-agent-clusterrole-binding
   labels:
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-clusterrole-binding
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-clusterrole-binding
 {{ include "config.labels.common" . | indent 4 }}
 {{ include "config.labels.roles.coreConfig" . | indent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ template "polyaxon.fullname" . }}-clusterrole
+  name: {{ template "polyaxon.fullname" . }}-agent-clusterrole
 subjects:
   - kind: ServiceAccount
-    name: {{ template "polyaxon.fullname" . }}-sa
+    name: {{ template "polyaxon.fullname" . }}-agent-sa
     namespace: {{ .Values.namespace }}
+{{- end }}
 {{- end }}

@@ -12,6 +12,7 @@ data:
   POLYAXON_PROXY_STREAMS_HOST: {{ template "proxies.streams.host" . }}
   POLYAXON_PROXY_API_PORT: "{{ template "proxies.api.port" . }}"
   POLYAXON_PROXY_API_HOST: {{ template "proxies.api.host" . }}
+  POLYAXON_PROXY_API_USE_RESOLVER: "{{ template "proxies.api.useResolver" . }}"
   {{- if (not (empty .Values.auth)) }}
   POLYAXON_PROXY_AUTH_ENABLED: {{ .Values.auth.enabled | quote }}
   {{- if .Values.auth.external }}

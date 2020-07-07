@@ -4,6 +4,7 @@ name: dockerizer
 description: "Build container images with Polyaxon dockerizer"
 tags: ["build"]
 
+inputs:
 - name: context
   isOptional: true
   type: str
@@ -24,7 +25,7 @@ run:
   kind: job
   connections: ["{{ destination.connection }}"]
   container:
-    image: polyaxon/polyaxon-init:1.1.1
+    image: polyaxon/polyaxon-init:1.1.2
     command: ["polyaxon", "docker", "build-and-push"]
     args: [
       "-c",

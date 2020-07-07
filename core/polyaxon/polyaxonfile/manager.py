@@ -57,6 +57,7 @@ def get_op_specification(
     queue: str = None,
     nocache: bool = None,
     path_context: str = None,
+    validate_params: bool = True,
 ) -> V1Operation:
     job_data = {
         "version": config.version if config else pkg.SCHEMA_VERSION,
@@ -90,7 +91,7 @@ def get_op_specification(
     public_hub = config.has_public_hub_reference
     params = copy.deepcopy(config.params)
     # Sanity check if params were passed and we are not dealing with a hub component
-    if not (hub and not public_hub):
+    if validate_params and not (hub and not public_hub):
         run_config = OperationSpecification.compile_operation(config)
         run_config.validate_params(params=params, is_template=False)
         if run_config.is_dag_run:

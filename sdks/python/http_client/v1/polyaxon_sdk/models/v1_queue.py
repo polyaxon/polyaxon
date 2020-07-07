@@ -50,26 +50,36 @@ class V1Queue(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'uuid': 'str',
-        'agent': 'str',
-        'name': 'str',
-        'priority': 'int',
-        'concurrency': 'int',
-        'created_at': 'datetime',
-        'updated_at': 'datetime'
+        "uuid": "str",
+        "agent": "str",
+        "name": "str",
+        "priority": "int",
+        "concurrency": "int",
+        "created_at": "datetime",
+        "updated_at": "datetime",
     }
 
     attribute_map = {
-        'uuid': 'uuid',
-        'agent': 'agent',
-        'name': 'name',
-        'priority': 'priority',
-        'concurrency': 'concurrency',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at'
+        "uuid": "uuid",
+        "agent": "agent",
+        "name": "name",
+        "priority": "priority",
+        "concurrency": "concurrency",
+        "created_at": "created_at",
+        "updated_at": "updated_at",
     }
 
-    def __init__(self, uuid=None, agent=None, name=None, priority=None, concurrency=None, created_at=None, updated_at=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        uuid=None,
+        agent=None,
+        name=None,
+        priority=None,
+        concurrency=None,
+        created_at=None,
+        updated_at=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1Queue - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -253,18 +263,20 @@ class V1Queue(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

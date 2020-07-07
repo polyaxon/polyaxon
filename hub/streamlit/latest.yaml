@@ -6,7 +6,9 @@ tags: ["notebook"]
 inputs:
 - name: app
   description: The entrypoint app to run
-  type: app.py
+  isOptional: true
+  value: app.py
+  type: str
 - name: context
   description: The directory containing the app, defaults to the whre
   isOptional: true

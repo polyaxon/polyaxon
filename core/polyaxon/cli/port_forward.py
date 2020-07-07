@@ -30,12 +30,12 @@ from polyaxon.utils.formatting import Printer
 )
 @click.option(
     "--namespace",
-    type=int,
+    type=str,
     help="The namespace used for deploying Polyaxon, default polyaxon.",
 )
 @click.option(
     "--release",
-    type=int,
+    type=str,
     help="The release name used for deploying Polyaxon, default polyaxon.",
 )
 @clean_outputs

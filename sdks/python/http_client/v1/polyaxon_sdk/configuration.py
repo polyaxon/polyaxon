@@ -33,9 +33,9 @@ import copy
 import logging
 import multiprocessing
 import sys
-import urllib3
 
 import six
+import urllib3
 from six.moves import http_client as httplib
 
 
@@ -91,11 +91,15 @@ conf = polyaxon_sdk.Configuration(
 
     _default = None
 
-    def __init__(self, host="http://localhost",
-                 api_key=None, api_key_prefix=None,
-                 username=None, password=None,
-                 discard_unknown_keys=False,
-                 ):
+    def __init__(
+        self,
+        host="http://localhost",
+        api_key=None,
+        api_key_prefix=None,
+        username=None,
+        password=None,
+        discard_unknown_keys=False,
+    ):
         """Constructor
         """
         self.host = host
@@ -130,7 +134,7 @@ conf = polyaxon_sdk.Configuration(
         """
         self.logger["package_logger"] = logging.getLogger("polyaxon_sdk")
         self.logger["urllib3_logger"] = logging.getLogger("urllib3")
-        self.logger_format = '%(asctime)s %(levelname)s %(message)s'
+        self.logger_format = "%(asctime)s %(levelname)s %(message)s"
         """Log format
         """
         self.logger_stream_handler = None
@@ -178,7 +182,7 @@ conf = polyaxon_sdk.Configuration(
         self.proxy_headers = None
         """Proxy headers
         """
-        self.safe_chars_for_path_param = ''
+        self.safe_chars_for_path_param = ""
         """Safe chars for path_param
         """
         self.retries = None
@@ -192,7 +196,7 @@ conf = polyaxon_sdk.Configuration(
         result = cls.__new__(cls)
         memo[id(self)] = result
         for k, v in self.__dict__.items():
-            if k not in ('logger', 'logger_file_handler'):
+            if k not in ("logger", "logger_file_handler"):
                 setattr(result, k, copy.deepcopy(v, memo))
         # shallow copy of loggers
         result.logger = copy.copy(self.logger)
@@ -341,9 +345,9 @@ conf = polyaxon_sdk.Configuration(
         password = ""
         if self.password is not None:
             password = self.password
-        return urllib3.util.make_headers(
-            basic_auth=username + ':' + password
-        ).get('authorization')
+        return urllib3.util.make_headers(basic_auth=username + ":" + password).get(
+            "authorization"
+        )
 
     def auth_settings(self):
         """Gets Auth Settings dict for api client.
@@ -351,12 +355,12 @@ conf = polyaxon_sdk.Configuration(
         :return: The Auth Settings information dict.
         """
         auth = {}
-        if 'Authorization' in self.api_key:
-            auth['ApiKey'] = {
-                'type': 'api_key',
-                'in': 'header',
-                'key': 'Authorization',
-                'value': self.get_api_key_with_prefix('Authorization')
+        if "Authorization" in self.api_key:
+            auth["ApiKey"] = {
+                "type": "api_key",
+                "in": "header",
+                "key": "Authorization",
+                "value": self.get_api_key_with_prefix("Authorization"),
             }
         return auth
 
@@ -365,24 +369,20 @@ conf = polyaxon_sdk.Configuration(
 
         :return: The report for debugging.
         """
-        return "Python SDK Debug Report:\n"\
-               "OS: {env}\n"\
-               "Python Version: {pyversion}\n"\
-               "Version of the API: 1.1.0\n"\
-               "SDK Package Version: 1.1.0".\
-               format(env=sys.platform, pyversion=sys.version)
+        return (
+            "Python SDK Debug Report:\n"
+            "OS: {env}\n"
+            "Python Version: {pyversion}\n"
+            "Version of the API: 1.1.0\n"
+            "SDK Package Version: 1.1.0".format(env=sys.platform, pyversion=sys.version)
+        )
 
     def get_host_settings(self):
         """Gets an array of host settings
 
         :return: An array of host settings
         """
-        return [
-            {
-                'url': "/",
-                'description': "No description provided",
-            }
-        ]
+        return [{"url": "/", "description": "No description provided",}]
 
     def get_host_from_settings(self, index, variables=None):
         """Gets host URL based on the index and variables
@@ -398,22 +398,22 @@ conf = polyaxon_sdk.Configuration(
         except IndexError:
             raise ValueError(
                 "Invalid index {0} when selecting the host settings. "
-                "Must be less than {1}".format(index, len(servers)))
+                "Must be less than {1}".format(index, len(servers))
+            )
 
-        url = server['url']
+        url = server["url"]
 
         # go through variables and replace placeholders
-        for variable_name, variable in server['variables'].items():
-            used_value = variables.get(
-                variable_name, variable['default_value'])
+        for variable_name, variable in server["variables"].items():
+            used_value = variables.get(variable_name, variable["default_value"])
 
-            if 'enum_values' in variable \
-                    and used_value not in variable['enum_values']:
+            if "enum_values" in variable and used_value not in variable["enum_values"]:
                 raise ValueError(
                     "The variable `{0}` in the host URL has invalid value "
                     "{1}. Must be {2}.".format(
-                        variable_name, variables[variable_name],
-                        variable['enum_values']))
+                        variable_name, variables[variable_name], variable["enum_values"]
+                    )
+                )
 
             url = url.replace("{" + variable_name + "}", used_value)
 

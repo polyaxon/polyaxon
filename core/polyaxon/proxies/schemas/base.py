@@ -31,4 +31,8 @@ def get_config(options, indent=0, **kwargs):
     for p in _options.split("\n"):
         config.append("{}{}".format(_get_indent(indent), p))
 
-    return "\n".join(config)
+    return clean_config(config)
+
+
+def clean_config(config):
+    return "\n".join(config).replace("    \n", "")

@@ -50,28 +50,39 @@ class V1Organization(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'user': 'str',
-        'user_email': 'str',
-        'name': 'str',
-        'is_public': 'bool',
-        'created_at': 'datetime',
-        'updated_at': 'datetime',
-        'role': 'str',
-        'settings': 'object'
+        "user": "str",
+        "user_email": "str",
+        "name": "str",
+        "is_public": "bool",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "role": "str",
+        "settings": "object",
     }
 
     attribute_map = {
-        'user': 'user',
-        'user_email': 'user_email',
-        'name': 'name',
-        'is_public': 'is_public',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at',
-        'role': 'role',
-        'settings': 'settings'
+        "user": "user",
+        "user_email": "user_email",
+        "name": "name",
+        "is_public": "is_public",
+        "created_at": "created_at",
+        "updated_at": "updated_at",
+        "role": "role",
+        "settings": "settings",
     }
 
-    def __init__(self, user=None, user_email=None, name=None, is_public=None, created_at=None, updated_at=None, role=None, settings=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        user=None,
+        user_email=None,
+        name=None,
+        is_public=None,
+        created_at=None,
+        updated_at=None,
+        role=None,
+        settings=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1Organization - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -279,18 +290,20 @@ class V1Organization(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

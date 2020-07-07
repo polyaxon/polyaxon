@@ -1,0 +1,23 @@
+name: Test hub
+
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    container: docker://polyaxon/polyaxon-cli:dev
+    strategy:
+      matrix:
+        component: [aws-cli, azure-cli, buildah, commuter, dockerizer, gcloud-cli, jupyter-lab, jupyter-notebook, kaniko, papermill, streamlit, tensorboard, vscode]
+
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - name: test
+        run: |
+          COMPONENTS=hub/${{ matrix.component }}/*.yaml
+          echo "checking components: $COMPONENTS"
+
+          for f in $COMPONENTS; do
+          echo "checking component: $f"
+          polyaxon check -f $f --spec-only
+          done

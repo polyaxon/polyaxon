@@ -30,6 +30,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_NGINX_TIMEOUT,
     POLYAXON_KEYS_PROXY_API_HOST,
     POLYAXON_KEYS_PROXY_API_PORT,
+    POLYAXON_KEYS_PROXY_API_USE_RESOLVER,
     POLYAXON_KEYS_PROXY_AUTH_ENABLED,
     POLYAXON_KEYS_PROXY_AUTH_EXTERNAL,
     POLYAXON_KEYS_PROXY_AUTH_USE_RESOLVER,
@@ -58,6 +59,9 @@ class ProxiesSchema(BaseSchema):
     )
     api_port = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_PORT)
     api_host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_HOST)
+    api_use_resolver = fields.Bool(
+        allow_none=True, data_key=POLYAXON_KEYS_PROXY_API_USE_RESOLVER
+    )
     services_port = fields.Str(
         allow_none=True, data_key=POLYAXON_KEYS_PROXY_SERVICES_PORT
     )
@@ -106,6 +110,7 @@ class ProxiesConfig(BaseConfig):
         POLYAXON_KEYS_PROXY_STREAMS_HOST,
         POLYAXON_KEYS_PROXY_API_PORT,
         POLYAXON_KEYS_PROXY_API_HOST,
+        POLYAXON_KEYS_PROXY_API_USE_RESOLVER,
         POLYAXON_KEYS_PROXY_SERVICES_PORT,
         POLYAXON_KEYS_PROXY_SSL_ENABLED,
         POLYAXON_KEYS_PROXY_SSL_PATH,
@@ -137,6 +142,7 @@ class ProxiesConfig(BaseConfig):
         streams_host=None,
         api_port=None,
         api_host=None,
+        api_use_resolver=None,
         services_port=None,
         dns_use_resolver=None,
         dns_custom_cluster=None,
@@ -161,6 +167,7 @@ class ProxiesConfig(BaseConfig):
         self.streams_host = streams_host or "polyaxon-polyaxon-streams"
         self.api_port = api_port or self.default_serving_port
         self.api_host = api_host or "polyaxon-polyaxon-api"
+        self.api_use_resolver = api_use_resolver or False
         self.services_port = services_port or self.default_serving_port
         self.dns_use_resolver = dns_use_resolver or False
         self.dns_custom_cluster = dns_custom_cluster or "cluster.local"

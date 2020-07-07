@@ -21,7 +21,7 @@ spec:
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}
-{{ include "config.sa" . | indent 6 }}
+{{ include "config.agent.sa" . | indent 6 }}
 {{ include "config.imagePullSecrets" . | indent 6}}
       restartPolicy: Never
       activeDeadlineSeconds: 360
@@ -29,6 +29,7 @@ spec:
       - name: clean-runs
         image: "{{ .Values.cleanHooks.image }}:{{ .Values.cleanHooks.imageTag }}"
         imagePullPolicy: {{ .Values.cleanHooks.imagePullPolicy }}
+        command: ["polyaxon"]
         args: ["clean-ops", "--namespace={{ .Values.namespace }}", "--in-cluster", "--delete"]
         envFrom:
 {{ include "config.envFrom.common" . | indent 8 }}

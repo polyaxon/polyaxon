@@ -35,10 +35,7 @@ import re  # noqa: F401
 import six
 
 from polyaxon_sdk.api_client import ApiClient
-from polyaxon_sdk.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from polyaxon_sdk.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class ConnectionsV1Api(object):
@@ -75,8 +72,10 @@ class ConnectionsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.create_connection_with_http_info(owner, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.create_connection_with_http_info(
+            owner, body, **kwargs
+        )  # noqa: E501
 
     def create_connection_with_http_info(self, owner, body, **kwargs):  # noqa: E501
         """Create connection  # noqa: E501
@@ -105,41 +104,46 @@ class ConnectionsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'body'
-        ]
+        all_params = ["owner", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_connection" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `create_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `create_connection`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `create_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `create_connection`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
 
@@ -149,34 +153,42 @@ class ConnectionsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/connections', 'POST',
+            "/api/v1/orgs/{owner}/connections",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ConnectionResponse',  # noqa: E501
+            response_type="V1ConnectionResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_connection(self, owner, uuid, **kwargs):  # noqa: E501
         """Delete connection  # noqa: E501
@@ -200,8 +212,10 @@ class ConnectionsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_connection_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.delete_connection_with_http_info(
+            owner, uuid, **kwargs
+        )  # noqa: E501
 
     def delete_connection_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
         """Delete connection  # noqa: E501
@@ -230,43 +244,48 @@ class ConnectionsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'uuid'
-        ]
+        all_params = ["owner", "uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_connection" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `delete_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `delete_connection`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `uuid` when calling `delete_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "uuid" not in local_var_params
+            or local_var_params["uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `uuid` when calling `delete_connection`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'uuid' in local_var_params:
-            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "uuid" in local_var_params:
+            path_params["uuid"] = local_var_params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -277,14 +296,16 @@ class ConnectionsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/connections/{uuid}', 'DELETE',
+            "/api/v1/orgs/{owner}/connections/{uuid}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -293,11 +314,14 @@ class ConnectionsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_connection(self, owner, uuid, **kwargs):  # noqa: E501
         """Get connection  # noqa: E501
@@ -321,7 +345,7 @@ class ConnectionsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.get_connection_with_http_info(owner, uuid, **kwargs)  # noqa: E501
 
     def get_connection_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
@@ -351,43 +375,48 @@ class ConnectionsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'uuid'
-        ]
+        all_params = ["owner", "uuid"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_connection" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `get_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `get_connection`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if self.api_client.client_side_validation and ('uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `uuid` when calling `get_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "uuid" not in local_var_params
+            or local_var_params["uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `uuid` when calling `get_connection`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'uuid' in local_var_params:
-            path_params['uuid'] = local_var_params['uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "uuid" in local_var_params:
+            path_params["uuid"] = local_var_params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -398,27 +427,32 @@ class ConnectionsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/connections/{uuid}', 'GET',
+            "/api/v1/orgs/{owner}/connections/{uuid}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ConnectionResponse',  # noqa: E501
+            response_type="V1ConnectionResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_connection_names(self, owner, **kwargs):  # noqa: E501
         """List connections names  # noqa: E501
@@ -445,7 +479,7 @@ class ConnectionsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_connection_names_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_connection_names_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -478,50 +512,56 @@ class ConnectionsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_connection_names" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_connection_names`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_connection_names`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -530,27 +570,32 @@ class ConnectionsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/connections/names', 'GET',
+            "/api/v1/orgs/{owner}/connections/names",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListConnectionsResponse',  # noqa: E501
+            response_type="V1ListConnectionsResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_connections(self, owner, **kwargs):  # noqa: E501
         """List connections  # noqa: E501
@@ -577,7 +622,7 @@ class ConnectionsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_connections_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_connections_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -610,50 +655,56 @@ class ConnectionsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_connections" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_connections`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_connections`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -662,27 +713,32 @@ class ConnectionsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/connections', 'GET',
+            "/api/v1/orgs/{owner}/connections",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListConnectionsResponse',  # noqa: E501
+            response_type="V1ListConnectionsResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def patch_connection(self, owner, connection_uuid, body, **kwargs):  # noqa: E501
         """Patch connection  # noqa: E501
@@ -707,10 +763,14 @@ class ConnectionsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.patch_connection_with_http_info(owner, connection_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.patch_connection_with_http_info(
+            owner, connection_uuid, body, **kwargs
+        )  # noqa: E501
 
-    def patch_connection_with_http_info(self, owner, connection_uuid, body, **kwargs):  # noqa: E501
+    def patch_connection_with_http_info(
+        self, owner, connection_uuid, body, **kwargs
+    ):  # noqa: E501
         """Patch connection  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -738,48 +798,58 @@ class ConnectionsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'connection_uuid',
-            'body'
-        ]
+        all_params = ["owner", "connection_uuid", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_connection" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `patch_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `patch_connection`"
+            )  # noqa: E501
         # verify the required parameter 'connection_uuid' is set
-        if self.api_client.client_side_validation and ('connection_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['connection_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `connection_uuid` when calling `patch_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "connection_uuid" not in local_var_params
+            or local_var_params["connection_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `connection_uuid` when calling `patch_connection`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `patch_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `patch_connection`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'connection_uuid' in local_var_params:
-            path_params['connection.uuid'] = local_var_params['connection_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "connection_uuid" in local_var_params:
+            path_params["connection.uuid"] = local_var_params[
+                "connection_uuid"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -789,34 +859,42 @@ class ConnectionsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/connections/{connection.uuid}', 'PATCH',
+            "/api/v1/orgs/{owner}/connections/{connection.uuid}",
+            "PATCH",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ConnectionResponse',  # noqa: E501
+            response_type="V1ConnectionResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def update_connection(self, owner, connection_uuid, body, **kwargs):  # noqa: E501
         """Update connection  # noqa: E501
@@ -841,10 +919,14 @@ class ConnectionsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.update_connection_with_http_info(owner, connection_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.update_connection_with_http_info(
+            owner, connection_uuid, body, **kwargs
+        )  # noqa: E501
 
-    def update_connection_with_http_info(self, owner, connection_uuid, body, **kwargs):  # noqa: E501
+    def update_connection_with_http_info(
+        self, owner, connection_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update connection  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -872,48 +954,58 @@ class ConnectionsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'connection_uuid',
-            'body'
-        ]
+        all_params = ["owner", "connection_uuid", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_connection" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `update_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `update_connection`"
+            )  # noqa: E501
         # verify the required parameter 'connection_uuid' is set
-        if self.api_client.client_side_validation and ('connection_uuid' not in local_var_params or  # noqa: E501
-                                                        local_var_params['connection_uuid'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `connection_uuid` when calling `update_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "connection_uuid" not in local_var_params
+            or local_var_params["connection_uuid"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `connection_uuid` when calling `update_connection`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `update_connection`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `update_connection`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'connection_uuid' in local_var_params:
-            path_params['connection.uuid'] = local_var_params['connection_uuid']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "connection_uuid" in local_var_params:
+            path_params["connection.uuid"] = local_var_params[
+                "connection_uuid"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -923,31 +1015,39 @@ class ConnectionsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/connections/{connection.uuid}', 'PUT',
+            "/api/v1/orgs/{owner}/connections/{connection.uuid}",
+            "PUT",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ConnectionResponse',  # noqa: E501
+            response_type="V1ConnectionResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

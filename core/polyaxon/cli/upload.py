@@ -28,4 +28,6 @@ def upload():  # pylint:disable=assign-to-new-keyword
 
     > **Note**: Please note that this command has been temporarily disabled.
     """
-    Printer.print_warning("Please note that this command has been temporarily disabled.")
+    Printer.print_warning(
+        "Please note that this command has been temporarily disabled."
+    )

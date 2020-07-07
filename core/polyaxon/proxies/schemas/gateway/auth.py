@@ -17,7 +17,7 @@
 from polyaxon import settings
 from polyaxon.api import AUTH_V1
 from polyaxon.proxies.schemas.base import get_config
-from polyaxon.proxies.schemas.gateway.urls import get_service_url
+from polyaxon.proxies.schemas.gateway.urls import get_service_url, get_ssl_server_name
 
 AUTH_API = "/" + AUTH_V1 + "/"
 
@@ -38,6 +38,7 @@ def get_auth_config():
 AUTH_LOCATION_CONFIG = """
 location = {auth_api} {{
     {resolver}
+    {ssl_server_name}
     proxy_pass {service};
     proxy_pass_request_body off;
     proxy_set_header Content-Length "";
@@ -63,4 +64,5 @@ def get_auth_location_config(resolver: str):
         service=service,
         auth_api=AUTH_API,
         resolver=resolver,
+        ssl_server_name=get_ssl_server_name(service),
     )

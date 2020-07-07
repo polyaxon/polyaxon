@@ -23,7 +23,6 @@ SERVICES_V1 = "services/{}".format(VERSION_V1)
 REWRITE_SERVICES_V1 = "rewrite-services/{}".format(VERSION_V1)
 WS_V1 = "ws/{}".format(VERSION_V1)
 AUTH_V1 = "auth/{}".format(VERSION_V1)
-POLYAXON_CLOUD = "cloud.polyaxon.com"
 POLYAXON_CLOUD_HOST = "https://cloud.polyaxon.com"
 POLYAXON_VERSIONS_HOST = "https://versions.polyaxon.com/?v={}".format(pkg.VERSION)
 REGISTER = (

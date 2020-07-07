@@ -47,11 +47,21 @@ from polyaxon.utils.formatting import Printer
     multiple=True,
     help="A parameter to override the default params of the run, form -P name=value.",
 )
+@click.option(
+    "--spec-only",
+    "-so",
+    is_flag=True,
+    default=False,
+    help="To check the specification only without params validation.",
+)
 @clean_outputs
-def check(polyaxonfile, python_module, version, params):
+def check(polyaxonfile, python_module, version, params, spec_only):
     """Check a polyaxonfile."""
     specification = check_polyaxonfile(
-        polyaxonfile=polyaxonfile, python_module=python_module, params=params
+        polyaxonfile=polyaxonfile,
+        python_module=python_module,
+        params=params,
+        validate_params=not spec_only
     )
 
     if version:

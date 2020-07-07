@@ -31,12 +31,12 @@ Starting with Jenkins Pipeline versions 2.5 and higher, Jenkins Pipeline has bui
 ```json
 pipeline {
     agent {
-        docker { image 'polyaxon:polyaxon-cli' }
+        docker { image 'polyaxon:polyaxon-cli:1.1.2' }
     }
     stages {
         stage('Submit') {
             steps {
-                sh 'run -f path/to/polyaxonfile'
+                sh 'polyaxon run -f path/to/polyaxonfile'
             }
         }
     }

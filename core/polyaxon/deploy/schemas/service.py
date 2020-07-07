@@ -483,7 +483,7 @@ class ExternalService(BaseConfig):
         "database",
         "usePassword",
         "connMaxAge",
-        "pgbouncer"
+        "pgbouncer",
     ]
 
     def __init__(

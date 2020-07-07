@@ -14,12 +14,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.api import POLYAXON_CLOUD, POLYAXON_CLOUD_HOST
+from urllib.parse import urlparse
 
 
-def get_service_url(host, port):
-    if host == POLYAXON_CLOUD:
-        return POLYAXON_CLOUD_HOST
-    if port in {80, 443}:
+def get_service_url(host: str, port: int):
+    if port == 80:
         return "http://{}".format(host)
+    if port == 443:
+        return "https://{}".format(host)
     return "http://{}:{}".format(host, port)
+
+
+def has_https(url: str):
+    return "https" in url
+
+
+def get_ssl_server_name(url: str):
+    if has_https(url):
+        return "proxy_ssl_server_name on;"
+    return ""
+
+
+def get_header_host(url: str):
+    if has_https(url):
+        return "proxy_set_header Host {};".format(urlparse(url).netloc.split(":")[0])
+    return "proxy_set_header Host $http_host;"

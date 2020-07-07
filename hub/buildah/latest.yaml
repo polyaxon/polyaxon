@@ -15,13 +15,16 @@ inputs:
   value: overlay
 - name: dockerfile
   description: Path to the Dockerfile to build.
-  default: Dockerfile
+  isOptional: true
+  value: Dockerfile
 - name: tls_verify
   description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
-  default: "true"
+  isOptional: true
+  value: "true"
 - name: format
   description: The format of the built container, oci or docker
-  default: "oci"
+  isOptional: true
+  value: "oci"
 
 outputs:
 - name: destination
@@ -40,7 +43,7 @@ run:
     image: quay.io/buildah/stable:latest
     args: [
       "buildah --storage-driver={{ storage_drive }} bud --format={{ format }} --tls-verify={{ tls-verify }} --no-cache -f ./{{ dockerfile }} -t {{ destination.name }} .",
-      "buildah --storage-driver={{ storage_drive }} push --tls-verify={{ tls-verify }} --digestfile ./image-digest {{ destination.name }} docker://{{ destination.name }}"]
+      "buildah --storage-driver={{ storage_drive }} push --tls-verify={{ tls-verify }} --digestfile ./image-digest {{ destination.name }} docker://{{ destination.name }}"
     ]
     workingDir: "{{ context or globals.artifacts_path }}"
     volumeMounts:

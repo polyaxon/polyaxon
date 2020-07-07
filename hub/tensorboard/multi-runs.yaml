@@ -16,7 +16,7 @@ run:
   kind: service
   ports: [6006]
   init:
-    - artifacts: {"dirs":  "{{ uuids | map('map_format', '%s/outputs') | list }}"}
+    - artifacts: {"dirs":  '{{ uuids | map("map_format", "%s/outputs") | list }}'}
   container:
     image: "{{ image }}"
     command: ["tensorboard"]

@@ -79,6 +79,7 @@ def check_polyaxonfile(
     eager_hub: bool = True,
     is_cli: bool = True,
     to_op: bool = True,
+    validate_params: bool = True,
 ):
     if sum([1 for i in [polyaxonfile, python_module, url, hub] if i]) > 1:
         message = (
@@ -156,6 +157,7 @@ def check_polyaxonfile(
                 queue=queue,
                 nocache=nocache,
                 path_context=path_context,
+                validate_params=validate_params,
             )
         if log and not is_cli:
             Printer.print_success("Polyaxonfile valid")

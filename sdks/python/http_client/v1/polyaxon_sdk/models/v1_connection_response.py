@@ -50,32 +50,45 @@ class V1ConnectionResponse(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'uuid': 'str',
-        'name': 'str',
-        'description': 'str',
-        'tags': 'list[str]',
-        'created_at': 'datetime',
-        'updated_at': 'datetime',
-        'frozen': 'bool',
-        'disabled': 'bool',
-        'deleted': 'bool',
-        'kind': 'V1ConnectionKind'
+        "uuid": "str",
+        "name": "str",
+        "description": "str",
+        "tags": "list[str]",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "frozen": "bool",
+        "disabled": "bool",
+        "deleted": "bool",
+        "kind": "V1ConnectionKind",
     }
 
     attribute_map = {
-        'uuid': 'uuid',
-        'name': 'name',
-        'description': 'description',
-        'tags': 'tags',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at',
-        'frozen': 'frozen',
-        'disabled': 'disabled',
-        'deleted': 'deleted',
-        'kind': 'kind'
+        "uuid": "uuid",
+        "name": "name",
+        "description": "description",
+        "tags": "tags",
+        "created_at": "created_at",
+        "updated_at": "updated_at",
+        "frozen": "frozen",
+        "disabled": "disabled",
+        "deleted": "deleted",
+        "kind": "kind",
     }
 
-    def __init__(self, uuid=None, name=None, description=None, tags=None, created_at=None, updated_at=None, frozen=None, disabled=None, deleted=None, kind=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        uuid=None,
+        name=None,
+        description=None,
+        tags=None,
+        created_at=None,
+        updated_at=None,
+        frozen=None,
+        disabled=None,
+        deleted=None,
+        kind=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1ConnectionResponse - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -331,18 +344,20 @@ class V1ConnectionResponse(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

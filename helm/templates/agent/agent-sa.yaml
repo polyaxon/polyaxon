@@ -1,0 +1,106 @@
+{{- if and .Values.rbac.enabled (or .Values.agent.enabled (not .Values.organizationKey)) }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-agent-sa
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-sa
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreConfig" . | indent 4 }}
+{{- if .Values.rbac.enabled }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-agent-clusterrole
+  labels:
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-clusterrole
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreConfig" . | indent 4 }}
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["watch", "list", "patch"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods", "nodes"]
+    verbs: ["get", "list"]
+  - nonResourceURLs:
+    - /version/
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-agent-role
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-role
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreConfig" . | indent 4 }}
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "batch"]
+    verbs: ["get", "watch", "list", "create", "delete", "patch"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["get", "watch", "list", "create", "delete", "patch"]
+  - apiGroups: [""]
+    resources: ["configmaps", "secrets"]
+    verbs: ["get", "update", "patch", "create", "delete"]
+  - apiGroups: ["", "apps", "extensions"]
+    resources: ["services", "deployments", "replicasets"]
+    verbs: ["get", "create", "patch", "delete", "list"]
+  - apiGroups: ["", "extensions"]
+    resources: ["ingresses"]
+    verbs: ["get", "create", "patch", "delete", "list"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods", "nodes", "apis"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["", "*"]
+    resources: ["events", "pods/status", "pods/log"]
+    verbs: ["watch", "get", "list"]
+  - apiGroups: ["core.polyaxon.com"]
+    resources: ["operations"]
+    verbs: ["get", "watch", "list", "create", "delete", "patch"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["get", "watch", "list", "create", "delete", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-agent-role-binding
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-role-binding
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreConfig" . | indent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "polyaxon.fullname" . }}-agent-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "polyaxon.fullname" . }}-agent-sa
+    namespace: {{ .Values.namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-agent-clusterrole-binding
+  labels:
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-clusterrole-binding
+{{ include "config.labels.common" . | indent 4 }}
+{{ include "config.labels.roles.coreConfig" . | indent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ template "polyaxon.fullname" . }}-agent-clusterrole
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "polyaxon.fullname" . }}-agent-sa
+    namespace: {{ .Values.namespace }}
+{{- end }}
+{{- end }}

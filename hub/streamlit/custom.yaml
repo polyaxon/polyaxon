@@ -9,8 +9,10 @@ inputs:
   type: str
   value: polyaxon/polyaxon-contrib
 - name: app
+  type: str
   description: The entrypoint app to run
-  type: app.py
+  isOptional: true
+  value: app.py
 - name: context
   description: The directory containing the app, defaults to the whre
   isOptional: true

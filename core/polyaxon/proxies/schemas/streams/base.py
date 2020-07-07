@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from polyaxon import settings
+from polyaxon.proxies.schemas.base import clean_config
 from polyaxon.proxies.schemas.buffering import get_buffering_config
 from polyaxon.proxies.schemas.charset import get_charset_config
 from polyaxon.proxies.schemas.error_page import get_error_page_config
@@ -41,4 +42,4 @@ def get_base_config():
         get_streams_locations_config(),
     ]
 
-    return "\n".join(config)
+    return clean_config(config)

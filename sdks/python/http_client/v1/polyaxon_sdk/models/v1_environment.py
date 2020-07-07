@@ -50,46 +50,66 @@ class V1Environment(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'labels': 'dict(str, str)',
-        'annotations': 'dict(str, str)',
-        'node_selector': 'dict(str, str)',
-        'affinity': 'V1Affinity',
-        'tolerations': 'list[V1Toleration]',
-        'node_name': 'str',
-        'service_account_name': 'str',
-        'host_aliases': 'list[V1HostAlias]',
-        'security_context': 'V1PodSecurityContext',
-        'image_pull_secrets': 'list[str]',
-        'host_network': 'bool',
-        'dns_policy': 'str',
-        'dns_config': 'V1PodDNSConfig',
-        'scheduler_name': 'str',
-        'priority_class_name': 'str',
-        'priority': 'int',
-        'restart_policy': 'str'
+        "labels": "dict(str, str)",
+        "annotations": "dict(str, str)",
+        "node_selector": "dict(str, str)",
+        "affinity": "V1Affinity",
+        "tolerations": "list[V1Toleration]",
+        "node_name": "str",
+        "service_account_name": "str",
+        "host_aliases": "list[V1HostAlias]",
+        "security_context": "V1PodSecurityContext",
+        "image_pull_secrets": "list[str]",
+        "host_network": "bool",
+        "dns_policy": "str",
+        "dns_config": "V1PodDNSConfig",
+        "scheduler_name": "str",
+        "priority_class_name": "str",
+        "priority": "int",
+        "restart_policy": "str",
     }
 
     attribute_map = {
-        'labels': 'labels',
-        'annotations': 'annotations',
-        'node_selector': 'node_selector',
-        'affinity': 'affinity',
-        'tolerations': 'tolerations',
-        'node_name': 'node_name',
-        'service_account_name': 'service_account_name',
-        'host_aliases': 'host_aliases',
-        'security_context': 'security_context',
-        'image_pull_secrets': 'image_pull_secrets',
-        'host_network': 'host_network',
-        'dns_policy': 'dns_policy',
-        'dns_config': 'dns_config',
-        'scheduler_name': 'scheduler_name',
-        'priority_class_name': 'priority_class_name',
-        'priority': 'priority',
-        'restart_policy': 'restart_policy'
+        "labels": "labels",
+        "annotations": "annotations",
+        "node_selector": "node_selector",
+        "affinity": "affinity",
+        "tolerations": "tolerations",
+        "node_name": "node_name",
+        "service_account_name": "service_account_name",
+        "host_aliases": "host_aliases",
+        "security_context": "security_context",
+        "image_pull_secrets": "image_pull_secrets",
+        "host_network": "host_network",
+        "dns_policy": "dns_policy",
+        "dns_config": "dns_config",
+        "scheduler_name": "scheduler_name",
+        "priority_class_name": "priority_class_name",
+        "priority": "priority",
+        "restart_policy": "restart_policy",
     }
 
-    def __init__(self, labels=None, annotations=None, node_selector=None, affinity=None, tolerations=None, node_name=None, service_account_name=None, host_aliases=None, security_context=None, image_pull_secrets=None, host_network=None, dns_policy=None, dns_config=None, scheduler_name=None, priority_class_name=None, priority=None, restart_policy=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        labels=None,
+        annotations=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        node_name=None,
+        service_account_name=None,
+        host_aliases=None,
+        security_context=None,
+        image_pull_secrets=None,
+        host_network=None,
+        dns_policy=None,
+        dns_config=None,
+        scheduler_name=None,
+        priority_class_name=None,
+        priority=None,
+        restart_policy=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1Environment - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -527,18 +547,20 @@ class V1Environment(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

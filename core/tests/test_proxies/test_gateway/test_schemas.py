@@ -104,8 +104,6 @@ class TestGatewayServicesSchemas(BaseTestCase):
         settings.PROXIES_CONFIG.auth_enabled = False
         expected = """
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
-    
     proxy_pass http://plx-operation-$4.$1.svc.cluster.local;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -126,7 +124,6 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
 
         expected = """
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -159,7 +156,6 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
         settings.PROXIES_CONFIG.dns_use_resolver = True
         expected = """
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     resolver kube-dns.kube-system.svc.cluster.local valid=5s;
     proxy_pass http://plx-operation-$4.$1.svc.cluster.local;
     proxy_http_version 1.1;
@@ -182,7 +178,6 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
 
         expected = """
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -214,7 +209,6 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
         settings.PROXIES_CONFIG.dns_use_resolver = True
         expected = """
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -243,7 +237,6 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
 
         expected = """
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -279,8 +272,6 @@ class TestGatewayRewriteServicesSchemas(BaseTestCase):
         settings.PROXIES_CONFIG.auth_enabled = False
         expected = """
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
-    
     rewrite_log on;
     rewrite ^/rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
     proxy_pass http://plx-operation-$4.$1.svc.cluster.local;
@@ -303,7 +294,6 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
 
         expected = """
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -338,7 +328,6 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
         settings.PROXIES_CONFIG.dns_use_resolver = True
         expected = """
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     resolver kube-dns.kube-system.svc.cluster.local valid=5s;
     rewrite_log on;
     rewrite ^/rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
@@ -363,7 +352,6 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
 
         expected = """
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -397,7 +385,6 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
         settings.PROXIES_CONFIG.dns_use_resolver = True
         expected = """
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -428,7 +415,6 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
 
         expected = """
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -481,8 +467,6 @@ class TestGatewayPluginsSchemas(BaseTestCase):
         proxy_services = {"tensorboard": {"port": 6006}, "notebook": {"port": 8888}}
         expected = """
 location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
-    
-    
     rewrite_log on;
     rewrite ^/tensorboard/proxy/([-_.:\w]+)/(.*) /tensorboard/proxy/$1/$2 break;
     proxy_pass http://$1:6006;
@@ -496,8 +480,6 @@ location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
 
 
 location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
-    
-    
     rewrite_log on;
     rewrite ^/notebook/proxy/([-_.:\w]+)/(.*) /notebook/proxy/$1/$2 break;
     proxy_pass http://$1:8888;
@@ -522,7 +504,6 @@ location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
 
         expected = """
 location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -540,7 +521,6 @@ location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
 
 
 location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -578,7 +558,6 @@ location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
         settings.PROXIES_CONFIG.dns_use_resolver = True
         expected = """
 location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
-    
     resolver kube-dns.kube-system.svc.cluster.local valid=5s;
     rewrite_log on;
     rewrite ^/tensorboard/proxy/([-_.:\w]+)/(.*) /tensorboard/proxy/$1/$2 break;
@@ -593,7 +572,6 @@ location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
 
 
 location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
-    
     resolver kube-dns.kube-system.svc.cluster.local valid=5s;
     rewrite_log on;
     rewrite ^/notebook/proxy/([-_.:\w]+)/(.*) /notebook/proxy/$1/$2 break;
@@ -620,7 +598,6 @@ location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
 
         expected = """
 location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -638,7 +615,6 @@ location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
 
 
 location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -675,7 +651,6 @@ location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
         settings.PROXIES_CONFIG.dns_use_resolver = True
         expected = """
 location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -693,7 +668,6 @@ location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
 
 
 location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -726,7 +700,6 @@ location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
 
         expected = """
 location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -744,7 +717,6 @@ location ~ /tensorboard/proxy/([-_.:\w]+)/(.*) {
 
 
 location ~ /notebook/proxy/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -783,8 +755,6 @@ class TestGatewaySTreamsSchemas(BaseTestCase):
     def test_streams_location_with_auth_config(self):
         expected = """
 location /streams/ {
-    
-    
     proxy_pass http://polyaxon-polyaxon-streams;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -803,11 +773,9 @@ location /streams/ {
         settings.PROXIES_CONFIG.streams_host = "foo"
         expected = """
 location /streams/ {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
-    
     proxy_pass http://foo:8888;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -827,7 +795,6 @@ location /streams/ {
         settings.PROXIES_CONFIG.dns_use_resolver = True
         expected = """
 location /streams/ {
-    
     resolver coredns.kube-system.svc.cluster.local valid=5s;
     proxy_pass http://polyaxon-polyaxon-streams;
     proxy_http_version 1.1;
@@ -847,7 +814,6 @@ location /streams/ {
 
         expected = """
 location /streams/ {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -880,15 +846,13 @@ class TestGatewayApiSchemas(BaseTestCase):
     def test_api_location_config(self):
         expected = """
 location / {
-    
-    
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
     proxy_set_header Origin "";
-    proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
     proxy_buffering off;
 }
 """  # noqa
@@ -898,15 +862,30 @@ location / {
         settings.PROXIES_CONFIG.api_host = "foo"
         expected = """
 location / {
-    
-    
     proxy_pass http://foo:8888;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
     proxy_set_header Origin "";
-    proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+"""  # noqa
+        assert get_api_location_config(resolver="") == expected
+
+        settings.PROXIES_CONFIG.api_port = 443
+        settings.PROXIES_CONFIG.api_host = "polyaxon.foo.com"
+        expected = """
+location / {
+    proxy_ssl_server_name on;
+    proxy_pass https://polyaxon.foo.com;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
     proxy_buffering off;
 }
 """  # noqa
@@ -929,7 +908,6 @@ location / {
         settings.PROXIES_CONFIG.auth_enabled = True
         expected = """
 location = /auth/v1/ {
-    
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_pass_request_body off;
     proxy_set_header Content-Length "";
@@ -952,7 +930,6 @@ location = /auth/v1/ {
 
         expected = """
 location = /auth/v1/ {
-    
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_pass_request_body off;
     proxy_set_header Content-Length "";
@@ -990,7 +967,7 @@ location = /auth/v1/ {
         settings.PROXIES_CONFIG.auth_external = "https://cloud.polyaxon.com"
         expected = """
 location = /auth/v1/ {
-    
+    proxy_ssl_server_name on;
     proxy_pass https://cloud.polyaxon.com;
     proxy_pass_request_body off;
     proxy_set_header Content-Length "";
@@ -1013,7 +990,7 @@ location = /auth/v1/ {
 
         expected = """
 location = /auth/v1/ {
-    
+    proxy_ssl_server_name on;
     proxy_pass https://cloud.polyaxon.com;
     proxy_pass_request_body off;
     proxy_set_header Content-Length "";

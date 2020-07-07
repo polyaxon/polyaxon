@@ -70,8 +70,6 @@ location /healthz/ {
 
 
 location /streams/ {
-    
-    
     proxy_pass http://polyaxon-polyaxon-streams;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -84,8 +82,6 @@ location /streams/ {
 
 
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
-    
     proxy_pass http://plx-operation-$4.$1.svc.cluster.local;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -99,8 +95,6 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
 
 
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
-    
     rewrite_log on;
     rewrite ^/rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) /$5 break;
     proxy_pass http://plx-operation-$4.$1.svc.cluster.local;
@@ -116,15 +110,13 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
 
 
 location / {
-    
-    
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
     proxy_set_header Origin "";
-    proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
     proxy_buffering off;
 }
 """  # noqa
@@ -190,7 +182,6 @@ location = /auth/v1/ {
 
 
 location /streams/ {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -207,7 +198,6 @@ location /streams/ {
 
 
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -225,7 +215,6 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
 
 
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {
-    
     auth_request     /auth/v1/;
     auth_request_set $auth_status $upstream_status;
 
@@ -245,20 +234,20 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
 
 
 location / {
-    
     resolver coredns.kube-system.svc.cluster.local valid=5s;
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
     proxy_set_header Origin "";
-    proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
     proxy_buffering off;
 }
 """  # noqa
         settings.PROXIES_CONFIG.auth_enabled = True
         settings.PROXIES_CONFIG.auth_use_resolver = True
+        settings.PROXIES_CONFIG.api_use_resolver = True
         settings.PROXIES_CONFIG.dns_use_resolver = True
         settings.PROXIES_CONFIG.dns_prefix = "coredns.kube-system"
         settings.PROXIES_CONFIG.dns_custom_cluster = "cluster.local"

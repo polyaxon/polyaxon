@@ -16,19 +16,24 @@
 
 from polyaxon import settings
 from polyaxon.proxies.schemas.base import get_config
-from polyaxon.proxies.schemas.gateway.urls import get_service_url
+from polyaxon.proxies.schemas.gateway.urls import (
+    get_header_host,
+    get_service_url,
+    get_ssl_server_name,
+)
 
 OPTIONS = """
 location / {{
     {auth}
     {resolver}
+    {ssl_server_name}
     proxy_pass {service};
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
     proxy_set_header Origin "";
-    proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
+    {header_host}
     proxy_buffering off;
 }}
 """  # noqa
@@ -38,6 +43,15 @@ def get_api_location_config(resolver: str, auth=str):
     service = get_service_url(
         host=settings.PROXIES_CONFIG.api_host, port=settings.PROXIES_CONFIG.api_port,
     )
+    if not settings.PROXIES_CONFIG.api_use_resolver:
+        resolver = ""
     if not settings.PROXIES_CONFIG.auth_external:
         auth = ""
-    return get_config(options=OPTIONS, service=service, resolver=resolver, auth=auth)
+    return get_config(
+        options=OPTIONS,
+        service=service,
+        resolver=resolver,
+        auth=auth,
+        ssl_server_name=get_ssl_server_name(service),
+        header_host=get_header_host(service),
+    )

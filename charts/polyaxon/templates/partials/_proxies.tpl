@@ -25,6 +25,14 @@ Proxies apis
 {{- end }}
 {{- end -}}
 
+{{- define "proxies.api.useResolver" -}}
+{{- if .Values.api.enabled }}
+{{- default "false" .Values.api.useResolver -}}
+{{- else }}
+{{- default "false" .Values.externalServices.api.useResolver -}}
+{{- end }}
+{{- end -}}
+
 {{- define "proxies.streams.host" -}}
 {{- template "polyaxon.fullname" . }}-streams
 {{- end -}}

@@ -38,6 +38,6 @@ run:
       "{{ nb_input }}",
       "{{ nb_output }}",
       "{{ ('-f ' + parameters_file) if parameters_file else '' }}",
-      "{{ ('-y "' + parameters_yaml + '"') if parameters_yaml else '' }}",
-      "{{ ('-b ' + parameters_base64 ) if parameters_base64 else '' }}",
+      "{{ ('-y ' + parameters_yaml) if parameters_yaml else '' }}",
+      "{{ ('-b ' + parameters_base64) if parameters_base64 else '' }}",
     ]

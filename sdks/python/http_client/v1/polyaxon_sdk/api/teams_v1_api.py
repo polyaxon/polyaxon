@@ -35,10 +35,7 @@ import re  # noqa: F401
 import six
 
 from polyaxon_sdk.api_client import ApiClient
-from polyaxon_sdk.exceptions import (  # noqa: F401
-    ApiTypeError,
-    ApiValueError
-)
+from polyaxon_sdk.exceptions import ApiTypeError, ApiValueError  # noqa: F401
 
 
 class TeamsV1Api(object):
@@ -75,7 +72,7 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.create_team_with_http_info(owner, body, **kwargs)  # noqa: E501
 
     def create_team_with_http_info(self, owner, body, **kwargs):  # noqa: E501
@@ -105,41 +102,46 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'body'
-        ]
+        all_params = ["owner", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_team" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `create_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `create_team`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `create_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `create_team`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
 
@@ -149,34 +151,42 @@ class TeamsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams', 'POST',
+            "/api/v1/orgs/{owner}/teams",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Team',  # noqa: E501
+            response_type="V1Team",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def create_team_member(self, owner, team, body, **kwargs):  # noqa: E501
         """Create team member  # noqa: E501
@@ -201,10 +211,14 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.create_team_member_with_http_info(owner, team, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.create_team_member_with_http_info(
+            owner, team, body, **kwargs
+        )  # noqa: E501
 
-    def create_team_member_with_http_info(self, owner, team, body, **kwargs):  # noqa: E501
+    def create_team_member_with_http_info(
+        self, owner, team, body, **kwargs
+    ):  # noqa: E501
         """Create team member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -232,48 +246,56 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team',
-            'body'
-        ]
+        all_params = ["owner", "team", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_team_member" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `create_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `create_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'team' is set
-        if self.api_client.client_side_validation and ('team' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team` when calling `create_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team" not in local_var_params
+            or local_var_params["team"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team` when calling `create_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `create_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `create_team_member`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team' in local_var_params:
-            path_params['team'] = local_var_params['team']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team" in local_var_params:
+            path_params["team"] = local_var_params["team"]  # noqa: E501
 
         query_params = []
 
@@ -283,34 +305,42 @@ class TeamsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team}/members', 'POST',
+            "/api/v1/orgs/{owner}/teams/{team}/members",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1TeamMember',  # noqa: E501
+            response_type="V1TeamMember",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_team(self, owner, team, **kwargs):  # noqa: E501
         """Delete team  # noqa: E501
@@ -334,7 +364,7 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.delete_team_with_http_info(owner, team, **kwargs)  # noqa: E501
 
     def delete_team_with_http_info(self, owner, team, **kwargs):  # noqa: E501
@@ -364,43 +394,48 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team'
-        ]
+        all_params = ["owner", "team"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_team" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `delete_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `delete_team`"
+            )  # noqa: E501
         # verify the required parameter 'team' is set
-        if self.api_client.client_side_validation and ('team' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team` when calling `delete_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team" not in local_var_params
+            or local_var_params["team"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team` when calling `delete_team`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team' in local_var_params:
-            path_params['team'] = local_var_params['team']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team" in local_var_params:
+            path_params["team"] = local_var_params["team"]  # noqa: E501
 
         query_params = []
 
@@ -411,14 +446,16 @@ class TeamsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team}', 'DELETE',
+            "/api/v1/orgs/{owner}/teams/{team}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -427,11 +464,14 @@ class TeamsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_team_member(self, owner, team, user, **kwargs):  # noqa: E501
         """Delete team member details  # noqa: E501
@@ -456,10 +496,14 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_team_member_with_http_info(owner, team, user, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.delete_team_member_with_http_info(
+            owner, team, user, **kwargs
+        )  # noqa: E501
 
-    def delete_team_member_with_http_info(self, owner, team, user, **kwargs):  # noqa: E501
+    def delete_team_member_with_http_info(
+        self, owner, team, user, **kwargs
+    ):  # noqa: E501
         """Delete team member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -487,50 +531,58 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team',
-            'user'
-        ]
+        all_params = ["owner", "team", "user"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_team_member" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `delete_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `delete_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'team' is set
-        if self.api_client.client_side_validation and ('team' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team` when calling `delete_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team" not in local_var_params
+            or local_var_params["team"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team` when calling `delete_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'user' is set
-        if self.api_client.client_side_validation and ('user' not in local_var_params or  # noqa: E501
-                                                        local_var_params['user'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `user` when calling `delete_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "user" not in local_var_params
+            or local_var_params["user"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `user` when calling `delete_team_member`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team' in local_var_params:
-            path_params['team'] = local_var_params['team']  # noqa: E501
-        if 'user' in local_var_params:
-            path_params['user'] = local_var_params['user']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team" in local_var_params:
+            path_params["team"] = local_var_params["team"]  # noqa: E501
+        if "user" in local_var_params:
+            path_params["user"] = local_var_params["user"]  # noqa: E501
 
         query_params = []
 
@@ -541,14 +593,16 @@ class TeamsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team}/members/{user}', 'DELETE',
+            "/api/v1/orgs/{owner}/teams/{team}/members/{user}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -557,11 +611,14 @@ class TeamsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_team(self, owner, team, **kwargs):  # noqa: E501
         """Get team  # noqa: E501
@@ -585,7 +642,7 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.get_team_with_http_info(owner, team, **kwargs)  # noqa: E501
 
     def get_team_with_http_info(self, owner, team, **kwargs):  # noqa: E501
@@ -615,43 +672,48 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team'
-        ]
+        all_params = ["owner", "team"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_team" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `get_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `get_team`"
+            )  # noqa: E501
         # verify the required parameter 'team' is set
-        if self.api_client.client_side_validation and ('team' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team` when calling `get_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team" not in local_var_params
+            or local_var_params["team"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team` when calling `get_team`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team' in local_var_params:
-            path_params['team'] = local_var_params['team']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team" in local_var_params:
+            path_params["team"] = local_var_params["team"]  # noqa: E501
 
         query_params = []
 
@@ -662,27 +724,32 @@ class TeamsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team}', 'GET',
+            "/api/v1/orgs/{owner}/teams/{team}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Team',  # noqa: E501
+            response_type="V1Team",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_team_member(self, owner, team, user, **kwargs):  # noqa: E501
         """Get team member details  # noqa: E501
@@ -707,8 +774,10 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.get_team_member_with_http_info(owner, team, user, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.get_team_member_with_http_info(
+            owner, team, user, **kwargs
+        )  # noqa: E501
 
     def get_team_member_with_http_info(self, owner, team, user, **kwargs):  # noqa: E501
         """Get team member details  # noqa: E501
@@ -738,50 +807,58 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team',
-            'user'
-        ]
+        all_params = ["owner", "team", "user"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_team_member" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `get_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `get_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'team' is set
-        if self.api_client.client_side_validation and ('team' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team` when calling `get_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team" not in local_var_params
+            or local_var_params["team"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team` when calling `get_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'user' is set
-        if self.api_client.client_side_validation and ('user' not in local_var_params or  # noqa: E501
-                                                        local_var_params['user'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `user` when calling `get_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "user" not in local_var_params
+            or local_var_params["user"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `user` when calling `get_team_member`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team' in local_var_params:
-            path_params['team'] = local_var_params['team']  # noqa: E501
-        if 'user' in local_var_params:
-            path_params['user'] = local_var_params['user']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team" in local_var_params:
+            path_params["team"] = local_var_params["team"]  # noqa: E501
+        if "user" in local_var_params:
+            path_params["user"] = local_var_params["user"]  # noqa: E501
 
         query_params = []
 
@@ -792,27 +869,32 @@ class TeamsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team}/members/{user}', 'GET',
+            "/api/v1/orgs/{owner}/teams/{team}/members/{user}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1TeamMember',  # noqa: E501
+            response_type="V1TeamMember",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_team_members(self, owner, team, **kwargs):  # noqa: E501
         """Get team members  # noqa: E501
@@ -840,8 +922,10 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.list_team_members_with_http_info(owner, team, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.list_team_members_with_http_info(
+            owner, team, **kwargs
+        )  # noqa: E501
 
     def list_team_members_with_http_info(self, owner, team, **kwargs):  # noqa: E501
         """Get team members  # noqa: E501
@@ -874,57 +958,66 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "team", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_team_members" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_team_members`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_team_members`"
+            )  # noqa: E501
         # verify the required parameter 'team' is set
-        if self.api_client.client_side_validation and ('team' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team` when calling `list_team_members`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team" not in local_var_params
+            or local_var_params["team"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team` when calling `list_team_members`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team' in local_var_params:
-            path_params['team'] = local_var_params['team']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team" in local_var_params:
+            path_params["team"] = local_var_params["team"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -933,27 +1026,32 @@ class TeamsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team}/members', 'GET',
+            "/api/v1/orgs/{owner}/teams/{team}/members",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListTeamMembersResponse',  # noqa: E501
+            response_type="V1ListTeamMembersResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_team_names(self, owner, **kwargs):  # noqa: E501
         """List teams names  # noqa: E501
@@ -980,7 +1078,7 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_team_names_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_team_names_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -1013,50 +1111,56 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_team_names" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_team_names`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_team_names`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -1065,27 +1169,32 @@ class TeamsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/names', 'GET',
+            "/api/v1/orgs/{owner}/teams/names",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListTeamsResponse',  # noqa: E501
+            response_type="V1ListTeamsResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_teams(self, owner, **kwargs):  # noqa: E501
         """List teams  # noqa: E501
@@ -1112,7 +1221,7 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        kwargs["_return_http_data_only"] = True
         return self.list_teams_with_http_info(owner, **kwargs)  # noqa: E501
 
     def list_teams_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -1145,50 +1254,56 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'offset',
-            'limit',
-            'sort',
-            'query'
-        ]
+        all_params = ["owner", "offset", "limit", "sort", "query"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_teams" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `list_teams`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `list_teams`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in local_var_params and local_var_params['offset'] is not None:  # noqa: E501
-            query_params.append(('offset', local_var_params['offset']))  # noqa: E501
-        if 'limit' in local_var_params and local_var_params['limit'] is not None:  # noqa: E501
-            query_params.append(('limit', local_var_params['limit']))  # noqa: E501
-        if 'sort' in local_var_params and local_var_params['sort'] is not None:  # noqa: E501
-            query_params.append(('sort', local_var_params['sort']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
+        if (
+            "offset" in local_var_params and local_var_params["offset"] is not None
+        ):  # noqa: E501
+            query_params.append(("offset", local_var_params["offset"]))  # noqa: E501
+        if (
+            "limit" in local_var_params and local_var_params["limit"] is not None
+        ):  # noqa: E501
+            query_params.append(("limit", local_var_params["limit"]))  # noqa: E501
+        if (
+            "sort" in local_var_params and local_var_params["sort"] is not None
+        ):  # noqa: E501
+            query_params.append(("sort", local_var_params["sort"]))  # noqa: E501
+        if (
+            "query" in local_var_params and local_var_params["query"] is not None
+        ):  # noqa: E501
+            query_params.append(("query", local_var_params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -1197,27 +1312,32 @@ class TeamsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams', 'GET',
+            "/api/v1/orgs/{owner}/teams",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListTeamsResponse',  # noqa: E501
+            response_type="V1ListTeamsResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def patch_team(self, owner, team_name, body, **kwargs):  # noqa: E501
         """Patch team  # noqa: E501
@@ -1242,8 +1362,10 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.patch_team_with_http_info(owner, team_name, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.patch_team_with_http_info(
+            owner, team_name, body, **kwargs
+        )  # noqa: E501
 
     def patch_team_with_http_info(self, owner, team_name, body, **kwargs):  # noqa: E501
         """Patch team  # noqa: E501
@@ -1273,48 +1395,56 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team_name',
-            'body'
-        ]
+        all_params = ["owner", "team_name", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_team" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `patch_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `patch_team`"
+            )  # noqa: E501
         # verify the required parameter 'team_name' is set
-        if self.api_client.client_side_validation and ('team_name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team_name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team_name` when calling `patch_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team_name" not in local_var_params
+            or local_var_params["team_name"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team_name` when calling `patch_team`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `patch_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `patch_team`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team_name' in local_var_params:
-            path_params['team.name'] = local_var_params['team_name']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team_name" in local_var_params:
+            path_params["team.name"] = local_var_params["team_name"]  # noqa: E501
 
         query_params = []
 
@@ -1324,34 +1454,42 @@ class TeamsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team.name}', 'PATCH',
+            "/api/v1/orgs/{owner}/teams/{team.name}",
+            "PATCH",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Team',  # noqa: E501
+            response_type="V1Team",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def patch_team_member(self, owner, team, member_user, body, **kwargs):  # noqa: E501
         """Patch tram member  # noqa: E501
@@ -1377,10 +1515,14 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.patch_team_member_with_http_info(owner, team, member_user, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.patch_team_member_with_http_info(
+            owner, team, member_user, body, **kwargs
+        )  # noqa: E501
 
-    def patch_team_member_with_http_info(self, owner, team, member_user, body, **kwargs):  # noqa: E501
+    def patch_team_member_with_http_info(
+        self, owner, team, member_user, body, **kwargs
+    ):  # noqa: E501
         """Patch tram member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1409,55 +1551,66 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team',
-            'member_user',
-            'body'
-        ]
+        all_params = ["owner", "team", "member_user", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_team_member" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `patch_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `patch_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'team' is set
-        if self.api_client.client_side_validation and ('team' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team` when calling `patch_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team" not in local_var_params
+            or local_var_params["team"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team` when calling `patch_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'member_user' is set
-        if self.api_client.client_side_validation and ('member_user' not in local_var_params or  # noqa: E501
-                                                        local_var_params['member_user'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `member_user` when calling `patch_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "member_user" not in local_var_params
+            or local_var_params["member_user"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `member_user` when calling `patch_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `patch_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `patch_team_member`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team' in local_var_params:
-            path_params['team'] = local_var_params['team']  # noqa: E501
-        if 'member_user' in local_var_params:
-            path_params['member.user'] = local_var_params['member_user']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team" in local_var_params:
+            path_params["team"] = local_var_params["team"]  # noqa: E501
+        if "member_user" in local_var_params:
+            path_params["member.user"] = local_var_params["member_user"]  # noqa: E501
 
         query_params = []
 
@@ -1467,34 +1620,42 @@ class TeamsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team}/members/{member.user}', 'PATCH',
+            "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}",
+            "PATCH",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1TeamMember',  # noqa: E501
+            response_type="V1TeamMember",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def update_team(self, owner, team_name, body, **kwargs):  # noqa: E501
         """Update team  # noqa: E501
@@ -1519,10 +1680,14 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.update_team_with_http_info(owner, team_name, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.update_team_with_http_info(
+            owner, team_name, body, **kwargs
+        )  # noqa: E501
 
-    def update_team_with_http_info(self, owner, team_name, body, **kwargs):  # noqa: E501
+    def update_team_with_http_info(
+        self, owner, team_name, body, **kwargs
+    ):  # noqa: E501
         """Update team  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1550,48 +1715,56 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team_name',
-            'body'
-        ]
+        all_params = ["owner", "team_name", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_team" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `update_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `update_team`"
+            )  # noqa: E501
         # verify the required parameter 'team_name' is set
-        if self.api_client.client_side_validation and ('team_name' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team_name'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team_name` when calling `update_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team_name" not in local_var_params
+            or local_var_params["team_name"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team_name` when calling `update_team`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `update_team`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `update_team`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team_name' in local_var_params:
-            path_params['team.name'] = local_var_params['team_name']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team_name" in local_var_params:
+            path_params["team.name"] = local_var_params["team_name"]  # noqa: E501
 
         query_params = []
 
@@ -1601,36 +1774,46 @@ class TeamsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team.name}', 'PUT',
+            "/api/v1/orgs/{owner}/teams/{team.name}",
+            "PUT",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1Team',  # noqa: E501
+            response_type="V1Team",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def update_team_member(self, owner, team, member_user, body, **kwargs):  # noqa: E501
+    def update_team_member(
+        self, owner, team, member_user, body, **kwargs
+    ):  # noqa: E501
         """Update team member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1654,10 +1837,14 @@ class TeamsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        return self.update_team_member_with_http_info(owner, team, member_user, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        return self.update_team_member_with_http_info(
+            owner, team, member_user, body, **kwargs
+        )  # noqa: E501
 
-    def update_team_member_with_http_info(self, owner, team, member_user, body, **kwargs):  # noqa: E501
+    def update_team_member_with_http_info(
+        self, owner, team, member_user, body, **kwargs
+    ):  # noqa: E501
         """Update team member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1686,55 +1873,66 @@ class TeamsV1Api(object):
 
         local_var_params = locals()
 
-        all_params = [
-            'owner',
-            'team',
-            'member_user',
-            'body'
-        ]
+        all_params = ["owner", "team", "member_user", "body"]
         all_params.extend(
             [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
+                "async_req",
+                "_return_http_data_only",
+                "_preload_content",
+                "_request_timeout",
             ]
         )
 
-        for key, val in six.iteritems(local_var_params['kwargs']):
+        for key, val in six.iteritems(local_var_params["kwargs"]):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_team_member" % key
                 )
             local_var_params[key] = val
-        del local_var_params['kwargs']
+        del local_var_params["kwargs"]
         # verify the required parameter 'owner' is set
-        if self.api_client.client_side_validation and ('owner' not in local_var_params or  # noqa: E501
-                                                        local_var_params['owner'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `owner` when calling `update_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "owner" not in local_var_params
+            or local_var_params["owner"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `owner` when calling `update_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'team' is set
-        if self.api_client.client_side_validation and ('team' not in local_var_params or  # noqa: E501
-                                                        local_var_params['team'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `team` when calling `update_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "team" not in local_var_params
+            or local_var_params["team"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `team` when calling `update_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'member_user' is set
-        if self.api_client.client_side_validation and ('member_user' not in local_var_params or  # noqa: E501
-                                                        local_var_params['member_user'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `member_user` when calling `update_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "member_user" not in local_var_params
+            or local_var_params["member_user"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `member_user` when calling `update_team_member`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
-                                                        local_var_params['body'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `body` when calling `update_team_member`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in local_var_params
+            or local_var_params["body"] is None  # noqa: E501
+        ):  # noqa: E501
+            raise ApiValueError(
+                "Missing the required parameter `body` when calling `update_team_member`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in local_var_params:
-            path_params['owner'] = local_var_params['owner']  # noqa: E501
-        if 'team' in local_var_params:
-            path_params['team'] = local_var_params['team']  # noqa: E501
-        if 'member_user' in local_var_params:
-            path_params['member.user'] = local_var_params['member_user']  # noqa: E501
+        if "owner" in local_var_params:
+            path_params["owner"] = local_var_params["owner"]  # noqa: E501
+        if "team" in local_var_params:
+            path_params["team"] = local_var_params["team"]  # noqa: E501
+        if "member_user" in local_var_params:
+            path_params["member.user"] = local_var_params["member_user"]  # noqa: E501
 
         query_params = []
 
@@ -1744,31 +1942,39 @@ class TeamsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in local_var_params:
-            body_params = local_var_params['body']
+        if "body" in local_var_params:
+            body_params = local_var_params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/orgs/{owner}/teams/{team}/members/{member.user}', 'PUT',
+            "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}",
+            "PUT",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1TeamMember',  # noqa: E501
+            response_type="V1TeamMember",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=local_var_params.get("async_req"),
+            _return_http_data_only=local_var_params.get(
+                "_return_http_data_only"
+            ),  # noqa: E501
+            _preload_content=local_var_params.get("_preload_content", True),
+            _request_timeout=local_var_params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

@@ -50,36 +50,51 @@ class V1DockerfileType(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'image': 'str',
-        'env': 'dict(str, str)',
-        'path': 'dict(str, str)',
-        'copy': 'dict(str, str)',
-        'run': 'list[str]',
-        'lang_env': 'str',
-        'uid': 'int',
-        'gid': 'int',
-        'filename': 'str',
-        'workdir': 'str',
-        'workdir_path': 'str',
-        'shell': 'str'
+        "image": "str",
+        "env": "dict(str, str)",
+        "path": "dict(str, str)",
+        "copy": "dict(str, str)",
+        "run": "list[str]",
+        "lang_env": "str",
+        "uid": "int",
+        "gid": "int",
+        "filename": "str",
+        "workdir": "str",
+        "workdir_path": "str",
+        "shell": "str",
     }
 
     attribute_map = {
-        'image': 'image',
-        'env': 'env',
-        'path': 'path',
-        'copy': 'copy',
-        'run': 'run',
-        'lang_env': 'lang_env',
-        'uid': 'uid',
-        'gid': 'gid',
-        'filename': 'filename',
-        'workdir': 'workdir',
-        'workdir_path': 'workdir_path',
-        'shell': 'shell'
+        "image": "image",
+        "env": "env",
+        "path": "path",
+        "copy": "copy",
+        "run": "run",
+        "lang_env": "lang_env",
+        "uid": "uid",
+        "gid": "gid",
+        "filename": "filename",
+        "workdir": "workdir",
+        "workdir_path": "workdir_path",
+        "shell": "shell",
     }
 
-    def __init__(self, image=None, env=None, path=None, copy=None, run=None, lang_env=None, uid=None, gid=None, filename=None, workdir=None, workdir_path=None, shell=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        image=None,
+        env=None,
+        path=None,
+        copy=None,
+        run=None,
+        lang_env=None,
+        uid=None,
+        gid=None,
+        filename=None,
+        workdir=None,
+        workdir_path=None,
+        shell=None,
+        local_vars_configuration=None,
+    ):  # noqa: E501
         """V1DockerfileType - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -383,18 +398,20 @@ class V1DockerfileType(object):
         for attr, _ in six.iteritems(self.openapi_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
 

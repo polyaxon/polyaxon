@@ -77,7 +77,7 @@ uiEnabled: false
 ```
 
 
-## Auth
+## Security
 
 Polyaxon will deploy by default using a ClusterIp service, and provides a command to port-forward the traffic to localhost in a secure way. 
 If you decide to deploy Polyaxon CE using a LoadBalancer or an Ingress, 

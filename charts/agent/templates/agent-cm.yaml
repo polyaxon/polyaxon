@@ -1,3 +1,4 @@
+{{- if or .Values.agent.enabled (not .Values.organizationKey) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -46,3 +47,4 @@ data:
   {{- if .Values.operators.sparkjob }}
   POLYAXON_SPARK_JOB_ENABLED: "true"
   {{- end }}
+{{- end }}
