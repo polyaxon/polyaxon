@@ -72,12 +72,14 @@ func main() {
 	// Allow to pass by env and override by flag
 	if config.GetStrEnv(config.Namespace, "") != "" {
 		namespace = config.GetStrEnv(config.Namespace, "")
+	} else {
+		namespace = "polyaxon"
 	}
 
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "enable-leader-election", false,
 		"Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.")
-	flag.StringVar(&namespace, "namespace", "polyaxon", "The namespace to restrict the operator.")
+	flag.StringVar(&namespace, "namespace", namespace, "The namespace to restrict the operator.")
 	flag.Parse()
 
 	ctrl.SetLogger(zap.New(func(o *zap.Options) {

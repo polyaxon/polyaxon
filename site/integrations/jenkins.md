@@ -31,7 +31,7 @@ Starting with Jenkins Pipeline versions 2.5 and higher, Jenkins Pipeline has bui
 ```json
 pipeline {
     agent {
-        docker { image 'polyaxon:polyaxon-cli:1.1.2' }
+        docker { image 'polyaxon:polyaxon-cli:1.1.3' }
     }
     stages {
         stage('Submit') {
