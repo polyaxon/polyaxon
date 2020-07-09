@@ -63,7 +63,7 @@ setup(
         "reinforcement-learning",
     ],
     install_requires=[
-        "celery==4.4.5",
+        "celery==4.4.6",
         "Django==3.0.8",
         "django-cors-headers==3.2.1",
         "djangorestframework==3.11.0",
