@@ -1,0 +1,14 @@
+version: 1.1
+kind: operation
+name: build
+params:
+  destination:
+    value:
+      name: polyaxon/polyaxon-horovod-examples
+      connection: docker-connection
+  context:
+    value: "/plx_context/artifacts/polyaxon-examples/horovod/tensorflow"
+runPatch:
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+hubRef: kaniko
