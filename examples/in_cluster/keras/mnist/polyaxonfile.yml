@@ -3,7 +3,6 @@ kind: component
 tags: [examples, keras]
 
 inputs:
-- {name: image, type: str}
 - {name: conv1_size, type: int, value: 32, isOptional: true}
 - {name: conv2_size, type: int, value: 64, isOptional: true}
 - {name: dropout, type: float, value: 0.8, isOptional: true}

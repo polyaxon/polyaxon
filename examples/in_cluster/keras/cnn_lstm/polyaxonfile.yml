@@ -3,7 +3,6 @@ kind: component
 tags: [examples, keras]
 
 inputs:
-- {name: image, type: str}
 - {name: max_features, type: int, value: 20000, isOptional: true}
 - {name: skip_top, type: int, value: 50, isOptional: true}
 - {name: maxlen, type: int, value: 100, isOptional: true}
