@@ -70,5 +70,5 @@ jobs:
       - name: login
         run: polyaxon login -t ${{ secrets.POLYAXON_TOKEN }}
       - name: submit
-        run: polyaxon run -p MY-PRoJECT -f operation.yaml
+        run: polyaxon run -p MY-PROJECT -f operation.yaml
 ```
