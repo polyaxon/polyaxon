@@ -69,7 +69,7 @@ setup(
         "tabulate<=0.8.7",
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
-        "marshmallow>=3.4.0,<3.7.1",
+        "marshmallow>=3.4.0,<=3.7.1",
         "polyaxon-sdk==1.1.0",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
