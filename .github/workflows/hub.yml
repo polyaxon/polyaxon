@@ -19,5 +19,5 @@ jobs:
 
           for f in $COMPONENTS; do
           echo "checking component: $f"
-          polyaxon check -f $f --spec-only
+          polyaxon check -f $f --lint
           done
