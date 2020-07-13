@@ -23,13 +23,13 @@ Polyaxon provides native support for several KubeFlow components.
 ## Overview
 
  1. Kubeflow Operators:
-    Polyaxon can schedule and manage KubeFlow operators natively. Polyaxon provides uniform workflow for:
+    Polyaxon can schedule and manage Kubeflow operators natively. Polyaxon provides uniform workflow for:
      * Viewing logs and resources.
      * Tracking metrics, outputs, and models.
      * Comparing and driving insights.
     All Kubeflow jobs can be compared and composed natively with other operations supported by Polyaxon.
  2. Kubeflow Pipelines:
-    Polyaxon support Kubeflow Pipeline components with very few changes.
+    Polyaxon supports Kubeflow Pipeline components with very few changes.
  3. Kubeflow KFServing:
     Polyaxon provides reusable components that can deploy models using KFServing.
       
@@ -38,7 +38,7 @@ Polyaxon provides native support for several KubeFlow components.
 For teams not running/using Kubeflow and want to use this integration, 
 Polyaxon provides [Helm charts](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow) for the Kubeflow operators currently supported.
 
-These Helm charts will be maintained and supported by Polyaxon to allow users to easily deploy and manage them in similar way they manage Polyaxon.
+These Helm charts will be maintained and supported by Polyaxon to allow users to deploy and manage Kubeflow Operators in an easy way.
 
  * [TFJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/tfjob)
  * [PytorchJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/pytorchjob)
