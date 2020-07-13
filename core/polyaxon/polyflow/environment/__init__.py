@@ -191,7 +191,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
 
     > The affinity/anti-affinity feature, greatly expands the types of constraints you can express.
 
-    The affinity to use for the scheduling the job.
+    The affinity to use for scheduling the job.
 
     ```yaml
     >>> environment:
@@ -358,7 +358,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
 
     From [Kubernetes docs](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/)  # noqa
 
-    > If specified, the pod will be dispatched by specified scheduler.
+    > If specified, the pod will be dispatched by the specified scheduler.
       Or it will be dispatched by workflow scope scheduler if specified.
       If neither specified, the pod will be dispatched by default scheduler.
 

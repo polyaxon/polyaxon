@@ -41,10 +41,10 @@ When an operation is queued, using the default queue or following the `queue` fi
 the operation will not immediately be scheduled to be executed, there's a process to check the priority of each queue, 
 and it only schedules the number of operations based on the queue's concurrency setting.
 
-This how Polyaxon checks when to queue and execute an operations:
+This how Polyaxon checks when to queue and execute an operation:
 
  * Check if the workflow directly managing the operation can queue more operations based on the concurrency field 
-    (i.e. max concurrency, if no concurrency is set than it's considered unlimited)
+    (i.e. max concurrency, if no concurrency is set then it's considered unlimited)
  * Check if this workflow is running in the context of a meta workflow, i.e nested in a controller workflow, check the concurrency of that workflow.
  * Queue the operation on the requested queue, if no queue is set then use the default queue of the project.
  * Check if the queue can schedule more operations based on their priority and concurrency definitions.

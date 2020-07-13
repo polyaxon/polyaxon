@@ -22,7 +22,7 @@ Polyaxon Agent chart is a Helm chart for deploying Polyaxon Agent on Kubernetes.
 This chart bootstraps a Polyaxon Agent deployment on
 a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-This chart can be installed on single node or multi-nodes cluster,
+This chart can be installed on a single node or multi-nodes cluster,
 in which case you need to provide some volumes with `ReadWriteMany` or cloud buckets.
 
 > **Tip**: The full list of the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/agent/values.yaml)
@@ -75,7 +75,7 @@ kubectl port-forward -n polyaxon svc/polyaxon-polyaxon-gateway 8000:80
 | `gateway.service.annotations`| Gateway Service annotations                                         | `{}`
 
 
-This chart provides support for Ingress resource.
+This chart provides support for an Ingress resource.
 
 If you enable ingress, please set the gateway service type value to:
  * ClusterIP or NodePort 
@@ -178,7 +178,7 @@ Polyaxon's helm chart comes with an ingress resource that you can use with an in
 
 ### NGINX for NodePort service
 
-To enable ssl for Polyaxon API running with NodePort service on Kubernetes, you need to provide an ssl certificate and ssl certificate key.
+To enable ssl for Polyaxon API running with NodePort service on Kubernetes, you need to provide an SSL certificate and SSL certificate key.
  
 you can provide a self-signed certificate or a browser trusted certificate.
 
@@ -195,7 +195,7 @@ you can provide a self-signed certificate or a browser trusted certificate.
       enabled: true  
       secretName: 'polyaxon-cert'
     ```
- 3. Set the service type to `NodePort` and update the api's service port to 443.
+ 3. Set the service type to `NodePort` and update the API's service port to 443.
  
  N.B. By default Polyaxon mounts the ssl certificate and key to `/etc/ssl`, this value can be updated using the `.Values.ssl.path`.
 
@@ -349,7 +349,7 @@ agent:
 
 
 Polyaxon runs all containers as root by default, this configuration is often fine for several deployment, 
-however, in some use case it can expose a compliance issue for some teams.
+however, in some use cases it can expose a compliance issue for some teams.
 
 Polyaxon provides a simple way to enable a security context for all core components, experiments and jobs.  
 

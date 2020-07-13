@@ -15,6 +15,11 @@
 # limitations under the License.
 from typing import List
 
+from polyaxon.env_vars.keys import (
+    POLYAXON_KEYS_UI_ADMIN_ENABLED,
+    POLYAXON_KEYS_UI_ENABLED,
+    POLYAXON_KEYS_UI_OFFLINE,
+)
 from polycommon.config_manager import ConfigManager
 
 
@@ -43,7 +48,7 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
         "django.template.context_processors.tz",
         "django.contrib.messages.context_processors.messages",
         "polycommon.settings.context_processors.versions",
-        "polycommon.settings.context_processors.js_offline",
+        "polycommon.settings.context_processors.ui_offline",
         "polycommon.settings.context_processors.ui_enabled",
     ] + processors
 
@@ -53,14 +58,14 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
         config.get_boolean("DJANGO_TEMPLATE_DEBUG", is_optional=True)
         or config.is_debug_mode
     )
-    context["ADMIN_VIEW_ENABLED"] = config.get_boolean(
-        "POLYAXON_ADMIN_VIEW_ENABLED", is_optional=True, default=False
+    context["UI_ADMIN_ENABLED"] = config.get_boolean(
+        POLYAXON_KEYS_UI_ADMIN_ENABLED, is_optional=True, default=False
     )
-    context["JS_OFFLINE"] = config.get_boolean(
-        "POLYAXON_JS_OFFLINE", is_optional=True, default=False
+    context["UI_OFFLINE"] = config.get_boolean(
+        POLYAXON_KEYS_UI_OFFLINE, is_optional=True, default=False
     )
     context["UI_ENABLED"] = config.get_boolean(
-        "POLYAXON_UI_ENABLED", is_optional=True, default=True
+        POLYAXON_KEYS_UI_ENABLED, is_optional=True, default=True
     )
     context["TEMPLATES_DEBUG"] = template_debug
     context["LIST_TEMPLATE_CONTEXT_PROCESSORS"] = processors

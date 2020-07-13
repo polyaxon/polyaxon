@@ -15,7 +15,7 @@ Polyaxon will log that execution as a run and connection any information related
 
 ## Overview
 
-All runs in Polyaxon have some similar characteristics, based on the [component/operation specification](/docs/core/specification/):
+All runs in Polyaxon has some similar characteristics, based on the [component/operation specification](/docs/core/specification/):
    * name, description, and tags
    * inputs/outputs
 

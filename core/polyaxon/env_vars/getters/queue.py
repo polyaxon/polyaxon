@@ -14,22 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.proxies.schemas.base import get_config
-
-UWSGI_OPTIONS = """
-location / {{
-    proxy_pass http://polyaxon;
-    proxy_http_version 1.1;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-    proxy_set_header Origin "";
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_intercept_errors on;
-}}
-"""
+from polyaxon.exceptions import PolyaxonSchemaError
 
 
-def get_gunicorn_config():
-    return get_config(options=UWSGI_OPTIONS, indent=0)
+def get_queue_info(queue: str):
+    parts = queue.replace(".", "/").split("/")
+    agent = None
+    queue_name = queue
+    if len(parts) == 2:
+        agent, queue_name = parts
+    elif len(parts) > 2:
+        raise PolyaxonSchemaError(
+            "Please provide a valid queue. "
+            "The queue name should be: queue-name to use the default agent or agent-name/queue."
+        )
+
+    return agent, queue_name

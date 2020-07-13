@@ -24,7 +24,7 @@ If you are here, it means that you have access to a Polyaxon EE Control Plane or
  * Agents can deploy different artifacts store and connections to ensure isolation, it's also possible to deploy similar configurations on different clusters to enable access to new resources, e.g. on-prem GPU and GKE for TPUs. 
  * Agents can be used to only deploy jobs / distributed jobs workload, and they can also deploy and expose services.
 
-It's important to note that Polyaxon Agent is an important piece in Polyaxon architecture to enable a complete isolation and a hybrid execution.
+It's important to note that Polyaxon Agent is an important piece in Polyaxon architecture to enable complete isolation and a hybrid execution.
 
 ![polyaxon agent](../../../../content/images/references/agent/agent-execution.png)
 
@@ -39,7 +39,7 @@ $ kubectl create namespace polyaxon
 namespace "polyaxon" created
 ```
 
-If you would like to use a different value, you must keep im mind to update the `namespace` value in your config.
+If you would like to use a different value, you must keep in mind to update the `namespace` value in your config.
 
 ## Configuration
 

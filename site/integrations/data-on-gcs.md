@@ -22,18 +22,18 @@ status: published
 
 You can use one or multiple buckets on Google Cloud Storage (GCS) to access data directly on your machine learning experiments and jobs.
 
-## Create an Google cloud storage bucket
+## Create a Google cloud storage bucket
 
 You should create a google cloud storage bucket (e.g. plx-data), and you have to assign permission to the bucket.
 
-Google cloud storage provide an easy way to download access key as json file. You should create a secret based on that json file.
+Google cloud storage provides an easy way to download the access key as a JSON file. You should create a secret based on that JSON file.
 
 ## Create a secret on Kubernetes
 
 You can create a secret with an env var of the content of the gcs-key.json:
  * `GC_KEYFILE_DICT` or `GOOGLE_KEYFILE_DICT`
  
-Or you can create secret to be mounted as a volume: 
+Or you can create a secret to be mounted as a volume: 
 
  * `kubectl create secret generic gcs-secret --from-file=gcs-secret.json=path/to/gcs-key.json -n polyaxon`
 

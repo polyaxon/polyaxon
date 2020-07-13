@@ -1,7 +1,7 @@
 ---
 title: "SendGrid"
 meta_title: "SendGrid"
-meta_description: "How to receive notifications from Polyaxon directly to your email using sendgrid. Get email notifications when an experiment, job, build is finished using sendgrid so that your team stays in sync."
+meta_description: "How to receive notifications from Polyaxon directly to your email using Sendgrid. Get email notifications when an experiment, job, build is finished using Sendgrid so that your team stays in sync."
 custom_excerpt: "SendGrid is a cloud-based SMTP provider that acts as an email delivery engine, allowing you to send email without the cost and complexity of maintaining your own email servers."
 image: "../../content/images/integrations/sendgrid.jpg"
 author:
@@ -19,15 +19,15 @@ visibility: public
 status: published
 ---
 
-Get email notifications when an experiment, a job, or a build is finished using sendgrid so that your team stays in sync.
+Get email notifications when an experiment, a job, or a build is finished using Sendgrid so that your team stays in sync.
 
-## Start by creating a sendgrid account
+## Start by creating a Sendgrid account
 
-[sendgrid](https://sendgrid.com/solutions/smtp-service/) makes it easy to setup an smtp email service.
+[Sendgrid](https://sendgrid.com/solutions/smtp-service/) makes it easy to set up an smtp email service.
 
-## Add your Email notification using sendgrid to Polyaxon deployment config
+## Add your Email notification using Sendgrid to Polyaxon deployment config
 
-Now you can set the email section using your sendgrid's information:
+Now you can set the email section using your Sendgrid's information:
 
 ```yaml
 email:

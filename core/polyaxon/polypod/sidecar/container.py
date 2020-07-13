@@ -70,7 +70,7 @@ def get_sidecar_container(
         return None
 
     if (has_artifacts or has_logs) and not run_path:
-        raise PolypodException("Logs store / outputs store must have a run_path.")
+        raise PolypodException("Logs store/outputs store must have a run_path.")
 
     env = get_sidecar_env_vars(
         env_vars=env,

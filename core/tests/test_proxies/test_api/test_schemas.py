@@ -27,7 +27,7 @@ class TestApiSchemas(BaseTestCase):
     def test_api_locations(self):
         expected = """
 location /static/ {
-    alias /static/;
+    alias /static/v1/;
     autoindex on;
     expires                   30d;
     add_header                Cache-Control private;

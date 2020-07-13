@@ -33,7 +33,7 @@ class SlackWebHookNotifier(WebHookNotifier):
 
     @classmethod
     def serialize_notification_to_context(cls, notification: NotificationSpec) -> Dict:
-        logo_url = ""  # TODO: add logo url
+        logo_url = "https://cdn.polyaxon.com/static/v1/images/logo_small.png"
         fields = []  # Use build_field
 
         payload = {

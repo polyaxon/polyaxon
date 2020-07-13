@@ -22,6 +22,10 @@ def clean_host(host: str):
     return host.rstrip("/")
 
 
+def polyaxon_ui(host: str):
+    return "{}/ui".format(clean_host(host))
+
+
 def absolute_uri(url: str, api_host: str = None, protocol: str = None) -> Optional[str]:
     if not url:
         return None

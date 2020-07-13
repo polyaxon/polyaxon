@@ -21,7 +21,7 @@ This section includes guides to deploy:
  
 Both deployments share some [common Helm options](/docs/setup/platform/common-reference/).
 
-This guide is reference with commands to deploy, upgrade, and teardown a cluster.
+This guide is a reference with commands to deploy, upgrade, and teardown a cluster.
 
 Please consider reading the other configuration sections to have a deeper knowledge about how to configure and customize Polyaxon to your need.
 
@@ -40,7 +40,7 @@ $ kubectl create namespace polyaxon
 namespace "polyaxon" created
 ```
 
-If you would like to use a different value, you must keep im mind to update the `namespace` value in your config.
+If you would like to use a different value, you must keep in mind to update the `namespace` value in your config.
 
 ## Configuration
 

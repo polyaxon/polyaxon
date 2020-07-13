@@ -116,7 +116,7 @@ You can negate any condition by prefixing the query with `~`, e.g `x:~2` is the 
 
 ## Query by combining multiple conditions
 
-Every time you put a comma `,` Polyaxon will filter further  by the condition that comes after the comma.
+Every time you put a comma `,` Polyaxon will filter further= by the condition that comes after the comma.
 
 
 ## Entities

@@ -13,7 +13,7 @@ sidebar: "core"
 ---
 
 Polyaxon relies on a set of concepts to manage the experimentation and the automation process,
-in this section we provide a high level introduction to these concepts,
+in this section, we provide a high-level introduction to these concepts,
 with more details in pages dedicated to each concept.
 
 
@@ -40,7 +40,7 @@ A `Team` provides a way to manage groups of users, their access roles, and resou
 
 A `Project` in Polyaxon is very similar to a project in GitHub,
 it aims at organizing your efforts to solve a specific problem.
-A project consist of a name and a description, access to several connections and data, and components to execute.
+A project consists of a name and a description, access to several connections and data, and components to execute.
 
 <blockquote class="light">Please refer to <a href="/docs/management/ui/projects/">management/projects</a> for more details.</blockquote>
 
@@ -96,7 +96,7 @@ Polyaxon supports distributed jobs for model training or data processing via sev
 
 ### Service
 
-A `service` allows to run dashboards, apps, and apis.
+A `service` allows to run dashboards, apps, and APIs.
 
 A service can be:
  
@@ -135,7 +135,7 @@ Please refer to <a href="/docs/core/specification/operation/">core/specification
  
 ### Matrix
 
-A `matrix` is an automatic and practical way to run an component with different hyper parameters based on a mapping or a hyperparameters search algorithm.
+A `matrix` is an automatic and practical way to run a component with different parameters based on a mapping or a hyperparameter search algorithm.
 
 
 <blockquote class="light">

@@ -49,7 +49,7 @@ class V1ArtifactsType(BaseConfig, polyaxon_sdk.V1ArtifactsType):
         files: List[str], optional, list of file subpaths
         dirs: List[str], optional, list of directory subpaths
         init: bool, optional, if True the files and the dirs will be automatically
-              downloaded / provided in the run's artifacts context.
+              downloaded/provided in the run's artifacts context.
         workers: int, optional, number of threads for downloading data from S3/GCS/Azure.
 
     ### YAML usage

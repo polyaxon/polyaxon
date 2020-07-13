@@ -15,8 +15,8 @@ sidebar: "experimentation"
 
 Polyaxon supports distributed jobs for model training or data processing via several Kubernetes operators.
 
-By default Polyaxon does not deploy the operators required for running distributed jobs to keep the deployment process lightweight. 
-In order to use a distributed jobs operator, you need make sure that your namespace/cluster has the operator deployed 
+By default, Polyaxon does not deploy the operators required for running distributed jobs to keep the deployment process lightweight. 
+In order to use a distributed jobs operator, you need to make sure that your namespace/cluster has the operator deployed 
 or you should deploy the operator(s) before starting an execution.
 
 > When you start a distributed job, Polyaxon will stream and archive logs from all replicas.

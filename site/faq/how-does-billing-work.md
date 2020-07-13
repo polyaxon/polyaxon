@@ -1,9 +1,9 @@
 ---
 title: "How does billing for this work?"
 meta_title: "How does billing for this work? - FAQ"
-meta_description: "If you deploy the community open source version, the billing is not handled by Polyaxon and is done by the cloud provider of your choice."
+meta_description: "If you deploy the community open-source version, the billing is not handled by Polyaxon and is done by the cloud provider of your choice."
 featured: false
-custom_excerpt: "If you deploy the community open source version, the billing is not handled by Polyaxon and is done by the cloud provider of your choice."
+custom_excerpt: "If you deploy the community open-source version, the billing is not handled by Polyaxon and is done by the cloud provider of your choice."
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
@@ -18,7 +18,7 @@ tags:
     - enterprise
 ---
 
-If you deploy the community open source version, 
+If you deploy the community open-source version, 
 the billing is not handled by Polyaxon and is done by the cloud provider of your choice.
 
 For the **Polyaxon Cloud** and **Polyaxon EE**, please check our pricing page. 

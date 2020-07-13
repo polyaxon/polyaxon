@@ -2,7 +2,7 @@
 title: "Polyaxon Security"
 sub_link: "security"
 meta_title: "Polyaxon Security - Core Concepts"
-meta_description: "Polyaxon is committed to developing secure, reliable products utilising all modern security best practices. Find out more!"
+meta_description: "Polyaxon is committed to developing secure, reliable products utilizing all modern security best practices. Find out more!"
 tags:
     - reference
     - polyaxon
@@ -12,9 +12,9 @@ tags:
     - security
 ---
 
-Polyaxon is committed to developing secure, reliable products utilising all modern security best practices and processes.
+Polyaxon is committed to developing secure, reliable products utilizing all modern security best practices and processes.
 
-We take security very seriously at Polyaxon and welcome any peer review of our [open source codebase](https://github.com/polyaxon/polyaxon) to help ensure that it remains completely secure.
+We take security very seriously at Polyaxon and welcome any peer review of our [open-source codebase](https://github.com/polyaxon/polyaxon) to help ensure that it remains completely secure.
 
 
 ## Security features
@@ -27,9 +27,9 @@ Polyaxon allows and recommends setting an SSL for your deployments.
 
 The admin view is disabled by default, and can be easily enabled.
 
-### Data validation and serialisation
+### Data validation and serialization
 
-Polyaxon performs strong serialisation and validation on all data that goes into the database, and follows industry best practices when uploading files.
+Polyaxon performs strong serialization and validation on all data that goes into the database, and follows industry best practices when uploading files.
 
 ### Encoded tokens everywhere
 
@@ -37,7 +37,7 @@ All user invitation and password reset tokens are base64 encoded with serverside
 
 ### Password hashing
 
-Polyaxon follows best parctices for authentication with all passwords hashed and salted properly to ensure password integrity.
+Polyaxon follows best practices for authentication with all passwords hashed and salted properly to ensure password integrity.
 
 ### SQLi prevention
 

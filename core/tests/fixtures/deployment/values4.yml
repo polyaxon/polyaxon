@@ -100,3 +100,14 @@ securityContext:
   group: 2222
 
 passwordLength: 4
+
+auth:
+  enabled: false
+  external:
+  useResolver: true
+
+ui:
+  enabled: true
+  offline: true
+  staticUrl: https://ffo.com
+  adminEnabled: true

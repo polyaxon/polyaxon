@@ -13,20 +13,41 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from polyaxon.proxies.schemas.base import get_config
+from polyaxon import settings
+from polyaxon.api import (
+    ADMIN_V1_LOCATION,
+    API_V1_LOCATION,
+    AUTH_V1_LOCATION,
+    HEALTHZ_LOCATION,
+    UI_V1_LOCATION,
+)
+from polyaxon.proxies.schemas.base import clean_config, get_config
 
 UWSGI_OPTIONS = """
-location / {{
+location {path} {{
     include     /etc/nginx/uwsgi_params;
     uwsgi_pass  polyaxon;
     uwsgi_param Host				$host;
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
+    uwsgi_intercept_errors on;
 }}
 """
 
 
+def get_api_config(path: str):
+    return get_config(options=UWSGI_OPTIONS, indent=0, path=path,)
+
+
 def get_uwsgi_config():
-    return get_config(options=UWSGI_OPTIONS, indent=0)
+    config = [
+        get_api_config(path="= /"),
+        get_api_config(path="= {}".format(HEALTHZ_LOCATION)),
+        get_api_config(path=API_V1_LOCATION),
+        get_api_config(path=AUTH_V1_LOCATION),
+        get_api_config(path=UI_V1_LOCATION),
+    ]
+    if settings.PROXIES_CONFIG.ui_admin_enabled:
+        config.append(get_api_config(path=ADMIN_V1_LOCATION))
+    return clean_config(config)

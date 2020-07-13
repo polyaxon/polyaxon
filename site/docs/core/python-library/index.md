@@ -2,7 +2,7 @@
 title: "Polyaxon Python Library"
 sub_link: "python-library"
 meta_title: "Polyaxon Python Library - Polyaxon References"
-meta_description: "Use our python library to instrument your machine learning model and track experiments, create polyaxonfile specification, and extend Polyaxon's behaviour. Setup should only take a few lines of code. If you're using a popular framework, we have a number of integrations to make setting up Polyaxon easy."
+meta_description: "Use our Python library to instrument your machine learning model and track experiments, create Polyaxonfile specification, and extend Polyaxon's behavior. Setup should only take a few lines of code. If you're using a popular framework, we have a number of integrations to make setting up Polyaxon easy."
 visibility: public
 status: published
 tags:
@@ -12,8 +12,8 @@ tags:
 sidebar: "core"
 ---
 
-Use Polyaxon Python library to create polyaxonfile specification, to interact with Polyaxon API in a programmatic way, 
-to instrument your machine learning model and track experiments, create custom visualizations, and to extend Polyaxon's behaviour.
+Use Polyaxon Python library to create Polyaxonfile specification, to interact with Polyaxon API in a programmatic way, 
+to instrument your machine learning model and track experiments, create custom visualizations, and to extend Polyaxon's behavior.
 
 ## Install
 
@@ -21,7 +21,7 @@ to instrument your machine learning model and track experiments, create custom v
 $ pip install -U polyaxon
 ```
 
-N.B. `polyaxon` library is python 3.5+ package, if you are still using python 2 `polyaxon-sdk` is python 2/3 compatible.
+N.B. `polyaxon` library is Python 3.5+ package, if you are still using Python 2 `polyaxon-sdk` is python 2/3 compatible.
 
 ## CLI
 
@@ -32,7 +32,7 @@ N.B. `polyaxon` library is python 3.5+ package, if you are still using python 2 
 This module includes a client that can be used to interact with Polyaxon API in a programmatic way.
 
 
- * [Client Reference](/docs/core/python-library/polyaxon-client/): Auto-configurable and high level base client that abstract the need to set a configuration for each service.
+ * [Client Reference](/docs/core/python-library/polyaxon-client/): Auto-configurable and high-level base client that abstract the need to set a configuration for each service.
  * [Project Client](/docs/core/python-library/polyaxon-client/): A client to communicate with Polyaxon projects endpoints.
  * [Run Client](/docs/core/python-library/run-client/): A client to communicate with Polyaxon runs endpoints.
 
@@ -51,7 +51,7 @@ to drive visualization programmatically using [Plotly Express](https://plotly.co
 
 ## Disabling Polyaxon clients without changing the code
 
-Since using the Polyaxon client and the tracking api requires code change, e.g.
+Since using the Polyaxon client and the tracking API requires code change, e.g.
 
 ```python
 # Polyaxon experiment
@@ -62,7 +62,7 @@ experiment.log_metrics(step=1000, loss=0.01, accuracy=0.97)
 ``` 
 
 Users might need to run the same code outside of a Polyaxon context, 
-which will break since Polyaxon related operations perform api calls.
+which will break since Polyaxon related operations perform API calls.
   
 Users won't need to perform any change to their code, 
 they just need to set an environment variable `POLYAXON_NO_OP` to true/1, and the Polyaxon related code will be ignored.   
@@ -93,11 +93,11 @@ e.g.
 run_client = RunClient()
 ```
 
-The client will check for the current authenticated user and raise if non found.
+The client will check for the currently authenticated user and raise if non found.
 
 ### Not in-cluster and no authenticated CLI
 
-When you need to  authenticate a client in an environment outside of a Polyaxon cluster and no authenticated CLI, Polyaxon provides several option:
+When you need to  authenticate a client in an environment outside of a Polyaxon cluster and no authenticated CLI, Polyaxon provides several options:
 
 #### Authentication with Environment variables:
     
@@ -112,7 +112,7 @@ Once these environment variables are set, you can instantiate your client, e.g.
 run_client = RunClient()
 ```
 
-Authentication using environment variables could be useful to keep you code behave similarly on different environments.
+Authentication using environment variables could be useful to keep your code behave similarly in different environments.
     
 #### Provide an authenticated client:
 
@@ -123,9 +123,9 @@ run_client = RunClient(owner="org1", project="project-name", run_uuid="uuid", cl
 
 ## Reading Polyaxonfiles
 
-In order to use Polyaxon users have to create and execute polyaxonfiles, these files use a
+In order to use Polyaxon users have to create and execute Polyaxonfiles, these files use a
 [specification](/docs/core/specification/) to describe how experiments, jobs, services should be scheduled and executed.
-Users can author and read polyaxonfiles in a programmatic way using Python. 
+Users can author and read Polyaxonfiles in a programmatic way using Python. 
 
 
 You can use the Python library to read and validate YAML/Json files, Python objects, or Python dictionaries:
@@ -141,7 +141,7 @@ operation = V1Operation(...)
 
 ### Known specification kind
 
-If you know the kind of polyaxonfile or dict, you can use directly the corresponding specification to read the content:
+If you know the kind of Polyaxonfile or dict, you can use directly the corresponding specification to read the content:
 
 ```python
 from polyaxon.polyaxonfile import ComponentSpecification, OperationSpecification
@@ -171,7 +171,7 @@ plx_file = ComponentSpecification.read([group_dict, {'run': {'cmd': 'override_co
 
 ### Reading a single file
 
-Sometimes you might not know the content of file, Polyaxon provides a generic function to resolve the content of a file(s) to the correct specification kind. 
+Sometimes you might not know the content of a file, Polyaxon provides a generic function to resolve the content of a file(s) to the correct specification kind. 
 
 ```python
 from polyaxon.polyaxonfile import check_polyaxonfile
@@ -205,8 +205,8 @@ plx_file = get_specification(['path/to/yaml_file.yaml', 'path/to/json_file.json'
 
 ### Using PolyaxonFiles
 
-Once you read the content of Polyaxonfile, you will get a python class if the file passed and is valid, 
-and you will be able to interact with it as any python object.
+Once you read the content of Polyaxonfile, you will get a Python class if the file passed and is valid, 
+and you will be able to interact with it as any Python object.
 
 ```yaml
 version: 1
@@ -238,7 +238,7 @@ Please check the [specification docs](/docs/core/specification/)
 
 ## Exceptions
 
-Polyaxon raises several exception during the parsing and validation of a Polyaxonfile or configurations, all classes are derived from:
+Polyaxon raises several exceptions during the parsing and validation of a Polyaxonfile or configurations, all classes are derived from:
 
 ```bash
 from polyaxon.exceptions import PolyaxonException

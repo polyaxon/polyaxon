@@ -84,7 +84,7 @@ def check_polyaxonfile(
     if sum([1 for i in [polyaxonfile, python_module, url, hub] if i]) > 1:
         message = (
             "You can only use one and only one option: "
-            "hub, url, module, or path ro polyaxonfile.".format(hub)
+            "hub, url, module, or path or polyaxonfile.".format(hub)
         )
         if is_cli:
             Printer.print_error(message, sys_exit=True)

@@ -16,7 +16,7 @@ sidebar: "setup"
 
 Polyaxon ships with a default Rabbitmq based on the stable [Helm chart](https://github.com/helm/charts/tree/master/stable/rabbitmq-ha).
 
-You can check the chart values to extend it's configuration.
+You can check the chart values to extend its configuration.
 
 ## External Rabbitmq
 
@@ -40,7 +40,7 @@ externalServices:
 
 ## Disabling Rabbitmq
 
-If you decide not to use Rabbitmq, and use Redis for handling events, please check this section on how to alter the [default broker behaviour](/configuration/broker/).
+If you decide not to use Rabbitmq, and use Redis for handling events, please check this section on how to alter the [default broker behavior](/configuration/broker/).
 
 ## Scheduling
 

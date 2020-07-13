@@ -2,7 +2,7 @@
 title: "Resources Scheduling"
 sub_link: "scheduling-strategies/resources-scheduling"
 meta_title: "Resources Scheduling in Polyaxon - Scheduling strategies"
-meta_description: "Polyaxon schedules workload on Kubernetes, which means you can enable GPU,TPU, or any other resource supported in your cluster for running your operations."
+meta_description: "Polyaxon schedules workload on Kubernetes, which means you can enable GPU, TPU, or any other resource supported in your cluster for running your operations."
 tags:
     - configuration
     - polyaxon
@@ -14,7 +14,7 @@ tags:
 sidebar: "core"
 ---
 
-Polyaxon schedules workload on Kubernetes, which means you can enable GPU,TPU, or any other resource supported in your cluster for running your operations.
+Polyaxon schedules workload on Kubernetes, which means you can enable GPU, TPU, or any other resource supported in your cluster for running your operations.
 
 ## Prerequisites
 

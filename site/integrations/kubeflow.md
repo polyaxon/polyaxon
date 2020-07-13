@@ -1,7 +1,7 @@
 ---
 title: "KubeFlow"
 meta_title: "KubeFlow"
-meta_description: "How to schedule, track, and mange KubeFlow operators on Polyaxon. Polyaxon can schedule and manage KubeFlow operators natively."
+meta_description: "How to schedule, track, and manage KubeFlow operators on Polyaxon. Polyaxon can schedule and manage KubeFlow operators natively."
 custom_excerpt: "The Kubeflow project is dedicated to making deployments of machine learning (ML) workflows on Kubernetes simple, portable and scalable."
 image: "../../content/images/integrations/kubeflow.png"
 author:
@@ -23,7 +23,7 @@ Polyaxon provides native support for several KubeFlow components.
 ## Overview
 
  1. Kubeflow Operators:
-    Polyaxon can schedule and manage Kubeflow operators natively. Polyaxon provides uniform workflow for:
+    Polyaxon can schedule and manage Kubeflow operators natively. Polyaxon provides a uniform workflow for:
      * Viewing logs and resources.
      * Tracking metrics, outputs, and models.
      * Comparing and driving insights.
@@ -55,7 +55,7 @@ $ helm repo update
 
 ## Deploying/Deleting TFJob
 
-In order to use Kubeflow as backend for running [distributed Tensorflow experiments](/integrations/tfjob/), 
+In order to use Kubeflow as a backend for running [distributed Tensorflow experiments](/integrations/tfjob/), 
 you need to deploy TFJob on the same namespace where Polyaxon was deployed
 
 ```bash
@@ -68,7 +68,7 @@ helm install del plxtf --purge
   
 ## Deploying/Deleting PytorchJob
 
-In order to use Kubeflow as backend for running [distributed Pytorch experiments](/integrations/pytorchjob/), 
+In order to use Kubeflow as a backend for running [distributed Pytorch experiments](/integrations/pytorchjob/), 
 you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
 
 ```bash
@@ -81,7 +81,7 @@ helm install del plxpytorch --purge
 
 ## Deploying/Deleting MpiJob
 
-In order to use Kubeflow as backend for running [distributed experiments using MPI](/integrations/mpijob/), 
+In order to use Kubeflow as a backend for running [distributed experiments using MPI](/integrations/mpijob/), 
 you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
 
 ```bash

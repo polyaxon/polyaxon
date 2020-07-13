@@ -13,6 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from polyaxon.api import STATIC_V1
+from polyaxon.env_vars.keys import POLYAXON_KEYS_STATIC_URL
 from polycommon.config_manager import ConfigManager
 
 
@@ -21,7 +24,9 @@ def set_assets(context, root_dir, config: ConfigManager):
     context["MEDIA_URL"] = config.get_string("POLYAXON_MEDIA_URL")
 
     context["STATIC_ROOT"] = config.get_string("POLYAXON_STATIC_ROOT")
-    context["STATIC_URL"] = config.get_string("POLYAXON_STATIC_URL")
+    context["STATIC_URL"] = config.get_string(
+        POLYAXON_KEYS_STATIC_URL, is_optional=True, default="/static/",
+    )
 
     # Additional locations of static files
     context["STATICFILES_DIRS"] = (str(root_dir.parent.parent / "public"),)
@@ -36,7 +41,7 @@ def set_assets(context, root_dir, config: ConfigManager):
         str(root_dir / "client" / "js" / "libs" / "locale"),
     )
 
-    context["STATICI18N_ROOT"] = "static"
+    context["STATICI18N_ROOT"] = STATIC_V1
     context["STATICI18N_OUTPUT_DIR"] = "jsi18n"
 
     context["ARTIFACTS_ROOT"] = config.get_string(

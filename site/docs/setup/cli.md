@@ -4,14 +4,14 @@ title_link: "Install Polyaxon CLI"
 sub_link: "cli"
 date: "2018-10-01"
 meta_title: "How to install Polyaxon CLI"
-meta_description: "Polyaxon CLI is a python command line interface to interact with Polyaxon API."
+meta_description: "Polyaxon CLI is a Python command line interface to interact with Polyaxon API."
 tags:
     - cli
     - install
 sidebar: "setup"
 ---
 
-Polyaxon CLI is a python command line interface to interact with Polyaxon API.
+Polyaxon CLI is a Python command line interface to interact with Polyaxon API.
 
 
 ## Install
@@ -22,7 +22,7 @@ To install it simply run:
 pip install -U polyaxon
 ```
 
-N.B. `polyaxon` library is a python 3.5+ package, if you are still using python 2 `polyaxon-sdk` is python 2/3 compatible.
+N.B. `polyaxon` library is a Python 3.5+ package, if you are still using Python 2 `polyaxon-sdk` is Python 2/3 compatible.
 
 ## Configure
 

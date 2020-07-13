@@ -309,9 +309,8 @@ externalServices:
     host:
     port:
 
-  api:
-    host:
-    port:
+  gateway: {}
+  api: {}
 
   metrics:
     enabled: false
@@ -493,7 +492,6 @@ user:
 
 # Time zone
 timezone: 'UTC'
-adminViewEnabled: false
 encryptionSecret:
 
 # Include helm chart release revision
@@ -560,10 +558,8 @@ intervals:  # in seconds
   operationsDefaultRetryDelay: 60
   operationsMaxRetryDelay: 3600
 
-auth:
-  enabled: false
-  external:
-  useResolver: true
+auth: {}
 
 istio: {}
 operators: {}
+ui: {}

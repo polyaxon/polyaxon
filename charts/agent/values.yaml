@@ -7,14 +7,11 @@ rbac:
   enabled: true
 
 externalServices:
-  api:
-    host:
-    port:
+  gateway: {}
+  api: {}
 
 auth:
   enabled: true
-  external:
-  useResolver: true
 
 ingress:
   enabled: false
@@ -216,3 +213,4 @@ includeChartRevision: true
 istio: {}
 operators: {}
 api: {}
+ui: {}

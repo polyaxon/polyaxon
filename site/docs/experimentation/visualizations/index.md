@@ -29,7 +29,7 @@ For single runs:
  * Histogram charts
  * Curve charts: PR curves, AUC/ROC curves, custom curves (<x, y> arrays)
  
-For multi-runs you can compare metrics and curves from several runs, as well as chart for hyperparameter values and metrics:
+For multi-runs you can compare metrics and curves from several runs, as well as charts for hyperparameter values and metrics:
 
  * Line charts
  * Bar charts

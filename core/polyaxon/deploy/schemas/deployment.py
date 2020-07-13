@@ -39,6 +39,7 @@ from polyaxon.deploy.schemas.service import (
 )
 from polyaxon.deploy.schemas.service_types import ServiceTypes
 from polyaxon.deploy.schemas.ssl import SSLSchema
+from polyaxon.deploy.schemas.ui import UISchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.types import ConnectionTypeSchema
 
@@ -183,7 +184,6 @@ class DeploymentSchema(BaseCamelSchema):
     encryption_secret = fields.Str(allow_none=True)
     platform_secret = fields.Str(allow_none=True)
     agent_secret = fields.Str(allow_none=True)
-    admin_view_enabled = fields.Bool(allow_none=True)
     timezone = fields.Str(allow_none=True)
     environment = fields.Str(allow_none=True)
     ingress = fields.Nested(IngressSchema, allow_none=True)
@@ -230,8 +230,7 @@ class DeploymentSchema(BaseCamelSchema):
     debug_mode = fields.Bool(allow_none=True)
     organization_key = fields.Str(allow_none=True)
     auth = fields.Nested(AuthSchema, allow_none=True)
-    js_offline = fields.Bool(allow_none=True)
-    ui_enabled = fields.Bool(allow_none=True)
+    ui = fields.Nested(UISchema, allow_none=True)
     include_chart_revision = fields.Bool(allow_none=True)
     operators = fields.Nested(OperatorsSchema, allow_none=True)
     istio = fields.Dict(allow_none=True)
@@ -265,7 +264,6 @@ class DeploymentSchema(BaseCamelSchema):
                 polyaxon_secret=data.get("polyaxon_secret"),
                 internal_token=data.get("internal_token"),
                 password_length=data.get("password_length"),
-                admin_view_enabled=data.get("admin_view_enabled"),
                 user=data.get("user"),
                 global_replicas=data.get("global_replicas"),
                 global_concurrency=data.get("global_concurrency"),
@@ -284,6 +282,7 @@ class DeploymentSchema(BaseCamelSchema):
                 intervals=data.get("intervals"),
                 metrics=data.get("metrics"),
                 organization_key=data.get("organization_key"),
+                ui=data.get("ui"),
             )
 
 
@@ -304,7 +303,6 @@ class DeploymentConfig(BaseConfig):
         encryption_secret=None,
         platform_secret=None,
         agent_secret=None,
-        admin_view_enabled=None,
         timezone=None,
         environment=None,
         ingress=None,
@@ -350,8 +348,7 @@ class DeploymentConfig(BaseConfig):
         auth=None,
         organization_key=None,
         dns=None,
-        js_offline=None,
-        ui_enabled=None,
+        ui=None,
         operators=None,
         istio=None,
         include_chart_revision=None,
@@ -383,7 +380,6 @@ class DeploymentConfig(BaseConfig):
         self.encryption_secret = encryption_secret
         self.platform_secret = platform_secret
         self.agent_secret = agent_secret
-        self.admin_view_enabled = admin_view_enabled
         self.timezone = timezone
         self.environment = environment
         self.ingress = ingress
@@ -428,8 +424,7 @@ class DeploymentConfig(BaseConfig):
         self.debug_mode = debug_mode
         self.auth = auth
         self.organization_key = organization_key
-        self.js_offline = js_offline
-        self.ui_enabled = ui_enabled
+        self.ui = ui
         self.operators = operators
         self.istio = istio
         self.include_chart_revision = include_chart_revision
@@ -440,7 +435,6 @@ class DeploymentConfig(BaseConfig):
                 password_length=password_length,
                 platform_secret=platform_secret,
                 encryption_secret=encryption_secret,
-                admin_view_enabled=admin_view_enabled,
                 user=user,
                 global_replicas=global_replicas,
                 global_concurrency=global_concurrency,
@@ -459,4 +453,5 @@ class DeploymentConfig(BaseConfig):
                 intervals=intervals,
                 metrics=metrics,
                 organization_key=organization_key,
+                ui=ui,
             )

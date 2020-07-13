@@ -13,21 +13,21 @@ tags:
 
 Polyaxon is a single platform that does everything from accessing data to managing machine learning models. This provides more results, happier developers and data scientists, improved cycle times, and a great return on investment.
 
-Other solutions currently in market offer a kit plane you have to assemble yourself, or lock-in solution with rigid approach, Polyaxon is based on an open-source end-to-end opinionated platform with flexible and extensible interfaces.
+Other solutions currently in the market offer a kit plane you have to assemble yourself, or lock-in solution with a rigid approach, Polyaxon is based on an open-source end-to-end opinionated platform with flexible and extensible interfaces.
 
 ## One access interface
 
 Users on your teams have to access to one and only one platform to perform most of the operations needed to develop and manage ML models. 
 No time is wasted switching between platforms with different access interfaces.
 
-Teams can set one high level authorization for managing access to the different aspects of the platform. 
+Teams can set one high-level authorization for managing access to the different aspects of the platform. 
 This means that you set permissions once and everyone in your organization has the right access to every component.
 
-One interface can have a major impact on distributing knowledge within and between team, which will result in improving all your employees' productivity.
+One interface can have a major impact on distributing knowledge within and between teams, which will result in improving all your employees' productivity.
 
 ## One project interface
 
-Polyaxon provides one interface for managing the lifecycle of your projects, with all needed components, steps, and plugings, 
+Polyaxon provides one interface for managing the lifecycle of your projects, with all needed components, steps, and plugins, 
 this gives Polyaxon all information needed at every step to expose the relevant context to users. 
 This allows natural, fast, and intuitive access to the needed information in an easy and optimal way. 
 Finally, the single project interface reduces information dissipation due to the nonexistent context switching, which results in more productivity.
@@ -53,10 +53,10 @@ and makes upgrades a complex process prone to errors and incompatibilities.
 Managing the state an application is hard, so imagine what it means to manage several stateful applications with different scalability, migrations, and backup processes. 
 In addition to the non-necessary complexity, several applications plane will result in redundant, and eventually inconsistent, data.
 
-Polyaxon comes with one database, PostgreSQL, providing you with one consistent source of truth about the state of your deployment, so you don't have to manual extract data or create a warehouse.   
+Polyaxon comes with one database, PostgreSQL, providing you with one consistent source of truth about the state of your deployment, so you don't have to manually extract data or create a warehouse.   
 
 ## One Vendor
 
 You only have to deal with Polyaxon, while ensuring that you have access to an open-source ecosystem, instead of multiple vendors with different licensing and risk pointing to each-other.
 
-If you decide to invest in an internal solution, you can base it on a tool you are already using, and you only need to learn one code base, which is open source.
+If you decide to invest in an internal solution, you can base it on a tool you are already using, and you only need to learn one code base, which is open-source.

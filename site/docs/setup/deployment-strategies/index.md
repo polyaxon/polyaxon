@@ -19,12 +19,12 @@ There are different types of deployment strategies you can take advantage of dep
   * You may want to scale your operations over several nodes.
   * You may want to scale your operations over several clusters or cloud providers.
   * You may want to establish some processes to separate dev/staging/production environments either on different namespaces or on different clusters.
-  * You may want to isolate projects, datasets access, models and other artifacts either on different namespaces or on different clusters.
+  * You may want to isolate projects, datasets access, models, and other artifacts either on different namespaces or on different clusters.
   * You may want to authorize users and teams with different access rights to different namespaces or to different clusters.
 
-Polyaxon provides a set of customizable and a flexible deployment strategies, that can fit different use cases and requirements.
+Polyaxon provides a set of customizable and flexible deployment strategies, that can fit different use cases and requirements.
 
-In this section we will try to go over some strategies of deploying Polyaxon and possibly answer frequently asked questions about how to manage and scale Polyaxon.
+In this section, we will try to go over some strategies of deploying Polyaxon and possibly answer frequently asked questions about how to manage and scale Polyaxon.
 
 ## Use cases
 
@@ -43,7 +43,7 @@ Isolation is the process of defining boundaries to separate and manage access.
 Isolation can be used to:
   
   * Establish some processes and to separate dev/staging/production environments.
-  * Isolate projects, datasets access, models and other artifacts.
+  * Isolate projects, datasets access, models, and other artifacts.
   * Authorize users and teams with different access to different environments.
   * Isolate and partition customer data. 
   * All.
@@ -79,16 +79,16 @@ In the following section we will go over several deployment options:
 This is the simplest deployment strategy possible, it consists of deploying Polyaxon to a single Kubernetes cluster with one single node.
 This deployment strategy is mostly used for trying out Polyaxon Community Edition on a user's laptop with [minikube](https://github.com/kubernetes/minikube) or [microk8s](https://microk8s.io/).
 
-> If you are using Polyaxon cloud or Polyaxon EE, you can also turn your local laptop into a worker node using Polyaxon agent. 
+> If you are using Polyaxon cloud or Polyaxon EE, you can also turn your local laptop into a worker node using Polyaxon Agent. 
 By deploying Polyaxon agents to your laptop and your team members' laptops, you can use those agents for 
 testing and running operations using your local GPU resources in case the main cluster is busy.  
 
 ### Multi nodes deployment
 
 This is also a simple deployment option, and is generally enough for several teams. 
-Polyaxon can deploy to any cluster and has no restrictions on the number of nodes, even for the open source version. 
+Polyaxon can deploy to any cluster and has no restrictions on the number of nodes, even for the open-source version. 
 
-Users can still leverage node management and scheduling to deploy and schedule different workload on different node types.
+Users can still leverage node management and scheduling to deploy and schedule different workloads on different node types.
 
 ### Multi-namespace deployment
 
@@ -97,7 +97,7 @@ When you need to manage multiple namespaces, you need to deploy Polyaxon control
 The control plane in that case will have no access to the other namespaces or the configurations they are using, 
 it will only manage the agents and their queues, and the agent deployments will be responsible for managing their respective namespaces.
 
-Each Agent deployment, on  the different namespaces, can also take advantage of node scheduling.
+Each Agent deployment, on the different namespaces, can also take advantage of node scheduling.
 
 ### Multi-cluster deployment
 
@@ -107,11 +107,11 @@ you need to deploy Polyaxon control plane separately from Polyaxon Agent deploym
 The control plane in that case will have no access to the other clusters and namespaces or the configurations they are using, 
 it will only manage the agents and their queues, and the agent deployments will be responsible for managing their respective namespaces in the clusters they are deployed in.
 
-Each Agent deployment, on  the different namespaces, can also take advantage of node scheduling.
+Each Agent deployment, on the different namespaces, can also take advantage of node scheduling.
 
 ## Scale
 
-With these different deployment strategies you can achieve several type of setups for isolation, replication, and scale.
+With these different deployment strategies you can achieve several setups for isolation, replication, and scale.
 
 Polyaxon offers solutions that adapt with your need and requirements, and you can achieve massive scale:
  

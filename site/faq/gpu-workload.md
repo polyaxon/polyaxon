@@ -1,9 +1,9 @@
 ---
-title: "Does Polyaxon supports gpu workload?"
-meta_title: "Does Polyaxon supports gpu workload? - FAQ"
-meta_description: "Polyaxon discovers your cluster's graphics processing units (GPUs) and enables you to leverage their compute power for you experiments, jobs, and Jupyter notebooks."
+title: "Does Polyaxon support gpu workload?"
+meta_title: "Does Polyaxon support gpu workload? - FAQ"
+meta_description: "Polyaxon discovers your cluster's graphics processing units (GPUs) and enables you to leverage their compute power for your experiments, jobs, and Jupyter notebooks."
 featured: false
-custom_excerpt: "Polyaxon discovers your cluster's graphics processing units (GPUs) and enables you to leverage their compute power for you experiments, jobs, and Jupyter notebooks."
+custom_excerpt: "Polyaxon discovers your cluster's graphics processing units (GPUs) and enables you to leverage their compute power for your experiments, jobs, and Jupyter notebooks."
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
@@ -17,4 +17,4 @@ tags:
     - deployment
 ---
 
-Polyaxon discovers your cluster's graphics processing units (GPUs) and enables you to leverage their compute power for you experiments, jobs, and Jupyter notebooks. 
+Polyaxon discovers your cluster's graphics processing units (GPUs) and enables you to leverage their compute power for your experiments, jobs, and Jupyter notebooks. 

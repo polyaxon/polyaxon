@@ -85,7 +85,7 @@ $ kubectl create namespace polyaxon
 namespace "polyaxon" created
 ```
 
-If you would like to use a different value, you must keep im mind to update the `namespace` value in your config.
+If you would like to use a different value, you must keep in mind to update the `namespace` value in your config.
 
 ## Install Polyaxon
 

@@ -2,8 +2,8 @@
 title: "Polyaxon deployment best practices"
 title_link: "Polyaxon deployment best practices"
 meta_title: "Polyaxon deployment best practices"
-meta_description: "Deploying Polyaxon can be hard, not only because because it requires using Kubernetes a tool that is not yet fully used by several teams, but also because it is a stateful application."
-custom_excerpt: "Deploying Polyaxon can be hard, not only because because it requires using Kubernetes a tool that is not yet fully used by several teams, but also because it is a stateful application."
+meta_description: "Deploying Polyaxon can be hard, not only because it requires using Kubernetes a tool that is not yet fully used by several teams, but also because it is a stateful application."
+custom_excerpt: "Deploying Polyaxon can be hard, not only because it requires using Kubernetes a tool that is not yet fully used by several teams, but also because it is a stateful application."
 featured: true
 author:
   name: "Polyaxon"
@@ -26,10 +26,10 @@ Polyaxon uses Kubernetes, a tool that is rapidly getting adopted by several team
 Polyaxon depends on some core components to function correctly, these core components include the API, the scheduler, other services for hptuning and for monitoring, 
 and third party services like a database for example. In addition to these core components, Polyaxon schedules jobs and experiments for every data scientist using the platform.
 
-In order to keep the core components highly responsive, we recommend that users should deployed them on separate nodes than those used for running user's workload. 
+In order to keep the core components highly responsive, we recommend that users should deploy them on separate nodes than those used for running the user's workload. 
 This ensures that, experiments and jobs won't consume CPU and/or memory that could be essential to the database or the API to be responsive.
 
-In order to achieve such behaviour Polyaxon provides a [node scheduling configuration](/configuration/custom-node-scheduling/).
+In order to achieve such behavior, Polyaxon provides a [node scheduling configuration](/configuration/custom-node-scheduling/).
 
 Here's an example of the minimum requirement that we suggest for a production cluster:
 
@@ -49,8 +49,8 @@ nodeSelector:
 
 You can also decide to just use at a minimum 2 selectors one for core components and for the workload to keep them separated.
 
-Several teams have advanced setup where they take advantage of Node Selectors, Affinity, and Tolerations to setup the default platform behaviour, 
-and use a custom scheduling per experiment/job when needed. Please refer to this section for full reference of the [node scheduling behaviour](/configuration/custom-node-scheduling/).
+Several teams have advanced setups where they take advantage of Node Selectors, Affinity, and Tolerations to setup the default platform behavior, 
+and use a custom scheduling per experiment/job when needed. Please refer to this section for full reference of the [node scheduling behavior](/configuration/custom-node-scheduling/).
 
 > N.B. make sure that Polyaxon's dependencies are not deployed on the same node where you are running your experiments and jobs, 
 this way you won't impact the stability of these components if one of the runs has a high CPU/Memory consumption or being preempted.
@@ -85,7 +85,7 @@ our [FAQ on using custom domain](/faq/use-custom-domain/), [Nginx Ingress](/inte
 
 Starting from Polyaxon v0.5, we recommend running all Polyaxon's services and workloads with a non-root/privileged user.
 
-Polyaxon exposes a security context to setup a user uid and a group gid to use for it's containers.
+Polyaxon exposes a security context to setup a user uid and a group gid to use for its containers.
 
 All mounted volumes will have a filesystem group with the same value as the gid provided by the user. 
 
@@ -99,6 +99,6 @@ Debugging workloads on Kubernetes can be challenging, we generally tell our user
 
 For our tracking API, Polyaxon respect a setting to [disable calls to the APIs](/docs/experimentation/tracking/#disabling-polyaxon-tracking-without-changing-the-code).
 
-We are also in the process of providing Local Runs for Polyaxon, where user will be able to generate dockerfiles locally, run them, and track the result similar to the in-cluster behaviour.
+We are also in the process of providing Local Runs for Polyaxon, where the user will be able to generate dockerfiles locally, run them, and track the result similar to the in-cluster behavior.
 
 

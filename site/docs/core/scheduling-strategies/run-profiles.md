@@ -20,7 +20,7 @@ sidebar: "core"
 Run Profile is a feature for injecting certain information into operations at compilation time to preset configuration for node scheduling, 
 queue routing, resources requirements and definition, connections, and access level control.
 
-## Why using run profile
+## Why using a run profile
 
 It's possible to set for each operation an 
 [environment section](/docs/core/specification/environment/), a [queue](/docs/core/specification/operation/#queue), a [container resources requirements](https://kubernetes.io/docs/concepts/containers/), 

@@ -1,9 +1,9 @@
 ---
 title: "Logs viewer is getting slower at rendering the logs."
 meta_title: "Logs viewer is getting slower at rendering the logs. - FAQ"
-meta_description: "Polyaxon provides two modes for viewing jobs, experiments, and services, we recommend using the full-view mode when the logs or dashboard are rendering large amount of data."
+meta_description: "Polyaxon provides two modes for viewing jobs, experiments, and services, we recommend using the full-view mode when the logs viewer or the dashboard is rendering a large amount of data."
 featured: false
-custom_excerpt: "Polyaxon provides two modes for viewing jobs, experiments, and services, we recommend using the full-view mode when the logs or dashboard are rendering large amount of data."
+custom_excerpt: "Polyaxon provides two modes for viewing jobs, experiments, and services, we recommend using the full-view mode when the logs viewer or the dashboard is rendering a large amount of data."
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
@@ -22,4 +22,4 @@ Polyaxon provides two modes for viewing jobs, experiments, and services:
  * Flyout mode
  * Full-view mode
  
-We recommend using the full-view mode when the logs or dashboards are rendering large amount of data.
+We recommend using the full-view mode when the logs viewer or the dashboard is rendering a large amount of data.

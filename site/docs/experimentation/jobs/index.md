@@ -17,7 +17,7 @@ Jobs are used to train machine learning models,
 process a dataset, build container images, execute generic tasks and can be used to perform a variety of functions 
 from compiling a model to running an ETL operation.
 
-In order ro run a job you will need to create a component with a `kind: job` as a runtime:
+In order to run a job you will need to create a component with a `kind: job` as a runtime:
 
 ```yaml
 kind: component
@@ -29,7 +29,7 @@ run:
     command: [python, model.py]
 ```
 
-Same example in Python.
+The same example in Python.
 
 ```python
 from polyaxon.polyflow import V1Component, V1Job

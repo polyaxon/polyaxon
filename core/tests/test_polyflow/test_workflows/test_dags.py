@@ -762,7 +762,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["E"].upstream == {"A"}
         assert config.dag["E"].downstream == set()
 
-        # Adding the same ops should not alter the behaviour
+        # Adding the same ops should not alter the behavior
         config.add_ops([operation_d, operation_e])
 
         # Process the dag
@@ -941,7 +941,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["E"].upstream == {"A"}
         assert config.dag["E"].downstream == set()
 
-        # Adding the same ops should not alter the behaviour
+        # Adding the same ops should not alter the behavior
         config.add_op(operation_d)
         config.add_op(operation_e)
 

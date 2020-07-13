@@ -16,7 +16,7 @@ sidebar: "setup"
 
 Polyaxon ships with a default redis based on the stable [Helm chart](https://github.com/helm/charts/tree/master/stable/redis).
 
-You can check the chart values to extend it's configuration.
+You can check the chart values to extend its configuration.
 
 ## External Redis
 
@@ -63,7 +63,7 @@ please follow this [integration guide](/integrations/redis/).
 
 ## Using Redis as broker
 
-You can also use Redis for as async worker broker, please check this section on how to alter the [default broker behaviour](/configuration/broker/).
+You can also use Redis for as async worker broker, please check this section on how to alter the [default broker behavior](/configuration/broker/).
 
 ## Scheduling
 

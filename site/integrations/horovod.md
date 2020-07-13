@@ -27,4 +27,4 @@ Polyaxon provides support for Horovod via the [MPIJob Operator](/integrations/mp
  
 ## Define the distributed topology
 
-Please check the guide [Running Horovod](https://github.com/horovod/horovod#running-horovod) for more details how to set a Horovod experiment with MPI. 
+Please check the guide [Running Horovod](https://github.com/horovod/horovod#running-horovod) for more details on how to set a Horovod experiment with MPI. 

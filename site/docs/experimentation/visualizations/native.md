@@ -42,7 +42,7 @@ Polyaxon dashboard provides several visualizations and charts based on events lo
 
 ## Multi-runs
  
-For multi-runs you can compare metrics and curves from several runs, as well as chart for hyperparameter values and metrics:
+For multi-runs you can compare metrics and curves from several runs, as well as charts for hyperparameter values and metrics:
 
 ![runs-comparison-new](../../../../content/images/dashboard/comparison/charts-new.png)
 

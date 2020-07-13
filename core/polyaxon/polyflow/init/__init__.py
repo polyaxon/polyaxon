@@ -79,7 +79,7 @@ class V1Init(BaseConfig, polyaxon_sdk.V1Init):
     provide their own containers and run any custom init containers which can contain utilities
     or setup scripts not present in the main container.
 
-    By default all built-in handlers will mount and initialize data under the path
+    By default, all built-in handlers will mount and initialize data under the path
     `/plx-context/artifacts/{{connection-name}}` unless the user passes a custom `path`.
 
     Args:

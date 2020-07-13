@@ -16,6 +16,31 @@
 
 from polyaxon import settings
 from polyaxon.proxies.schemas.base import get_config
+from polyaxon.proxies.schemas.urls import get_ssl_server_name, has_https
+
+STATIC_PROXY_OPTIONS = """
+location /static/ {{
+    {ssl_server_name}
+    proxy_pass {service};
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Origin-URI $request_uri;
+    proxy_set_header X-Origin-Method $request_method;
+}}
+"""
+
+
+def get_static_proxy_config():
+    return get_config(
+        options=STATIC_PROXY_OPTIONS,
+        indent=0,
+        service=settings.PROXIES_CONFIG.static_url.rstrip("/") + "/",
+        ssl_server_name=get_ssl_server_name(settings.PROXIES_CONFIG.static_url),
+    )
+
 
 STATIC_LOCATION_OPTIONS = """
 location /static/ {{
@@ -69,7 +94,13 @@ def get_archives_root_location_config():
 
 
 def get_api_locations_config():
-    config = [get_static_location_config(), get_tmp_location_config()]
+    if settings.PROXIES_CONFIG.static_url and has_https(
+        settings.PROXIES_CONFIG.static_url
+    ):
+        static_location = get_static_proxy_config()
+    else:
+        static_location = get_static_location_config()
+    config = [static_location, get_tmp_location_config()]
     return "\n".join(config)
 
 

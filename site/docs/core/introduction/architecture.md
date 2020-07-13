@@ -26,9 +26,9 @@ Polyaxon is structured as a modern, decoupled, micro-service oriented architectu
 7. **A CI system to trigger experiments/hyperparameter tuning/pipelines automatically based on some event and track their execution and report results to users**
 
 These components work together to make every Polyaxon deployment function smoothly, 
-but because they're decoupled there's plenty of room for customisation.
+but because they're decoupled there's plenty of room for customization.
 
-In fact users can decide for example to deploy only the core and using an external tracking service, or replace the built-in scheduler, pipeline, and optimization engine with other platforms.
+In fact, users can decide for example to deploy only the core and using an external tracking service, or replace the built-in scheduler, pipeline, and optimization engine with other platforms.
 
 
 ## How things fit together
@@ -54,7 +54,7 @@ you need to understand how Polyaxon abstract the best practices of data science 
 
 ![Polyaxon platform](../../../../content/images/concepts/architecture/polyaxon_platform.png)
 
-Polyaxon runs both in the cloud and on premise, and provides access via:
+Polyaxon runs both in the cloud and on-premise, and provides access via:
 
  * Polyaxon command line interface
  * Polyaxon dashboard

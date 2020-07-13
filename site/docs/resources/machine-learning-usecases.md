@@ -11,7 +11,7 @@ tags:
 
 ## Machine learning use-cases
 
-Polyaxon develops a single platform to help companies solve problems in any vertical with their data and model strategy in any industry .
+Polyaxon develops a single platform to help companies solve problems in any vertical with their data and model strategy in any industry.
 
 ### Machine learning use-cases by vertical
 

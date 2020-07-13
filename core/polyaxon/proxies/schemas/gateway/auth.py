@@ -15,11 +15,9 @@
 # limitations under the License.
 
 from polyaxon import settings
-from polyaxon.api import AUTH_V1
+from polyaxon.api import AUTH_V1_LOCATION
 from polyaxon.proxies.schemas.base import get_config
-from polyaxon.proxies.schemas.gateway.urls import get_service_url, get_ssl_server_name
-
-AUTH_API = "/" + AUTH_V1 + "/"
+from polyaxon.proxies.schemas.urls import get_service_url, get_ssl_server_name
 
 AUTH_OPTIONS = """
     auth_request     {auth_api};
@@ -31,7 +29,7 @@ def get_auth_config():
     return get_config(
         options=AUTH_OPTIONS if settings.PROXIES_CONFIG.auth_enabled else "",
         indent=0,
-        auth_api=AUTH_API,
+        auth_api=AUTH_V1_LOCATION,
     )
 
 
@@ -62,7 +60,7 @@ def get_auth_location_config(resolver: str):
         options=AUTH_LOCATION_CONFIG if settings.PROXIES_CONFIG.auth_enabled else "",
         indent=0,
         service=service,
-        auth_api=AUTH_API,
+        auth_api=AUTH_V1_LOCATION,
         resolver=resolver,
         ssl_server_name=get_ssl_server_name(service),
     )

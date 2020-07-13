@@ -11,8 +11,8 @@ tags:
 
 > We will update this document to reflect any change in our release mechanism.
 
-Polyaxon is using a SemVer ([Semantic Versioning](https://semver.org/)) for all of its open source releases — major versions indicates breaking, 
-backward-incompatible changes; minor versions means new features, and patch releases are bug fixes only.
+Polyaxon is using a SemVer ([Semantic Versioning](https://semver.org/)) for all of its open-source releases — major versions indicate breaking, 
+backward-incompatible changes; minor versions mean new features, and patch releases are bug fixes only.
 
 ## Benefits
 
@@ -31,5 +31,5 @@ New versions will be released:
 
 ## Other components
 
-In addition to Polyaxon's core functionality, we develop several other aspects and components that we believe have major impact on the productivity of our users. 
+In addition to Polyaxon's core functionality, we develop several other aspects and components that we believe have a major impact on the productivity of our users. 
 These components will be marked separately with alpha/beta until they reach a stable state.

@@ -2,7 +2,7 @@
 title: "Agents"
 sub_link: "ui/agents"
 meta_title: "Polyaxon management tools and UI - Agents"
-meta_description: "Polyaxon Agent is the tool that allows to orchestrate runs on user's clusters."
+meta_description: "Polyaxon Agent is the tool that allows orchestrating runs on user's clusters."
 tags:
     - concepts
     - polyaxon
@@ -12,7 +12,7 @@ sidebar: "management"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-Polyaxon Agent is the tool that allows to orchestrate runs on the remote clusters.
+Polyaxon Agent is the tool that allows orchestrating runs on the remote clusters.
 
 Every organization comes with a default agent.
 

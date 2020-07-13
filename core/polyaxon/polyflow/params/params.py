@@ -131,7 +131,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
 
     When a param is passed from the CLI or directly in the YAML/Python specification,
-    it will be validated against the [inputs / outputs](/docs/core/specification/io/)
+    it will be validated against the [inputs/outputs](/docs/core/specification/io/)
     defined in the [component](/docs/core/specification/component/)
 
     Args:
@@ -239,8 +239,8 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     ### contextOnly
 
     A flag to signal to Polyaxon that this param should not be validated
-    against the inputs / outputs, and it's only used to resolve some
-    information and inject it to the context.
+    against the inputs/outputs, and it's only used to resolve some
+    information and inject it into the context.
 
     ```yaml
     >>> params:
@@ -257,7 +257,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     >>>          strides: [1, 1]
     ```
 
-    Polyaxon will not check if this param was required by an input / output,
+    Polyaxon will not check if this param was required by an input/output,
     and will inject it automatically in the context to be used.
     You can use for example `{{ convolutions.conv1 }}` in the specification.
     """

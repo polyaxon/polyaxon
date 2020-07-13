@@ -52,7 +52,7 @@ $ polyaxon command --help
 ## Caching
 
 When using the Polyaxon CLI to run a command requiring a project or a run,
-you can always specify the values for these options, example:
+you can always specify the values for these options, for example:
 
  * `$ polyaxon project --project=user_1/project_10 get`
  * `$ polyaxon ops --project=user_1/project_10 --uid=UUID get`
@@ -60,7 +60,7 @@ you can always specify the values for these options, example:
 
 Polyaxon CLI allows also you to omit these options for project and runs, the CLI does the following:
 
- 1. When an username is missing, the username of the logged-in user is used, if no use is found the default owner is used.
+ 1. When a username is missing, the username of the logged-in user is used, if no use is found the default owner is used.
  2. When a project name is missing, the name of the currently initialized project is used.
  3. When a run is missing, the last value is used.
  4. If no values are found, the CLI will show an error.
@@ -76,15 +76,15 @@ All commands and sub-command of `project` and `ops` support caching:
  
 ## Caching visibility
 
-By default Polyaxon will cache all information on the global path, if you want to enable caching on local project folder(s), you can se the init command:
+By default, Polyaxon will cache all information on the global path, if you want to enable caching on local project folder(s), you can use the init command:
 
 ```bash
 $ polyaxon init PROJECT_NAME
 ``` 
 
-This will create a local cache folder for the project and it's runs.
+This will create a local cache folder for the project and its runs.
 
-Anytime you use the cli, it will look first locally, then default to global path.
+Anytime you use the cli, it will look first locally, then default to the global path.
 
 ## Switching context
 

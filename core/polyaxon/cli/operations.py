@@ -42,7 +42,7 @@ from polyaxon.utils.formatting import (
     get_runs_with_keys,
     list_dicts_to_tabulate,
 )
-from polyaxon.utils.http_utils import clean_host
+from polyaxon.utils.http_utils import clean_host, polyaxon_ui
 from polyaxon.utils.validation import validate_tags
 
 
@@ -719,7 +719,7 @@ def dashboard(ctx, yes, url):
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
-    dashboard_url = clean_host(settings.CLIENT_CONFIG.host)
+    dashboard_url = polyaxon_ui(settings.CLIENT_CONFIG.host)
     run_url = "{}/{}/{}/runs/{}/".format(dashboard_url, owner, project_name, run_uuid)
     if url:
         Printer.print_header("The dashboard is available at: {}".format(run_url))
@@ -768,11 +768,12 @@ def service(ctx, yes, external, url):
     client.refresh_data()
     if client.run_data.kind != V1RunKind.SERVICE:
         Printer.print_warning(
-            "Command expected a operations of "
+            "Command expected an operation of "
             "kind `service` received kind: {}!".format(client.run_data.kind)
         )
         sys.exit(1)
-    dashboard_url = clean_host(settings.CLIENT_CONFIG.host)
+    dashboard_url = polyaxon_ui(settings.CLIENT_CONFIG.host)
+    host = clean_host(settings.CLIENT_CONFIG.host)
 
     Printer.print_header("Waiting for running condition ...")
     client.wait_for_condition(
@@ -796,7 +797,7 @@ def service(ctx, yes, external, url):
     if client.run_data.meta_info.get("rewrite_path", False):
         service_endpoint = REWRITE_SERVICES_V1
     external_run_url = "{}/{}/{}/{}/{}/runs/{}/".format(
-        dashboard_url, service_endpoint, namespace, owner, project_name, run_uuid
+        host, service_endpoint, namespace, owner, project_name, run_uuid
     )
     if url:
         Printer.print_header("The service will be available at: {}".format(run_url))

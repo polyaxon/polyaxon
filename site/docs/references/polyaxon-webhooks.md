@@ -27,7 +27,7 @@ or as complex as a triggering a pipeline on a different infrastructure.
 ## Setting up a webhook
 
 Configuring webhooks can be done through the deployment config file. 
-The only required fields to setup a new webhook are a trigger event and target URL to notify. 
+The only required fields to set up a new webhook are a trigger event and a target URL to notify. 
 This target URL is your application URL, 
 the endpoint where the POST request will be sent. 
 Of course, this URL must be reachable from the Internet.
@@ -40,7 +40,7 @@ and anything returned in the body of the response will be discarded.
 
 ## Available events
 
-Currently Polyaxon has support a couple of events on which webhook can be setup, 
+Currently Polyaxon supports a couple of events on which webhook can be setup, 
 but we are working on adding more:
 
 |Event|Description|

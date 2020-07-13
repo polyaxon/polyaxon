@@ -21,7 +21,7 @@ from polyaxon.client.transport import Transport
 
 
 class PolyaxonClient:
-    """Auto-configurable and high level base client that abstract
+    """Auto-configurable and high-level base client that abstract
     the need to set a configuration for each service.
 
     PolyaxonClient comes with logic

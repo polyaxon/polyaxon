@@ -14,27 +14,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.views.generic import TemplateView
+from django.http import HttpResponse
+from django.views.generic import View
 
 
-class TemplateStatusView(TemplateView):
+class StatusView(View):
     status_code = 200
 
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context, status=self.status_code)
+        return HttpResponse(status=self.status_code)
 
 
-class Handler404View(TemplateStatusView):
-    template_name = "common/404.html"
+class Handler404View(StatusView):
     status_code = 404
 
 
-class Handler50xView(TemplateStatusView):
-    template_name = "common/50x.html"
+class Handler50xView(StatusView):
     status_code = 500
 
 
-class Handler403View(TemplateStatusView):
-    template_name = "common/403.html"
+class Handler403View(StatusView):
     status_code = 403

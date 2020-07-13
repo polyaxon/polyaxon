@@ -26,4 +26,4 @@ You can easily add many private registries to Polyaxon to pull and push private 
 
 ## Add your private docker registries credentials
 
-You should just follow your provider's documentation and create a secret and / or config map. 
+You should just follow your provider's documentation and create a secret and/or config map. 

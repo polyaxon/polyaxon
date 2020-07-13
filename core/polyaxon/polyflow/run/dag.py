@@ -58,14 +58,14 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     A dag's main goal is to describe and run several operations
     necessary for a Machine Learning (ML) workflow.
 
-    A dag executes a dependency graph of operations, each operation runs a Kubernetes privmitive
+    A dag executes a dependency graph of operations, each operation runs a Kubernetes primitive
     described in its component.
 
     Dags are defined in Polyaxon as a [component runtime](/docs/core/specification/component/#run),
     which makes them compatible with all knowledge used for running other runtimes:
       * They can be defined in reusable components and can be registered in the Component Hub.
       * They get executed using operations.
-      * They can be parametrised similar to jobs and services.
+      * They can be parametrized similar to jobs and services.
       * Since they are defined as components' runtimes, and they run a graph of other components,
         they can be nested natively.
       * They can leverage all [pipeline helpers](/docs/automation/helpers/).
@@ -131,7 +131,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     ### operations
 
-    A List of operations to run with their dependency definition.
+    A list of operations to run with their dependency definition.
     If the operations are defined with no dependencies or no params are
     passed from one operation to another, the operations will be running in parallel following the
     concurrency and other queue priority definitions.
@@ -253,7 +253,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     #### conditions
 
-    Conditions are an advance tool for resolving dependencies between operations.
+    Conditions are an advanced tool for resolving dependencies between operations.
     Conditions take advantage of information resolved in the context to decide if an operation
     can be started, and they can be used to define branching strategies.
 
@@ -274,7 +274,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
     ### references
 
-    A List of operations and their dependency definition.
+    A list of operations and their dependency definition.
     If operations are defined with dependencies or no params are
     passed from one operation to another, the operations will be running in parallel following the
     concurrency and other queue priority definitions.

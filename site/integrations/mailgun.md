@@ -23,7 +23,7 @@ Get email notifications when an experiment, a job, or a build is finished using 
 
 ## Start by creating a mailgun account
 
-[mailgun](https://www.mailgun.com/sending-email) makes it easy to setup an outgoing email. It has a generous free tier that we recommend you checking out.
+[mailgun](https://www.mailgun.com/sending-email) makes it easy to set up an outgoing email. It has a generous free tier that we recommend you checking out.
 
 ## Add your Email notification using mailgun to Polyaxon deployment config
 

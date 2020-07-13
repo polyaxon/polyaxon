@@ -1,9 +1,9 @@
 ---
 title: "Do you provide training and help with the installation and usage of Polyaxon?"
 meta_title: "Do you provide training and help with the installation and usage of Polyaxon? - FAQ"
-meta_description: "Yes, we offer trainings and workshop sessions."
+meta_description: "Yes, we offer training and workshop sessions."
 featured: true
-custom_excerpt: "Yes, we offer trainings and workshop sessions"
+custom_excerpt: "Yes, we offer training and workshop sessions"
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
@@ -16,5 +16,5 @@ tags:
     - enterprise
 ---
 
-Yes, we offer trainings and workshop sessions, please reach out to us at: _**contact@polyaxon.com**_
+Yes, we offer training and workshop sessions, please reach out to us at: _**contact@polyaxon.com**_
 

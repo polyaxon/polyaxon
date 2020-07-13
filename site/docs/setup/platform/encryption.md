@@ -11,7 +11,7 @@ tags:
 sidebar: "setup"
 ---
 
-Polyaxon might need to save some sensitive information in the database, such a keys. 
+Polyaxon might need to save some sensitive information in the database, such as keys. 
 
 By default Polyaxon uses Kubernetes secrets for accessing all user's provided secrets, 
 but sometime it might need to also store some additional information. 

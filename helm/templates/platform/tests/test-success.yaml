@@ -17,5 +17,5 @@ spec:
   - name: test-success-job
     image: busybox
     command: ["wget"]
-    args:  ['{{ template "api.host" . }}:{{ template "api.port" . }}']
+    args:  ['{{ template "proxies.api.host" . }}:{{ template "proxies.api.port" . }}']
 {{- end }}

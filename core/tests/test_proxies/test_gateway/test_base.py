@@ -57,9 +57,9 @@ proxy_read_timeout 650;
 keepalive_requests 10000;
 
 
-error_page 500 502 503 504 /50x.html;
-error_page 401 403 /permission.html;
-error_page 404 /404.html;
+error_page 500 502 503 504 /static/errors/50x.html;
+error_page 401 403 /static/errors/permission.html;
+error_page 404 /static/errors/404.html;
 
 
 location /healthz/ {
@@ -109,7 +109,43 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
 }
 
 
-location / {
+location = / {
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /api/v1/ {
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /ui/ {
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /static/ {
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -156,9 +192,9 @@ proxy_read_timeout 650;
 keepalive_requests 10000;
 
 
-error_page 500 502 503 504 /50x.html;
-error_page 401 403 /permission.html;
-error_page 404 /404.html;
+error_page 500 502 503 504 /static/errors/50x.html;
+error_page 401 403 /static/errors/permission.html;
+error_page 404 /static/errors/404.html;
 
 
 location /healthz/ {
@@ -233,7 +269,59 @@ location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\
 }
 
 
-location / {
+location = / {
+    resolver coredns.kube-system.svc.cluster.local valid=5s;
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /api/v1/ {
+    resolver coredns.kube-system.svc.cluster.local valid=5s;
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /ui/ {
+    resolver coredns.kube-system.svc.cluster.local valid=5s;
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /static/ {
+    resolver coredns.kube-system.svc.cluster.local valid=5s;
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /_admin/ {
     resolver coredns.kube-system.svc.cluster.local valid=5s;
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_http_version 1.1;
@@ -245,6 +333,7 @@ location / {
     proxy_buffering off;
 }
 """  # noqa
+        settings.PROXIES_CONFIG.ui_admin_enabled = True
         settings.PROXIES_CONFIG.auth_enabled = True
         settings.PROXIES_CONFIG.auth_use_resolver = True
         settings.PROXIES_CONFIG.api_use_resolver = True

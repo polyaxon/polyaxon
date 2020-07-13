@@ -13,14 +13,14 @@ sidebar: "management"
 A `Project` in Polyaxon is very similar to a project in GitHub,
 it aims at organizing your efforts to solve a specific problem.
 
-## Create new project
+## Create a new project
 
 To create a project, you can either use the Polyaxon Dashboard or the Polyaxon CLI.
 
-The projects consist of a required argument `--name`, an optional argument `--description`,
+A project consists of a required argument `--name`, an optional argument `--description`,
 and a flag `--private` with a default value set to `True`.
 
-The projects could be `private` (default behaviour) or `public`.
+Projects could be `private` (default behavior) or `public`.
 
 
 ```bash
@@ -30,7 +30,7 @@ $ polyaxon project create --name=mnist --description='Classification of handwrit
 > For more details about this command please run `polyaxon project create --help`, 
 or check the [command reference](/references/polyaxon-cli/project/#create)
 
-The project is created by default `private`, to make it private please add `--public`
+All projects are created by default `private`, you can change this behavior by adding `--public`
 
 To create projects with the UI
 
@@ -55,7 +55,7 @@ The general settings page lets you change the project's details
 
 ## Default settings
 
-By default when a project is created, it will be accessible to all the organization's members following their roles on the organizations level.
+By default, when a project is created, it will be accessible to all the organization's members following their roles on the organization level.
 In order to restrict teams, connections, profiles, ..., you need to manually define the resources and teams that can access using the settings tabs. 
 
 Example restricting teams access

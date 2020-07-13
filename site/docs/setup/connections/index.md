@@ -24,7 +24,7 @@ a volume, a git repo, a container registry, a slack channel, and other external 
 
 Polyaxon is built on top of Kubernetes, so you can and in some cases will have to configure 
 access to some resources manually.
-However for many use cases, for example connecting to an S3 bucket, 
+However for many use cases, for example, connecting to an S3 bucket, 
 using connections will reduce the amount of boilerplate in your jobs' specification files.
 
 Every Polyaxon Agent deployment can configure:
@@ -81,11 +81,11 @@ The `artifactsStore` must be of kind:
 
 For more details please check the [artifacts store section](/docs/setup/connections/artifacts/).
 
-### Default behaviour
+### Default behavior
 
 When the user does not provide any `artifactsStore` configuration, 
-the default behaviour is to use a local path on the host node for storing outputs and logs, 
-this behaviour is oftentimes sufficient for users who are just trying the platform, 
+the default behavior is to use a local path on the host node for storing outputs and logs, 
+this behavior is oftentimes sufficient for users who are just trying the platform, 
 and don't want to deal with configuration steps.
 
 ## Connections
@@ -103,9 +103,9 @@ or you can duplicate some or all connections in some namespaces and clusters.
 
 For more details please check the [connection specification](/docs/setup/connections/specification/). 
 
-### Default behaviour
+### Default behavior
 
-By default this catalog is empty, and is not required for Polyaxon to function correctly.
+By default, this catalog is empty and is not required for Polyaxon to function correctly.
 
 ## NotificationConnections
 

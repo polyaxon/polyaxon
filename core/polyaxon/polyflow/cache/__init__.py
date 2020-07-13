@@ -33,7 +33,7 @@ class CacheSchema(BaseCamelSchema):
 
 class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
     """Polyaxon provides a caching layer for operation executions,
-    this behaviour is enabled by default for all runs executed in the context of a DAG,
+    this behavior is enabled by default for all runs executed in the context of a DAG,
     a hyperparameter tuning, or a mapping.
 
     When runs are cached their outputs will be reused for future
@@ -78,7 +78,7 @@ class V1Cache(BaseConfig, polyaxon_sdk.V1Cache):
 
     ### ttl
 
-    the default caching behaviour is to persist and reuse a run's results everytime a new operation
+    the default caching behavior is to persist and reuse a run's results everytime a new operation
     with similar characteristics is scheduled to run.
 
     In order to invalidate the cache after a certain period of time you can

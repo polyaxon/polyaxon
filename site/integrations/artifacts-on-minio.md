@@ -1,7 +1,7 @@
 ---
 title: "Artifacts on Minio"
 meta_title: "Minio"
-meta_description: "Using Minio buckets to organize your jobs outputs and experiment artifacts. Polyaxon allows users to connect to one or multiple buckets on Minio to store job outputs and experiment artifacts."
+meta_description: "Using Minio buckets to organize your jobs' outputs and experiments' artifacts. Polyaxon allows users to connect to one or multiple buckets on Minio to store job outputs and experiment artifacts."
 custom_excerpt: "Minio is a high performance distributed object storage server, designed for large-scale private cloud infrastructure."
 image: "../../content/images/integrations/minio.png"
 author:
@@ -23,9 +23,9 @@ You can use one or multiple buckets on Minio to store logs, job outputs, and exp
 
 ## Deploy Minio
 
-Before using Minio, you need to deployed it and create a bucket to host your outputs.
+Before using Minio, you need to deploy it and create a bucket to host your outputs.
 
-For that you can use the Helm stable chart: `helm install stable/minio --name=plx-minio --namespace=polyaxon`
+For that, you can use the Helm stable chart: `helm install stable/minio --name=plx-minio --namespace=polyaxon`
 
 ## Create a bucket on Minio
 

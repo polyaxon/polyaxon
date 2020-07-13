@@ -18,8 +18,8 @@ visibility: public
 status: EE
 ---
 
-Get in-depth metrics usage of your Polyaxon deployment, number of experiments, jobs, builds, and theirs statuses directly to Segment for further analysis. 
-[Segment](https://segment.com/) is a platform for collecting and analysing your on-premise Polyaxon deployment. 
+Get in-depth metrics usage of your Polyaxon deployment, number of experiments, jobs, builds, and their statuses directly to Segment for further analysis. 
+[Segment](https://segment.com/) is a platform for collecting and analyzing your on-premise Polyaxon deployment. 
 
 ## Set up a new Segment source
 

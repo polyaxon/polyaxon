@@ -26,25 +26,25 @@ $ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-s
 
 `polyaxon run` is how the CLI starts new executions of your configuration files, you can also use the UI, the API, or the clients to submit new jobs and experiments.
 
-The run command consumes configuration files, also called polyaxonfile, from different sources:
+The run command consumes configuration files, also called Polyaxonfile, from different sources:
 
  * From local files using the `-f` flag: 
     * `polyaxon run -f path/to/polyaxonfile.yaml`
     * `polyaxon run -f path/to/polyaxonfile.yml -f path/to/polyaxonfile_override.yml`
- * From local python files using `--python-module` or `-pm` flag:
+ * From local Python files using `--python-module` or `-pm` flag:
     * `polyaxon run -pm path/to/pythonfile.py` in this case Polyaxon will look for a variable `main` which will contain your component.
-    * `polyaxon run -pm path/to/pythonfile.py:component-name` if you have multiple components in your python file you can specify which one to run.
+    * `polyaxon run -pm path/to/pythonfile.py:component-name` if you have multiple components in your Python file you can specify which one to run.
  * From urls using the `--url` flag: 
     * `polyaxon run --url=https://public-site.com/polyaxonfile.yaml` this is the command we used to avoid cloning the project locally.
  * From a registry `--hub` flag:
     * `polyaxon run --hub=tensorboard:single-run` this is the command we used to run the Tensorboard.
-      Oftentimes, component can be reusable and generic, some of these components are distributed in a public registry.
+      Oftentimes, components can be reusable and generic, some of these components are distributed in a public registry.
       Polyaxon also provides a managed registry integrated with the auth, access management, and team management, please check [Component Hub docs](/docs/management/component-hub/).
   
 
-## Understanding the polyaxonfile 
+## Understanding the Polyaxonfile 
 
-The polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/Typescript, 
+The Polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/Typescript, 
 files to check that they can be compiled and executed by Polyaxon.   
 
 Let's first look at the content of the url:
@@ -64,7 +64,7 @@ run:
     command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/model.py"]
 ```
 
-This is a simple polyaxonfile.
+This is a simple Polyaxonfile.
  
 the file can be made simpler by removing the optional fields `name`, `description`, and `tags`, 
 and if the docker image had an entry point, the file would have looked like this:
@@ -78,8 +78,8 @@ run:
     image: polyaxon/polyaxon-quick-start
 ```
 
-Every polyaxonfile must have a kind [component](/docs/core/specification/component/) or [operation](/docs/core/specification/operation/).
-In this section we will explore the component and the next part of the tutorial we will dive into the operation kind. 
+Every Polyaxonfile must have a kind [component](/docs/core/specification/component/) or [operation](/docs/core/specification/operation/).
+In this section, we will explore the component, and in the next part of the tutorial we will dive into the operation kind. 
 
  
 This simple file runs a container with a custom image `polyaxon/polyaxon-quick-start`, the image is based on Tensorflow, and a command that executes our custom code.
@@ -88,7 +88,7 @@ every time we run this component, Polyaxon will clone the repo and inject it in 
 
 > Please check this section to learn more about [initializers](/docs/core/specification/init/)
 
-In nutshell what Polyaxon provides is a simple way to schedule and run containerized workload.
+In a nutshell, what Polyaxon provides is a simple way to schedule and run containerized workload.
 
 > We will [come back](/docs/core/quick-start/builds/) to the docker image to learn how to build containers later, 
  for now let's assume that we have an image with all requirements installed
@@ -142,7 +142,7 @@ In this Python file you can see that we are importing some information from `pol
  * We are important a tracking module
  * We are loading some Keras callbacks
 
-You can also see that this is a simple TF.Keras model, and we have a small section where we use `polyaxon.tracking` module to track information about the run. 
+You can also see that this is a simple TF.Keras model and we have a small section where we use `polyaxon.tracking` module to track information about the run. 
 In this case the keras callbacks, and one line for getting a path for logging Tensorboard information. Polyaxon will take care of archiving the assets, outputs, 
 logs to the artifacts store (NFS, S3, GCS, Azure, ...) you configured in an async way without impacting your model training. 
 
@@ -160,7 +160,7 @@ Let's start a new experiment, we can just run the same command as before.
 But we might want to change some parameters, e.g. the learning rate or the dropout for instance.
 
 This component does not provide inputs/outputs definition, 
-so the only way to change the parameters is by changing the python 
+so the only way to change the parameters is by changing the Python 
 file and pushing a new commit, then starting a new experiment, which is not ideal, especially that our program has arguments.
 
 ## Inputs / Outputs
@@ -242,7 +242,7 @@ If you initialized a folder run
 $ polyaxon ops ls
 ```
 
-Otherwise you need to run
+Otherwise, you need to run
 
 ```bash
 $ polyaxon ops -p quick-start ls
@@ -258,7 +258,7 @@ If the operation is cached you can run:
 $ polyaxon ops logs
 ```
 
-This will return the results for the last operation you executed, otherwise you need to pass a UUID to get the logs for a specific run:
+This will return the results for the last operation you executed, otherwise, you need to pass a UUID to get the logs for a specific run:
 
 ```bash
 $ polyaxon ops -p quick-start -uuid UUID logs

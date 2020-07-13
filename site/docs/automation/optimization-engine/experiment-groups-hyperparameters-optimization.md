@@ -27,7 +27,7 @@ you can use the [matrix section](/references/yaml-specification/hptuning/#matrix
 
 The first thing you need to do is to update the default `polyaxonfile.yml` that was generated.
 
-You need to set the required information, for example if the code requires `tensorflow` and `sklearn`,
+You need to set the required information, for example, if the code requires `tensorflow` and `sklearn`,
 the polyaxonfile.yml `build` section could look something like this
 
 ```yaml
@@ -157,8 +157,8 @@ we will do something different this time and override this value with a new file
 
 Create a new file, let's call it polyaxonfile_override.yml
 
-> You can call your polyaxonfiles anything you want. 
-By default Polyaxon commands look for files called `polyaxonfile.yml`.
+> You can call your Polyaxonfiles anything you want. 
+By default, Polyaxon commands look for files called `polyaxonfile.yml`.
 If you call your files differently or want to override values, you need to use the option `-f`
 
 ```bash
@@ -255,7 +255,7 @@ In this case, the scheduler will not start any more experiments, if one of the e
 
 First, we can double check that our groups were created.
 
-For that you can use the Polyaxon dashboard or Polyaxon CLI.
+For that, you can use the Polyaxon dashboard or Polyaxon CLI.
 
 ```bash
 $ polyaxon project groups

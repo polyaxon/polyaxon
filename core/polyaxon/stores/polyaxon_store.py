@@ -35,7 +35,7 @@ class PolyaxonStore(StoreMixin):
 
     Used to download data from Polyaxon streams apis.
 
-    By default this store requires a valid run.
+    By default, this store requires a valid run.
     """
 
     URL = "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact"

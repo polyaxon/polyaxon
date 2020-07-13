@@ -1,9 +1,9 @@
 ---
 title: "What is Polyaxon?"
 meta_title: "What is Polyaxon? - FAQ"
-meta_description: "Polyaxon is platform that tries to simplify Deep Learning and Machine Learning workflows, and makes it reproducible, scalable, and portable."
+meta_description: "Polyaxon is a platform that tries to simplify Deep Learning and Machine Learning workflows, and makes it reproducible, scalable, and portable."
 featured: false
-custom_excerpt: "Polyaxon is platform that tries to simplify Deep Learning and Machine Learning workflows, and makes it reproducible, scalable, and portable."
+custom_excerpt: "Polyaxon is a platform that tries to simplify Deep Learning and Machine Learning workflows, and makes it reproducible, scalable, and portable."
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
@@ -16,4 +16,4 @@ tags:
     - polyaxon
 ---
 
-Polyaxon is platform that tries to simplify Deep Learning and Machine Learning workflows, and makes it reproducible, scalable, and portable.
+Polyaxon is a platform that tries to simplify Deep Learning and Machine Learning workflow and makes it reproducible, scalable, and portable.

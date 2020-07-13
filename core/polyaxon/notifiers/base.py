@@ -119,7 +119,7 @@ class BaseNotifier:
     def _prepare(cls, context: Dict) -> Dict:
         """This is where you should alter the context to fit the action.
 
-        Default behaviour will leave the context as it is.
+        Default behavior will leave the context as it is.
         """
         if not context and cls.raise_empty_context:
             raise PolyaxonNotificationException(

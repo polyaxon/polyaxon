@@ -20,6 +20,7 @@ import click
 
 from polyaxon import settings
 from polyaxon.logger import clean_outputs
+from polyaxon.utils.http_utils import polyaxon_ui
 
 
 @click.command()
@@ -37,7 +38,7 @@ from polyaxon.logger import clean_outputs
 @clean_outputs
 def dashboard(yes, url):
     """Open dashboard in browser."""
-    dashboard_url = settings.CLIENT_CONFIG.host
+    dashboard_url = polyaxon_ui(settings.CLIENT_CONFIG.host)
     if url:
         click.echo(dashboard_url)
         sys.exit(0)

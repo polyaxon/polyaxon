@@ -2,7 +2,7 @@
 title: "Polyaxonfile Specification"
 sub_link: "specification"
 meta_title: "Polyaxonfile Specification - Polyaxon References"
-meta_description: "In order to use Polyaxon, users need to create YAML/Json polyaxonfiles. These files use a specification to describe how experiments, experiment groups, jobs, plugins should run on Polyaxon."
+meta_description: "In order to use Polyaxon, users need to create YAML/Json Polyaxonfiles. These files use a specification to describe how experiments, experiment groups, jobs, plugins should run on Polyaxon."
 visibility: public
 status: published
 tags:
@@ -14,7 +14,7 @@ sidebar: "core"
 
 ![polyaxonfile architecture](../../../../content/images/references/specification/polyaxonfile.png)
 
-In order to schedule runs on Polyaxon, users need to create polyaxonfiles. 
+In order to schedule runs on Polyaxon, users need to create Polyaxonfiles. 
 These files use a specification to describe how jobs, distributed jobs, services, parallel executions, and pipelines should run on Polyaxon.
 
 The Polyaxon specification can be authored in YAML, json, python, and partially in Go, Typescript, and Java.

@@ -252,8 +252,16 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     the queue of the component will be used if it exists.
 
     ```yaml
-    >>> operation:
-    >>>   queue: test
+    >>> component:
+    >>>   queue: agent-name/queue-name
+    ```
+
+    If the agent name is not specified, Polyaxon will resolve the name of the queue
+    based on the default agent.
+
+    ```yaml
+    >>> component:
+    >>>   queue: queue-name
     ```
 
     ### cache
@@ -300,9 +308,9 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ### params
 
     The [params](/docs/core/specification/params/)  to pass to the component,
-    they will be validated against the inputs / outputs.
-    If a param is passed and the component does not define a corresponding inputs / outputs,
-    a validation error will be raised unless the param is has the contextOnly flag enabled.
+    they will be validated against the inputs/outputs.
+    If a param is passed and the component does not define a corresponding inputs/outputs,
+    a validation error will be raised unless the param has the contextOnly flag enabled.
 
     ```yaml
     >>> operation:
@@ -315,7 +323,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     ### run_patch
 
-    The run patch provide a way to override information about the component's run section,
+    The run patch provides a way to override information about the component's run section,
     for example the container's resources or the environment section.
 
     The run patch is a dictionary that can modify most of the run time information and
@@ -333,7 +341,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
                                                                    MPI job.
         * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
         * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
-        * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG / workflow.
+        * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG/workflow.
 
     For example, fi we define a generic component for running Jupyter Notebook:
 
@@ -362,7 +370,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     This component is generic, and does not define resources requirements,
     if for instance this component is hosted on github and you don't
-    want to modify the component while at the sametime you want to request a GPU for the notebook,
+    want to modify the component while at the same time you want to request a GPU for the notebook,
     you can patch the run:
 
     ```yaml
@@ -434,7 +442,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     ### component
 
-    If you are still in the developement phase or if you are building a
+    If you are still in the development phase or if you are building a
     singleton operation that can be executed in a unique way, you can define
     the component inline inside the operation:
 

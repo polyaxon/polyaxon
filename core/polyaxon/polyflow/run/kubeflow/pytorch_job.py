@@ -38,7 +38,7 @@ class PytorchJobSchema(BaseCamelSchema):
 
 
 class V1PytorchJob(BaseConfig, polyaxon_sdk.V1PytorchJob):
-    """Kubeflow Pytorch-Job provides an interface to train a distributed experiments with Pytorch.
+    """Kubeflow Pytorch-Job provides an interface to train distributed experiments with Pytorch.
 
     Args:
         kind: str, should be equal `pytorchjob`
@@ -85,7 +85,7 @@ class V1PytorchJob(BaseConfig, polyaxon_sdk.V1PytorchJob):
 
     ### cleanPodPolicy
 
-    Controls deletion of pods when a job terminates.
+    Controls the deletion of pods when a job terminates.
     The policy can be one of the following values: [`All`, `Running`, `None`]
 
 

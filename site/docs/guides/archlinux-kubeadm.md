@@ -20,7 +20,7 @@ author:
   github: "jorgemf"
 ---
 
-This file explains how to install polyaxon in kubernetes over archlinux
+This file explains how to install polyaxon in Kubernetes over archlinux
 
 ## Requirements
 
@@ -98,21 +98,21 @@ export DOMAIN=my.domain.com
 export LOCAL_IP=192.168.0.2
 ```
 
-## Configure kubernetes
+## Configure Kubernetes
 
-Reset kubernetes for a fresh start
+Reset Kubernetes for a fresh start
 
 ```bash
 sudo kubeadm reset
 ```
 ### Basic configuration
 
-Init kubernetes. We are using canal so we set the `pod-network-cidr` to the value expecified in the documentation. You might have problems if you are using the same network.
+Init Kubernetes. We are using canal so we set the `pod-network-cidr` to the value specified in the documentation. You might have problems if you are using the same network.
 
 ```bash
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
-Move the kubernetes `admin.conf` file to the local user in the machine to use `kubelet`.
+Move the Kubernetes `admin.conf` file to the local user in the machine to use `kubelet`.
 ```bash
 mkdir $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/
@@ -125,7 +125,7 @@ Wait for few seconds until some containers have been started. You can check them
 
 #### Network configuration
 
-Now we configure `canal` for the network in kubernetes.
+Now we configure `canal` for the network in Kubernetes.
 
 ```bash
 kubectl apply -f https://docs.projectcalico.org/v3.5/getting-started/kubernetes/installation/hosted/canal/canal.yaml
@@ -162,7 +162,7 @@ helm repo update
 
 ## Add nvidia capabilities
 
-If you use nvidia cards you need to add support for them in kubernetes:
+If you use nvidia cards you need to add support for them in Kubernetes:
 
 ```bash
 kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/1.0.0-beta/nvidia-device-plugin.yml

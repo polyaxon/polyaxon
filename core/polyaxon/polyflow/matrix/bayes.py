@@ -366,8 +366,8 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
 
     The algorithm will keep suggesting more experiments and adding
     their results as an observation, every time we make a new observation,
-    i.e. an experiment finishes and reports results to the platform,
-    the results are append to the historical values, and then used to make a better suggestion.
+    i.e. an experiment finishes and reports the results to the platform,
+    the results are appended to the historical values, and then used to make a better suggestion.
 
     ```yaml
     >>> matrix:

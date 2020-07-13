@@ -42,7 +42,7 @@ For runs with metrics, you can switch to a visualization mode to compare metrics
 
 ![comparison-bars](../../../../content/images/dashboard/comparison/charts-bars.png)
 
-The comparision features are also useful to create charts for hyperparameter tuning or a selection of runs to create hyperparameter values and model metrics charts
+The comparison features are also useful to create charts for hyperparameter tuning or a selection of runs to create hyperparameter values and model metrics charts
 
 ![comparison-new-charts](../../../../content/images/dashboard/comparison/charts-new.png)
 

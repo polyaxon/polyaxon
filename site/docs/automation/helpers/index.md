@@ -2,7 +2,7 @@
 title: "Pipeline helpers"
 sub_link: "helpers"
 meta_title: "Pipeline helpers: a set of tools to use with matrix, parallel, and dag workflows - Polyaxon Automation Engine"
-meta_description: "Running pipelines is often important to optimize an build strong models, but could be costly, Polyaxon provides several useful tools to manage concurrency, cache state, ..."
+meta_description: "Running pipelines is often important to optimize and build strong models, but could be costly, Polyaxon provides several useful tools to manage concurrency, cache state, ..."
 visibility: public
 status: published
 tags:

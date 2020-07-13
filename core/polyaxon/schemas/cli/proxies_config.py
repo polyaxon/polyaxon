@@ -16,6 +16,7 @@
 
 from marshmallow import EXCLUDE, fields
 
+from polyaxon.api import STATIC_V1
 from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_ARCHIVE_ROOT,
@@ -42,6 +43,8 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_PROXY_STREAMS_HOST,
     POLYAXON_KEYS_PROXY_STREAMS_PORT,
     POLYAXON_KEYS_STATIC_ROOT,
+    POLYAXON_KEYS_STATIC_URL,
+    POLYAXON_KEYS_UI_ADMIN_ENABLED,
 )
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
@@ -94,6 +97,10 @@ class ProxiesSchema(BaseSchema):
     )
     archive_root = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_ARCHIVE_ROOT)
     static_root = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_STATIC_ROOT)
+    static_url = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_STATIC_URL)
+    ui_admin_enabled = fields.Bool(
+        allow_none=True, data_key=POLYAXON_KEYS_UI_ADMIN_ENABLED
+    )
 
     @staticmethod
     def schema_config():
@@ -129,6 +136,8 @@ class ProxiesConfig(BaseConfig):
         POLYAXON_KEYS_LOG_LEVEL,
         POLYAXON_KEYS_ARCHIVE_ROOT,
         POLYAXON_KEYS_STATIC_ROOT,
+        POLYAXON_KEYS_STATIC_URL,
+        POLYAXON_KEYS_UI_ADMIN_ENABLED,
     ]
 
     def __init__(
@@ -156,6 +165,8 @@ class ProxiesConfig(BaseConfig):
         ssl_path=None,
         archive_root=None,
         static_root=None,
+        static_url=None,
+        ui_admin_enabled=None,
         **kwargs
     ):
         self.namespace = namespace
@@ -181,7 +192,9 @@ class ProxiesConfig(BaseConfig):
         self.log_level = self.log_level.lower()
         self.ssl_path = ssl_path or "/etc/ssl/polyaxon"
         self.archive_root = archive_root or CONTEXT_ARCHIVE_ROOT
-        self.static_root = static_root or "/static"
+        self.static_root = static_root or "/{}".format(STATIC_V1)
+        self.static_url = static_url
+        self.ui_admin_enabled = ui_admin_enabled
 
     @property
     def default_serving_port(self):

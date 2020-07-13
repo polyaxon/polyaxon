@@ -28,7 +28,7 @@ First, you'll need to set up a new incoming webhook in your team's Slack configu
 
 ## Customise webhook & copy URL
 
-Once the webhook is created, you can optionally customise the channel, name, and icon which the webhook uses whenever it posts a new message. Either way, however, you'll need to copy the Webhook URL at the very top.
+Once the webhook is created, you can optionally customize the channel, name, and icon which the webhook uses whenever it posts a new message. Either way, however, you'll need to copy the Webhook URL at the very top.
 
 ![slack-integration2](../../content/images/integrations/slack/img2.png)
 

@@ -25,7 +25,7 @@ Polyaxon Component Hub is a product for managing versioned and reusable componen
 
 ![overview](../../../../content/images/dashboard/hub/overview.png)
 
-Component is the entity in Polyaxon that defines a run time, it allows to package a containerize workload or a whole workflow, 
+`Component` is the entity in Polyaxon that defines a run time, it allows to package a containerize workload or a whole workflow, 
 and makes it repeatable, portable, and sharable.
 
 Polyaxon Component Hub gives you the extra utilities and features to manage access, security, and versioning.
@@ -38,8 +38,8 @@ Each component can list all versions, their stage, their specification, and thei
 
 ![production-stage](../../../../content/images/dashboard/hub/production.png)
 
-Polyaxon provides a special tag to signal the stage of your components versions. 
-By default the Component Hub shows the latest version and its stage.
+Polyaxon provides a special tag to signal the stage of your components' versions. 
+By default, the Component Hub shows the latest version and its stage.
 
 ![testing-stage](../../../../content/images/dashboard/hub/testing.png)
 
@@ -47,7 +47,7 @@ By default the Component Hub shows the latest version and its stage.
 
 You can create a new component using the API or the dashboard, 
 the component definition is the same [specification](/docs/core/specification/component/) that is used for running inline components. 
-By using the `:tag`, you can add new version in to a component, Polyaxon uses the `owner/component-name` as a namespace for the component.
+By using `:tag`, you can add new versions to a component, Polyaxon uses the `owner/component-name` as a namespace for the component.
 
 ## Usage
 

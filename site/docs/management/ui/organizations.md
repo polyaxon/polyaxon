@@ -14,9 +14,9 @@ sidebar: "management"
 
 Organizations are an entity where businesses can collaborate across many projects at once. 
 Owners and administrators can manage member access to the organization's data, projects, models, and components with sophisticated security and administrative features.
-Organization can also have analytics, activities, and insights. 
+Organizations can also have analytics, activities, and insights. 
 
-## Create new organization
+## Create a new organization
 
 If you have access you can create a new organization.
 

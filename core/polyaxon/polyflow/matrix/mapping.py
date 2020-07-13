@@ -126,7 +126,6 @@ class V1Mapping(BaseConfig, polyaxon_sdk.V1Mapping):
 
     For more details please check the
     [early stopping section](/docs/automation/helpers/early-stopping/).
-
     """
 
     SCHEMA = MappingSchema

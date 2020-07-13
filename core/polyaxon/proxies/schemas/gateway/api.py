@@ -15,15 +15,16 @@
 # limitations under the License.
 
 from polyaxon import settings
-from polyaxon.proxies.schemas.base import get_config
-from polyaxon.proxies.schemas.gateway.urls import (
+from polyaxon.api import ADMIN_V1_LOCATION, API_V1_LOCATION, UI_V1_LOCATION
+from polyaxon.proxies.schemas.base import clean_config, get_config
+from polyaxon.proxies.schemas.urls import (
     get_header_host,
     get_service_url,
     get_ssl_server_name,
 )
 
 OPTIONS = """
-location / {{
+location {path} {{
     {auth}
     {resolver}
     {ssl_server_name}
@@ -39,6 +40,25 @@ location / {{
 """  # noqa
 
 
+def get_api_config(
+    path: str,
+    service: str,
+    resolver: str,
+    auth: str,
+    ssl_server_name: str,
+    header_host: str,
+):
+    return get_config(
+        options=OPTIONS,
+        path=path,
+        service=service,
+        resolver=resolver,
+        auth=auth,
+        ssl_server_name=ssl_server_name,
+        header_host=header_host,
+    )
+
+
 def get_api_location_config(resolver: str, auth=str):
     service = get_service_url(
         host=settings.PROXIES_CONFIG.api_host, port=settings.PROXIES_CONFIG.api_port,
@@ -47,11 +67,51 @@ def get_api_location_config(resolver: str, auth=str):
         resolver = ""
     if not settings.PROXIES_CONFIG.auth_external:
         auth = ""
-    return get_config(
-        options=OPTIONS,
-        service=service,
-        resolver=resolver,
-        auth=auth,
-        ssl_server_name=get_ssl_server_name(service),
-        header_host=get_header_host(service),
-    )
+    ssl_server_name = get_ssl_server_name(service)
+    header_host = get_header_host(service)
+    config = [
+        get_api_config(
+            path="= /",
+            service=service,
+            resolver=resolver,
+            auth=auth,
+            ssl_server_name=ssl_server_name,
+            header_host=header_host,
+        ),
+        get_api_config(
+            path=API_V1_LOCATION,
+            service=service,
+            resolver=resolver,
+            auth=auth,
+            ssl_server_name=ssl_server_name,
+            header_host=header_host,
+        ),
+        get_api_config(
+            path=UI_V1_LOCATION,
+            service=service,
+            resolver=resolver,
+            auth="",
+            ssl_server_name=ssl_server_name,
+            header_host=header_host,
+        ),
+        get_api_config(
+            path="/static/",
+            service=service,
+            resolver=resolver,
+            auth="",
+            ssl_server_name=ssl_server_name,
+            header_host=header_host,
+        ),
+    ]
+    if settings.PROXIES_CONFIG.ui_admin_enabled:
+        config.append(
+            get_api_config(
+                path=ADMIN_V1_LOCATION,
+                service=service,
+                resolver=resolver,
+                auth=auth,
+                ssl_server_name=ssl_server_name,
+                header_host=header_host,
+            )
+        )
+    return clean_config(config)

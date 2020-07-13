@@ -38,7 +38,9 @@ api_patterns += [
 ]
 
 app_urlpatterns = [
-    re_path(r"^{}/".format(API_V1), include((api_patterns, "v1"), namespace="v1")),
+    re_path(
+        r"^{}/".format(API_V1), include((api_patterns, "api-v1"), namespace="api-v1")
+    ),
 ]
 
 # UI

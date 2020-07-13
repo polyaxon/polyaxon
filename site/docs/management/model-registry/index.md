@@ -21,7 +21,7 @@ Polyaxon Model Registry is a models store and a system that provides:
  * It can be used with your teams' configuration and access control settings to enable collaborative model management.
  * Logging and lineage using the experimentation feature.
  * Versioning.
- * Deploying as an internal tool or as a test api using the service abstraction.
+ * Deploying as an internal tool or as a test API using the service abstraction.
  * Agnostic to the model packaging format.
  * Integrations with your favorite serving technologies.
 
@@ -37,11 +37,11 @@ Each model can list all versions, their stage, their model artifacts used, their
 
 ![production-stage](../../../../content/images/dashboard/registry/production.png)
 
-Polyaxon provides a special tag to signal the stage of your components versions. 
+Polyaxon provides a special tag to signal the stage of your components' versions. 
 
 ![testing-stage](../../../../content/images/dashboard/registry/testing.png)
 
-By default the Component Hub shows the latest version and its stage.
+By default, the Component Hub shows the latest version and its stage.
 
 ![staging-stage](../../../../content/images/dashboard/registry/staging.png)
 

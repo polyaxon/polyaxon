@@ -238,8 +238,8 @@ def _read_from_yml(f_path, is_stream=False):
             return yaml.safe_load(f)
     except (ScannerError, ParserError) as e:
         raise PolyaxonSchemaError(
-            "Received non valid yaml: `%s`.\n"
-            "Yaml error %s" % (f_path, e)) from e
+            "Received non valid yaml: `%s`.\n" "Yaml error %s" % (f_path, e)
+        ) from e
 
 
 def _read_from_json(f_path, is_stream=False):
@@ -252,5 +252,5 @@ def _read_from_json(f_path, is_stream=False):
         return json.loads(open(f_path).read())
     except ValueError as e:
         raise PolyaxonSchemaError(
-            "Received non valid json: `%s`.\n"
-            "Json error %s" % (f_path, e)) from e
+            "Received non valid json: `%s`.\n" "Json error %s" % (f_path, e)
+        ) from e

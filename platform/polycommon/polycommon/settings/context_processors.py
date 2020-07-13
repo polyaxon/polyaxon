@@ -1,13 +1,13 @@
 from polycommon import conf, pkg
-from polycommon.options.registry.core import JS_OFFLINE, UI_ENABLED
+from polycommon.options.registry.core import UI_ENABLED, UI_OFFLINE
 
 
 def versions(request):
     return {"version": pkg.VERSION}
 
 
-def js_offline(request):
-    return {"js_offline": conf.get(JS_OFFLINE)}
+def ui_offline(request):
+    return {"ui_offline": conf.get(UI_OFFLINE)}
 
 
 def ui_enabled(request):

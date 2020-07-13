@@ -2,8 +2,8 @@
 title: "Discussion about autoscaling of preemptible GPU resources"
 title_link: "Discussion about autoscaling of preemptible GPU resources with Polyaxon"
 meta_title: "Discussion about autoscaling of preemptible GPU resources with Polyaxon"
-meta_description: "Discussion about how to use a pool of preemptible GPUs that are automatically used whenever experiments or hyper parameters search is created in Polyaxon."
-custom_excerpt: "Discussion about how to use a pool of preemptible GPUs that are automatically used whenever experiments or hyper parameters search is created in Polyaxon."
+meta_description: "Discussion about how to use a pool of preemptible GPUs that are automatically used whenever experiments or a hyperparameter search is created in Polyaxon."
+custom_excerpt: "Discussion about how to use a pool of preemptible GPUs that are automatically used whenever experiments or a hyperparameter search is created in Polyaxon."
 featured: false
 author:
   name: "Polyaxon"

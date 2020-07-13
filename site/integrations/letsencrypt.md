@@ -24,7 +24,7 @@ We strongly recommend that you use SSL for your Polyaxon deployment.
 
 ## Polyaxon Cloud
 
-All **Polyaxon Cloud** come with automatic SSL enabled by default and require no setup of any kind.
+**Polyaxon Cloud** comes with automatic SSL enabled by default and requires no setup of any kind.
 
 
 ## Self-Hosting

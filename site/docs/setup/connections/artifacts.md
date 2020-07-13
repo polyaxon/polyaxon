@@ -19,10 +19,10 @@ sidebar: "setup"
 
 You can connect as many datasets, volumes, and artifacts stores in Polyaxon.
  
-It's better to set a connection for each datasets, or artifacts store, or volume path holding some data, 
+It's better to set a connection for each dataset, or artifacts store, or volume path holding some data, 
 to get more visibility and granular control over who is using that connection and how often.
 
-Exposing each datasets or artifacts as a connection also gives you the possibility to 
+Exposing each dataset or artifacts as a connection also gives you the possibility to 
 effectively version your data, and expose information about the changes from one dataset version to another in the description.
 By using connections you can also migrate and find jobs that use a dataset, and take necessary actions.
 
@@ -31,10 +31,10 @@ to have different teams access different volumes and storage backends.
 
 This section tries to explain how Polyaxon mounts these volumes for experiments and jobs.
 
-## Default behaviour
+## Default behavior
 
-When no connection is provided, the default behaviour is to use a local path on the host node for storing outputs and logs. 
-Oftentimes this default behaviour is sufficient for users who are just trying the platform, and don't want to deal with configuration steps.
+When no connection is provided, the default behavior is to use a local path on the host node for storing outputs and logs. 
+Oftentimes this default behavior is sufficient for users who are just trying the platform, and don't want to deal with configuration steps.
 
 ## Host paths
 
@@ -45,7 +45,7 @@ You can use host paths to define storage connections:
 
   * hostPath: the host path.
   * mountPath: path where to mount the volume content in the container
-  * readOnly: if th volume should be mounted in read only mode.
+  * readOnly: if the volume should be mounted in read-only mode.
 
 > **Note**: If you the node where the host path is defined is lost, all data will be lost as well.
 
@@ -80,7 +80,7 @@ You can use a [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/p
 
   * volumeClaim: volume claim name.
   * mountPath: path where to mount the volume content in the container
-  * readOnly: if the volume should be mounted in read only mode.
+  * readOnly: if the volume should be mounted in read-only mode.
 
 ### Example usage as the default artifactsStore
 

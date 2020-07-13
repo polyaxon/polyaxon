@@ -1,7 +1,7 @@
 ---
 title: "Artifacts on S3"
 meta_title: "AWS S3"
-meta_description: "Using AWS S3 buckets to organize your jobs outputs and experiment artifacts. Polyaxon allows users to connect to one or multiple buckets on S3 to store job outputs and experiment artifacts."
+meta_description: "Using AWS S3 buckets to organize your jobs' outputs and experiments' artifacts. Polyaxon allows users to connect to one or multiple buckets on S3 to store job outputs and experiment artifacts."
 custom_excerpt: "Amazon S3 has a simple web services interface that you can use to store and retrieve any amount of data, at any time, from anywhere on the web. It gives any developer access to the same highly scalable, reliable, fast, inexpensive data storage infrastructure that Amazon uses to run its own global network of web sites."
 image: "../../content/images/integrations/s3.png"
 author:

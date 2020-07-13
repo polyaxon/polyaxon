@@ -50,7 +50,7 @@ class ServiceSchema(BaseCamelSchema):
 
 class V1Service(BaseConfig, polyaxon_sdk.V1Service):
     """Services are used to launch Tensorboards, Notebooks, JupyterHub apps,
-    Streamlit/voila/bokeh apps, internal tools,
+    Streamlit/Voila/Bokeh apps, internal tools,
     and dashboards based on your models and data analysis.
 
     Args:
@@ -264,10 +264,10 @@ class V1Service(BaseConfig, polyaxon_sdk.V1Service):
 
     ### rewritePath
 
-    By default Polyaxon will expose services with a base url following this pattern:
+    By default, Polyaxon exposes services with a base url following this pattern:
      `/services/v1/test/user/project/runs/uuid`
 
-    This default behaviour works very well for Tensorboards and Notebooks,
+    This default behavior works very well for Tensorboards and Notebooks,
     but if you are exposing an API that doesn't handle base urls, you can enable
     this option to rewrite the path and remove that part.
 

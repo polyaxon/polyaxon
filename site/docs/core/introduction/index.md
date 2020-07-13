@@ -2,7 +2,7 @@
 title: "Introduction"
 sub_link: "introduction"
 meta_title: "Introduction to Polyaxon - Core Concepts"
-meta_description: "Polyaxon is an open source platform for managing deep learning and machine learning lifecycle for teams who need power, flexibility and performance."
+meta_description: "Polyaxon is an open-source platform for managing deep learning and machine learning lifecycle for teams who need power, flexibility, and performance."
 visibility: public
 status: published
 tags:
@@ -28,10 +28,10 @@ or can be hosted and managed by Polyaxon,
 and it supports all major deep learning frameworks such as Tensorflow, MXNet, Caffe, Torch, etc.
 
 Polyaxon makes it faster, easier, and more efficient to develop machine learning and deep learning applications.
-It is designed for individuals, teams and organizations who need reproducibility, compliance, power, flexibility and performance.
+It is designed for individuals, teams, and organizations who need reproducibility, compliance, power, flexibility, and performance.
 It allows workloads scheduling with smart container and node management, and turns GPU servers into shared, self-service resources for your team or organization.
 
-Here  you will find a comprehensive guides for setting up Polyaxon on your cluster,
+Here you will find comprehensive guides for setting up Polyaxon on your cluster,
 and information for training, tracking, monitoring, and managing your data science lifecycle.
 
 We do our best to make this documentation clear and user friendly,
@@ -50,7 +50,7 @@ please take some time to familiarize yourself with the [architecture & experimen
 
 Polyaxon’s mission is to make machine learning and deep learning simple and accessible to enterprises.
 
-Current advances in machine learning and deep learning have direct impact on business,
+Current advances in machine learning and deep learning have a direct impact on business,
 yet few companies are leveraging these latest technologies.
 The data science space is still lacking good tooling and best practices
 for organizing practitioners' workflows. It's particularly challenging
@@ -82,13 +82,13 @@ The first question most people have is, of course, how is Polyaxon different fro
 
 ## Ecosystem
 
-There are a broad range of tools, resources and helpful tutorials for working with Polyaxon available to help you get started.
+There is a broad range of tools, resources and, helpful tutorials for working with Polyaxon available to help you get started.
 
-Before diving into Polyaxon's Features in  the next section, it's useful to give you a high level overview of where to find things!
+Before diving into Polyaxon's Features in the next section, it's useful to give you a high-level overview of where to find things!
 
 ### The blog
 
-For long-form news and announcements the best place to keep up to date with everything happening is [our blog](https://medium.com/polyaxon).
+For long-form news and announcements, the best place to keep up to date with everything happening is [our blog](https://medium.com/polyaxon).
 There's an [RSS feed](https://medium.com/feed/polyaxon) and
 also [a newsletter](https://polyaxon.us17.list-manage.com/subscribe/post?u=1b6eccb8409861418bcc5dbfc&id=012464842e).
 
@@ -106,7 +106,7 @@ Here are the easiest ways to keep track of Polyaxon:
 
 ### Guides &  Tutorials
 
-We publish some [guides and tutorials](/docs/guides/) from time to time to explain or clarify how to use our tools in a practical ways.
+We publish some [guides and tutorials](/docs/guides/) from time to time to explain or clarify how to use our tools in practical ways.
 These guides have tags, you can for instance show all guides for a particular tag to gain deeper knowledge about that area.
 
 ### Frequently asked questions
@@ -114,5 +114,5 @@ These guides have tags, you can for instance show all guides for a particular ta
 **Don't forget!** If you have any questions or problems the best places to start is the search box on this page, which will immediately return all results from across our documentation and [FAQ](/faq/) archive.
 
 
-If you have subscription to one of our enterprise editions (`Cloud` or `EE`),
+If you have a subscription to one of our enterprise editions (`Cloud` or `EE`),
 just drop us an email on `support@polyaxon.com` and we'll be more than happy to help.

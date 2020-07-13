@@ -52,7 +52,7 @@ or
 ```
 
 N.B. that the auth must contain a concatenation of the username, a colon, and the password, i.e. `user:password`, 
-you can find the auths in your `$HOME/.docker/config.json` for instance, or you can create this auth using a simple python script:
+you can find the auths in your `$HOME/.docker/config.json` for instance, or you can create this auth using a simple Python script:
 
 ```python
 import base64

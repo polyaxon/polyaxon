@@ -207,7 +207,15 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     ```yaml
     >>> component:
-    >>>   queue: test
+    >>>   queue: agent-name/queue-name
+    ```
+
+    If the agent name is not specified, Polyaxon will resolve the name of the queue
+    based on the default agent.
+
+    ```yaml
+    >>> component:
+    >>>   queue: queue-name
     ```
 
     ### cache
@@ -302,7 +310,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     Sometimes the outputs can be resolved immediately at execution time,
     for example a container image name, because such information is required for the
-    job to finish successfully, i.e. pushing the image with correct name,
+    job to finish successfully, i.e. pushing the image with the correct name,
     in that case you can disable `delayValidation` flag.
 
     ```yaml
@@ -331,8 +339,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
                                                                    MPI job.
         * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
         * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
-        * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG / workflow.
-
+        * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG/workflow.
     """
 
     SCHEMA = ComponentSchema

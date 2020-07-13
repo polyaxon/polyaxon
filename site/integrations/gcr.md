@@ -46,7 +46,7 @@ Start with enabling the Container Registry API by logging into Google Cloud and 
 
 In order to create a valid secret using the service account key, you need to create base64 auth based on the `_json_key` and value in `json.json`.
 
-So using python you can do:
+Using Python you can do:
 
 ```python
 import base64

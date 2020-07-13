@@ -1,9 +1,9 @@
 ---
 title: "How Polyaxon is different than Kubeflow?"
 meta_title: "How Polyaxon is different than Kubeflow? - FAQ"
-meta_description: "Polyaxon have a native integration of Kubeflow's components."
+meta_description: "Polyaxon has a native integration of Kubeflow's components."
 featured: false
-custom_excerpt: "Polyaxon have a native integration of Kubeflow's components."
+custom_excerpt: "Polyaxon has a native integration of Kubeflow's components."
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
@@ -16,10 +16,10 @@ tags:
     - experimentation
 ---
 
-Polyaxon have a native integration of Kubeflow's components.
+Polyaxon has a native integration of Kubeflow's components.
 
 We believe that both platforms complement each other, 
-and we are working on making an integration with this community effort as painless as possible. 
+and we are working on making integration with this community effort as painless as possible. 
 
-With Polyaxon's Kubeflow integration, users will have a choice to schedule distributed experiments using our native behaviour or 
+With Polyaxon's Kubeflow integration, users will have a choice to schedule distributed experiments using our native behavior or 
 they can leverage Kubeflow’s operators, i.e. TFJob, PytorchJob, and MPIJob in an easy way.

@@ -1,9 +1,9 @@
 ---
 title: "How do I contribute?"
 meta_title: "How do I contribute? - FAQ"
-meta_description: "Polyaxon is an open source software, and we would be happy to welcome your contributions."
+meta_description: "Polyaxon is an open-source software, and we would be happy to welcome your contributions."
 featured: true
-custom_excerpt: "Polyaxon is an open source software, and we would be happy to welcome your contributions."
+custom_excerpt: "Polyaxon is an open-source software, and we would be happy to welcome your contributions."
 author:
   name: "Polyaxon"
   slug: "Polyaxon"
@@ -16,9 +16,9 @@ tags:
     - contribution
 ---
 
-Polyaxon is an open source software, and we would be happy to welcome your contributions.
+Polyaxon is an open-source software, and we would be happy to welcome your contributions.
 
-There's many ways to contribute to the project, you can check this [page](https://github.com/polyaxon/polyaxon/blob/master/CONTRIBUTING.md) for more detailed information
+There are many ways to contribute to the project, you can check this [page](https://github.com/polyaxon/polyaxon/blob/master/CONTRIBUTING.md) for more detailed information
 
 Contributions to this project must be accompanied by a Contributor License Agreement.
 This simply gives us permission to use and redistribute your contributions as part of the project.

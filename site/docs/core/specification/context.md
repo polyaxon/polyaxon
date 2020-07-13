@@ -23,8 +23,8 @@ Users can use the `{{}}` to inject information that will be provided to the cont
 
 ## Top level information
 
-Information in the top level of a context can be used without prefix, inputs and outputs are set on the top level.
-This means that when you are developing your components, 
+Information in the top level of a context can be used without a prefix.
+Inputs and outputs are set on the top level, this means that when you are developing your components, 
 you can use the variables defined in your inputs and outputs without any prefix: 
 
 ```yaml
@@ -79,7 +79,7 @@ If you are authoring a component that contains a service, the globals prefix wil
 
 ## Connections
 
-Similarly if you add a connection or an init container that requests a connection, if that connection has any schema, it will be available in the context:
+Similarly, if you add a connection or an init container that requests a connection, if that connection has any schema, it will be available in the context:
 
 > Several connections do not have a schema, and just expose env vars or mount secret volumes
 
@@ -114,4 +114,4 @@ run:
 ## Distributed jobs
 
 If your Polyaxonfile defines a distributed job, each replica will receive a context with information from the `globals` level augmented with 
-information about he connections and init sections specific to each replica.  
+information about the connections and init sections specific to each replica.  

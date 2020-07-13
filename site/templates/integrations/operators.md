@@ -23,7 +23,7 @@ status: {{status}}
 
 ## Deploy the {{title}} operator
 
-Before you can use the {{name}} runtime, you need make sure that {{title}} operator and the CRD (custom resource definition) 
+Before you can use the {{name}} runtime, you need to make sure that {{title}} operator and the CRD (custom resource definition) 
 are deployed in your cluster. 
 
 ## Enable the operator

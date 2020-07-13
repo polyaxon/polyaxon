@@ -1,7 +1,7 @@
 ---
 title: "Artifacts on Azure Storage"
 meta_title: "Azure Storage"
-meta_description: "Using Azure Storage to organize your jobs outputs and experiment artifacts. Polyaxon allows users to connect to one or multiple blobs on Azure Storage to store job outputs and experiment artifacts."
+meta_description: "Using Azure Storage to organize your jobs' outputs and experiments' artifacts. Polyaxon allows users to connect to one or multiple blobs on Azure Storage to store job outputs and experiment artifacts."
 custom_excerpt: "Azure Storage is Microsoft's cloud storage solution. Azure Storage provides storage for data objects that is highly available, secure, durable, massively scalable cloud storage solution."
 image: "../../content/images/integrations/azure-storage.png"
 author:

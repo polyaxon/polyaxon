@@ -3,7 +3,7 @@ title: "TF-Job Specification"
 sub_link: "distributed/tf-jobs"
 code_link: "core/polyaxon/polyflow/run/kubeflow/tf_job.py"
 meta_title: "Kubeflow TF-Job Specification - Experimentation"
-meta_description: "Kubeflow TF-Job provides an interface to train a distributed experiments with TensorFlow."
+meta_description: "Kubeflow TF-Job provides an interface to train distributed experiments with TensorFlow."
 visibility: public
 status: published
 tags:

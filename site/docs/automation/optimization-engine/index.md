@@ -28,7 +28,7 @@ how to manage, schedule, and monitor a large set of experiments for hyperparamet
 The way Polyaxon performs hyperparameter tuning is by providing a selection of customizable search algorithms.
 Polyaxon supports both simple approaches such as `random search` and `grid search`, and provides a simple interface for
 advanced approaches, such as `Hyperband` and `Bayesian Optimization`, it also integrates with tools such as `Hyperopt`, 
-and provides an interface fo running custom iterative processes.
+and provides an interface for running custom iterative processes.
 
 All these search algorithms run in an asynchronous way, and support concurrency and routing to leverage your cluster(s)'s resources to the maximum.
 
@@ -37,7 +37,7 @@ Some of these approaches are also iterative and improve based on previous experi
 ## Features
 
  * Easy-to-use: Polyaxon's Optimization Engine is a built-in service and can be used easily by adding a `matrix` section to your operations, you can run hyperparameter tuning using the CLI, client and the dashboard.
- * Scalability: Tuning hyperparameters or neural architectures requires leveraging a large amount of computation resources, using Polyaxon you can run hundreds of trials in parallel and track their progress in an intuitive way.
+ * Scalability: Tuning hyperparameters or neural architectures requires leveraging a large amount of computation resources, using Polyaxon you can run hundreds of trials in parallel and intuitively track their progress.
  * Flexibility: Besides the rich built-in algorithms, Polyaxon allows users to customize various hyperparameter tuning algorithms, neural architecture search algorithms, early stopping algorithms, etc.
  * Efficiency: We are intensively working on more efficient model tuning from both system level and algorithm level. For example, leveraging early feedback to speedup tuning procedure.
 
@@ -46,7 +46,7 @@ Some of these approaches are also iterative and improve based on previous experi
  * Define a search space.
  * Define a search algorithm.
  * Define a model to optimize.
- * Optionally define the queuing, routing, concurrency and early stopping.
+ * Optionally define the queuing, routing, concurrency, and early stopping.
 
 ## Algorithms 
 
@@ -68,7 +68,7 @@ All optimization algorithms can leverage the [pipeline helpers](/docs/automation
 ## Search Space
 
 In order to define a search space, users must define how to generate the values that will be used to create 
-the parameters combination for running the component, The `params` sre defined as `{key: value}` 
+the parameters combination for running the component, The `params` are defined as `{key: value}` 
 object where the key is the name of the parameter you are defining and the value is one of these options:
 
 ### Discrete params 

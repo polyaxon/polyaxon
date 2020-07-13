@@ -58,7 +58,7 @@ Example:
 kubectl label nodes worker_1 worker_2 polyaxon.com=experiments
 ```
 
-And then in your polyaxonfile
+And then in your Polyaxonfile
 
 ```yaml
 environment:
@@ -72,7 +72,7 @@ This will force Polyaxon to schedule this particular experiment on the specific 
 
 Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
 
-Similar to node selector, it's very easy to provide a tolerations in the polyaxonfile:
+Similar to node selector, it's very easy to provide tolerations in the Polyaxonfile:
 
 
 ```yaml
@@ -84,7 +84,7 @@ environment:
 
 ## Affinity
 
-The affinity/anti-affinity feature, greatly expands the types of constraints you can express.
+The affinity/anti-affinity feature greatly expands the types of constraints you can express.
 
 ```yaml
 environment:
@@ -121,7 +121,7 @@ from polyaxon.polyflow import V1Environment
 environment = V1Environment(annotations={"cloud.google.com/gke-preemptible": "true"})
 ```
 
-Additionally if you have a tainted node for preemptible VMs, you can configure a toleration to schedule to that node.
+Additionally, if you have a tainted node for preemptible VMs, you can configure a toleration to schedule to that node.
 
 ```yaml
 ...

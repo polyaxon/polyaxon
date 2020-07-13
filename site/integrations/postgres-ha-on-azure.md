@@ -1,7 +1,7 @@
 ---
 title: "Postgres HA on Azure"
 meta_title: "Azure Database for postgres"
-meta_description: "Using Azure Database for postgres for a high available Polyaxon sql storage of your experiments and jobs records."
+meta_description: "Using Azure Database for postgres for a high available Polyaxon sql storage of your experiments and jobs' records."
 custom_excerpt: "Azure Database for PostgreSQL provides fully managed, enterprise-ready community PostgreSQL database as a service. The PostgreSQL Community edition helps you easily lift and shift to the cloud, using languages and frameworks of your choice."
 image: "../../content/images/integrations/azure-postgresql.png"
 author:
@@ -22,7 +22,7 @@ status: published
 
 This integration is about using Azure Database for PostgreSQL server to provide a High Available database for Polyaxon.
 
-> This integration can used with all Polyaxon deployment types
+> This integration can be used with all Polyaxon deployment types
 
 
 ## Pre-requisites
@@ -56,7 +56,7 @@ externalServices:
     host: <server_name>
 ``` 
 
-You need to replace the user, password, database, and host based on the information you filled in the form, you can always find this information on the entity overview of Azure dashboard.
+You need to replace the user, password, database, and host, based on the information you filled in the form, you can always find this information on the entity overview of Azure dashboard.
 
 ## CLI instructions
 

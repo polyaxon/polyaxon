@@ -16,7 +16,7 @@ sidebar: "core"
 ![notebooks](../../../../content/images/concepts/dashboard/notebooks.png)
 
 We previously learned how to create components and how to run them using operations. 
-In this section we will learn how to run components interactively inside a Jupyter notebook.
+In this sections we will learn how to run components interactively inside a Jupyter notebook.
 
 > Same principle applies to running other interactive environments, e.g. zeppelin, or any other service.  
 
@@ -29,7 +29,7 @@ Notebooks are great for interactively writing and debugging your code and visual
 
 ## Start a notebook
 
-Starting notebook is similar to running any other Polyaxon components, i.e. you need to define polyaxonfile or use a public component.
+Starting a notebook is similar to running any other Polyaxon components, i.e. you need to define Polyaxonfile or use a public component.
 
 Let's run one of the public notebook components:
 
@@ -40,7 +40,7 @@ $ polyaxon run --hub jupyter-lab:tensorflow -w
 > For more details about this command please run `polyaxon run --help`, 
 or check the [command reference](/docs/core/cli/run/)
 
-Since the notebook is created with a polyaxonfile, it can be customized in the same way as any other job, e.g. instead of just executing `polyaxon run` 
+Since the notebook is created with a Polyaxonfile, it can be customized in the same way as any other job, e.g. instead of just executing `polyaxon run` 
 we can create an operation to customize the resources, request GPUs ... in case the component itself is limiting, users can create their own component:
 
 ```yaml
@@ -71,7 +71,7 @@ If the operation is cached
 $ polyaxon ops stop
 ```
 
-Otherwise you need to pass a UUID
+Otherwise, you need to pass a UUID
 
 ```bash
 $ polyaxon ops -uid UUID stop
@@ -136,7 +136,7 @@ Tidy dataframe
 run_client.get_tidy_df()
 ```
 
-Plot line chart
+Plot a line chart
 
 ```python
 run_client.line()

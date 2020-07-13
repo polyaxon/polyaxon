@@ -320,7 +320,6 @@ class V1Spark(BaseConfig, polyaxon_sdk.V1Spark):
     >>>     ...
     >>>   ...
     ```
-
     """
 
     SCHEMA = SparkSchema

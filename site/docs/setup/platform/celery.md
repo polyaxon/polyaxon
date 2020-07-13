@@ -15,7 +15,7 @@ sidebar: "setup"
 Polyaxon uses Celery for Distributed Task Queue. 
 This allows Polyaxon to execute tasks concurrently on a single or more worker servers.
 
-Polyaxon exposes some configuration options to customize the behaviour of the async workers.
+Polyaxon exposes some configuration options to customize the behavior of the async workers.
 
 
 ## brokerPoolLimit
@@ -57,4 +57,4 @@ Maximum number of tasks a pool worker process can execute before it’s replaced
 Maximum amount of resident memory, in kilobytes, that may be consumed by a worker before it will be replaced by a new worker. 
 If a single task causes a worker to exceed this limit, the task will be completed, and the worker will be replaced afterwards.
 
-> N.B. setting this to a low value might have a negative impact on your workers since they will be replaced after few tasks.
+> N.B. setting this to a low value might have a negative impact on your workers since they will be replaced after a few tasks.

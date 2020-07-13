@@ -12,16 +12,16 @@ tags:
 sidebar: "core"
 ---
 
-During this quick-start tutorial, we having been using a docker image `polyaxon/polyaxon-quick-start`, 
-which was built using a polyaxonfile as well.
+During this quick-start tutorial, we have been using a docker image `polyaxon/polyaxon-quick-start`, 
+which was built using a Polyaxonfile as well.
 
 N.B. you can build docker images outside of Polyaxon, or use your own system. 
 
 ## Docker images
 
-Using the `job` runtime, users can use Polyaxon to build docker images, there are a couple of build options and component provided.
+Using the `job` runtime, users can use Polyaxon to build docker images, there are a couple of build options and components provided.
 
-For example the image we are using in this tutorial is based on this polyaxonfile:
+For example the image we are using in this tutorial is based on this Polyaxonfile:
 
 ```yaml
 version: 1
@@ -50,11 +50,11 @@ it uses an initializer [dockerfile](/docs/core/specification/init/) which genera
 Since we do not want to create or modify the Kaniko component, 
 we are using the `runPatch` section to add the init section to the job.
 The `runPatch` allows us to patch the component definition without having to rewrite it from scratch, 
-in this case we are generating a dockerfile.
+in this case, we are generating a dockerfile.
 The dockerfile we are generating is a based on a tensorflow docker image and 
 we are just installing `polyaxon` library and some extra dependencies to use the [tracking module](/docs/experimentation/tracking/).
 
-The `hubRef` is the reference of the component we are going to run, in this case it's a Kaniko component for building the image.
+The `hubRef` is the reference of the component we are going to run, in this case, it's a Kaniko component for building the image.
 
 We are also passing a parameter `destination` which is of type [image](/docs/core/specification/types/), 
 it defines the name of the image and the connection to use for pushing the image.

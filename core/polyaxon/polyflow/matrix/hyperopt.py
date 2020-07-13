@@ -191,9 +191,6 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
     >>>   kind: hyperopt
     >>>   earlyStopping: ...
     ```
-
-
-
     """
 
     SCHEMA = HyperoptSchema

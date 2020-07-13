@@ -23,8 +23,8 @@ you should definitely look at the other persistence strategies.
 When the user uses a local path to store outputs, a couple of things could happen:
  * If you have more than one node, i.e. using other nodes to schedule experiments and jobs, you will not be able to see the outputs, because they will be stored on the node where the experiment/job was scheduled.
  * The host node might be deleted, or replaced, and all outputs will be deleted as well.
- * If the user scales the platform, the API, scheduler, and other component might be deployed on different nodes, which means that only some of these components will be able to access the outputs.
- * If the API is replicated on different node same thing could happen as well.
- * After an upgrade all your component might be scheduled on a different node.
+ * If the user scales the platform, the API, scheduler, and other components might be deployed on different nodes, which means that only some of these components will be able to access the outputs.
+ * If the API is replicated on different nodes the same thing could happen as well.
+ * After an upgrade, all your components might be scheduled on a different node.
  
-Polyaxon provides several options to make robust persistent of your outputs.   
+Polyaxon provides several options to make robust persistence of your outputs.   

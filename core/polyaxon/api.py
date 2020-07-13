@@ -23,6 +23,15 @@ SERVICES_V1 = "services/{}".format(VERSION_V1)
 REWRITE_SERVICES_V1 = "rewrite-services/{}".format(VERSION_V1)
 WS_V1 = "ws/{}".format(VERSION_V1)
 AUTH_V1 = "auth/{}".format(VERSION_V1)
+STATIC_V1 = "static/{}".format(VERSION_V1)
+UI_V1 = "ui"
+ADMIN_V1 = "_admin"
+API_V1_LOCATION = "/" + API_V1 + "/"
+UI_V1_LOCATION = "/" + UI_V1 + "/"
+STATIC_V1_LOCATION = "/" + STATIC_V1 + "/"
+ADMIN_V1_LOCATION = "/" + ADMIN_V1 + "/"
+AUTH_V1_LOCATION = "/" + AUTH_V1 + "/"
+HEALTHZ_LOCATION = "/healthz/"
 POLYAXON_CLOUD_HOST = "https://cloud.polyaxon.com"
 POLYAXON_VERSIONS_HOST = "https://versions.polyaxon.com/?v={}".format(pkg.VERSION)
 REGISTER = (

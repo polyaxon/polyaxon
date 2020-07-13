@@ -39,7 +39,7 @@ def parse_negation_operation(operation: str) -> Tuple[bool, str]:
 
 
 def parse_comparison_operation(operation: str) -> Tuple[Optional[str], str]:
-    """Parse the comparision operator in an operation."""
+    """Parse the comparison operator in an operation."""
     _operation = operation.strip()
     if not _operation:
         raise PQLException("Operation is not valid: {}".format(operation))

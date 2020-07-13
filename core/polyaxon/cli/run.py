@@ -93,7 +93,13 @@ from polyaxon.utils.validation import validate_tags
     help="A parameter to override the default params of the run, form -P name=value.",
 )
 @click.option("--profile", type=str, help="Name of the profile to use for this run.")
-@click.option("--queue", type=str, help="Name of the queue to use for this run.")
+@click.option(
+    "--queue",
+    type=str,
+    help="Name of the queue to use for this run. "
+    "If the name is not namespaced by the agent name the default agent is used: "
+    "queue-name or agent-name/queue-name",
+)
 @click.option(
     "--nocache",
     is_flag=True,

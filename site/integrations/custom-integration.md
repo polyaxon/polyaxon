@@ -1,8 +1,8 @@
 ---
 title: "Custom"
 meta_title: "Custom"
-meta_description: "How to create custom API and webhook based integrations to create alter the behaviour of Polyaxon."
-custom_excerpt: "Polyaxon is completely open source and can be integrated with just about any other app or service."
+meta_description: "How to create custom API and webhook based integrations to create alter the behavior of Polyaxon."
+custom_excerpt: "Polyaxon is completely open-source and can be integrated with just about any other app or service."
 image: "../../content/images/integrations/custom.png"
 author:
   name: "Polyaxon"
@@ -18,7 +18,7 @@ visibility: public
 status: published
 ---
 
-Polyaxon core engine is open source, has an Json API, webhooks, and an abstraction for creating components, and can be integrated with just about any other app or service.
+Polyaxon core engine is open-source, has a Json API, webhooks, and an abstraction for creating components, and can be integrated with just about any other app or service.
 
 ## Components
 

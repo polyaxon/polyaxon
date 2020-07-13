@@ -65,12 +65,13 @@ location / {
     proxy_set_header Origin "";
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
+    proxy_intercept_errors on;
 }
 
 
-error_page 500 502 503 504 /50x.html;
-error_page 401 403 /permission.html;
-error_page 404 /404.html;
+error_page 500 502 503 504 /static/errors/50x.html;
+error_page 401 403 /static/errors/permission.html;
+error_page 404 /static/errors/404.html;
 
 
 location /tmp/ {

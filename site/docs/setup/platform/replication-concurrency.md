@@ -2,7 +2,7 @@
 title: "Replication & Concurrency"
 sub_link: "platform/replication-concurrency"
 meta_title: "Replication and Concurrency in Polyaxon - Configuration"
-meta_description: "Polyaxon supports scaling of it's services (api and workers) in horizontal way using replication, and the user can increase the workers' concurrency for higher throughput."
+meta_description: "Polyaxon supports scaling of it's services (API and workers) in a horizontal way using replication, and the user can increase the workers' concurrency for higher throughput."
 tags:
     - configuration
     - polyaxon
@@ -14,7 +14,7 @@ tags:
 sidebar: "setup"
 ---
 
-Polyaxon supports scaling of it's services (api and workers) in horizontal way using replication, and the user can increase the workers' concurrency for higher throughput.
+Polyaxon supports scaling of it's services (API and workers) in a horizontal way using replication, and the user can increase the workers' concurrency for higher throughput.
 
 ## Services Replication
 

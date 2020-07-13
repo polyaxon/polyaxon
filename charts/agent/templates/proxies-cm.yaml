@@ -8,17 +8,22 @@ metadata:
 {{ include "config.labels.roles.coreConfig" . | indent 4 }}
 data:
   # Cluster
+  POLYAXON_API_HOST: "{{ template "gateway.scheme" . }}://{{ template "gateway.host" . }}:{{ template "gateway.port" . }}"
+  {{- if .Values.streams.enabled }}
   POLYAXON_PROXY_STREAMS_PORT: "{{ template "proxies.streams.port" . }}"
   POLYAXON_PROXY_STREAMS_HOST: {{ template "proxies.streams.host" . }}
+  {{- end }}
   POLYAXON_PROXY_API_PORT: "{{ template "proxies.api.port" . }}"
   POLYAXON_PROXY_API_HOST: {{ template "proxies.api.host" . }}
   POLYAXON_PROXY_API_USE_RESOLVER: "{{ template "proxies.api.useResolver" . }}"
-  {{- if (not (empty .Values.auth)) }}
+  {{- if .Values.auth.enabled }}
   POLYAXON_PROXY_AUTH_ENABLED: {{ .Values.auth.enabled | quote }}
   {{- if .Values.auth.external }}
   POLYAXON_PROXY_AUTH_EXTERNAL: {{ .Values.auth.external | quote }}
   {{- end }}
+  {{- if .Values.auth.useResolver }}
   POLYAXON_PROXY_AUTH_USE_RESOLVER: {{ .Values.auth.useResolver | quote }}
+  {{- end }}
   {{- end }}
   # DNS
   POLYAXON_DNS_USE_RESOLVER: "true"
@@ -42,11 +47,17 @@ data:
   POLYAXON_PROXY_SERVICES_PORT: {{ .Values.services.port | quote }}
   {{- end }}
   # UI
-  {{- if (not (empty .Values.jsOffline)) }}
-  POLYAXON_JS_OFFLINE: {{ .Values.jsOffline | quote }}
+  {{- if (not (eq (.Values.ui.enabled | toString) "<nil>")) }}
+  POLYAXON_UI_ENABLED: {{ .Values.ui.enabled | quote }}
   {{- end }}
-  {{- if (not (empty .Values.uiEnabled)) }}
-  POLYAXON_UI_ENABLED: {{ .Values.uiEnabled | quote }}
+  {{- if (not (eq (.Values.ui.adminEnabled | toString) "<nil>")) }}
+  POLYAXON_UI_ADMIN_ENABLED: {{ .Values.ui.adminEnabled | quote }}
+  {{- end }}
+  {{- if .Values.ui.offline }}
+  POLYAXON_UI_OFFLINE: {{ .Values.ui.offline | quote }}
+  {{- end }}
+  {{- if .Values.ui.staticUrl }}
+  POLYAXON_STATIC_URL: {{ .Values.ui.staticUrl | quote }}
   {{- end }}
   {{- if .Values.istio.enabled }}
   POLYAXON_ISTIO_ENABLED: "true"

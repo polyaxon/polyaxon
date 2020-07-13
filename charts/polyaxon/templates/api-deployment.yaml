@@ -4,7 +4,6 @@ metadata:
   name: {{ template "polyaxon.fullname" . }}-api
   annotations:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    checksum/proxies-config: {{ include (print $.Template.BasePath "/proxies-cm.yaml") . | sha256sum }}
 {{ include "config.checksum.platform" . | indent 4 }}
   labels:
 {{ include "config.labels.apps.api" . | indent 4 }}
@@ -19,7 +18,6 @@ spec:
     metadata:
       annotations:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-        checksum/proxies-config: {{ include (print $.Template.BasePath "/proxies-cm.yaml") . | sha256sum }}
 {{ include "config.checksum.platform" . | indent 8 }}
       labels:
 {{ include "config.labels.apps.api" . | indent 8 }}

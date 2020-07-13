@@ -49,7 +49,7 @@ This is the common Helm chart reference for both [Enterprise Edition Control Pla
 
 The gateway is the service fronting the traffic to/from Polyaxon. By default it's deployed with `ClusterIP`.
 
-You can use port forwarding to access the api and dashboard on localhost:
+You can use port forwarding to access the API and dashboard on localhost:
 
 By running Polyaxon CLI, you will automatically auto-configure the cli and clients:
 
@@ -76,7 +76,7 @@ kubectl port-forward -n polyaxon svc/polyaxon-polyaxon-gateway 8000:80
 | `gateway.service.annotations`| Gateway Service annotations                                         | `{}`
 
 
-This chart provides support for Ingress resource.
+This chart provides support for an Ingress resource.
 
 If you enable ingress, please set the gateway service type value to:
  * ClusterIP or NodePort 
@@ -103,7 +103,7 @@ ingress.kubernetes.io/send-timeout: "600"
 ingress.kubernetes.io/proxy-body-size: 4G
 ```
 
-## Securing api server with TLS
+## Securing API server with TLS
 
 If you have your own certificate you can make a new secret with the `tls.crt` and the `tls.key`,
 then set the secret name in the values file.
@@ -179,7 +179,7 @@ Polyaxon's helm chart comes with an ingress resource that you can use with an in
 
 ### NGINX for NodePort service
 
-To enable ssl for Polyaxon API running with NodePort service on Kubernetes, you need to provide an ssl certificate and ssl certificate key.
+To enable ssl for Polyaxon API running with NodePort service on Kubernetes, you need to provide an ssl certificate and SSL certificate key.
  
 you can provide a self-signed certificate or a browser trusted certificate.
 
@@ -196,9 +196,9 @@ you can provide a self-signed certificate or a browser trusted certificate.
       enabled: true  
       secretName: 'polyaxon-cert'
     ```
- 3. Set the service type to `NodePort` and update the api's service port to 443.
+ 3. Set the service type to `NodePort` and update the API's service port to 443.
  
- N.B. By default Polyaxon mounts the ssl certificate and key to `/etc/ssl`, this value can be updated using the `.Values.ssl.path`.
+ N.B. By default Polyaxon mounts the SSL certificate and key to `/etc/ssl`, this value can be updated using the `.Values.ssl.path`.
 
 ## dns
 
@@ -329,7 +329,7 @@ rabbitmq-ha:
 ### Affinity
 
 It allows you to constrain which nodes your pod is eligible to schedule on, based on the node's labels.
-Polyaxon has a default `Affinity` values for it's core components to ensure that they deploy on the same node.
+Polyaxon has a default `Affinity` values for its core components to ensure that they deploy on the same node.
 
 Polyaxon's default affinity:
 
@@ -374,7 +374,7 @@ rabbitmq-ha:
 
 ## IPs/Hosts White list
 
-In order to restrict IP addresses and hosts that can communicate with the api
+In order to restrict IP addresses and hosts that can communicate with the API
 
 ```yaml
 allowedHosts:
@@ -407,7 +407,7 @@ hostName: polyaxon.foo.com
 
 
 Polyaxon runs all containers as root by default, this configuration is often fine for several deployment, 
-however, in some use case it can expose a compliance issue for some teams.
+however, in some use cases it can expose a compliance issue for some teams.
 
 Polyaxon provides a simple way to enable a security context for all core components, experiments and jobs.  
 

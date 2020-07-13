@@ -42,7 +42,7 @@ streams:
 ## Enable extra services
 
 Polyaxon API can be easily scaled horizontally if you have a growing traffic, 
-but you are submitting a large number of operations, and you think that you can benefit from using an background worker, 
+but you are submitting a large number of operations, and you think that you can benefit from using a background worker, 
 you can enable the open-source scheduler to process events and submission in an asynchronous fashion.
 
 ```yaml
@@ -73,9 +73,9 @@ If your main use of Polyaxon is to schedule jobs, use the packaging format, and 
 you can disable the UI:
 
 ```yaml
-uiEnabled: false
+ui:
+  enabled: false
 ```
-
 
 ## Security
 

@@ -20,7 +20,7 @@ This example assumes that both Polyaxon is [installed](/docs/setup/) and running
 You can create a project using [Polyaxon UI](/docs/management/ui/projects/) or with [Polyaxon CLI](/docs/core/cli/project/#project-create)
 
 This example uses a [public Github repo](https://github.com/polyaxon/polyaxon-quick-start) 
-for hosting the project and the polyaxonfile manifests, similar results can be achieved using local folder or other platforms, e.g. GitLab, Bitbucket, ...
+for hosting the project and the Polyaxonfile manifests, similar results can be achieved using a local folder or other platforms, e.g. GitLab, Bitbucket, ...
 
 ## Start an experiment
 

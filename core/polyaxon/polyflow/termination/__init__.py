@@ -106,7 +106,7 @@ class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
 
     ### timeout
 
-    Sometime you might to stop an operation after a certain time, timeout let's you define how
+    Sometimes you might stop an operation after a certain time, timeout lets you define how
     long before Polyaxon decides to stop that operation, this is the equivalent of Kubernetes Jobs
     [activeDeadlineSeconds](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#job-termination-and-cleanup)  # noqa
     but you can use this field for all runtimes, for instance you might want to stop a

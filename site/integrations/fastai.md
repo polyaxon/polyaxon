@@ -24,7 +24,7 @@ Polyaxon allows to schedule Fastai experiments, and supports tracking metrics, o
 
 Polyaxon provides a [tracking API](/docs/experimentation/tracking/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard.
 
-You can use the tracking API to create custom tracking experience with Fastai.
+You can use the tracking API to create a custom tracking experience with Fastai.
 
 ## Fastai Callback
 

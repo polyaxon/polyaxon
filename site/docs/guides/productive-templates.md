@@ -23,7 +23,7 @@ Developing machine learning models requires several iterations, some of these it
  * running the experiments on GPU nodes
  * running the experiments in distributed ways
 
-The following sections will give a high level examples of how to create several templates to either update the parameters or the node used for running your experiments. 
+The following sections will give a high-level examples of how to create several templates to either update the parameters or the node used for running your experiments. 
 Similar approach can be used to override polyaxonfiles used for jobs, notebooks, tensorboards, ... 
 
 ## Standard and simple polyaxonfiles

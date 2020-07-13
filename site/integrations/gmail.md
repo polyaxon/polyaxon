@@ -1,7 +1,7 @@
 ---
 title: "Gmail"
 meta_title: "Gmail"
-meta_description: "How to receive notifications from Polyaxon directly to your email using gmail. Get email notifications when an experiment, job, build is finished using gmail so everyone in your team stays in sync."
+meta_description: "How to receive notifications from Polyaxon directly to your email using Gmail. Get email notifications when an experiment, job, build is finished using gmail so everyone in your team stays in sync."
 custom_excerpt: "Gmail is email that's intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access."
 image: "../../content/images/integrations/gmail.png"
 author:
@@ -19,18 +19,18 @@ visibility: public
 status: published
 ---
 
-Get email notifications when an experiment, a job, or a build is finished using gmail so that your team stays in sync.
+Get email notifications when an experiment, a job, or a build is finished using Gmail so that your team stays in sync.
 
 > For production deployments with recommend using other outgoing email services
 
-## Create an gmail to use for sending emails to your team members
+## Create a Gmail to use for sending emails to your team members
 
-In order to use [gmail](https://gmail.com) to receive email notifications from Polyaxon, 
-you should create an account in gmail.
+In order to use [Gmail](https://gmail.com) to receive email notifications from Polyaxon, 
+you should create an account in Gmail.
 
 ## Add your Email notification using GMail to Polyaxon deployment config
 
-Now you can set the email section using your gmail's information:
+Now you can set the email section using your Gmail's information:
 
 ```yaml
 email:

@@ -27,11 +27,11 @@ It also packages some required dependencies for Polyaxon:
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
  * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq-ha)
 
-> **Note**: It's possible to provide your own managed version of each one fo these dependecies.
+> **Note**: It's possible to provide your own managed version of each one for these dependencies.
 
-This chart can be installed on single node or multi-nodes cluster,
+This chart can be installed on a single node or multi-nodes cluster,
 in which case you need to provide some volumes with `ReadWriteMany` or cloud buckets.
-An nfs provisioner can be used in cases where you want to try the platform on multi-nodes cluster
+An nfs provisioner can be used in cases where you want to try the platform on a multi-nodes cluster
 without the need to create your own volumes. Please see [polyaxon-nfs-provisioner](https://github.com/polyaxon/polyaxon-nfs-provisioner)
 
 > **Tip**: The full list of the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
@@ -142,7 +142,7 @@ $ helm install --name my-release -f values.yaml polyaxon
 
 ## Ingress, RBAC, and API service
 
-This chart provides support for Ingress resource with a custom ingress controller `polyaxon-ingress`.
+This chart provides support for an Ingress resource with a custom ingress controller `polyaxon-ingress`.
 You can also provide different annotations for the ingress and it will not use `polyaxon-ingress` class. (`ingress.annotations.kubernetes.io/ingress.class`)
 
 | Parameter                | Description                                        | Default
@@ -162,7 +162,7 @@ Note: using TLS requires either:
 
 It's also possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
 
-## Securing api server with TLS
+## Securing API server with TLS
 
 If you have your own certificate you can make a new secret with the `tls.crt` and the `tls.key`,
 then set the secret name in the values file.
@@ -236,7 +236,7 @@ Polyaxon's helm chart comes with an ingress resource that you can use with an in
 
 ### NGINX for NodePort service
 
-To enable ssl for Polyaxon API running with NodePort service on Kubernetes, you need to provide an ssl certificate and ssl certificate key.
+To enable ssl for Polyaxon API running with NodePort service on Kubernetes, you need to provide an ssl certificate and SSL certificate key.
  
 you can provide a self-signed certificate or a browser trusted certificate.
 
@@ -253,9 +253,9 @@ you can provide a self-signed certificate or a browser trusted certificate.
       enabled: true  
       secretName: 'polyaxon-cert'
     ```
- 3. Set the service type to `NodePort` and update the api's service port to 443.
+ 3. Set the service type to `NodePort` and update the API's service port to 443.
  
- N.B. By default Polyaxon mounts the ssl certificate and key to `/etc/ssl`, this value can be updated using the `.Values.ssl.path`.
+ N.B. By default, Polyaxon mounts the ssl certificate and key to `/etc/ssl`, this value can be updated using the `.Values.ssl.path`.
 
 ## CLI setup
 
@@ -360,7 +360,7 @@ or enable the nfs provisioner to provision the volumes, or some of them.
 > **Tip**: If you are using a multi node cluster and need to have `ReadWriteMany` volumes for trying out the platform,
 you can use the nfs provisioner provided by the platform. See later [Persistence with nfs](#persistence-with-nfs-provisioner)
 
-For `logs` and `repos` Polyaxon by default uses the host node, in many case this is a sufficient default,
+For `logs` and `repos` Polyaxon by default uses the host node, in many cases this is a sufficient default,
 in other cases where Polyaxon is deployed on a multi-nodes and is replicated,
 the usage of `ReadWriteMany` PVC is recommended to have a stable deployment.
 
@@ -389,7 +389,7 @@ If you don't provide an outputs claim to use, Polyaxon will use the host.
 **upload**: temporary volume where Polyaxon uploads data, code, files, ...
 
 If you don't provide an outputs claim to use, Polyaxon will use the host.
-It is not very important to have a volume claim for this, if your host node has sufficient storage.
+It is not very important to have a volume claim for this if your host node has sufficient storage.
 
 | Parameter                         | Description                                       | Default
 | --------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
@@ -411,7 +411,7 @@ Every definition should follow the structure:
 | `persistence.data.dataName.existingClaim`  | Name of an existing PVC                           | ``
 | `persistence.data.dataName.mountPath`      | Path where to mount the volume                    | ``
 | `persistence.data.dataName.hostPath`       | The directory from the host node's                | ``
-| `persistence.data.dataName.readOnly`       | Whether to mount as read only                     |
+| `persistence.data.dataName.readOnly`       | Whether to mount as read-only                     |
 | `persistence.data.dataName.store`          | To mount a cloud storage (s3, gcs, azure)         |
 | `persistence.data.dataName.bucket`         | The bucket to mount                               |
 | `persistence.data.dataName.secret`         | The secret containing access to the bucket        |
@@ -474,7 +474,7 @@ Every definition should follow the structure:
 | `persistence.outputs.outputsName.existingClaim`  | Name of an existing PVC                           | ``
 | `persistence.outputs.outputsName.mountPath`      | Path where to mount the volume                    | ``
 | `persistence.outputs.outputsName.hostPath`       | The directory from the host node's                | ``
-| `persistence.outputs.outputsName.readOnly`       | Whether to mount as read only                     |
+| `persistence.outputs.outputsName.readOnly`       | Whether to mount as read-only                     |
 | `persistence.outputs.dataName.store`             | To mount a cloud storage (s3, gcs, azure)         |
 | `persistence.outputs.dataName.bucket`            | The bucket to mount                               |
 | `persistence.outputs.dataName.secret`            | The secret containing access to the bucket        |
@@ -605,7 +605,7 @@ rabbitmq-ha:
 ### Affinity
 
 It allows you to constrain which nodes your pod is eligible to schedule on, based on the node's labels.
-Polyaxon has a default `Affinity` values for it's core components to ensure that they deploy on the same node.
+Polyaxon has a default `Affinity` values for its core components to ensure that they deploy on the same node.
 
 Polyaxon's default affinity:
 
@@ -658,7 +658,7 @@ rabbitmq-ha:
 
 ### IPs/Hosts White list
 
-In order to restrict IP addresses and hosts that can communicate with the api
+In order to restrict IP addresses and hosts that can communicate with the API
 
 ```yaml
 allowedHosts:
@@ -686,7 +686,8 @@ Polyaxon ships with an admin interface:
 
 
 ```yaml
-adminViewEnabled: true
+ui:
+ adminEnabled: true
 ```
 
 ## Security context
@@ -700,9 +701,9 @@ adminViewEnabled: true
 
 
 Polyaxon runs all containers as root by default, this configuration is often fine for several deployment, 
-however, in some use case it can expose a compliance issue for some teams.
+however, in some use cases it can expose a compliance issue for some teams.
 
-Polyaxon provides a simple way to enable a security context for all core components, experiments and jobs.  
+Polyaxon provides a simple way to enable a security context for all core components, experiments, and jobs.  
 
 Default configuration:
 
@@ -736,7 +737,7 @@ This will enable a security context to run all containers using a UID/GID == 111
 
 ## Port forwarding
 
-You can use port forwarding to access the api and dashboard on localhost:
+You can use port forwarding to access the API and dashboard on localhost:
 
 ```bash
 kubectl port-forward  svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon

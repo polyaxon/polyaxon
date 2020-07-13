@@ -12,10 +12,10 @@ tags:
 sidebar: "core"
 ---
 
-In the previous section we looked at components, we also saw how to create components with inputs / outputs 
+In the previous section we looked at components, we also saw how to create components with inputs/outputs 
 to run our model with different parameters without changing the code or the component itself.
 
-In this section we will look at what happened when we run a component w/o params.
+In this sections we will look at what happened when we run a component w/o params.
 
 ## Understanding the process
 

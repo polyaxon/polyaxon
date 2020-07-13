@@ -14,7 +14,7 @@ sidebar: "management"
 
 You can group organization members into teams that reflect your company or group's structure with cascading access permissions.
 
-## Create team
+## Create a team
 
 You can create teams to manage scoped permissions to your projects.
 
@@ -31,7 +31,7 @@ You can add organization members to teams
 You can invite members to a team and give them higher roles within the team.
 
 e.g. A user can be an outsider of an organization and can be invited to a single project 
-as an admin without having access to other project.
+as an admin without having access to other projects.
 
 ![team-invite](../../../../content/images/dashboard/teams/invite.png)
 

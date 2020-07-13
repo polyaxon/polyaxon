@@ -1,8 +1,8 @@
 ---
 title: "Elastic Stack"
 meta_title: "Elastic Stack"
-meta_description: "Polyaxon allows users to use Elastic Stack to reliably and securely take data from any source, in any format, and search, analyze, and visualize it in real time."
-custom_excerpt: "Elastic Stack lets you reliably and securely take data from any source, in any format, and search, analyze, and visualize it in real time."
+meta_description: "Polyaxon allows users to use Elastic Stack to reliably and securely take data from any source, in any format, and search, analyze, and visualize it in real-time."
+custom_excerpt: "Elastic Stack lets you reliably and securely take data from any source, in any format, and search, analyze, and visualize it in real-time."
 image: "../../content/images/integrations/elastic-stack.png"
 author:
   name: "Polyaxon"
@@ -19,7 +19,7 @@ visibility: public
 status: published
 ---
 
-You can use the Elastic Stack to centralise your logging with Polyaxon.
+You can use the Elastic Stack to centralize your logging with Polyaxon.
 
 ## Overview
 
@@ -153,7 +153,7 @@ You can read more about how to customize your ElasticSearch instance and provide
 
 ## Check the logs on the Kibana UI
 
-You can inspect the logs ont the Kibana UI, by port-forwarding for example. 
+You can inspect the logs on the Kibana UI, by port-forwarding for example. 
 
  1. When Kibana appears click Explore on my own. 
      From the top-left or from the Visualize and Explore Data panel select the Discover item. 
@@ -163,7 +163,7 @@ You can inspect the logs ont the Kibana UI, by port-forwarding for example.
  
  3. From the bottom-right of the form select Create index pattern. In a moment a list of fields will appear. 
  
- 4. From the top-left or the home screen’s Visualize and Explore Data panel, select the Discover item. The logs list will appear. 
+ 4. From the top-left of the home screen’s Visualize and Explore Data panel, select the Discover item. The logs list will appear. 
 
 
 ## Notes

@@ -39,7 +39,7 @@ class MPIJobSchema(BaseCamelSchema):
 
 
 class V1MPIJob(BaseConfig, polyaxon_sdk.V1MPIJob):
-    """Kubeflow MPI-Job provides an interface to train a distributed experiments with Pytorch.
+    """Kubeflow MPI-Job provides an interface to train distributed experiments with Pytorch.
 
     Args:
         kind: str, should be equal `mpijob`
@@ -88,7 +88,7 @@ class V1MPIJob(BaseConfig, polyaxon_sdk.V1MPIJob):
 
     ### cleanPodPolicy
 
-    Controls deletion of pods when a job terminates.
+    Controls the deletion of pods when a job terminates.
     The policy can be one of the following values: [`All`, `Running`, `None`]
 
 

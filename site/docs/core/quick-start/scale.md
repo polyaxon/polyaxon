@@ -22,13 +22,13 @@ There are different ways to scale your operations:
 Oftentimes you may want to create many experiments with different parameters and automatically manage their execution.
 
 Polyaxon has APIs and clients that you can use with your favorite scheduler. 
-It also comes with a built-in support for distributed jobs, parallel executions, an optimization and a flow engine.    
+It also comes with built-in support for distributed jobs, parallel executions, and an optimization and a flow engine.    
 
 ## Scaling with distributed jobs
 
 Running a distributed job is similar to running a normal job, Polyaxon offers different [distributed runtimes](/docs/experimentation/distributed/).
 
-In this example we will just show a tensorflow distributed experiment based on TFJob. But the same principle applies to other supported operators. 
+In this example, we will just show a tensorflow distributed experiment based on TFJob. But the same principle applies to other supported operators. 
 
 ```yaml
 version: 1.1
@@ -81,7 +81,7 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/e
 
 This is an operation based on the same component.
 Instead of defining a single set of params, similar to what we did in previous sections of this tutorial,
-this file defines a matrix, in this case a matrix with grid search algorithm.
+this file defines a matrix, in this case, a matrix with the grid search algorithm.
 It uses the same component and Polyaxon validate the space search generated against
 the inputs and outputs defined in the component to validate the params.
 Polyaxon will generate multiple operations based on the search space, and it will manage their execution using a pipeline.
@@ -181,7 +181,7 @@ run:
 
 This DAG will start an experiment, if the experiment has a `loss > max_loss` 
 it will start a tuning job based on a random search algorithm, 
-finally it will run a container to print the best 5 models.
+finally, it will run a container to print the best 5 models.
 
 The DAG itself is parameterized, we can pass different values for `max_loss` and `top`.
 

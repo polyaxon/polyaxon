@@ -32,7 +32,7 @@ to use code from public Bitbucket repositories.
 ## Access token
 
 Bitbucket allows to create [app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html), 
-you can also create a user `polyaxon` with read only access to your organization repos, and use the username/password. 
+you can also create a user `polyaxon` with read-only access to your organization repos, and use the username/password. 
 
 ## Create a secret
 
@@ -40,7 +40,7 @@ you can also create a user `polyaxon` with read only access to your organization
 kubectl -n polyaxon create secret generic bitbucket-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="username:password"
 ```
 
-## Add th repos you want to use to the connections catalog
+## Add the repos you want to use to the connections catalog
 
 ```yaml
 connections:

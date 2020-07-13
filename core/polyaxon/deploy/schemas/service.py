@@ -537,6 +537,7 @@ class ExternalServicesSchema(BaseCamelSchema):
     redis = fields.Nested(ExternalServiceSchema, allow_none=True)
     rabbitmq = fields.Nested(ExternalServiceSchema, allow_none=True)
     postgresql = fields.Nested(ExternalServiceSchema, allow_none=True)
+    gateway = fields.Nested(ExternalServiceSchema, allow_none=True)
     api = fields.Nested(ExternalServiceSchema, allow_none=True)
     metrics = fields.Nested(ExternalBackendSchema, allow_none=True)
     errors = fields.Nested(ExternalBackendSchema, allow_none=True)
@@ -553,6 +554,7 @@ class ExternalServicesConfig(BaseConfig):
         "redis",
         "rabbitmq",
         "postgresql",
+        "gateway",
         "api",
         "metrics",
         "errors",
@@ -564,6 +566,7 @@ class ExternalServicesConfig(BaseConfig):
         redis=None,
         rabbitmq=None,
         postgresql=None,
+        gateway=None,
         api=None,
         metrics=None,
         errors=None,
@@ -572,6 +575,7 @@ class ExternalServicesConfig(BaseConfig):
         self.redis = redis
         self.rabbitmq = rabbitmq
         self.postgresql = postgresql
+        self.gateway = gateway
         self.api = api
         self.metrics = metrics
         self.errors = errors

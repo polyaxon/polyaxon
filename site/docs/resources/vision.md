@@ -1,7 +1,7 @@
 ---
 title: "Vision"
 sub_link: "vision"
-meta_title: "Vision - Polyaxon's vision is to provide an enterprise grade platform For Machine Learning and Deep Learning Life Cycle"
+meta_title: "Vision - Polyaxon's vision is to provide an enterprise-grade platform For Machine Learning and Deep Learning Life Cycle"
 meta_description: "Polyaxon's master plan is to replace disparate tools and applications with a Single Platform pre-configured to work by default across the entire Machine Learning lifecycle."
 visibility: public
 status: published
@@ -14,7 +14,7 @@ pre-configured to work by default across the entire [Machine Learning lifecycle]
 
 Today, Polyaxon gives you a simple interface to access data, train experiments, and manage models.
 
-What most people don't know is that our long-term vision is to create an enterprise grade platform that makes it faster, easier, and more efficient to develop machine learning and deep learning applications, 
+What most people don't know is that our long-term vision is to create an enterprise-grade platform that makes it faster, easier, and more efficient to develop machine learning and deep learning applications, 
 in every [industry](/docs/resources/machine-learning-usecases/), in every organization, in every country, and not just the ones working at the half-dozen tech companies. 
 We believe that by using the power of machine learning, individuals and organizations will change the world. We want to help and simplify this technological transition, 
 and we want to enable the innovations needed in [transportation, health care, energy, communication, space travel, etc.](/docs/resources/machine-learning-usecases/)

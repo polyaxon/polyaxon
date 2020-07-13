@@ -42,21 +42,21 @@ Each agent can manage multiple queues to prioritize which operations the agent s
 
 ### Queues
 
-A queue is a concept that Polyaxon uses to prepare fully compiled and resolved operations before routing them to the namespace / cluster where they should be running on.
+A queue is a concept that Polyaxon uses to prepare fully compiled and resolved operations before routing them to the namespace/cluster where they should be running on.
 
-Every queue in Polyaxon can define a priority and a concurrency. By default, queues are created with the maximum concurrency limit, and the highest priority level. 
+Every queue in Polyaxon can define a priority and a concurrency. By default, queues are created with the maximum concurrency limit and the highest priority level. 
 In that case, if a queue is created with the default configuration it will be used only for routing purposes.
 
- * Concurrency: By default each queue is created with the maximum concurrency limit, unless the user sets a concurrency limit [-1, ...].
+ * Concurrency: By default, each queue is created with the maximum concurrency limit, unless the user sets a concurrency limit [-1, ...].
 
- * Priority: By default each queue is created with the highest priority, unless the user sets a priority level [-1, ...].
+ * Priority: By default, each queue is created with the highest priority, unless the user sets a priority level [-1, ...].
  
 > To manage queues please check the [management section](/docs/management/ui/queues/)
 
 ## Queueing
 
 When a user runs an independent operation, Polyaxon will automatically start compiling and resolving that operation and will put it on the queue defined in the operation, 
-if no queue is defined in th operation, the default queue assigned to the project will be used.
+if no queue is defined in the operation, the default queue assigned to the project will be used.
 
 > To define a queue on the [component](/docs/core/specification/component/#queue), 
   on the [operation](/docs/core/specification/operation/#queue),
@@ -68,7 +68,7 @@ Polyaxon will use the right algorithm for generating any dynamic operations
 to generate the operations and will only compile and resolve operations that have a fully defined upstream dependency and resolved conditions and triggers. 
 It will then start to queue operations on the requested queues up to the concurrency defined by the workflow. 
 
-Once the operations are queued, Polyaxon will follow the routing process defined in the next section to route and schedule operation on the right namespace / cluster.
+Once the operations are queued, Polyaxon will follow the routing process defined in the next section to route and schedule operation on the right namespace/cluster.
 
 
 ## Routing
@@ -96,6 +96,6 @@ Or the statuses page:
 
 ![Runs statuses](../../../../content/images/dashboard/runs/statuses.png)
 
-You get a full overview of the timeline of each stage, if during the lifecycle of an operation an error 
+You get a full overview of the timeline of each stage, and if during the lifecycle of an operation an error 
 occurs or an exception is raised, 
-a red status will be save with a condition containing information about how to debug the cause of the error. 
+a red status will be saved with a condition containing information about how to debug the cause of the error. 

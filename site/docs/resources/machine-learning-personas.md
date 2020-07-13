@@ -11,11 +11,11 @@ tags:
 
 ## Personas
 
-Polyaxon aims to enables everyone in your organization to participate and contribute to your machine learning transition.
+Polyaxon aims to enable everyone in your organization to participate and contribute to your machine learning transition.
 
 ### Machine learning engineers and data scientists
 
-Our core product is optimized with tools, workflows and dashboards to enable data scientists and machine learning engineers to be more productive and iterate faster on model development.
+Our core product is optimized with tools, workflows, and dashboards to enable data scientists and machine learning engineers to be more productive and iterate faster on model development.
 
 ### Project managers and team leads
 
@@ -24,7 +24,7 @@ We have features that enable project managers and team leads to effectively mana
 ### Devops
 
 Our tool is simple to deploy and we have several documentation resources to scale and configure the platform. 
-We have features that gives visibility about who access what and when for auditing and security.
+We have features that give visibility about who accesses what and when for auditing and security.
 
 We are developing more features to enable better monitoring of the cluster resources for the core components and scheduled jobs.
 
@@ -41,4 +41,4 @@ We would like to enable more people in your organization to be able to track and
 
 ### Executive
 
-We have tools that notify executives about weekly progress of your teams. But we are also thinking about high level views that quickly capture the state and progress of all teams under an organization.
+We have tools that notify executives about the weekly progress of your teams. But we are also thinking about high-level views that quickly capture the state and progress of all teams under an organization.

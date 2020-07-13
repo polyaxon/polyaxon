@@ -845,7 +845,43 @@ class TestGatewayApiSchemas(BaseTestCase):
 
     def test_api_location_config(self):
         expected = """
-location / {
+location = / {
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /api/v1/ {
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /ui/ {
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /static/ {
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -861,7 +897,43 @@ location / {
         settings.PROXIES_CONFIG.api_port = 8888
         settings.PROXIES_CONFIG.api_host = "foo"
         expected = """
-location / {
+location = / {
+    proxy_pass http://foo:8888;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /api/v1/ {
+    proxy_pass http://foo:8888;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /ui/ {
+    proxy_pass http://foo:8888;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /static/ {
     proxy_pass http://foo:8888;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -877,7 +949,46 @@ location / {
         settings.PROXIES_CONFIG.api_port = 443
         settings.PROXIES_CONFIG.api_host = "polyaxon.foo.com"
         expected = """
-location / {
+location = / {
+    proxy_ssl_server_name on;
+    proxy_pass https://polyaxon.foo.com;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+
+
+location /api/v1/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://polyaxon.foo.com;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+
+
+location /ui/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://polyaxon.foo.com;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+
+
+location /static/ {
     proxy_ssl_server_name on;
     proxy_pass https://polyaxon.foo.com;
     proxy_http_version 1.1;

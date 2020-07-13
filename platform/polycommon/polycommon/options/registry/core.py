@@ -28,8 +28,8 @@ CELERY_BROKER_URL = "CELERY_BROKER_URL"
 SECRET_INTERNAL_TOKEN = "SECRET_INTERNAL_TOKEN"  # noqa
 HEALTH_CHECK_WORKER_TIMEOUT = "HEALTH_CHECK_WORKER_TIMEOUT"
 SCHEDULER_ENABLED = "SCHEDULER_ENABLED"
-ADMIN_VIEW_ENABLED = "ADMIN_VIEW_ENABLED"
-JS_OFFLINE = "JS_OFFLINE"
+UI_ADMIN_ENABLED = "UI_ADMIN_ENABLED"
+UI_OFFLINE = "UI_OFFLINE"
 UI_ENABLED = "UI_ENABLED"
 
 OPTIONS = {
@@ -41,8 +41,8 @@ OPTIONS = {
     SECRET_INTERNAL_TOKEN,
     HEALTH_CHECK_WORKER_TIMEOUT,
     SCHEDULER_ENABLED,
-    ADMIN_VIEW_ENABLED,
-    JS_OFFLINE,
+    UI_ADMIN_ENABLED,
+    UI_OFFLINE,
     UI_ENABLED,
 }
 
@@ -144,8 +144,8 @@ class SchedulerEnabled(Option):
     options = None
 
 
-class AdminViewEnabled(Option):
-    key = ADMIN_VIEW_ENABLED
+class UiAdminEnabled(Option):
+    key = UI_ADMIN_ENABLED
     scope = OptionScope.GLOBAL
     is_secret = False
     is_optional = True
@@ -156,8 +156,8 @@ class AdminViewEnabled(Option):
     options = None
 
 
-class JsOffline(Option):
-    key = JS_OFFLINE
+class UiOffline(Option):
+    key = UI_OFFLINE
     scope = OptionScope.GLOBAL
     is_secret = False
     is_optional = True

@@ -1,7 +1,7 @@
 ---
 title: "Artifacts on Persistent Volume Claim"
 meta_title: "PVC(Persistent Volume Claim)"
-meta_description: "Using PVC(Persistent Volume Claim) to organize your jobs outputs and experiment artifacts. Polyaxon allows users to connect to one or multiple PVCs(Persistent Volume Claim) to store job outputs and experiment artifacts."
+meta_description: "Using PVC(Persistent Volume Claim) to organize your jobs' outputs and experiments' artifacts. Polyaxon allows users to connect to one or multiple PVCs(Persistent Volume Claim) to store job outputs and experiment artifacts."
 custom_excerpt: "The PersistentVolume subsystem provides an API for users and administrators that abstracts details of how storage is provided from how it is consumed."
 image: "../../content/images/integrations/pvc.png"
 author:
@@ -31,7 +31,7 @@ Under the same namespace where you are deploying Polyaxon, e.g. `polyaxon`, crea
 kubectl create -f data-pvc.yml -n polyaxon
 ```
 
-> **Tip**: Please visit the kubernetes documentation to learn about [persistent volumes](docs/concepts/storage/persistent-volumes/).
+> **Tip**: Please visit the Kubernetes documentation to learn about [persistent volumes](docs/concepts/storage/persistent-volumes/).
 
 ## Now you can use this PVC as an artifacts store
 

@@ -28,7 +28,7 @@ class TestDeploymentConfig(BaseTestCase):
         assert isinstance(config, DeploymentConfig)
         assert config.namespace is None
         assert config.rbac.enabled is True
-        assert config.admin_view_enabled is None
+        assert config.ui is None
         assert config.timezone is None
         assert config.environment == "staging"
         assert config.ingress.enabled is True
@@ -62,7 +62,7 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.deployment_type is None
         assert config.namespace is None
         assert config.rbac.enabled is False
-        assert config.admin_view_enabled is None
+        assert config.ui is None
         assert config.timezone is None
         assert config.environment == "staging"
         assert config.ingress.enabled is False
@@ -101,7 +101,7 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.deployment_type is None
         assert config.namespace is None
         assert config.rbac.enabled is True
-        assert config.admin_view_enabled is None
+        assert config.ui is None
         assert config.timezone is None
         assert config.environment == "staging"
         assert config.ingress.enabled is True
@@ -139,7 +139,6 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.deployment_type is None
         assert config.namespace is None
         assert config.rbac.enabled is True
-        assert config.admin_view_enabled is None
         assert config.timezone == "Europe/Berlin"
         assert config.environment == "staging"
         assert config.ingress.enabled is True
@@ -168,6 +167,13 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.artifacts_store.kind == "volume_claim"
         assert config.artifacts_store.schema.volume_claim == "test"
         assert len(config.connections) == 2
+        assert config.auth.enabled is False
+        assert config.auth.external is None
+        assert config.auth.use_resolver is True
+        assert config.ui.enabled is True
+        assert config.ui.offline is True
+        assert config.ui.static_url == "https://ffo.com"
+        assert config.ui.admin_enabled is True
         assert config.ldap is not None
         assert config.ssl.enabled is True
         assert config.ssl.secret_name == "polyaxon-cert"
@@ -188,7 +194,7 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.deployment_type is None
         assert config.namespace is None
         assert config.rbac.enabled is True
-        assert config.admin_view_enabled is None
+        assert config.ui is None
         assert config.timezone == "Europe/Berlin"
         assert config.environment == "staging"
         assert config.ingress.enabled is True
@@ -234,12 +240,31 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.artifacts_store is not None
         assert config.connections is None
 
+    def test_read_deploy_config_values6(self):
+        config = reader.read("tests/fixtures/deployment/values6.yml")
+        assert isinstance(config, DeploymentConfig)
+        assert config.deployment_chart == "agent"
+        assert config.deployment_type == "kubernetes"
+        assert config.namespace == "polyaxon"
+        assert config.limit_resources is False
+        assert config.rbac.enabled is True
+        assert config.ingress.enabled is False
+        assert config.external_services.gateway.host == "foo-bar-ex"
+        assert config.external_services.gateway.port == 443
+        assert config.external_services.api.host == "foo-bar-ex"
+        assert config.external_services.api.port == 443
+        assert config.gateway.enabled is False
+        assert config.streams.image == "polyaxon/polyaxon-streams"
+        assert config.auth.enabled is True
+        assert config.auth.external == "test"
+        assert config.auth.use_resolver is True
+
     def test_read_deploy_config_pgsql_values(self):
         config = reader.read("tests/fixtures/deployment/external_pgsql_values.yml")
         assert isinstance(config, DeploymentConfig)
         assert config.namespace is None
         assert config.rbac.enabled is True
-        assert config.admin_view_enabled is None
+        assert config.ui is None
         assert config.timezone is None
         assert config.environment == "staging"
         assert config.ingress is None
@@ -286,7 +311,7 @@ class TestDeploymentConfig(BaseTestCase):
         assert isinstance(config, DeploymentConfig)
         assert config.namespace is None
         assert config.rbac.enabled is True
-        assert config.admin_view_enabled is None
+        assert config.ui is None
         assert config.timezone is None
         assert config.environment == "staging"
         assert config.ingress is None
@@ -328,7 +353,7 @@ class TestDeploymentConfig(BaseTestCase):
         assert isinstance(config, DeploymentConfig)
         assert config.namespace is None
         assert config.rbac.enabled is True
-        assert config.admin_view_enabled is None
+        assert config.ui is None
         assert config.timezone is None
         assert config.environment == "staging"
         assert config.ingress is None
@@ -370,7 +395,7 @@ class TestDeploymentConfig(BaseTestCase):
         assert isinstance(config, DeploymentConfig)
         assert config.namespace is None
         assert config.rbac.enabled is True
-        assert config.admin_view_enabled is None
+        assert config.ui is None
         assert config.timezone is None
         assert config.environment == "staging"
         assert config.ingress is None

@@ -1,6 +1,6 @@
 ---
 title: "After upgrading Polyaxon I was not able to start experiments because of failed builds."
-meta_title: "After upgrading Polyaxon I was not able to start experiments, jobs, and nontebooks, because of failed builds, the code was not there anymore. - FAQ"
+meta_title: "After upgrading Polyaxon I was not able to start experiments, jobs, and notebooks, because of failed builds, the code was not there anymore. - FAQ"
 meta_description: "Polyaxon provides several ways for storing the logs, the default method uses a local path on the host node."
 featured: false
 custom_excerpt: "Polyaxon provides several ways for storing the logs, the default method uses a local path on the host node."
@@ -22,8 +22,8 @@ you should definitely look at the other persistence strategies.
 
 When the user uses a local path to store logs, a couple of things could happen:
  * The host node might be deleted, or replaced, and all logs will be deleted as well.
- * If the user scales the platform, the API, scheduler, and other component might be deployed on different nodes, which means that only some of these components will be able to access the logs.
- * If the API is replicated on different node same thing could happen as well.
- * After an upgrade all your component might be scheduled on a different node.
+ * If the user scales the platform, the API, scheduler, and other components might be deployed on different nodes, which means that only some of these components will be able to access the logs.
+ * If the API is replicated on different nodes the same thing could happen as well.
+ * After an upgrade, all your components might be scheduled on a different node.
  
-Polyaxon provides several options to make robust persistent of your logs.   
+Polyaxon provides several options to make robust persistence of your logs.   

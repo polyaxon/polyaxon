@@ -8,7 +8,6 @@ metadata:
 {{ include "config.labels.common" . | indent 4 }}
 {{ include "config.labels.roles.coreConfig" . | indent 4 }}
 data:
-  POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
   POLYAXON_K8S_IN_CLUSTER: "true"
   POLYAXON_SET_AGENT: "true"
   {{- if .Values.agent.instance }}

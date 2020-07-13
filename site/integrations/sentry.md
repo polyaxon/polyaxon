@@ -2,7 +2,7 @@
 title: "Sentry"
 meta_title: "Sentry"
 meta_description: "Polyaxon allows users to integrate Sentry to monitor your cluster."
-custom_excerpt: "Sentry is an open-source error tracking that helps developers monitor and fix crashes in real time. Iterate continuously. Boost workflow efficiency. Improve user experience."
+custom_excerpt: "Sentry is an open-source error tracking that helps developers monitor and fix crashes in real-time. Iterate continuously. Boost workflow efficiency. Improve user experience."
 image: "../../content/images/integrations/sentry.png"
 author:
   name: "Polyaxon"
@@ -38,9 +38,9 @@ externalServices:
     backend: sentry
 ```
 
-## to use you own key, start by creating a Sentry account
+## To use your own key, start by creating a Sentry account
 
-[Sentry](https://sentry.io) makes it easy to setup one or more keys.
+[Sentry](https://sentry.io) makes it easy to set up one or more keys.
 
 ## Add your Key to your Polyaxon Control Plane deployment
 

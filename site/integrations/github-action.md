@@ -42,17 +42,17 @@ jobs:
       - name: lint
         run: |
           polyaxon check -f polyaxonfies/operation.yaml
-          polyaxon check -f polyaxonfies/component.yaml --spec-only
+          polyaxon check -f polyaxonfies/component.yaml --lint
       - name: validate
         run: polyaxon check -f polyaxonfies/component.yaml -P activation=relu -P lr=0.01
 ```
 
 ## Submit runs
 
-In order to submit runs from a Github action you need to provide information about your `host` if you are using Polyaxon CE, 
+In order to submit runs from a Github action, you need to provide information about your `host` if you are using Polyaxon CE, 
 and your token if you are using one of Polyaxon commercial products.
 
-This example assumes that the user changes the `operation.yaml` file with new params and / or new information about the environment (e.g. GPU) on every push.
+This example assumes that the user changes the `operation.yaml` file with new params and/or new information about the environment (e.g. GPU) on every push.
 
 ```yaml
 name: Submit Job

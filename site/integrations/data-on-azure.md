@@ -20,7 +20,7 @@ visibility: public
 status: published
 ---
 
-You can use one or multiple  blobs on Azure Storage to access data directly on your machine learning experiments and jobs.
+You can use one or multiple blobs on Azure Storage to access data directly on your machine learning experiments and jobs.
 
 ## Create an Azure Storage account
 

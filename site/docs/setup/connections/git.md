@@ -101,7 +101,7 @@ run:
 
 ## Connecting public repos
 
-To add a connection for a public repo, you don't need set a secret, 
+To add a connection for a public repo, you don't need to set a secret, 
 for example we can clone `https://github.com/polyaxon/polyaxon-quick-start` github repo:
 
 ```yaml

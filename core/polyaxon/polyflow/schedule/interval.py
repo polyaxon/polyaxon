@@ -103,7 +103,7 @@ class V1IntervalSchedule(BaseConfig, polyaxon_sdk.V1IntervalSchedule):
 
     ### frequency
 
-    The time delta value for setting frequency of triggering executions.
+    The time delta value for setting the frequency of triggering executions.
 
     When using the python client you can pass `datetime.TimeDelta`
     where you can set human interpretable precision, e.g. `days`,

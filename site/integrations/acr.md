@@ -26,7 +26,7 @@ Integrate your Azure Container Registry ACR with Polyaxon to start your machine 
 You can easily add many private registries to Polyaxon.
 In order to push private docker images to ACR, you need to set access credentials.
 
-## Create a service principle and ArcPush
+## Create a service principal and ArcPush
 
 To use Azure Container Registry (ACR), you will need to provide proper credentials. 
 You can do so by creating a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) 
@@ -90,9 +90,9 @@ that has the [AcrPush](https://docs.microsoft.com/en-us/azure/role-based-access-
 
 ## Create a secret to allow access to ACR
 
-In order to create a valid secret using the login credentials from previous step, you need to create base64 auth based on the AppID and password.
+In order to create a valid secret using the login credentials from the previous step, you need to create base64 auth based on the AppID and password.
 
-So using python you can do:
+Using Python you can do:
 
 ```python
 import base64

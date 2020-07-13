@@ -51,7 +51,7 @@ class IterativeSchema(BaseCamelSchema):
 
 
 class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
-    """To build a custom optimization algorithm, this interface let's you create an iterative
+    """To build a custom optimization algorithm, this interface lets you create an iterative
     process for creating suggestions and training your model based on those suggestions
 
     The iterative process expect a user defined container that will generate the suggestions for

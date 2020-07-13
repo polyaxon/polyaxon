@@ -31,6 +31,6 @@ You can list, review, and manage all run profiles.
 
 ## Run profile settings
 
-You can update or delete an run profile.
+You can update or delete a run profile.
 
 ![queue-settings](../../../../content/images/dashboard/run-profiles/settings.png)

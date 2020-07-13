@@ -20,6 +20,7 @@ from collections import Mapping
 from typing import Dict, Union
 
 from polyaxon import pkg
+from polyaxon.env_vars.getters.queue import get_queue_info
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
@@ -72,6 +73,8 @@ def get_op_specification(
     if profile:
         job_data["profile"] = profile
     if queue:
+        # Check only
+        get_queue_info(queue)
         job_data["queue"] = queue
     if nocache is not None:
         job_data["cache"] = {"disable": nocache}

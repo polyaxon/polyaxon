@@ -422,8 +422,7 @@ class RunClient:
         N.B. Create methods are only useful if you want to create a run programmatically,
         if you run a component/operation from the CLI/UI an instance will be created automatically.
 
-        By default the hub hosts components. If the component has required inputs,
-        you should pass the params.
+        If the component has required inputs, you should pass the params.
 
         [Run API](/docs/api/#operation/CreateRun)
 

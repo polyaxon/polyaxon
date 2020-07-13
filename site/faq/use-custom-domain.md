@@ -17,12 +17,12 @@ tags:
     - kubernetes
 ---
 
-Polyaxon chart provides support for Ingress resource. You need to set `ingress.enabled` to `true` and `gateway.service.type`  to `CluterIp` and choose an `ingress.hosts` for the URL. 
+Polyaxon chart provides support for an Ingress resource. You need to set `ingress.enabled` to `true` and `gateway.service.type`  to `CluterIp` and choose an `ingress.hosts` for the URL. 
 Then, you should be able to access the installation using that address.
 
 If you want to use your own Ingress Controller such as Nginx or Traefik you maybe want to set `gateway.service.type`  to `CluterIp` and integrate Polyaxon with your custom Ingress controller.
 
-You can follow this steps to setup a domain:
+You can follow these steps to setup a domain:
 
 ## 1. Set up your domain
  

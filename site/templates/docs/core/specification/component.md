@@ -3,7 +3,7 @@ title: "Component Specification"
 sub_link: "specification/component"
 code_link: "core/polyaxon/polyflow/component/component.py"
 meta_title: "Component - Polyaxon Specification"
-meta_description: "A Component is discrete, repeatable, and self-contained action."
+meta_description: "A Component is a discrete, repeatable, and self-contained action."
 visibility: public
 status: published
 tags:

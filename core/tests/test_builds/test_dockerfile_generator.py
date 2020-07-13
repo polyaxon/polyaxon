@@ -57,7 +57,7 @@ class TestDockerfileGenerator(BaseTestCase):
 
         build_context = V1DockerfileType(image="busybox")
 
-        # By default it should use FROM image declare WORKDIR
+        # By default, it should use FROM image declare WORKDIR
         builder = DockerFileGenerator(
             build_context=build_context, destination=repo_path
         )
@@ -69,7 +69,7 @@ class TestDockerfileGenerator(BaseTestCase):
         assert "WORKDIR {}".format(POLYAXON_DOCKER_WORKDIR) in dockerfile
         assert "COPY" not in dockerfile
 
-        # By default it should use FROM image declare WORKDIR, and work
+        # By default, it should use FROM image declare WORKDIR, and work
         build_context = V1DockerfileType(image="busybox", workdir_path=repo_path)
         builder = DockerFileGenerator(
             build_context=build_context, destination=repo_path

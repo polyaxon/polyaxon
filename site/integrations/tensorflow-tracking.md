@@ -24,7 +24,7 @@ Polyaxon allows to schedule Tensorflow experiments and distributed Tensorflow ex
 
 Polyaxon provides a [tracking API](/docs/experimentation/tracking/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard.
 
-You can use the tracking API to create custom tracking experience with Tensorflow.
+You can use the tracking API to create a custom tracking experience with Tensorflow.
 
 ## Tensorflow Callbacks
 

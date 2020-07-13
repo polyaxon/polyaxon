@@ -36,6 +36,6 @@ You can list, review, and manage all queues for each agent.
 
 ## Queue settings
 
-You can update or delete an queue.
+You can update or delete a queue.
 
 ![queue-settings](../../../../content/images/dashboard/queues/settings.png)

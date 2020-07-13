@@ -1,6 +1,6 @@
 ---
-title: "Does Polyaxon supports JupyterLabs?"
-meta_title: "Does Polyaxon supports JupyterLabs? - FAQ"
+title: "Does Polyaxon support JupyterLabs?"
+meta_title: "Does Polyaxon support JupyterLabs? - FAQ"
 meta_description: "Yes, Polyaxon supports running Jupyter notebooks and Jupyter Labs."
 featured: false
 custom_excerpt: "Yes, Polyaxon supports running Jupyter notebooks and Jupyter Labs."
@@ -18,6 +18,6 @@ tags:
 
 Yes, Polyaxon supports running Jupyter notebooks and Jupyter Labs.
 
-Polyaxon supports different different experimentation mediums, Jupyter notebooks and Jupyter Labs are one of these experimentation mediums.
+Polyaxon supports different experimentation mediums, Jupyter notebooks and Jupyter Labs are one of these experimentation mediums.
 
 You can start a Jupyter notebook / Jupyter Lab for your projects and share access with your team members.

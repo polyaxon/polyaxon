@@ -23,7 +23,7 @@ status: published
 
 ## Component info on Polyaxon Hub
 
-To learn about this component definition or customize its behaviour, please check [{{name}} on polyaxon-hub](https://github.com/polyaxon/polyaxon-hub/tree/master/{{name}}).
+To learn about this component definition or customize its behavior, please check [{{name}} on polyaxon-hub](https://github.com/polyaxon/polyaxon-hub/tree/master/{{name}}).
 
 ## Component info using Polyaxon CLI
 
@@ -35,7 +35,7 @@ polyaxon hub --name={{name}} get
 
 ## Fetch component to the current working dir
 
-You can use the CLI to fetch the component to local file:
+You can use the CLI to fetch the component to a local file:
 
 ```bash
 polyaxon hub --name={{name}} get --save
@@ -114,4 +114,4 @@ hubRef: {{name}}:[tag]
 
 ## Versions
 
-This components has the following versions: `{{versions}}`
+This component has the following versions: `{{versions}}`

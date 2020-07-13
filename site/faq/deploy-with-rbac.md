@@ -18,12 +18,12 @@ tags:
 ---
 
 Kubernetes supports, and often requires, using [Role Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/) 
-to secure which pods / users can perform what kinds of actions on the cluster. 
+to secure which pods/users can perform what kinds of actions on the cluster. 
 RBAC rules can be set to provide users with minimal necessary access based on their administrative needs.
 
 It is critical to understand that if RBAC is disabled, 
 all pods are given root equivalent permission on the Kubernetes cluster and all the nodes in it. 
-This opens up very bad vulnerabilites for your security.
+This opens up very bad vulnerabilities for your security.
 
 Polyaxon helm chart can natively work with RBAC enabled clusters, and it's enabled by default. 
 To provide sensible security defaults, we ship appropriate minimal RBAC rules for the various components we use. 

@@ -20,7 +20,7 @@ visibility: public
 status: published
 ---
 
-Integrate Polyaxon with Amazon SES to receive directly email notifications.
+Integrate Polyaxon with Amazon SES to receive email notifications.
 
 ## Setup Amazon SES
 

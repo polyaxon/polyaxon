@@ -91,7 +91,7 @@ def get_volume_args(
     if artifacts:
         files = artifacts.files or files
         dirs = artifacts.dirs or dirs
-    # Default behaviour is to pull all bucket
+    # Default behavior is to pull all bucket
     if not files and not dirs:
         dirs = [""]
     args = []

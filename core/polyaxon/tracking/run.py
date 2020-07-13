@@ -177,7 +177,7 @@ class Run(RunClient):
              rel_path: str, optional, default "model",
                        the relative path to the `outputs` context.
         Returns:
-            str, outputs_path / rel_path
+            str, outputs_path/rel_path
         """
         path = self._outputs_path
         if rel_path:
@@ -194,7 +194,7 @@ class Run(RunClient):
              rel_path: str, optional, default "tensorboard",
                        the relative path to the `outputs` context.
         Returns:
-            str, outputs_path / rel_path
+            str, outputs_path/rel_path
         """
         path = self._outputs_path
         if rel_path:

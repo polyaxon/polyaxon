@@ -121,7 +121,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     inputs and outputs types are used to validate the flow of information
     going from one operation to another.
 
-    The final value of an input / output can be resolved
+    The final value of an input/output can be resolved
     from [params](/docs/core/specification/params/), or from other values in
     the [context](/docs/core/specification/context/).
 
@@ -209,7 +209,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### name
 
-    The input / output name.
+    The input/output name.
 
     the name must be a valid slug, and cannot include dots `.`.
 
@@ -220,7 +220,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### description
 
-    An optional description for the input / output.
+    An optional description for the input/output.
 
     ```yaml
     >>> inputs:
@@ -230,7 +230,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### type
 
-    The type of the input / output. The type will be used to validate the value
+    The type of the input/output. The type will be used to validate the value
 
     ```yaml
     >>> inputs:
@@ -281,7 +281,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### is_optional
 
-    A flag to tell if an input / output is optional.
+    A flag to tell if an input/output is optional.
 
     ```yaml
     >>> inputs:
@@ -294,7 +294,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### is_list
 
-    A flag to tell if an input / output is a list of the type passed.
+    A flag to tell if an input/output is a list of the type passed.
 
     ```yaml
     >>> inputs:
@@ -308,7 +308,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### is_flag
 
-    A flag to tell if an input / output is a a flag. This only works and makes sense for inputs
+    A flag to tell if an input/output is a flag. This only works and makes sense for inputs
     of type `bool`.
 
     When this flag is enabled, it will turn the usage of the input to `--...`
@@ -330,16 +330,16 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### delayValidation
 
-    A flag to tell if an input / output should not be
+    A flag to tell if an input/output should not be
     validated at compilation or resolution time.
 
     This flag is enabled by default for outputs, since they can only be
     resolved after or during the run. To request validation at compilation time for outputs,
-    you need set this flag to `False`.
+    you need to set this flag to `False`.
 
     ### options
 
-    Options allows to pass a list of values that will be used to validate any passed params.
+    Options allow to pass a list of values that will be used to validate any passed params.
 
     ```yaml
     >>> inputs:
@@ -350,7 +350,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>>     options: [1.1, 2.2, 3.3]
     ```
 
-    If you pass the value `4.4` for learning rate it will raise a validation error.
+    If you pass the value `4.4` for the learning rate it will raise a validation error.
 
     ## Example
 
@@ -401,13 +401,13 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     ### Running a typed component using the CLI
 
-    Using the Polyaxon CLI we can now run this compoennt and override the inputs' default values:
+    Using the Polyaxon CLI we can now run this component and override the inputs' default values:
 
     ```bash
     polyaxon run -f polyaxonfile.yaml -P activation=sigmoid -P dropout=0.4
     ```
 
-    this will result in an run where the params are passed and validated against the inputs types.
+    this will result in a run where the params are passed and validated against the inputs' types.
 
     ### Required inputs
 

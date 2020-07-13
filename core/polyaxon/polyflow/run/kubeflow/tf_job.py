@@ -40,7 +40,7 @@ class TFJobSchema(BaseCamelSchema):
 
 
 class V1TFJob(BaseConfig, polyaxon_sdk.V1TFJob):
-    """Kubeflow TF-Job provides an interface to train a distributed experiments with TensorFlow.
+    """Kubeflow TF-Job provides an interface to train distributed experiments with TensorFlow.
 
     Args:
         kind: str, should be equal `tfjob`
@@ -92,7 +92,7 @@ class V1TFJob(BaseConfig, polyaxon_sdk.V1TFJob):
 
     ### cleanPodPolicy
 
-    Controls deletion of pods when a job terminates.
+    Controls the deletion of pods when a job terminates.
     The policy can be one of the following values: [`All`, `Running`, `None`]
 
 

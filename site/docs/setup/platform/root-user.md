@@ -27,7 +27,8 @@ user:
 To enable the DB admin interface:
 
 ```yaml
-adminViewEnabled: true
+ui:
+  adminEnabled: true
 ```
 
-The user/password generate will be used for access the admin interface.
+The user/password generated will be used for access the admin interface.

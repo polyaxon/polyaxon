@@ -59,7 +59,7 @@ Select the token and copy it.
 kubectl -n polyaxon create secret generic github-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="TokenHash"
 ```
 
-## Add th repos you want to use to the connections catalog
+## Add the repos you want to use to the connections catalog
 
 ```yaml
 connections:

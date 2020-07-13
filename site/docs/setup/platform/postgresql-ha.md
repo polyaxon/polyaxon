@@ -95,4 +95,4 @@ Use `0` to close database connections at the end of each request and `None` for 
 
 ## Transaction pooling with pgbouncer
 
-If you are running a high load Polyaxon deployment, we suggest to use a connection pooler, e.g [pgbouncer](https://pgbouncer.github.io/).
+If you are running a high load Polyaxon deployment, we suggest using a connection pooler, e.g [pgbouncer](https://pgbouncer.github.io/).

@@ -42,7 +42,7 @@ class PluginsSchema(BaseCamelSchema):
 class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     """Plugins section provides a way to set notifications and customize extrat Polyaxon utilities.
 
-    By default Polyaxon injects some information for example an auth context
+    By default, Polyaxon injects some information for example an auth context
     and triggers some mechanisms for collecting logs and outputs.
 
     Plugins section provides more control to the end user to enable/disable some of these utilities.
@@ -101,7 +101,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     This plugin is enabled by default in Polyaxon deployments with user management.
     </blockquote>
 
-    By default Polyaxon will create an auth context for each operation, this removes the overhead
+    By default, Polyaxon will create an auth context for each operation, this removes the overhead
     to think about how you can pass tokens to your runs,
     or the need to create secrets to load the token from during the run time.
 
@@ -146,7 +146,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     This plugin mounts an tmpfs volume to /dev/shm.
     This will set /dev/shm size to half of the RAM of node.
     By default, /dev/shm is very small, only 64MB.
-    Some experiments/jobs will fail due to lack of share memory,
+    Some experiments/jobs will fail due to the lack of shared memory,
     such as some experiments running on Pytorch.
 
     To disable this plugin:
@@ -160,7 +160,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     <blockquote class="light">This plugin is enabled by default.</blockquote>
 
-    By default Polyaxon will collect all artifacts and outputs that you share in the
+    By default, Polyaxon will collect all artifacts and outputs that you share in the
     `plx-context/artifacts/run-uuid/outputs` to the default artifacts store
     that you configured during the deployment.
 
@@ -196,7 +196,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     <blockquote class="light">This plugin is enabled by default.</blockquote>
 
-    By default Polyaxon will collect all logs related to your runs before deleting
+    By default, Polyaxon will collect all logs related to your runs before deleting
     the resource on the clusters. This ensures that your cluster(s) are kept clean and no resources
     are actively putting pressure on the API server.
 
@@ -213,7 +213,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     <blockquote class="light">This plugin is enabled by default.</blockquote>
 
-    By default Polyaxon will collect all Mem/CPU/GPU resources
+    By default, Polyaxon will collect all Mem/CPU/GPU resources
     for your runs that use the python client.
 
     Sometimes you might want to avoid collecting this information for some runs,
@@ -230,7 +230,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     <blockquote class="light">This plugin is enabled by default.</blockquote>
 
-    By default Polyaxon will resume from collecting metrics/outputs/artifacts
+    By default, Polyaxon will resume from collecting metrics/outputs/artifacts
     if a run fails and retries or if the user resume a run.
 
     To disable this plugin:
@@ -260,7 +260,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     <blockquote class="light">Default is None.</blockquote>
 
-    If you want to control the log level of your runs in similar way locally and on cluster,
+    If you want to control the log level of your runs in a similar way locally and on the cluster,
     you can either use env vars or this plugin to share the same log level with all containers
     running in your operation.
 

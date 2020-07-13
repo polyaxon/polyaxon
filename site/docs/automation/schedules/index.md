@@ -19,7 +19,7 @@ sidebar: "automation"
 
 ## Overview
  
-Components are by default triggered one time when a user create an operation, 
+Components are by default triggered one time when a user creates an operation, 
 or as many times as the users trigger new operations.
 Polyaxon monitors all operations and all DAGs, and triggers ops whose dependencies have been met.
 

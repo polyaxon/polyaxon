@@ -1,6 +1,6 @@
 ---
-title: "Does Polyaxon supports serving models?"
-meta_title: "Does Polyaxon supports serving models? - FAQ"
+title: "Does Polyaxon support serving models?"
+meta_title: "Does Polyaxon support serving models? - FAQ"
 meta_description: "Currently, Polyaxon does not provide an in-cluster mechanism for deploying models. Polyaxon tries to solve problems related to experimentation."
 featured: false
 custom_excerpt: "Currently, Polyaxon does not provide an in-cluster mechanism for deploying models."

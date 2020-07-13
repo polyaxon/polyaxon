@@ -22,7 +22,6 @@ data:
   {{- end }}
   {{- end }}
   {{- end }}
-  POLYAXON_API_HOST: "http://{{ template "api.host" . }}:{{ template "api.port" . }}"
   POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
   POLYAXON_K8S_APP_SECRET_NAME: {{ template "config.platformSecret" . }}
   POLYAXON_LOG_LEVEL: {{ default "WARN" .Values.logLevel | quote }}

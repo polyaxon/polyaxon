@@ -22,7 +22,7 @@ Polyaxon experimentation is a set of tools for:
 
  * [Processing data and Training ML models](/docs/experimentation/jobs/)
  * [Running Notebooks and Tensorboards, and launching apps and dashboards](/docs/experimentation/services/)
- * [Running distributed jobs using cloud native operators](/docs/experimentation/distributed/)
+ * [Running distributed jobs using cloud-native operators](/docs/experimentation/distributed/)
  * [Tracking metrics and artifacts](/docs/experimentation/tracking/)
  * [Driving analyses and visualizing results](/docs/experimentation/visualizations/)
  * [Run hyperparameter tuning using our open-source tools or using your own tools](/docs/experimentation/sweep/)
@@ -33,5 +33,5 @@ Polyaxon experimentation is a set of tools for:
 Polyaxon experimentation tools are:
  * Reproducible: Code, environment, and specification are versioned, dependencies are containerized, and every execution is tracked and reproducible.
  * Serverless and Kubernetes native so they benefit from all the benefits containerization provides: portability, scalability, reliability.
- * Massive scale: Fully distributed, several scheduling strategies, fault-tolerant, scale to multiple nodes, clusters, and hundred of thousands of concurrent executions.
+ * Massive scale: Fully distributed, several scheduling strategies, fault-tolerant, scale to multiple nodes, clusters, and hundreds of thousands of concurrent executions.
  * Sharable: Any component can be promoted with typed inputs and outputs to be sharable and reusable.
