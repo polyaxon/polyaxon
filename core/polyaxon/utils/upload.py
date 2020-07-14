@@ -41,7 +41,7 @@ def upload():
             with get_files_by_paths("repo", [filepath]) as (files, files_size):
                 try:
                     PolyaxonClient().project.upload_repo(
-                        project.user, project.name, files, files_size, sync=sync
+                        project.user, project.name, files, files_size
                     )
                 except (
                     PolyaxonHTTPError,

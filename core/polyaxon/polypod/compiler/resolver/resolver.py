@@ -32,6 +32,7 @@ def resolve(
     params: Optional[Dict[str, Dict]],
     run=None,
     resolver_cls=None,
+    created_at: datetime = None,
     compiled_at: datetime = None,
 ):
     resolver_cls = resolver_cls or BaseResolver
@@ -54,7 +55,7 @@ def resolve(
         run_path=run_path,
         run_uuid=run_uuid,
         params=params,
-        created_at=run.created_at,
+        created_at=created_at,
         compiled_at=compiled_at,
     )
     if resolver:

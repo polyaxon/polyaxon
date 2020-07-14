@@ -28,7 +28,6 @@ from polyaxon.polyflow import (  # noqa
     V1Init,
     V1Param,
 )
-from polyaxon.utils.list_utils import to_list
 
 
 class CompiledOperationSpecification(BaseSpecification):

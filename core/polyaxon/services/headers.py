@@ -31,5 +31,7 @@ class PolyaxonServices:  # noqa
     SIDECAR = "sidecar"
     RUNNER = "runner"
     AGENT = "agent"
+    OPERATOR = "operator"
 
-    VALUES = {INITIALIZER, SIDECAR, RUNNER, AGENT}
+    VALUES = {INITIALIZER, SIDECAR, RUNNER, AGENT, OPERATOR}
+    AGENT_VALUES = [OPERATOR, AGENT, INITIALIZER, SIDECAR]

@@ -64,6 +64,7 @@ def resolve(run: BaseRun, compiled_at: datetime = None, resolver_cls=None):
             resolver_cls=resolver_cls,
             params=None,
             compiled_at=compiled_at,
+            created_at=run.created_at,
         )
     except (
         AccessNotAuthorized,

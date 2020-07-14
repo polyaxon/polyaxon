@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
-
 from typing import List, Optional
 
 from polyaxon.containers.containers import V1PolyaxonInitContainer

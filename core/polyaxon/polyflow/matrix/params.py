@@ -248,7 +248,7 @@ class V1HpChoice(BaseConfig, polyaxon_sdk.V1HpChoice):
     IDENTIFIER = "choice"
 
     @staticmethod
-    def validate_io(io: "V1IO"):
+    def validate_io(io: "V1IO"):  # noqa
         return True
 
     @property
@@ -317,7 +317,7 @@ class V1HpPChoice(BaseConfig, polyaxon_sdk.V1HpPChoice):
     IDENTIFIER = "pchoice"
 
     @staticmethod
-    def validate_io(io: "V1IO"):
+    def validate_io(io: "V1IO"):  # noqa
         return True
 
     @property
@@ -347,7 +347,7 @@ class V1HpPChoice(BaseConfig, polyaxon_sdk.V1HpPChoice):
 
 class BaseHParamConfig(BaseConfig):
     @staticmethod
-    def validate_io(io: "V1IO"):
+    def validate_io(io: "V1IO"):  # noqa
         if io.iotype not in [types.INT, types.FLOAT]:
             raise ValidationError(
                 "Param `{}` has a an input type `{}` "

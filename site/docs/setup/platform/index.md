@@ -23,7 +23,7 @@ Both deployments share some [common Helm options](/docs/setup/platform/common-re
 
 This guide is a reference with commands to deploy, upgrade, and teardown a cluster.
 
-Please consider reading the other configuration sections to have a deeper knowledge about how to configure and customize Polyaxon to your need.
+Please consider reading the other configuration sections to have a deeper knowledge about how to configure and customize Polyaxon to fit your needs.
 
 If you are deploying Polyaxon in production mode, you should take some time to read about some [best practices](/docs/guides/best-practices-for-deploying-polyaxon/) when deploying Polyaxon.
 

@@ -12,7 +12,7 @@ tags:
 
 If you are here, it means that you have a Minikube cluster and [helm](/docs/guides/setup-helm/) setup.
 
-Please consider reading our [configuration guides](/configuration/introduction/) to have a deeper knowledge about how to configure and customize Polyaxon to your need.
+Please consider reading our [configuration guides](/configuration/introduction/) to have a deeper knowledge about how to configure and customize Polyaxon to fit your needs.
 
 Please also check the [helm reference](/references/polyaxon-helm-reference/) for all default values.
 
