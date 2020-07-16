@@ -91,9 +91,19 @@ class PolypodConfig:
 
     def _resolve_connections(self, connections: List[str], agent_config: AgentConfig):
         if connections:
-            connection_by_names = {
-                c: agent_config.connections_by_names[c] for c in connections
-            }
+            connection_by_names = {}
+            missing_connections = set()
+            for c in connections:
+                if c not in agent_config.connections_by_names:
+                    missing_connections.add(c)
+                else:
+                    connection_by_names[c] = agent_config.connections_by_names[c]
+            if missing_connections:
+                raise PolyaxonCompilerError(
+                    "Some Connection refs were provided "
+                    "but were not found in the "
+                    "agent.connections catalog: `{}`".format(missing_connections)
+                )
             self.connection_by_names.update(connection_by_names)
 
     def _resolve_notification_connections(
