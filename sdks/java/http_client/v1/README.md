@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.1.0
+- API version: 1.1.4-rc8
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.4-rc8</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.1.0"
+compile "org.openapitools:openapi-java-client:1.1.4-rc8"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.1.0.jar`
+* `target/openapi-java-client-1.1.4-rc8.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -128,13 +128,23 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**getAgent**](docs/AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
 *AgentsV1Api* | [**getAgentState**](docs/AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
 *AgentsV1Api* | [**getAgentStatuses**](docs/AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
+*AgentsV1Api* | [**getAgentToken**](docs/AgentsV1Api.md#getAgentToken) | **GET** /api/v1/orgs/{owner}/agents/{agent}/token | Get agent token
 *AgentsV1Api* | [**listAgentNames**](docs/AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
 *AgentsV1Api* | [**listAgents**](docs/AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List agents
 *AgentsV1Api* | [**patchAgent**](docs/AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch agent
+*AgentsV1Api* | [**patchAgentToken**](docs/AgentsV1Api.md#patchAgentToken) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/token | Patch agent token
 *AgentsV1Api* | [**syncAgent**](docs/AgentsV1Api.md#syncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | Sync agent
 *AgentsV1Api* | [**updateAgent**](docs/AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update agent
+*AgentsV1Api* | [**updateAgentToken**](docs/AgentsV1Api.md#updateAgentToken) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/token | Update agent token
 *ArtifactsStoresV1Api* | [**uploadArtifact**](docs/ArtifactsStoresV1Api.md#uploadArtifact) | **POST** /api/v1/catalogs/{owner}/artifacts/{uuid}/upload | Upload artifact to a store
 *AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | Login
+*ComponentHubV1Api* | [**createComponentHub**](docs/ComponentHubV1Api.md#createComponentHub) | **POST** /api/v1/orgs/{owner}/components | Create hub component
+*ComponentHubV1Api* | [**deleteComponentHub**](docs/ComponentHubV1Api.md#deleteComponentHub) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
+*ComponentHubV1Api* | [**getComponentHub**](docs/ComponentHubV1Api.md#getComponentHub) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub component
+*ComponentHubV1Api* | [**listComponentHubNames**](docs/ComponentHubV1Api.md#listComponentHubNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub component names
+*ComponentHubV1Api* | [**listComponentHubs**](docs/ComponentHubV1Api.md#listComponentHubs) | **GET** /api/v1/orgs/{owner}/components | List hub components
+*ComponentHubV1Api* | [**patchComponentHub**](docs/ComponentHubV1Api.md#patchComponentHub) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub component
+*ComponentHubV1Api* | [**updateComponentHub**](docs/ComponentHubV1Api.md#updateComponentHub) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub component
 *ConnectionsV1Api* | [**createConnection**](docs/ConnectionsV1Api.md#createConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
 *ConnectionsV1Api* | [**deleteConnection**](docs/ConnectionsV1Api.md#deleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
 *ConnectionsV1Api* | [**getConnection**](docs/ConnectionsV1Api.md#getConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
@@ -149,20 +159,13 @@ Class | Method | HTTP request | Description
 *DashboardsV1Api* | [**listDashboards**](docs/DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List dashboards
 *DashboardsV1Api* | [**patchDashboard**](docs/DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Patch dashboard
 *DashboardsV1Api* | [**updateDashboard**](docs/DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update dashboard
-*HubComponentsV1Api* | [**createHubComponent**](docs/HubComponentsV1Api.md#createHubComponent) | **POST** /api/v1/orgs/{owner}/components | Create hub component
-*HubComponentsV1Api* | [**deleteHubComponent**](docs/HubComponentsV1Api.md#deleteHubComponent) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
-*HubComponentsV1Api* | [**getHubComponent**](docs/HubComponentsV1Api.md#getHubComponent) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub component
-*HubComponentsV1Api* | [**listHubComponebtNames**](docs/HubComponentsV1Api.md#listHubComponebtNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub component names
-*HubComponentsV1Api* | [**listHubComponents**](docs/HubComponentsV1Api.md#listHubComponents) | **GET** /api/v1/orgs/{owner}/components | List hub components
-*HubComponentsV1Api* | [**patchHubComponent**](docs/HubComponentsV1Api.md#patchHubComponent) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub component
-*HubComponentsV1Api* | [**updateHubComponent**](docs/HubComponentsV1Api.md#updateHubComponent) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub component
-*HubModelsV1Api* | [**createHubModel**](docs/HubModelsV1Api.md#createHubModel) | **POST** /api/v1/orgs/{owner}/models | Create hub model
-*HubModelsV1Api* | [**deleteHubModel**](docs/HubModelsV1Api.md#deleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete hub model
-*HubModelsV1Api* | [**getHubModel**](docs/HubModelsV1Api.md#getHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get hub model
-*HubModelsV1Api* | [**listHubModelNames**](docs/HubModelsV1Api.md#listHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List hub model names
-*HubModelsV1Api* | [**listHubModels**](docs/HubModelsV1Api.md#listHubModels) | **GET** /api/v1/orgs/{owner}/models | List hub models
-*HubModelsV1Api* | [**patchHubModel**](docs/HubModelsV1Api.md#patchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch hub model
-*HubModelsV1Api* | [**updateHubModel**](docs/HubModelsV1Api.md#updateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update hub model
+*ModelRegistryV1Api* | [**createModelRegistry**](docs/ModelRegistryV1Api.md#createModelRegistry) | **POST** /api/v1/orgs/{owner}/models | Create hub model
+*ModelRegistryV1Api* | [**deleteModelRegistry**](docs/ModelRegistryV1Api.md#deleteModelRegistry) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete hub model
+*ModelRegistryV1Api* | [**getModelRegistry**](docs/ModelRegistryV1Api.md#getModelRegistry) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get hub model
+*ModelRegistryV1Api* | [**listModelRegistry**](docs/ModelRegistryV1Api.md#listModelRegistry) | **GET** /api/v1/orgs/{owner}/models | List hub models
+*ModelRegistryV1Api* | [**listModelRegistryNames**](docs/ModelRegistryV1Api.md#listModelRegistryNames) | **GET** /api/v1/orgs/{owner}/models/names | List hub model names
+*ModelRegistryV1Api* | [**patchModelRegistry**](docs/ModelRegistryV1Api.md#patchModelRegistry) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch hub model
+*ModelRegistryV1Api* | [**updateModelRegistry**](docs/ModelRegistryV1Api.md#updateModelRegistry) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update hub model
 *OrganizationsV1Api* | [**createOrganization**](docs/OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | Create organization
 *OrganizationsV1Api* | [**createOrganizationMember**](docs/OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Create organization member
 *OrganizationsV1Api* | [**deleteOrganization**](docs/OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
@@ -301,8 +304,14 @@ Class | Method | HTTP request | Description
 *TeamsV1Api* | [**patchTeamMember**](docs/TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch tram member
 *TeamsV1Api* | [**updateTeam**](docs/TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update team
 *TeamsV1Api* | [**updateTeamMember**](docs/TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update team member
+*UsersV1Api* | [**createToken**](docs/UsersV1Api.md#createToken) | **POST** /api/v1/users/tokens | Create token
+*UsersV1Api* | [**deleteToken**](docs/UsersV1Api.md#deleteToken) | **DELETE** /api/v1/users/tokens/{uuid} | Delete token
+*UsersV1Api* | [**getToken**](docs/UsersV1Api.md#getToken) | **GET** /api/v1/users/tokens/{uuid} | Get token
 *UsersV1Api* | [**getUser**](docs/UsersV1Api.md#getUser) | **GET** /api/v1/users | Get current user
+*UsersV1Api* | [**listTokens**](docs/UsersV1Api.md#listTokens) | **GET** /api/v1/users/tokens | List tokens
+*UsersV1Api* | [**patchToken**](docs/UsersV1Api.md#patchToken) | **PATCH** /api/v1/users/tokens/{token.uuid} | Patch token
 *UsersV1Api* | [**patchUser**](docs/UsersV1Api.md#patchUser) | **PATCH** /api/v1/users | Patch current user
+*UsersV1Api* | [**updateToken**](docs/UsersV1Api.md#updateToken) | **PUT** /api/v1/users/tokens/{token.uuid} | Update token
 *UsersV1Api* | [**updateUser**](docs/UsersV1Api.md#updateUser) | **PUT** /api/v1/users | Update current user
 *VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | Get log handler
 *VersionsV1Api* | [**getVersions**](docs/VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get versions
@@ -336,6 +345,7 @@ Class | Method | HTTP request | Description
  - [V1CloningKind](docs/V1CloningKind.md)
  - [V1CompiledOperation](docs/V1CompiledOperation.md)
  - [V1Component](docs/V1Component.md)
+ - [V1ComponentHub](docs/V1ComponentHub.md)
  - [V1ConnectionKind](docs/V1ConnectionKind.md)
  - [V1ConnectionResponse](docs/V1ConnectionResponse.md)
  - [V1ConnectionSchema](docs/V1ConnectionSchema.md)
@@ -391,8 +401,6 @@ Class | Method | HTTP request | Description
  - [V1HpQUniform](docs/V1HpQUniform.md)
  - [V1HpRange](docs/V1HpRange.md)
  - [V1HpUniform](docs/V1HpUniform.md)
- - [V1HubComponent](docs/V1HubComponent.md)
- - [V1HubModel](docs/V1HubModel.md)
  - [V1HubRef](docs/V1HubRef.md)
  - [V1Hyperband](docs/V1Hyperband.md)
  - [V1Hyperopt](docs/V1Hyperopt.md)
@@ -409,10 +417,10 @@ Class | Method | HTTP request | Description
  - [V1KFReplica](docs/V1KFReplica.md)
  - [V1ListAccessResourcesResponse](docs/V1ListAccessResourcesResponse.md)
  - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
+ - [V1ListComponentHubsResponse](docs/V1ListComponentHubsResponse.md)
  - [V1ListConnectionsResponse](docs/V1ListConnectionsResponse.md)
  - [V1ListDashboardsResponse](docs/V1ListDashboardsResponse.md)
- - [V1ListHubComponentsResponse](docs/V1ListHubComponentsResponse.md)
- - [V1ListHubModelsResponse](docs/V1ListHubModelsResponse.md)
+ - [V1ListModelRegistryResponse](docs/V1ListModelRegistryResponse.md)
  - [V1ListOrganizationMembersResponse](docs/V1ListOrganizationMembersResponse.md)
  - [V1ListOrganizationsResponse](docs/V1ListOrganizationsResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
@@ -423,6 +431,7 @@ Class | Method | HTTP request | Description
  - [V1ListSearchesResponse](docs/V1ListSearchesResponse.md)
  - [V1ListTeamMembersResponse](docs/V1ListTeamMembersResponse.md)
  - [V1ListTeamsResponse](docs/V1ListTeamsResponse.md)
+ - [V1ListTokenResponse](docs/V1ListTokenResponse.md)
  - [V1Log](docs/V1Log.md)
  - [V1LogHandler](docs/V1LogHandler.md)
  - [V1Logs](docs/V1Logs.md)
@@ -432,6 +441,7 @@ Class | Method | HTTP request | Description
  - [V1MatrixKind](docs/V1MatrixKind.md)
  - [V1MedianStoppingPolicy](docs/V1MedianStoppingPolicy.md)
  - [V1MetricEarlyStopping](docs/V1MetricEarlyStopping.md)
+ - [V1ModelRegistry](docs/V1ModelRegistry.md)
  - [V1Notification](docs/V1Notification.md)
  - [V1Operation](docs/V1Operation.md)
  - [V1OperationBody](docs/V1OperationBody.md)
@@ -485,6 +495,7 @@ Class | Method | HTTP request | Description
  - [V1Team](docs/V1Team.md)
  - [V1TeamMember](docs/V1TeamMember.md)
  - [V1Termination](docs/V1Termination.md)
+ - [V1Token](docs/V1Token.md)
  - [V1TriggerPolicy](docs/V1TriggerPolicy.md)
  - [V1TruncationStoppingPolicy](docs/V1TruncationStoppingPolicy.md)
  - [V1UriType](docs/V1UriType.md)

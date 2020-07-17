@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.0",
+    "version": "1.1.4-rc8",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -1527,7 +1527,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Agent"
+              "$ref": "#/definitions/v1Queue"
             }
           },
           "204": {
@@ -1768,6 +1768,180 @@
         ],
         "tags": [
           "QueuesV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/agents/{agent}/token": {
+      "get": {
+        "summary": "Get agent token",
+        "operationId": "GetAgentToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      },
+      "put": {
+        "summary": "Update agent token",
+        "operationId": "UpdateAgentToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Token body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Patch agent token",
+        "operationId": "PatchAgentToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Token body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          }
+        ],
+        "tags": [
+          "AgentsV1"
         ]
       }
     },
@@ -2162,12 +2336,12 @@
     "/api/v1/orgs/{owner}/components": {
       "get": {
         "summary": "List hub components",
-        "operationId": "ListHubComponents",
+        "operationId": "ListComponentHubs",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListHubComponentsResponse"
+              "$ref": "#/definitions/v1ListComponentHubsResponse"
             }
           },
           "204": {
@@ -2229,17 +2403,17 @@
           }
         ],
         "tags": [
-          "HubComponentsV1"
+          "ComponentHubV1"
         ]
       },
       "post": {
         "summary": "Create hub component",
-        "operationId": "CreateHubComponent",
+        "operationId": "CreateComponentHub",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HubComponent"
+              "$ref": "#/definitions/v1ComponentHub"
             }
           },
           "204": {
@@ -2275,24 +2449,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1HubComponent"
+              "$ref": "#/definitions/v1ComponentHub"
             }
           }
         ],
         "tags": [
-          "HubComponentsV1"
+          "ComponentHubV1"
         ]
       }
     },
     "/api/v1/orgs/{owner}/components/names": {
       "get": {
         "summary": "List hub component names",
-        "operationId": "ListHubComponebtNames",
+        "operationId": "ListComponentHubNames",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListHubComponentsResponse"
+              "$ref": "#/definitions/v1ListComponentHubsResponse"
             }
           },
           "204": {
@@ -2354,19 +2528,19 @@
           }
         ],
         "tags": [
-          "HubComponentsV1"
+          "ComponentHubV1"
         ]
       }
     },
     "/api/v1/orgs/{owner}/components/{component.uuid}": {
       "put": {
         "summary": "Update hub component",
-        "operationId": "UpdateHubComponent",
+        "operationId": "UpdateComponentHub",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HubComponent"
+              "$ref": "#/definitions/v1ComponentHub"
             }
           },
           "204": {
@@ -2409,22 +2583,22 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1HubComponent"
+              "$ref": "#/definitions/v1ComponentHub"
             }
           }
         ],
         "tags": [
-          "HubComponentsV1"
+          "ComponentHubV1"
         ]
       },
       "patch": {
         "summary": "Patch hub component",
-        "operationId": "PatchHubComponent",
+        "operationId": "PatchComponentHub",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HubComponent"
+              "$ref": "#/definitions/v1ComponentHub"
             }
           },
           "204": {
@@ -2467,24 +2641,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1HubComponent"
+              "$ref": "#/definitions/v1ComponentHub"
             }
           }
         ],
         "tags": [
-          "HubComponentsV1"
+          "ComponentHubV1"
         ]
       }
     },
     "/api/v1/orgs/{owner}/components/{uuid}": {
       "get": {
         "summary": "Get hub component",
-        "operationId": "GetHubComponent",
+        "operationId": "GetComponentHub",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HubComponent"
+              "$ref": "#/definitions/v1ComponentHub"
             }
           },
           "204": {
@@ -2523,12 +2697,12 @@
           }
         ],
         "tags": [
-          "HubComponentsV1"
+          "ComponentHubV1"
         ]
       },
       "delete": {
         "summary": "Delete hub component",
-        "operationId": "DeleteHubComponent",
+        "operationId": "DeleteComponentHub",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -2569,7 +2743,7 @@
           }
         ],
         "tags": [
-          "HubComponentsV1"
+          "ComponentHubV1"
         ]
       }
     },
@@ -3744,12 +3918,12 @@
     "/api/v1/orgs/{owner}/models": {
       "get": {
         "summary": "List hub models",
-        "operationId": "ListHubModels",
+        "operationId": "ListModelRegistry",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListHubModelsResponse"
+              "$ref": "#/definitions/v1ListModelRegistryResponse"
             }
           },
           "204": {
@@ -3811,17 +3985,17 @@
           }
         ],
         "tags": [
-          "HubModelsV1"
+          "ModelRegistryV1"
         ]
       },
       "post": {
         "summary": "Create hub model",
-        "operationId": "CreateHubModel",
+        "operationId": "CreateModelRegistry",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HubModel"
+              "$ref": "#/definitions/v1ModelRegistry"
             }
           },
           "204": {
@@ -3857,24 +4031,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1HubModel"
+              "$ref": "#/definitions/v1ModelRegistry"
             }
           }
         ],
         "tags": [
-          "HubModelsV1"
+          "ModelRegistryV1"
         ]
       }
     },
     "/api/v1/orgs/{owner}/models/names": {
       "get": {
         "summary": "List hub model names",
-        "operationId": "ListHubModelNames",
+        "operationId": "ListModelRegistryNames",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListHubModelsResponse"
+              "$ref": "#/definitions/v1ListModelRegistryResponse"
             }
           },
           "204": {
@@ -3936,19 +4110,19 @@
           }
         ],
         "tags": [
-          "HubModelsV1"
+          "ModelRegistryV1"
         ]
       }
     },
     "/api/v1/orgs/{owner}/models/{model.uuid}": {
       "put": {
         "summary": "Update hub model",
-        "operationId": "UpdateHubModel",
+        "operationId": "UpdateModelRegistry",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HubModel"
+              "$ref": "#/definitions/v1ModelRegistry"
             }
           },
           "204": {
@@ -3991,22 +4165,22 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1HubModel"
+              "$ref": "#/definitions/v1ModelRegistry"
             }
           }
         ],
         "tags": [
-          "HubModelsV1"
+          "ModelRegistryV1"
         ]
       },
       "patch": {
         "summary": "Patch hub model",
-        "operationId": "PatchHubModel",
+        "operationId": "PatchModelRegistry",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HubModel"
+              "$ref": "#/definitions/v1ModelRegistry"
             }
           },
           "204": {
@@ -4049,24 +4223,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1HubModel"
+              "$ref": "#/definitions/v1ModelRegistry"
             }
           }
         ],
         "tags": [
-          "HubModelsV1"
+          "ModelRegistryV1"
         ]
       }
     },
     "/api/v1/orgs/{owner}/models/{uuid}": {
       "get": {
         "summary": "Get hub model",
-        "operationId": "GetHubModel",
+        "operationId": "GetModelRegistry",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HubModel"
+              "$ref": "#/definitions/v1ModelRegistry"
             }
           },
           "204": {
@@ -4105,12 +4279,12 @@
           }
         ],
         "tags": [
-          "HubModelsV1"
+          "ModelRegistryV1"
         ]
       },
       "delete": {
         "summary": "Delete hub model",
-        "operationId": "DeleteHubModel",
+        "operationId": "DeleteModelRegistry",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -4151,7 +4325,7 @@
           }
         ],
         "tags": [
-          "HubModelsV1"
+          "ModelRegistryV1"
         ]
       }
     },
@@ -6288,6 +6462,304 @@
         ],
         "tags": [
           "AuthV1"
+        ]
+      }
+    },
+    "/api/v1/users/tokens": {
+      "get": {
+        "summary": "List tokens",
+        "operationId": "ListTokens",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListTokenResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UsersV1"
+        ]
+      },
+      "post": {
+        "summary": "Create token",
+        "operationId": "CreateToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Token body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          }
+        ],
+        "tags": [
+          "UsersV1"
+        ]
+      }
+    },
+    "/api/v1/users/tokens/{token.uuid}": {
+      "put": {
+        "summary": "Update token",
+        "operationId": "UpdateToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "token.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Token body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          }
+        ],
+        "tags": [
+          "UsersV1"
+        ]
+      },
+      "patch": {
+        "summary": "Patch token",
+        "operationId": "PatchToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "token.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Token body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          }
+        ],
+        "tags": [
+          "UsersV1"
+        ]
+      }
+    },
+    "/api/v1/users/tokens/{uuid}": {
+      "get": {
+        "summary": "Get token",
+        "operationId": "GetToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Token"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUid of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UsersV1"
+        ]
+      },
+      "delete": {
+        "summary": "Delete token",
+        "operationId": "DeleteToken",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUid of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UsersV1"
         ]
       }
     },
@@ -11881,6 +12353,10 @@
         "status": {
           "$ref": "#/definitions/v1Statuses",
           "title": "Optional latest status of this entity"
+        },
+        "settings": {
+          "type": "object",
+          "title": "Optional settings"
         }
       },
       "title": "Agent specification"
@@ -12027,7 +12503,7 @@
       "properties": {
         "token": {
           "type": "string",
-          "title": "UUID"
+          "title": "token hash"
         }
       },
       "title": "Auth specification"
@@ -12364,6 +12840,55 @@
         }
       },
       "title": "Component specification"
+    },
+    "v1ComponentHub": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional component name, should be a valid fully qualified value: name[:version]"
+        },
+        "content": {
+          "type": "string",
+          "title": "The Component body content"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional tags of this entity"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to disable the model"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entity was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "component hub specification"
     },
     "v1ConnectionKind": {
       "type": "string",
@@ -13784,104 +14309,6 @@
       },
       "title": "HP Uniform Dist specification"
     },
-    "v1HubComponent": {
-      "type": "object",
-      "properties": {
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "name": {
-          "type": "string",
-          "title": "Optional component name, should be a valid fully qualified value: name[:version]"
-        },
-        "content": {
-          "type": "string",
-          "title": "The Component body content"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional tags of this entity"
-        },
-        "disabled": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to disable the model"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional time when the entity was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional last time the entity was updated"
-        }
-      },
-      "title": "Hub component specification"
-    },
-    "v1HubModel": {
-      "type": "object",
-      "properties": {
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "name": {
-          "type": "string",
-          "title": "Optional component name, should be a valid fully qualified value: name[:version]"
-        },
-        "framework": {
-          "type": "string",
-          "title": "Model framework"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional tags of this entity"
-        },
-        "disabled": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to disable the model"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional time when the entity was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional last time the entity was updated"
-        }
-      },
-      "title": "Hub model specification"
-    },
     "v1HubRef": {
       "type": "object",
       "properties": {
@@ -14379,6 +14806,32 @@
       },
       "title": "Contains list agents"
     },
+    "v1ListComponentHubsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ComponentHub"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list component hub"
+    },
     "v1ListConnectionsResponse": {
       "type": "object",
       "properties": {
@@ -14431,7 +14884,7 @@
       },
       "title": "Contains list dashboards"
     },
-    "v1ListHubComponentsResponse": {
+    "v1ListModelRegistryResponse": {
       "type": "object",
       "properties": {
         "count": {
@@ -14442,7 +14895,7 @@
         "results": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1HubComponent"
+            "$ref": "#/definitions/v1ModelRegistry"
           },
           "title": "List of all entities"
         },
@@ -14455,33 +14908,7 @@
           "title": "Next page"
         }
       },
-      "title": "Contains list hub components"
-    },
-    "v1ListHubModelsResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1HubModel"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list hub models"
+      "title": "Contains list model registries"
     },
     "v1ListOrganizationMembersResponse": {
       "type": "object",
@@ -14743,6 +15170,32 @@
       },
       "title": "Contains list teams"
     },
+    "v1ListTokenResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Token"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list tokens"
+    },
     "v1Log": {
       "type": "object",
       "properties": {
@@ -14953,6 +15406,55 @@
         }
       },
       "description": "MetricEarlyStoppingSchema specification\nEarly stopping based on metric config."
+    },
+    "v1ModelRegistry": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional component name, should be a valid fully qualified value: name[:version]"
+        },
+        "framework": {
+          "type": "string",
+          "title": "Model framework"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional tags of this entity"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to disable the model"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entity was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Model regsitry specification"
     },
     "v1Notification": {
       "type": "object",
@@ -16683,6 +17185,58 @@
         }
       },
       "description": "Termination specification, it defines how to handle failures, job runtime, and cleanup policy."
+    },
+    "v1Token": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "key": {
+          "type": "string",
+          "title": "Key"
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional token name"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional scopes allowed for this token"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional services allowed for this token"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entity was created"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entity was created"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entity was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Token specification"
     },
     "v1Toleration": {
       "type": "object",

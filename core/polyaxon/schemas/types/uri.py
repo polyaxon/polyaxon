@@ -95,3 +95,9 @@ class V1UriType(BaseConfig, polyaxon_sdk.V1UriType):
     IDENTIFIER = "uri"
     SCHEMA = UriTypeSchema
     REDUCED_ATTRIBUTES = ["user", "password", "host"]
+
+    def __str__(self):
+        return "{}:{}@{}".format(self.user, self.password, self.host)
+
+    def __repr__(self):
+        return str(self)

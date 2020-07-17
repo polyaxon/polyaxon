@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.1.0";
+        version: "1.1.4-rc8";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -923,24 +923,24 @@ service DashboardsV1 {
 }
 
 // Service to manage models on a hosted polyaxon hub
-service HubModelsV1 {
+service ModelRegistryV1 {
 
     // List hub model names
-    rpc ListHubModelNames(OwnerResourceListRequest) returns (ListHubModelsResponse) {
+    rpc ListModelRegistryNames(OwnerResourceListRequest) returns (ListModelRegistryResponse) {
         option (google.api.http) = {
             get: "/api/v1/orgs/{owner}/models/names"
         };
     }
 
     // List hub models
-    rpc ListHubModels(OwnerResourceListRequest) returns (ListHubModelsResponse) {
+    rpc ListModelRegistry(OwnerResourceListRequest) returns (ListModelRegistryResponse) {
         option (google.api.http) = {
             get: "/api/v1/orgs/{owner}/models"
         };
     }
 
     // Create hub model
-    rpc CreateHubModel(HubModelBodyRequest) returns (HubModel) {
+    rpc CreateModelRegistry(ModelRegistryBodyRequest) returns (ModelRegistry) {
         option (google.api.http) = {
             post: "/api/v1/orgs/{owner}/models"
             body: "model"
@@ -948,14 +948,14 @@ service HubModelsV1 {
     }
 
     // Get hub model
-    rpc GetHubModel(OwnerEntityResourceRequest) returns (HubModel) {
+    rpc GetModelRegistry(OwnerEntityResourceRequest) returns (ModelRegistry) {
         option (google.api.http) = {
             get: "/api/v1/orgs/{owner}/models/{uuid}"
         };
     }
 
     // Update hub model
-    rpc UpdateHubModel(HubModelBodyRequest) returns (HubModel) {
+    rpc UpdateModelRegistry(ModelRegistryBodyRequest) returns (ModelRegistry) {
         option (google.api.http) = {
             put: "/api/v1/orgs/{owner}/models/{model.uuid}"
             body: "model"
@@ -963,7 +963,7 @@ service HubModelsV1 {
     }
 
     // Patch hub model
-    rpc PatchHubModel(HubModelBodyRequest) returns (HubModel) {
+    rpc PatchModelRegistry(ModelRegistryBodyRequest) returns (ModelRegistry) {
         option (google.api.http) = {
             patch: "/api/v1/orgs/{owner}/models/{model.uuid}"
             body: "model"
@@ -971,7 +971,7 @@ service HubModelsV1 {
     }
 
     // Delete hub model
-    rpc DeleteHubModel(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+    rpc DeleteModelRegistry(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/orgs/{owner}/models/{uuid}"
         };
@@ -979,24 +979,24 @@ service HubModelsV1 {
 }
 
 // Service to manage component on a hosted polyaxon hub
-service HubComponentsV1 {
+service ComponentHubV1 {
 
     // List hub component names
-    rpc ListHubComponebtNames(OwnerResourceListRequest) returns (ListHubComponentsResponse) {
+    rpc ListComponentHubNames(OwnerResourceListRequest) returns (ListComponentHubsResponse) {
         option (google.api.http) = {
             get: "/api/v1/orgs/{owner}/components/names"
         };
     }
 
     // List hub components
-    rpc ListHubComponents(OwnerResourceListRequest) returns (ListHubComponentsResponse) {
+    rpc ListComponentHubs(OwnerResourceListRequest) returns (ListComponentHubsResponse) {
         option (google.api.http) = {
             get: "/api/v1/orgs/{owner}/components"
         };
     }
 
     // Create hub component
-    rpc CreateHubComponent(HubComponentBodyRequest) returns (HubComponent) {
+    rpc CreateComponentHub(ComponentHubBodyRequest) returns (ComponentHub) {
         option (google.api.http) = {
             post: "/api/v1/orgs/{owner}/components"
             body: "component"
@@ -1004,14 +1004,14 @@ service HubComponentsV1 {
     }
 
     // Get hub component
-    rpc GetHubComponent(OwnerEntityResourceRequest) returns (HubComponent) {
+    rpc GetComponentHub(OwnerEntityResourceRequest) returns (ComponentHub) {
         option (google.api.http) = {
             get: "/api/v1/orgs/{owner}/components/{uuid}"
         };
     }
 
     // Update hub component
-    rpc UpdateHubComponent(HubComponentBodyRequest) returns (HubComponent) {
+    rpc UpdateComponentHub(ComponentHubBodyRequest) returns (ComponentHub) {
         option (google.api.http) = {
             put: "/api/v1/orgs/{owner}/components/{component.uuid}"
             body: "component"
@@ -1019,7 +1019,7 @@ service HubComponentsV1 {
     }
 
     // Patch hub component
-    rpc PatchHubComponent(HubComponentBodyRequest) returns (HubComponent) {
+    rpc PatchComponentHub(ComponentHubBodyRequest) returns (ComponentHub) {
         option (google.api.http) = {
             patch: "/api/v1/orgs/{owner}/components/{component.uuid}"
             body: "component"
@@ -1027,7 +1027,7 @@ service HubComponentsV1 {
     }
 
     // Delete hub component
-    rpc DeleteHubComponent(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+    rpc DeleteComponentHub(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/orgs/{owner}/components/{uuid}"
         };
@@ -1174,6 +1174,29 @@ service AgentsV1 {
             body: "*"
         };
     }
+
+    // Get agent token
+    rpc GetAgentToken(AgentEntityResourceRequest) returns (Token) {
+        option (google.api.http) = {
+            get: "/api/v1/orgs/{owner}/agents/{agent}/token"
+        };
+    }
+
+    // Update agent token
+    rpc UpdateAgentToken(AgentTokenBodyRequest) returns (Token) {
+        option (google.api.http) = {
+            put: "/api/v1/orgs/{owner}/agents/{agent}/token"
+            body: "token"
+        };
+    }
+
+    // Patch agent token
+    rpc PatchAgentToken(AgentTokenBodyRequest) returns (Token) {
+        option (google.api.http) = {
+            patch: "/api/v1/orgs/{owner}/agents/{agent}/token"
+            body: "token"
+        };
+    }
 }
 
 
@@ -1209,7 +1232,7 @@ service QueuesV1 {
     }
 
     // Create queue
-    rpc CreateQueue(QueueBodyRequest) returns (Agent) {
+    rpc CreateQueue(QueueBodyRequest) returns (Queue) {
         option (google.api.http) = {
             post: "/api/v1/orgs/{owner}/agents/{agent}/queues"
             body: "queue"
@@ -1280,6 +1303,51 @@ service UsersV1 {
         option (google.api.http) = {
             patch: "/api/v1/users"
             body: "*"
+        };
+    }
+
+    // List tokens
+    rpc ListTokens(ResourceListRequest) returns (ListTokenResponse) {
+      option (google.api.http) = {
+          get: "/api/v1/users/tokens"
+        };
+    }
+
+    // Create token
+    rpc CreateToken(TokenBodyRequest) returns (Token) {
+        option (google.api.http) = {
+            post: "/api/v1/users/tokens"
+            body: "token"
+        };
+    }
+
+    // Get token
+    rpc GetToken(UuidResourceRequest) returns (Token) {
+        option (google.api.http) = {
+            get: "/api/v1/users/tokens/{uuid}"
+        };
+    }
+
+    // Update token
+    rpc UpdateToken(TokenBodyRequest) returns (Token) {
+        option (google.api.http) = {
+            put: "/api/v1/users/tokens/{token.uuid}"
+            body: "token"
+        };
+    }
+
+    // Patch token
+    rpc PatchToken(TokenBodyRequest) returns (Token) {
+        option (google.api.http) = {
+            patch: "/api/v1/users/tokens/{token.uuid}"
+            body: "token"
+        };
+    }
+
+    // Delete token
+    rpc DeleteToken(UuidResourceRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/v1/users/tokens/{uuid}"
         };
     }
 }

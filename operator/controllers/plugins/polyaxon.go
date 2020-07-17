@@ -56,7 +56,11 @@ const (
 
 func polyaxonAuth(name, value string) httpRuntime.ClientAuthInfoWriter {
 	return httpRuntime.ClientAuthInfoWriterFunc(func(r httpRuntime.ClientRequest, _ strfmt.Registry) error {
-		return r.SetHeaderParam("Authorization", name+" "+value)
+		err := r.SetHeaderParam("Authorization", name+" "+value)
+		if err != nil {
+			return err
+		}
+		return r.SetHeaderParam("X-POLYAXON-SERVICE", "operator")
 	})
 }
 

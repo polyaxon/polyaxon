@@ -105,3 +105,9 @@ class V1AuthType(BaseConfig, polyaxon_sdk.V1AuthType):
     IDENTIFIER = "auth"
     SCHEMA = AuthTypeSchema
     REDUCED_ATTRIBUTES = ["user", "password"]
+
+    def __str__(self):
+        return "{}:{}".format(self.user, self.password)
+
+    def __repr__(self):
+        return str(self)

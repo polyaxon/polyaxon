@@ -18,9 +18,12 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
 // Auth specification
 message Auth {
-    // UUID
+    // token hash
     string token = 1;
 }
 
@@ -31,4 +34,69 @@ message Credentials{
 
     // Project where the run will be assigned
     string password = 2;
+}
+
+// Token specification
+message Token {
+    // UUID
+    string uuid = 1;
+
+    // Key
+    string key = 2;
+
+    // Optional token name
+    string name = 3;
+
+    // Optional scopes allowed for this token
+    repeated string scopes = 4;
+
+    // Optional services allowed for this token
+    repeated string services = 5;
+
+    // Optional time when the entity was created
+    google.protobuf.Timestamp started_at = 6;
+
+    // Optional time when the entity was created
+    google.protobuf.Timestamp expires_at = 7;
+
+    // Optional time when the entity was created
+    google.protobuf.Timestamp created_at = 8;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 9;
+
+}
+
+ // Request data to create/update token
+ message AgentTokenBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Agent
+    string agent = 2;
+
+    // Token body
+    Token token = 3;
+ }
+
+  // Request data to create/update token
+  message TokenBodyRequest {
+    // Token body
+    Token token = 1;
+ }
+
+
+// Contains list tokens
+message ListTokenResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Token results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
 }

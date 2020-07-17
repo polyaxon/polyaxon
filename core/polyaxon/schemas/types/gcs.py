@@ -94,3 +94,12 @@ class V1GcsType(BaseConfig, polyaxon_sdk.V1GcsType):
     IDENTIFIER = "gcs"
     SCHEMA = GcsTypeSchema
     REDUCED_ATTRIBUTES = ["bucket", "blob"]
+
+    def __str__(self):
+        path = "gs:{}".format(self.bucket)
+        if self.blob:
+            path = "{}/{}".format(path, self.blob)
+        return path
+
+    def __repr__(self):
+        return str(self)

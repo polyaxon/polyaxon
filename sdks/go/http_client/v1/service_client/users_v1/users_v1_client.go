@@ -39,13 +39,133 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	CreateToken(params *CreateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTokenOK, *CreateTokenNoContent, error)
+
+	DeleteToken(params *DeleteTokenParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTokenOK, *DeleteTokenNoContent, error)
+
+	GetToken(params *GetTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetTokenOK, *GetTokenNoContent, error)
+
 	GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, *GetUserNoContent, error)
 
+	ListTokens(params *ListTokensParams, authInfo runtime.ClientAuthInfoWriter) (*ListTokensOK, *ListTokensNoContent, error)
+
+	PatchToken(params *PatchTokenParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTokenOK, *PatchTokenNoContent, error)
+
 	PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthInfoWriter) (*PatchUserOK, *PatchUserNoContent, error)
+
+	UpdateToken(params *UpdateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTokenOK, *UpdateTokenNoContent, error)
 
 	UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateUserOK, *UpdateUserNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  CreateToken creates token
+*/
+func (a *Client) CreateToken(params *CreateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTokenOK, *CreateTokenNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateToken",
+		Method:             "POST",
+		PathPattern:        "/api/v1/users/tokens",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateTokenOK:
+		return value, nil, nil
+	case *CreateTokenNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateTokenDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  DeleteToken deletes token
+*/
+func (a *Client) DeleteToken(params *DeleteTokenParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTokenOK, *DeleteTokenNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DeleteToken",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/users/tokens/{uuid}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteTokenOK:
+		return value, nil, nil
+	case *DeleteTokenNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteTokenDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetToken gets token
+*/
+func (a *Client) GetToken(params *GetTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetTokenOK, *GetTokenNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetToken",
+		Method:             "GET",
+		PathPattern:        "/api/v1/users/tokens/{uuid}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetTokenOK:
+		return value, nil, nil
+	case *GetTokenNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetTokenDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -85,6 +205,78 @@ func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoW
 }
 
 /*
+  ListTokens lists tokens
+*/
+func (a *Client) ListTokens(params *ListTokensParams, authInfo runtime.ClientAuthInfoWriter) (*ListTokensOK, *ListTokensNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListTokensParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListTokens",
+		Method:             "GET",
+		PathPattern:        "/api/v1/users/tokens",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListTokensReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListTokensOK:
+		return value, nil, nil
+	case *ListTokensNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListTokensDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  PatchToken patches token
+*/
+func (a *Client) PatchToken(params *PatchTokenParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTokenOK, *PatchTokenNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchToken",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/users/tokens/{token.uuid}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &PatchTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *PatchTokenOK:
+		return value, nil, nil
+	case *PatchTokenNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchTokenDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   PatchUser patches current user
 */
 func (a *Client) PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthInfoWriter) (*PatchUserOK, *PatchUserNoContent, error) {
@@ -117,6 +309,42 @@ func (a *Client) PatchUser(params *PatchUserParams, authInfo runtime.ClientAuthI
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*PatchUserDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateToken updates token
+*/
+func (a *Client) UpdateToken(params *UpdateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTokenOK, *UpdateTokenNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UpdateToken",
+		Method:             "PUT",
+		PathPattern:        "/api/v1/users/tokens/{token.uuid}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UpdateTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateTokenOK:
+		return value, nil, nil
+	case *UpdateTokenNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateTokenDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

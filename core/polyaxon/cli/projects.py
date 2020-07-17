@@ -221,11 +221,11 @@ def get(ctx):
             owner=owner,
             project=project_name,
         )
+        get_project_details(polyaxon_client.project_data)
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not get project `{}`.".format(project_name))
-        sys.exit(1)
-
-    get_project_details(polyaxon_client.project_data)
+        handle_cli_error(
+            e, message="Could not get project `{}`.".format(project_name), sys_exit=True
+        )
 
 
 @project.command()

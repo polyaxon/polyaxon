@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 <a name="createQueue"></a>
 # **createQueue**
-> V1Agent createQueue(owner, agent, body)
+> V1Queue createQueue(owner, agent, body)
 
 Create queue
 
@@ -48,7 +48,7 @@ public class Example {
     String agent = "agent_example"; // String | Agent that consumes the queue
     V1Queue body = new V1Queue(); // V1Queue | Queue body
     try {
-      V1Agent result = apiInstance.createQueue(owner, agent, body);
+      V1Queue result = apiInstance.createQueue(owner, agent, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#createQueue");
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1Agent**](V1Agent.md)
+[**V1Queue**](V1Queue.md)
 
 ### Authorization
 

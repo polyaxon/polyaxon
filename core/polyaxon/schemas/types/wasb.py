@@ -100,3 +100,11 @@ class V1WasbType(BaseConfig, polyaxon_sdk.V1WasbType):
     IDENTIFIER = "wasb"
     SCHEMA = WasbTypeSchema
     REDUCED_ATTRIBUTES = ["container", "storageAccount", "path"]
+
+    def __str__(self):
+        return "{}@{}.blob.core.windows.net".format(
+            self.container, self.storage_account, self.path
+        )
+
+    def __repr__(self):
+        return str(self)

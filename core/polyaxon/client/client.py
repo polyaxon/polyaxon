@@ -54,7 +54,7 @@ class PolyaxonClient:
     >>> client.auth_v1
     >>> client.users_v1
     >>> client.agents_v1
-    >>> client.components_v1
+    >>> client.hub_v1
     >>> client.models_v1
     ```
     """
@@ -74,8 +74,8 @@ class PolyaxonClient:
         self._users_v1 = None
         self._versions_v1 = None
         self._agents_v1 = None
-        self._components_v1 = None
-        self._models_v1 = None
+        self._component_hub_v1 = None
+        self._model_registry_v1 = None
 
     def reset(self):
         self._transport = None
@@ -85,8 +85,8 @@ class PolyaxonClient:
         self._users_v1 = None
         self._versions_v1 = None
         self._agents_v1 = None
-        self._components_v1 = None
-        self._models_v1 = None
+        self._component_hub_v1 = None
+        self._model_registry_v1 = None
         self.api_client = polyaxon_sdk.ApiClient(
             self.config.sdk_config, **self.config.client_header
         )
@@ -144,16 +144,16 @@ class PolyaxonClient:
         return self._agents_v1
 
     @property
-    def components_v1(self):
-        if not self._components_v1:
-            self._components_v1 = polyaxon_sdk.HubComponentsV1Api(self.api_client)
-        return self._components_v1
+    def component_hub_v1(self):
+        if not self._component_hub_v1:
+            self._component_hub_v1 = polyaxon_sdk.ComponentHubV1Api(self.api_client)
+        return self._component_hub_v1
 
     @property
-    def models_v1(self):
-        if not self._models_v1:
-            self._models_v1 = polyaxon_sdk.HubModelsV1Api(self.api_client)
-        return self._models_v1
+    def model_registry_v1(self):
+        if not self._model_registry_v1:
+            self._model_registry_v1 = polyaxon_sdk.ModelRegistryV1Api(self.api_client)
+        return self._model_registry_v1
 
     def sanitize_for_serialization(self, value):
         return self.api_client.sanitize_for_serialization(value)

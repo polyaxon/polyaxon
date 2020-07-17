@@ -29,7 +29,7 @@ import (
 // swagger:model v1Auth
 type V1Auth struct {
 
-	// UUID
+	// token hash
 	Token string `json:"token,omitempty"`
 }
 

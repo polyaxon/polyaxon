@@ -39,7 +39,7 @@ if not to_bool(os.environ.get("POLYAXON_NO_CONFIG", False)):
             agent_path=CLIENT_CONFIG.agent_path
         )
 else:
-    CLIENT_CONFIG = ClientConfigManager.CONFIG()
+    CLIENT_CONFIG = ClientConfigManager.CONFIG(host="http://localhost:8000")
 
 
 def set_proxies_config():

@@ -17,5 +17,6 @@ Name | Type | Description | Notes
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 **status** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
+**settings** | [**Object**](.md) |  | [optional] 
 
 

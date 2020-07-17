@@ -18,6 +18,12 @@ from typing import Any, Optional
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 
+def clean_verify_ssl(host: str, verify_ssl: bool = None):
+    if verify_ssl is None and "https" in host:
+        return True
+    return verify_ssl
+
+
 def clean_host(host: str):
     return host.rstrip("/")
 

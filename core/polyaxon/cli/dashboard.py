@@ -38,7 +38,7 @@ from polyaxon.utils.http_utils import polyaxon_ui
 @clean_outputs
 def dashboard(yes, url):
     """Open dashboard in browser."""
-    dashboard_url = polyaxon_ui(settings.CLIENT_CONFIG.host)
+    dashboard_url = "{}/".format(polyaxon_ui(settings.CLIENT_CONFIG.host))
     if url:
         click.echo(dashboard_url)
         sys.exit(0)

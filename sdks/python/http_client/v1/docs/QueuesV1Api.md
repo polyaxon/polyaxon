@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 
 # **create_queue**
-> V1Agent create_queue(owner, agent, body)
+> V1Queue create_queue(owner, agent, body)
 
 Create queue
 
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1Agent**](V1Agent.md)
+[**V1Queue**](V1Queue.md)
 
 ### Authorization
 

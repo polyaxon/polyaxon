@@ -83,20 +83,20 @@ func NewCreateQueueOK() *CreateQueueOK {
 A successful response.
 */
 type CreateQueueOK struct {
-	Payload *service_model.V1Agent
+	Payload *service_model.V1Queue
 }
 
 func (o *CreateQueueOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueOK  %+v", 200, o.Payload)
 }
 
-func (o *CreateQueueOK) GetPayload() *service_model.V1Agent {
+func (o *CreateQueueOK) GetPayload() *service_model.V1Queue {
 	return o.Payload
 }
 
 func (o *CreateQueueOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(service_model.V1Agent)
+	o.Payload = new(service_model.V1Queue)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

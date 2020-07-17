@@ -22,7 +22,8 @@ def handle_cli_error(e, message=None, sys_exit: bool = False):
     if message:
         Printer.print_error(message)
     if hasattr(e, "status"):
-        Printer.print_error("Error message: {}.".format(e))
+        if e.status not in [404, 401, 403]:
+            Printer.print_error("Error message: {}.".format(e))
         Printer.print_error(
             HTTP_ERROR_MESSAGES_MAPPING.get(e.status), sys_exit=sys_exit
         )

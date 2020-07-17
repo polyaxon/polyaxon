@@ -63,6 +63,9 @@ message Agent {
 
     // Optional latest status of this entity
     Statuses status = 14;
+
+    // Optional settings
+    google.protobuf.Struct settings = 15;
 }
 
  // Request data to create/update agents

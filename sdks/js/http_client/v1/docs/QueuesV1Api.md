@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 ## createQueue
 
-> V1Agent createQueue(owner, agent, body)
+> V1Queue createQueue(owner, agent, body)
 
 Create queue
 
@@ -59,7 +59,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1Agent**](V1Agent.md)
+[**V1Queue**](V1Queue.md)
 
 ### Authorization
 

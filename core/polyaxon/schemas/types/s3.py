@@ -94,3 +94,12 @@ class V1S3Type(BaseConfig, polyaxon_sdk.V1S3Type):
     IDENTIFIER = "s3"
     SCHEMA = S3TypeSchema
     REDUCED_ATTRIBUTES = ["bucket", "key"]
+
+    def __str__(self):
+        path = "s3:{}".format(self.bucket)
+        if self.key:
+            path = "{}/{}".format(path, self.key)
+        return path
+
+    def __repr__(self):
+        return str(self)

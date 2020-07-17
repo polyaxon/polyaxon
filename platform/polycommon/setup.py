@@ -38,7 +38,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polycommon",
-    version="1.1.3",
+    version="1.1.4-rc8",
     description=(
         "Polycommon is a set of common core tools used by several Polyaxon python microservices."
     ),

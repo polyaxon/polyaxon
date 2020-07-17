@@ -21,8 +21,8 @@ package v1;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-// Hub model specification
-message HubModel {
+// Model regsitry specification
+message ModelRegistry {
     // UUID
     string uuid = 1;
 
@@ -52,23 +52,23 @@ message HubModel {
 
 }
 
- // Request data to create/update hub model
- message HubModelBodyRequest {
+ // Request data to create/update model registries
+ message ModelRegistryBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
     // Model body
-    HubModel model = 2;
+    ModelRegistry model = 2;
  }
 
 
-// Contains list hub models
-message ListHubModelsResponse {
+// Contains list model registries
+message ListModelRegistryResponse {
     // Count of the entities
     int32 count = 1;
 
     // List of all entities
-    repeated HubModel results = 2;
+    repeated ModelRegistry results = 2;
 
     // Previous page
     string previous = 3;
@@ -77,8 +77,8 @@ message ListHubModelsResponse {
     string next = 4;
 }
 
-// Hub component specification
-message HubComponent {
+// component hub specification
+message ComponentHub {
     // UUID
     string uuid = 1;
 
@@ -108,23 +108,23 @@ message HubComponent {
 
 }
 
- // Request data to create/update hub component
- message HubComponentBodyRequest {
+ // Request data to create/update component hub
+ message ComponentHubBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
     // Component body
-    HubComponent component = 2;
+    ComponentHub component = 2;
  }
 
 
-// Contains list hub components
-message ListHubComponentsResponse {
+// Contains list component hub
+message ListComponentHubsResponse {
     // Count of the entities
     int32 count = 1;
 
     // List of all entities
-    repeated HubComponent results = 2;
+    repeated ComponentHub results = 2;
 
     // Previous page
     string previous = 3;

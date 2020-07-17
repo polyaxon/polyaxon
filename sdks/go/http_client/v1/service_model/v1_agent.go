@@ -56,6 +56,9 @@ type V1Agent struct {
 	// Namespace where the agent is deployed
 	Namespace string `json:"namespace,omitempty"`
 
+	// Optional settings
+	Settings interface{} `json:"settings,omitempty"`
+
 	// Optional latest status of this entity
 	Status V1Statuses `json:"status,omitempty"`
 

@@ -66,7 +66,11 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
     def apply_params(self, params=None, context=None):
         context = context or {}
         validated_params = self.validate_params(
-            params=params, context=context, is_template=False, check_runs=True
+            params=params,
+            context=context,
+            is_template=False,
+            check_runs=True,
+            parse_values=True,
         )
         if not validated_params:
             return

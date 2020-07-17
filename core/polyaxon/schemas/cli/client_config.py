@@ -61,7 +61,7 @@ from polyaxon.pkg import VERSION
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.services.auth import AuthenticationTypes
 from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
-from polyaxon.utils.http_utils import clean_host
+from polyaxon.utils.http_utils import clean_host, clean_verify_ssl
 
 
 class ClientSchema(BaseSchema):
@@ -215,7 +215,9 @@ class ClientConfig(BaseConfig):
         self.is_ops = self._get_bool(is_ops, False)
         self.in_cluster = self._get_bool(in_cluster, False)
         self.no_op = self._get_bool(no_op, False)
-        self.verify_ssl = self._get_bool(verify_ssl, None)
+        self.verify_ssl = clean_verify_ssl(
+            host=self.host, verify_ssl=self._get_bool(verify_ssl, None)
+        )
         self.ssl_ca_cert = ssl_ca_cert
         self.cert_file = cert_file
         self.key_file = key_file
@@ -278,7 +280,9 @@ class ClientConfig(BaseConfig):
         config = polyaxon_sdk.Configuration()
         config.debug = self.debug
         config.host = clean_host(self.host)
-        config.verify_ssl = self.verify_ssl
+        config.verify_ssl = clean_verify_ssl(
+            host=config.host, verify_ssl=self.verify_ssl
+        )
         config.ssl_ca_cert = self.ssl_ca_cert
         config.cert_file = self.cert_file
         config.key_file = self.key_file

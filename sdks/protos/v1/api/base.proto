@@ -37,6 +37,11 @@ message OwnerResourceRequest {
     string owner = 1;
 }
 
+message UuidResourceRequest {
+  // UUid of the namespace
+  string uuid = 1;
+}
+
 // Request data to get/delete entity
 message OwnerEntityResourceRequest {
     // Owner of the namespace
@@ -142,6 +147,21 @@ message AgentEntityResourceRequest {
     string uuid = 3;
 }
 
+
+// Request list data
+message ResourceListRequest {
+  // Pagination offset
+  int32 offset = 1;
+
+  // Limit size
+  int32 limit = 2;
+
+  // Sort to order the search
+  string sort = 3;
+
+  // Query filter the search search
+  string query = 4;
+}
 
 // Request list data with user namespace
 message UserResourceListRequest {

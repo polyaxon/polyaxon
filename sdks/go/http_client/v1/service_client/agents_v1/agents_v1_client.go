@@ -51,15 +51,21 @@ type ClientService interface {
 
 	GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error)
 
+	GetAgentToken(params *GetAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentTokenOK, *GetAgentTokenNoContent, error)
+
 	ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error)
 
 	ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentsOK, *ListAgentsNoContent, error)
 
 	PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentOK, *PatchAgentNoContent, error)
 
+	PatchAgentToken(params *PatchAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentTokenOK, *PatchAgentTokenNoContent, error)
+
 	SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error)
 
 	UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentOK, *UpdateAgentNoContent, error)
+
+	UpdateAgentToken(params *UpdateAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentTokenOK, *UpdateAgentTokenNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -281,6 +287,42 @@ func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runti
 }
 
 /*
+  GetAgentToken gets agent token
+*/
+func (a *Client) GetAgentToken(params *GetAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentTokenOK, *GetAgentTokenNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetAgentTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetAgentToken",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/token",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetAgentTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetAgentTokenOK:
+		return value, nil, nil
+	case *GetAgentTokenNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetAgentTokenDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   ListAgentNames lists agents names
 */
 func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error) {
@@ -389,6 +431,42 @@ func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAut
 }
 
 /*
+  PatchAgentToken patches agent token
+*/
+func (a *Client) PatchAgentToken(params *PatchAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentTokenOK, *PatchAgentTokenNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchAgentTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchAgentToken",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/token",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &PatchAgentTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *PatchAgentTokenOK:
+		return value, nil, nil
+	case *PatchAgentTokenNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchAgentTokenDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   SyncAgent syncs agent
 */
 func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error) {
@@ -457,6 +535,42 @@ func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientA
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateAgentDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateAgentToken updates agent token
+*/
+func (a *Client) UpdateAgentToken(params *UpdateAgentTokenParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentTokenOK, *UpdateAgentTokenNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateAgentTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UpdateAgentToken",
+		Method:             "PUT",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/token",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UpdateAgentTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateAgentTokenOK:
+		return value, nil, nil
+	case *UpdateAgentTokenNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateAgentTokenDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

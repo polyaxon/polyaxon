@@ -56,7 +56,13 @@ If you are using Polyaxon CLI to deploy Polyaxon, we suggest that you define the
 ```yaml
 deploymentChart: agent
 deploymentVersion: 1.1.0
-``` 
+```
+
+In Polyaxon UI you can get an starter deployment config:
+
+![agent-deployment](../../../../content/images/dashboard/agents/deployment.png)
+
+> To manage agents please check the [management section](/docs/management/ui/agents/)
 
 ## Install Polyaxon Agent
 
