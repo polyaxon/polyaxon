@@ -28,11 +28,11 @@ from tests.base.case import BaseTest
 class TestInstallationVersionViewsV1(BaseTest):
     def setUp(self):
         super().setUp()
-        self.installation_version = "/{}/version/".format(API_V1)
+        self.installation_version = "/{}/installation/".format(API_V1)
 
     def test_version(self):
         resp = self.client.get(self.installation_version)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["version"] == conf.get(PLATFORM_VERSION)
         assert resp.data["dist"] == conf.get(PLATFORM_DIST)
-        assert set(resp.data.keys()) == {"version", "dist"}
+        assert set(resp.data.keys()) == {'dist', 'key', 'version'}
