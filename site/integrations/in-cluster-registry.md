@@ -29,7 +29,7 @@ A local docker registry can be used to push container images directly to the clu
 > **Note**: Insecure registries can be used for development and trials. 
  You should not use this in production. To deploy a secure registry, please consider customizing the chart or use an external registry provider.
 
-## Deploy a Registry Using Helm
+## Deploy a docker registry using Helm
 
 We will deploy an insecure registry on a Kubernetes cluster using the official Helm chart.
 
