@@ -18,8 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class ImageSchema(BaseCamelSchema):
@@ -31,7 +32,7 @@ class ImageSchema(BaseCamelSchema):
         return V1ImageType
 
 
-class V1ImageType(BaseConfig, polyaxon_sdk.V1ImageType):
+class V1ImageType(BaseTypeConfig, polyaxon_sdk.V1ImageType):
     IDENTIFIER = "image"
     SCHEMA = ImageSchema
     REDUCED_ATTRIBUTES = ["name", "connection"]

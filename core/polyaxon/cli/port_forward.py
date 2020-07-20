@@ -19,7 +19,6 @@ import click
 
 from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.logger import clean_outputs
 from polyaxon.managers.client import ClientConfigManager
 from polyaxon.utils.formatting import Printer
 
@@ -38,7 +37,6 @@ from polyaxon.utils.formatting import Printer
     type=str,
     help="The release name used for deploying Polyaxon, default polyaxon.",
 )
-@clean_outputs
 def port_forward(port, namespace, release):
     """If you deploy Polyaxon using ClusterIP, you can use this command
     to access the gateway through `localhost:port`.

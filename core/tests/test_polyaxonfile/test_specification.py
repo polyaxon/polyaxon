@@ -264,8 +264,8 @@ class TestSpecifications(BaseTestCase):
         validated_params = run_config.validate_params(params=params)
         run_config.apply_params(params=params)
         assert params == {p.name: p.param.to_dict() for p in validated_params}
-        assert run_config.inputs[0].value.connection == "docker-registry"
-        assert run_config.inputs[1].value.connection == "repo-connection"
+        assert run_config.inputs[0].value["connection"] == "docker-registry"
+        assert run_config.inputs[1].value["connection"] == "repo-connection"
         run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         run_config = CompiledOperationSpecification.apply_params(run_config)
         run_config = CompiledOperationSpecification.apply_runtime_contexts(run_config)

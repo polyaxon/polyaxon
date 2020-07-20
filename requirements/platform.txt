@@ -1,5 +1,6 @@
 -r base.txt
 
+analytics-python==1.2.9
 celery==4.4.6
 cryptography==2.9.2
 Django==3.0.8

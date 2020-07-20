@@ -6,8 +6,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**minVersion** | **String** |  |  [optional]
-**latestVersion** | **String** |  |  [optional]
+**min** | **String** |  |  [optional]
+**latest** | **String** |  |  [optional]
 
 
 

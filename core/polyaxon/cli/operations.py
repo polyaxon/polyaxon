@@ -30,7 +30,6 @@ from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.lifecycle import LifeCycle, V1Statuses
-from polyaxon.logger import clean_outputs
 from polyaxon.managers.run import RunManager
 from polyaxon.polyflow import V1RunKind
 from polyaxon.utils import cache
@@ -84,7 +83,6 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
 )
 @click.option("--uid", "-uid", type=str, help="The run uuid.")
 @click.pass_context
-@clean_outputs
 def ops(ctx, project, uid):
     """Commands for ops/runs."""
     ctx.obj = ctx.obj or {}
@@ -107,8 +105,6 @@ def ops(ctx, project, uid):
 @click.option("--limit", type=int, help="To limit the list of runs.")
 @click.option("--offset", type=int, help="To offset the list of runs.")
 @click.pass_context
-@clean_outputs
-@clean_outputs
 def ls(ctx, io, query, sort, limit, offset):
     """List runs for this project.
 
@@ -221,7 +217,6 @@ def ls(ctx, io, query, sort, limit, offset):
 
 @ops.command()
 @click.pass_context
-@clean_outputs
 def get(ctx):
     """Get run.
 
@@ -266,7 +261,6 @@ def get(ctx):
 
 @ops.command()
 @click.pass_context
-@clean_outputs
 def delete(ctx):
     """Delete a run.
 
@@ -311,7 +305,6 @@ def delete(ctx):
     "--tags", type=str, help="Tags of the run, comma separated values (optional)."
 )
 @click.pass_context
-@clean_outputs
 def update(ctx, name, description, tags):
     """Update run.
 
@@ -369,7 +362,6 @@ def update(ctx, name, description, tags):
     'Assume "yes" as answer to all prompts and run non-interactively.',
 )
 @click.pass_context
-@clean_outputs
 def stop(ctx, yes):
     """Stop run.
 
@@ -421,7 +413,6 @@ def stop(ctx, yes):
     help="The polyaxonfiles to update with.",
 )
 @click.pass_context
-@clean_outputs
 def restart(ctx, copy, polyaxonfile):
     """Restart run.
 
@@ -464,7 +455,6 @@ def restart(ctx, copy, polyaxonfile):
     help="The polyaxonfiles to update with.",
 )
 @click.pass_context
-@clean_outputs
 def resume(ctx, polyaxonfile):
     """Resume run.
 
@@ -495,7 +485,6 @@ def resume(ctx, polyaxonfile):
 
 @ops.command()
 @click.pass_context
-@clean_outputs
 def invalidate(ctx):
     """Invalidate the run's cache state.
 
@@ -524,7 +513,6 @@ def invalidate(ctx):
 @ops.command()
 @click.option("--watch", "-w", is_flag=True, help="Watch statuses.")
 @click.pass_context
-@clean_outputs
 def statuses(ctx, watch):
     """Get run or run job statuses.
 
@@ -586,7 +574,6 @@ def statuses(ctx, watch):
 # @ops.command()
 # @click.option("--gpu", "-g", is_flag=True, help="List run GPU resources.")
 # @click.pass_context
-# @clean_outputs
 # def resources(ctx, gpu):
 #     """Get run or run job resources.
 #
@@ -645,7 +632,6 @@ def statuses(ctx, watch):
     help="Whether to stream logs from all containers.",
 )
 @click.pass_context
-@clean_outputs
 def logs(ctx, follow, hide_time, all_info):
     """Get run or run job logs.
 
@@ -672,7 +658,6 @@ def logs(ctx, follow, hide_time, all_info):
 
 @ops.command()
 @click.pass_context
-@clean_outputs
 def artifacts(ctx):
     """Download outputs/artifacts for run.
 
@@ -713,7 +698,6 @@ def artifacts(ctx):
     help="Print the url of the dashboard for this run.",
 )
 @click.pass_context
-@clean_outputs
 def dashboard(ctx, yes, url):
     """Open this operation's dashboard details in browser."""
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -752,7 +736,6 @@ def dashboard(ctx, yes, url):
     help="Print the url of the dashboard or external service.",
 )
 @click.pass_context
-@clean_outputs
 def service(ctx, yes, external, url):
     """Open the operation service in browser.
 

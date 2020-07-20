@@ -28,8 +28,6 @@ from polyaxon.cli.init import init as init_project
 from polyaxon.client import ProjectClient
 from polyaxon.constants import DEFAULT
 from polyaxon.env_vars.getters import get_project_or_local
-from polyaxon.logger import clean_outputs
-from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.project import ProjectManager
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import (
@@ -59,7 +57,6 @@ def get_project_details(project):
 @click.group()
 @click.option("--project", "-p", type=str)
 @click.pass_context
-@clean_outputs
 def project(ctx, project):  # pylint:disable=redefined-outer-name
     """Commands for projects."""
     if ctx.invoked_subcommand not in ["create", "ls"]:
@@ -87,7 +84,6 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
 )
 @click.option("--init", is_flag=True, help="Initialize the project after creation.")
 @click.pass_context
-@clean_outputs
 def create(ctx, name, owner, description, tags, private, init):
     """Create a new project.
 
@@ -98,7 +94,7 @@ def create(ctx, name, owner, description, tags, private, init):
     \b
     $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
     """
-    owner = owner or AuthConfigManager.get_value("username") or DEFAULT
+    owner = owner or settings.AUTH_CONFIG.username or DEFAULT
     tags = validate_tags(tags)
 
     if not owner:
@@ -138,13 +134,12 @@ def create(ctx, name, owner, description, tags, private, init):
 )
 @click.option("--limit", type=int, help="To limit the list of projects.")
 @click.option("--offset", type=int, help="To offset the list of projects.")
-@clean_outputs
 def ls(owner, limit, offset):
     """List projects.
 
     Uses /docs/core/cli/#caching
     """
-    owner = owner or AuthConfigManager.get_value("username") or DEFAULT
+    owner = owner or settings.AUTH_CONFIG.username or DEFAULT
     if not owner:
         Printer.print_error(
             "Please login first or provide a valid owner --owner. "
@@ -189,7 +184,6 @@ def ls(owner, limit, offset):
 
 @project.command()
 @click.pass_context
-@clean_outputs
 def get(ctx):
     """Get info for current project, by project_name, or owner/project_name.
 
@@ -230,7 +224,6 @@ def get(ctx):
 
 @project.command()
 @click.pass_context
-@clean_outputs
 def delete(ctx):
     """Delete project.
 
@@ -275,7 +268,6 @@ def delete(ctx):
     "--private", type=bool, help="Set the visibility of the project to private/public."
 )
 @click.pass_context
-@clean_outputs
 def update(ctx, name, description, private):
     """Update project.
 
@@ -337,7 +329,6 @@ def update(ctx, name, description, private):
     help="Print the url of the dashboard for this project.",
 )
 @click.pass_context
-@clean_outputs
 def dashboard(ctx, yes, url):
     """Open this operation's dashboard details in browser."""
     owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)

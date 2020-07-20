@@ -18,8 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class S3TypeSchema(BaseCamelSchema):
@@ -31,7 +32,7 @@ class S3TypeSchema(BaseCamelSchema):
         return V1S3Type
 
 
-class V1S3Type(BaseConfig, polyaxon_sdk.V1S3Type):
+class V1S3Type(BaseTypeConfig, polyaxon_sdk.V1S3Type):
     """S3 type.
 
     Args:
@@ -102,4 +103,7 @@ class V1S3Type(BaseConfig, polyaxon_sdk.V1S3Type):
         return path
 
     def __repr__(self):
+        return str(self)
+
+    def to_param(self):
         return str(self)

@@ -43,7 +43,7 @@ class AgentManager(BaseConfigManager):
         return cls.get_config()
 
     @classmethod
-    def get_config_from_env(cls, agent_path=None) -> AgentConfig:
+    def get_config_from_env(cls) -> AgentConfig:
         tmp_path = os.path.join(CONTEXT_TMP_POLYAXON_PATH, ".agent")
         user_path = os.path.join(CONTEXT_USER_POLYAXON_PATH, ".agent")
 
@@ -53,10 +53,6 @@ class AgentManager(BaseConfigManager):
             ConfigSpec(user_path, config_type=".json", check_if_exists=False),
             {"dummy": "dummy"},
         ]
-        if agent_path:
-            config_paths.append(
-                ConfigSpec(agent_path, config_type=".json", check_if_exists=False)
-            )
 
         agent_config = ConfigManager.read_configs(config_paths)
         return AgentConfig.from_dict(agent_config.data)

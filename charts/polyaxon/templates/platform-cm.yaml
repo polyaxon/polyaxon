@@ -53,6 +53,7 @@ data:
   POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operationsDefaultRetryDelay | quote }}
   POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY: {{ .Values.intervals.operationsMaxRetryDelay | quote }}
   {{- end }}
+  POLYAXON_INTERVALS_COMPATIBILITY_CHECK: {{ .Values.intervals.compatibilityCheck | quote }}
   # DB
   POLYAXON_DB_USER: {{ template "pgsql.user" . }}
   POLYAXON_DB_NAME: {{ template "pgsql.database" . }}
@@ -65,23 +66,24 @@ data:
   POLYAXON_SECURITY_CONTEXT_USER: {{ .Values.securityContext.user | quote }}
   POLYAXON_SECURITY_CONTEXT_GROUP: {{ .Values.securityContext.group | quote }}
   {{- end }}
-  {{- if .Values.tracker }}
-  POLYAXON_TRACKER_BACKEND: {{ default "noop" .Values.trackerBackend | quote }}
+  {{- if .Values.externalServices.analytics.enabled }}
+  POLYAXON_ANALYTICS_BACKEND: {{ default "default" .Values.externalServices.analytics.backend | quote }}
+  POLYAXON_ANALYTICS_OPTIONS: {{ toJson .Values.externalServices.analytics.options | quote }}
   {{- end }}
   # Metrics
   {{- if .Values.metrics.enabled }}
   POLYAXON_METRICS_BACKEND: "statsd"
   POLYAXON_METRICS_OPTIONS: {{ include "config.metrics.options" . | fromJson | toJson | quote }}
   {{- else if .Values.externalServices.metrics.enabled }}
-  POLYAXON_METRICS_BACKEND: {{ .Values.externalServices.metrics.backend | quote }}
+  POLYAXON_METRICS_BACKEND: {{ default "default" .Values.externalServices.metrics.backend | quote }}
   POLYAXON_METRICS_OPTIONS: {{ toJson .Values.externalServices.metrics.options | quote }}
   {{- end }}
   {{- if .Values.externalServices.errors.enabled }}
-  POLYAXON_ERRORS_BACKEND: {{ .Values.externalServices.errors.backend | quote }}
+  POLYAXON_ERRORS_BACKEND: {{ default "default" .Values.externalServices.errors.backend | quote }}
   POLYAXON_ERRORS_OPTIONS: {{ toJson .Values.externalServices.errors.options | quote }}
   {{- end }}
   {{- if .Values.externalServices.tracing.enabled }}
-  POLYAXON_TRACING_BACKEND: {{ .Values.externalServices.tracing.backend | quote }}
+  POLYAXON_TRACING_BACKEND: {{ default "default" .Values.externalServices.tracing.backend | quote }}
   POLYAXON_TRACING_OPTIONS: {{ toJson .Values.externalServices.tracing.options | quote }}
   {{- end }}
   # Auth

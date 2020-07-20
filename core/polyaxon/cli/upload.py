@@ -17,12 +17,10 @@
 
 import click
 
-from polyaxon.logger import clean_outputs
 from polyaxon.utils.formatting import Printer
 
 
 @click.command()
-@clean_outputs
 def upload():  # pylint:disable=assign-to-new-keyword
     """Upload code of the current directory while respecting the .polyaxonignore file.
 

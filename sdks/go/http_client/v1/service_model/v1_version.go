@@ -30,10 +30,10 @@ import (
 type V1Version struct {
 
 	// Latest version
-	LatestVersion string `json:"latest_version,omitempty"`
+	Latest string `json:"latest,omitempty"`
 
 	// Min version
-	MinVersion string `json:"min_version,omitempty"`
+	Min string `json:"min,omitempty"`
 }
 
 // Validate validates this v1 version

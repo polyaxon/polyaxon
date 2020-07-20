@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.1.4-rc8
+  version: 1.1.4
 servers:
 - url: /
 security:
@@ -280,6 +280,101 @@ paths:
       tags:
       - RunsV1
       x-accepts: application/json
+  /api/v1/compatibility/{uuid}/{version}/{service}:
+    get:
+      operationId: GetCompatibility
+      parameters:
+      - description: UUid
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Version
+        in: path
+        name: version
+        required: true
+        schema:
+          type: string
+      - description: Service
+        in: path
+        name: service
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Compatibility'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Get compatibility versions
+      tags:
+      - VersionsV1
+      x-accepts: application/json
+  /api/v1/installation:
+    get:
+      operationId: GetInstallation
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Installation'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Get installation versions
+      tags:
+      - VersionsV1
+      x-accepts: application/json
   /api/v1/log_handler:
     get:
       operationId: GetLogHandler
@@ -314,7 +409,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response
-      summary: Get log handler
+      summary: Get log handler versions
       tags:
       - VersionsV1
       x-accepts: application/json
@@ -6612,44 +6707,6 @@ paths:
       tags:
       - UsersV1
       x-accepts: application/json
-  /api/v1/version:
-    get:
-      operationId: GetVersions
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1Versions'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
-      summary: Get versions
-      tags:
-      - VersionsV1
-      x-accepts: application/json
   /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy:
     post:
       operationId: CopyRun
@@ -12460,6 +12517,30 @@ components:
       - cache
       - schedule
       type: string
+    v1Compatibility:
+      example:
+        cli:
+          min: min
+          latest: latest
+        agent:
+          min: min
+          latest: latest
+        ui:
+          min: min
+          latest: latest
+        platform:
+          min: min
+          latest: latest
+      properties:
+        cli:
+          $ref: '#/components/schemas/v1Version'
+        platform:
+          $ref: '#/components/schemas/v1Version'
+        agent:
+          $ref: '#/components/schemas/v1Version'
+        ui:
+          $ref: '#/components/schemas/v1Version'
+      type: object
     v1CompiledOperation:
       example:
         termination:
@@ -15184,6 +15265,19 @@ components:
           title: Placeholder for Container
           type: object
       title: Artifacts initializer specification
+      type: object
+    v1Installation:
+      example:
+        dist: dist
+        version: version
+        key: key
+      properties:
+        key:
+          type: string
+        version:
+          type: string
+        dist:
+          type: string
       type: object
     v1IntervalSchedule:
       example:
@@ -24739,41 +24833,16 @@ components:
       type: object
     v1Version:
       example:
-        min_version: min_version
-        latest_version: latest_version
+        min: min
+        latest: latest
       properties:
-        min_version:
+        min:
           title: Min version
           type: string
-        latest_version:
+        latest:
           title: Latest version
           type: string
       title: Version specification
-      type: object
-    v1Versions:
-      example:
-        cli:
-          min_version: min_version
-          latest_version: latest_version
-        agent:
-          min_version: min_version
-          latest_version: latest_version
-        platform_version: platform_version
-        platform_dist: platform_dist
-        platform:
-          min_version: min_version
-          latest_version: latest_version
-      properties:
-        platform_version:
-          type: string
-        platform_dist:
-          type: string
-        cli:
-          $ref: '#/components/schemas/v1Version'
-        platform:
-          $ref: '#/components/schemas/v1Version'
-        agent:
-          $ref: '#/components/schemas/v1Version'
       type: object
     v1Volume:
       title: Placeholder for Volume

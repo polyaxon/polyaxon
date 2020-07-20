@@ -19,7 +19,6 @@ import os
 import click
 
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.logger import clean_outputs
 from polyaxon.managers.deploy import DeployManager
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.list_utils import to_list
@@ -47,7 +46,6 @@ def read_deployment_config(filepaths):
 
 
 @click.group()
-@clean_outputs
 def admin():
     """Commands for admin management."""
 
@@ -77,7 +75,6 @@ def admin():
     default=False,
     help="Dry run the configuration and generate a debuggable output.",
 )
-@clean_outputs
 def deploy(config_file, manager_path, check, dry_run):
     """Deploy polyaxon."""
     config = read_deployment_config(config_file)
@@ -133,7 +130,6 @@ def deploy(config_file, manager_path, check, dry_run):
     default=False,
     help="Dry run the configuration and generate a debuggable output.",
 )
-@clean_outputs
 def upgrade(config_file, manager_path, check, dry_run):
     """Upgrade a Polyaxon deployment."""
     config = read_deployment_config(config_file)
@@ -176,7 +172,6 @@ def upgrade(config_file, manager_path, check, dry_run):
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
 )
-@clean_outputs
 def teardown(config_file, manager_path):
     """Teardown a polyaxon deployment given a config file."""
     config = read_deployment_config(config_file)

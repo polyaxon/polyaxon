@@ -145,8 +145,9 @@ class HttpTransportMixin(object):
         headers=None,
         session=None,
     ):
-
-        if files_size > settings.CLIENT_CONFIG.upload_size_warn:
+        upload_size_max = os.environ.get("POLYAXON_UPLOAD_SIZE_MAX", 1024 * 1024 * 10)
+        upload_size_warn = os.environ.get("POLYAXON_UPLOAD_SIZE_MAX", 1024 * 1024 * 150)
+        if files_size > upload_size_warn:
             logger.warning(
                 "You are uploading %s, there's a hard limit of %s.\n"
                 "If you have data files in the current directory, "
@@ -154,16 +155,16 @@ class HttpTransportMixin(object):
                 "add them directly to your data volume, or upload them "
                 "separately using `polyaxon data` command and remove them from here.\n",
                 self.format_sizeof(files_size),
-                self.format_sizeof(settings.CLIENT_CONFIG.upload_size_max),
+                self.format_sizeof(upload_size_max),
             )
 
-        if files_size > settings.CLIENT_CONFIG.upload_size_max:
+        if files_size > upload_size_max:
             raise PolyaxonShouldExitError(
                 "Files too large to sync, please keep it under {}.\n"
                 "If you have data files in the current directory, "
                 "please add them directly to your data volume, or upload them "
                 "separately using `polyaxon data` command and remove them from here.\n".format(
-                    self.format_sizeof(settings.CLIENT_CONFIG.upload_size_max)
+                    self.format_sizeof(upload_size_max)
                 )
             )
 

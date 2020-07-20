@@ -14,10 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.views import APIView
+
+from coredb.managers.dummy_key import get_dummy_key
+from polyaxon.cli.session import get_compatibility
+from polyaxon.schemas.cli.cli_config import CliConfig
+from polyaxon.services.headers import PolyaxonServices
+from polyaxon.utils.tz_utils import now
+from polycommon import conf, pkg
+from polycommon.options.registry.installation import ORGANIZATION_KEY
 
 
 class HealthRateThrottle(AnonRateThrottle):
@@ -27,6 +37,34 @@ class HealthRateThrottle(AnonRateThrottle):
 class HealthView(APIView):
     authentication_classes = ()
     throttle_classes = (HealthRateThrottle,)
+    FILE = "/tmp/.compatibility"
+
+    def init_config(self):
+        if not os.path.exists(self.FILE):
+            self.write_config(CliConfig())
+
+    def write_config(self, config: CliConfig):
+        with open(self.FILE, "w") as config_file:
+            config_file.write(config.to_dict(dump=True))
+
+    def get_config(self):
+        try:
+            return CliConfig.read(self.FILE, config_type=".json")
+        except:
+            return
 
     def get(self, request, *args, **kwargs):
+        self.init_config()
+        config = self.get_config()
+        if config and config.should_check():
+            config.version = pkg.VERSION
+            key = conf.get(ORGANIZATION_KEY) or get_dummy_key()
+            config.compatibility = get_compatibility(
+                key=key,
+                service=PolyaxonServices.PLATFORM,
+                version=config.version,
+                is_cli=False,
+            )
+            config.last_check = now()
+            self.write_config(config)
         return Response(status=status.HTTP_200_OK)

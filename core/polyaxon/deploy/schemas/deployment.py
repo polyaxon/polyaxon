@@ -224,7 +224,6 @@ class DeploymentSchema(BaseCamelSchema):
         fields.Nested(ConnectionTypeSchema), allow_none=True,
     )
     log_level = fields.Str(allow_none=True)
-    tracker_backend = fields.Str(allow_none=True)
     security_context = fields.Nested(SecurityContextSchema, allow_none=True)
     external_services = fields.Nested(ExternalServicesSchema, allow_none=True)
     debug_mode = fields.Bool(allow_none=True)
@@ -341,7 +340,6 @@ class DeploymentConfig(BaseConfig):
         connections=None,
         notification_connections=None,
         log_level=None,
-        tracker_backend=None,
         security_context=None,
         external_services=None,
         debug_mode=None,
@@ -418,7 +416,6 @@ class DeploymentConfig(BaseConfig):
         self.connections = connections
         self.notification_connections = notification_connections
         self.log_level = log_level
-        self.tracker_backend = tracker_backend
         self.security_context = security_context
         self.external_services = external_services
         self.debug_mode = debug_mode

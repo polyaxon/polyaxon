@@ -24,21 +24,37 @@ import "protoc-gen-swagger/options/annotations.proto";
 // Version specification
 message Version {
     // Min version
-    string min_version = 1;
+    string min = 1;
 
     // Latest version
-    string latest_version = 2;
+    string latest = 2;
 }
 
-message Versions {
-    string platform_version = 1;
-    string platform_dist = 2;
-    Version cli = 3;
-    Version platform = 4;
-    Version agent = 5;
+message Installation {
+    string key = 1;
+    string version = 2;
+    string dist = 3;
+}
+
+message Compatibility {
+    Version cli = 1;
+    Version platform = 2;
+    Version agent = 3;
+    Version ui = 4;
 }
 
 message LogHandler {
     string dsn = 1;
     string environment = 2;
+}
+
+message ServiceResourceRequest {
+  // UUid
+  string uuid = 1;
+
+  // Version
+  string version = 2;
+
+  // Service
+  string service = 3;
 }

@@ -31,4 +31,3 @@ from polyaxon.env_vars.getters.run import (
     get_run_info,
     get_run_or_local,
 )
-from polyaxon.env_vars.getters.user import get_username_or_local

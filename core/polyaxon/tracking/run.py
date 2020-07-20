@@ -146,13 +146,6 @@ class Run(RunClient):
         if settings.CLIENT_CONFIG.is_managed:
             self._register_wait()
 
-    @property
-    def is_service(self):
-        if settings.CLIENT_CONFIG.no_op:
-            return None
-
-        return settings.CLIENT_CONFIG.is_managed and settings.CLIENT_CONFIG.is_service
-
     @check_no_op
     def get_artifacts_path(self):
         """Returns the current artifacts path configured for this instance.

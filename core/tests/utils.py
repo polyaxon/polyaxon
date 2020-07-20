@@ -107,8 +107,6 @@ class BaseTestCase(TestCase):
         if self.SET_PROXIES_SETTINGS:
             settings.PROXIES_CONFIG = ProxiesConfig()
 
-        fpath = tempfile.mkdtemp()
-        settings.CLIENT_CONFIG.agent_path = fpath
         settings.CLIENT_CONFIG.tracking_timeout = 0
 
 

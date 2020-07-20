@@ -18,8 +18,6 @@ import time
 
 import click
 
-from polyaxon.logger import clean_outputs
-
 
 @click.command()
 @click.option("--namespace", type=str)
@@ -29,7 +27,6 @@ from polyaxon.logger import clean_outputs
 @click.option(
     "--delete", is_flag=True, default=False,
 )
-@clean_outputs
 def clean_ops(namespace, in_cluster, delete):
     """clean-ops command."""
     from polyaxon.k8s.manager import K8SManager

@@ -18,8 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class UriTypeSchema(BaseCamelSchema):
@@ -32,7 +33,7 @@ class UriTypeSchema(BaseCamelSchema):
         return V1UriType
 
 
-class V1UriType(BaseConfig, polyaxon_sdk.V1UriType):
+class V1UriType(BaseTypeConfig, polyaxon_sdk.V1UriType):
     """Uri type.
 
     Args:
@@ -100,4 +101,7 @@ class V1UriType(BaseConfig, polyaxon_sdk.V1UriType):
         return "{}:{}@{}".format(self.user, self.password, self.host)
 
     def __repr__(self):
+        return str(self)
+
+    def to_param(self):
         return str(self)

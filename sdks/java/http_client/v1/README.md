@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.1.4-rc8
+- API version: 1.1.4
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.1.4-rc8</version>
+  <version>1.1.4</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.1.4-rc8"
+compile "org.openapitools:openapi-java-client:1.1.4"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.1.4-rc8.jar`
+* `target/openapi-java-client-1.1.4.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -313,8 +313,9 @@ Class | Method | HTTP request | Description
 *UsersV1Api* | [**patchUser**](docs/UsersV1Api.md#patchUser) | **PATCH** /api/v1/users | Patch current user
 *UsersV1Api* | [**updateToken**](docs/UsersV1Api.md#updateToken) | **PUT** /api/v1/users/tokens/{token.uuid} | Update token
 *UsersV1Api* | [**updateUser**](docs/UsersV1Api.md#updateUser) | **PUT** /api/v1/users | Update current user
-*VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | Get log handler
-*VersionsV1Api* | [**getVersions**](docs/VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get versions
+*VersionsV1Api* | [**getCompatibility**](docs/VersionsV1Api.md#getCompatibility) | **GET** /api/v1/compatibility/{uuid}/{version}/{service} | Get compatibility versions
+*VersionsV1Api* | [**getInstallation**](docs/VersionsV1Api.md#getInstallation) | **GET** /api/v1/installation | Get installation versions
+*VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | Get log handler versions
 
 
 ## Documentation for Models
@@ -343,6 +344,7 @@ Class | Method | HTTP request | Description
  - [V1CleanPodPolicy](docs/V1CleanPodPolicy.md)
  - [V1Cloning](docs/V1Cloning.md)
  - [V1CloningKind](docs/V1CloningKind.md)
+ - [V1Compatibility](docs/V1Compatibility.md)
  - [V1CompiledOperation](docs/V1CompiledOperation.md)
  - [V1Component](docs/V1Component.md)
  - [V1ComponentHub](docs/V1ComponentHub.md)
@@ -408,6 +410,7 @@ Class | Method | HTTP request | Description
  - [V1IO](docs/V1IO.md)
  - [V1ImageType](docs/V1ImageType.md)
  - [V1Init](docs/V1Init.md)
+ - [V1Installation](docs/V1Installation.md)
  - [V1IntervalSchedule](docs/V1IntervalSchedule.md)
  - [V1IoCond](docs/V1IoCond.md)
  - [V1Iterative](docs/V1Iterative.md)
@@ -503,7 +506,6 @@ Class | Method | HTTP request | Description
  - [V1User](docs/V1User.md)
  - [V1Uuids](docs/V1Uuids.md)
  - [V1Version](docs/V1Version.md)
- - [V1Versions](docs/V1Versions.md)
  - [V1WasbType](docs/V1WasbType.md)
 
 

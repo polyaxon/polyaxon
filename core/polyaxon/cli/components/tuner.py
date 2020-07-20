@@ -17,12 +17,10 @@ from typing import Dict, List
 
 import click
 
-from polyaxon.logger import clean_outputs
 from polyaxon.utils.formatting import Printer
 
 
 @click.group()
-@clean_outputs
 def tuner():
     pass
 
@@ -56,7 +54,6 @@ def log_suggestions(suggestions: List[Dict]):
 @click.option(
     "--metrics", help="A string representing the list metrics to use for tuning."
 )
-@clean_outputs
 def bayesian(matrix, configs, metrics):
     """Create suggestions based on bayesian optimization."""
     from polyaxon.polyflow import V1Bayes
@@ -89,7 +86,6 @@ def bayesian(matrix, configs, metrics):
 @click.option(
     "--metrics", help="A string representing the list metrics to use for tuning."
 )
-@clean_outputs
 def hyperband(matrix, iteration, bracket_iteration, configs, metrics):
     """Create suggestions based on hyperband."""
     from polyaxon.polyflow import V1Hyperband
@@ -119,7 +115,6 @@ def hyperband(matrix, iteration, bracket_iteration, configs, metrics):
 @click.option(
     "--metrics", help="A string representing the list metrics to use for tuning."
 )
-@clean_outputs
 def hyperopt(matrix, configs, metrics):
     """Create suggestions based on hyperopt."""
     from polyaxon.polyflow import V1Hyperopt

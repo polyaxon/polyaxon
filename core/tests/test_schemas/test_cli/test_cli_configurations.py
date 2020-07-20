@@ -16,16 +16,19 @@
 
 from tests.utils import BaseTestCase
 
-from polyaxon.schemas.cli.cli_config import CliConfigurationConfig
+from polyaxon.schemas.cli.cli_config import CliConfig
 
 
 class TestCliConfig(BaseTestCase):
     def test_cli_config(self):
         config_dict = {
-            "check_count": 1,
             "current_version": "0.0.1",
-            "server_versions": {"cli": "0.0.1"},
+            "installation": {"key": "uuid", "version": "1.1.4-rc11", "dist": "foo"},
+            "compatibility": {"cli": {"min": "0.0.4", "latest": "1.1.4"}},
             "log_handler": None,
         }
-        config = CliConfigurationConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config = CliConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
+        config_to_dict.pop("last_check")
+        assert config_to_dict == config_dict
+        assert config.INTERVAL == 30 * 60

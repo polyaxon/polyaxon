@@ -18,8 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class WasbTypeSchema(BaseCamelSchema):
@@ -32,7 +33,7 @@ class WasbTypeSchema(BaseCamelSchema):
         return V1WasbType
 
 
-class V1WasbType(BaseConfig, polyaxon_sdk.V1WasbType):
+class V1WasbType(BaseTypeConfig, polyaxon_sdk.V1WasbType):
     """Wasb type.
 
     Args:
@@ -107,4 +108,7 @@ class V1WasbType(BaseConfig, polyaxon_sdk.V1WasbType):
         )
 
     def __repr__(self):
+        return str(self)
+
+    def to_param(self):
         return str(self)

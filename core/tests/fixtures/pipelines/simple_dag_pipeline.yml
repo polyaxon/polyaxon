@@ -10,7 +10,7 @@ run:
     - name: job1
       dagRef: job-template
       params:
-        bucket: {value: s3://foo}
+        bucket: {value: "s3://foo"}
     - name: experiment1
       dagRef: experiment-template
       dependencies: [job1]
@@ -29,7 +29,7 @@ run:
     - name: job2
       dagRef: job-template
       params:
-        bucket: {value: s3://bar}
+        bucket: {value: "s3://bar"}
       dependencies: [experiment1, experiment2, experiment3]
 
   components:

@@ -21,7 +21,6 @@ import click
 
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
-from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile import get_specification
 from polyaxon.utils.formatting import Printer, dict_tabulate, list_dicts_to_tabulate
 
@@ -52,7 +51,6 @@ def get_component_details(polyaxonfile, specification):
 @click.group()
 @click.option("--name", type=str, help="The component name.")
 @click.pass_context
-@clean_outputs
 def hub(ctx, name):
     """Commands for ops/runs."""
     ctx.obj = ctx.obj or {}
@@ -72,7 +70,6 @@ def hub(ctx, name):
     help="The filename to use for saving the polyaxonfile, default to `polyaxonfile.yaml`.",
 )
 @click.pass_context
-@clean_outputs
 def get(ctx, save, filename):
     """Get a component info by component_name, or owner/component_name.
 

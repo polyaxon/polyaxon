@@ -33,11 +33,13 @@ ADMIN_V1_LOCATION = "/" + ADMIN_V1 + "/"
 AUTH_V1_LOCATION = "/" + AUTH_V1 + "/"
 HEALTHZ_LOCATION = "/healthz/"
 POLYAXON_CLOUD_HOST = "https://cloud.polyaxon.com"
+LOCALHOST = "http://localhost:8000"
 POLYAXON_VERSIONS_HOST = "https://versions.polyaxon.com/?v={}".format(pkg.VERSION)
-REGISTER = (
-    "{url}&cid={cluster_uuid}&t=pageview&"
-    "dp=%2Fplatform"
-    "%2F{created_at}%2F{version}&"
-    "ds=app&z={cluster_uuid}&"
-    "an=polyaxon&aid=com.polyaxon.app&av={version}"
-)
+
+
+def get_default_host(host: str = None, service: str = None):
+    if host:
+        return host
+    if service is None:
+        return POLYAXON_CLOUD_HOST
+    return LOCALHOST

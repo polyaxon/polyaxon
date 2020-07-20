@@ -18,7 +18,6 @@ import os
 import click
 
 from polyaxon.exceptions import PolyaxonException
-from polyaxon.logger import clean_outputs
 
 
 @click.command()
@@ -27,7 +26,6 @@ from polyaxon.logger import clean_outputs
     "--path", default="./web", help="Path where the config should be generated."
 )
 @click.option("--root", help="Absolute root where the configs, default to pwd")
-@clean_outputs
 def proxy(component, path, root):
     """Create api proxy."""
     from polyaxon.proxies.generators import (

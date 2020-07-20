@@ -18,8 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class AuthTypeSchema(BaseCamelSchema):
@@ -31,7 +32,7 @@ class AuthTypeSchema(BaseCamelSchema):
         return V1AuthType
 
 
-class V1AuthType(BaseConfig, polyaxon_sdk.V1AuthType):
+class V1AuthType(BaseTypeConfig, polyaxon_sdk.V1AuthType):
     """Auth type.
 
     Args:

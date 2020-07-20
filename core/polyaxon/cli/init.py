@@ -25,7 +25,6 @@ from urllib3.exceptions import HTTPError
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import ProjectClient
 from polyaxon.env_vars.getters import get_project_or_local
-from polyaxon.logger import clean_outputs
 from polyaxon.managers.ignore import IgnoreManager
 from polyaxon.managers.project import ProjectManager
 from polyaxon.polyaxonfile import check_polyaxonfile
@@ -91,7 +90,6 @@ def create_debug_polyaxonfile():
     show_default=False,
     help="Purge previous configs before calling init.",
 )
-@clean_outputs
 def init(project, polyaxonfile, purge):
     """Initialize a new polyaxonfile specification."""
     owner, project_name = get_project_or_local(project, is_cli=True)

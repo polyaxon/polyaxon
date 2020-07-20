@@ -13,11 +13,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import os
 
-from polyaxon.managers.auth import AuthConfigManager
+from marshmallow import ValidationError
+
+from polyaxon.api import LOCALHOST
+from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_CONFIG, POLYAXON_KEYS_SET_AGENT
 from polyaxon.managers.client import ClientConfigManager
 from polyaxon.utils.bool_utils import to_bool
+from polyaxon.utils.formatting import Printer
 
 MIN_TIMEOUT = 1
 LONG_REQUEST_TIMEOUT = 3600
@@ -25,21 +30,9 @@ HEALTH_CHECK_INTERVAL = 60
 
 AUTH_CONFIG = None
 CLIENT_CONFIG = None
+CLI_CONFIG = None
 PROXIES_CONFIG = None
 AGENT_CONFIG = None
-
-if not to_bool(os.environ.get("POLYAXON_NO_CONFIG", False)):
-    AUTH_CONFIG = AuthConfigManager.get_config_from_env()
-    CLIENT_CONFIG = ClientConfigManager.get_config_from_env()
-
-    if CLIENT_CONFIG.set_agent:
-        from polyaxon.managers.agent import AgentManager
-
-        AGENT_CONFIG = AgentManager.get_config_from_env(
-            agent_path=CLIENT_CONFIG.agent_path
-        )
-else:
-    CLIENT_CONFIG = ClientConfigManager.CONFIG(host="http://localhost:8000")
 
 
 def set_proxies_config():
@@ -48,3 +41,54 @@ def set_proxies_config():
     global PROXIES_CONFIG
 
     PROXIES_CONFIG = ProxiesManager.get_config_from_env()
+
+
+def set_agent_config():
+    from polyaxon.managers.agent import AgentManager
+
+    global AGENT_CONFIG
+
+    AGENT_CONFIG = AgentManager.get_config_from_env()
+
+
+def set_cli_config():
+    from polyaxon.managers.cli import CliConfigManager
+
+    global CLI_CONFIG
+
+    try:
+        CLI_CONFIG = CliConfigManager.get_config_or_default()
+    except (TypeError, ValidationError):
+        CliConfigManager.purge()
+        Printer.print_warning("Your CLI Configuration was purged!")
+
+
+def set_client_config():
+    global CLIENT_CONFIG
+
+    try:
+        CLIENT_CONFIG = ClientConfigManager.get_config_from_env()
+    except (TypeError, ValidationError):
+        ClientConfigManager.purge()
+        Printer.print_warning("Your client Configuration was purged!")
+        CLIENT_CONFIG = ClientConfigManager.get_config_from_env()
+
+
+def set_auth_config():
+    from polyaxon.managers.auth import AuthConfigManager
+
+    global AUTH_CONFIG
+    try:
+        AUTH_CONFIG = AuthConfigManager.get_config_from_env()
+    except (TypeError, ValidationError):
+        AuthConfigManager.purge()
+        Printer.print_warning("Your auth Configuration was purged!")
+
+
+if not to_bool(os.environ.get(POLYAXON_KEYS_NO_CONFIG, False)):
+    set_auth_config()
+    set_client_config()
+    if to_bool(os.environ.get(POLYAXON_KEYS_SET_AGENT, False)):
+        set_agent_config()
+else:
+    CLIENT_CONFIG = ClientConfigManager.CONFIG(host=LOCALHOST)

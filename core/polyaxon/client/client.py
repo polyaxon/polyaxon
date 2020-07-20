@@ -18,6 +18,7 @@ import polyaxon_sdk
 
 from polyaxon import settings
 from polyaxon.client.transport import Transport
+from polyaxon.constants import NO_AUTH
 
 
 class PolyaxonClient:
@@ -62,7 +63,10 @@ class PolyaxonClient:
     def __init__(self, config=None, token=None):
 
         self._config = config or settings.CLIENT_CONFIG
-        self._config.token = token or settings.AUTH_CONFIG.token
+        if not token:
+            self._config.token = settings.AUTH_CONFIG.token
+        elif token != NO_AUTH:
+            self._config.token = token
 
         self._transport = None
         self.api_client = polyaxon_sdk.ApiClient(

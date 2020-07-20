@@ -25,10 +25,10 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1Versions v1 versions
+// V1Compatibility v1 compatibility
 //
-// swagger:model v1Versions
-type V1Versions struct {
+// swagger:model v1Compatibility
+type V1Compatibility struct {
 
 	// agent
 	Agent *V1Version `json:"agent,omitempty"`
@@ -39,15 +39,12 @@ type V1Versions struct {
 	// platform
 	Platform *V1Version `json:"platform,omitempty"`
 
-	// platform dist
-	PlatformDist string `json:"platform_dist,omitempty"`
-
-	// platform version
-	PlatformVersion string `json:"platform_version,omitempty"`
+	// ui
+	UI *V1Version `json:"ui,omitempty"`
 }
 
-// Validate validates this v1 versions
-func (m *V1Versions) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 compatibility
+func (m *V1Compatibility) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAgent(formats); err != nil {
@@ -62,13 +59,17 @@ func (m *V1Versions) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateUI(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
 	return nil
 }
 
-func (m *V1Versions) validateAgent(formats strfmt.Registry) error {
+func (m *V1Compatibility) validateAgent(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Agent) { // not required
 		return nil
@@ -86,7 +87,7 @@ func (m *V1Versions) validateAgent(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Versions) validateCli(formats strfmt.Registry) error {
+func (m *V1Compatibility) validateCli(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Cli) { // not required
 		return nil
@@ -104,7 +105,7 @@ func (m *V1Versions) validateCli(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Versions) validatePlatform(formats strfmt.Registry) error {
+func (m *V1Compatibility) validatePlatform(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Platform) { // not required
 		return nil
@@ -122,8 +123,26 @@ func (m *V1Versions) validatePlatform(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Compatibility) validateUI(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UI) { // not required
+		return nil
+	}
+
+	if m.UI != nil {
+		if err := m.UI.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ui")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // MarshalBinary interface implementation
-func (m *V1Versions) MarshalBinary() ([]byte, error) {
+func (m *V1Compatibility) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -131,8 +150,8 @@ func (m *V1Versions) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1Versions) UnmarshalBinary(b []byte) error {
-	var res V1Versions
+func (m *V1Compatibility) UnmarshalBinary(b []byte) error {
+	var res V1Compatibility
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

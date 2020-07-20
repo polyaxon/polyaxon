@@ -17,19 +17,16 @@
 import click
 
 from polyaxon.connections.kinds import V1ConnectionKind
-from polyaxon.logger import clean_outputs
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.formatting import Printer
 
 
 @click.group()
-@clean_outputs
 def initializer():
     pass
 
 
 @initializer.command()
-@clean_outputs
 def auth():
     """Create auth context."""
     from polyaxon.init.auth import create_auth_context
@@ -42,7 +39,6 @@ def auth():
 @click.option("--revision", help="The revision(commint/branch/treeish) to pull.")
 @click.option("--repo_path", "--repo-path", help="The path to where to pull the repos.")
 @click.option("--connection", help="The connection used for pulling this repo.")
-@clean_outputs
 def git(url, repo_path, revision, connection):
     """Create auth context."""
     from polyaxon.init.git import create_code_repo
@@ -68,7 +64,6 @@ def git(url, repo_path, revision, connection):
 @click.option(
     "--workers", type=int, default=50, help="Number of worker threads to use."
 )
-@clean_outputs
 def s3(connection_name, path_from, path_to, is_file, workers):
     """Create s3 path context."""
     from polyaxon.stores.manager import download_file_or_dir
@@ -100,7 +95,6 @@ def s3(connection_name, path_from, path_to, is_file, workers):
 @click.option(
     "--workers", type=int, default=50, help="Number of worker threads to use."
 )
-@clean_outputs
 def gcs(connection_name, path_from, path_to, is_file, workers):
     """Create gcs path context."""
     from polyaxon.stores.manager import download_file_or_dir
@@ -132,7 +126,6 @@ def gcs(connection_name, path_from, path_to, is_file, workers):
 @click.option(
     "--workers", type=int, default=50, help="Number of worker threads to use."
 )
-@clean_outputs
 def wasb(connection_name, path_from, path_to, is_file, workers):
     """Create wasb path context."""
     from polyaxon.stores.manager import download_file_or_dir

@@ -23,3 +23,17 @@ You can update your user profile settings as well as your dashboard theme prefer
 Polyaxon UI comes in two themes: 
 
 ![dark-theme](../../../../content/images/dashboard/users/dark-theme.png)
+
+## Token management
+
+Each user can manage multiple API tokens to authenticate Cli, Clients, and other external services to access projects, experiments, and artifacts.
+
+![tokens-default](../../../../content/images/dashboard/users/tokens-default.png)
+
+Each token can be managed, deleted, refreshed, or regenerated:
+ 
+![tokens-default](../../../../content/images/dashboard/users/tokens-management.png)
+ 
+Each token can restricted to specific services and have specific scopes:
+
+![tokens-default](../../../../content/images/dashboard/users/tokens-scope.png)

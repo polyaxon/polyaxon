@@ -13,9 +13,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import yaml
 
-from polyaxon.managers.auth import AuthConfigManager
+from typing import TextIO, Union
+
+try:
+    from yaml import CSafeLoader as _SafeLoader, CSafeDumper as _SafeDumper
+except ImportError:
+    from yaml import SafeLoader as _SafeLoader, SafeDumper as _SafeDumper
 
 
-def get_username_or_local(username):
-    return username or AuthConfigManager.get_value("username")
+def dump(data, stream=None):
+    return yaml.dump(
+        data,
+        stream=stream,
+        Dumper=_SafeDumper,
+        default_flow_style=False,
+        allow_unicode=True,
+    )
+
+
+def safe_load(filepath: Union[str, TextIO]):
+    return yaml.load(filepath, Loader=_SafeLoader)

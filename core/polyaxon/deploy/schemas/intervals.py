@@ -23,6 +23,7 @@ class IntervalsSchema(BaseCamelSchema):
     runs_scheduler = fields.Int(default=None)
     operations_default_retry_delay = fields.Int(default=None)
     operations_max_retry_delay = fields.Int(default=None)
+    compatibility_check = fields.Int(default=None)
 
     @staticmethod
     def schema_config():
@@ -35,6 +36,7 @@ class IntervalsConfig(BaseConfig):
         "runsScheduler",
         "operationsDefaultRetryDelay",
         "operationsMaxRetryDelay",
+        "compatibilityCheck",
     ]
 
     def __init__(
@@ -42,7 +44,9 @@ class IntervalsConfig(BaseConfig):
         runs_scheduler=None,
         operations_default_retry_delay=None,
         operations_max_retry_delay=None,
+        compatibility_check=None,
     ):
         self.runs_scheduler = runs_scheduler
         self.operations_default_retry_delay = operations_default_retry_delay
         self.operations_max_retry_delay = operations_max_retry_delay
+        self.compatibility_check = compatibility_check

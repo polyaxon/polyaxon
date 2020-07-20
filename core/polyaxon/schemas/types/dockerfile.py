@@ -18,9 +18,10 @@ import polyaxon_sdk
 
 from marshmallow import fields, validates_schema
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.docker_image import validate_image
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 POLYAXON_DOCKERFILE_NAME = "Dockerfile"
 POLYAXON_DOCKER_WORKDIR = "/code"
@@ -50,7 +51,7 @@ class DockerfileTypeSchema(BaseCamelSchema):
         validate_image(data.get("image"))
 
 
-class V1DockerfileType(BaseConfig, polyaxon_sdk.V1DockerfileType):
+class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
     """Dockerfile type.
 
     This type allows you to easily construct a dockerfile without

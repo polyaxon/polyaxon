@@ -36,7 +36,7 @@ on: [push]
 jobs:
   check:
     runs-on: ubuntu-latest
-    container: docker://polyaxon/polyaxon-cli:1.1.3
+    container: docker://polyaxon/polyaxon-cli:1.1.4
     steps:
       - uses: actions/checkout@v2.3.1
       - name: lint
@@ -62,7 +62,7 @@ on: [push]
 jobs:
   check:
     runs-on: ubuntu-latest
-    container: docker://polyaxon/polyaxon-cli:1.1.3
+    container: docker://polyaxon/polyaxon-cli:1.1.4
     steps:
       - uses: actions/checkout@v2.3.1
       - name: config

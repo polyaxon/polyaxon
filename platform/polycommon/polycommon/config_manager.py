@@ -14,13 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import base64
 import os
 
 from pathlib import Path
-from typing import List, Optional
-
-from django.utils.functional import cached_property
+from typing import List
 
 from polyaxon.config_reader.manager import ConfigManager as BaseConfigManager
 from polyaxon.env_vars.keys import (
@@ -36,24 +33,6 @@ TESTING = parser.get_boolean(
 
 
 class ConfigManager(BaseConfigManager):
-    @cached_property
-    def decode_iterations(self):
-        return self.get_int("_POLYAXON_DECODE_ITERATION", is_optional=True, default=1)
-
-    def _decode(self, value, iteration=3):
-        iteration = iteration or self.decode_iterations
-
-        def _decode_once():
-            return base64.b64decode(value).decode("utf-8")
-
-        for _ in range(iteration):
-            value = _decode_once()
-        return value
-
-    @staticmethod
-    def _encode(value) -> str:
-        return base64.b64encode(value.encode("utf-8")).decode("utf-8")
-
     def __init__(self, **params) -> None:
         super().__init__(**params)
         self._env = self.get_string("POLYAXON_ENVIRONMENT")
@@ -72,7 +51,7 @@ class ConfigManager(BaseConfigManager):
             "POLYAXON_SCHEDULER_ENABLED", is_optional=True, default=False
         )
         self._chart_version = self.get_string(
-            "POLYAXON_CHART_VERSION", is_optional=True, default="1.1.4-rc8"
+            "POLYAXON_CHART_VERSION", is_optional=True, default="1.1.4"
         )
         self._redis_protocol = self.get_string(
             "POLYAXON_REDIS_PROTOCOL", is_optional=True, default="redis"
@@ -195,31 +174,6 @@ class ConfigManager(BaseConfigManager):
         if self.broker_backend == "redis":
             return self.get_redis_url("POLYAXON_REDIS_CELERY_BROKER_URL")
         return self._get_rabbitmq_broker_url()
-
-    @cached_property
-    def ignore_exceptions(self) -> Optional[List[str]]:
-        return self.get_string(
-            "_POLYAXON_IGNORE_EXCEPTIONS",
-            is_list=True,
-            is_secret=True,
-            is_local=True,
-            is_optional=True,
-            default=[],
-        )
-
-    @cached_property
-    def platform_dsn(self) -> Optional[str]:
-        value = self.get_string(
-            "_POLYAXON_PLATFORM_DSN", is_secret=True, is_local=True, is_optional=True
-        )
-        return self._decode(value, 1) if value else None
-
-    @cached_property
-    def cli_dsn(self) -> Optional[str]:
-        value = self.get_string(
-            "_POLYAXON_CLI_DSN", is_secret=True, is_local=True, is_optional=True
-        )
-        return self._decode(value, 2) if value else None
 
 
 def get_config(context, file_path):

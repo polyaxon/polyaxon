@@ -18,7 +18,6 @@ import sys
 
 from polyaxon.constants import DEFAULT
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.project import ProjectManager
 from polyaxon.utils.formatting import Printer
 
@@ -30,11 +29,13 @@ def get_project_full_name(owner: str = None, project: str = None) -> str:
 
 
 def get_project_info(project):
+    from polyaxon import settings
+
     parts = project.replace(".", "/").split("/")
     if len(parts) == 2:
         owner, project_name = parts
     else:
-        owner = AuthConfigManager.get_value("username")
+        owner = settings.AUTH_CONFIG.username
         project_name = project
 
     return owner, project_name

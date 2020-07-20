@@ -19,8 +19,6 @@ import os
 import click
 import click_completion
 
-from marshmallow import ValidationError
-
 from polyaxon import settings
 from polyaxon.cli.admin import admin
 from polyaxon.cli.auth import login, logout, whoami
@@ -34,10 +32,10 @@ from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
 from polyaxon.cli.run import run
+from polyaxon.cli.session import set_versions_config
 from polyaxon.cli.upload import upload
 from polyaxon.cli.version import check_cli_version, upgrade, version
-from polyaxon.logger import clean_outputs, configure_logger
-from polyaxon.managers.client import ClientConfigManager
+from polyaxon.logger import configure_logger
 from polyaxon.utils.bool_utils import to_bool
 
 DOCS_GEN = to_bool(os.environ.get("POLYAXON_DOCS_GEN", False))
@@ -50,9 +48,6 @@ click_completion.init()
     "-v", "--verbose", is_flag=True, default=False, help="Turn on debug logging"
 )
 @click.option(
-    "-c", "--check-version", is_flag=True, default=False, help="Turn on version check"
-)
-@click.option(
     "--offline",
     is_flag=True,
     default=False,
@@ -60,8 +55,7 @@ click_completion.init()
     "Currently used for run command in --local mode.",
 )
 @click.pass_context
-@clean_outputs
-def cli(context, verbose, check_version, offline):
+def cli(context, verbose, offline):
     """Polyaxon - Cloud Native Machine Learning Automation & Experimentation tool.
 
     This CLI provides tools to:
@@ -112,11 +106,8 @@ def cli(context, verbose, check_version, offline):
 
     Check the help available for each command listed below.
     """
-
-    try:
-        configure_logger(verbose or ClientConfigManager.get_value("debug"))
-    except ValidationError:
-        ClientConfigManager.purge()
+    settings.set_cli_config()
+    configure_logger(verbose)
     non_check_cmds = [
         "completion",
         "config",
@@ -131,6 +122,8 @@ def cli(context, verbose, check_version, offline):
         "sidecar",
         "proxy",
         "notify",
+        "upgrade",
+        "port-forward",
     ]
     context.obj = context.obj or {}
     if not settings.CLIENT_CONFIG.client_header:
@@ -139,14 +132,17 @@ def cli(context, verbose, check_version, offline):
     if offline:
         os.environ["POLYAXON_IS_OFFLINE"] = "true"
         settings.CLIENT_CONFIG.is_offline = True
-    if check_version and not (
+    if not (
         context.invoked_subcommand in non_check_cmds
         or offline
         or settings.CLIENT_CONFIG.no_api
         or settings.CLIENT_CONFIG.is_ops
         or DOCS_GEN
+    ) and settings.CLI_CONFIG.should_check(
+        settings.CLIENT_CONFIG.compatibility_check_interval
     ):
-        check_cli_version()
+        cli_config = set_versions_config()
+        check_cli_version(cli_config)
 
 
 cli.add_command(login)
@@ -174,7 +170,6 @@ if settings.CLIENT_CONFIG.is_ops:
     from polyaxon.cli.components.initializer import initializer
     from polyaxon.cli.components.notifier import notify
     from polyaxon.cli.components.proxies import proxy
-    from polyaxon.cli.components.register import register
     from polyaxon.cli.components.sidecar import sidecar
     from polyaxon.cli.components.tuner import tuner
 
@@ -184,6 +179,5 @@ if settings.CLIENT_CONFIG.is_ops:
     cli.add_command(initializer)
     cli.add_command(notify)
     cli.add_command(proxy)
-    cli.add_command(register)
     cli.add_command(sidecar)
     cli.add_command(tuner)

@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.1.4-rc8";
+        version: "1.1.4";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -1354,14 +1354,21 @@ service UsersV1 {
 
 // Service to get versions
 service VersionsV1 {
-    // Get versions
-    rpc GetVersions(google.protobuf.Empty) returns (Versions) {
+    // Get installation versions
+    rpc GetInstallation(google.protobuf.Empty) returns (Installation) {
         option (google.api.http) = {
-            get: "/api/v1/version"
+            get: "/api/v1/installation"
         };
     }
 
-    // Get log handler
+    // Get compatibility versions
+    rpc GetCompatibility(ServiceResourceRequest) returns (Compatibility) {
+      option (google.api.http) = {
+          get: "/api/v1/compatibility/{uuid}/{version}/{service}"
+      };
+  }
+
+    // Get log handler versions
     rpc GetLogHandler(google.protobuf.Empty) returns (LogHandler) {
         option (google.api.http) = {
             get: "/api/v1/log_handler"

@@ -39,9 +39,13 @@ def now(tzinfo=True, no_micor=False):
     """
     Return an aware or naive datetime.datetime, depending on settings.USE_TZ.
     """
+    value = None
     if dj_now:
-        value = dj_now()
-    else:
+        try:
+            value = dj_now()
+        except Exception:  # Improper configuration
+            pass
+    if not value:
         if tzinfo:
             value = datetime.utcnow().replace(tzinfo=pytz.utc)
         else:

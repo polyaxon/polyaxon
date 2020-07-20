@@ -18,8 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class GitTypeSchema(BaseCamelSchema):
@@ -33,7 +34,7 @@ class GitTypeSchema(BaseCamelSchema):
         return V1GitType
 
 
-class V1GitType(BaseConfig, polyaxon_sdk.V1GitType):
+class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
     """Git type allows you to pass a git repo as a parameter.
 
     If used as an input type, Polyaxon can resolve several git connections

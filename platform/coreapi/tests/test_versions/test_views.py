@@ -33,6 +33,6 @@ class TestInstallationVersionViewsV1(BaseTest):
     def test_version(self):
         resp = self.client.get(self.installation_version)
         assert resp.status_code == status.HTTP_200_OK
-        assert resp.data["platform_version"] == conf.get(PLATFORM_VERSION)
-        assert resp.data["platform_dist"] == conf.get(PLATFORM_DIST)
-        assert set(resp.data.keys()) == {"platform_version", "platform_dist"}
+        assert resp.data["version"] == conf.get(PLATFORM_VERSION)
+        assert resp.data["dist"] == conf.get(PLATFORM_DIST)
+        assert set(resp.data.keys()) == {"version", "dist"}

@@ -23,9 +23,6 @@ def set_core(context, config: ConfigManager):
     context["POLYAXON_ENVIRONMENT"] = config.env
     context["CHART_VERSION"] = config.chart_version
     context["SCHEDULER_ENABLED"] = config.scheduler_enabled
-    context["ORGANIZATION_KEY"] = config.get_string(
-        "POLYAXON_ORGANIZATION_KEY", is_optional=True
-    )
     context["K8S_NAMESPACE"] = config.namespace
 
     context["FILE_UPLOAD_PERMISSIONS"] = 0o644

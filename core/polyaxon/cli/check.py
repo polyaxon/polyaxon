@@ -16,7 +16,6 @@
 
 import click
 
-from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile.check import check_polyaxonfile
 from polyaxon.utils.formatting import Printer
 
@@ -54,7 +53,6 @@ from polyaxon.utils.formatting import Printer
     default=False,
     help="To check the specification only without params validation.",
 )
-@clean_outputs
 def check(polyaxonfile, python_module, version, params, lint):
     """Check a polyaxonfile."""
     specification = check_polyaxonfile(

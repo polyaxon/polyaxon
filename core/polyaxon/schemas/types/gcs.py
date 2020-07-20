@@ -18,8 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class GcsTypeSchema(BaseCamelSchema):
@@ -31,7 +32,7 @@ class GcsTypeSchema(BaseCamelSchema):
         return V1GcsType
 
 
-class V1GcsType(BaseConfig, polyaxon_sdk.V1GcsType):
+class V1GcsType(BaseTypeConfig, polyaxon_sdk.V1GcsType):
     """GCS type.
 
     Args:
@@ -102,4 +103,7 @@ class V1GcsType(BaseConfig, polyaxon_sdk.V1GcsType):
         return path
 
     def __repr__(self):
+        return str(self)
+
+    def to_param(self):
         return str(self)

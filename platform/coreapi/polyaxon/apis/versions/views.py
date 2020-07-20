@@ -16,15 +16,21 @@
 
 from rest_framework.response import Response
 
+from coredb.managers.dummy_key import get_dummy_key
 from polycommon import conf
 from polycommon.endpoints.base import BaseEndpoint, RetrieveEndpoint
-from polycommon.options.registry.installation import PLATFORM_DIST, PLATFORM_VERSION
+from polycommon.options.registry.installation import (
+    ORGANIZATION_KEY,
+    PLATFORM_DIST,
+    PLATFORM_VERSION,
+)
 
 
-class VersionView(BaseEndpoint, RetrieveEndpoint):
+class VersionsInstalledView(BaseEndpoint, RetrieveEndpoint):
     def retrieve(self, request, *args, **kwargs):
-        versions = {
-            "platform_version": conf.get(PLATFORM_VERSION),
-            "platform_dist": conf.get(PLATFORM_DIST),
+        data = {
+            "key": conf.get(ORGANIZATION_KEY) or get_dummy_key(),
+            "version": conf.get(PLATFORM_VERSION),
+            "dist": conf.get(PLATFORM_DIST),
         }
-        return Response(versions)
+        return Response(data)

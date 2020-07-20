@@ -19,7 +19,8 @@ import polyaxon_sdk
 from marshmallow import fields
 
 from polyaxon.connections.schemas import K8sResourceSchema
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class K8sResourceTypeSchema(BaseCamelSchema):
@@ -32,7 +33,7 @@ class K8sResourceTypeSchema(BaseCamelSchema):
         return V1K8sResourceType
 
 
-class V1K8sResourceType(BaseConfig, polyaxon_sdk.V1K8sResourceType):
+class V1K8sResourceType(BaseTypeConfig, polyaxon_sdk.V1K8sResourceType):
     IDENTIFIER = "secret_resource"
     SCHEMA = K8sResourceTypeSchema
     REDUCED_ATTRIBUTES = ["name", "schema", "isRequested"]

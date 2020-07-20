@@ -39,15 +39,89 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error)
+	GetCompatibility(params *GetCompatibilityParams, authInfo runtime.ClientAuthInfoWriter) (*GetCompatibilityOK, *GetCompatibilityNoContent, error)
 
-	GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, *GetVersionsNoContent, error)
+	GetInstallation(params *GetInstallationParams, authInfo runtime.ClientAuthInfoWriter) (*GetInstallationOK, *GetInstallationNoContent, error)
+
+	GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  GetLogHandler gets log handler
+  GetCompatibility gets compatibility versions
+*/
+func (a *Client) GetCompatibility(params *GetCompatibilityParams, authInfo runtime.ClientAuthInfoWriter) (*GetCompatibilityOK, *GetCompatibilityNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetCompatibilityParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetCompatibility",
+		Method:             "GET",
+		PathPattern:        "/api/v1/compatibility/{uuid}/{version}/{service}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetCompatibilityReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetCompatibilityOK:
+		return value, nil, nil
+	case *GetCompatibilityNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetCompatibilityDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetInstallation gets installation versions
+*/
+func (a *Client) GetInstallation(params *GetInstallationParams, authInfo runtime.ClientAuthInfoWriter) (*GetInstallationOK, *GetInstallationNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetInstallationParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetInstallation",
+		Method:             "GET",
+		PathPattern:        "/api/v1/installation",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetInstallationReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetInstallationOK:
+		return value, nil, nil
+	case *GetInstallationNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetInstallationDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetLogHandler gets log handler versions
 */
 func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -79,42 +153,6 @@ func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.Cli
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetLogHandlerDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  GetVersions gets versions
-*/
-func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, *GetVersionsNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetVersionsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetVersions",
-		Method:             "GET",
-		PathPattern:        "/api/v1/version",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &GetVersionsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *GetVersionsOK:
-		return value, nil, nil
-	case *GetVersionsNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetVersionsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

@@ -19,7 +19,6 @@ import sys
 import click
 
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.logger import clean_outputs
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.client import ClientConfigManager
@@ -41,7 +40,6 @@ def validate_options(ctx, param, value):
 
 @click.group(invoke_without_command=True)
 @click.option("--list", "-l", is_flag=True, help="List all global config values.")
-@clean_outputs
 def config(list):  # pylint:disable=redefined-builtin
     """Set and get the global configurations."""
     if list:
@@ -52,7 +50,6 @@ def config(list):  # pylint:disable=redefined-builtin
 
 @config.command()
 @click.argument("keys", type=str, nargs=-1)
-@clean_outputs
 def get(keys):
     """Get the global config values by keys.
 
@@ -87,7 +84,16 @@ def get(keys):
     type=bool,
     help="To set whether or not to verify the SSL certificate.",
 )
-@clean_outputs
+@click.option(
+    "--compatibility-check-interval",
+    type=int,
+    help="To set the compatibility check interval, to disable set this flag to -1.",
+)
+@click.option(
+    "--disable-errors-reporting",
+    type=bool,
+    help="To set the disable errors reporting.",
+)
 def set(**kwargs):  # pylint:disable=redefined-builtin
     """Set the global config values.
 
@@ -116,7 +122,6 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 
 
 @config.command()
-@clean_outputs
 def purge():
     """Purge the global config values."""
     ClientConfigManager.purge()

@@ -18,7 +18,7 @@ import time
 import click
 
 from polyaxon.exceptions import PolyaxonAgentError
-from polyaxon.logger import clean_outputs, logger
+from polyaxon.logger import logger
 
 
 @click.command()
@@ -35,7 +35,6 @@ from polyaxon.logger import clean_outputs, logger
     default=3,
     help="Number of times to retry the process.",
 )
-@clean_outputs
 def agent(max_retries, sleep_interval):
     from polyaxon import settings
     from polyaxon.agents.agent import Agent

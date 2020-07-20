@@ -86,7 +86,10 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
                 if i.name in param_specs:
                     i.is_optional = True
                     if param_specs[i.name].param.is_literal:
-                        i.value = param_specs[i.name].param.value
+                        value = param_specs[i.name].param.value
+                        if hasattr(value, "to_param"):
+                            value = value.to_param()
+                        i.value = value
 
         set_io(self.inputs)
         set_io(self.outputs)

@@ -23,14 +23,9 @@ from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.cli.version import (
-    get_current_version,
-    get_log_handler,
-    get_server_versions,
-    session_expired,
-)
+from polyaxon.cli.session import session_expired, set_versions_config
 from polyaxon.client import PolyaxonClient
-from polyaxon.logger import clean_outputs, logger
+from polyaxon.logger import logger
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
@@ -42,7 +37,6 @@ from polyaxon.utils.http_utils import polyaxon_ui
 @click.option("--token", "-t", help="Polyaxon token.")
 @click.option("--username", "-u", help="Polyaxon username or email.")
 @click.option("--password", "-p", help="Polyaxon password.")
-@clean_outputs
 def login(token, username, password):
     """Login to Polyaxon."""
     polyaxon_client = PolyaxonClient()
@@ -116,20 +110,10 @@ def login(token, username, password):
     polyaxon_client.config.token = access_auth.token
     Printer.print_success("Login successful")
 
-    # Reset current cli
-    server_versions = get_server_versions(polyaxon_client=polyaxon_client)
-    current_version = get_current_version()
-    log_handler = get_log_handler(polyaxon_client=polyaxon_client)
-    CliConfigManager.reset(
-        check_count=0,
-        current_version=current_version,
-        server_versions=server_versions.to_dict(),
-        log_handler=log_handler,
-    )
+    set_versions_config(polyaxon_client=polyaxon_client, set_handler=True)
 
 
 @click.command()
-@clean_outputs
 def logout():
     """Logout of Polyaxon."""
     AuthConfigManager.purge()
@@ -138,7 +122,6 @@ def logout():
 
 
 @click.command()
-@clean_outputs
 def whoami():
     """Show current logged Polyaxon user."""
     try:
@@ -147,14 +130,10 @@ def whoami():
     except ApiException as e:
         if e.status == 403:
             session_expired()
-            sys.exit(1)
-        handle_cli_error(e, message="Could not get the user info.")
-        sys.exit(1)
+        handle_cli_error(e, message="Could not get the user info.", sys_exit=True)
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not load user info.")
-        sys.exit(1)
+        handle_cli_error(e, message="Could not load user info.", sys_exit=True)
 
     response = dict_to_tabulate(user.to_dict(), exclude_attrs=["role"])
-
     Printer.print_header("User info:")
     dict_tabulate(response)

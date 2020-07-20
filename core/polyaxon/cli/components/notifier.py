@@ -16,8 +16,6 @@
 
 import click
 
-from polyaxon.logger import clean_outputs
-
 
 @click.command()
 @click.option(
@@ -38,7 +36,6 @@ from polyaxon.logger import clean_outputs
 @click.option(
     "--condition", help="The run condition to notify.",
 )
-@clean_outputs
 def notify(kind, owner, project, run_uuid, run_name, condition):
     """Notifier command."""
     import ujson

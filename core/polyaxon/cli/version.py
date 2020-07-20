@@ -18,16 +18,10 @@ import sys
 
 import click
 
-from polyaxon_sdk.rest import ApiException
-from urllib3.exceptions import HTTPError
-
 from polyaxon import pkg
-from polyaxon.cli.errors import handle_cli_error
-from polyaxon.client import PolyaxonClient
+from polyaxon.cli.session import clean_version_for_check, set_versions_config
 from polyaxon.deploy.operators.pip import PipOperator
-from polyaxon.logger import clean_outputs, logger
-from polyaxon.managers.auth import AuthConfigManager
-from polyaxon.managers.cli import CliConfigManager
+from polyaxon.logger import logger
 from polyaxon.utils import indentation
 from polyaxon.utils.formatting import Printer, dict_tabulate
 
@@ -37,13 +31,6 @@ PROJECT_CLI_NAME = "polyaxon-cli"
 def pip_upgrade(project_name=PROJECT_CLI_NAME):
     PipOperator.execute(["install", "--upgrade", project_name], stream=True)
     click.echo("polyaxon-cli upgraded.")
-
-
-def session_expired():
-    AuthConfigManager.purge()
-    CliConfigManager.purge()
-    click.echo("Session has expired, please try again.")
-    sys.exit(1)
 
 
 def get_version(package):
@@ -59,106 +46,74 @@ def get_current_version():
     return pkg.VERSION
 
 
-def get_server_versions(polyaxon_client=None):
-    polyaxon_client = polyaxon_client or PolyaxonClient()
-    try:
-        return polyaxon_client.versions_v1.get_versions()
-    except ApiException as e:
-        if e.status == 403:
-            session_expired()
-            sys.exit(1)
-        handle_cli_error(e, message="Could not get cli version.")
-        sys.exit(1)
-    except HTTPError:
-        Printer.print_error("Could not connect to remote server.")
-        sys.exit(1)
-
-
-def get_log_handler(polyaxon_client=None):
-    polyaxon_client = polyaxon_client or PolyaxonClient()
-    try:
-        return polyaxon_client.versions_v1.get_log_handler()
-    except ApiException as e:
-        if e.status == 403:
-            session_expired()
-            sys.exit(1)
-        handle_cli_error(e, message="Could not get cli version.")
-        sys.exit(1)
-    except HTTPError:
-        Printer.print_error("Could not connect to remote server.")
-        sys.exit(1)
-
-
-def check_cli_version(server_versions=None, current_version=None):
+def check_cli_version(config):
     """Check if the current cli version satisfies the server requirements"""
-    if not CliConfigManager.should_check():
-        return
-
     from distutils.version import LooseVersion  # pylint:disable=import-error
 
-    server_versions = server_versions or get_server_versions()
-    current_version = current_version or get_current_version()
-    cli_config = CliConfigManager.reset(
-        current_version=current_version, server_versions=server_versions.to_dict()
-    )
+    click.echo("Checking CLI compatibility version ...")
 
-    if LooseVersion(current_version) < LooseVersion(cli_config.min_version):
+    min_version = clean_version_for_check(config.min_version)
+    latest_version = clean_version_for_check(config.latest_version)
+    current_version = clean_version_for_check(config.current_version)
+    if not min_version or not latest_version or not current_version:
+        Printer.print_error(
+            "Could get the min/latest versions from compatibility API.", sys_exit=True
+        )
+    if LooseVersion(current_version) < LooseVersion(min_version):
         click.echo(
             """Your version of CLI ({}) is no longer compatible with server.""".format(
-                current_version
+                config.current_version
             )
         )
         if click.confirm(
-            "Do you want to upgrade to "
-            "version {} now?".format(cli_config.latest_version)
+            "Do you want to upgrade to " "version {} now?".format(config.latest_version)
         ):
             pip_upgrade()
             sys.exit(0)
         else:
             indentation.puts("Your can manually run:")
             with indentation.indent(4):
-                indentation.puts("pip install -U polyaxon-cli")
+                indentation.puts("pip install -U polyaxon")
             indentation.puts(
-                "to upgrade to the latest version `{}`".format(
-                    cli_config.latest_version
-                )
+                "to upgrade to the latest version `{}`".format(config.latest_version)
             )
 
             sys.exit(0)
-    elif LooseVersion(current_version) < LooseVersion(cli_config.latest_version):
+    elif LooseVersion(current_version) < LooseVersion(latest_version):
         indentation.puts(
             "New version of CLI ({}) is now available. To upgrade run:".format(
-                cli_config.latest_version
+                config.latest_version
             )
         )
         with indentation.indent(4):
-            indentation.puts("pip install -U polyaxon-cli")
-    elif LooseVersion(current_version) > LooseVersion(cli_config.latest_version):
+            indentation.puts("pip install -U polyaxon")
+    elif LooseVersion(current_version) > LooseVersion(latest_version):
         indentation.puts(
             "Your version of CLI ({}) is ahead of the latest version "
             "supported by Polyaxon Platform ({}) on your cluster, "
             "and might be incompatible.".format(
-                current_version, cli_config.latest_version
+                config.current_version, config.latest_version
             )
         )
 
 
 @click.command()
-@click.option("--check", is_flag=True, default=False, help="Check versions.")
-@clean_outputs
+@click.option(
+    "--check", is_flag=True, default=False, help="Check compatibility versions."
+)
 def version(check):
     """Print the current version of the cli and platform."""
-    current_version = get_current_version()
-    Printer.print_header("Current cli version: {}.".format(current_version))
+    Printer.print_header("Current cli version: {}.".format(pkg.VERSION))
     if check:
-        server_versions = get_server_versions()
-        Printer.print_header("Supported versions:")
-        dict_tabulate(server_versions.to_dict())
-        check_cli_version(server_versions, current_version)
+        config = set_versions_config()
+        Printer.print_header("Platform:")
+        dict_tabulate(config.installation)
+        Printer.print_header("compatibility versions:")
+        dict_tabulate(config.compatibility)
+        check_cli_version(config)
 
 
 @click.command()
-@clean_outputs
 def upgrade():
     """Install/Upgrade polyaxon cli."""
     try:

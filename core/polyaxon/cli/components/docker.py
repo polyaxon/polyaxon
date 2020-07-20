@@ -24,7 +24,6 @@ from polyaxon.cli.check import check_polyaxonfile
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonBuildException, PolyaxonSchemaError
-from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile.specs import CompiledOperationSpecification
 from polyaxon.schemas.fields.docker_image import validate_image
 from polyaxon.schemas.types import V1DockerfileType
@@ -33,7 +32,6 @@ from polyaxon.utils.path_utils import copy_file
 
 
 @click.group()
-@clean_outputs
 def docker():
     pass
 
@@ -68,7 +66,6 @@ def docker():
     multiple=True,
     help="A parameter to override the default params of the run, form -P name=value.",
 )
-@clean_outputs
 def generate(
     polyaxonfile, python_module, build_context, destination, copy_path, params
 ):
@@ -163,7 +160,6 @@ def generate(
     show_default=False,
     help="To force rebuild the image.",
 )
-@clean_outputs
 def build(context, destination, nocache, max_retries, sleep_interval, reraise):
     """Build a dockerfile, this command required Docker to be installed."""
     from polyaxon.builds.builder import build
@@ -213,7 +209,6 @@ def build(context, destination, nocache, max_retries, sleep_interval, reraise):
     show_default=False,
     help="To force rebuild the image.",
 )
-@clean_outputs
 def push(destination, max_retries, sleep_interval, reraise):
     """Push an image, this command required Docker to be installed."""
     from polyaxon.builds.builder import push
@@ -270,7 +265,6 @@ def push(destination, max_retries, sleep_interval, reraise):
     show_default=False,
     help="To force rebuild the image.",
 )
-@clean_outputs
 def build_and_push(context, destination, nocache, max_retries, sleep_interval, reraise):
     """
     Build a dockerfile and push it to the provided registry,

@@ -1,6 +1,6 @@
 {
   "name": "polyaxon-sdk",
-  "version": "1.1.4-rc8",
+  "version": "1.1.4",
   "description": "Polyaxon_SDKs_and_REST_API_specification_",
   "license": "Unlicense",
   "main": "dist/index.js",

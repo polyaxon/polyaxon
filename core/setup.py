@@ -28,7 +28,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon",
-    version="1.1.4-rc8",
+    version="1.1.4",
     description="Command Line Interface (CLI) and client to interact with Polyaxon API.",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
@@ -70,7 +70,7 @@ setup(
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
         "marshmallow>=3.4.0,<=3.7.1",
-        "polyaxon-sdk==1.1.4rc8",
+        "polyaxon-sdk==1.1.4",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "PyYAML>=5.1",
@@ -101,7 +101,7 @@ setup(
         ],
         "streams": [
             "kubernetes-asyncio==11.2.0",
-            "starlette==0.13.4",
+            "starlette==0.13.5",
             "aiofiles==0.5.0",
             "uvicorn==0.11.5",
             "pandas",

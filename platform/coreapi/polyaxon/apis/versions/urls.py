@@ -22,7 +22,7 @@ from apis.versions import views
 from polycommon.apis.urls import versions
 
 urlpatterns = [
-    re_path(versions.URLS_VERSIONS_INSTALLED, views.VersionView.as_view()),
+    re_path(versions.URLS_VERSIONS_INSTALLED, views.VersionsInstalledView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

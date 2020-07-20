@@ -21,7 +21,7 @@ POLYAXON_ENVIRONMENT = "POLYAXON_ENVIRONMENT"
 PLATFORM_VERSION = "PLATFORM_VERSION"
 PLATFORM_DIST = "PLATFORM_DIST"
 CHART_VERSION = "CHART_VERSION"
-ORGANIZATION_KEY = "ORGANIZATION_KEY"
+ORGANIZATION_KEY = "POLYAXON_ORGANIZATION_KEY"
 
 OPTIONS = {
     POLYAXON_ENVIRONMENT,
@@ -87,6 +87,6 @@ class OrganizationKey(Option):
     is_optional = True
     is_list = False
     typing = types.STR
-    store = OptionStores.SETTINGS
+    store = OptionStores.ENV
     default = None
     options = None

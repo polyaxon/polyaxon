@@ -14,10 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from distutils.version import LooseVersion  # pylint:disable=import-error
-
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.schemas.cli.cli_config import CliConfigurationConfig
+from polyaxon.schemas.cli.cli_config import CliConfig
+from polyaxon.utils.tz_utils import now
 
 
 class CliConfigManager(BaseConfigManager):
@@ -25,45 +24,44 @@ class CliConfigManager(BaseConfigManager):
 
     VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL
     CONFIG_FILE_NAME = ".cli"
-    CONFIG = CliConfigurationConfig
-    FREQUENCY = 3
-
-    @classmethod
-    def _get_count(cls):
-        config = cls.get_config_or_default()
-        return config.check_count + 1
+    CONFIG = CliConfig
 
     @classmethod
     def reset(
         cls,
-        check_count=None,
         current_version=None,
-        server_versions=None,
+        installation=None,
+        compatibility=None,
         log_handler=None,
+        last_check=None,
     ):
-        if not any([check_count, current_version, server_versions, log_handler]):
+        if not any(
+            [current_version, installation, compatibility, log_handler, last_check]
+        ):
             return
         cli_config = cls.get_config_or_default()
-        if check_count is not None:
-            cli_config.check_count = check_count
         if current_version is not None:
             cli_config.current_version = current_version
-        if server_versions is not None:
-            cli_config.server_versions = server_versions
+        if installation is not None:
+            cli_config.installation = installation
+        if compatibility is not None:
+            cli_config.compatibility = compatibility
         if log_handler is not None:
             cli_config.log_handler = log_handler
+        if last_check is not None:
+            cli_config.last_check = cli_config.get_last_check(last_check)
 
         CliConfigManager.set_config(config=cli_config)
         return cli_config
 
     @classmethod
-    def should_check(cls):
-        count = cls._get_count()
-        cls.reset(check_count=count)
-        if count > cls.FREQUENCY:
-            return True
-
+    def should_check(cls, interval: int = None):
         config = cls.get_config_or_default()
-        if config.current_version is None or config.min_version is None:
-            return True
-        return LooseVersion(config.current_version) < LooseVersion(config.min_version)
+        should_check = config.should_check(interval=interval)
+        if should_check:
+            cls.reset(last_check=now())
+        return should_check
+
+    @classmethod
+    def get_config_from_env(cls):
+        pass

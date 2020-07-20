@@ -17,7 +17,7 @@ import time
 
 import click
 
-from polyaxon.logger import clean_outputs, logger
+from polyaxon.logger import logger
 
 
 @click.command()
@@ -47,7 +47,6 @@ from polyaxon.logger import clean_outputs, logger
     default=-1,
     help="Interval between artifacts syncs in seconds.",
 )
-@clean_outputs
 def sidecar(container_id, max_retries, sleep_interval, sync_interval):
     """
     Start Polyaxon's sidecar command.

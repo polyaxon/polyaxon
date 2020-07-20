@@ -27,11 +27,13 @@ class PolyaxonServiceHeaders:
 
 
 class PolyaxonServices:  # noqa
+    PLATFORM = "platform"
+    CLI = "cli"
     INITIALIZER = "initializer"
     SIDECAR = "sidecar"
     RUNNER = "runner"
     AGENT = "agent"
     OPERATOR = "operator"
 
-    VALUES = {INITIALIZER, SIDECAR, RUNNER, AGENT, OPERATOR}
+    VALUES = {CLI, INITIALIZER, SIDECAR, RUNNER, AGENT, OPERATOR}
     AGENT_VALUES = [OPERATOR, AGENT, INITIALIZER, SIDECAR]

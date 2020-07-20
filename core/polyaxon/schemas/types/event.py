@@ -18,8 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class EventSchema(BaseCamelSchema):
@@ -31,7 +32,7 @@ class EventSchema(BaseCamelSchema):
         return V1EventType
 
 
-class V1EventType(BaseConfig, polyaxon_sdk.V1EventType):
+class V1EventType(BaseTypeConfig, polyaxon_sdk.V1EventType):
     IDENTIFIER = "event"
     SCHEMA = EventSchema
     REDUCED_ATTRIBUTES = ["name", "kind"]

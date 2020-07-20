@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.4-rc8",
+    "version": "1.1.4",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -317,9 +317,102 @@
         ]
       }
     },
+    "/api/v1/compatibility/{uuid}/{version}/{service}": {
+      "get": {
+        "summary": "Get compatibility versions",
+        "operationId": "GetCompatibility",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Compatibility"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "UUid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "description": "Version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "description": "Service",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "VersionsV1"
+        ]
+      }
+    },
+    "/api/v1/installation": {
+      "get": {
+        "summary": "Get installation versions",
+        "operationId": "GetInstallation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Installation"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "VersionsV1"
+        ]
+      }
+    },
     "/api/v1/log_handler": {
       "get": {
-        "summary": "Get log handler",
+        "summary": "Get log handler versions",
         "operationId": "GetLogHandler",
         "responses": {
           "200": {
@@ -6763,41 +6856,6 @@
         ]
       }
     },
-    "/api/v1/version": {
-      "get": {
-        "summary": "Get versions",
-        "operationId": "GetVersions",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Versions"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "tags": [
-          "VersionsV1"
-        ]
-      }
-    },
     "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy": {
       "post": {
         "summary": "Restart run with copy",
@@ -12667,6 +12725,23 @@
       ],
       "default": "copy"
     },
+    "v1Compatibility": {
+      "type": "object",
+      "properties": {
+        "cli": {
+          "$ref": "#/definitions/v1Version"
+        },
+        "platform": {
+          "$ref": "#/definitions/v1Version"
+        },
+        "agent": {
+          "$ref": "#/definitions/v1Version"
+        },
+        "ui": {
+          "$ref": "#/definitions/v1Version"
+        }
+      }
+    },
     "v1CompiledOperation": {
       "type": "object",
       "properties": {
@@ -14529,6 +14604,20 @@
         }
       },
       "title": "Artifacts initializer specification"
+    },
+    "v1Installation": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "dist": {
+          "type": "string"
+        }
+      }
     },
     "v1IntervalSchedule": {
       "type": "object",
@@ -17366,36 +17455,16 @@
     "v1Version": {
       "type": "object",
       "properties": {
-        "min_version": {
+        "min": {
           "type": "string",
           "title": "Min version"
         },
-        "latest_version": {
+        "latest": {
           "type": "string",
           "title": "Latest version"
         }
       },
       "title": "Version specification"
-    },
-    "v1Versions": {
-      "type": "object",
-      "properties": {
-        "platform_version": {
-          "type": "string"
-        },
-        "platform_dist": {
-          "type": "string"
-        },
-        "cli": {
-          "$ref": "#/definitions/v1Version"
-        },
-        "platform": {
-          "$ref": "#/definitions/v1Version"
-        },
-        "agent": {
-          "$ref": "#/definitions/v1Version"
-        }
-      }
     },
     "v1Volume": {
       "type": "object",

@@ -32,7 +32,7 @@ Proxies apis
 {{- define "gateway.scheme" -}}
 {{- if .Values.gateway.enabled }}
 {{- printf "http" -}}
-{{- else if eq .Values.externalServices.gateway.port 443 }}
+{{- else if eq (default 443 .Values.externalServices.gateway.port) 443 }}
 {{- printf "https" -}}
 {{- else }}
 {{- printf "http" -}}

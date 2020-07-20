@@ -1,1 +1,1 @@
-polyaxon==1.1.4rc8
+polyaxon==1.1.4

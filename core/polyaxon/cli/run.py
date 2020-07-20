@@ -24,7 +24,6 @@ from polyaxon import settings
 from polyaxon.cli.executor import docker_run, k8s_run, platform_run
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.exceptions import PolyaxonSchemaError
-from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile import (
     CompiledOperationSpecification,
     OperationSpecification,
@@ -107,7 +106,6 @@ from polyaxon.utils.validation import validate_tags
     help="Disable cache check before starting this operation.",
 )
 @click.pass_context
-@clean_outputs
 def run(
     ctx,
     project,

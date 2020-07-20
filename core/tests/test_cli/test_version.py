@@ -33,9 +33,11 @@ class TestCliVersion(BaseCommandTestCase):
         self.runner.invoke(upgrade)
         pip_upgrade.assert_called_once()
 
-    @patch("polyaxon_sdk.VersionsV1Api.get_versions")
+    @patch("polyaxon_sdk.VersionsV1Api.get_installation")
+    @patch("polyaxon_sdk.VersionsV1Api.get_compatibility")
     @patch("polyaxon.cli.version.dict_tabulate")
-    def test_versions(self, dict_tabulate, get_versions):
+    def test_versions(self, dict_tabulate, get_compatibility, get_installation):
         self.runner.invoke(version, ["--check"])
-        get_versions.assert_called_once()
-        dict_tabulate.assert_called_once()
+        get_installation.assert_called_once()
+        get_compatibility.assert_called_once()
+        assert dict_tabulate.call_count == 2

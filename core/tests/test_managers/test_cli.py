@@ -17,13 +17,16 @@
 import os
 import uuid
 
+from datetime import timedelta
+
 import pytest
 
 from mock import patch
 from tests.utils import BaseTestCase
 
 from polyaxon.managers.cli import CliConfigManager
-from polyaxon.schemas.cli.cli_config import CliConfigurationConfig
+from polyaxon.schemas.cli.cli_config import CliConfig
+from polyaxon.utils.tz_utils import now
 
 
 @pytest.mark.managers_mark
@@ -32,8 +35,7 @@ class TestCliConfigManager(BaseTestCase):
         assert CliConfigManager.is_global() is True
         assert CliConfigManager.IS_POLYAXON_DIR is False
         assert CliConfigManager.CONFIG_FILE_NAME == ".cli"
-        assert CliConfigManager.CONFIG == CliConfigurationConfig
-        assert CliConfigManager.FREQUENCY == 3
+        assert CliConfigManager.CONFIG == CliConfig
 
 
 @pytest.mark.managers_mark
@@ -49,12 +51,9 @@ class TestCliConfigManagerMethods(BaseTestCase):
             return
         os.remove(path)
 
-    def test_get_count(self):
-        assert CliConfigManager._get_count() == 1
-
-    def test_set_new_count(self):
+    def test_set_compatibility(self):
         with patch.object(CliConfigManager, "set_config") as patch_fct:
-            CliConfigManager.reset(check_count=4)
+            CliConfigManager.reset(current_version=True)
 
         assert patch_fct.call_count == 1
 
@@ -66,18 +65,22 @@ class TestCliConfigManagerMethods(BaseTestCase):
         assert result is True
 
         CliConfigManager.reset(
-            current_version="0.0.5", server_versions={"cli": {"min_version": "0.0.4"}}
+            last_check=now(),
+            current_version="0.0.5",
+            installation={"key": "uuid", "version": "1.1.4-rc11", "dist": "foo"},
+            compatibility={"cli": {"min": "0.0.4", "latest": "1.1.4"}},
         )
         with patch.object(CliConfigManager, "reset") as patch_fct:
             result = CliConfigManager.should_check()
 
-        assert patch_fct.call_count == 1
+        assert patch_fct.call_count == 0
         assert result is False
 
         CliConfigManager.reset(
-            check_count=4,
+            last_check=now() - timedelta(1000),
             current_version="0.0.5",
-            server_versions={"cli": {"min_version": "0.0.4"}},
+            installation={"key": "uuid", "version": "1.1.4-rc11", "dist": "foo"},
+            compatibility={"cli": {"min": "0.0.4", "latest": "1.1.4"}},
         )
         with patch.object(CliConfigManager, "reset") as patch_fct:
             result = CliConfigManager.should_check()
@@ -86,10 +89,14 @@ class TestCliConfigManagerMethods(BaseTestCase):
         assert result is True
 
         CliConfigManager.reset(
-            current_version="0.0.2", server_versions={"cli": {"min_version": "0.0.4"}}
+            last_check=now(),
+            current_version="0.0.2",
+            installation={"key": "uuid", "version": "1.1.4-rc11", "dist": "foo"},
+            compatibility={"cli": {"min": "0.0.4", "latest": "1.1.4"}},
         )
         with patch.object(CliConfigManager, "reset") as patch_fct:
             result = CliConfigManager.should_check()
 
-        assert patch_fct.call_count == 1
-        assert result is True
+        # Although condition for showing a message, do not reset
+        assert patch_fct.call_count == 0
+        assert result is False

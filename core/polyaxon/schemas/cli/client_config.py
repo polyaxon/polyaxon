@@ -18,10 +18,9 @@ import polyaxon_sdk
 
 from marshmallow import EXCLUDE, fields
 
-from polyaxon.api import POLYAXON_CLOUD_HOST
+from polyaxon.api import get_default_host
 from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_AGENT_PATH,
     POLYAXON_KEYS_API_HOST,
     POLYAXON_KEYS_API_VERSION,
     POLYAXON_KEYS_ARCHIVE_ROOT,
@@ -30,14 +29,14 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_CERT_FILE,
     POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE,
     POLYAXON_KEYS_DEBUG,
+    POLYAXON_KEYS_DISABLE_ERRORS_REPORTING,
     POLYAXON_KEYS_HEADER,
     POLYAXON_KEYS_HEADER_SERVICE,
     POLYAXON_KEYS_INTERVAL,
-    POLYAXON_KEYS_IS_LOCAL,
+    POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK,
     POLYAXON_KEYS_IS_MANAGED,
     POLYAXON_KEYS_IS_OFFLINE,
     POLYAXON_KEYS_IS_OPS,
-    POLYAXON_KEYS_IS_SERVICE,
     POLYAXON_KEYS_K8S_IN_CLUSTER,
     POLYAXON_KEYS_K8S_NAMESPACE,
     POLYAXON_KEYS_K8S_POD_ID,
@@ -45,18 +44,15 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_LOG_LEVEL,
     POLYAXON_KEYS_NO_API,
     POLYAXON_KEYS_NO_OP,
-    POLYAXON_KEYS_SET_AGENT,
+    POLYAXON_KEYS_SERVICE,
     POLYAXON_KEYS_SSL_CA_CERT,
     POLYAXON_KEYS_TIME_ZONE,
     POLYAXON_KEYS_TIMEOUT,
     POLYAXON_KEYS_TRACKING_TIMEOUT,
-    POLYAXON_KEYS_UPLOAD_SIZE_MAX,
-    POLYAXON_KEYS_UPLOAD_SIZE_WARN,
     POLYAXON_KEYS_VERIFY_SSL,
     POLYAXON_KEYS_WATCH_INTERVAL,
 )
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.pkg import VERSION
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.services.auth import AuthenticationTypes
@@ -65,6 +61,7 @@ from polyaxon.utils.http_utils import clean_host, clean_verify_ssl
 
 
 class ClientSchema(BaseSchema):
+    service = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_SERVICE)
     host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_API_HOST)
     version = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_API_VERSION)
     debug = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_DEBUG)
@@ -73,8 +70,6 @@ class ClientSchema(BaseSchema):
         allow_none=True, data_key=POLYAXON_KEYS_AUTHENTICATION_TYPE
     )
     is_managed = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_MANAGED)
-    is_service = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_SERVICE)
-    is_local = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_LOCAL)
     is_offline = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_OFFLINE)
     is_ops = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_OPS)
     in_cluster = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_K8S_IN_CLUSTER)
@@ -98,12 +93,6 @@ class ClientSchema(BaseSchema):
     connection_pool_maxsize = fields.Int(
         allow_none=True, data_key=POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE
     )
-    upload_size_warn = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_UPLOAD_SIZE_WARN
-    )
-    upload_size_max = fields.Int(
-        allow_none=True, data_key=POLYAXON_KEYS_UPLOAD_SIZE_MAX
-    )
     archive_root = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_ARCHIVE_ROOT)
 
     header = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER)
@@ -112,8 +101,12 @@ class ClientSchema(BaseSchema):
     pod_id = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_POD_ID)
     namespace = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_NAMESPACE)
     no_api = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_NO_API)
-    agent_path = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_AGENT_PATH)
-    set_agent = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_SET_AGENT)
+    disable_errors_reporting = fields.Bool(
+        allow_none=True, data_key=POLYAXON_KEYS_DISABLE_ERRORS_REPORTING
+    )
+    compatibility_check_interval = fields.Int(
+        allow_none=True, data_key=POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK
+    )
 
     @staticmethod
     def schema_config():
@@ -130,24 +123,21 @@ class ClientConfig(BaseConfig):
     UNKNOWN_BEHAVIOUR = EXCLUDE
 
     REDUCED_ATTRIBUTES = [
+        POLYAXON_KEYS_SERVICE,
         POLYAXON_KEYS_API_HOST,
         POLYAXON_KEYS_API_VERSION,
         POLYAXON_KEYS_ASSERT_HOSTNAME,
         POLYAXON_KEYS_AUTHENTICATION_TYPE,
         POLYAXON_KEYS_CERT_FILE,
         POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE,
-        POLYAXON_KEYS_UPLOAD_SIZE_WARN,
-        POLYAXON_KEYS_UPLOAD_SIZE_MAX,
         POLYAXON_KEYS_ARCHIVE_ROOT,
         POLYAXON_KEYS_DEBUG,
         POLYAXON_KEYS_HEADER,
         POLYAXON_KEYS_HEADER_SERVICE,
         POLYAXON_KEYS_K8S_IN_CLUSTER,
         POLYAXON_KEYS_INTERVAL,
-        POLYAXON_KEYS_IS_LOCAL,
         POLYAXON_KEYS_IS_MANAGED,
         POLYAXON_KEYS_IS_OFFLINE,
-        POLYAXON_KEYS_IS_SERVICE,
         POLYAXON_KEYS_IS_OPS,
         POLYAXON_KEYS_K8S_NAMESPACE,
         POLYAXON_KEYS_K8S_POD_ID,
@@ -155,17 +145,18 @@ class ClientConfig(BaseConfig):
         POLYAXON_KEYS_LOG_LEVEL,
         POLYAXON_KEYS_NO_API,
         POLYAXON_KEYS_NO_OP,
-        POLYAXON_KEYS_AGENT_PATH,
-        POLYAXON_KEYS_SET_AGENT,
         POLYAXON_KEYS_SSL_CA_CERT,
         POLYAXON_KEYS_TIMEOUT,
         POLYAXON_KEYS_TRACKING_TIMEOUT,
         POLYAXON_KEYS_VERIFY_SSL,
         POLYAXON_KEYS_WATCH_INTERVAL,
+        POLYAXON_KEYS_DISABLE_ERRORS_REPORTING,
+        POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK,
     ]
 
     def __init__(
         self,
+        service=None,
         host=None,
         token=None,
         debug=None,
@@ -173,8 +164,6 @@ class ClientConfig(BaseConfig):
         version=None,
         authentication_type=None,
         is_managed=None,
-        is_service=None,
-        is_local=None,
         is_offline=None,
         is_ops=None,
         in_cluster=None,
@@ -190,27 +179,23 @@ class ClientConfig(BaseConfig):
         key_file=None,
         assert_hostname=None,
         connection_pool_maxsize=None,
-        upload_size_warn=None,
-        upload_size_max=None,
         archive_root=None,
         header=None,
         header_service=None,
         pod_id=None,
         namespace=None,
         no_api=None,
-        agent_path=None,
-        set_agent=None,
+        disable_errors_reporting=None,
+        compatibility_check_interval=None,
         **kwargs
     ):
-
-        self.host = clean_host(host or POLYAXON_CLOUD_HOST)
+        self.service = service
+        self.host = clean_host(get_default_host(host, service))
         self.token = token
         self.debug = self._get_bool(debug, False)
         self.log_level = log_level
         self.version = version or "v1"
         self.is_managed = self._get_bool(is_managed, False)
-        self.is_service = self._get_bool(is_service, False)
-        self.is_local = self._get_bool(is_local, False)
         self.is_offline = self._get_bool(is_offline, False)
         self.is_ops = self._get_bool(is_ops, False)
         self.in_cluster = self._get_bool(in_cluster, False)
@@ -223,8 +208,6 @@ class ClientConfig(BaseConfig):
         self.key_file = key_file
         self.assert_hostname = self._get_bool(assert_hostname, None)
         self.connection_pool_maxsize = connection_pool_maxsize
-        self.upload_size_warn = upload_size_warn or 1024 * 1024 * 10
-        self.upload_size_max = upload_size_max or 1024 * 1024 * 150
         self.archive_root = archive_root or CONTEXT_ARCHIVE_ROOT
         self.header = header
         self.header_service = header_service
@@ -236,9 +219,9 @@ class ClientConfig(BaseConfig):
         self.pod_id = pod_id
         self.namespace = namespace
         self.no_api = self._get_bool(no_api, False)
-        self.agent_path = agent_path
-        self.set_agent = set_agent
         self.authentication_type = authentication_type or AuthenticationTypes.TOKEN
+        self.disable_errors_reporting = self._get_bool(disable_errors_reporting, False)
+        self.compatibility_check_interval = compatibility_check_interval
 
         self.client_header = {}
 
@@ -261,14 +244,6 @@ class ClientConfig(BaseConfig):
         self.header_service = PolyaxonServices.AGENT
         self.client_header["header_name"] = self.header
         self.client_header["header_value"] = self.header_service
-
-    @staticmethod
-    def get_config_from_manager():
-        from polyaxon.managers.client import ClientConfigManager
-
-        config = ClientConfigManager.get_config_or_default()
-        config.token = AuthConfigManager.get_value("token")
-        return config
 
     @property
     def sdk_config(self):
