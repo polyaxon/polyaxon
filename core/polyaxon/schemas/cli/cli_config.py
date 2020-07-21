@@ -13,31 +13,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
-
-from datetime import timedelta
 
 from marshmallow import fields
 
-from polyaxon.env_vars.keys import POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK
 from polyaxon.schemas.api.log_handler import LogHandlerSchema
-from polyaxon.schemas.base import BaseConfig, BaseSchema
-from polyaxon.utils.tz_utils import now
+from polyaxon.schemas.cli.checks_config import ChecksConfig, ChecksSchema
 
 
-class CliSchema(BaseSchema):
+class CliSchema(ChecksSchema):
     current_version = fields.Str(allow_none=True)
     installation = fields.Dict(allow_none=True)
     compatibility = fields.Dict(allow_none=True)
     log_handler = fields.Nested(LogHandlerSchema, allow_none=True)
-    last_check = fields.DateTime(allow_none=True)
 
     @staticmethod
     def schema_config():
         return CliConfig
 
 
-class CliConfig(BaseConfig):
+class CliConfig(ChecksConfig):
     SCHEMA = CliSchema
     IDENTIFIER = "cli"
     INTERVAL = 30 * 60
@@ -54,18 +48,7 @@ class CliConfig(BaseConfig):
         self.installation = installation
         self.compatibility = compatibility
         self.log_handler = log_handler
-        self.last_check = self.get_last_check(last_check)
-
-    def get_interval(self, interval: int = None):
-        if interval is not None:
-            return interval
-        return int(
-            os.environ.get(POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK, self.INTERVAL)
-        )
-
-    @classmethod
-    def get_last_check(cls, last_check):
-        return last_check or now() - timedelta(cls.INTERVAL)
+        super().__init__(last_check=last_check)
 
     @property
     def min_version(self):
@@ -80,11 +63,3 @@ class CliConfig(BaseConfig):
             return None
         cli_version = self.compatibility["cli"] or {}
         return cli_version.get("latest")
-
-    def should_check(self, interval: int = None):
-        interval = self.get_interval(interval=interval)
-        if interval == -1:
-            return False
-        if (now() - self.last_check).total_seconds() > interval:
-            return True
-        return False

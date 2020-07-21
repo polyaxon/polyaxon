@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 
 from collections import Mapping, OrderedDict
 from datetime import timezone
@@ -71,6 +72,7 @@ class BaseConfig:
     PERCENT_ATTRIBUTES = []
     ROUNDING = 2
     UNKNOWN_BEHAVIOUR = RAISE
+    WRITE_MODE = 0o777
 
     def to_light_dict(
         self,
@@ -180,6 +182,16 @@ class BaseConfig:
     def read(cls, values, unknown=None, config_type=None):
         values = ConfigSpec.read_from(values, config_type=config_type)
         return cls.from_dict(values, unknown=unknown)
+
+    @classmethod
+    def init_file(cls, filepath: str, config=None):
+        if not os.path.exists(filepath):
+            cls.write(config or cls(), filepath=filepath)
+            os.chmod(filepath, cls.WRITE_MODE)
+
+    def write(self, filepath: str):
+        with open(filepath, "w") as config_file:
+            config_file.write(self.to_dict(dump=True))
 
     @classmethod
     def patch_obj(cls, config, values):

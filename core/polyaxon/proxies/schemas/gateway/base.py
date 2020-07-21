@@ -19,6 +19,7 @@ from polyaxon.proxies.schemas.base import clean_config
 from polyaxon.proxies.schemas.buffering import get_buffering_config
 from polyaxon.proxies.schemas.charset import get_charset_config
 from polyaxon.proxies.schemas.error_page import get_error_page_config
+from polyaxon.proxies.schemas.favicon import get_favicon_config
 from polyaxon.proxies.schemas.gateway.api import get_api_location_config
 from polyaxon.proxies.schemas.gateway.auth import (
     get_auth_config,
@@ -48,6 +49,7 @@ def get_base_config():
         get_buffering_config(),
         get_timeout_config(),
         get_error_page_config(),
+        get_favicon_config(),
         get_healthz_location_config(),
         get_auth_location_config(resolver=resolver),
         get_streams_location_config(resolver=resolver, auth=auth),

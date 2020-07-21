@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+import pytest
 import ujson
 
 from marshmallow import ValidationError
@@ -29,6 +31,7 @@ from polyaxon.env_vars.keys import (
 from polyaxon.schemas.cli.agent_config import AgentConfig
 
 
+@pytest.mark.schemas_mark
 class TestAgentConfig(BaseTestCase):
     def test_agent_config(self):
         config_dict = {POLYAXON_KEYS_AGENT_ARTIFACTS_STORE: 12}

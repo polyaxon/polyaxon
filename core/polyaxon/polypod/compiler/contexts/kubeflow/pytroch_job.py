@@ -25,7 +25,7 @@ from polyaxon.schemas.types import V1ConnectionType
 
 class PytorchJobContextsManager(BaseContextsManager):
     @classmethod
-    def resolver(
+    def resolve(
         cls,
         namespace: str,
         owner_name: str,

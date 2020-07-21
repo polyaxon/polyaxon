@@ -25,6 +25,7 @@ from polyaxon.polypod.compiler.contexts import (
     resolve_contexts,
     resolve_globals_contexts,
 )
+from polyaxon.polypod.compiler.lineage import resolve_artifacts_lineage
 
 
 class BaseResolver:
@@ -73,6 +74,7 @@ class BaseResolver:
         self.iteration = None
         self.agent_config = None
         self.globals = {}
+        self.artifacts = []
         self.created_at = created_at
         self.compiled_at = compiled_at
         self._param_spec = {}
@@ -160,6 +162,23 @@ class BaseResolver:
         self.connection_by_names = polypod_config.connection_by_names
         self.artifacts_store = polypod_config.artifacts_store
 
+    def resolve_actions(self):
+        pass
+
+    def resolve_artifacts_lineage(self):
+        self.artifacts = resolve_artifacts_lineage(
+            owner_name=self.owner_name,
+            project_name=self.project_name,
+            project_uuid=self.project_uuid,
+            run_name=self.run_name,
+            run_path=self.run_path,
+            run_uuid=self.run_uuid,
+            param_spec=self._param_spec,
+            compiled_operation=self.compiled_operation,
+            connection_by_names=self.connection_by_names,
+            artifacts_store=self.artifacts_store,
+        )
+
     def _apply_runtime_contexts(self):
         contexts = resolve_contexts(
             namespace=self.namespace,
@@ -205,6 +224,8 @@ class BaseResolver:
         self.resolve_io()
         self.resolve_access()
         self.resolve_connections()
+        self.resolve_actions()
+        self.resolve_artifacts_lineage()
         self.apply_runtime_contexts()
         self.resolve_state()
         return self.compiled_operation

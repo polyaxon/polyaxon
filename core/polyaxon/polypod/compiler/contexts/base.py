@@ -75,7 +75,7 @@ class BaseContextsManager:
         return contexts
 
     @classmethod
-    def resolver(
+    def resolve(
         cls,
         namespace: str,
         owner_name: str,

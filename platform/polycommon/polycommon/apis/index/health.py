@@ -37,34 +37,27 @@ class HealthRateThrottle(AnonRateThrottle):
 class HealthView(APIView):
     authentication_classes = ()
     throttle_classes = (HealthRateThrottle,)
-    FILE = "/tmp/.compatibility"
-
-    def init_config(self):
-        if not os.path.exists(self.FILE):
-            self.write_config(CliConfig())
-
-    def write_config(self, config: CliConfig):
-        with open(self.FILE, "w") as config_file:
-            config_file.write(config.to_dict(dump=True))
+    HEALTH_FILE = "/tmp/.compatibility"
 
     def get_config(self):
         try:
-            return CliConfig.read(self.FILE, config_type=".json")
+            return CliConfig.read(self.HEALTH_FILE, config_type=".json")
         except:
             return
 
     def get(self, request, *args, **kwargs):
-        self.init_config()
+        CliConfig.init_file(self.HEALTH_FILE)
         config = self.get_config()
         if config and config.should_check():
             config.version = pkg.VERSION
             key = conf.get(ORGANIZATION_KEY) or get_dummy_key()
-            config.compatibility = get_compatibility(
+            compatibility = get_compatibility(
                 key=key,
                 service=PolyaxonServices.PLATFORM,
                 version=config.version,
                 is_cli=False,
             )
+            config.compatibility = compatibility.to_dict() if compatibility else None
             config.last_check = now()
-            self.write_config(config)
+            config.write(self.HEALTH_FILE)
         return Response(status=status.HTTP_200_OK)

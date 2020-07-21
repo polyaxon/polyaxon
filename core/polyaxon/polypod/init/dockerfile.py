@@ -72,6 +72,7 @@ def get_dockerfile_init_container(
             "--copy-path={}".format(
                 CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path) + "/outputs"
             ),
+            "--track",
         ],
         env=env,
         resources=polyaxon_init.get_resources(),

@@ -33,12 +33,29 @@ spec:
       - name: {{ .Chart.Name }}-agent
         image: "{{ .Values.agent.image }}:{{ .Values.agent.imageTag }}"
         imagePullPolicy: {{ .Values.agent.imagePullPolicy }}
+        args: ["start"]
         envFrom:
 {{ include "config.envFrom.common" . | indent 8 }}
 {{ include "config.envFrom.agent" . | indent 8 }}
 {{ include "config.envFrom.proxies" . | indent 8 }}
         env:
 {{ include "config.debugMode" . | indent 8 }}
+        livenessProbe:
+          exec:
+            command: ["/bin/bash", "./entrypoint.sh", "healthz"]
+          initialDelaySeconds: 120
+          periodSeconds: 60
+          successThreshold: 1
+          failureThreshold: 10
+          timeoutSeconds: 10
+        readinessProbe:
+          exec:
+            command: ["/bin/bash", "./entrypoint.sh", "healthz"]
+          initialDelaySeconds: 120
+          periodSeconds: 60
+          successThreshold: 1
+          failureThreshold: 10
+          timeoutSeconds: 2
         resources:
           requests:
 {{ toYaml .Values.agent.resources.requests | indent 12 }}

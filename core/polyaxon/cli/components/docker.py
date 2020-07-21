@@ -66,10 +66,19 @@ def docker():
     multiple=True,
     help="A parameter to override the default params of the run, form -P name=value.",
 )
+@click.option(
+    "--track",
+    is_flag=True,
+    default=False,
+    help="Flag to track or not the file content.",
+)
 def generate(
-    polyaxonfile, python_module, build_context, destination, copy_path, params
+    polyaxonfile, python_module, build_context, destination, copy_path, params, track
 ):
     """Generate a dockerfile given the polyaxonfile."""
+    from polyaxon.init.dockerfile import create_dockerfile_lineage
+    from polyaxon.utils.hashing import hash_value
+
     if all([polyaxonfile, build_context]):
         Printer.print_error(
             "Only a polyaxonfile or a build context option is required."
@@ -117,8 +126,12 @@ def generate(
             "Dockerfile was generated, path: `{}`".format(generator.dockerfile_path)
         )
 
+        dockerfile_path = generator.dockerfile_path
         if copy_path:
-            copy_file(generator.dockerfile_path, copy_path)
+            dockerfile_path = copy_file(dockerfile_path, copy_path)
+        if track:
+            hash_content = hash_value(init_dockerfile.to_dict())
+            create_dockerfile_lineage(dockerfile_path, summary={"hash": hash_content})
 
 
 @docker.command()

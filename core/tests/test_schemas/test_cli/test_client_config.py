@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
+
 from tests.utils import BaseTestCase
 
 from polyaxon.env_vars.keys import (
@@ -24,6 +26,7 @@ from polyaxon.env_vars.keys import (
 from polyaxon.schemas.cli.client_config import ClientConfig
 
 
+@pytest.mark.schemas_mark
 class TestClientConfig(BaseTestCase):
     def setUp(self):
         super().setUp()

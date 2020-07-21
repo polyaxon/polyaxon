@@ -41,20 +41,20 @@ spec:
 {{ include "config.envs" . | indent 8 }}
 {{ include "config.celery.worker" . | indent 8 }}
         livenessProbe:
-          failureThreshold: 10
           exec:
             command: ["/bin/bash", "./entrypoint.sh", "healthz"]
           initialDelaySeconds: 120
           periodSeconds: 60
           successThreshold: 1
+          failureThreshold: 10
           timeoutSeconds: 10
         readinessProbe:
-          failureThreshold: 30
           exec:
             command: ["/bin/bash", "./entrypoint.sh", "healthz"]
           initialDelaySeconds: 120
           periodSeconds: 60
           successThreshold: 1
+          failureThreshold: 10
           timeoutSeconds: 2
         resources:
           requests:

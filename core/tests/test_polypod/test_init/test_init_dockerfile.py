@@ -56,6 +56,7 @@ class TestInitDockerfile(BaseTestCase):
             "--build-context={}".format(dockerfile_args.to_dict(dump=True)),
             "--destination={}".format(CONTEXT_MOUNT_ARTIFACTS),
             "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")),
+            "--track",
         ]
         assert container.env == [get_run_instance_env_var()]
         assert container.resources == get_init_resources()
@@ -93,6 +94,7 @@ class TestInitDockerfile(BaseTestCase):
             "--build-context={}".format(dockerfile_args.to_dict(dump=True)),
             "--destination=/somepath",
             "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")),
+            "--track",
         ]
         assert container.env == [get_run_instance_env_var()]
         assert container.resources == get_init_resources()

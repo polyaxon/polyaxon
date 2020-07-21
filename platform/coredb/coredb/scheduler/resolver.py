@@ -18,6 +18,7 @@ from datetime import datetime
 from marshmallow import ValidationError
 
 from coredb.abstracts.runs import BaseRun
+from coredb.managers.artifacts import set_artifacts
 from polyaxon.exceptions import PolyaxonCompilerError, PolyaxonSchemaError
 from polyaxon.polyflow import V1CompiledOperation
 from polyaxon.polypod.compiler import resolver
@@ -38,6 +39,10 @@ class CorePlatformResolver(resolver.BaseResolver):
                 io.name: io.value for io in self.compiled_operation.outputs
             }
 
+    def _resolve_artifacts_lineage_state(self):
+        if self.artifacts:
+            set_artifacts(self.run, self.artifacts)
+
     def resolve_state(self):
         self.run.content = self.compiled_operation.to_dict(dump=True)
         if (
@@ -46,6 +51,7 @@ class CorePlatformResolver(resolver.BaseResolver):
         ):
             self.run.meta_info["rewrite_path"] = True
         self.run.save(update_fields=["content", "inputs", "outputs", "meta_info"])
+        self._resolve_artifacts_lineage_state()
 
 
 def resolve(run: BaseRun, compiled_at: datetime = None, resolver_cls=None):

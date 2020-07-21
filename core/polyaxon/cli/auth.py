@@ -22,6 +22,7 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.session import session_expired, set_versions_config
 from polyaxon.client import PolyaxonClient
@@ -30,7 +31,6 @@ from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
 from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
-from polyaxon.utils.http_utils import polyaxon_ui
 
 
 @click.command()
@@ -68,9 +68,7 @@ def login(token, username, password):
             return
     else:
         if not token:
-            token_url = "{}/profile/token".format(
-                polyaxon_ui(polyaxon_client.config.host)
-            )
+            token_url = get_dashboard_url(subpath="profile/token")
             click.confirm(
                 "Authentication token page will now open in your browser. Continue?",
                 abort=True,

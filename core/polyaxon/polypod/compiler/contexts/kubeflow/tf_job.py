@@ -24,7 +24,7 @@ from polyaxon.schemas.types import V1ConnectionType
 
 class TfJobContextsManager(BaseContextsManager):
     @classmethod
-    def resolver(
+    def resolve(
         cls,
         namespace: str,
         owner_name: str,

@@ -23,6 +23,7 @@ import click
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.operations import logs as run_logs
 from polyaxon.cli.operations import statuses
@@ -59,6 +60,15 @@ def run(
                 project=project_name,
             )
             Printer.print_success("A new run `{}` was created".format(response.uuid))
+            click.echo(
+                "You can view this run on Polyaxon UI: {}".format(
+                    get_dashboard_url(
+                        subpath="{}/{}/runs/{}".format(
+                            owner, project_name, response.uuid
+                        )
+                    )
+                )
+            )
         except (ApiException, HTTPError) as e:
             handle_cli_error(e, message="Could not create a run.")
             sys.exit(1)

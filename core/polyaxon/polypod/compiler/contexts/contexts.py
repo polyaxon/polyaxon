@@ -129,7 +129,7 @@ def resolve_contexts(
         artifacts_store=artifacts_store,
     )
 
-    return CONTEXTS_MANAGERS[run_kind].resolver(
+    return CONTEXTS_MANAGERS[run_kind].resolve(
         namespace=namespace,
         owner_name=owner_name,
         project_name=project_name,

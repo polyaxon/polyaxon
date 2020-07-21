@@ -1032,7 +1032,8 @@ class RunClient:
             )
             self.log_artifact_lineage(body=artifact_run)
 
-    def _get_rel_asset_path(self, path: str = None, rel_path: str = None):
+    @staticmethod
+    def get_rel_asset_path(path: str = None, rel_path: str = None):
         if not path or rel_path:
             return rel_path
         if CONTEXT_MOUNT_ARTIFACTS in path:
@@ -1108,7 +1109,7 @@ class RunClient:
         elif content is not None:
             summary["hash"] = hash_value(content)
         name = name or os.path.basename(path)
-        rel_path = self._get_rel_asset_path(path=path, rel_path=rel_path)
+        rel_path = self.get_rel_asset_path(path=path, rel_path=rel_path)
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
@@ -1133,7 +1134,7 @@ class RunClient:
             rel_path: str, optional relative path to the run artifacts path.
         """
         name = name or os.path.basename(path)
-        rel_path = self._get_rel_asset_path(path=path, rel_path=rel_path)
+        rel_path = self.get_rel_asset_path(path=path, rel_path=rel_path)
         if name:
             artifact_run = V1RunArtifact(
                 name=name,
@@ -1161,7 +1162,7 @@ class RunClient:
             is_input: bool, if the tensorboard reference is an input or outputs
             rel_path: str, optional relative path to run the artifacts path.
         """
-        rel_path = self._get_rel_asset_path(path=path, rel_path=rel_path)
+        rel_path = self.get_rel_asset_path(path=path, rel_path=rel_path)
         artifact_run = V1RunArtifact(
             name=name,
             kind=V1ArtifactKind.TENSORBOARD,

@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
+import sys
 import traceback
 
 from concurrent.futures import ThreadPoolExecutor
@@ -29,10 +31,14 @@ from polyaxon.env_vars.getters import get_run_info
 from polyaxon.exceptions import PolypodException
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.logger import logger
+from polyaxon.schemas.cli.checks_config import ChecksConfig
+from polyaxon.utils.tz_utils import now
 from polyaxon.utils.workers_utils import exit_context, get_pool_workers, get_wait
 
 
 class BaseAgent:
+    HEALTH_FILE = "/tmp/.healthz"
+
     def __init__(self, sleep_interval=None):
         self.sleep_interval = sleep_interval
         self.spawner = Spawner()
@@ -41,6 +47,28 @@ class BaseAgent:
 
     def get_state(self) -> polyaxon_sdk.V1AgentStateResponse:
         raise NotImplementedError
+
+    @classmethod
+    def get_healthz_config(cls):
+        try:
+            return ChecksConfig.read(cls.HEALTH_FILE, config_type=".json")
+        except:
+            return
+
+    @classmethod
+    def ping(cls):
+        ChecksConfig.init_file(cls.HEALTH_FILE)
+        config = cls.get_healthz_config()
+        if config:
+            config.last_check = now()
+            config.write(cls.HEALTH_FILE)
+
+    @classmethod
+    def pong(cls, interval: int = 15) -> bool:
+        config = cls.get_healthz_config()
+        if config and config.should_check(interval=interval):
+            return False
+        return True
 
     def start(self) -> None:
         try:
@@ -59,6 +87,7 @@ class BaseAgent:
                             return
                         if agent_state.state.full:
                             index = 0
+                        self.ping()
                         timeout = self.sleep_interval or get_wait(index)
                         logger.info("Sleeping for {} seconds".format(timeout))
         finally:

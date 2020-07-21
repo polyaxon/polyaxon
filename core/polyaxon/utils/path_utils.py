@@ -95,6 +95,7 @@ def copy_file(filename, path_to, use_basename=True):
 
     check_or_create_path(path_to, is_dir=False)
     shutil.copy(filename, path_to)
+    return path_to
 
 
 @contextmanager

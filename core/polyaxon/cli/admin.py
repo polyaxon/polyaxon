@@ -18,6 +18,7 @@ import os
 
 import click
 
+from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.managers.deploy import DeployManager
 from polyaxon.utils.formatting import Printer
@@ -190,3 +191,20 @@ def teardown(config_file, manager_path):
 
     if exception:
         Printer.print_error("Error message: {}.".format(exception))
+
+
+@admin.command()
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
+@click.option(
+    "--url", is_flag=True, default=False, help="Print the url of the dashboard."
+)
+def dashboard(yes, url):
+    """Open dashboard in browser."""
+    get_dashboard(dashboard_url=get_dashboard_url(base="_admin"), url_only=url, yes=yes)

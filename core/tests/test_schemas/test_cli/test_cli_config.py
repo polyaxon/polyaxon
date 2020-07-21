@@ -14,11 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
+
 from tests.utils import BaseTestCase
 
 from polyaxon.schemas.cli.cli_config import CliConfig
 
 
+@pytest.mark.schemas_mark
 class TestCliConfig(BaseTestCase):
     def test_cli_config(self):
         config_dict = {

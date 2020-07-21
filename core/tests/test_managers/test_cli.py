@@ -77,7 +77,7 @@ class TestCliConfigManagerMethods(BaseTestCase):
         assert result is False
 
         CliConfigManager.reset(
-            last_check=now() - timedelta(1000),
+            last_check=now() - timedelta(seconds=10000),
             current_version="0.0.5",
             installation={"key": "uuid", "version": "1.1.4-rc11", "dist": "foo"},
             compatibility={"cli": {"min": "0.0.4", "latest": "1.1.4"}},

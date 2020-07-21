@@ -67,3 +67,17 @@ VALUES = {
     DATE,
     DATETIME,
 }
+
+LINEAGE_VALUES = {
+    GCS,
+    S3,
+    WASB,
+    DOCKERFILE,
+    GIT,
+    IMAGE,
+    EVENT,
+    ARTIFACTS,
+    PATH,
+    METRIC,
+    METADATA,
+}

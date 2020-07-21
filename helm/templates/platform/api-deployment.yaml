@@ -43,7 +43,6 @@ spec:
 {{ include "config.envs" . | indent 8 }}
 {{ include "config.debugMode" . | indent 8 }}
         livenessProbe:
-          failureThreshold: 10
           httpGet:
             path: /healthz/
             port: {{ .Values.api.service.targetPort }}
@@ -56,9 +55,9 @@ spec:
           initialDelaySeconds: 120
           periodSeconds: 30
           successThreshold: 1
+          failureThreshold: 10
           timeoutSeconds: 2
         readinessProbe:
-          failureThreshold: 30
           httpGet:
             path: /healthz/
             port: {{ .Values.api.service.targetPort }}
@@ -71,6 +70,7 @@ spec:
           initialDelaySeconds: 120
           periodSeconds: 30
           successThreshold: 1
+          failureThreshold: 10
           timeoutSeconds: 2
         resources:
           requests:

@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import sys
 import time
 
 import click
@@ -21,21 +22,21 @@ from polyaxon.exceptions import PolyaxonAgentError
 from polyaxon.logger import logger
 
 
-@click.command()
+@click.group()
+def agent():
+    pass
+
+
+@agent.command()
 @click.option(
-    "--sleep_interval",
     "--sleep-interval",
     type=int,
     help="Sleep interval between fetches (Applied only to base agent).",
 )
 @click.option(
-    "--max_retries",
-    "--max-retries",
-    type=int,
-    default=3,
-    help="Number of times to retry the process.",
+    "--max-retries", type=int, default=3, help="Number of times to retry the process.",
 )
-def agent(max_retries, sleep_interval):
+def start(max_retries, sleep_interval):
     from polyaxon import settings
     from polyaxon.agents.agent import Agent
     from polyaxon.agents.base import BaseAgent
@@ -66,3 +67,15 @@ def agent(max_retries, sleep_interval):
             logger.warning("Polyaxon agent retrying, error %s", e)
             retry += 1
             time.sleep(5 * retry)
+
+
+@agent.command()
+@click.option(
+    "--health-interval", type=int, help="Health interval between checks.",
+)
+def healthz(health_interval):
+    from polyaxon.agents.base import BaseAgent
+
+    if not BaseAgent.pong(interval=health_interval):
+        logger.warning("Polyaxon agent is not healthy!")
+        sys.exit(1)

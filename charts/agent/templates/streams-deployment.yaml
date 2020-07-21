@@ -44,7 +44,6 @@ spec:
         volumeMounts:
 {{ include "config.artifactsStore.mount" . | indent 8}}
         livenessProbe:
-          failureThreshold: 10
           httpGet:
             path: /healthz/
             port: {{ .Values.streams.service.targetPort }}
@@ -56,10 +55,10 @@ spec:
             {{- end }}
           initialDelaySeconds: 120
           periodSeconds: 30
+          failureThreshold: 10
           successThreshold: 1
           timeoutSeconds: 2
         readinessProbe:
-          failureThreshold: 30
           httpGet:
             path: /healthz/
             port: {{ .Values.streams.service.targetPort }}
@@ -72,6 +71,7 @@ spec:
           initialDelaySeconds: 120
           periodSeconds: 30
           successThreshold: 1
+          failureThreshold: 10
           timeoutSeconds: 2
         resources:
           requests:

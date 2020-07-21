@@ -21,8 +21,8 @@ import click
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
-from polyaxon import settings
 from polyaxon.api import REWRITE_SERVICES_V1, SERVICES_V1
+from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import RunClient
 from polyaxon.client.run import get_run_logs
@@ -41,7 +41,6 @@ from polyaxon.utils.formatting import (
     get_runs_with_keys,
     list_dicts_to_tabulate,
 )
-from polyaxon.utils.http_utils import clean_host, polyaxon_ui
 from polyaxon.utils.validation import validate_tags
 
 
@@ -703,18 +702,10 @@ def dashboard(ctx, yes, url):
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
-    dashboard_url = polyaxon_ui(settings.CLIENT_CONFIG.host)
-    run_url = "{}/{}/{}/runs/{}/".format(dashboard_url, owner, project_name, run_uuid)
-    if url:
-        Printer.print_header("The dashboard is available at: {}".format(run_url))
-        sys.exit(0)
-    if not yes:
-        click.confirm(
-            "Dashboard page will now open in your browser. Continue?",
-            abort=True,
-            default=True,
-        )
-    click.launch(run_url)
+    subpath = "{}/{}/runs/{}".format(owner, project_name, run_uuid)
+    get_dashboard(
+        dashboard_url=get_dashboard_url(subpath=subpath), url_only=url, yes=yes
+    )
 
 
 @ops.command()
@@ -752,11 +743,9 @@ def service(ctx, yes, external, url):
     if client.run_data.kind != V1RunKind.SERVICE:
         Printer.print_warning(
             "Command expected an operation of "
-            "kind `service` received kind: {}!".format(client.run_data.kind)
+            "kind `service` received kind: `{}`!".format(client.run_data.kind)
         )
         sys.exit(1)
-    dashboard_url = polyaxon_ui(settings.CLIENT_CONFIG.host)
-    host = clean_host(settings.CLIENT_CONFIG.host)
 
     Printer.print_header("Waiting for running condition ...")
     client.wait_for_condition(
@@ -771,17 +760,19 @@ def service(ctx, yes, external, url):
         )
         click.echo("{}\n".format(latest_status["status"]))
 
-    namespace = client.run_data.settings.namespace
-
-    run_url = "{}/{}/{}/runs/{}/service".format(
-        dashboard_url, owner, project_name, run_uuid
+    run_url = get_dashboard_url(
+        subpath="{}/{}/runs/{}/service".format(owner, project_name, run_uuid)
     )
+
+    namespace = client.run_data.settings.namespace
     service_endpoint = SERVICES_V1
     if client.run_data.meta_info.get("rewrite_path", False):
         service_endpoint = REWRITE_SERVICES_V1
-    external_run_url = "{}/{}/{}/{}/{}/runs/{}/".format(
-        host, service_endpoint, namespace, owner, project_name, run_uuid
+    external_run_url = get_dashboard_url(
+        base=service_endpoint,
+        subpath="{}/{}/{}/runs/{}/".format(namespace, owner, project_name, run_uuid),
     )
+
     if url:
         Printer.print_header("The service will be available at: {}".format(run_url))
         Printer.print_header(

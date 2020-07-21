@@ -19,7 +19,28 @@ import sys
 import click
 
 from polyaxon import settings
-from polyaxon.utils.http_utils import polyaxon_ui
+from polyaxon.utils.http_utils import clean_host
+
+
+def get_dashboard_url(base: str = "ui", subpath: str = "") -> str:
+    dashboard_url = "{}/{}/".format(clean_host(settings.CLIENT_CONFIG.host), base)
+    if subpath:
+        return "{}{}/".format(dashboard_url, subpath.rstrip("/"))
+    return dashboard_url
+
+
+def get_dashboard(dashboard_url: str, url_only: bool, yes: bool):
+    if url_only:
+        click.echo(dashboard_url)
+        sys.exit(0)
+    if not yes:
+        click.confirm(
+            "Dashboard page will now open in your browser. Continue?",
+            abort=True,
+            default=True,
+        )
+
+    click.launch(dashboard_url)
 
 
 @click.command()
@@ -36,15 +57,4 @@ from polyaxon.utils.http_utils import polyaxon_ui
 )
 def dashboard(yes, url):
     """Open dashboard in browser."""
-    dashboard_url = "{}/".format(polyaxon_ui(settings.CLIENT_CONFIG.host))
-    if url:
-        click.echo(dashboard_url)
-        sys.exit(0)
-    if not yes:
-        click.confirm(
-            "Dashboard page will now open in your browser. Continue?",
-            abort=True,
-            default=True,
-        )
-
-    click.launch(dashboard_url)
+    get_dashboard(dashboard_url=get_dashboard_url(), url_only=url, yes=yes)

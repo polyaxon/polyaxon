@@ -20,9 +20,10 @@ By default, all containers are running with root user, but you can set a securit
 
 If you are seeing a message like:
 
-> *** WARNING: you are running uWSGI as root !!! (use the --uid flag) ***
-
-> Running a worker with superuser privileges when the
+<blockquote class="info">
+ * you are running uWSGI as root !!! (use the --uid flag)
+ * Running a worker with superuser privileges when the
+</blockquote>
 
 You can change this behavior by setting a security context.
 
