@@ -33,7 +33,7 @@ run:
       "-c",
       "{{ context or globals.artifacts_path }}",
       "-d",
-      "{{ (connections[destination.connection].url + '/' + destination.name) if connections[destination.connection].url else destination.name }}",
+      "{{ (connections[destination.connection].url + '/' + destination.name) if (destination.connection in connections and connections[destination.connection].url) else destination.name }}",
       "{{ cache }}",
       "--cache-ttl={{ cache_ttl }}",
     ]
