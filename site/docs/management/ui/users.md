@@ -31,9 +31,9 @@ Each user can manage multiple API tokens to authenticate Cli, Clients, and other
 ![tokens-default](../../../../content/images/dashboard/users/tokens-default.png)
 
 Each token can be managed, deleted, refreshed, or regenerated:
- 
+
 ![tokens-default](../../../../content/images/dashboard/users/tokens-management.png)
- 
-Each token can restricted to specific services and have specific scopes:
+
+Each token can be restricted to specific services and specific scopes:
 
 ![tokens-default](../../../../content/images/dashboard/users/tokens-scope.png)

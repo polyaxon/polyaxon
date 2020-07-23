@@ -38,6 +38,6 @@ You can update or delete an agent.
 
 ## Agent deployment
 
-You can deploy and agent or refresh/regenerate its token using the configure tab
+You can deploy an agent or refresh/regenerate its token using the configure tab
 
 ![agent-deployment](../../../../content/images/dashboard/agents/deployment.png)

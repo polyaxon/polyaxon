@@ -22,24 +22,8 @@ If you are seeing a message like:
 
 <blockquote class="info">
  * you are running uWSGI as root !!! (use the --uid flag)
- * Running a worker with superuser privileges when the
+<br/>
+ * Running a worker with superuser privileges
 </blockquote>
 
-You can change this behavior by setting a security context.
-
- * Enable security context with default configuration:
-
-```yaml
-securityContext:
-  enabled: true
-```
-
-
- * Enable security context with custom configuration:
-
-```yaml
-securityContext:
-  enabled: false
-  user: 1111
-  group: 1111
-```
+You can change this behavior by setting a [security context](/docs/setup/platform/common-reference/#security-context).
