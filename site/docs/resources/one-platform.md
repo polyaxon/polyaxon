@@ -50,7 +50,7 @@ and makes upgrades a complex process prone to errors and incompatibilities.
 
 ## One centralized database
 
-Managing the state an application is hard, so imagine what it means to manage several stateful applications with different scalability, migrations, and backup processes. 
+Managing the state of an application is hard, so imagine what it means to manage several stateful applications with different scalability, migrations, and backup processes. 
 In addition to the non-necessary complexity, several applications plane will result in redundant, and eventually inconsistent, data.
 
 Polyaxon comes with one database, PostgreSQL, providing you with one consistent source of truth about the state of your deployment, so you don't have to manually extract data or create a warehouse.   

@@ -12,7 +12,7 @@ tags:
 sidebar: "setup"
 ---
 
-If you are here, it means that you are about to deploy or upgrade Polyaxon CE or Polyaxon Agent.
+If you are here, we assume that you are about to deploy or upgrade Polyaxon CE or Polyaxon Agent.
 
 ## Overview 
 

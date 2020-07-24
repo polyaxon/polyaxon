@@ -13,7 +13,7 @@ tags:
 sidebar: "setup"
 ---
 
-If you are here, it means that you have a Kubernetes cluster and [helm](/docs/guides/setup-helm/) setup.
+If you are here, we assume that you have a Kubernetes cluster and [helm](/docs/guides/setup-helm/) setup.
 
 This section includes guides to deploy:
  * Polyaxon [Community Edition](/docs/setup/platform/community-edition/).

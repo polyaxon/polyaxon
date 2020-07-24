@@ -14,7 +14,7 @@ sidebar: "setup"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-If you are here, it means that you have access to a Polyaxon EE Control Plane or Polyaxon Cloud.
+If you are here, we assume that you have access to a Polyaxon EE Control Plane or Polyaxon Cloud.
 
 ## Overview 
 
