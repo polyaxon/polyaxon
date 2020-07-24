@@ -16,16 +16,13 @@
 from tests.utils import BaseTestCase
 
 from polyaxon import settings
+from polyaxon.auxiliaries import V1PolyaxonInitContainer, V1PolyaxonSidecarContainer
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
     V1BucketConnection,
     V1ClaimConnection,
     V1GitConnection,
     V1K8sResourceSchema,
-)
-from polyaxon.containers.containers import (
-    V1PolyaxonInitContainer,
-    V1PolyaxonSidecarContainer,
 )
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Init, V1Plugins

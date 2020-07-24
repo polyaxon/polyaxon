@@ -18,7 +18,7 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.containers.containers import get_sidecar_resources
+from polyaxon.auxiliaries import get_sidecar_resources
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_ARTIFACTS_STORE_NAME,
     POLYAXON_KEYS_CONTAINER_ID,

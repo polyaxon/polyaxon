@@ -5,6 +5,7 @@ meta_title: "Polyaxonfile Specification - Polyaxon References"
 meta_description: "In order to use Polyaxon, users need to create YAML/Json Polyaxonfiles. These files use a specification to describe how experiments, experiment groups, jobs, plugins should run on Polyaxon."
 visibility: public
 status: published
+is_index: true
 tags:
     - specifications
     - polyaxon

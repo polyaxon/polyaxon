@@ -16,7 +16,7 @@
 
 from typing import List, Optional
 
-from polyaxon.containers.containers import V1PolyaxonInitContainer
+from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.containers.names import INIT_GIT_CONTAINER_PREFIX, generate_container_name
 from polyaxon.exceptions import PolypodException

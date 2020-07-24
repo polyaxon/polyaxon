@@ -5,6 +5,7 @@ meta_title: "Polyaxon Mapping - Polyaxon Automation"
 meta_description: "Polyaxon mapping is a tool for applying a list of params combination to a component."
 visibility: public
 status: published
+is_index: true
 tags:
     - reference
     - polyaxon

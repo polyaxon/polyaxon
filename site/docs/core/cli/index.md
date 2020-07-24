@@ -5,6 +5,7 @@ meta_title: "Polyaxon Command Line Interface Specification - Polyaxon References
 meta_description: "Polyaxon Command Line Interface Specification."
 visibility: public
 status: published
+is_index: true
 tags:
     - cli
     - reference

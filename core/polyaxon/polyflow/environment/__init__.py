@@ -39,6 +39,7 @@ class EnvironmentSchema(BaseCamelSchema):
     security_context = SwaggerField(cls=k8s_schemas.V1SecurityContext, allow_none=True)
     image_pull_secrets = fields.List(fields.Str(), allow_none=True)
     host_network = fields.Bool(allow_none=True)
+    host_pid = fields.Bool(allow_none=True, data_key="hostPID")
     dns_policy = fields.Str(allow_none=True)
     dns_config = SwaggerField(cls=k8s_schemas.V1PodDNSConfig, allow_none=True)
     scheduler_name = fields.Str(allow_none=True)
@@ -72,6 +73,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
         security_context: V1SecurityContext, optional
         image_pull_secrets: List[str], optional
         host_network: bool, optional
+        host_pid: bool, optional
         dns_policy: str, optional
         dns_config: V1PodDNSConfig, optional
         scheduler_name: str, optional
@@ -94,6 +96,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     >>>   securityContext:
     >>>   imagePullSecrets:
     >>>   hostNetwork:
+    >>>   hostPID:
     >>>   dnsPolicy:
     >>>   dnsConfig:
     >>>   schedulerName:
@@ -126,6 +129,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     >>>     security_context=V1SecurityContext(...),
     >>>     image_pull_secrets=["secret1", "secret2", ...],
     >>>     host_network=False,
+    >>>     host_pid=False,
     >>>     dns_policy="Default",
     >>>     dns_config=V1PodDNSConfig(...),
     >>>     scheduler_name="name",
@@ -318,6 +322,19 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
     >>>   hostNetwork: false
     ```
 
+    ### hostPID
+
+    From [Kubernetes docs](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces)  # noqa
+
+    > Controls whether the pod containers can share the host process ID namespace.
+      Note that when paired with ptrace this can be used to escalate privileges outside
+      of the container (ptrace is forbidden by default).
+
+    ```yaml
+    >>> environment:
+    >>>   hostPID: false
+    ```
+
     ### dnsPolicy
 
     From [Kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pods-dns-policy)  # noqa
@@ -423,6 +440,7 @@ class V1Environment(BaseConfig, polyaxon_sdk.V1Environment):
         "securityContext",
         "imagePullSecrets",
         "hostNetwork",
+        "hostPID",
         "dnsPolicy",
         "dnsConfig",
         "schedulerName",

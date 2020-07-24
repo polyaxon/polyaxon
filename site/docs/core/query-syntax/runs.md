@@ -20,11 +20,21 @@ sidebar: "core"
 
 # Searching Runs
 
+## Aliases
+
+Several fields accept aliases:
+
+ * id: uid, uuid
+ * inputs: in, params
+ * outputs: out, metrics
+
+> N.B. the difference between `outputs` and `metrics`: outputs use value condition, and metrics use comparison condition.
+
 ## Query
 
 field                           | condition
 --------------------------------|------------------
-`id`                            | [value condition](/docs/core/query-syntax/#query-with-value-condition)
+`id`                            | [string condition](/docs/core/query-syntax/#query-with-value-condition)
 `name`                          | [string condition](/docs/core/query-syntax/#query-with-string-condition)
 `description`                   | [string condition](/docs/core/query-syntax/#query-with-string-condition)
 `created_at`                    | [datetime condition](/docs/core/query-syntax/#query-with-datetime-condition)

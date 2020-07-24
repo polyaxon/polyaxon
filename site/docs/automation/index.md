@@ -4,6 +4,7 @@ sub_link: ""
 meta_title: "Polyaxon automation engine: DAGs, workflow, matrix, parallelism, hyperparameter tuning, Schedules - Polyaxon Automation"
 meta_description: "Polyaxon automation engine is a workflow management system that makes it easy to take your data pipelines or machine learning workflows and add semantics like retries, logging, dynamic mapping, caching, failure notifications, and more."
 visibility: public
+is_index: true
 status: published
 tags:
     - reference

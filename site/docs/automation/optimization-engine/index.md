@@ -7,6 +7,7 @@ and requires to efficiently search the space of possible hyperparameters as well
 how to manage, schedule, and monitor a large set of experiments for hyperparameter tuning, Polyaxon Optimization Engine tries to simplify this by exposing a set of search algorithms."
 visibility: public
 status: published
+is_index: true
 tags:
     - reference
     - polyaxon

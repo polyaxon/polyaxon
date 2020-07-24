@@ -18,16 +18,13 @@ import pytest
 
 from tests.utils import BaseTestCase
 
+from polyaxon.auxiliaries import V1PolyaxonSidecarContainer, get_sidecar_resources
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
     V1BucketConnection,
     V1ClaimConnection,
     V1HostPathConnection,
     V1K8sResourceSchema,
-)
-from polyaxon.containers.containers import (
-    V1PolyaxonSidecarContainer,
-    get_sidecar_resources,
 )
 from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.exceptions import PolypodException

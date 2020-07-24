@@ -5,6 +5,7 @@ meta_title: "Polyaxon Pipeline is a Flow Engine - Polyaxon References"
 meta_description: "Running pipelines is often important to optimize and build strong models."
 visibility: public
 status: published
+is_index: true
 tags:
     - reference
     - polyaxon

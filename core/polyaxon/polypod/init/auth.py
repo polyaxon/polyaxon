@@ -16,7 +16,7 @@
 
 from typing import List
 
-from polyaxon.containers.containers import V1PolyaxonInitContainer
+from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.containers.names import INIT_AUTH_CONTAINER
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.mounts import get_auth_context_mount

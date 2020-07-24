@@ -122,7 +122,7 @@ def ls(ctx, io, query, sort, limit, offset):
     \b
     $ polyaxon ops ls \
     -q "status:created|running, started_at:2018-01-01..2018-01-02, \
-    params.activation:sigmoid, metric.loss:<=0.2"
+    params.activation:sigmoid, metrics.loss:<=0.2"
 
 
     Get all runs sorted by update date:

@@ -39,7 +39,6 @@ class RunQueryManager(BaseQueryManager):
         "in": "inputs",
         "out": "outputs",
         "metrics": "outputs",
-        "metric": "outputs",
         "id": "uuid",
         "uid": "uuid",
         "user": "user__username",
@@ -58,7 +57,6 @@ class RunQueryManager(BaseQueryManager):
     )
     FIELDS_ORDERING_PROXY = {
         "metrics": {"field": "outputs", "annotate": True},
-        "metric": {"field": "outputs", "annotate": True},
         "params": {"field": "inputs", "annotate": True},
         "inputs": {"field": "inputs", "annotate": True},
         "in": {"field": "inputs", "annotate": True},
@@ -69,9 +67,9 @@ class RunQueryManager(BaseQueryManager):
     CHECK_ALIVE = True
     PARSERS_BY_FIELD = {
         # Uuid
-        "id": parse_value_operation,
-        "uid": parse_value_operation,
-        "uuid": parse_value_operation,
+        "id": parse_search_operation,
+        "uid": parse_search_operation,
+        "uuid": parse_search_operation,
         # Dates
         "created_at": parse_datetime_operation,
         "updated_at": parse_datetime_operation,
@@ -112,7 +110,6 @@ class RunQueryManager(BaseQueryManager):
         "out": parse_value_operation,
         # Metrics
         "metrics": parse_scalar_operation,
-        "metric": parse_scalar_operation,
         # Tags
         "tags": parse_value_operation,
         # Archived
@@ -122,9 +119,9 @@ class RunQueryManager(BaseQueryManager):
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
-        "id": ValueCondition,
-        "uid": ValueCondition,
-        "uuid": ValueCondition,
+        "id": SearchCondition,
+        "uid": SearchCondition,
+        "uuid": SearchCondition,
         # Dates
         "created_at": DateTimeCondition,
         "updated_at": DateTimeCondition,
@@ -165,7 +162,6 @@ class RunQueryManager(BaseQueryManager):
         "out": ValueCondition,
         # Metrics
         "metrics": ComparisonCondition,
-        "metric": ComparisonCondition,
         # Tags
         "tags": ArrayCondition,
         # archived

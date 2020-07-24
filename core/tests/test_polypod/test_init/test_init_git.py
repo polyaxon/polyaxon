@@ -18,9 +18,9 @@ import pytest
 
 from tests.utils import BaseTestCase
 
+from polyaxon.auxiliaries import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1GitConnection
-from polyaxon.containers.containers import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.containers.names import INIT_GIT_CONTAINER_PREFIX, generate_container_name
 from polyaxon.exceptions import PolypodException

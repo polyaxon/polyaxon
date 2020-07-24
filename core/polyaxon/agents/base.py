@@ -66,9 +66,9 @@ class BaseAgent:
     @classmethod
     def pong(cls, interval: int = 15) -> bool:
         config = cls.get_healthz_config()
-        if config and config.should_check(interval=interval):
+        if not config:
             return False
-        return True
+        return not config.should_check(interval=interval)
 
     def start(self) -> None:
         try:

@@ -17,7 +17,7 @@
 from django.conf import settings
 
 from polyaxon import types
-from polyaxon.containers.containers import (
+from polyaxon.auxiliaries import (
     V1PolyaxonInitContainer,
     V1PolyaxonSidecarContainer,
     get_default_init_container,

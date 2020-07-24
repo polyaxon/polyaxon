@@ -16,7 +16,7 @@
 from typing import List
 
 from polyaxon import settings
-from polyaxon.containers.containers import (
+from polyaxon.auxiliaries import (
     get_default_init_container,
     get_default_sidecar_container,
 )

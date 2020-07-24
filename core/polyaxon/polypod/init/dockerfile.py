@@ -16,7 +16,7 @@
 
 from typing import List, Optional
 
-from polyaxon.containers.containers import V1PolyaxonInitContainer
+from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS,
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,

@@ -372,7 +372,7 @@ def parse_field(field: str) -> Tuple[str, Optional[str]]:
 
     Example:
         foo => foo, None
-        metric.foo => metric, foo
+        metrics.foo => metric, foo
     """
     _field = field.split(".")
     _field = [f.strip() for f in _field]

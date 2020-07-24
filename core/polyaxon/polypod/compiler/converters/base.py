@@ -20,11 +20,8 @@ from typing import Any, Dict, Iterable, List, Optional
 
 from polyaxon import pkg, settings
 from polyaxon.api import VERSION_V1
+from polyaxon.auxiliaries import V1PolyaxonInitContainer, V1PolyaxonSidecarContainer
 from polyaxon.connections.kinds import V1ConnectionKind
-from polyaxon.containers.containers import (
-    V1PolyaxonInitContainer,
-    V1PolyaxonSidecarContainer,
-)
 from polyaxon.containers.names import INIT_PREFIX, SIDECAR_PREFIX
 from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_API
 from polyaxon.exceptions import PolypodException

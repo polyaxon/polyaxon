@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from polyaxon import types
-from polyaxon.containers.containers import get_default_notification_container
+from polyaxon.auxiliaries import get_default_notification_container
 from polyaxon.polyflow import (
     V1IO,
     V1Component,

@@ -5,6 +5,7 @@ meta_title: "Polyaxon Schedules - Polyaxon Automation Reference"
 meta_description: "To be able to trigger a component repeatedly, a pipeline must define a schedule."
 visibility: public
 status: published
+is_index: true
 tags:
     - reference
     - polyaxon

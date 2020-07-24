@@ -3,6 +3,7 @@ title: "Introduction"
 sub_link: "introduction"
 meta_title: "Introduction to Polyaxon - Core Concepts"
 meta_description: "Polyaxon is an open-source platform for managing deep learning and machine learning lifecycle for teams who need power, flexibility, and performance."
+is_index: true
 visibility: public
 status: published
 tags:

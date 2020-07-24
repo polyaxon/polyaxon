@@ -5,6 +5,7 @@ meta_title: "Polyaxon Query Syntax Specification - Polyaxon References"
 meta_description: "Polyaxon Query Syntax Specification."
 visibility: public
 status: published
+is_index: true
 tags:
     - api
     - reference

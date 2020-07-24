@@ -47,6 +47,9 @@ type V1Environment struct {
 	// explicitly to 'ClusterFirstWithHostNet'.
 	DNSPolicy string `json:"dns_policy,omitempty"`
 
+	// Use the host's pid namespace. Default to false.
+	HostPID string `json:"hostPID,omitempty"`
+
 	// Optional HostAliases is an optional list of hosts and IPs that will be injected into the pod spec.
 	HostAliases []V1HostAlias `json:"host_aliases"`
 

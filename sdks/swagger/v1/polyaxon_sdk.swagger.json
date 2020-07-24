@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.4",
+    "version": "1.1.5-rc0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -13621,6 +13621,10 @@
           "type": "boolean",
           "format": "boolean",
           "description": "Host networking requested for this workflow pod. Default to false."
+        },
+        "hostPID": {
+          "type": "string",
+          "description": "Use the host's pid namespace. Default to false."
         },
         "dns_policy": {
           "type": "string",

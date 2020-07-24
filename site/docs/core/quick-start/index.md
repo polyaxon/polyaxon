@@ -5,6 +5,7 @@ meta_title: "Polyaxon quick start tutorial - Core Concepts"
 meta_description: "Get started with Polyaxon and become familiar with the ecosystem of Polyaxon with a top-level overview and useful links to get you started."
 visibility: public
 status: published
+is_index: true
 tags:
     - tutorials
     - concepts

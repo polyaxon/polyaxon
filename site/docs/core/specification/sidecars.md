@@ -17,7 +17,7 @@ sidebar: "core"
 
 Sidecars section provides a way to run specialized containers as sidecars to the main container.
 
-Polyaxon by default inject its own sidecar container that collects outputs and artifacts, 
+Polyaxon by default injects its own sidecar container that collects outputs and artifacts, 
 and users can run any additional sidecar containers.
 
 the sidecar section accepts a list of [Kubernetes Containers](https://kubernetes.io/docs/concepts/containers/). 

@@ -84,3 +84,9 @@ class TestEnvironmentsConfigs(BaseTestCase):
         config_dict["restartPolicy"] = "Never"
         config = V1Environment.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
+
+        # Add host namespaces
+        config_dict["hostNetwork"] = True
+        config_dict["hostPID"] = True
+        config = V1Environment.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())

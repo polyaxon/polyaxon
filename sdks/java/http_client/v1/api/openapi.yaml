@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.1.4
+  version: 1.1.5-rc0
 servers:
 - url: /
 security:
@@ -13305,6 +13305,7 @@ components:
           scheduler_name: scheduler_name
           security_context: '{}'
           affinity: '{}'
+          hostPID: hostPID
         operations:
         - termination:
             max_retries: 0
@@ -13824,6 +13825,7 @@ components:
           scheduler_name: scheduler_name
           security_context: '{}'
           affinity: '{}'
+          hostPID: hostPID
         kind: dask
         volumes:
         - null
@@ -14110,6 +14112,7 @@ components:
         scheduler_name: scheduler_name
         security_context: '{}'
         affinity: '{}'
+        hostPID: hostPID
       properties:
         labels:
           additionalProperties:
@@ -14170,6 +14173,9 @@ components:
             false.
           format: boolean
           type: boolean
+        hostPID:
+          description: Use the host's pid namespace. Default to false.
+          type: string
         dns_policy:
           description: |-
             Set DNS policy for the pod.
@@ -15481,6 +15487,7 @@ components:
           scheduler_name: scheduler_name
           security_context: '{}'
           affinity: '{}'
+          hostPID: hostPID
         kind: job
         volumes:
         - null
@@ -15666,6 +15673,7 @@ components:
           scheduler_name: scheduler_name
           security_context: '{}'
           affinity: '{}'
+          hostPID: hostPID
         replicas: 3
         volumes:
         - null
@@ -16774,6 +16782,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 3
           volumes:
           - null
@@ -16886,6 +16895,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 3
           volumes:
           - null
@@ -17997,6 +18007,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 3
           volumes:
           - null
@@ -18109,6 +18120,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 3
           volumes:
           - null
@@ -18686,6 +18698,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 3
             volumes:
             - null
@@ -18798,6 +18811,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 3
             volumes:
             - null
@@ -18921,6 +18935,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 6
           executor:
             container: '{}'
@@ -19027,6 +19042,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 6
           python_version: python_version
           spark_version: spark_version
@@ -19143,6 +19159,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           kind: service
           volumes:
           - null
@@ -19352,6 +19369,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           operations:
           - termination:
               max_retries: 0
@@ -19762,6 +19780,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           kind: dask
           volumes:
           - null
@@ -19878,6 +19897,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           kind: job
           volumes:
           - null
@@ -19991,6 +20011,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 3
             volumes:
             - null
@@ -20104,6 +20125,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 3
             volumes:
             - null
@@ -20216,6 +20238,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 3
             volumes:
             - null
@@ -20328,6 +20351,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 3
             volumes:
             - null
@@ -20443,6 +20467,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 3
             volumes:
             - null
@@ -20555,6 +20580,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             replicas: 3
             volumes:
             - null
@@ -20914,6 +20940,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 3
               volumes:
               - null
@@ -21026,6 +21053,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 3
               volumes:
               - null
@@ -21149,6 +21177,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 6
             executor:
               container: '{}'
@@ -21255,6 +21284,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 6
             python_version: python_version
             spark_version: spark_version
@@ -21371,6 +21401,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             kind: service
             volumes:
             - null
@@ -21580,6 +21611,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             operations:
             - termination:
                 max_retries: 0
@@ -21990,6 +22022,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             kind: dask
             volumes:
             - null
@@ -22106,6 +22139,7 @@ components:
               scheduler_name: scheduler_name
               security_context: '{}'
               affinity: '{}'
+              hostPID: hostPID
             kind: job
             volumes:
             - null
@@ -22219,6 +22253,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 3
               volumes:
               - null
@@ -22332,6 +22367,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 3
               volumes:
               - null
@@ -22444,6 +22480,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 3
               volumes:
               - null
@@ -22556,6 +22593,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 3
               volumes:
               - null
@@ -22671,6 +22709,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 3
               volumes:
               - null
@@ -22783,6 +22822,7 @@ components:
                 scheduler_name: scheduler_name
                 security_context: '{}'
                 affinity: '{}'
+                hostPID: hostPID
               replicas: 3
               volumes:
               - null
@@ -23517,6 +23557,7 @@ components:
           scheduler_name: scheduler_name
           security_context: '{}'
           affinity: '{}'
+          hostPID: hostPID
         kind: service
         volumes:
         - null
@@ -23689,6 +23730,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 6
         executor:
           container: '{}'
@@ -23795,6 +23837,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 6
         python_version: python_version
         spark_version: spark_version
@@ -23983,6 +24026,7 @@ components:
           scheduler_name: scheduler_name
           security_context: '{}'
           affinity: '{}'
+          hostPID: hostPID
         replicas: 6
       properties:
         replicas:
@@ -24216,6 +24260,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 3
           volumes:
           - null
@@ -24329,6 +24374,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 3
           volumes:
           - null
@@ -24441,6 +24487,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 3
           volumes:
           - null
@@ -24553,6 +24600,7 @@ components:
             scheduler_name: scheduler_name
             security_context: '{}'
             affinity: '{}'
+            hostPID: hostPID
           replicas: 3
           volumes:
           - null

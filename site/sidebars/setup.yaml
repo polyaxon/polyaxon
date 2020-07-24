@@ -45,6 +45,14 @@
       link: /docs/setup/connections/git/
     - title: Notifications
       link: /docs/setup/connections/notifications/
+  - group: Auxiliaries
+    items:
+    - title: Introduction
+      link: /docs/setup/auxiliaries/
+    - title: Init Container
+      link: /docs/setup/auxiliaries/init/
+    - title: Sidecar Container
+      link: /docs/setup/auxiliaries/sidecar/
   - group: Deployment Strategies
     items:
     - title: Overview

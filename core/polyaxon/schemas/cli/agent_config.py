@@ -17,7 +17,7 @@ from typing import List
 
 from marshmallow import EXCLUDE, ValidationError, fields, pre_load, validates_schema
 
-from polyaxon.containers.containers import (
+from polyaxon.auxiliaries import (
     PolyaxonInitContainerSchema,
     PolyaxonSidecarContainerSchema,
 )

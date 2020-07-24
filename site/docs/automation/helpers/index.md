@@ -5,6 +5,7 @@ meta_title: "Pipeline helpers: a set of tools to use with matrix, parallel, and 
 meta_description: "Running pipelines is often important to optimize and build strong models, but could be costly, Polyaxon provides several useful tools to manage concurrency, cache state, ..."
 visibility: public
 status: published
+is_index: true
 tags:
   - dags
   - pipelines

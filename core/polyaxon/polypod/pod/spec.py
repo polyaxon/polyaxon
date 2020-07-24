@@ -67,6 +67,7 @@ def get_pod_spec(
         dns_policy=environment.dns_policy,
         host_aliases=environment.host_aliases,
         host_network=environment.host_network,
+        host_pid=environment.host_pid,
         node_name=environment.node_name,
         priority=environment.priority,
         priority_class_name=environment.priority_class_name,

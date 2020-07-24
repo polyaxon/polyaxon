@@ -21,12 +21,12 @@ import pytest
 from tests.utils import BaseTestCase
 
 from polyaxon import settings
-from polyaxon.connections.kinds import V1ConnectionKind
-from polyaxon.connections.schemas import V1BucketConnection, V1K8sResourceSchema
-from polyaxon.containers.containers import (
+from polyaxon.auxiliaries import (
     get_default_init_container,
     get_default_sidecar_container,
 )
+from polyaxon.connections.kinds import V1ConnectionKind
+from polyaxon.connections.schemas import V1BucketConnection, V1K8sResourceSchema
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.managers.agent import AgentManager
 from polyaxon.polyaxonfile.specs import kinds

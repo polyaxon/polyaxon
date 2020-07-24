@@ -18,10 +18,7 @@ from typing import Any, Dict, Iterable, Optional
 
 from kubernetes import client as k8s_client
 
-from polyaxon.containers.containers import (
-    V1PolyaxonInitContainer,
-    V1PolyaxonSidecarContainer,
-)
+from polyaxon.auxiliaries import V1PolyaxonInitContainer, V1PolyaxonSidecarContainer
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyflow import V1CompiledOperation
 from polyaxon.polypod.compiler.converters import CORE_CONVERTERS

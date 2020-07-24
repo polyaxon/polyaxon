@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **security_context** | [**V1PodSecurityContext**](V1PodSecurityContext.md) |  | [optional] 
 **image_pull_secrets** | **list[str]** |  | [optional] 
 **host_network** | **bool** | Host networking requested for this workflow pod. Default to false. | [optional] 
+**host_pid** | **str** | Use the host&#39;s pid namespace. Default to false. | [optional] 
 **dns_policy** | **str** | Set DNS policy for the pod. Defaults to \&quot;ClusterFirst\&quot;. Valid values are &#39;ClusterFirstWithHostNet&#39;, &#39;ClusterFirst&#39;, &#39;Default&#39; or &#39;None&#39;. DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy. To have DNS options set along with hostNetwork, you have to specify DNS policy explicitly to &#39;ClusterFirstWithHostNet&#39;. | [optional] 
 **dns_config** | [**V1PodDNSConfig**](V1PodDNSConfig.md) |  | [optional] 
 **scheduler_name** | **str** |  | [optional] 

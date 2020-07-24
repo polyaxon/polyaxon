@@ -4,6 +4,7 @@ sub_link: "scheduling-strategies"
 title_link: "Scheduling Strategies"
 meta_title: "How to schedule runs on Polyaxon"
 meta_description: "This is a guide to assist you through the process and strategies for scheduling your runs."
+is_index: true
 tags:
     - namespace
     - queueing

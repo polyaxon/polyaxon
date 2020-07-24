@@ -24,7 +24,6 @@ sidebar: "core"
 
 field                           | condition
 --------------------------------|------------------
-`id`                            | [value condition](/docs/core/query-syntax/#query-with-value-condition)
 `name`                          | [string condition](/docs/core/query-syntax/#query-with-string-condition)
 `description`                   | [string condition](/docs/core/query-syntax/#query-with-string-condition)
 `created_at`                    | [datetime condition](/docs/core/query-syntax/#query-with-datetime-condition)
@@ -39,6 +38,6 @@ field:
 
  * `created_at`
  * `updated_at`
- * `inputs.*`
- * `outputs.*`
- * `metrics.*`
+ * `name`
+ * `user`
+

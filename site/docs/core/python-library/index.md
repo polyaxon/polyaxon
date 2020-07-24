@@ -5,6 +5,7 @@ meta_title: "Polyaxon Python Library - Polyaxon References"
 meta_description: "Use our Python library to instrument your machine learning model and track experiments, create Polyaxonfile specification, and extend Polyaxon's behavior. Setup should only take a few lines of code. If you're using a popular framework, we have a number of integrations to make setting up Polyaxon easy."
 visibility: public
 status: published
+is_index: true
 tags:
     - specifications
     - polyaxon

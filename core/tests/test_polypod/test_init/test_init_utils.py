@@ -18,7 +18,7 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.containers.containers import get_init_resources
+from polyaxon.auxiliaries import get_init_resources
 from polyaxon.k8s import k8s_schemas
 
 

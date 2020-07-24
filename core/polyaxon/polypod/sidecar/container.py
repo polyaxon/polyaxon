@@ -16,7 +16,7 @@
 
 from typing import List, Optional
 
-from polyaxon.containers.containers import V1PolyaxonSidecarContainer
+from polyaxon.auxiliaries import V1PolyaxonSidecarContainer
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.env_vars import (

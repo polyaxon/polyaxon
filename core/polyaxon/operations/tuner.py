@@ -16,7 +16,7 @@
 from typing import Dict, List
 
 from polyaxon import types
-from polyaxon.containers.containers import get_default_tuner_container
+from polyaxon.auxiliaries import get_default_tuner_container
 from polyaxon.k8s.k8s_schemas import V1Container
 from polyaxon.polyflow import (
     V1IO,

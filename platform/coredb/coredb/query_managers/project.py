@@ -41,9 +41,9 @@ class ProjectQueryManager(BaseQueryManager):
     CHECK_ALIVE = True
     PARSERS_BY_FIELD = {
         # Uuid
-        "id": parse_value_operation,
-        "uid": parse_value_operation,
-        "uuid": parse_value_operation,
+        "id": parse_search_operation,
+        "uid": parse_search_operation,
+        "uuid": parse_search_operation,
         # Dates
         "created_at": parse_datetime_operation,
         "updated_at": parse_datetime_operation,
@@ -60,9 +60,9 @@ class ProjectQueryManager(BaseQueryManager):
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
-        "id": ValueCondition,
-        "uid": ValueCondition,
-        "uuid": ValueCondition,
+        "id": SearchCondition,
+        "uid": SearchCondition,
+        "uuid": SearchCondition,
         # Dates
         "created_at": DateTimeCondition,
         "updated_at": DateTimeCondition,

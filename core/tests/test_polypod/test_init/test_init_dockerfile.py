@@ -18,7 +18,7 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.containers.containers import V1PolyaxonInitContainer, get_init_resources
+from polyaxon.auxiliaries import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS,
     CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
