@@ -144,6 +144,7 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
         you might set this field to a high value, or `-1` to only trigger
         this behavior when the workload is done.
     """
+
     SCHEMA = PolyaxonSidecarContainerSchema
     IDENTIFIER = "polyaxon_sidecar"
     REDUCED_ATTRIBUTES = [

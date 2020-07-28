@@ -196,6 +196,8 @@ export * from './V1TruncationStoppingPolicy';
 export * from './V1UriType';
 export * from './V1UrlRef';
 export * from './V1User';
+export * from './V1UserEmail';
+export * from './V1UserSingup';
 export * from './V1Uuids';
 export * from './V1Version';
 export * from './V1WasbType';

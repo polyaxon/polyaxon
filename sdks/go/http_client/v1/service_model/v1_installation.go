@@ -29,6 +29,9 @@ import (
 // swagger:model v1Installation
 type V1Installation struct {
 
+	// auth
+	Auth []string `json:"auth"`
+
 	// dist
 	Dist string `json:"dist,omitempty"`
 

@@ -32,8 +32,29 @@ message Credentials{
     // User username or email
     string username = 1;
 
-    // Project where the run will be assigned
+    // User password
     string password = 2;
+}
+
+// User email
+message UserEmail{
+  // User username
+  string email = 1;
+}
+
+// User Singup
+message UserSingup{
+  // User username
+  string username = 1;
+
+  // User email
+  string email = 2;
+
+  // User organization
+  string organization = 3;
+
+  // User password
+  string password = 4;
 }
 
 // Token specification

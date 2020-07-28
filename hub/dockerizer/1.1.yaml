@@ -25,7 +25,7 @@ run:
   kind: job
   connections: ["{{ destination.connection }}"]
   container:
-    image: polyaxon/polyaxon-init:1.1.4
+    image: polyaxon/polyaxon-init:1.1.5
     command: ["polyaxon", "docker", "build-and-push"]
     args: [
       "-c",

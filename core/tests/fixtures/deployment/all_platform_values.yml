@@ -248,6 +248,20 @@ externalServices:
 
   api:
 
+  auth:
+    github:
+      enabled: true
+      options: {foo: bar}
+    gitlab:
+      enabled: true
+      options: {foo: bar}
+    bitbucket:
+      enabled: true
+      options: {foo: bar}
+    google:
+      enabled: true
+      options: {foo: bar}
+
 broker:
 
 postgresql:

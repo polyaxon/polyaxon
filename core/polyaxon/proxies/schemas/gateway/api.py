@@ -15,7 +15,12 @@
 # limitations under the License.
 
 from polyaxon import settings
-from polyaxon.api import ADMIN_V1_LOCATION, API_V1_LOCATION, UI_V1_LOCATION
+from polyaxon.api import (
+    ADMIN_V1_LOCATION,
+    API_V1_LOCATION,
+    UI_V1_LOCATION,
+    SSO_V1_LOCATION,
+)
 from polyaxon.proxies.schemas.base import clean_config, get_config
 from polyaxon.proxies.schemas.urls import (
     get_header_host,
@@ -88,6 +93,14 @@ def get_api_location_config(resolver: str, auth=str):
         ),
         get_api_config(
             path=UI_V1_LOCATION,
+            service=service,
+            resolver=resolver,
+            auth="",
+            ssl_server_name=ssl_server_name,
+            header_host=header_host,
+        ),
+        get_api_config(
+            path=SSO_V1_LOCATION,
             service=service,
             resolver=resolver,
             auth="",

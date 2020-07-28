@@ -61,7 +61,7 @@ auth:
 
 You need to register a new [application on github](https://github.com/settings/applications/new).
 
-You should provide a callback URL: [Domain/IP]`/oauth/github`
+You should provide a callback URL: [Domain/IP]`/sso/github`
 
 And use your client id and secret token using the settings page (auth section).
 
@@ -71,7 +71,7 @@ Please see this [section for more details](/integrations/sso-github/).
 
 You need to register a new [application on gitlab](http://doc.gitlab.com/ce/integration/oauth_provider.html).
 
-You should provide a callback URL: [Domain/IP]`/oauth/gitlab`
+You should provide a callback URL: [Domain/IP]`/sso/gitlab`
 
 And use your client id and secret token using the settings page (auth section). 
 If you have an on-premise Gitlab installation you can additionally provide your Gitlab url.
@@ -82,7 +82,7 @@ Please see this [section for more details](/integrations/sso-gitlab/).
 
 You need to register a new [application on bitbucket](https://confluence.atlassian.com/bitbucket/oauth-on-bitbucket-cloud-238027431.html).
 
-You should provide a callback URL: [Domain/IP]`/oauth/bitbucket`
+You should provide a callback URL: [Domain/IP]`/sso/bitbucket`
 
 And use your client id and secret token using the settings page (auth section).
 
@@ -92,7 +92,7 @@ Please see this [section for more details](/integrations/sso-bitbucket/).
 
 You need to register a new [application on Azure](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications).
 
-You will need to provide a reply URL: [Domain/IP]`/oauth/azure`
+You will need to provide a reply URL: [Domain/IP]`/sso/azure`
 
 And use your client id and secret token using the settings page (auth section).
 

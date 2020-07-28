@@ -34,6 +34,7 @@ message Installation {
     string key = 1;
     string version = 2;
     string dist = 3;
+    repeated string auth = 4;
 }
 
 message Compatibility {

@@ -29,7 +29,7 @@ import (
 // swagger:model v1Credentials
 type V1Credentials struct {
 
-	// Project where the run will be assigned
+	// User password
 	Password string `json:"password,omitempty"`
 
 	// User username or email

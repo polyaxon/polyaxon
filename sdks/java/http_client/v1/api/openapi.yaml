@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.1.5-rc0
+  version: 1.1.5
 servers:
 - url: /
 security:
@@ -145,6 +145,138 @@ paths:
       summary: List archived runs for user
       tags:
       - RunsV1
+      x-accepts: application/json
+  /api/v1/auth/reset-password:
+    post:
+      operationId: ResetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UserEmail'
+        required: true
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: ResetPAssword
+      tags:
+      - AuthV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /api/v1/auth/signup:
+    post:
+      operationId: Signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UserSingup'
+        required: true
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Signup
+      tags:
+      - AuthV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /api/v1/auth/token:
+    post:
+      operationId: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1Credentials'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Auth'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Login
+      tags:
+      - AuthV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
       x-accepts: application/json
   /api/v1/bookmarks/{user}/projects:
     get:
@@ -6358,52 +6490,6 @@ paths:
       summary: Update current user
       tags:
       - UsersV1
-      x-codegen-request-body-name: body
-      x-contentType: application/json
-      x-accepts: application/json
-  /api/v1/users/token:
-    post:
-      operationId: Login
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/v1Credentials'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1Auth'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
-      summary: Login
-      tags:
-      - AuthV1
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
@@ -13076,7 +13162,7 @@ components:
           title: User username or email
           type: string
         password:
-          title: Project where the run will be assigned
+          title: User password
           type: string
       title: Login
       type: object
@@ -15274,6 +15360,9 @@ components:
       type: object
     v1Installation:
       example:
+        auth:
+        - auth
+        - auth
         dist: dist
         version: version
         key: key
@@ -15284,6 +15373,10 @@ components:
           type: string
         dist:
           type: string
+        auth:
+          items:
+            type: string
+          type: array
       type: object
     v1IntervalSchedule:
       example:
@@ -24871,6 +24964,29 @@ components:
           title: Default organization
           type: string
       title: Auth specification
+      type: object
+    v1UserEmail:
+      properties:
+        email:
+          title: User username
+          type: string
+      title: User email
+      type: object
+    v1UserSingup:
+      properties:
+        username:
+          title: User username
+          type: string
+        email:
+          title: User email
+          type: string
+        organization:
+          title: User organization
+          type: string
+        password:
+          title: User password
+          type: string
+      title: User Singup
       type: object
     v1Uuids:
       properties:

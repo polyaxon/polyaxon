@@ -87,7 +87,7 @@ type LoginOK struct {
 }
 
 func (o *LoginOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/auth/token][%d] loginOK  %+v", 200, o.Payload)
 }
 
 func (o *LoginOK) GetPayload() *service_model.V1Auth {
@@ -120,7 +120,7 @@ type LoginNoContent struct {
 }
 
 func (o *LoginNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/auth/token][%d] loginNoContent  %+v", 204, o.Payload)
 }
 
 func (o *LoginNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type LoginForbidden struct {
 }
 
 func (o *LoginForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/auth/token][%d] loginForbidden  %+v", 403, o.Payload)
 }
 
 func (o *LoginForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type LoginNotFound struct {
 }
 
 func (o *LoginNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/auth/token][%d] loginNotFound  %+v", 404, o.Payload)
 }
 
 func (o *LoginNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *LoginDefault) Code() int {
 }
 
 func (o *LoginDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/users/token][%d] Login default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/auth/token][%d] Login default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *LoginDefault) GetPayload() *service_model.RuntimeError {

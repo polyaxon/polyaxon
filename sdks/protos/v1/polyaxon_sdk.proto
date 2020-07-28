@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.1.5-rc0";
+        version: "1.1.5";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -1276,9 +1276,25 @@ service AuthV1 {
     // Login
     rpc Login(Credentials) returns (Auth) {
         option (google.api.http) = {
-            post: "/api/v1/users/token"
+            post: "/api/v1/auth/token"
             body: "*"
         };
+    }
+
+    // Signup
+    rpc Signup(UserSingup) returns (google.protobuf.Empty) {
+      option (google.api.http) = {
+          post: "/api/v1/auth/signup"
+          body: "*"
+      };
+    }
+
+    // ResetPAssword
+    rpc ResetPassword(UserEmail) returns (google.protobuf.Empty) {
+      option (google.api.http) = {
+          post: "/api/v1/auth/reset-password"
+          body: "*"
+      };
     }
 }
 

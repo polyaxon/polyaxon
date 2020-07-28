@@ -533,6 +533,38 @@ class ExternalBackend(BaseConfig):
         self.options = options
 
 
+class AuthServicesSchema(BaseCamelSchema):
+    github = fields.Nested(ExternalBackendSchema, allow_none=True)
+    gitlab = fields.Nested(ExternalBackendSchema, allow_none=True)
+    bitbucket = fields.Nested(ExternalBackendSchema, allow_none=True)
+    google = fields.Nested(ExternalBackendSchema, allow_none=True)
+    saml = fields.Nested(ExternalBackendSchema, allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return AuthServicesConfig
+
+
+class AuthServicesConfig(BaseConfig):
+    SCHEMA = AuthServicesSchema
+    REDUCED_ATTRIBUTES = [
+        "github",
+        "gitlab",
+        "bitbucket",
+        "google",
+        "saml",
+    ]
+
+    def __init__(
+        self, github=None, gitlab=None, bitbucket=None, google=None, saml=None,
+    ):
+        self.github = github
+        self.gitlab = gitlab
+        self.bitbucket = bitbucket
+        self.google = google
+        self.saml = saml
+
+
 class ExternalServicesSchema(BaseCamelSchema):
     redis = fields.Nested(ExternalServiceSchema, allow_none=True)
     rabbitmq = fields.Nested(ExternalServiceSchema, allow_none=True)
@@ -543,6 +575,7 @@ class ExternalServicesSchema(BaseCamelSchema):
     metrics = fields.Nested(ExternalBackendSchema, allow_none=True)
     errors = fields.Nested(ExternalBackendSchema, allow_none=True)
     tracing = fields.Nested(ExternalBackendSchema, allow_none=True)
+    auth = fields.Nested(AuthServicesSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -561,6 +594,7 @@ class ExternalServicesConfig(BaseConfig):
         "metrics",
         "errors",
         "tracing",
+        "auth",
     ]
 
     def __init__(
@@ -574,6 +608,7 @@ class ExternalServicesConfig(BaseConfig):
         metrics=None,
         errors=None,
         tracing=None,
+        auth=None,
     ):
         self.redis = redis
         self.rabbitmq = rabbitmq
@@ -584,3 +619,4 @@ class ExternalServicesConfig(BaseConfig):
         self.metrics = metrics
         self.errors = errors
         self.tracing = tracing
+        self.auth = auth

@@ -101,6 +101,17 @@ location /auth/v1/ {
 }
 
 
+location /sso/ {
+    include     /etc/nginx/uwsgi_params;
+    uwsgi_pass  polyaxon;
+    uwsgi_param Host				$host;
+    uwsgi_param X-Real-IP			$remote_addr;
+    uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
+    uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
+    uwsgi_intercept_errors on;
+}
+
+
 location /ui/ {
     include     /etc/nginx/uwsgi_params;
     uwsgi_pass  polyaxon;
@@ -140,7 +151,7 @@ location /tmp/ {
 """  # noqa
         assert get_base_config() == expected
 
-    def test_api_base_config_with_cdn_and_admin_admin(self):
+    def test_api_base_config_with_cdn_and_admin(self):
         expected = """
 listen 80;
 
@@ -206,6 +217,17 @@ location /api/v1/ {
 
 
 location /auth/v1/ {
+    include     /etc/nginx/uwsgi_params;
+    uwsgi_pass  polyaxon;
+    uwsgi_param Host				$host;
+    uwsgi_param X-Real-IP			$remote_addr;
+    uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
+    uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
+    uwsgi_intercept_errors on;
+}
+
+
+location /sso/ {
     include     /etc/nginx/uwsgi_params;
     uwsgi_pass  polyaxon;
     uwsgi_param Host				$host;

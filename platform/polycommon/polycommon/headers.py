@@ -38,15 +38,3 @@ def get_header(request: HttpRequest, header_service: str):
         # Work around django test client oddness
         service = service.encode(HTTP_HEADER_ENCODING)
     return service
-
-
-def get_service_header(request: HttpRequest):
-    """Return request's 'X_POLYAXON_SERVICE:' header, as a bytestring."""
-    return get_header(request=request, header_service=PolyaxonServiceHeaders.SERVICE)
-
-
-def get_internal_header(request: HttpRequest) -> str:
-    """
-    Return request's 'X_POLYAXON_INTERNAL:' header, as a bytestring.
-    """
-    return get_header(request=request, header_service=PolyaxonServiceHeaders.INTERNAL)

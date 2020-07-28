@@ -23,7 +23,7 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 class LogHandlerSchema(BaseSchema):
     dsn = fields.Str(allow_none=True)
-    environment = fields.Str()
+    environment = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -34,7 +34,7 @@ class LogHandlerConfig(BaseConfig):
     SCHEMA = LogHandlerSchema
     IDENTIFIER = "log_handler"
 
-    def __init__(self, environment, dsn=None):
+    def __init__(self, dsn=None, environment=None):
         self.dsn = dsn
         self.environment = environment
 

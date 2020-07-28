@@ -115,6 +115,7 @@ class V1PolyaxonInitContainer(BaseConfig, polyaxon_sdk.V1PolyaxonInitContainer):
     > **N.B.2**: It's possible to alter this behaviour on per operation level
         using the init section.
     """
+
     SCHEMA = PolyaxonInitContainerSchema
     IDENTIFIER = "container"
     REDUCED_ATTRIBUTES = ["imageTag", "imagePullPolicy", "resources"]

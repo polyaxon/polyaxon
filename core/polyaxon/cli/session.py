@@ -135,7 +135,7 @@ def set_versions_config(
     return CliConfigManager.reset(
         last_check=now(),
         current_version=version,
-        installation=server_installation.to_dict() if server_installation else None,
-        compatibility=compatibility.to_dict() if compatibility else None,
-        log_handler=log_handler.to_dict() if log_handler else None,
+        installation=server_installation.to_dict() if server_installation else {},
+        compatibility=compatibility.to_dict() if compatibility else {},
+        log_handler=log_handler.to_dict() if log_handler else {},
     )

@@ -20,6 +20,7 @@ from polyaxon.api import (
     AUTH_V1_LOCATION,
     HEALTHZ_LOCATION,
     UI_V1_LOCATION,
+    SSO_V1_LOCATION,
 )
 from polyaxon.proxies.schemas.base import clean_config, get_config
 
@@ -46,6 +47,7 @@ def get_uwsgi_config():
         get_api_config(path="= {}".format(HEALTHZ_LOCATION)),
         get_api_config(path=API_V1_LOCATION),
         get_api_config(path=AUTH_V1_LOCATION),
+        get_api_config(path=SSO_V1_LOCATION),
         get_api_config(path=UI_V1_LOCATION),
     ]
     if settings.PROXIES_CONFIG.ui_admin_enabled:

@@ -751,6 +751,7 @@ class RunClient:
             url=url,
             path=path,
             untar=untar,
+            path_to=path_to,
             delete_tar=delete_tar,
             extract_path=extract_path,
         )

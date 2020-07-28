@@ -41,6 +41,10 @@ type Client struct {
 type ClientService interface {
 	Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter) (*LoginOK, *LoginNoContent, error)
 
+	ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordOK, *ResetPasswordNoContent, error)
+
+	Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter) (*SignupOK, *SignupNoContent, error)
+
 	SetTransport(transport runtime.ClientTransport)
 }
 
@@ -56,7 +60,7 @@ func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWrite
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "Login",
 		Method:             "POST",
-		PathPattern:        "/api/v1/users/token",
+		PathPattern:        "/api/v1/auth/token",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -77,6 +81,78 @@ func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWrite
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*LoginDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ResetPassword resets p assword
+*/
+func (a *Client) ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordOK, *ResetPasswordNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewResetPasswordParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ResetPassword",
+		Method:             "POST",
+		PathPattern:        "/api/v1/auth/reset-password",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ResetPasswordReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ResetPasswordOK:
+		return value, nil, nil
+	case *ResetPasswordNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ResetPasswordDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  Signup signups
+*/
+func (a *Client) Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter) (*SignupOK, *SignupNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSignupParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "Signup",
+		Method:             "POST",
+		PathPattern:        "/api/v1/auth/signup",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &SignupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *SignupOK:
+		return value, nil, nil
+	case *SignupNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*SignupDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

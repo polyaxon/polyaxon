@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.5-rc0",
+    "version": "1.1.5",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -166,6 +166,135 @@
         ],
         "tags": [
           "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/auth/reset-password": {
+      "post": {
+        "summary": "ResetPAssword",
+        "operationId": "ResetPassword",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UserEmail"
+            }
+          }
+        ],
+        "tags": [
+          "AuthV1"
+        ]
+      }
+    },
+    "/api/v1/auth/signup": {
+      "post": {
+        "summary": "Signup",
+        "operationId": "Signup",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UserSingup"
+            }
+          }
+        ],
+        "tags": [
+          "AuthV1"
+        ]
+      }
+    },
+    "/api/v1/auth/token": {
+      "post": {
+        "summary": "Login",
+        "operationId": "Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Auth"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Credentials"
+            }
+          }
+        ],
+        "tags": [
+          "AuthV1"
         ]
       }
     },
@@ -6510,51 +6639,6 @@
         ],
         "tags": [
           "UsersV1"
-        ]
-      }
-    },
-    "/api/v1/users/token": {
-      "post": {
-        "summary": "Login",
-        "operationId": "Login",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Auth"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1Credentials"
-            }
-          }
-        ],
-        "tags": [
-          "AuthV1"
         ]
       }
     },
@@ -13131,7 +13215,7 @@
         },
         "password": {
           "type": "string",
-          "title": "Project where the run will be assigned"
+          "title": "User password"
         }
       },
       "title": "Login"
@@ -14620,6 +14704,12 @@
         },
         "dist": {
           "type": "string"
+        },
+        "auth": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -17444,6 +17534,38 @@
         }
       },
       "title": "Auth specification"
+    },
+    "v1UserEmail": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "title": "User username"
+        }
+      },
+      "title": "User email"
+    },
+    "v1UserSingup": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "User username"
+        },
+        "email": {
+          "type": "string",
+          "title": "User email"
+        },
+        "organization": {
+          "type": "string",
+          "title": "User organization"
+        },
+        "password": {
+          "type": "string",
+          "title": "User password"
+        }
+      },
+      "title": "User Singup"
     },
     "v1Uuids": {
       "type": "object",

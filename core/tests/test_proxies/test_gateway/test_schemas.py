@@ -881,6 +881,18 @@ location /ui/ {
 }
 
 
+location /sso/ {
+    proxy_pass http://polyaxon-polyaxon-api;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
 location /static/ {
     proxy_pass http://polyaxon-polyaxon-api;
     proxy_http_version 1.1;
@@ -922,6 +934,18 @@ location /api/v1/ {
 
 
 location /ui/ {
+    proxy_pass http://foo:8888;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_buffering off;
+}
+
+
+location /sso/ {
     proxy_pass http://foo:8888;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -976,6 +1000,19 @@ location /api/v1/ {
 
 
 location /ui/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://polyaxon.foo.com;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Origin "";
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host polyaxon.foo.com;
+    proxy_buffering off;
+}
+
+
+location /sso/ {
     proxy_ssl_server_name on;
     proxy_pass https://polyaxon.foo.com;
     proxy_http_version 1.1;

@@ -68,7 +68,6 @@ data:
   {{- end }}
   {{- if .Values.externalServices.analytics.enabled }}
   POLYAXON_ANALYTICS_BACKEND: {{ default "default" .Values.externalServices.analytics.backend | quote }}
-  POLYAXON_ANALYTICS_OPTIONS: {{ toJson .Values.externalServices.analytics.options | quote }}
   {{- end }}
   # Metrics
   {{- if .Values.metrics.enabled }}
@@ -80,7 +79,6 @@ data:
   {{- end }}
   {{- if .Values.externalServices.errors.enabled }}
   POLYAXON_ERRORS_BACKEND: {{ default "default" .Values.externalServices.errors.backend | quote }}
-  POLYAXON_ERRORS_OPTIONS: {{ toJson .Values.externalServices.errors.options | quote }}
   {{- end }}
   {{- if .Values.externalServices.tracing.enabled }}
   POLYAXON_TRACING_BACKEND: {{ default "default" .Values.externalServices.tracing.backend | quote }}

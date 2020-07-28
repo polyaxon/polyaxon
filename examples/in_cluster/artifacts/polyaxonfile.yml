@@ -1,0 +1,22 @@
+version: 1.1
+kind: component
+name: artifacts_tracking
+tags: [examples]
+
+inputs:
+- {name: steps, type: int, value: 100, isOptional: true}
+- {name: validate_every, type: int, value: 10, isOptional: true}
+
+run:
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/artifacts"
+    command: ["python", "-u", "main.py"]
+    imagePullPolicy: "Always"
+    args: [
+      "--steps={{ steps }}",
+      "--validate_every={{ validate_every }}",
+    ]

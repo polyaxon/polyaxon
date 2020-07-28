@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.1.5-rc0
+- API version: 1.1.5
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.1.5-rc0</version>
+  <version>1.1.5</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.1.5-rc0"
+compile "org.openapitools:openapi-java-client:1.1.5"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.1.5-rc0.jar`
+* `target/openapi-java-client-1.1.5.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -137,7 +137,9 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**updateAgent**](docs/AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update agent
 *AgentsV1Api* | [**updateAgentToken**](docs/AgentsV1Api.md#updateAgentToken) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/token | Update agent token
 *ArtifactsStoresV1Api* | [**uploadArtifact**](docs/ArtifactsStoresV1Api.md#uploadArtifact) | **POST** /api/v1/catalogs/{owner}/artifacts/{uuid}/upload | Upload artifact to a store
-*AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | Login
+*AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/auth/token | Login
+*AuthV1Api* | [**resetPassword**](docs/AuthV1Api.md#resetPassword) | **POST** /api/v1/auth/reset-password | ResetPAssword
+*AuthV1Api* | [**signup**](docs/AuthV1Api.md#signup) | **POST** /api/v1/auth/signup | Signup
 *ComponentHubV1Api* | [**createComponentHub**](docs/ComponentHubV1Api.md#createComponentHub) | **POST** /api/v1/orgs/{owner}/components | Create hub component
 *ComponentHubV1Api* | [**deleteComponentHub**](docs/ComponentHubV1Api.md#deleteComponentHub) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
 *ComponentHubV1Api* | [**getComponentHub**](docs/ComponentHubV1Api.md#getComponentHub) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub component
@@ -504,6 +506,8 @@ Class | Method | HTTP request | Description
  - [V1UriType](docs/V1UriType.md)
  - [V1UrlRef](docs/V1UrlRef.md)
  - [V1User](docs/V1User.md)
+ - [V1UserEmail](docs/V1UserEmail.md)
+ - [V1UserSingup](docs/V1UserSingup.md)
  - [V1Uuids](docs/V1Uuids.md)
  - [V1Version](docs/V1Version.md)
  - [V1WasbType](docs/V1WasbType.md)
