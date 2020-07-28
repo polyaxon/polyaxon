@@ -1,7 +1,7 @@
 -r base.txt
 
 celery==4.4.6
-cryptography==2.9.2
+cryptography==3.0
 Django==3.0.8
 django-picklefield==3.0.1
 djangorestframework==3.11.0
