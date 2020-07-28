@@ -274,6 +274,12 @@ def log_curves(step):
     tracking.log_pr_curve(name='pr-curve-man', precision=x, recall=y, average_precision=0.742149,
                           step=step)
 
+    # Random curve
+    # TODO: FIX
+    tracking.TRACKING_RUN.log_curve(
+        name='random-curve-man', x=np.random.randn(100), y=np.random.randn(100), step=step
+    )
+
 
 def train_network():
     data_size = 1000

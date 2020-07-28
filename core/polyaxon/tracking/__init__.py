@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List, Optional, Union, Sequence
+from typing import Dict, List, Optional, Union, Sequence
 
 from polyaxon import settings
 from polyaxon.client import RunClient
@@ -369,7 +369,7 @@ log_sklearn_pr_curve.__doc__ = Run.log_sklearn_pr_curve.__doc__
 
 def log_curve(name, x, y, annotation=None, step=None, timestamp=None):
     global TRACKING_RUN
-    TRACKING_RUN.log_sklearn_pr_curve(
+    TRACKING_RUN.log_curve(
         name=name, x=x, y=y, annotation=annotation, step=step, timestamp=timestamp,
     )
 
@@ -493,9 +493,9 @@ def log_failed(message=None, traceback=None):
 log_failed.__doc__ = Run.log_failed.__doc__
 
 
-def log_code_ref():
+def log_code_ref(code_ref: Dict = None, is_input: bool = True):
     global TRACKING_RUN
-    TRACKING_RUN.log_code_ref()
+    TRACKING_RUN.log_code_ref(code_ref=code_ref, is_input=is_input)
 
 
 log_code_ref.__doc__ = Run.log_code_ref.__doc__

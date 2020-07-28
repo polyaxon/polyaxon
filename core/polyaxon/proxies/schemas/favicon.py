@@ -18,7 +18,7 @@ from polyaxon.proxies.schemas.base import get_config
 
 OPTIONS = """
 location = /favicon.ico {{
-    alias /static/images/favicon.ico;
+    alias /polyaxon/static/v1/images/favicon.ico;
 }}
 """
 
