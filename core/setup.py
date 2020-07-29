@@ -103,7 +103,7 @@ setup(
             "kubernetes-asyncio==11.2.0",
             "starlette==0.13.5",
             "aiofiles==0.5.0",
-            "uvicorn==0.11.6",
+            "uvicorn==0.11.7",
             "pandas",
         ],
     },
