@@ -1,8 +1,8 @@
 ---
-title: "Concepts"
-sub_link: "introduction/concepts"
-meta_title: "Polyaxon Architecture - Core Concepts"
-meta_description: "Polyaxon is structured as a modern, decoupled, micro-services oriented platform. Discover how things fit together at Polyaxon."
+title: "Runtime Concepts"
+sub_link: "introduction/runtime-concepts"
+meta_title: "Polyaxon Runtime/Jobs/Services/Notebooks/Tensorboard/DAGs/Hyperparameter Tuning - Core Concepts"
+meta_description: "Polyaxon schedules and manage the lifecycle of several runtimes."
 visibility: public
 status: published
 tags:
@@ -16,35 +16,7 @@ Polyaxon relies on a set of concepts to manage the experimentation and the autom
 in this section, we provide a high-level introduction to these concepts,
 with more details in pages dedicated to each concept.
 
-
-### User
-
-A `User` is the entity that creates projects, starts experiments, creates jobs and pipelines, manages teams and clusters.
-
-<blockquote class="light">Please refer to <a href="/docs/management/ui/users/">management/users</a> for more details.</blockquote>
-
-### Organization
-
-An `Organization` is the entity that enables several users to collaborate across many projects at once.
-Owners and admins can manage member access to the organization's data and projects with sophisticated security and administrative features.
-
-<blockquote class="light">Please refer to <a href="/docs/management/ui/organizations/">management/organizations</a> for more details.</blockquote>
-
-### Team
-
-A `Team` provides a way to manage groups of users, their access roles, and resources quotas and permissions.
-
-<blockquote class="light">Please refer to <a href="/docs/management/ui/teams/">management/teams</a> for more details.</blockquote>
-
-### Project
-
-A `Project` in Polyaxon is very similar to a project in GitHub,
-it aims at organizing your efforts to solve a specific problem.
-A project consists of a name and a description, access to several connections and data, and components to execute.
-
-<blockquote class="light">Please refer to <a href="/docs/management/ui/projects/">management/projects</a> for more details.</blockquote>
-
-### Component
+### Runtime of a Component
 
 A `component` is the model that describes the discrete and containerized logic you want to run, 
 they optionally take inputs, perform some work, and optionally return some outputs.
@@ -100,10 +72,10 @@ A `service` allows to run dashboards, apps, and APIs.
 
 A service can be:
  
- * A tensorboard.
- * A notebook.
+ * A Tensorboard.
+ * A Notebook.
  * A custom dashboard.
- * A streamlit app.
+ * A Streamlit app.
  * A container exposing an API.
 
 <blockquote class="light">Please refer to <a href="/docs/experimentation/services">experimentation/services</a> for more details.</blockquote>
@@ -139,21 +111,5 @@ A `matrix` is an automatic and practical way to run a component with different p
 
 
 <blockquote class="light">
-Please refer to <a href="/docs/automation/optimization-engine/">automation/optimization-engine</a> and <a href="/docs/automation/mapping/">automation/mapping</> for more details.
+Please refer to <a href="/docs/automation/optimization-engine/">automation/optimization-engine</a> and <a href="/docs/automation/mapping/">automation/mapping</a> for more details.
 </blockquote>
-
-
-### Schedules
-
-Although you can run your operation at any time, for any reason, it is often useful to automate and run your components at certain times using a `schedule`. 
-
-<blockquote class="light">Please refer to <a href="/docs/automation/optimization-engine/">automation/schedules</a> for more details.</blockquote>
-
-
-### Run Profile
-
-A `run Profile` allows admin to preset several meta information about runs, e.g. node scheduling and routing, which facilitate attaching quotas to a user/team/project, 
-so that the entities they create, i.e. builds/jobs/experiments/notebooks, cannot exceed the parallelism and may not consume more 
-resources than the quota specification allows.
-
-<blockquote class="light">Please refer to <a href="/docs/core/scheduling-strategies/run-profiles/">scheduling-strategies/run-profiles</a> and <a href="/docs/management/ui/run-profiles/">management/run-profiles</a> for more details.</blockquote>

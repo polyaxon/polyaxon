@@ -57,6 +57,12 @@
     items:
     - title: Overview
       link: /docs/setup/deployment-strategies/
+    - title: Best Practices
+      link: /docs/setup/deployment-strategies/best-practices/
+    - title: Strategies
+      link: /docs/setup/deployment-strategies/strategies/
+    - title: Scaling
+      link: /docs/setup/deployment-strategies/scaling/
   - group: Install cli
     items:
     - title: Overview

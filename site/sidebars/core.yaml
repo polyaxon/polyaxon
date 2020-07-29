@@ -1,14 +1,4 @@
 - groups:
-  - group: Introduction
-    items:
-    - title: Welcome to Polyaxon
-      link: /docs/core/introduction/
-    - title: Features
-      link: /docs/core/introduction/features/
-    - title: Architecture
-      link: /docs/core/introduction/architecture/
-    - title: Core concepts
-      link: /docs/core/introduction/concepts/
   - group: Quick Start
     items:
     - title: Get Started
@@ -23,6 +13,22 @@
       link: /docs/core/quick-start/scale/
     - title: Builds
       link: /docs/core/quick-start/builds/
+  - group: Introduction
+    items:
+    - title: Welcome to Polyaxon
+      link: /docs/core/introduction/
+    - title: Features
+      link: /docs/core/introduction/features/
+    - title: Architecture
+      link: /docs/core/introduction/architecture/
+    - title: Organization Concepts
+      link: /docs/core/introduction/organization-concepts/
+    - title: Runtime Concepts
+      link: /docs/core/introduction/runtime-concepts/
+    - title: Scheduling Concepts
+      link: /docs/core/introduction/scheduling-concepts/
+    - title: Reproducibility Concepts
+      link: /docs/core/introduction/reproducibility-concepts/
   - group: Specification
     items:
     - title: Overview

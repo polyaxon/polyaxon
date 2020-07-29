@@ -20,7 +20,7 @@ Oftentimes, teams will have several environments with different resources and ac
 Allocating operations to the right resources while ensuring a fair queueing is an important behavior, especially when you scale your workload.
 
 Polyaxon provides several interfaces designed to achieve fairness when a limited resource is shared, 
-for example to prevent a hyperparameter tuning with large search space or parallel executions from consuming more cluster resources than other workflows and operations.
+for example, to prevent a hyperparameter tuning with large search space or parallel executions from consuming more cluster resources than other workflows and operations.
 
 ## Features
 
