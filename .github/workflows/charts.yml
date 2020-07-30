@@ -13,7 +13,7 @@ jobs:
         run: |
           cmd/helm/all
       - name: Run chart-testing (lint)
-        uses: helm/chart-testing-action@v1.0.0-rc.2
+        uses: helm/chart-testing-action@v1.0.0
         with:
           command: lint
           config: config/ct.yaml
