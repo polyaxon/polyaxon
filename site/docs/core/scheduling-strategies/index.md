@@ -32,7 +32,7 @@ Polyaxon provides several tools to:
  
 ## Concepts   
 
-There are several distinct features involved in the scheduling strategies feature:
+There are several distinct features involved in the scheduling strategies:
 
  * [Node scheduling](/docs/core/scheduling-strategies/node-scheduling/): A feature that leverages the Kubernetes API to select nodes for running your operations.
  * [Resources scheduling](/docs/core/scheduling-strategies/resources-scheduling/): A feature that leverages the Kubernetes API to enable GPU/TPU, or other special resources for your operations.

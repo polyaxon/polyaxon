@@ -1,6 +1,6 @@
 ---
 title: "Organization Concepts"
-sub_link: "introduction/organization-concepts"
+sub_link: "concepts/organization-concepts"
 meta_title: "Polyaxon Organization/Teams/Users - Core Concepts"
 meta_description: "Polyaxon relies on a set of concepts to manage your organization, teams, and members."
 visibility: public

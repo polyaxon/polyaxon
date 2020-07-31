@@ -123,3 +123,9 @@ container = k8s_schemas.V1Container(
 
 If your cluster has special resources schedulable with Kubernetes, you can use them with Polyaxon, 
 for instance [AMD GPU](https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/#deploying-amd-gpu-device-plugin).
+
+## Sharing GPUs
+
+Aliyun provides a plugin for GPU sharing. You need to deploy the plugin and use the `aliyun.com/gpu-mem` instead of the default `nvidia.com/gpu`.
+
+For more details please check this [user guide](https://github.com/AliyunContainerService/gpushare-scheduler-extender/blob/master/docs/userguide.md).

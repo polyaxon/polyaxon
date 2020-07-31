@@ -1,6 +1,6 @@
 ---
 title: "Scheduling Concepts"
-sub_link: "introduction/scheduling-concepts"
+sub_link: "concepts/scheduling-concepts"
 meta_title: "Polyaxon Scheduling/Schedules/Events/Actions/Agents/Queues - Core Concepts"
 meta_description: "Polyaxon can trigger execution manually or automatically using schedules, data, and events driven strategies."
 visibility: public
