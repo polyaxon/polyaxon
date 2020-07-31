@@ -63,6 +63,8 @@
       link: /docs/setup/deployment-strategies/strategies/
     - title: Scaling
       link: /docs/setup/deployment-strategies/scaling/
+    - title: Multiarch
+      link: /docs/setup/deployment-strategies/multiarch/
   - group: Install cli
     items:
     - title: Overview

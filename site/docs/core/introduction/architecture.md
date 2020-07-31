@@ -72,10 +72,15 @@ Polyaxon relies on Kubernetes for:
 
 Polyaxon does the heavy lifting of:
 
- * Scheduling the jobs
+ * Exposing a rich runtime including jobs, services, distributed jobs
+ * Scheduling operations
+ * Automation with a flow engine and an optimization engine
  * Resolving dependencies between operations
  * Validating and authorizing access to resources, connections, namespaces
  * Creating docker images
  * Monitoring the statuses and resources
+ * Streaming logs
  * Tracking code version, params, logs, configurations, and tags
  * Reporting metrics and outputs and other results to the user
+ * Driving insights, knowledge, and analytics about your experiments
+ * Exposing a rich workspace based on Notebooks, Streamlit, VSCode, ...

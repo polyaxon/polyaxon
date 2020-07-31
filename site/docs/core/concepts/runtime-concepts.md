@@ -1,6 +1,6 @@
 ---
 title: "Runtime Concepts"
-sub_link: "introduction/runtime-concepts"
+sub_link: "concepts/runtime-concepts"
 meta_title: "Polyaxon Runtime/Jobs/Services/Notebooks/Tensorboard/DAGs/Hyperparameter Tuning - Core Concepts"
 meta_description: "Polyaxon schedules and manage the lifecycle of several runtimes."
 visibility: public

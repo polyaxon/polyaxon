@@ -1,6 +1,6 @@
 ---
 title: "Reproducibility Concepts"
-sub_link: "introduction/reproducibility-concepts"
+sub_link: "concepts/reproducibility-concepts"
 meta_title: "Polyaxon makes your experiments reproducible, portable, and repeatable while being language and framework agnostic. - Core Concepts"
 meta_description: "Polyaxon makes your experiments reproducible, portable, and repeatable while being language and framework agnostic."
 visibility: public

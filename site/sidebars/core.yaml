@@ -21,14 +21,16 @@
       link: /docs/core/introduction/features/
     - title: Architecture
       link: /docs/core/introduction/architecture/
+  - group: Concepts
+    items:
     - title: Organization Concepts
-      link: /docs/core/introduction/organization-concepts/
+      link: /docs/core/concepts/organization-concepts/
     - title: Runtime Concepts
-      link: /docs/core/introduction/runtime-concepts/
+      link: /docs/core/concepts/runtime-concepts/
     - title: Scheduling Concepts
-      link: /docs/core/introduction/scheduling-concepts/
+      link: /docs/core/concepts/scheduling-concepts/
     - title: Reproducibility Concepts
-      link: /docs/core/introduction/reproducibility-concepts/
+      link: /docs/core/concepts/reproducibility-concepts/
   - group: Specification
     items:
     - title: Overview
