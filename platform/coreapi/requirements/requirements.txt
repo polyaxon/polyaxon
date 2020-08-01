@@ -1,2 +1,2 @@
-django-cors-headers==3.2.1
+django-cors-headers==3.4.0
 uWSGI==2.0.18
