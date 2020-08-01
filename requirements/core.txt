@@ -1,6 +1,6 @@
 -r base.txt
 
-celery==4.4.6
+celery==4.4.7
 cryptography==3.0
 Django==3.0.8
 django-picklefield==3.0.1
