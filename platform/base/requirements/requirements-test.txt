@@ -1,6 +1,6 @@
 polyaxon-pip-tests[black]==0.0.9
 
-execnet==1.3.0
+execnet==1.7.1
 factory-boy
 faker==4.0.3
 fake-factory==9999.9.9
