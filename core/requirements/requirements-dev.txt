@@ -9,7 +9,7 @@ hyperopt==0.2.4
 
 azure-storage-blob==12.3.2
 boto3==1.14.33
-botocore==1.16.0
+botocore==1.17.33
 google-cloud-storage==1.28.0
 
 httpretty==1.0.2
