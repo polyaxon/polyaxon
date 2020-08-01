@@ -2,7 +2,7 @@ polyaxon-pip-tests[black]==0.0.9
 
 execnet==1.7.1
 factory-boy==2.12.0
-faker==4.0.3
+faker==4.1.1
 fake-factory==9999.9.9
 responses==0.5.1
 pylint-django==0.7.2
