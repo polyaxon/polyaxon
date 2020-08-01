@@ -6,6 +6,6 @@ faker==4.1.1
 fake-factory==9999.9.9
 responses==0.10.15
 pylint-django==2.2.0
-pytest-cov==2.5.1
+pytest-cov==2.10.0
 pytest-django==3.1.2
 pytest-pythonpath==0.7.1
