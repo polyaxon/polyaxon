@@ -24,6 +24,9 @@ class StoreMixin:
     def list(self, *args, **kwargs):
         raise NotImplementedError
 
+    def delete_file(self, *args, **kwargs):
+        raise NotImplementedError
+
     def delete(self, *args, **kwargs):
         raise NotImplementedError
 

@@ -16,13 +16,13 @@
 
 import os
 
-from datetime import datetime
 from typing import Optional
 
 import aiofiles
 
 from polyaxon import settings
 from polyaxon.exceptions import PolyaxonException
+from polyaxon.logger import logger
 from polyaxon.stores import manager
 from polyaxon.utils.path_utils import check_or_create_path, get_path
 
@@ -38,20 +38,6 @@ async def upload_data(subpath: str, data):
         path_from=path_from,
         path_to=path_to,
         is_file=True,
-    )
-
-
-async def upload_dir(
-    subpath: str, path_from: str, workers: int = 0, last_time: datetime = None
-):
-    path_to = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
-    manager.upload_file_or_dir(
-        connection_type=settings.AGENT_CONFIG.artifacts_store,
-        path_from=path_from,
-        path_to=path_to,
-        is_file=False,
-        workers=workers,
-        last_time=last_time,
     )
 
 
@@ -74,7 +60,8 @@ async def download_file(subpath: str, check_cache=True) -> Optional[str]:
             path_to=path_to,
             is_file=True,
         )
-    except PolyaxonException:
+    except (OSError, PolyaxonException) as e:
+        logger.warning("Could not download %s. Error %s".format(path_from, e))
         return None
 
 
@@ -91,7 +78,8 @@ async def download_dir(subpath: str, to_tar: bool = False) -> Optional[str]:
             workers=5,
             to_tar=to_tar,
         )
-    except PolyaxonException:
+    except (OSError, PolyaxonException) as e:
+        logger.warning("Could not download %s. Error %s".format(path_from, e))
         return None
 
 
@@ -101,3 +89,30 @@ async def list_files(subpath: str, filepath) -> str:
         subpath=subpath,
         filepath=filepath,
     )
+
+
+async def delete_file(subpath: str) -> bool:
+    try:
+        manager.delete_file_or_dir(
+            connection_type=settings.AGENT_CONFIG.artifacts_store,
+            subpath=subpath,
+            is_file=True,
+        )
+        return True
+    except (OSError, PolyaxonException) as e:
+        logger.warning("Could not delete %s. Error %s".format(subpath, e))
+        return False
+
+
+async def delete_dir(subpath: str) -> bool:
+    try:
+        manager.delete_file_or_dir(
+            connection_type=settings.AGENT_CONFIG.artifacts_store,
+            subpath=subpath,
+            is_file=False,
+            workers=5,
+        )
+        return True
+    except (OSError, PolyaxonException) as e:
+        logger.warning("Could not delete %s. Error %s".format(subpath, e))
+        return False

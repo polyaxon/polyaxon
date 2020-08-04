@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-class cached_property(object):  # noqa
+class cached_property:  # noqa
     """
     Decorator that converts a method with a single self argument into a
     property cached on the instance.

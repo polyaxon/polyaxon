@@ -19,7 +19,7 @@ from marshmallow import post_dump, post_load
 from marshmallow.utils import _Missing
 
 
-class UnknownSchemaMixin(object):
+class UnknownSchemaMixin:
     @post_load(pass_original=True)
     def _handle_load_unknown(self, data, original):
         """Preserve unknown keys during deserialization."""
@@ -83,7 +83,7 @@ def to_snake_case(camel_str):
     return regex2.sub(r"\1_\2", regex1.sub(r"\1_\2", camel_str)).lower()
 
 
-class TaskType(object):
+class TaskType:
     MASTER = "master"
     CHIEF = "chief"
     PS = "ps"

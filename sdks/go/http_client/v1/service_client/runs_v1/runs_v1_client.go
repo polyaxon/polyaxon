@@ -59,7 +59,11 @@ type ClientService interface {
 
 	DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunOK, *DeleteRunNoContent, error)
 
+	DeleteRunArtifact(params *DeleteRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactOK, *DeleteRunArtifactNoContent, error)
+
 	DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error)
+
+	DeleteRunArtifacts(params *DeleteRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactsOK, *DeleteRunArtifactsNoContent, error)
 
 	DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunsOK, *DeleteRunsNoContent, error)
 
@@ -463,6 +467,42 @@ func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthI
 }
 
 /*
+  DeleteRunArtifact deletes run artifact
+*/
+func (a *Client) DeleteRunArtifact(params *DeleteRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactOK, *DeleteRunArtifactNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteRunArtifactParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DeleteRunArtifact",
+		Method:             "DELETE",
+		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteRunArtifactReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteRunArtifactOK:
+		return value, nil, nil
+	case *DeleteRunArtifactNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteRunArtifactDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   DeleteRunArtifactLineage deletes run artifact lineage
 */
 func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error) {
@@ -495,6 +535,42 @@ func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*DeleteRunArtifactLineageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  DeleteRunArtifacts deletes run artifacts
+*/
+func (a *Client) DeleteRunArtifacts(params *DeleteRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactsOK, *DeleteRunArtifactsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteRunArtifactsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DeleteRunArtifacts",
+		Method:             "DELETE",
+		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteRunArtifactsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteRunArtifactsOK:
+		return value, nil, nil
+	case *DeleteRunArtifactsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteRunArtifactsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

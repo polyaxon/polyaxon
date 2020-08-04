@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import mock
 import pytest
+
+from tests.utils import AsyncMock
 
 from polyaxon.agents.spawners.async_spawner import AsyncSpawner
 from polyaxon.exceptions import PolyaxonAgentError
@@ -51,8 +52,13 @@ async def test_start_apply_stop_get_raises_for_non_recognized_kinds():
 @pytest.mark.asyncio
 @pytest.mark.filterwarnings("ignore::RuntimeWarning")
 async def test_start_apply_stop_get():
+    class k8s_manager:
+        create_custom_object = AsyncMock()
+        update_custom_object = AsyncMock()
+        get_custom_object = AsyncMock()
+        delete_custom_object = AsyncMock()
+
     spawner = AsyncSpawner()
-    k8s_manager = mock.MagicMock()
     k8s_manager.create_custom_object.return_value = ("", "")
     spawner._k8s_manager = k8s_manager
 

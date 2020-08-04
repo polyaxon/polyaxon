@@ -16,10 +16,9 @@
 
 import numpy as np
 import os
-import tempfile
 
-from collections import Mapping
-from unittest import TestCase
+from collections.abc import Mapping
+from unittest import TestCase, mock
 
 import ujson
 
@@ -82,6 +81,31 @@ def assert_equal_layers(config, expected_layer):
             assert k not in result_layer
 
 
+def patch_settings(
+    set_auth: bool = True,
+    set_client: bool = True,
+    set_agent: bool = True,
+    set_proxies: bool = True,
+):
+    settings.AUTH_CONFIG = None
+    if set_auth:
+        settings.AUTH_CONFIG = AccessTokenConfig()
+
+    settings.CLIENT_CONFIG = None
+    if set_client:
+        settings.CLIENT_CONFIG = ClientConfig(host="1.2.3.4")
+
+    settings.AGENT_CONFIG = None
+    if set_agent:
+        settings.AGENT_CONFIG = AgentConfig()
+
+    settings.PROXIES_CONFIG = None
+    if set_proxies:
+        settings.PROXIES_CONFIG = ProxiesConfig()
+
+    settings.CLIENT_CONFIG.tracking_timeout = 0
+
+
 class BaseTestCase(TestCase):
     SET_AUTH_SETTINGS = True
     SET_CLIENT_SETTINGS = True
@@ -90,24 +114,12 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         super().setUp()
-
-        settings.AUTH_CONFIG = None
-        if self.SET_AUTH_SETTINGS:
-            settings.AUTH_CONFIG = AccessTokenConfig()
-
-        settings.CLIENT_CONFIG = None
-        if self.SET_CLIENT_SETTINGS:
-            settings.CLIENT_CONFIG = ClientConfig(host="1.2.3.4")
-
-        settings.AGENT_CONFIG = None
-        if self.SET_AGENT_SETTINGS:
-            settings.AGENT_CONFIG = AgentConfig()
-
-        settings.PROXIES_CONFIG = None
-        if self.SET_PROXIES_SETTINGS:
-            settings.PROXIES_CONFIG = ProxiesConfig()
-
-        settings.CLIENT_CONFIG.tracking_timeout = 0
+        patch_settings(
+            set_auth=self.SET_AUTH_SETTINGS,
+            set_client=self.SET_CLIENT_SETTINGS,
+            set_agent=self.SET_AGENT_SETTINGS,
+            set_proxies=self.SET_PROXIES_SETTINGS,
+        )
 
 
 class TestEnvVarsCase(BaseTestCase):
@@ -140,3 +152,8 @@ class TestEnvVarsCase(BaseTestCase):
 
 def tensor_np(shape, dtype=float):
     return np.arange(np.prod(shape), dtype=dtype).reshape(shape)
+
+
+class AsyncMock(mock.MagicMock):
+    async def __call__(self, *args, **kwargs):
+        return super(AsyncMock, self).__call__(*args, **kwargs)

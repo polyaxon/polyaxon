@@ -13,7 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from collections import Mapping
+
+from collections.abc import Mapping
 
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.polyaxonfile.specs import kinds as spec_kinds

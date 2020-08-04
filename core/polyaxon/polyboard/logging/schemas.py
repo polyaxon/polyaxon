@@ -87,6 +87,7 @@ class LogsSchema(BaseSchema):
     logs = fields.List(fields.Nested(LogSchema), allow_none=True)
     last_time = fields.DateTime(allow_none=True)
     last_file = fields.Str(allow_none=True)
+    files = fields.List(fields.Str(), allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -97,7 +98,7 @@ class V1Logs(BaseConfig, polyaxon_sdk.V1Logs):
     CHUNK_SIZE = 2000
     IDENTIFIER = "logs"
     SCHEMA = LogsSchema
-    REDUCED_ATTRIBUTES = ["logs", "last_time", "last_file"]
+    REDUCED_ATTRIBUTES = ["logs", "last_time", "last_file", "files"]
 
     @classmethod
     def chunk_logs(cls, logs: List[V1Log]):

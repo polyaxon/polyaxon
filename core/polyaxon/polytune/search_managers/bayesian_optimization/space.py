@@ -23,7 +23,7 @@ from polyaxon.polytune.matrix.utils import get_max, get_min, to_numpy
 _logger = logging.getLogger("polyaxon.hpsearch.search_managers")
 
 
-class SearchSpace(object):
+class SearchSpace:
     def __init__(self, config):
         self.config = config
         self._dim = 0

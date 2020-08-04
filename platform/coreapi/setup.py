@@ -40,7 +40,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon-api",
-    version="1.1.5",
+    version="1.1.6",
     description="Polyaxon core api.",
     maintainer="Polyaxon, Inc.",
     maintainer_email="contact@polyaxon.com",
@@ -63,8 +63,8 @@ setup(
         "reinforcement-learning",
     ],
     install_requires=[
-        "celery==4.4.6",
-        "Django==3.0.8",
+        "celery==4.4.7",
+        "Django==3.0.9",
         "django-cors-headers==3.2.1",
         "djangorestframework==3.11.0",
         "psycopg2-binary==2.8.5",

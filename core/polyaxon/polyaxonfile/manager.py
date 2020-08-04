@@ -16,7 +16,7 @@
 import copy
 import os
 
-from collections import Mapping
+from collections.abc import Mapping
 from typing import Dict, Union
 
 from polyaxon import pkg

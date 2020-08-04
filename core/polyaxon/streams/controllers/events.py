@@ -24,8 +24,8 @@ from starlette.exceptions import HTTPException
 
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events, get_event_path, get_resource_path
+from polyaxon.stores.async_manager import download_file
 from polyaxon.stores.manager import list_files
-from polyaxon.streams.stores.async_manager import download_file
 
 
 def get_events_files(run_uuid: str, event_kind: str) -> List[str]:

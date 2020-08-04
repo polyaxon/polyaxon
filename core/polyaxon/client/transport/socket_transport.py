@@ -20,7 +20,7 @@ import websocket
 from polyaxon.logger import logger
 
 
-class SocketTransportMixin(object):
+class SocketTransportMixin:
     """Socket operations transport."""
 
     def socket(self, url, message_handler, headers=None):

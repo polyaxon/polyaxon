@@ -195,7 +195,7 @@ message RunArtifactLineageRequest {
 
 
 // Request data to get run artifacts tree
-message RunArtifactsTreeRequest {
+message RunArtifactsPathRequest {
     // namespace
     string namespace = 1;
 

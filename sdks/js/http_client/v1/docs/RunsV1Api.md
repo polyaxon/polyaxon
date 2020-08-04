@@ -15,7 +15,9 @@ Method | HTTP request | Description
 [**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**deleteRun**](RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
+[**deleteRunArtifact**](RunsV1Api.md#deleteRunArtifact) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Delete run artifact
 [**deleteRunArtifactLineage**](RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
+[**deleteRunArtifacts**](RunsV1Api.md#deleteRunArtifacts) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Delete run artifacts
 [**deleteRuns**](RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**getMultiRunEvents**](RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
 [**getRun**](RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
@@ -541,6 +543,65 @@ null (empty response body)
 - **Accept**: application/json
 
 
+## deleteRunArtifact
+
+> deleteRunArtifact(namespace, owner, project, uuid, opts)
+
+Delete run artifact
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | namespace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let opts = {
+  'path': "path_example" // String | Path query param.
+};
+apiInstance.deleteRunArtifact(namespace, owner, project, uuid, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **path** | **String**| Path query param. | [optional] 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## deleteRunArtifactLineage
 
 > deleteRunArtifactLineage(owner, project, uuid, name, opts)
@@ -585,6 +646,65 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Uuid identifier of the entity | 
  **name** | **String**| Artifact name | 
  **namespace** | **String**| namespace. | [optional] 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## deleteRunArtifacts
+
+> deleteRunArtifacts(namespace, owner, project, uuid, opts)
+
+Delete run artifacts
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.RunsV1Api();
+let namespace = "namespace_example"; // String | namespace
+let owner = "owner_example"; // String | Owner of the namespace
+let project = "project_example"; // String | Project where the run will be assigned
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let opts = {
+  'path': "path_example" // String | Path query param.
+};
+apiInstance.deleteRunArtifacts(namespace, owner, project, uuid, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **path** | **String**| Path query param. | [optional] 
 
 ### Return type
 

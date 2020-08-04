@@ -60,6 +60,9 @@ def admin():
     help="The polyaxon deployment config file(s) to check.",
 )
 @click.option(
+    "-t", "--deployment-type", help="Deployment type.",
+)
+@click.option(
     "--manager-path",
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
@@ -76,11 +79,15 @@ def admin():
     default=False,
     help="Dry run the configuration and generate a debuggable output.",
 )
-def deploy(config_file, manager_path, check, dry_run):
+def deploy(config_file, deployment_type, manager_path, check, dry_run):
     """Deploy polyaxon."""
     config = read_deployment_config(config_file)
     manager = DeployManager(
-        config=config, filepath=config_file, manager_path=manager_path, dry_run=dry_run
+        config=config,
+        filepath=config_file,
+        deployment_type=deployment_type,
+        manager_path=manager_path,
+        dry_run=dry_run,
     )
     exception = None
     if config:
@@ -115,6 +122,9 @@ def deploy(config_file, manager_path, check, dry_run):
     help="The polyaxon deployment config file(s) to check.",
 )
 @click.option(
+    "-t", "--deployment-type", help="Deployment type.",
+)
+@click.option(
     "--manager-path",
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
@@ -131,11 +141,15 @@ def deploy(config_file, manager_path, check, dry_run):
     default=False,
     help="Dry run the configuration and generate a debuggable output.",
 )
-def upgrade(config_file, manager_path, check, dry_run):
+def upgrade(config_file, deployment_type, manager_path, check, dry_run):
     """Upgrade a Polyaxon deployment."""
     config = read_deployment_config(config_file)
     manager = DeployManager(
-        config=config, filepath=config_file, manager_path=manager_path, dry_run=dry_run
+        config=config,
+        filepath=config_file,
+        deployment_type=deployment_type,
+        manager_path=manager_path,
+        dry_run=dry_run,
     )
     exception = None
     if config:

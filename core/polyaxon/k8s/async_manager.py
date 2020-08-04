@@ -18,6 +18,7 @@ from kubernetes_asyncio import client, config
 from kubernetes_asyncio.client.rest import ApiException
 
 from polyaxon.exceptions import PolyaxonK8SError
+from polyaxon.k8s.monitor import is_pod_running
 from polyaxon.logger import logger
 
 
@@ -55,6 +56,20 @@ class AsyncK8SManager:
 
     async def set_namespace(self, namespace):
         self.namespace = namespace
+
+    async def get_pod(self, name, reraise=False):
+        try:
+            return await self.k8s_api.read_namespaced_pod(
+                name=name, namespace=self.namespace
+            )
+        except ApiException as e:
+            if reraise:
+                raise PolyaxonK8SError("Connection error: %s" % e) from e
+            return None
+
+    async def is_pod_running(self, pod_id: str, container_id: str):
+        event = await self.k8s_api.read_namespaced_pod_status(pod_id, self.namespace)
+        return is_pod_running(event, container_id)
 
     async def _list_namespace_resource(self, resource_api, reraise=False, **kwargs):
         try:

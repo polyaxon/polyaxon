@@ -153,7 +153,7 @@ class TestOneOfSchema(BaseTestCase):
         assert FooConfig("hello world!"), BarConfig(123) == result
 
     def test_load_removes_type_field(self):
-        class Nonlocal(object):
+        class Nonlocal:
             data = None
 
         class MySchema(Schema):
@@ -177,7 +177,7 @@ class TestOneOfSchema(BaseTestCase):
         assert "type" not in Nonlocal.data
 
     def test_load_keeps_type_field(self):
-        class Nonlocal(object):
+        class Nonlocal:
             data = None
             type = None
 

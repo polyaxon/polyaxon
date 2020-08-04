@@ -14,7 +14,9 @@ Method | HTTP request | Description
 [**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**deleteRun**](RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
+[**deleteRunArtifact**](RunsV1Api.md#deleteRunArtifact) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Delete run artifact
 [**deleteRunArtifactLineage**](RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
+[**deleteRunArtifacts**](RunsV1Api.md#deleteRunArtifacts) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Delete run artifacts
 [**deleteRuns**](RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**getMultiRunEvents**](RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
 [**getRun**](RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
@@ -731,6 +733,84 @@ null (empty response body)
 **404** | Resource does not exist. |  -  |
 **0** | An unexpected error response |  -  |
 
+<a name="deleteRunArtifact"></a>
+# **deleteRunArtifact**
+> deleteRunArtifact(namespace, owner, project, uuid, path)
+
+Delete run artifact
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | namespace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String path = "path_example"; // String | Path query param.
+    try {
+      apiInstance.deleteRunArtifact(namespace, owner, project, uuid, path);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#deleteRunArtifact");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **path** | **String**| Path query param. | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
 <a name="deleteRunArtifactLineage"></a>
 # **deleteRunArtifactLineage**
 > deleteRunArtifactLineage(owner, project, uuid, name, namespace)
@@ -786,6 +866,84 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Uuid identifier of the entity |
  **name** | **String**| Artifact name |
  **namespace** | **String**| namespace. | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
+<a name="deleteRunArtifacts"></a>
+# **deleteRunArtifacts**
+> deleteRunArtifacts(namespace, owner, project, uuid, path)
+
+Delete run artifacts
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String namespace = "namespace_example"; // String | namespace
+    String owner = "owner_example"; // String | Owner of the namespace
+    String project = "project_example"; // String | Project where the run will be assigned
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String path = "path_example"; // String | Path query param.
+    try {
+      apiInstance.deleteRunArtifacts(namespace, owner, project, uuid, path);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#deleteRunArtifacts");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **path** | **String**| Path query param. | [optional]
 
 ### Return type
 

@@ -29,7 +29,7 @@ from polyaxon.utils.log_levels import LogLevels
 _logger = logging.getLogger("polyaxon.dockerizer")
 
 
-class DockerMixin(object):
+class DockerMixin:
     IS_BUILD = None
 
     def _prepare_log_lines(self, log_line):  # pylint:disable=too-many-branches

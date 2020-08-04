@@ -19,6 +19,7 @@ import click
 
 from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
+from polyaxon.deploy.schemas.deployment_types import DeploymentTypes
 from polyaxon.managers.client import ClientConfigManager
 from polyaxon.utils.formatting import Printer
 
@@ -33,16 +34,24 @@ from polyaxon.utils.formatting import Printer
     help="The namespace used for deploying Polyaxon, default polyaxon.",
 )
 @click.option(
+    "-t", "--deployment-type", help="Deployment type.",
+)
+@click.option(
     "--release",
     type=str,
     help="The release name used for deploying Polyaxon, default polyaxon.",
 )
-def port_forward(port, namespace, release):
+def port_forward(port, namespace, deployment_type, release):
     """If you deploy Polyaxon using ClusterIP, you can use this command
     to access the gateway through `localhost:port`.
     """
     from polyaxon.deploy.operators.kubectl import KubectlOperator
 
+    if not port and deployment_type in [
+        DeploymentTypes.MICRO_K8S,
+        DeploymentTypes.MINIKUBE,
+    ]:
+        port = 31833
     port = port or 8000
     namespace = namespace or "polyaxon"
     release = release or "polyaxon"

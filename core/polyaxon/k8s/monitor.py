@@ -27,10 +27,7 @@ def is_container_terminated(status, container_id):
     return statuses.get("state", {}).get("terminated")
 
 
-def is_pod_running(k8s_manager, pod_id, container_id):
-    event = k8s_manager.k8s_api.read_namespaced_pod_status(
-        pod_id, k8s_manager.namespace
-    )
+def is_pod_running(event, container_id):
     event = event.to_dict()
     event_status = event.get("status", {})
     is_terminated = is_container_terminated(

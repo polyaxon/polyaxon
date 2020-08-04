@@ -19,7 +19,7 @@ import os
 import threading
 
 
-class BaseWorker(object):
+class BaseWorker:
     NAME = None
 
     def __init__(self):

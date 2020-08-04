@@ -18,7 +18,7 @@ import os
 import sys
 import time
 
-from collections import Mapping
+from collections.abc import Mapping
 from typing import Dict, List, Sequence, Union
 
 import click
@@ -52,6 +52,7 @@ from polyaxon.utils.hashing import hash_value
 from polyaxon.utils.http_utils import clean_host
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.query_params import get_logs_params, get_query_params
+from polyaxon.utils.tz_utils import now
 from polyaxon.utils.validation import validate_tags
 
 
@@ -1288,35 +1289,52 @@ def get_run_logs(
 
     def handle_logs():
         is_done = False
-        last_time = None
         last_file = None
         _status = None
-        last_status, _ = client.get_statuses()
+        files = []
+        last_transition_time = now()
+        last_status, conditions = client.get_statuses()
+        if conditions:
+            last_transition_time = conditions[0].last_transition_time
+
         while not LifeCycle.is_done(last_status) and not LifeCycle.is_running(
             last_status
         ):
-            time.sleep(1)
-            last_status, _ = client.get_statuses()
+            time.sleep(settings.CLIENT_CONFIG.watch_interval)
+            last_status, conditions = client.get_statuses()
+            if conditions:
+                last_transition_time = conditions[0].last_transition_time
             if _status != last_status:
                 _status = handle_status(last_status)
 
+        if LifeCycle.is_done(last_status):
+            last_time = None
+        else:
+            last_time = last_transition_time
+
+        checks = 0
         while not is_done:
             response = get_logs(last_time=last_time, last_file=last_file)
 
             if response:
                 last_time = response.last_time
                 last_file = response.last_file
+                files = response.files
             else:
                 last_time = None
                 last_file = None
 
             # Follow logic
-            if not any([last_file, last_time]):
+            if not any([last_file, last_time]) or checks > 3:
                 if follow:
                     last_status, _ = client.get_statuses()
                     if _status != last_status:
                         _status = handle_status(last_status)
                     is_done = LifeCycle.is_done(last_status)
+                    if not is_done:
+                        checks = 0
+                    if not last_time:
+                        last_time = last_transition_time
                 else:
                     is_done = True
             if last_time and not follow:
@@ -1324,8 +1342,12 @@ def get_run_logs(
 
             if not is_done:
                 if last_file:
-                    time.sleep(1)
+                    if len(files) > 1 and last_file != files[-1]:
+                        time.sleep(1)
+                    else:
+                        is_done = True
                 else:
                     time.sleep(settings.CLIENT_CONFIG.watch_interval)
+            checks += 1
 
     handle_logs()

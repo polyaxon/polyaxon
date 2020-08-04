@@ -196,7 +196,7 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
+        assert sidecar.command == ["polyaxon", "sidecar"]
         assert sidecar.volume_mounts == [
             get_auth_context_mount(read_only=True),
             get_artifacts_context_mount(read_only=False),
@@ -221,7 +221,7 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
+        assert sidecar.command == ["polyaxon", "sidecar"]
         assert sidecar.volume_mounts == [get_artifacts_context_mount(read_only=False)]
 
     def test_get_sidecar_container_with_managed_bucket_outputs_logs_store_and_env_secret(
@@ -262,12 +262,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -303,12 +304,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=-212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=-212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -343,10 +345,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(container_id="test", sleep_interval=213, sync_interval=212)
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id="test",
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id="test",
@@ -401,12 +406,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -443,12 +449,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -484,12 +491,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -541,12 +549,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -582,12 +591,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -622,12 +632,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -673,12 +684,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -713,12 +725,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -752,12 +765,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,
@@ -805,12 +819,13 @@ class TestSidecarContainer(BaseTestCase):
         assert sidecar.name == SIDECAR_CONTAINER
         assert sidecar.image == "sidecar/sidecar"
         assert sidecar.image_pull_policy == "IfNotPresent"
-        assert sidecar.command == ["/bin/bash", "-c"]
-        assert sidecar.args == [
-            get_sidecar_args(
-                container_id=MAIN_JOB_CONTAINER, sleep_interval=213, sync_interval=212
-            )
-        ]
+        assert sidecar.command == ["polyaxon", "sidecar"]
+        assert sidecar.args == get_sidecar_args(
+            container_id=MAIN_JOB_CONTAINER,
+            sleep_interval=213,
+            sync_interval=212,
+            monitor_logs=False,
+        )
         assert sidecar.env == get_sidecar_env_vars(
             env_vars=env_vars,
             container_id=MAIN_JOB_CONTAINER,

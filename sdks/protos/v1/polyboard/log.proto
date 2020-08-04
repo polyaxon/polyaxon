@@ -43,11 +43,14 @@ message Logs {
     // Log lines
     repeated Log logs = 1;
 
-    // last time
+    // Last log time
     google.protobuf.Timestamp last_time = 2;
 
-    // last file
+    // Last log file
     string last_file = 3;
+
+    // Log files
+    repeated string files = 4;
 }
 
 // Request logs for a run

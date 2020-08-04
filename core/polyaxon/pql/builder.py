@@ -28,7 +28,7 @@ class QueryCondSpec(namedtuple("QueryCondSpec", "cond params")):
         return self._asdict().items()
 
 
-class QueryBuilder(object):
+class QueryBuilder:
     """The `QueryBuild` adds filters to a `QuerySet` from a `params` mapping.
 
     Filters are a mapping of <name: Condition>, Condition being an object that update the queryset.
@@ -44,7 +44,7 @@ class QueryBuilder(object):
         return queryset
 
 
-class BaseCondition(object):
+class BaseCondition:
     """The base condition representing a single filter to apply to a `QuerySet`"""
 
     def apply(

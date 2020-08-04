@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -11383,6 +11383,293 @@
         ]
       }
     },
+    "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact": {
+      "delete": {
+        "summary": "Delete run artifact",
+        "operationId": "DeleteRunArtifact",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "description": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the run will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "Path query param.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      },
+      "get": {
+        "summary": "Get run artifact",
+        "operationId": "GetRunArtifact",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "description": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "Artifact filepath.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stream",
+            "description": "Whether to stream the file.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "force",
+            "description": "Whether to force reload.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts": {
+      "delete": {
+        "summary": "Delete run artifacts",
+        "operationId": "DeleteRunArtifacts",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "description": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the run will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "Path query param.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      },
+      "get": {
+        "summary": "Get run artifacts",
+        "operationId": "GetRunArtifacts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "description": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "Artifact filepath.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "force",
+            "description": "Whether to force reload.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
     "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree": {
       "get": {
         "summary": "Get run artifacts tree",
@@ -12108,159 +12395,6 @@
           {
             "name": "overwrite",
             "description": "File path query params.",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts": {
-      "get": {
-        "summary": "Get run artifacts",
-        "operationId": "GetRunArtifacts",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "namespace",
-            "description": "namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "path",
-            "description": "Artifact filepath.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "force",
-            "description": "Whether to force reload.",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact": {
-      "get": {
-        "summary": "Get run artifact",
-        "operationId": "GetRunArtifact",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "namespace",
-            "description": "namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "path",
-            "description": "Artifact filepath.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "stream",
-            "description": "Whether to stream the file.",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "name": "force",
-            "description": "Whether to force reload.",
             "in": "query",
             "required": false,
             "type": "boolean"
@@ -15430,11 +15564,18 @@
         "last_time": {
           "type": "string",
           "format": "date-time",
-          "title": "last time"
+          "title": "Last log time"
         },
         "last_file": {
           "type": "string",
-          "title": "last file"
+          "title": "Last log file"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Log files"
         }
       },
       "title": "Logs"
@@ -16104,6 +16245,10 @@
         "sync_interval": {
           "type": "integer",
           "format": "int32"
+        },
+        "monitor_logs": {
+          "type": "boolean",
+          "format": "boolean"
         },
         "resources": {
           "$ref": "#/definitions/v1ResourceRequirements"

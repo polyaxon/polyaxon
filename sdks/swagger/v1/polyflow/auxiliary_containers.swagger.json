@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "v1/polyflow/polyaxon_containers.proto",
+    "title": "v1/polyflow/auxiliary_containers.proto",
     "version": "version not set"
   },
   "consumes": [

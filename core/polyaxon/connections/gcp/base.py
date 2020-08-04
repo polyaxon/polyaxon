@@ -17,7 +17,7 @@
 import json
 import os
 
-from collections import Mapping
+from collections.abc import Mapping
 from typing import List, Optional, Union
 
 import google.auth

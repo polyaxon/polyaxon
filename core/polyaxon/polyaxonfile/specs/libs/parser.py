@@ -18,7 +18,7 @@ import ast
 import copy
 import jinja2
 
-from collections import Mapping
+from collections.abc import Mapping
 from typing import Dict
 
 from polyaxon.config_reader.utils import deep_update

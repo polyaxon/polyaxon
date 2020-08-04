@@ -90,7 +90,7 @@ V1Matrix = Union[
 ]
 
 
-class MatrixMixin(object):
+class MatrixMixin:
     def get_matrix_kind(self):
         raise NotImplementedError
 

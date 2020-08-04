@@ -123,8 +123,11 @@ def download_file_or_dir(
     return path_to
 
 
-def delete_path(
-    subpath: str, workers: int = 0, connection_type: V1ConnectionType = None
+def delete_file_or_dir(
+    subpath: str,
+    is_file: bool = False,
+    workers: int = 0,
+    connection_type: V1ConnectionType = None,
 ):
     connection_type = connection_type or get_artifacts_connection()
 
@@ -133,7 +136,10 @@ def delete_path(
     store_path = get_path(connection_type.store_path, subpath)
 
     store_manager = get_connection_from_type(connection_type=connection_type)
-    store_manager.delete(store_path, workers=workers)
+    if is_file:
+        store_manager.delete_file(store_path)
+    else:
+        store_manager.delete(store_path, workers=workers)
 
 
 def tar_dir(download_path: str) -> str:

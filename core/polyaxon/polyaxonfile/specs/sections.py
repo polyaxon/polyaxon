@@ -17,7 +17,7 @@
 from polyaxon.polyflow import ForConfig, IfConfig
 
 
-class Sections(object):
+class Sections:
     VERSION = "version"
     KIND = "kind"
     NAME = "name"

@@ -13,11 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import time
+import asyncio
 
 import click
 
 from polyaxon.logger import logger
+from polyaxon.utils.coroutine import coroutine
 
 
 @click.command()
@@ -47,7 +48,13 @@ from polyaxon.logger import logger
     default=-1,
     help="Interval between artifacts syncs in seconds.",
 )
-def sidecar(container_id, max_retries, sleep_interval, sync_interval):
+@click.option(
+    "--monitor-logs", is_flag=True, default=False, help="Enable logs monitoring.",
+)
+@coroutine
+async def sidecar(
+    container_id, max_retries, sleep_interval, sync_interval, monitor_logs
+):
     """
     Start Polyaxon's sidecar command.
     """
@@ -56,15 +63,15 @@ def sidecar(container_id, max_retries, sleep_interval, sync_interval):
     retry = 1
     while retry < max_retries:
         try:
-            start_sidecar(
+            await start_sidecar(
                 container_id=container_id,
                 sleep_interval=sleep_interval,
                 sync_interval=sync_interval,
                 monitor_outputs=True,
-                monitor_logs=False,
+                monitor_logs=monitor_logs,
             )
             return
         except Exception as e:
             logger.warning("Polyaxon sidecar retrying, error %s", e)
             retry += 1
-            time.sleep(1 * retry)
+            await asyncio.sleep(1 * retry)
