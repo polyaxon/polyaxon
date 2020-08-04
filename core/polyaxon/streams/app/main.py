@@ -94,14 +94,14 @@ routes = [
         methods=["POST"]
     ),
     Route(
-        URLS_RUNS_ARTIFACT, endpoints.download_artifact,
+        URLS_RUNS_ARTIFACT, endpoints.handle_artifact,
         name="download_artifact",
-        methods=["GET"]
+        methods=["GET", "DELETE"]
     ),
     Route(
-        URLS_RUNS_ARTIFACTS, endpoints.download_artifacts,
+        URLS_RUNS_ARTIFACTS, endpoints.handle_artifacts,
         name="download_artifacts",
-        methods=["GET"]
+        methods=["GET", "DELETE"]
     ),
     Route(
         URLS_RUNS_ARTIFACTS_TREE, endpoints.tree_artifacts,

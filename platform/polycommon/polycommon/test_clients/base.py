@@ -18,7 +18,7 @@ import datetime
 import json
 import uuid
 
-from collections import Mapping
+from collections.abc import Mapping
 from urllib.parse import urlparse
 
 from django.test import Client

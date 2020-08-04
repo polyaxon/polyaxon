@@ -27,7 +27,7 @@ from polyaxon.utils.tz_utils import now
 
 
 def query_logs(
-    k8s_manager: "K8SManager",
+    k8s_manager: K8SManager,
     pod_id: str,
     container_id: str,
     stream: bool = False,
@@ -55,7 +55,7 @@ def process_log_line(log_line: str):
 
 
 def stream_logs(
-    k8s_manager: "K8SManager", pod_id: str, container_id: str
+    k8s_manager: K8SManager, pod_id: str, container_id: str
 ) -> Iterable[str]:
     raw = None
     retries = 0

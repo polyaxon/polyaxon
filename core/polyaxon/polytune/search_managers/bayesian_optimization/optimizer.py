@@ -20,7 +20,7 @@ from polyaxon.polytune.search_managers.bayesian_optimization.acquisition_functio
 from polyaxon.polytune.search_managers.bayesian_optimization.space import SearchSpace
 
 
-class BOOptimizer(object):
+class BOOptimizer:
     def __init__(self, config):
         self.space = SearchSpace(config=config)
         self.utility_function = UtilityFunction(

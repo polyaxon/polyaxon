@@ -3,7 +3,7 @@
 [![Slack](https://img.shields.io/badge/Slack-1k%20members-blue.svg?style=flat&logo=slack&longCache=true)](https://polyaxon.com/slack/)
 
 [![Docs](https://img.shields.io/badge/docs-stable-brightgreen.svg?style=flat&longCache=true)](https://polyaxon.com/docs/)
-[![Release](https://img.shields.io/badge/release-v1.1.5-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/v1.1.5)
+[![Release](https://img.shields.io/badge/release-v1.1.6-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/v1.1.6)
 [![GitHub](https://img.shields.io/badge/issue_tracker-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/issues)
 [![GitHub](https://img.shields.io/badge/roadmap-github-blue?style=flat&logo=github&longCache=true)](https://github.com/polyaxon/polyaxon/milestones)
 
@@ -186,6 +186,3 @@ If you use Polyaxon in your academic research, we would be grateful if you could
 
 Feel free to [contact us](mailto:contact@polyaxon.com), we would love to learn about your project and see how we can support your custom need.
 
-# License
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon?ref=badge_large)

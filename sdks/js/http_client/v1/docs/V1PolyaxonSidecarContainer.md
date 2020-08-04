@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **image_pull_policy** | **String** |  | [optional] 
 **sleep_interval** | **Number** |  | [optional] 
 **sync_interval** | **Number** |  | [optional] 
+**monitor_logs** | **Boolean** |  | [optional] 
 **resources** | [**Object**](.md) |  | [optional] 
 
 

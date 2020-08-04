@@ -46,3 +46,21 @@ class TestArtifactsEndpoints(BaseTestCase):
         assert response.headers[
             "Content-Disposition"
         ] == 'attachment; filename="{}"'.format("uuid.tar.gz")
+
+    def test_delete_artifacts(self):
+        # Created nested path
+        nested_path = os.path.join(self.run_path, "foo")
+        create_path(nested_path)
+        create_tmp_files(nested_path)
+        subpath = os.path.join(self.run_path, "foo")
+
+        assert os.path.exists(self.run_path) is True
+        assert os.path.exists(subpath) is True
+        response = self.client.delete(self.base_url + "?path=foo")
+        assert response.status_code == 204
+        assert os.path.exists(self.run_path) is True
+        assert os.path.exists(subpath) is False
+
+        response = self.client.delete(self.base_url)
+        assert response.status_code == 204
+        assert os.path.exists(self.run_path) is False

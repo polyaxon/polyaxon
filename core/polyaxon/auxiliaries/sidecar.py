@@ -39,6 +39,7 @@ class PolyaxonSidecarContainerSchema(BaseCamelSchema):
     resources = SwaggerField(cls=k8s_schemas.V1ResourceRequirements, allow_none=True)
     sleep_interval = fields.Int(allow_none=True)
     sync_interval = fields.Int(allow_none=True)
+    monitor_logs = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -60,6 +61,7 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
         resources: V1ResourceRequirements, optional.
         sleep_interval: int, optional.
         sync_interval: int, optional.
+        monitor_logs: bool, optional.
 
     ## YAML usage
 
@@ -143,6 +145,10 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
     > **N.B.3**: If you don't need to access intermediate artifacts while the workload is running,
         you might set this field to a high value, or `-1` to only trigger
         this behavior when the workload is done.
+
+    ### monitorLogs
+
+    If the the sidecar should monitor the logs. this options is disabled by default.
     """
 
     SCHEMA = PolyaxonSidecarContainerSchema
@@ -153,6 +159,7 @@ class V1PolyaxonSidecarContainer(BaseConfig, polyaxon_sdk.V1PolyaxonSidecarConta
         "sleepInterval",
         "resources",
         "syncInterval",
+        "monitorLogs",
     ]
 
     def get_image(self):

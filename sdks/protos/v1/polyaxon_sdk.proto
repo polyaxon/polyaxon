@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.1.5";
+        version: "1.1.6";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -406,10 +406,24 @@ service RunsV1 {
     }
 
     // Get run artifacts tree
-    rpc GetRunArtifactsTree(RunArtifactsTreeRequest) returns (ArtifactTree) {
+    rpc GetRunArtifactsTree(RunArtifactsPathRequest) returns (ArtifactTree) {
         option (google.api.http) = {
             get: "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree"
         };
+    }
+
+    // Delete run artifact
+    rpc DeleteRunArtifact(RunArtifactsPathRequest) returns (google.protobuf.Empty) {
+      option (google.api.http) = {
+          delete: "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact"
+      };
+    }
+
+    // Delete run artifacts
+    rpc DeleteRunArtifacts(RunArtifactsPathRequest) returns (google.protobuf.Empty) {
+      option (google.api.http) = {
+        delete: "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts"
+      };
     }
 }
 

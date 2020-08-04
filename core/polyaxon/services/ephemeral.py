@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-class EphemeralServices(object):  # noqa
+class EphemeralServices:
     RUNNER = "runner"
 
     VALUES = [RUNNER]

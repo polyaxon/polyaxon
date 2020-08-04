@@ -57,12 +57,18 @@ def humanize_attrs(key, value, rounding=2):
     return value
 
 
-def list_dicts_to_tabulate(list_dicts, exclude_attrs=None, humanize_values=True):
+def list_dicts_to_tabulate(
+    list_dicts, exclude_attrs=None, include_attrs=None, humanize_values=True
+):
     exclude_attrs = exclude_attrs or {}
     results = OrderedDict()
+    if include_attrs:  # If include_attrs disable exclude_attrs
+        exclude_attrs = {}
     for d_value in list_dicts:
         for k, v in d_value.items():
             if k in exclude_attrs:
+                continue
+            if include_attrs and k not in include_attrs:
                 continue
 
             if humanize_values:
@@ -105,7 +111,7 @@ def pprint(value):
     click.echo(json.dumps(value, sort_keys=True, indent=4, separators=(",", ": ")))
 
 
-class Printer(object):
+class Printer:
     COLORS = ["yellow", "blue", "magenta", "green", "cyan", "red", "white"]
 
     @staticmethod

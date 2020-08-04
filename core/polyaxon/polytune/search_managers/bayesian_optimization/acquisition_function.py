@@ -30,7 +30,7 @@ from polyaxon.polyflow import (
 from polyaxon.polytune.search_managers.utils import get_random_generator
 
 
-class UtilityFunction(object):
+class UtilityFunction:
     def __init__(self, config, seed=None):
         if not isinstance(config, UtilityFunctionConfig):
             raise ValueError("Received a non valid configuration.")

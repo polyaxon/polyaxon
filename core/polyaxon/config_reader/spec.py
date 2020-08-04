@@ -19,7 +19,7 @@ import os
 import sys
 import yaml
 
-from collections import Mapping
+from collections.abc import Mapping
 from requests import HTTPError
 from yaml.parser import ParserError  # noqa
 from yaml.scanner import ScannerError  # noqa
@@ -249,7 +249,8 @@ def _read_from_json(f_path, is_stream=False):
         except ValueError as e:
             raise PolyaxonSchemaError("Json error: %s" % e) from e
     try:
-        return json.loads(open(f_path).read())
+        with open(f_path) as f:
+            return json.loads(f.read())
     except ValueError as e:
         raise PolyaxonSchemaError(
             "Received non valid json: `%s`.\n" "Json error %s" % (f_path, e)

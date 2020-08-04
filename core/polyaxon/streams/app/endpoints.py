@@ -25,24 +25,30 @@ from starlette.responses import FileResponse, Response, UJSONResponse
 from polyaxon import settings
 from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.k8s.custom_resources.operation import get_resource_name, get_run_instance
+from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
 from polyaxon.lifecycle import V1StatusCondition
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events
 from polyaxon.polyboard.logging import V1Logs
-from polyaxon.streams.controllers.archived_logs import get_archived_operation_logs
+from polyaxon.stores.async_manager import (
+    delete_dir,
+    delete_file,
+    download_dir,
+    download_file,
+    list_files,
+)
 from polyaxon.streams.controllers.events import (
     get_archived_operation_events,
     get_archived_operation_resources,
     get_archived_operations_events,
 )
 from polyaxon.streams.controllers.k8s_crd import get_k8s_operation
-from polyaxon.streams.controllers.k8s_logs import get_k8s_operation_logs
-from polyaxon.streams.stores.async_manager import (
-    download_dir,
-    download_file,
-    list_files,
+from polyaxon.streams.controllers.logs import (
+    get_archived_operation_logs,
+    get_operation_logs,
+    get_tmp_operation_logs,
 )
-from polyaxon.streams.tasks.logs import upload_logs
+from polyaxon.streams.tasks.logs import clean_tmp_logs, upload_logs
 from polyaxon.streams.tasks.notification import notify_run
 from polyaxon.utils.bool_utils import to_bool
 
@@ -56,16 +62,16 @@ async def get_logs(request):
     project = request.path_params["project"]
     run_uuid = request.path_params["run_uuid"]
     force = to_bool(request.query_params.get("force"), handle_none=True)
-    resource_name = get_resource_name(run_uuid=run_uuid)
-    operation = get_run_instance(owner=owner, project=project, run_uuid=run_uuid)
     last_time = QueryParams(request.url.query).get("last_time")
     if last_time:
         last_time = dt_parser.parse(last_time).astimezone()
     last_file = QueryParams(request.url.query).get("last_file")
+    files = []
 
-    k8s_manager = None
-    k8s_operation = None
-    if not last_file:
+    if last_time:
+        resource_name = get_resource_name(run_uuid=run_uuid)
+        operation = get_run_instance(owner=owner, project=project, run_uuid=run_uuid)
+
         k8s_manager = AsyncK8SManager(
             namespace=settings.CLIENT_CONFIG.namespace,
             in_cluster=settings.CLIENT_CONFIG.in_cluster,
@@ -74,29 +80,27 @@ async def get_logs(request):
         k8s_operation = await get_k8s_operation(
             k8s_manager=k8s_manager, resource_name=resource_name
         )
+        if k8s_operation:
+            operation_logs, last_time = await get_operation_logs(
+                k8s_manager=k8s_manager,
+                k8s_operation=k8s_operation,
+                operation=operation,
+                last_time=last_time,
+            )
+        else:
+            operation_logs, last_time = await get_tmp_operation_logs(
+                run_uuid=run_uuid, last_time=last_time
+            )
+        if k8s_manager:
+            await k8s_manager.close()
 
-    if not last_file and k8s_operation:
-        last_file = None
-        operation_logs, last_time = await get_k8s_operation_logs(
-            operation=operation,
-            last_time=last_time,
-            k8s_manager=k8s_manager,
-            stream=True,
-        )
-        if k8s_operation["status"].get("completionTime"):
-            last_time = None
-    elif last_time:  # Streaming should stop
-        last_file = None
-        last_time = None
-        operation_logs = []
     else:
-        last_time = None
-        operation_logs, last_file = await get_archived_operation_logs(
+        operation_logs, last_file, files = await get_archived_operation_logs(
             run_uuid=run_uuid, last_file=last_file, check_cache=not force
         )
-    if k8s_manager:
-        await k8s_manager.close()
-    response = V1Logs(last_time=last_time, last_file=last_file, logs=operation_logs)
+    response = V1Logs(
+        last_time=last_time, last_file=last_file, logs=operation_logs, files=files
+    )
     return UJSONResponse(response.to_dict())
 
 
@@ -119,7 +123,7 @@ async def collect_logs(request):
             detail="Run's logs was not collected, resource was not found.",
             status_code=status.HTTP_400_BAD_REQUEST,
         )
-    operation_logs, _ = await get_k8s_operation_logs(
+    operation_logs, _ = await query_k8s_operation_logs(
         operation=operation, k8s_manager=k8s_manager, last_time=None
     )
     if k8s_manager:
@@ -127,8 +131,8 @@ async def collect_logs(request):
     if not operation_logs:
         return Response()
 
-    logs = operation_logs
-    task = BackgroundTask(upload_logs, run_uuid=run_uuid, logs=logs)
+    await upload_logs(run_uuid=run_uuid, logs=operation_logs)
+    task = BackgroundTask(clean_tmp_logs, run_uuid=run_uuid)
     return Response(background=task)
 
 
@@ -259,6 +263,13 @@ async def notify(request):
     return Response(background=task)
 
 
+async def handle_artifact(request):
+    if request.method == "GET":
+        return await download_artifact(request)
+    if request.method == "DELETE":
+        return await delete_artifact(request)
+
+
 async def download_artifact(request):
     run_uuid = request.path_params["run_uuid"]
     filepath = request.query_params.get("path", "")
@@ -281,6 +292,31 @@ async def download_artifact(request):
     return redirect(archived_path)
 
 
+async def delete_artifact(request):
+    run_uuid = request.path_params["run_uuid"]
+    filepath = request.query_params.get("path", "")
+    if not filepath:
+        return Response(
+            content="A `path` query param is required to delete a file",
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+    subpath = "{}/{}".format(run_uuid, filepath).rstrip("/")
+    is_deleted = await delete_file(subpath=subpath)
+    if not is_deleted:
+        return Response(
+            content="Artifact could not be deleted: filepath={}".format(subpath),
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+    return Response(status_code=status.HTTP_204_NO_CONTENT,)
+
+
+async def handle_artifacts(request):
+    if request.method == "GET":
+        return await download_artifacts(request)
+    if request.method == "DELETE":
+        return await delete_artifacts(request)
+
+
 async def download_artifacts(request):
     run_uuid = request.path_params["run_uuid"]
     path = request.query_params.get("path", "")
@@ -292,6 +328,19 @@ async def download_artifacts(request):
             status_code=status.HTTP_404_NOT_FOUND,
         )
     return redirect(archived_path)
+
+
+async def delete_artifacts(request):
+    run_uuid = request.path_params["run_uuid"]
+    path = request.query_params.get("path", "")
+    subpath = "{}/{}".format(run_uuid, path).rstrip("/")
+    is_deleted = await delete_dir(subpath=subpath)
+    if not is_deleted:
+        return Response(
+            content="Artifacts could not be deleted: filepath={}".format(subpath),
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+    return Response(status_code=status.HTTP_204_NO_CONTENT,)
 
 
 async def tree_artifacts(request):

@@ -19,6 +19,7 @@ from kubernetes.client.rest import ApiException
 
 from polyaxon.exceptions import PolyaxonK8SError
 from polyaxon.k8s import constants
+from polyaxon.k8s.monitor import is_pod_running
 from polyaxon.logger import logger
 
 
@@ -719,3 +720,7 @@ class K8SManager:
         objs = self.list_services(reraise=reraise, **kwargs)
         for obj in objs:
             self.delete_ingress(name=obj.metadata.name, reraise=reraise)
+
+    def is_pod_running(self, pod_id: str, container_id: str):
+        event = self.k8s_api.read_namespaced_pod_status(pod_id, self.namespace)
+        return is_pod_running(event, container_id)

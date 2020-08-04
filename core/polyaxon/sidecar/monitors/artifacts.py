@@ -20,13 +20,13 @@ from typing import Optional
 
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
 from polyaxon.stores.manager import get_artifacts_connection, upload_file_or_dir
-from polyaxon.utils.tz_utils import now
+from polyaxon.utils.date_utils import path_last_modified
 
 
 def sync_artifacts(last_check: Optional[datetime], run_uuid: str):
-    new_check = now()
     connection_type = get_artifacts_connection()
     path_from = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_uuid)
+    new_check = path_last_modified(path_from)
     # check if there's a path to sync
     if os.path.exists(path_from):
         path_to = os.path.join(connection_type.store_path, run_uuid)

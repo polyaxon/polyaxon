@@ -25,9 +25,10 @@ run:
   kind: job
   connections: ["{{ destination.connection }}"]
   container:
-    image: polyaxon/polyaxon-init:1.1.5
-    command: ["polyaxon", "docker", "build-and-push"]
+    image: polyaxon/polyaxon-dockerizer:1.1.6
+    imagePullPolicy: "Always"
     args: [
+      "build-and-push",
       "-c",
       "{{ context or globals.artifacts_path }}",
       "-d",

@@ -21,7 +21,12 @@ import pytest
 from tests.test_streams.base import create_tmp_files, set_store
 
 from polyaxon import settings
-from polyaxon.streams.stores.async_manager import download_dir, download_file
+from polyaxon.stores.async_manager import (
+    delete_dir,
+    delete_file,
+    download_dir,
+    download_file,
+)
 from polyaxon.utils.path_utils import check_or_create_path
 
 
@@ -53,3 +58,34 @@ async def test_download_file():
 
     path_to = os.path.join(settings.AGENT_CONFIG.artifacts_root, "foo/0")
     assert os.path.exists(path_to)
+
+
+@pytest.mark.asyncio
+@pytest.mark.filterwarnings("ignore::RuntimeWarning")
+async def test_delete_file():
+    store_root = set_store()
+    path = os.path.join(store_root, "foo")
+    check_or_create_path(path, is_dir=True)
+    create_tmp_files(path)
+    filepath = "{}/0".format(path)
+    assert os.path.exists(path) is True
+    assert os.path.exists(filepath) is True
+    await delete_file(subpath="foo/0")
+    assert os.path.exists(path) is True
+    assert os.path.exists(filepath) is False
+
+
+@pytest.mark.asyncio
+@pytest.mark.filterwarnings("ignore::RuntimeWarning")
+async def test_delete_dir():
+    store_root = set_store()
+    path = os.path.join(store_root, "foo")
+    check_or_create_path(path, is_dir=True)
+    create_tmp_files(path)
+    filepath = "{}/0".format(path)
+    assert os.path.exists(path) is True
+    assert os.path.exists(filepath) is True
+    assert os.path.exists(filepath) is True
+    await delete_dir(subpath="foo")
+    assert os.path.exists(path) is False
+    assert os.path.exists(filepath) is False

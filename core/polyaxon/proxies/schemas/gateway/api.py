@@ -18,8 +18,8 @@ from polyaxon import settings
 from polyaxon.api import (
     ADMIN_V1_LOCATION,
     API_V1_LOCATION,
-    UI_V1_LOCATION,
     SSO_V1_LOCATION,
+    UI_V1_LOCATION,
 )
 from polyaxon.proxies.schemas.base import clean_config, get_config
 from polyaxon.proxies.schemas.urls import (

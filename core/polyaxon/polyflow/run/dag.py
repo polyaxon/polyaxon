@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections import Mapping
+from collections.abc import Mapping
 from typing import Set
 
 import polyaxon_sdk

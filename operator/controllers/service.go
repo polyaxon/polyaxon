@@ -134,6 +134,7 @@ func (r *OperationReconciler) reconcileDeploymentStatus(instance *operationv1.Op
 	log := r.Log
 
 	if len(deployment.Status.Conditions) == 0 {
+		log.V(1).Info("Service No Conditions")
 		return false
 	}
 

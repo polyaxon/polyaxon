@@ -16,7 +16,7 @@
 
 import os
 
-from collections import Mapping
+from collections.abc import Mapping
 from typing import Callable, Optional
 
 import ujson

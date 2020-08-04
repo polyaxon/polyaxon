@@ -39,13 +39,17 @@ from polyaxon.utils.list_utils import to_list
 SIDECAR_CONTAINER = "polyaxon-sidecar"
 
 
-def get_sidecar_args(container_id: str, sleep_interval: int, sync_interval: int) -> str:
-    return (
-        "polyaxon sidecar "
-        "--container_id={} "
-        "--sleep_interval={} "
-        "--sync_interval={}".format(container_id, sleep_interval, sync_interval)
-    )
+def get_sidecar_args(
+    container_id: str, sleep_interval: int, sync_interval: int, monitor_logs: bool
+) -> List[str]:
+    args = [
+        "--container_id={}".format(container_id),
+        "--sleep_interval={}".format(sleep_interval),
+        "--sync_interval={}".format(sync_interval),
+    ]
+    if monitor_logs:
+        args.append("--monitor-logs")
+    return args
 
 
 def get_sidecar_container(
@@ -89,6 +93,7 @@ def get_sidecar_container(
         container_id=container_id,
         sleep_interval=polyaxon_sidecar.sleep_interval,
         sync_interval=polyaxon_sidecar.sync_interval,
+        monitor_logs=polyaxon_sidecar.monitor_logs,
     )
 
     env_from = []
@@ -125,8 +130,8 @@ def get_sidecar_container(
         name=SIDECAR_CONTAINER,
         image=polyaxon_sidecar.get_image(),
         image_pull_policy=polyaxon_sidecar.image_pull_policy,
-        command=["/bin/bash", "-c"],
-        args=[sidecar_args],
+        command=["polyaxon", "sidecar"],
+        args=sidecar_args,
         env=env,
         env_from=env_from,
         resources=polyaxon_sidecar.get_resources(),

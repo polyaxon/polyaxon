@@ -21,7 +21,7 @@ from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
 
-class RetryTransportMixin(object):
+class RetryTransportMixin:
     """Threads operations transport."""
 
     @property

@@ -39,7 +39,6 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_IS_OPS,
     POLYAXON_KEYS_K8S_IN_CLUSTER,
     POLYAXON_KEYS_K8S_NAMESPACE,
-    POLYAXON_KEYS_K8S_POD_ID,
     POLYAXON_KEYS_KEY_FILE,
     POLYAXON_KEYS_LOG_LEVEL,
     POLYAXON_KEYS_NO_API,
@@ -98,7 +97,6 @@ class ClientSchema(BaseSchema):
     header = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER)
     header_service = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER_SERVICE)
 
-    pod_id = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_POD_ID)
     namespace = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_NAMESPACE)
     no_api = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_NO_API)
     disable_errors_reporting = fields.Bool(
@@ -140,7 +138,6 @@ class ClientConfig(BaseConfig):
         POLYAXON_KEYS_IS_OFFLINE,
         POLYAXON_KEYS_IS_OPS,
         POLYAXON_KEYS_K8S_NAMESPACE,
-        POLYAXON_KEYS_K8S_POD_ID,
         POLYAXON_KEYS_KEY_FILE,
         POLYAXON_KEYS_LOG_LEVEL,
         POLYAXON_KEYS_NO_API,
@@ -182,7 +179,6 @@ class ClientConfig(BaseConfig):
         archive_root=None,
         header=None,
         header_service=None,
-        pod_id=None,
         namespace=None,
         no_api=None,
         disable_errors_reporting=None,
@@ -216,7 +212,6 @@ class ClientConfig(BaseConfig):
         self.timezone = timezone
         self.interval = interval or 5
         self.watch_interval = watch_interval or 5
-        self.pod_id = pod_id
         self.namespace = namespace
         self.no_api = self._get_bool(no_api, False)
         self.authentication_type = authentication_type or AuthenticationTypes.TOKEN

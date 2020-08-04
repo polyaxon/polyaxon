@@ -144,6 +144,9 @@ class LocalStore(StoreMixin):
             **kwargs
         )
 
+    def delete_file(self, path, **kwargs):
+        os.remove(path)
+
     def delete(self, path, **kwargs):
         if not os.path.exists(path):
             return

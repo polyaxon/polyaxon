@@ -17,7 +17,7 @@
 import json
 import re
 
-from collections import Mapping
+from collections.abc import Mapping
 from datetime import date, datetime
 from distutils.util import strtobool  # pylint:disable=import-error
 from json import JSONDecodeError

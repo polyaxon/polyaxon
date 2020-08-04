@@ -5,10 +5,6 @@ description: "Build container images with Polyaxon dockerizer"
 tags: ["build"]
 
 inputs:
-- name: image
-  isOptional: true
-  type: str
-  value: polyaxon/polyaxon-init:dev
 - name: context
   isOptional: true
   type: str
@@ -29,10 +25,10 @@ run:
   kind: job
   connections: ["{{ destination.connection }}"]
   container:
+    image: polyaxon/polyaxon-dockerizer:1.1.6
     imagePullPolicy: "Always"
-    image: "{{ image }}"
-    command: ["polyaxon", "docker", "build-and-push"]
     args: [
+      "build-and-push",
       "-c",
       "{{ context or globals.artifacts_path }}",
       "-d",
@@ -40,6 +36,5 @@ run:
       "{{ nocache }}"
     ]
     env:
-      - name: PYTHONUNBUFFERED
-        value: "true"
-
+    - name: PYTHONUNBUFFERED
+      value: "true"

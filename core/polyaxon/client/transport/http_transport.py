@@ -32,7 +32,7 @@ from polyaxon.logger import logger
 from polyaxon.utils.list_utils import to_list
 
 
-class HttpTransportMixin(object):
+class HttpTransportMixin:
     """HTTP operations transport."""
 
     @property

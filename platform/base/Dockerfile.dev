@@ -6,5 +6,8 @@ LABEL maintainer="Polyaxon, Inc. <contact@polyaxon.com>"
 COPY platform/base/requirements /base/requirements/
 COPY requirements/base.txt /base/requirements/base.txt
 COPY requirements/core.txt /base/requirements/core.txt
+COPY requirements/test.txt /base/requirements/test.txt
 RUN pip3 install --no-cache-dir -r /base/requirements/core.txt
+RUN pip3 install --no-cache-dir -r /base/requirements/test.txt
 RUN pip3 install --no-cache-dir -r /base/requirements/requirements-test.txt
+RUN rm -rf /base

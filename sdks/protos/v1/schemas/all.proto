@@ -27,7 +27,7 @@ import "v1/polyflow/run.proto";
 import "v1/polyflow/compiled_operation.proto";
 import "v1/polyflow/reference.proto";
 import "v1/polyflow/schedule.proto";
-import "v1/polyflow/polyaxon_containers.proto";
+import "v1/polyflow/auxiliary_containers.proto";
 import "v1/polyflow/connection.proto";
 import "v1/polyflow/k8s_resource.proto";
 import "v1/types/artifacts.proto";

@@ -33,10 +33,13 @@ import (
 // swagger:model v1Logs
 type V1Logs struct {
 
-	// last file
+	// Log files
+	Files []string `json:"files"`
+
+	// Last log file
 	LastFile string `json:"last_file,omitempty"`
 
-	// last time
+	// Last log time
 	// Format: date-time
 	LastTime strfmt.DateTime `json:"last_time,omitempty"`
 

@@ -16,7 +16,7 @@
 
 import ast
 
-from collections import Mapping
+from collections.abc import Mapping
 from typing import Union
 
 import polyaxon_sdk

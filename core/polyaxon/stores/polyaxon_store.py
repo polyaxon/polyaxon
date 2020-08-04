@@ -162,9 +162,10 @@ class PolyaxonStore(StoreMixin):
             )
 
     def download_file(self, url, path, **kwargs):
-        local_path = kwargs.pop("path_to", get_path(
-            settings.CLIENT_CONFIG.archive_root, self._client.run_uuid,
-        ))
+        local_path = kwargs.pop(
+            "path_to",
+            get_path(settings.CLIENT_CONFIG.archive_root, self._client.run_uuid,),
+        )
         _local_path = local_path
         if path:
             _local_path = get_path(local_path, path)

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **imagePullPolicy** | **String** |  |  [optional]
 **sleepInterval** | **Integer** |  |  [optional]
 **syncInterval** | **Integer** |  |  [optional]
+**monitorLogs** | **Boolean** |  |  [optional]
 **resources** | [**Object**](.md) |  |  [optional]
 
 

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-class ManagerInterface(object):
+class ManagerInterface:
     def __init__(self):
         self._state = {}
 
