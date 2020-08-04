@@ -19,8 +19,8 @@ from polyaxon.api import (
     API_V1_LOCATION,
     AUTH_V1_LOCATION,
     HEALTHZ_LOCATION,
-    UI_V1_LOCATION,
     SSO_V1_LOCATION,
+    UI_V1_LOCATION,
 )
 from polyaxon.proxies.schemas.base import clean_config, get_config
 

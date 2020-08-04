@@ -100,11 +100,14 @@ def ops(ctx, project, uid):
 @click.option(
     "--query", "-q", type=str, help="To filter the runs based on this query spec."
 )
-@click.option("--sort", "-s", type=str, help="To change order by of the runs.")
+@click.option(
+    "--sort", "-s", type=str, help="To order the runs based on this sort spec."
+)
 @click.option("--limit", type=int, help="To limit the list of runs.")
 @click.option("--offset", type=int, help="To offset the list of runs.")
+@click.option("--columns", "-c", type=str, help="The columns to show.")
 @click.pass_context
-def ls(ctx, io, query, sort, limit, offset):
+def ls(ctx, io, query, sort, limit, offset, columns):
     """List runs for this project.
 
     Uses /docs/core/cli/#caching
@@ -171,6 +174,7 @@ def ls(ctx, io, query, sort, limit, offset):
         objects = get_runs_with_keys(objects=objects, params_keys=["inputs", "outputs"])
         objects = list_dicts_to_tabulate(
             objects,
+            include_attrs=validate_tags(columns),
             exclude_attrs=[
                 "owner",
                 "project",
@@ -190,6 +194,7 @@ def ls(ctx, io, query, sort, limit, offset):
     else:
         objects = list_dicts_to_tabulate(
             objects,
+            include_attrs=validate_tags(columns),
             exclude_attrs=[
                 "owner",
                 "project",
@@ -650,9 +655,15 @@ def logs(ctx, follow, hide_time, all_info):
     )
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
 
-    get_run_logs(
-        client=client, hide_time=hide_time, all_info=all_info, follow=follow,
-    )
+    try:
+        get_run_logs(
+            client=client, hide_time=hide_time, all_info=all_info, follow=follow,
+        )
+    except (ApiException, HTTPError, PolyaxonClientException) as e:
+        handle_cli_error(
+            e, message="Could not get logs for run `{}`.".format(client.run_uuid),
+        )
+        sys.exit(1)
 
 
 @ops.command()

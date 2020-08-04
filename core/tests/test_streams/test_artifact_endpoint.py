@@ -48,9 +48,17 @@ class TestArtifactEndpoints(BaseTestCase):
         response = self.client.get(self.base_url + "?=stream=true")
         assert response.status_code == 400
 
+    def test_delete_artifact_not_passing_path(self):
+        response = self.client.delete(self.base_url)
+        assert response.status_code == 400
+
     def test_download_artifact_non_existing_path(self):
         response = self.client.get(self.base_url + "?path=foo")
         assert response.status_code == 404
+
+    def test_delete_artifact_non_existing_path(self):
+        response = self.client.delete(self.base_url + "?path=foo")
+        assert response.status_code == 400
 
     def test_stream_artifact_non_existing_path(self):
         response = self.client.get(self.base_url + "?stream=true&path=foo")
@@ -182,3 +190,24 @@ class TestArtifactEndpoints(BaseTestCase):
         assert os.path.exists(filepath) is True
         response = self.client.get(self.base_url + "?stream=true&path=foo/1&force=true")
         assert response.status_code == 404
+
+    def test_delete_artifact_passing_path(self):
+        filepath = os.path.join(self.run_path, "1")
+        assert os.path.exists(filepath) is True
+        response = self.client.delete(self.base_url + "?path=1")
+        assert response.status_code == 204
+        assert os.path.exists(filepath) is False
+
+        # Nested dirs
+        nested_path = os.path.join(self.run_path, "foo")
+        create_path(nested_path)
+        create_tmp_files(nested_path)
+        filepath = os.path.join(self.run_path, "foo", "1")
+        assert os.path.exists(filepath) is True
+        response = self.client.delete(self.base_url + "?path=foo/1")
+        assert response.status_code == 204
+        assert os.path.exists(filepath) is False
+
+        # Deleting same file
+        response = self.client.delete(self.base_url + "?path=foo/1")
+        assert response.status_code == 400

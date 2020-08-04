@@ -14,4 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.sidecar.logging.monitor import sync_logs
+import asyncio
+
+from functools import wraps
+
+
+def coroutine(f):
+    """https://github.com/pallets/click/issues/85#issuecomment-503464628"""
+
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        return asyncio.run(f(*args, **kwargs))
+
+    return wrapper

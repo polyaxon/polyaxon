@@ -41,7 +41,7 @@ class ScheduleSchema(BaseOneOfSchema):
     }
 
 
-class ScheduleMixin(object):
+class ScheduleMixin:
     def get_schedule_kind(self):
         raise NotImplementedError
 

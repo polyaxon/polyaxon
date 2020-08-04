@@ -129,7 +129,7 @@ error_page 404 /static/errors/404.html;
 
 
 location = /favicon.ico {
-    alias /polyaxon/static/v1/images/favicon.ico;
+    rewrite ^ /static/images/favicon.ico;
 }
 
 
@@ -266,7 +266,7 @@ error_page 404 /static/errors/404.html;
 
 
 location = /favicon.ico {
-    alias /polyaxon/static/v1/images/favicon.ico;
+    rewrite ^ /static/images/favicon.ico;
 }
 
 

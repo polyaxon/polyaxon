@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections import Mapping
+from collections.abc import Mapping
 
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.utils.formatting import Printer

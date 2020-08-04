@@ -30,7 +30,7 @@ from polyaxon.utils.date_utils import to_datetime
 AZURE_MODULE = "polyaxon.connections.azure.azure_blobstore.{}"
 
 
-class MockBlobList(object):
+class MockBlobList:
     def __init__(self, items, next_marker=None):
         self.items = items
         self.next_marker = next_marker

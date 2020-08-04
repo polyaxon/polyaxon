@@ -21,7 +21,24 @@ from starlette.exceptions import HTTPException
 
 from polyaxon import settings
 from polyaxon.polyboard.logging import V1Log, V1Logs
-from polyaxon.streams.stores.async_manager import download_file, upload_data
+from polyaxon.stores.async_manager import (
+    delete_dir,
+    download_dir,
+    download_file,
+    upload_data,
+)
+from polyaxon.utils.path_utils import delete_path
+
+
+async def clean_tmp_logs(run_uuid: str):
+    if not settings.AGENT_CONFIG.artifacts_store:
+        raise HTTPException(
+            detail="Run's logs was not collected, resource was not found.",
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+    subpath = "{}/.tmpplxlogs".format(run_uuid)
+    delete_path(subpath)
+    await delete_dir(subpath=subpath)
 
 
 async def upload_logs(run_uuid: str, logs: List[V1Log]):
@@ -41,3 +58,9 @@ async def download_logs_file(
 ) -> str:
     subpath = "{}/plxlogs/{}".format(run_uuid, last_file)
     return await download_file(subpath, check_cache=check_cache)
+
+
+async def download_tmp_logs(run_uuid: str) -> str:
+    subpath = "{}/.tmpplxlogs".format(run_uuid)
+    delete_path(subpath)
+    return await download_dir(subpath)

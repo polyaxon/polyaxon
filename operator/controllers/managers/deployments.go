@@ -63,6 +63,9 @@ func IsDeploymentRunning(ds appsv1.DeploymentStatus, dc appsv1.DeploymentConditi
 	if dc.Type == appsv1.DeploymentProgressing && ds.AvailableReplicas > 0 && ds.ReadyReplicas > 0 {
 		return true
 	}
+	if dc.Type == appsv1.DeploymentAvailable && dc.Status == corev1.ConditionTrue {
+		return true
+	}
 	return false
 }
 

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-class LogLevels(object):
+class LogLevels:
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"

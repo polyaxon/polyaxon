@@ -31,16 +31,18 @@ from polyaxon.managers.compose import ComposeConfigManager
 from polyaxon.utils.formatting import Printer
 
 
-class DeployManager(object):
+class DeployManager:
     def __init__(
         self,
         config: DeploymentConfig = None,
         filepath=None,
+        deployment_type=False,
         manager_path=None,
         dry_run=False,
     ):
         self.config = config
         self.filepath = filepath
+        self.type = deployment_type
         self.manager_path = manager_path
         self.dry_run = dry_run
         self.kubectl = KubectlOperator()
@@ -50,6 +52,8 @@ class DeployManager(object):
 
     @property
     def deployment_type(self):
+        if self.type:
+            return self.type
         if self.config and self.config.deployment_type:
             return self.config.deployment_type
         return DeploymentTypes.KUBERNETES
@@ -207,6 +211,11 @@ class DeployManager(object):
         args += ["--namespace={}".format(self.deployment_namespace)]
         if self.filepath:
             args += ["-f", self.filepath]
+        if self.type in [DeploymentTypes.MICRO_K8S, DeploymentTypes.MINIKUBE]:
+            args += [
+                "--set",
+                "gateway.service.type=NodePort,deploymentType={}".format(self.type),
+            ]
         if self.deployment_version:
             args += ["--version", self.deployment_version]
         if self.dry_run:
@@ -283,6 +292,14 @@ class DeployManager(object):
             args += [self.k8s_chart]
         if self.filepath:
             args += ["-f", self.filepath]
+        if self.type and self.type in [
+            DeploymentTypes.MICRO_K8S,
+            DeploymentTypes.MINIKUBE,
+        ]:
+            args += [
+                "--set",
+                "gateway.service.type=NodePort,deploymentType={}".format(self.type),
+            ]
         if self.deployment_version:
             args += ["--version", self.deployment_version]
         args += ["--namespace={}".format(self.deployment_namespace)]

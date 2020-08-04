@@ -17,7 +17,7 @@
 # pylint:disable=inconsistent-return-statements
 
 
-class IgnoreRawDecorator(object):
+class IgnoreRawDecorator:
     """
     The `IgnoreRawDecorator` is a decorator to ignore raw/fixture data during signals handling.
 
@@ -40,7 +40,7 @@ class IgnoreRawDecorator(object):
         return self.f(*args, **kwargs)
 
 
-class IgnoreUpdatesDecorator(object):
+class IgnoreUpdatesDecorator:
     """
     The `IgnoreUpdatesDecorator` is a decorator to ignore signals for updates.
 
@@ -64,7 +64,7 @@ class IgnoreUpdatesDecorator(object):
         return self.f(*args, **kwargs)
 
 
-class IgnoreUpdatesPreDecorator(object):
+class IgnoreUpdatesPreDecorator:
     """
     The `IgnoreUpdatesPreDecorator` is a decorator to ignore signals for updates.
 
@@ -88,7 +88,7 @@ class IgnoreUpdatesPreDecorator(object):
         return self.f(*args, **kwargs)
 
 
-class CheckSpecificationDecorator(object):
+class CheckSpecificationDecorator:
     """
     The `CheckSpecificationDecorator` is a decorator to check if an instance has a specification.
 

@@ -15,7 +15,8 @@
 # limitations under the License.
 import os
 
-from collections import Mapping, OrderedDict
+from collections import OrderedDict
+from collections.abc import Mapping
 from datetime import timezone
 
 import ujson

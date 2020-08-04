@@ -29,7 +29,7 @@ def memoize(func):
 
     Example:
 
-        class MyClass(object):
+        class MyClass:
             @memoize
             def foo(self, a, b):
                 return self._do_calculation(a, b)

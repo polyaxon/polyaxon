@@ -33,7 +33,7 @@ ETA_INTERVAL = 1
 ETA_SMA_WINDOW = 9
 
 
-class Bar(object):
+class Bar:
     def __enter__(self):
         return self
 

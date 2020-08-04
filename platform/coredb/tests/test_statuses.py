@@ -139,6 +139,68 @@ class TestStatuses(TestCase):
         self.run.refresh_from_db()
         assert len(self.run.status_conditions) == 2
 
+    def test_status_transition(self):
+        new_run_status(
+            self.run,
+            condition=V1StatusCondition.get_condition(
+                type=V1Statuses.SCHEDULED, status=True, reason="foo"
+            ),
+        )
+        self.run.refresh_from_db()
+        assert len(self.run.status_conditions) == 1
+
+        # New running condition
+        new_run_status(
+            self.run,
+            condition=V1StatusCondition.get_condition(
+                type=V1Statuses.RUNNING,
+                status=True,
+                reason="foo",
+                message="New message",
+            ),
+        )
+        self.run.refresh_from_db()
+        assert len(self.run.status_conditions) == 2
+
+        # New warning condition
+        new_run_status(
+            self.run,
+            condition=V1StatusCondition.get_condition(
+                type=V1Statuses.WARNING,
+                status=True,
+                reason="foo",
+                message="New message",
+            ),
+        )
+        self.run.refresh_from_db()
+        assert len(self.run.status_conditions) == 3
+
+        # New running condition
+        new_run_status(
+            self.run,
+            condition=V1StatusCondition.get_condition(
+                type=V1Statuses.RUNNING,
+                status=True,
+                reason="foo",
+                message="New message",
+            ),
+        )
+        self.run.refresh_from_db()
+        assert len(self.run.status_conditions) == 4
+
+        # New warning condition
+        new_run_status(
+            self.run,
+            condition=V1StatusCondition.get_condition(
+                type=V1Statuses.WARNING,
+                status=True,
+                reason="foo",
+                message="New message",
+            ),
+        )
+        self.run.refresh_from_db()
+        assert len(self.run.status_conditions) == 5
+
     def test_new_status_set_start_date(self):
         # No status change
         assert self.run.started_at is None

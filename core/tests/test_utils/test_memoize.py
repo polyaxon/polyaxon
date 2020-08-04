@@ -27,7 +27,7 @@ class MemoizeMethodTest(BaseTestCase):
     def setUp(self):
         super().setUp()
 
-        class TestClass(object):
+        class TestClass:
             def __init__(self):
                 self.test0_execution_count = 0
                 self.test1_execution_count = 0

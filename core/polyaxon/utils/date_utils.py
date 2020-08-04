@@ -44,8 +44,12 @@ def to_datetime(value):
     return epoch + timedelta(seconds=value)
 
 
+def path_last_modified(filepath: str) -> datetime:
+    return to_datetime(os.stat(filepath).st_mtime)
+
+
 def file_modified_since(filepath: str, last_time: datetime) -> bool:
-    return to_datetime(os.stat(filepath).st_mtime) > last_time
+    return path_last_modified(filepath) > last_time
 
 
 class DateTimeFormatter:

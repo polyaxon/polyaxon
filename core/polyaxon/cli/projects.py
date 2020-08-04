@@ -73,6 +73,7 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
 )
 @click.option(
     "--owner",
+    "-o",
     type=str,
     help="Name of the owner/namespace, "
     "if not provided it will default to the namespace of the current user.",
@@ -133,13 +134,20 @@ def create(ctx, name, owner, description, tags, private, init):
 @project.command()
 @click.option(
     "--owner",
+    "-o",
     type=str,
     help="Name of the owner/namespace, "
     "if not provided it will default to the namespace of the current user.",
 )
+@click.option(
+    "--query", "-q", type=str, help="To filter the projects based on this query spec."
+)
+@click.option(
+    "--sort", "-s", type=str, help="To order the projects based on the sort spec."
+)
 @click.option("--limit", type=int, help="To limit the list of projects.")
 @click.option("--offset", type=int, help="To offset the list of projects.")
-def ls(owner, limit, offset):
+def ls(owner, query, sort, limit, offset):
     """List projects.
 
     Uses /docs/core/cli/#caching
@@ -154,7 +162,9 @@ def ls(owner, limit, offset):
 
     try:
         polyaxon_client = ProjectClient(owner=owner)
-        response = polyaxon_client.list(limit=limit, offset=offset)
+        response = polyaxon_client.list(
+            limit=limit, offset=offset, query=query, sort=sort
+        )
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not get list of projects.")
         sys.exit(1)

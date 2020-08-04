@@ -38,6 +38,9 @@ type V1PolyaxonSidecarContainer struct {
 	// image tag
 	ImageTag string `json:"image_tag,omitempty"`
 
+	// monitor logs
+	MonitorLogs bool `json:"monitor_logs,omitempty"`
+
 	// resources
 	Resources V1ResourceRequirements `json:"resources,omitempty"`
 

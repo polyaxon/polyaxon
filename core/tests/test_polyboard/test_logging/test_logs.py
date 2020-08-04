@@ -118,9 +118,42 @@ class TestLogsV1(BaseTestCase):
                 ),
             ],
         )
-        logs_dict = logs.to_dict()
-        assert logs_dict == logs.from_dict(logs_dict).to_dict()
-        assert logs_dict == logs.read(logs.to_dict(dump=True)).to_dict()
+        logs_dict = logs.to_light_dict()
+        assert logs_dict == logs.from_dict(logs_dict).to_light_dict()
+        assert logs_dict == logs.read(logs.to_dict(dump=True)).to_light_dict()
+
+    def test_logs_with_files(self):
+        logs = V1Logs(
+            last_file=1000,
+            last_time=now(),
+            files=["file1", "file2"],
+            logs=[
+                V1Log(
+                    value="foo",
+                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    node="node1",
+                    pod="pod1",
+                    container="container1",
+                ),
+                V1Log(
+                    value="foo",
+                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    node="node1",
+                    pod="pod1",
+                    container="container1",
+                ),
+                V1Log(
+                    value="foo",
+                    timestamp=dt_parser.parse("2018-12-11 10:24:57 UTC"),
+                    node="node1",
+                    pod="pod1",
+                    container="container1",
+                ),
+            ],
+        )
+        logs_dict = logs.to_light_dict()
+        assert logs_dict == logs.from_dict(logs_dict).to_light_dict()
+        assert logs_dict == logs.read(logs.to_dict(dump=True)).to_light_dict()
 
     def test_chunk_logs(self):
         logs = [

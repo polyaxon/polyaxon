@@ -22,7 +22,7 @@ from tempfile import TemporaryFile
 from polyaxon.exceptions import PolyaxonOperatorException
 
 
-class CmdOperator(object):
+class CmdOperator:
     CMD = ""
 
     @classmethod

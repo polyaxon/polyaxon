@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.1.5
+  version: 1.1.6
 servers:
 - url: /
 security:
@@ -11119,6 +11119,273 @@ paths:
       tags:
       - RunsV1
       x-accepts: application/json
+  /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact:
+    delete:
+      operationId: DeleteRunArtifact
+      parameters:
+      - description: namespace
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Project where the run will be assigned
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+      - description: Uuid identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Path query param.
+        in: query
+        name: path
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Delete run artifact
+      tags:
+      - RunsV1
+      x-accepts: application/json
+    get:
+      operationId: GetRunArtifact
+      parameters:
+      - description: namespace
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Project where the experiement will be assigned
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+      - description: Unique integer identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Artifact filepath.
+        in: query
+        name: path
+        schema:
+          type: string
+      - description: Whether to stream the file.
+        in: query
+        name: stream
+        schema:
+          type: boolean
+      - description: Whether to force reload.
+        in: query
+        name: force
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+      summary: Get run artifact
+      tags:
+      - RunsV1
+      x-accepts: application/json
+  /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts:
+    delete:
+      operationId: DeleteRunArtifacts
+      parameters:
+      - description: namespace
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Project where the run will be assigned
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+      - description: Uuid identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Path query param.
+        in: query
+        name: path
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Delete run artifacts
+      tags:
+      - RunsV1
+      x-accepts: application/json
+    get:
+      operationId: GetRunArtifacts
+      parameters:
+      - description: namespace
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Project where the experiement will be assigned
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+      - description: Unique integer identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Artifact filepath.
+        in: query
+        name: path
+        schema:
+          type: string
+      - description: Whether to force reload.
+        in: query
+        name: force
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+      summary: Get run artifacts
+      tags:
+      - RunsV1
+      x-accepts: application/json
   /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree:
     get:
       operationId: GetRunArtifactsTree
@@ -11802,145 +12069,6 @@ paths:
       tags:
       - RunsV1
       x-contentType: multipart/form-data
-      x-accepts: application/json
-  /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts:
-    get:
-      operationId: GetRunArtifacts
-      parameters:
-      - description: namespace
-        in: path
-        name: namespace
-        required: true
-        schema:
-          type: string
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Project where the experiement will be assigned
-        in: path
-        name: project
-        required: true
-        schema:
-          type: string
-      - description: Unique integer identifier of the entity
-        in: path
-        name: uuid
-        required: true
-        schema:
-          type: string
-      - description: Artifact filepath.
-        in: query
-        name: path
-        schema:
-          type: string
-      - description: Whether to force reload.
-        in: query
-        name: force
-        schema:
-          type: boolean
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: string
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-      summary: Get run artifacts
-      tags:
-      - RunsV1
-      x-accepts: application/json
-  /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact:
-    get:
-      operationId: GetRunArtifact
-      parameters:
-      - description: namespace
-        in: path
-        name: namespace
-        required: true
-        schema:
-          type: string
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Project where the experiement will be assigned
-        in: path
-        name: project
-        required: true
-        schema:
-          type: string
-      - description: Unique integer identifier of the entity
-        in: path
-        name: uuid
-        required: true
-        schema:
-          type: string
-      - description: Artifact filepath.
-        in: query
-        name: path
-        schema:
-          type: string
-      - description: Whether to stream the file.
-        in: query
-        name: stream
-        schema:
-          type: boolean
-      - description: Whether to force reload.
-        in: query
-        name: force
-        schema:
-          type: boolean
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: string
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-      summary: Get run artifact
-      tags:
-      - RunsV1
       x-accepts: application/json
 components:
   schemas:
@@ -16739,6 +16867,9 @@ components:
     v1Logs:
       example:
         last_time: 2000-01-23T04:56:07.000+00:00
+        files:
+        - files
+        - files
         logs:
         - container: container
           node: node
@@ -16759,11 +16890,16 @@ components:
           type: array
         last_time:
           format: date-time
-          title: last time
+          title: Last log time
           type: string
         last_file:
-          title: last file
+          title: Last log file
           type: string
+        files:
+          items:
+            type: string
+          title: Log files
+          type: array
       title: Logs
       type: object
     v1MPIJob:
@@ -17830,6 +17966,7 @@ components:
         resources: '{}'
         sync_interval: 9
         image_tag: image_tag
+        monitor_logs: true
       properties:
         image:
           type: string
@@ -17843,6 +17980,9 @@ components:
         sync_interval:
           format: int32
           type: integer
+        monitor_logs:
+          format: boolean
+          type: boolean
         resources:
           title: Placeholder Resource Requirements
           type: object
@@ -23210,6 +23350,7 @@ components:
           resources: '{}'
           sync_interval: 9
           image_tag: image_tag
+          monitor_logs: true
         operation_cond:
           io_conidtion:
             param: param

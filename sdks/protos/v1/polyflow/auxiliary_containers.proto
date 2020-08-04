@@ -27,7 +27,8 @@ message PolyaxonSidecarContainer {
     string image_pull_policy = 3;
     int32 sleep_interval = 4;
     int32 sync_interval = 5;
-    ResourceRequirements resources = 6;
+    bool monitor_logs = 6;
+    ResourceRequirements resources = 7;
 }
 
 // Polyaxon init specification

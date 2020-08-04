@@ -28,7 +28,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon",
-    version="1.1.5",
+    version="1.1.6",
     description="Command Line Interface (CLI) and client to interact with Polyaxon API.",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
@@ -70,7 +70,7 @@ setup(
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
         "marshmallow>=3.4.0,<=3.7.1",
-        "polyaxon-sdk==1.1.5",
+        "polyaxon-sdk==1.1.6",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "PyYAML>=5.1",
@@ -100,10 +100,10 @@ setup(
             "altair",
         ],
         "streams": [
-            "kubernetes-asyncio==11.2.0",
-            "starlette==0.13.5",
+            "kubernetes_asyncio==11.2.0",
+            "starlette==0.13.6",
             "aiofiles==0.5.0",
-            "uvicorn==0.11.7",
+            "uvicorn==0.11.6",
             "pandas",
         ],
     },

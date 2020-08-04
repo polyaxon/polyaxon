@@ -22,7 +22,7 @@ from tests.utils import BaseTestCase
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.polyboard.artifacts import V1RunArtifact
 from polyaxon.polyboard.events import V1Events
-from polyaxon.sidecar.outputs.summaries import sync_events_summaries
+from polyaxon.sidecar.monitors.summaries import sync_events_summaries
 
 
 @pytest.mark.sidecar_mark

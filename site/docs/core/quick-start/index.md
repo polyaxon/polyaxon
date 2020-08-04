@@ -13,8 +13,41 @@ tags:
 sidebar: "core"
 ---
 
-Let’s look at an example of how you can use Polyaxon for running deep learning experiments.
-This example assumes that both Polyaxon is [installed](/docs/setup/) and running.
+Let’s look at an example of how you can use Polyaxon for running deep learning experiments. 
+
+### Deploy local cluster
+
+This example assumes a functional [Polyaxon Deployment](/docs/setup/). 
+If you have Polyaxon already deployed and running, you can skip this section and proceed to [create a project](/docs/core/quick-start/#create-a-project). 
+Otherwise, this section will help you deploy a local Polyaxon cluster with default values.
+
+> **Note**: Minikube is not meant to be a production environment.
+
+Before you can deploy Polyaxon, make sure you have the following:
+ * [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) installed and running.
+ * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
+ * [Helm](https://helm.sh/docs/intro/install/).
+ * [Polyaxon CLI](/docs/setup/cli/).
+
+Deploy Polyaxon with default config values on Minikube:
+
+```bash
+polyaxon admin deploy -t minikube
+``` 
+
+Wait for all pods to reach the running state:
+
+```bash
+kubectl get pods -n polyaxon
+```
+
+Expose Polyaxon UI on your localhost:
+
+```bash
+polyaxon port-forward -t minikube
+```
+
+> **Tip**: You can learn more about how to customize your Polyaxon Deployment in the [setup section](/docs/setup/).
 
 ### Create a project 
 

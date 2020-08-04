@@ -27,5 +27,14 @@ def handle_cli_error(e, message=None, sys_exit: bool = False):
         Printer.print_error(
             HTTP_ERROR_MESSAGES_MAPPING.get(e.status), sys_exit=sys_exit
         )
+    elif hasattr(e, "message"):  # Handling of HTML errors
+        if "404" in e.message:
+            Printer.print_error(HTTP_ERROR_MESSAGES_MAPPING.get(404), sys_exit=sys_exit)
+        elif "401" in e.message:
+            Printer.print_error(HTTP_ERROR_MESSAGES_MAPPING.get(401), sys_exit=sys_exit)
+        elif "403" in e.message:
+            Printer.print_error(HTTP_ERROR_MESSAGES_MAPPING.get(403), sys_exit=sys_exit)
+        else:
+            Printer.print_error("Error message: {}.".format(e), sys_exit=sys_exit)
     else:
         Printer.print_error("Error message: {}.".format(e), sys_exit=sys_exit)
