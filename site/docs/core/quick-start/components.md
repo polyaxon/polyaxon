@@ -221,7 +221,7 @@ The required input is just for demonstration, if we try to run this component wi
 We need to pass an `epochs` param:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml epochs=10 -l
+$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml -P epochs=10 -l
 ```
 
 > The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
