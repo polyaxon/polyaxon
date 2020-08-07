@@ -37,14 +37,20 @@ class NotificationSchema(BaseCamelSchema):
 
 
 class V1Notification(BaseConfig, polyaxon_sdk.V1Notification):
-    """You can configure Polyaxon to send notifications to users about event changes in the platform.
+    """You can configure Polyaxon to send notifications to users and systems
+    about event changes in your runs.
+
+    Notifications also allow you to build or set up integrations using webhooks.
+    External systems can subscribe or provide handling for certain events.
+    When one of those events is triggered, Polyaxon will send an HTTP request
+    payload to the webhook's configured URL.
 
     Polyaxon can send notifications when a run reaches a final status:
 
      * succeeded
      * failed
      * stopped
-     * done
+     * done (any final state)
 
      Args:
          connections: List[str]

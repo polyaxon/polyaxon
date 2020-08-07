@@ -17,6 +17,7 @@
 CREATED = "created"
 UPDATED = "updated"
 DELETED = "deleted"
+PROMOTED = "promoted"
 VIEWED = "viewed"
 CLONED = "cloned"
 RESUMED = "resumed"
@@ -32,4 +33,14 @@ SETTINGS = "settings"
 NEW_STATUS = "new_status"
 NEW_ARTIFACTS = "new_artifacts"
 
-WRITE_ACTIONS = [CREATED, UPDATED, DELETED, RESUMED, COPIED, CLONED, STOPPED, SETTINGS]
+WRITE_ACTIONS = [
+    CREATED,
+    UPDATED,
+    DELETED,
+    RESUMED,
+    COPIED,
+    CLONED,
+    STOPPED,
+    SETTINGS,
+    PROMOTED,
+]

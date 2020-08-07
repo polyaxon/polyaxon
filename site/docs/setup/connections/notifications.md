@@ -2,7 +2,7 @@
 title: "Notifications"
 sub_link: "connections/notifications"
 meta_title: "Notifications and events in Polyaxon - Configuration"
-meta_description: "You can configure Polyaxon to send notifications to users about event changes in the platform."
+meta_description: "You can configure Polyaxon to send notifications to users and systems about event changes in the platform."
 tags:
   - configuration
   - polyaxon
@@ -12,7 +12,7 @@ tags:
 sidebar: "setup"
 ---
 
-You can configure Polyaxon to send notifications to users about event changes in the platform.
+You can configure Polyaxon to send notifications to users and systems about event changes in the platform.
 
 ## Slack
 
