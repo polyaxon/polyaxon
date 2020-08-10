@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.1
       - uses: azure/setup-helm@v1
-      - uses: helm/kind-action@v1.0.0-rc.1
+      - uses: helm/kind-action@v1.0.0
       - name: generate
         run: |
           helm repo add stable https://kubernetes-charts.storage.googleapis.com
