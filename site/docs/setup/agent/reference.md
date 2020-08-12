@@ -263,7 +263,7 @@ you can can provide a [valid time zone value](https://en.wikipedia.org/wiki/List
 
 | Parameter | Description         | Default
 | ----------| --------------------| ----------------------------------------------------------
-| `timeZone`| The timezone to use | `UTC`
+| `timezone`| The timezone to use | `UTC`
 
 
 ## Node manipulation

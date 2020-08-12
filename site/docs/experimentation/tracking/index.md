@@ -37,7 +37,7 @@ you can look at the [Python Library reference to learn more](/docs/core/python-l
 Polyaxon tracking exposes methods to log several aspects of a run:
 
  * Code Version: Git information used for the run.
- * Run time: Start and end time of the run.
+ * Duration: Start and end time of the run.
  * Environment: Name of the file to launch the run, the command, arguments, Python packages, ...
  * Parameters: Key-value parameters used or this run.
  * Events & Metrics: Key-value metrics where the value is numeric. Each metric can be updated throughout the course of the run (for example, to track how your model’s loss function is converging), and Polyaxon records and lets you visualize the metric’s full history.
