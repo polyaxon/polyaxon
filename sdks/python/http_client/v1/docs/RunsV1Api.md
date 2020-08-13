@@ -2803,7 +2803,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_bookmarked_runs**
-> V1ListRunsResponse list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListBookmarksResponse list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query)
 
 List bookmarked runs for user
 
@@ -2867,7 +2867,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ListRunsResponse**](V1ListRunsResponse.md)
+[**V1ListBookmarksResponse**](V1ListBookmarksResponse.md)
 
 ### Authorization
 

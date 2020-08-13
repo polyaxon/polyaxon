@@ -24,7 +24,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1UserSingup User Singup
+// V1UserSingup User singup
 //
 // swagger:model v1UserSingup
 type V1UserSingup struct {

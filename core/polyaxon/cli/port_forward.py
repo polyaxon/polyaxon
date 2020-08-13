@@ -26,9 +26,10 @@ from polyaxon.utils.formatting import Printer
 
 @click.command()
 @click.option(
-    "--port", type=int, help="The port to expose the gateway, default to 8000"
+    "-p", "--port", type=int, help="The port to expose the gateway, default to 8000"
 )
 @click.option(
+    "-n",
     "--namespace",
     type=str,
     help="The namespace used for deploying Polyaxon, default polyaxon.",
@@ -37,11 +38,12 @@ from polyaxon.utils.formatting import Printer
     "-t", "--deployment-type", help="Deployment type.",
 )
 @click.option(
-    "--release",
+    "-r",
+    "--release-name",
     type=str,
     help="The release name used for deploying Polyaxon, default polyaxon.",
 )
-def port_forward(port, namespace, deployment_type, release):
+def port_forward(port, namespace, deployment_type, release_name):
     """If you deploy Polyaxon using ClusterIP, you can use this command
     to access the gateway through `localhost:port`.
     """
@@ -54,14 +56,14 @@ def port_forward(port, namespace, deployment_type, release):
         port = 31833
     port = port or 8000
     namespace = namespace or "polyaxon"
-    release = release or "polyaxon"
+    release_name = release_name or "polyaxon"
 
     kubectl = KubectlOperator()
     args = [
         "port-forward",
         "-n",
         namespace,
-        "svc/{}-polyaxon-gateway".format(release),
+        "svc/{}-polyaxon-gateway".format(release_name),
         "{}:80".format(port),
     ]
 

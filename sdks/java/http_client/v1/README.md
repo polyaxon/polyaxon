@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.1.6
+- API version: 1.1.7
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.1.6</version>
+  <version>1.1.7</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.1.6"
+compile "org.openapitools:openapi-java-client:1.1.7"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.1.6.jar`
+* `target/openapi-java-client-1.1.7.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -137,8 +137,9 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**updateAgent**](docs/AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update agent
 *AgentsV1Api* | [**updateAgentToken**](docs/AgentsV1Api.md#updateAgentToken) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/token | Update agent token
 *ArtifactsStoresV1Api* | [**uploadArtifact**](docs/ArtifactsStoresV1Api.md#uploadArtifact) | **POST** /api/v1/catalogs/{owner}/artifacts/{uuid}/upload | Upload artifact to a store
+*AuthV1Api* | [**changePassword**](docs/AuthV1Api.md#changePassword) | **POST** /api/v1/auth/change-password | Change password
 *AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/auth/token | Login
-*AuthV1Api* | [**resetPassword**](docs/AuthV1Api.md#resetPassword) | **POST** /api/v1/auth/reset-password | ResetPAssword
+*AuthV1Api* | [**resetPassword**](docs/AuthV1Api.md#resetPassword) | **POST** /api/v1/auth/reset-password | Reset password
 *AuthV1Api* | [**signup**](docs/AuthV1Api.md#signup) | **POST** /api/v1/auth/signup | Signup
 *ComponentHubV1Api* | [**createComponentHub**](docs/ComponentHubV1Api.md#createComponentHub) | **POST** /api/v1/orgs/{owner}/components | Create hub component
 *ComponentHubV1Api* | [**deleteComponentHub**](docs/ComponentHubV1Api.md#deleteComponentHub) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
@@ -190,7 +191,7 @@ Class | Method | HTTP request | Description
 *ProjectDashboardsV1Api* | [**listProjectDashboardNames**](docs/ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
 *ProjectDashboardsV1Api* | [**listProjectDashboards**](docs/ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
 *ProjectDashboardsV1Api* | [**patchProjectDashboard**](docs/ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-*ProjectDashboardsV1Api* | [**promoteProjectDashboard**](docs/ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+*ProjectDashboardsV1Api* | [**promoteProjectDashboard**](docs/ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{uuid}/promote | Promote project dashboard
 *ProjectDashboardsV1Api* | [**updateProjectDashboard**](docs/ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 *ProjectSearchesV1Api* | [**createProjectSearch**](docs/ProjectSearchesV1Api.md#createProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
 *ProjectSearchesV1Api* | [**deleteProjectSearch**](docs/ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
@@ -325,6 +326,7 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [AgentStateResponseAgentState](docs/AgentStateResponseAgentState.md)
+ - [DashboardView](docs/DashboardView.md)
  - [NotificationTrigger](docs/NotificationTrigger.md)
  - [ProtobufAny](docs/ProtobufAny.md)
  - [ProtobufNullValue](docs/ProtobufNullValue.md)
@@ -424,6 +426,7 @@ Class | Method | HTTP request | Description
  - [V1KFReplica](docs/V1KFReplica.md)
  - [V1ListAccessResourcesResponse](docs/V1ListAccessResourcesResponse.md)
  - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
+ - [V1ListBookmarksResponse](docs/V1ListBookmarksResponse.md)
  - [V1ListComponentHubsResponse](docs/V1ListComponentHubsResponse.md)
  - [V1ListConnectionsResponse](docs/V1ListConnectionsResponse.md)
  - [V1ListDashboardsResponse](docs/V1ListDashboardsResponse.md)
@@ -460,6 +463,7 @@ Class | Method | HTTP request | Description
  - [V1OrganizationMember](docs/V1OrganizationMember.md)
  - [V1Param](docs/V1Param.md)
  - [V1ParamSearch](docs/V1ParamSearch.md)
+ - [V1PasswordChange](docs/V1PasswordChange.md)
  - [V1PathRef](docs/V1PathRef.md)
  - [V1Pipeline](docs/V1Pipeline.md)
  - [V1PipelineKind](docs/V1PipelineKind.md)

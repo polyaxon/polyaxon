@@ -50,7 +50,7 @@ class TestInitGit(BaseTestCase):
             revision=None,
             mount_path="/somepath",
         )
-        assert args == ["--repo_path=/somepath/user/repo1", "--url=http://foo.com"]
+        assert args == ["--repo-path=/somepath/user/repo1", "--url=http://foo.com"]
 
     def test_get_repo_context_args(self):
         args = get_repo_context_args(
@@ -60,7 +60,7 @@ class TestInitGit(BaseTestCase):
             mount_path="/somepath",
         )
         assert args == [
-            "--repo_path=/somepath/user/repo1",
+            "--repo-path=/somepath/user/repo1",
             "--url=http://foo.com",
             "--revision=00b9d2ea01c40f58d6b4051319f9375675a43c02",
         ]
@@ -72,7 +72,7 @@ class TestInitGit(BaseTestCase):
             mount_path="/somepath",
         )
         assert args == [
-            "--repo_path=/somepath/user/repo1",
+            "--repo-path=/somepath/user/repo1",
             "--url=http://foo.com",
             "--revision=dev",
         ]
@@ -84,7 +84,7 @@ class TestInitGit(BaseTestCase):
             mount_path="/somepath",
         )
         assert args == [
-            "--repo_path=/somepath/user/repo1",
+            "--repo-path=/somepath/user/repo1",
             "--url=http://foo.com",
             "--revision=00b9d2ea01c40f58d6b4051319f9375675a43c02",
         ]
@@ -146,7 +146,7 @@ class TestInitGit(BaseTestCase):
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["polyaxon", "initializer", "git"]
         assert container.args == [
-            "--repo_path={}/{}".format(CONTEXT_MOUNT_ARTIFACTS, connection.name),
+            "--repo-path={}/{}".format(CONTEXT_MOUNT_ARTIFACTS, connection.name),
             "--url={}".format(connection.schema.url),
         ]
         assert container.resources == get_init_resources()
@@ -180,7 +180,7 @@ class TestInitGit(BaseTestCase):
         assert container.image_pull_policy == "IfNotPresent"
         assert container.command == ["polyaxon", "initializer", "git"]
         assert container.args == [
-            "--repo_path=/somepath/{}".format(connection.name),
+            "--repo-path=/somepath/{}".format(connection.name),
             "--url={}".format(connection.schema.url),
             "--revision=00b9d2ea01c40f58d6b4051319f9375675a43c02",
         ]

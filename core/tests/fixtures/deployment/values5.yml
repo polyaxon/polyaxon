@@ -85,3 +85,7 @@ rabbitmq-ha:
   enabled: false
 
 broker: redis
+
+operator:
+  enabled: false
+  skipCRD: false

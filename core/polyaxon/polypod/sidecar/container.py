@@ -43,9 +43,9 @@ def get_sidecar_args(
     container_id: str, sleep_interval: int, sync_interval: int, monitor_logs: bool
 ) -> List[str]:
     args = [
-        "--container_id={}".format(container_id),
-        "--sleep_interval={}".format(sleep_interval),
-        "--sync_interval={}".format(sync_interval),
+        "--container-id={}".format(container_id),
+        "--sleep-interval={}".format(sleep_interval),
+        "--sync-interval={}".format(sync_interval),
     ]
     if monitor_logs:
         args.append("--monitor-logs")

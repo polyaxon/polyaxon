@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Optional, Set, Tuple, Union
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
@@ -25,6 +25,14 @@ from polycommon.service_interface import Service
 
 
 class OperationsService(Service):
+    DEFAULT_KINDS = {
+        V1RunKind.JOB,
+        V1RunKind.SERVICE,
+        V1RunKind.MPIJOB,
+        V1RunKind.TFJOB,
+        V1RunKind.PYTORCHJOB,
+        V1RunKind.NOTIFIER,
+    }
     __all__ = ("init_run",)
 
     @staticmethod
@@ -47,6 +55,19 @@ class OperationsService(Service):
             return V1RunKind.JOB, V1RunKind.SPARK
         else:
             return compiled_operation.run.kind, None
+
+    @classmethod
+    def supports_kind(
+        cls, kind: str, meta_kind: str, supported_kinds: Set[str]
+    ) -> bool:
+        supported_kinds = supported_kinds or set()
+        supported_kinds |= cls.DEFAULT_KINDS
+        error_message = "You cannot create this operation, your account does not support operations of kind: {}"
+        if kind not in supported_kinds:
+            raise ValueError(error_message.format(kind))
+        if meta_kind and meta_kind not in supported_kinds:
+            raise ValueError(error_message.format(meta_kind))
+        return True
 
     @staticmethod
     def get_meta_info(
@@ -77,6 +98,7 @@ class OperationsService(Service):
         readme: str = None,
         original_id: int = None,
         cloning_kind: str = None,
+        supported_kinds: Set[str] = None,
         **kwargs,
     ) -> Tuple[V1CompiledOperation, BaseRun]:
         content = None
@@ -103,6 +125,7 @@ class OperationsService(Service):
             tags = tags or compiled_operation.tags
             kind, meta_kind = self.get_kind(compiled_operation)
             kind, meta_info = self.get_meta_info(compiled_operation, kind, meta_kind)
+            self.supports_kind(kind, meta_kind, supported_kinds)
         instance = get_run_model()(
             project_id=project_id,
             user_id=user_id,

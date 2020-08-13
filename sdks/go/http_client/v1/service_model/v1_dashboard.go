@@ -47,9 +47,6 @@ type V1Dashboard struct {
 	// Optional name
 	Name string `json:"name,omitempty"`
 
-	// Optional dashboard search
-	RunView bool `json:"run_view,omitempty"`
-
 	// Optional dashboard specification
 	Spec interface{} `json:"spec,omitempty"`
 
@@ -62,6 +59,9 @@ type V1Dashboard struct {
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
+
+	// Optional dashboard level
+	View DashboardView `json:"view,omitempty"`
 }
 
 // Validate validates this v1 dashboard
@@ -73,6 +73,10 @@ func (m *V1Dashboard) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateView(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -102,6 +106,22 @@ func (m *V1Dashboard) validateUpdatedAt(formats strfmt.Registry) error {
 	}
 
 	if err := validate.FormatOf("updated_at", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Dashboard) validateView(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.View) { // not required
+		return nil
+	}
+
+	if err := m.View.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("view")
+		}
 		return err
 	}
 

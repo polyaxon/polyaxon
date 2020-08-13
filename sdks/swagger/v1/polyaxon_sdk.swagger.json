@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -169,9 +169,51 @@
         ]
       }
     },
+    "/api/v1/auth/change-password": {
+      "post": {
+        "summary": "Change password",
+        "operationId": "ChangePassword",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PasswordChange"
+            }
+          }
+        ],
+        "tags": [
+          "AuthV1"
+        ]
+      }
+    },
     "/api/v1/auth/reset-password": {
       "post": {
-        "summary": "ResetPAssword",
+        "summary": "Reset password",
         "operationId": "ResetPassword",
         "responses": {
           "200": {
@@ -306,7 +348,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListProjectsResponse"
+              "$ref": "#/definitions/v1ListBookmarksResponse"
             }
           },
           "204": {
@@ -380,7 +422,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListRunsResponse"
+              "$ref": "#/definitions/v1ListBookmarksResponse"
             }
           },
           "204": {
@@ -8099,64 +8141,6 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote": {
-      "post": {
-        "summary": "Promote project dashboard",
-        "operationId": "PromoteProjectDashboard",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Dashboard"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "dashboard.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ProjectDashboardsV1"
-        ]
-      }
-    },
     "/api/v1/{owner}/{project}/dashboards/{uuid}": {
       "get": {
         "summary": "Get project dashboard",
@@ -8217,6 +8201,61 @@
       "delete": {
         "summary": "Delete project dashboard",
         "operationId": "DeleteProjectDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectDashboardsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/dashboards/{uuid}/promote": {
+      "post": {
+        "summary": "Promote project dashboard",
+        "operationId": "PromoteProjectDashboard",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -12445,6 +12484,17 @@
         }
       }
     },
+    "DashboardView": {
+      "type": "string",
+      "enum": [
+        "any",
+        "single",
+        "compare"
+      ],
+      "default": "any",
+      "description": "- any: Any view\n - single: Single run dashboard\n - compare: Compare runs dashboard",
+      "title": "Dashboard view"
+    },
     "NotificationTrigger": {
       "type": "string",
       "enum": [
@@ -13486,10 +13536,9 @@
           "format": "boolean",
           "title": "Optional if the entity has been deleted"
         },
-        "run_view": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional dashboard search"
+        "view": {
+          "$ref": "#/definitions/DashboardView",
+          "title": "Optional dashboard level"
         },
         "spec": {
           "type": "object",
@@ -15123,6 +15172,32 @@
       },
       "title": "Contains list agents"
     },
+    "v1ListBookmarksResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list of bookmarks"
+    },
     "v1ListComponentHubsResponse": {
       "type": "object",
       "properties": {
@@ -16104,6 +16179,24 @@
       },
       "title": "Param search specification"
     },
+    "v1PasswordChange": {
+      "type": "object",
+      "properties": {
+        "old_password": {
+          "type": "string",
+          "title": "Old password"
+        },
+        "new_password1": {
+          "type": "string",
+          "title": "New password"
+        },
+        "new_password2": {
+          "type": "string",
+          "title": "New password confirmation"
+        }
+      },
+      "title": "User password change"
+    },
     "v1PathRef": {
       "type": "object",
       "properties": {
@@ -16623,7 +16716,7 @@
           "format": "date-time",
           "title": "Optional last time the entity was started"
         },
-        "run_time": {
+        "duration": {
           "type": "integer",
           "format": "int32",
           "title": "Optional run time of the entity"
@@ -16633,6 +16726,10 @@
           "title": "Optional flag to tell if this entity is managed by the platform"
         },
         "content": {
+          "type": "string",
+          "title": "Optional content of the entity's spec"
+        },
+        "raw_content": {
           "type": "string",
           "title": "Optional content of the entity's spec"
         },
@@ -17710,7 +17807,7 @@
           "title": "User password"
         }
       },
-      "title": "User Singup"
+      "title": "User singup"
     },
     "v1Uuids": {
       "type": "object",

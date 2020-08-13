@@ -1,6 +1,7 @@
 deploymentChart: "platform"
 deploymentType: "kubernetes"
 namespace: "polyaxon"
+releaseName: "plx"
 environment: staging
 limitResources: false
 
@@ -161,6 +162,7 @@ agent:
 
 operator:
   enabled: true
+  skipCRD: false
   image: polyaxon/polyaxon-operator
   imageTag: 1.0.9
   imagePullPolicy: Always

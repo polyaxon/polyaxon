@@ -269,6 +269,7 @@ class TestJobConverter(BaseTestCase):
                 env=self.converter.get_init_service_env_vars(),
                 contexts=None,
                 run_path=self.converter.run_path,
+                run_instance=self.converter.run_instance,
             ),
             get_dockerfile_init_container(
                 dockerfile_args=dockerfile_args2,
@@ -277,6 +278,7 @@ class TestJobConverter(BaseTestCase):
                 mount_path="/test",
                 contexts=None,
                 run_path=self.converter.run_path,
+                run_instance=self.converter.run_instance,
             ),
         ]
         for container in expected_containers:

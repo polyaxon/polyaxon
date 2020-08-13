@@ -28,7 +28,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon",
-    version="1.1.6-post1",
+    version="1.1.7",
     description="Command Line Interface (CLI) and client to interact with Polyaxon API.",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
@@ -70,7 +70,7 @@ setup(
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
         "marshmallow>=3.4.0,<=3.7.1",
-        "polyaxon-sdk==1.1.6",
+        "polyaxon-sdk==1.1.7",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "PyYAML>=5.1",
@@ -92,7 +92,7 @@ setup(
         "polytune": ["scikit-learn==0.22.2", "hyperopt==0.2.4"],
         "polyboard": [
             "Pillow",
-            "matplotlib<3.3.0",
+            "matplotlib",
             "moviepy",
             "plotly",
             "bokeh",

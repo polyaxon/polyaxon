@@ -41,6 +41,7 @@ def get_job_custom_resource(
     notifications: List[V1Notification],
     environment: V1Environment,
     labels: Dict[str, str],
+    annotations: Dict[str, str],
 ) -> Dict:
     metadata, pod_spec = get_pod_spec(
         namespace=namespace,
@@ -73,5 +74,6 @@ def get_job_custom_resource(
         namespace=namespace,
         resource_name=resource_name,
         labels=labels,
+        annotations=annotations,
         custom_object=custom_object,
     )

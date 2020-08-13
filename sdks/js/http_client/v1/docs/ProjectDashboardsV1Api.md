@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
 [**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
 [**patchProjectDashboard**](ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{uuid}/promote | Promote project dashboard
 [**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
@@ -355,7 +355,7 @@ Name | Type | Description  | Notes
 
 ## promoteProjectDashboard
 
-> V1Dashboard promoteProjectDashboard(owner, project, dashboard_uuid)
+> promoteProjectDashboard(owner, project, uuid)
 
 Promote project dashboard
 
@@ -372,13 +372,13 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project under namesapce
-let dashboard_uuid = "dashboard_uuid_example"; // String | UUID
-apiInstance.promoteProjectDashboard(owner, project, dashboard_uuid, (error, data, response) => {
+let project = "project_example"; // String | Project
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.promoteProjectDashboard(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -389,12 +389,12 @@ apiInstance.promoteProjectDashboard(owner, project, dashboard_uuid, (error, data
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project under namesapce | 
- **dashboard_uuid** | **String**| UUID | 
+ **project** | **String**| Project | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
-[**V1Dashboard**](V1Dashboard.md)
+null (empty response body)
 
 ### Authorization
 

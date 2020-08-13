@@ -81,7 +81,9 @@ class DeployManager:
             return "polyaxon/agent"
 
     @property
-    def k8s_name(self):
+    def release_name(self):
+        if self.config and self.config.release_name:
+            return self.config.release_name
         deployment_chart = DeploymentCharts.PLATFORM
         if self.config and self.config.deployment_chart:
             deployment_chart = self.config.deployment_chart
@@ -202,7 +204,7 @@ class DeployManager:
     def install_on_kubernetes(self):
         self._get_or_create_namespace()
 
-        args = ["install", self.k8s_name]
+        args = ["install", self.release_name]
         if self.manager_path:
             args += [self.manager_path]
         else:
@@ -285,7 +287,7 @@ class DeployManager:
             self.install_on_heroku()
 
     def upgrade_on_kubernetes(self):
-        args = ["upgrade", self.k8s_name]
+        args = ["upgrade", self.release_name]
         if self.manager_path:
             args += [self.manager_path]
         else:
@@ -336,7 +338,7 @@ class DeployManager:
             self.upgrade_on_heroku()
 
     def teardown_on_kubernetes(self, hooks):
-        args = ["delete", self.k8s_name]
+        args = ["delete", self.release_name]
         if not hooks:
             args += ["--no-hooks"]
         args += ["--namespace={}".format(self.deployment_namespace)]

@@ -1,4 +1,4 @@
-{{- if .Values.operator.enabled }}
+{{- if and .Values.operator.enabled (not .Values.operator.skipCRD) }}
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition

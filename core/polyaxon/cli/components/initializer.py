@@ -37,7 +37,7 @@ def auth():
 @initializer.command()
 @click.option("--url", help="The git url to pull.")
 @click.option("--revision", help="The revision(commint/branch/treeish) to pull.")
-@click.option("--repo_path", "--repo-path", help="The path to where to pull the repos.")
+@click.option("--repo-path", help="The path to where to pull the repos.")
 @click.option("--connection", help="The connection used for pulling this repo.")
 def git(url, repo_path, revision, connection):
     """Create auth context."""
@@ -51,11 +51,10 @@ def git(url, repo_path, revision, connection):
 
 
 @initializer.command()
-@click.option("--connection_name", "--connection-name", help="The connection name.")
-@click.option("--path_from", "--path-from", help="The s3 path to download data from.")
-@click.option("--path_to", "--path-to", help="The local path to store the data.")
+@click.option("--connection-name", help="The connection name.")
+@click.option("--path-from", help="The s3 path to download data from.")
+@click.option("--path-to", help="The local path to store the data.")
 @click.option(
-    "--is_file",
     "--is-file",
     is_flag=True,
     default=False,
@@ -82,11 +81,10 @@ def s3(connection_name, path_from, path_to, is_file, workers):
 
 
 @initializer.command()
-@click.option("--connection_name", "--connection-name", help="The connection name.")
-@click.option("--path_from", "--path-from", help="The gcs path to download data from.")
-@click.option("--path_to", "--path-to", help="The local path to store the data.")
+@click.option("--connection-name", help="The connection name.")
+@click.option("--path-from", help="The gcs path to download data from.")
+@click.option("--path-to", help="The local path to store the data.")
 @click.option(
-    "--is_file",
     "--is-file",
     is_flag=True,
     default=False,
@@ -113,11 +111,10 @@ def gcs(connection_name, path_from, path_to, is_file, workers):
 
 
 @initializer.command()
-@click.option("--connection_name", "--connection-name", help="The connection name.")
-@click.option("--path_from", "--path-from", help="The wasb path to download data from.")
-@click.option("--path_to", "--path-to", help="The local path to store the data.")
+@click.option("--connection-name", help="The connection name.")
+@click.option("--path-from", help="The wasb path to download data from.")
+@click.option("--path-to", help="The local path to store the data.")
 @click.option(
-    "--is_file",
     "--is-file",
     is_flag=True,
     default=False,

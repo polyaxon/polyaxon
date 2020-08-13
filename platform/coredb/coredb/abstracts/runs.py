@@ -20,11 +20,11 @@ from django.db import models
 from coredb.abstracts.deleted import DeletedModel
 from coredb.abstracts.describable import DescribableModel
 from coredb.abstracts.diff import DiffModel
+from coredb.abstracts.duration import DurationModel
 from coredb.abstracts.getter import get_db_model_name
 from coredb.abstracts.is_managed import IsManagedModel
 from coredb.abstracts.nameable import NameableModel
 from coredb.abstracts.readme import ReadmeModel
-from coredb.abstracts.runtime import RunTimeModel
 from coredb.abstracts.spec import SpecModel
 from coredb.abstracts.status import StatusModel
 from coredb.abstracts.tag import TagModel
@@ -36,7 +36,7 @@ from polyaxon.polyflow import V1CloningKind, V1RunKind
 class BaseRun(
     UuidModel,
     DiffModel,
-    RunTimeModel,
+    DurationModel,
     SpecModel,
     IsManagedModel,
     NameableModel,

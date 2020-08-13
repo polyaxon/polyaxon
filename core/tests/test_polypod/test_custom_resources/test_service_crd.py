@@ -63,6 +63,7 @@ class TestServiceCRD(BaseTestCase):
             api_version="core.polyaxon.com/v1",
             labels={"foo": "bar"},
             custom_object=custom_object,
+            annotations={"foo": "long-foo-bar" * 300},
         )
 
         crd = get_service_custom_resource(
@@ -75,6 +76,7 @@ class TestServiceCRD(BaseTestCase):
             termination=termination,
             environment=environment,
             labels=environment.labels,
+            annotations={"foo": "long-foo-bar" * 300},
             collect_logs=True,
             sync_statuses=True,
             notifications=None,
@@ -108,6 +110,7 @@ class TestServiceCRD(BaseTestCase):
             kind="Operation",
             api_version="core.polyaxon.com/v1",
             labels=None,
+            annotations=None,
             custom_object={
                 "serviceSpec": custom_object,
                 "collectLogs": False,
@@ -129,6 +132,7 @@ class TestServiceCRD(BaseTestCase):
             notifications=notifications,
             environment=None,
             labels=None,
+            annotations=None,
             ports=[12, 121, 12],
         )
 

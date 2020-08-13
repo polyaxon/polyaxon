@@ -526,7 +526,10 @@ def figure_to_image(figure, close=True):
     image_hwc = data.reshape([h, w, 4])[:, :, 0:3]
     image_chw = np.moveaxis(image_hwc, source=2, destination=0)
     if close:
-        plt.close(figure)
+        try:
+            plt.close(figure.number)
+        except:
+            plt.close(figure)
     return image_chw
 
 
@@ -724,6 +727,33 @@ def mpl_plotly_chart(figure) -> V1EventChart:
                     raise ValueError(
                         "Only matplotlib.pyplot or matplotlib.pyplot.Figure objects are accepted."
                     )
+
+    # This code was taken from:
+    # https://github.com/matplotlib/matplotlib/pull/16772/files#diff-506cc6d736a0593e8bb820981b2c12ae # noqa
+    # Removed in https://github.com/matplotlib/matplotlib/pull/16772
+    from matplotlib.spines import Spine
+
+    def is_frame_like(self):
+        """return True if directly on axes frame
+        This is useful for determining if a spine is the edge of an
+        old style MPL plot. If so, this function will return True.
+        """
+        self._ensure_position_is_set()
+        position = self._position
+        if isinstance(position, str):
+            if position == "center":
+                position = ("axes", 0.5)
+            elif position == "zero":
+                position = ("data", 0)
+        if len(position) != 2:
+            raise ValueError("position should be 2-tuple")
+        position_type, amount = position
+        if position_type == "outward" and amount == 0:
+            return True
+        else:
+            return False
+
+    Spine.is_frame_like = is_frame_like
     figure = plotly.tools.mpl_to_plotly(figure)
     return plotly_chart(figure=figure)
 

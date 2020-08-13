@@ -18,7 +18,7 @@ from typing import List
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
-from coredb.managers.run_time import set_finished_at, set_started_at
+from coredb.managers.duration import set_finished_at, set_started_at
 from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
 from polyaxon.utils.list_utils import to_list
 from polycommon import auditor
@@ -79,7 +79,7 @@ def new_status(entity, condition: V1StatusCondition):
             "started_at",
             "updated_at",
             "finished_at",
-            "run_time",
+            "duration",
         ]
     )
 

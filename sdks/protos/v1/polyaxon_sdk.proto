@@ -24,6 +24,7 @@ import "protoc-gen-swagger/options/annotations.proto";
 
 import "v1/api/access_resource.proto";
 import "v1/api/agent.proto";
+import "v1/api/bookmarks.proto";
 import "v1/api/connection.proto";
 import "v1/api/dashboard.proto";
 import "v1/api/base.proto";
@@ -46,7 +47,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.1.6";
+        version: "1.1.7";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -97,7 +98,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 // Service to manage runs
 service RunsV1 {
     // List bookmarked runs for user
-    rpc ListBookmarkedRuns(UserResourceListRequest) returns (ListRunsResponse) {
+    rpc ListBookmarkedRuns(UserResourceListRequest) returns (ListBookmarksResponse) {
         option (google.api.http) = {
             get: "/api/v1/bookmarks/{user}/runs"
         };
@@ -452,7 +453,7 @@ service ProjectsV1 {
     }
 
     // List bookmarked projects for user
-    rpc ListBookmarkedProjects(UserResourceListRequest) returns (ListProjectsResponse) {
+    rpc ListBookmarkedProjects(UserResourceListRequest) returns (ListBookmarksResponse) {
         option (google.api.http) = {
             get: "/api/v1/bookmarks/{user}/projects"
         };
@@ -872,9 +873,9 @@ service ProjectDashboardsV1 {
     }
 
     // Promote project dashboard
-    rpc PromoteProjectDashboard(ProjectDashboardBodyRequest) returns (Dashboard) {
+    rpc PromoteProjectDashboard(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            post: "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote"
+            post: "/api/v1/{owner}/{project}/dashboards/{uuid}/promote"
         };
     }
 }
@@ -1303,10 +1304,18 @@ service AuthV1 {
       };
     }
 
-    // ResetPAssword
+    // Reset password
     rpc ResetPassword(UserEmail) returns (google.protobuf.Empty) {
       option (google.api.http) = {
           post: "/api/v1/auth/reset-password"
+          body: "*"
+      };
+    }
+
+    // Change password
+    rpc ChangePassword(PasswordChange) returns (google.protobuf.Empty) {
+      option (google.api.http) = {
+          post: "/api/v1/auth/change-password"
           body: "*"
       };
     }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 export * from './AgentStateResponseAgentState';
+export * from './DashboardView';
 export * from './NotificationTrigger';
 export * from './ProtobufAny';
 export * from './ProtobufNullValue';
@@ -112,6 +113,7 @@ export * from './V1K8sResourceType';
 export * from './V1KFReplica';
 export * from './V1ListAccessResourcesResponse';
 export * from './V1ListAgentsResponse';
+export * from './V1ListBookmarksResponse';
 export * from './V1ListComponentHubsResponse';
 export * from './V1ListConnectionsResponse';
 export * from './V1ListDashboardsResponse';
@@ -148,6 +150,7 @@ export * from './V1Organization';
 export * from './V1OrganizationMember';
 export * from './V1Param';
 export * from './V1ParamSearch';
+export * from './V1PasswordChange';
 export * from './V1PathRef';
 export * from './V1Pipeline';
 export * from './V1PipelineKind';

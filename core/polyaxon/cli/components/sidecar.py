@@ -23,26 +23,18 @@ from polyaxon.utils.coroutine import coroutine
 
 @click.command()
 @click.option(
-    "--container_id",
-    "--container-id",
-    help="The tagged image destination $PROJECT/$IMAGE:$TAG.",
+    "--container-id", help="The tagged image destination $PROJECT/$IMAGE:$TAG.",
 )
 @click.option(
-    "--max_retries",
-    "--max-retries",
-    type=int,
-    default=3,
-    help="Number of times to retry the process.",
+    "--max-retries", type=int, default=3, help="Number of times to retry the process.",
 )
 @click.option(
-    "--sleep_interval",
     "--sleep-interval",
     type=int,
     default=2,
     help="Sleep interval between retries in seconds.",
 )
 @click.option(
-    "--sync_interval",
     "--sync-interval",
     type=int,
     default=-1,

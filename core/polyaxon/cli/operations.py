@@ -66,6 +66,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
             "description",
             "readme",
             "content",
+            "raw_content",
             "inputs",
             "outputs",
             "is_managed",
@@ -158,9 +159,7 @@ def ls(ctx, io, query, sort, limit, offset, columns):
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header(
-            "Experiments for project `{}/{}`.".format(owner, project_name)
-        )
+        Printer.print_header("Runs for project `{}/{}`.".format(owner, project_name))
         Printer.print_header("Navigation:")
         dict_tabulate(meta)
     else:
@@ -180,6 +179,7 @@ def ls(ctx, io, query, sort, limit, offset, columns):
                 "project",
                 "description",
                 "content",
+                "raw_content",
                 "deleted",
                 "readme",
                 "settings",
@@ -200,6 +200,7 @@ def ls(ctx, io, query, sort, limit, offset, columns):
                 "project",
                 "description",
                 "content",
+                "raw_content",
                 "deleted",
                 "readme",
                 "inputs",

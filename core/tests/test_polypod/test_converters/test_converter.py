@@ -51,7 +51,18 @@ class TestConverter(BaseTestCase):
     def test_recommended_labels(self):
         assert self.converter.get_recommended_labels(version="v1") == {
             "app.kubernetes.io/name": self.converter.run_name,
-            "app.kubernetes.io/instance": self.converter.run_instance,
+            "app.kubernetes.io/instance": self.converter.run_uuid,
+            "app.kubernetes.io/version": "v1",
+            "app.kubernetes.io/part-of": self.converter.K8S_LABELS_PART_OF,
+            "app.kubernetes.io/component": self.converter.K8S_LABELS_COMPONENT,
+            "app.kubernetes.io/managed-by": "polyaxon",
+        }
+
+    def test_recommended_labels_with_long_name(self):
+        self.converter.run_name = "text-sd-bar" * 265
+        assert self.converter.get_recommended_labels(version="v1") == {
+            "app.kubernetes.io/name": self.converter.run_name[:63],
+            "app.kubernetes.io/instance": self.converter.run_uuid,
             "app.kubernetes.io/version": "v1",
             "app.kubernetes.io/part-of": self.converter.K8S_LABELS_PART_OF,
             "app.kubernetes.io/component": self.converter.K8S_LABELS_COMPONENT,

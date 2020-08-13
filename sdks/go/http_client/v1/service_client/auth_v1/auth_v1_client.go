@@ -39,6 +39,8 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	ChangePassword(params *ChangePasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ChangePasswordOK, *ChangePasswordNoContent, error)
+
 	Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter) (*LoginOK, *LoginNoContent, error)
 
 	ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordOK, *ResetPasswordNoContent, error)
@@ -46,6 +48,42 @@ type ClientService interface {
 	Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter) (*SignupOK, *SignupNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  ChangePassword changes password
+*/
+func (a *Client) ChangePassword(params *ChangePasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ChangePasswordOK, *ChangePasswordNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewChangePasswordParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ChangePassword",
+		Method:             "POST",
+		PathPattern:        "/api/v1/auth/change-password",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ChangePasswordReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ChangePasswordOK:
+		return value, nil, nil
+	case *ChangePasswordNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ChangePasswordDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -85,7 +123,7 @@ func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWrite
 }
 
 /*
-  ResetPassword resets p assword
+  ResetPassword resets password
 */
 func (a *Client) ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordOK, *ResetPasswordNoContent, error) {
 	// TODO: Validate the params before sending

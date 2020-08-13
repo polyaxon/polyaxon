@@ -27,11 +27,13 @@ class TestCRD(BaseTestCase):
             kind="job",
             api_version="v1",
             labels={"foo": "bar"},
+            annotations={"foo": "bar"},
             custom_object={"some_spec": {"foo": "bar"}},
         )
         assert crd["kind"] == "job"
         assert crd["apiVersion"] == "v1"
         assert crd["metadata"].name == "foo"
         assert crd["metadata"].labels == {"foo": "bar"}
+        assert crd["metadata"].annotations == {"foo": "bar"}
         assert crd["metadata"].namespace == "default"
         assert crd["some_spec"] == {"foo": "bar"}

@@ -22,7 +22,7 @@ from marshmallow import ValidationError
 from tests.utils import BaseTestCase
 
 from polyaxon import types
-from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
     ComponentSpecification,
@@ -44,7 +44,7 @@ class TestSpecifications(BaseTestCase):
             ComponentSpecification.read(config)
 
     def test_job_specification_raises_for_missing_container_section(self):
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(PolyaxonfileError):
             OperationSpecification.read(
                 os.path.abspath("tests/fixtures/plain/job_missing_container.yml")
             )

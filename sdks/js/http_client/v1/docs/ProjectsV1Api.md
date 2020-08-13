@@ -551,7 +551,7 @@ Name | Type | Description  | Notes
 
 ## listBookmarkedProjects
 
-> V1ListProjectsResponse listBookmarkedProjects(user, opts)
+> V1ListBookmarksResponse listBookmarkedProjects(user, opts)
 
 List bookmarked projects for user
 
@@ -596,7 +596,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ListProjectsResponse**](V1ListProjectsResponse.md)
+[**V1ListBookmarksResponse**](V1ListBookmarksResponse.md)
 
 ### Authorization
 

@@ -57,6 +57,7 @@ class Sections:
         PARAMS,
         PROFILE,
         CACHE,
+        QUEUE,
         PLUGINS,
         TERMINATION,
         CONNECTIONS,

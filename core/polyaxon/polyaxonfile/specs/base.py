@@ -16,6 +16,8 @@
 
 import copy
 
+from collections.abc import Mapping
+
 from marshmallow import ValidationError
 
 from polyaxon.config_reader.spec import ConfigSpec
@@ -99,13 +101,14 @@ class BaseSpecification(Sections):
         if isinstance(values, cls.CONFIG):
             return values
 
-        values = to_list(values)
-        data = ConfigSpec.read_from([{"kind": cls._SPEC_KIND}] + values)
+        if not isinstance(values, Mapping) or Sections.KIND not in values:
+            values = to_list(values)
+            values = ConfigSpec.read_from([{Sections.KIND: cls._SPEC_KIND}] + values)
+        cls.check_data(values)
         try:
-            config = cls.CONFIG.from_dict(copy.deepcopy(data))
+            config = cls.CONFIG.from_dict(copy.deepcopy(values))
         except TypeError as e:
             raise ValidationError(
                 "Received a non valid config `{}`: `{}`".format(cls._SPEC_KIND, e)
             )
-        cls.check_data(data)
         return config

@@ -286,7 +286,7 @@ func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PromoteProjectDashboard",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote",
+		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{uuid}/promote",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

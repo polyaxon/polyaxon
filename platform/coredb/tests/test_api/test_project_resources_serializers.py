@@ -42,9 +42,10 @@ class TestRunSerializer(BaseTestRunSerializer):
         "updated_at",
         "started_at",
         "finished_at",
-        "run_time",
+        "duration",
         "status",
         "kind",
+        "meta_kind",
         "meta_info",
         "original",
         "is_managed",
@@ -80,6 +81,7 @@ class TestRunSerializer(BaseTestRunSerializer):
             "name": obj1.original.name,
             "kind": obj1.cloning_kind,
         }
+        assert data.pop("meta_kind") == obj1.meta_info.get("meta_kind")
         assert data.pop("settings") == {"namespace": conf.get(K8S_NAMESPACE)}
         data.pop("created_at")
         data.pop("updated_at")

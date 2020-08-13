@@ -363,6 +363,7 @@ class TestEnvVars(BaseTestCase):
                 polyaxon_agent_secret_ref="polyaxon-agent",
                 api_host="localhost",
                 api_version="v1",
+                run_instance="foo.bar.runs.run_uuid",
             )
 
     def test_get_service_env_vars(self):
@@ -377,6 +378,7 @@ class TestEnvVars(BaseTestCase):
             polyaxon_agent_secret_ref="polyaxon-agent",
             api_host="localhost",
             api_version="v1",
+            run_instance="foo.bar.runs.run_uuid",
         )
         assert len(env_vars) == 7
         env_var_names = [env_var.name for env_var in env_vars]
@@ -399,6 +401,7 @@ class TestEnvVars(BaseTestCase):
             polyaxon_agent_secret_ref="polyaxon-agent",
             api_host="localhost",
             api_version="v1",
+            run_instance="foo.bar.runs.run_uuid",
         )
         assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]
@@ -426,6 +429,7 @@ class TestEnvVars(BaseTestCase):
             polyaxon_agent_secret_ref="polyaxon-agent",
             api_host="localhost",
             api_version="v1",
+            run_instance="foo.bar.runs.run_uuid",
         )
         assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]

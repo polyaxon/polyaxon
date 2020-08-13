@@ -53,7 +53,7 @@ class RunQueryManager(BaseQueryManager):
         "kind",
         "user",
         "uuid",
-        "run_time",
+        "duration",
     )
     FIELDS_ORDERING_PROXY = {
         "metrics": {"field": "outputs", "annotate": True},
@@ -114,8 +114,8 @@ class RunQueryManager(BaseQueryManager):
         "tags": parse_value_operation,
         # Archived
         "archived": parse_value_operation,
-        # Run time
-        "run_time": parse_scalar_operation,
+        # Duration
+        "duration": parse_scalar_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
@@ -167,5 +167,5 @@ class RunQueryManager(BaseQueryManager):
         # archived
         "archived": BoolCondition,
         # run time
-        "run_time": ComparisonCondition,
+        "duration": ComparisonCondition,
     }

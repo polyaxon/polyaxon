@@ -83,6 +83,7 @@ class MPIJobConverter(MPIJobMixin, BaseConverter):
             sync_statuses=contexts.sync_statuses,
             notifications=plugins.notifications,
             labels=labels,
+            annotations=self.annotations,
         )
 
 

@@ -74,21 +74,21 @@ for the promote project dashboard operation typically these are written to a htt
 */
 type PromoteProjectDashboardParams struct {
 
-	/*DashboardUUID
-	  UUID
-
-	*/
-	DashboardUUID string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
 	/*Project
-	  Project under namesapce
+	  Project
 
 	*/
 	Project string
+	/*UUID
+	  Uuid identifier of the entity
+
+	*/
+	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -128,17 +128,6 @@ func (o *PromoteProjectDashboardParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithDashboardUUID adds the dashboardUUID to the promote project dashboard params
-func (o *PromoteProjectDashboardParams) WithDashboardUUID(dashboardUUID string) *PromoteProjectDashboardParams {
-	o.SetDashboardUUID(dashboardUUID)
-	return o
-}
-
-// SetDashboardUUID adds the dashboardUuid to the promote project dashboard params
-func (o *PromoteProjectDashboardParams) SetDashboardUUID(dashboardUUID string) {
-	o.DashboardUUID = dashboardUUID
-}
-
 // WithOwner adds the owner to the promote project dashboard params
 func (o *PromoteProjectDashboardParams) WithOwner(owner string) *PromoteProjectDashboardParams {
 	o.SetOwner(owner)
@@ -161,6 +150,17 @@ func (o *PromoteProjectDashboardParams) SetProject(project string) {
 	o.Project = project
 }
 
+// WithUUID adds the uuid to the promote project dashboard params
+func (o *PromoteProjectDashboardParams) WithUUID(uuid string) *PromoteProjectDashboardParams {
+	o.SetUUID(uuid)
+	return o
+}
+
+// SetUUID adds the uuid to the promote project dashboard params
+func (o *PromoteProjectDashboardParams) SetUUID(uuid string) {
+	o.UUID = uuid
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *PromoteProjectDashboardParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -169,11 +169,6 @@ func (o *PromoteProjectDashboardParams) WriteToRequest(r runtime.ClientRequest, 
 	}
 	var res []error
 
-	// path param dashboard.uuid
-	if err := r.SetPathParam("dashboard.uuid", o.DashboardUUID); err != nil {
-		return err
-	}
-
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
@@ -181,6 +176,11 @@ func (o *PromoteProjectDashboardParams) WriteToRequest(r runtime.ClientRequest, 
 
 	// path param project
 	if err := r.SetPathParam("project", o.Project); err != nil {
+		return err
+	}
+
+	// path param uuid
+	if err := r.SetPathParam("uuid", o.UUID); err != nil {
 		return err
 	}
 

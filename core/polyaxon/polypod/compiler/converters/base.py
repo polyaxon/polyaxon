@@ -142,12 +142,22 @@ class BaseConverter(ConverterAbstract):
 
     def get_recommended_labels(self, version: str):
         return {
-            "app.kubernetes.io/name": self.run_name,
-            "app.kubernetes.io/instance": self.run_instance,
+            "app.kubernetes.io/name": self.run_name[:63]
+            if self.run_name
+            else self.run_name,
+            "app.kubernetes.io/instance": self.run_uuid,
             "app.kubernetes.io/version": version,
             "app.kubernetes.io/part-of": self.K8S_LABELS_PART_OF,
             "app.kubernetes.io/component": self.K8S_LABELS_COMPONENT,
             "app.kubernetes.io/managed-by": "polyaxon",
+        }
+
+    @property
+    def annotations(self):
+        return {
+            "operation.polyaxon.com/name": self.run_name,
+            "operation.polyaxon.com/owner": self.owner_name,
+            "operation.polyaxon.com/project": self.project_name,
         }
 
     def get_labels(self, version: str, labels: Dict):
@@ -322,6 +332,7 @@ class BaseConverter(ConverterAbstract):
                             mount_path=init_connection.path,
                             contexts=contexts,
                             run_path=self.run_path,
+                            run_instance=self.run_instance,
                         )
                     )
 
@@ -486,6 +497,7 @@ class PlatformConverterMixin(ConverterAbstract):
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=clean_host(settings.CLIENT_CONFIG.host),
             api_version=VERSION_V1,
+            run_instance=self.run_instance,
         )
 
     def get_main_env_vars(self, **kwargs):

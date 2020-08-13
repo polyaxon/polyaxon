@@ -47,6 +47,7 @@ class TestInitDockerfile(BaseTestCase):
             env=None,
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
             run_path="test",
+            run_instance="foo.bar.runs.uuid",
         )
         assert INIT_DOCKERFILE_CONTAINER_PREFIX in container.name
         assert container.image == "foo"
@@ -58,7 +59,9 @@ class TestInitDockerfile(BaseTestCase):
             "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")),
             "--track",
         ]
-        assert container.env == [get_run_instance_env_var()]
+        assert container.env == [
+            get_run_instance_env_var(run_instance="foo.bar.runs.uuid")
+        ]
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [
             get_connections_context_mount(
@@ -85,6 +88,7 @@ class TestInitDockerfile(BaseTestCase):
             mount_path="/somepath",
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
             run_path="test",
+            run_instance="foo.bar.runs.uuid",
         )
         assert INIT_DOCKERFILE_CONTAINER_PREFIX in container.name
         assert container.image == "init/init"
@@ -96,7 +100,9 @@ class TestInitDockerfile(BaseTestCase):
             "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format("test")),
             "--track",
         ]
-        assert container.env == [get_run_instance_env_var()]
+        assert container.env == [
+            get_run_instance_env_var(run_instance="foo.bar.runs.uuid")
+        ]
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [
             get_connections_context_mount(

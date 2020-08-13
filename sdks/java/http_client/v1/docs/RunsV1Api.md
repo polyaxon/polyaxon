@@ -2548,7 +2548,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedRuns"></a>
 # **listBookmarkedRuns**
-> V1ListRunsResponse listBookmarkedRuns(user, offset, limit, sort, query)
+> V1ListBookmarksResponse listBookmarkedRuns(user, offset, limit, sort, query)
 
 List bookmarked runs for user
 
@@ -2580,7 +2580,7 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search search.
     try {
-      V1ListRunsResponse result = apiInstance.listBookmarkedRuns(user, offset, limit, sort, query);
+      V1ListBookmarksResponse result = apiInstance.listBookmarkedRuns(user, offset, limit, sort, query);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#listBookmarkedRuns");
@@ -2605,7 +2605,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ListRunsResponse**](V1ListRunsResponse.md)
+[**V1ListBookmarksResponse**](V1ListBookmarksResponse.md)
 
 ### Authorization
 

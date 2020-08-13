@@ -49,6 +49,9 @@ type V1Run struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
+	// Optional run time of the entity
+	Duration int32 `json:"duration,omitempty"`
+
 	// Optional last time the entity was started
 	// Format: date-time
 	FinishedAt strfmt.DateTime `json:"finished_at,omitempty"`
@@ -92,11 +95,11 @@ type V1Run struct {
 	// Required project name
 	Project string `json:"project,omitempty"`
 
+	// Optional content of the entity's spec
+	RawContent string `json:"raw_content,omitempty"`
+
 	// Current user's role in this (org/teams)/project/runs
 	Role string `json:"role,omitempty"`
-
-	// Optional run time of the entity
-	RunTime int32 `json:"run_time,omitempty"`
 
 	// Optional settings
 	Settings *V1RunSettings `json:"settings,omitempty"`

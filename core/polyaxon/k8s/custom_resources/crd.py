@@ -25,10 +25,11 @@ def get_custom_object(
     kind: str,
     api_version: str,
     labels: Dict,
+    annotations: Dict,
     custom_object: Dict,
 ) -> Dict:
     metadata = k8s_schemas.V1ObjectMeta(
-        name=resource_name, labels=labels, namespace=namespace
+        name=resource_name, labels=labels, annotations=annotations, namespace=namespace
     )
     custom_object.update(
         {"kind": kind, "apiVersion": api_version, "metadata": metadata}

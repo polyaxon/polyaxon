@@ -61,7 +61,7 @@ API_COLUMNS_DEFER = [
     "updated_at",
     "started_at",
     "finished_at",
-    "run_time",
+    "duration",
     "status",
     "status_conditions",
     "inputs",

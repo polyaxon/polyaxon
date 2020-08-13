@@ -63,22 +63,22 @@ def cp_copy_args(path_from, path_to, is_file: bool) -> str:
 
 
 def cp_gcs_args(path_from: str, path_to: str, is_file: bool) -> str:
-    file_flag = "--is_file" if is_file else ""
-    return "polyaxon initializer gcs --path_from={} --path_to={} {};".format(
+    file_flag = "--is-file" if is_file else ""
+    return "polyaxon initializer gcs --path-from={} --path-to={} {};".format(
         path_from, path_to, file_flag
     )
 
 
 def cp_s3_args(path_from: str, path_to: str, is_file: bool) -> str:
-    file_flag = "--is_file" if is_file else ""
-    return "polyaxon initializer s3 --path_from={} --path_to={} {};".format(
+    file_flag = "--is-file" if is_file else ""
+    return "polyaxon initializer s3 --path-from={} --path-to={} {};".format(
         path_from, path_to, file_flag
     )
 
 
 def cp_wasb_args(path_from: str, path_to: str, is_file: bool) -> str:
-    file_flag = "--is_file" if is_file else ""
-    return "polyaxon initializer wasb --path_from={} --path_to={} {};".format(
+    file_flag = "--is-file" if is_file else ""
+    return "polyaxon initializer wasb --path-from={} --path-to={} {};".format(
         path_from, path_to, file_flag
     )
 

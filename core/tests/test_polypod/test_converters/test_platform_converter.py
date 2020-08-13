@@ -71,6 +71,7 @@ class TestBaseConverter(BaseTestCase):
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
         )
 
         self.converter.internal_auth = True
@@ -93,6 +94,7 @@ class TestBaseConverter(BaseTestCase):
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
         )
 
         self.converter.internal_auth = False
@@ -115,6 +117,7 @@ class TestBaseConverter(BaseTestCase):
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
         )
 
         with self.assertRaises(PolypodException):
@@ -141,6 +144,7 @@ class TestBaseConverter(BaseTestCase):
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
         )
 
         self.converter.internal_auth = False
@@ -156,6 +160,7 @@ class TestBaseConverter(BaseTestCase):
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
         )
 
     def test_get_polyaxon_sidecar_service_env_vars(self):
@@ -172,6 +177,7 @@ class TestBaseConverter(BaseTestCase):
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
         )
 
         self.converter.internal_auth = False
@@ -187,4 +193,5 @@ class TestBaseConverter(BaseTestCase):
             polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
             api_host=settings.CLIENT_CONFIG.host,
             api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
         )

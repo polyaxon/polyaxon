@@ -49,16 +49,12 @@ def docker():
     "-pm", "--python-module", type=str, help="The python module to run.",
 )
 @click.option(
-    "--build_context",
-    "--build-context",
-    help="The build context config to generate the dockerfile from.",
+    "--build-context", help="The build context config to generate the dockerfile from.",
 )
 @click.option(
     "-dest", "--destination", help="The destination where to generate the build."
 )
-@click.option(
-    "--copy-path", "--copy_path", help="Copy generated files to a specific path."
-)
+@click.option("--copy-path", help="Copy generated files to a specific path.")
 @click.option(
     "--params",
     "-P",
@@ -153,14 +149,12 @@ def generate(
     help="To force rebuild the image.",
 )
 @click.option(
-    "--max_retries",
     "--max-retries",
     type=int,
     default=3,
     help="Number of times to retry the build process.",
 )
 @click.option(
-    "--sleep_interval",
     "--sleep-interval",
     type=int,
     default=2,
@@ -209,7 +203,6 @@ def build(context, destination, nocache, max_retries, sleep_interval, reraise):
     help="Number of times to retry the build process.",
 )
 @click.option(
-    "--sleep_interval",
     "--sleep-interval",
     type=int,
     default=2,
@@ -265,7 +258,6 @@ def push(destination, max_retries, sleep_interval, reraise):
     help="Number of times to retry the build process.",
 )
 @click.option(
-    "--sleep_interval",
     "--sleep-interval",
     type=int,
     default=2,

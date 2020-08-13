@@ -841,7 +841,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_bookmarked_projects**
-> V1ListProjectsResponse list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListBookmarksResponse list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
 
 List bookmarked projects for user
 
@@ -905,7 +905,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ListProjectsResponse**](V1ListProjectsResponse.md)
+[**V1ListBookmarksResponse**](V1ListBookmarksResponse.md)
 
 ### Authorization
 

@@ -37,8 +37,8 @@ def set_finished_at(run: BaseRun) -> bool:
         run.finished_at = now()
         if run.started_at is None:  # We should not have this case
             run.started_at = run.created_at
-        # Update run time
-        if run.run_time is None:
-            run.run_time = (run.finished_at - run.started_at).seconds
+        # Update duration
+        if run.duration is None:
+            run.duration = (run.finished_at - run.started_at).seconds
         return True
     return False

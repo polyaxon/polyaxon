@@ -229,6 +229,7 @@ def get_service_env_vars(
     polyaxon_agent_secret_ref: str,
     api_host: str,
     api_version: str,
+    run_instance: str,
 ) -> List[k8s_schemas.V1EnvVar]:
     env_vars = [
         get_env_var(name=POLYAXON_KEYS_API_HOST, value=api_host),
@@ -242,7 +243,7 @@ def get_service_env_vars(
             name=POLYAXON_KEYS_K8S_NAMESPACE, field_path="metadata.namespace"
         ),
         get_from_field_ref(name=POLYAXON_KEYS_K8S_POD_ID, field_path="metadata.name"),
-        get_run_instance_env_var(),
+        get_run_instance_env_var(run_instance),
     ]
     if header:
         env_vars.append(
@@ -294,11 +295,8 @@ def get_service_env_vars(
     return env_vars
 
 
-def get_run_instance_env_var() -> k8s_schemas.V1EnvVar:
-    return get_from_field_ref(
-        name=POLYAXON_KEYS_RUN_INSTANCE,
-        field_path="metadata.labels['app.kubernetes.io/instance']",
-    )
+def get_run_instance_env_var(run_instance: str) -> k8s_schemas.V1EnvVar:
+    return get_env_var(name=POLYAXON_KEYS_RUN_INSTANCE, value=run_instance)
 
 
 def get_connection_env_var(

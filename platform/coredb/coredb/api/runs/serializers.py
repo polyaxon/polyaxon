@@ -42,9 +42,16 @@ class RunDetailSerializer(RunSerializer, ProjectMixin, IsManagedMixin, TagsMixin
     project = fields.SerializerMethodField()
     merge = fields.BooleanField(write_only=True, required=False)
     content = fields.SerializerMethodField()
+    raw_content = fields.SerializerMethodField()
 
     class Meta(RunSerializer.Meta):
-        fields = RunSerializer.Meta.fields + ("project", "readme", "content", "merge",)
+        fields = RunSerializer.Meta.fields + (
+            "project",
+            "readme",
+            "raw_content",
+            "content",
+            "merge",
+        )
 
     def validate(self, attrs):
         attrs = super().validate(attrs)
@@ -98,4 +105,7 @@ class RunDetailSerializer(RunSerializer, ProjectMixin, IsManagedMixin, TagsMixin
         return super().update(instance=instance, validated_data=validated_data)
 
     def get_content(self, obj):
+        return obj.content
+
+    def get_raw_content(self, obj):
         return obj.raw_content

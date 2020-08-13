@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
 [**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
 [**patchProjectDashboard**](ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{uuid}/promote | Promote project dashboard
 [**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
@@ -480,7 +480,7 @@ Name | Type | Description  | Notes
 
 <a name="promoteProjectDashboard"></a>
 # **promoteProjectDashboard**
-> V1Dashboard promoteProjectDashboard(owner, project, dashboardUuid)
+> promoteProjectDashboard(owner, project, uuid)
 
 Promote project dashboard
 
@@ -507,11 +507,10 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
-    String dashboardUuid = "dashboardUuid_example"; // String | UUID
+    String project = "project_example"; // String | Project
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      V1Dashboard result = apiInstance.promoteProjectDashboard(owner, project, dashboardUuid);
-      System.out.println(result);
+      apiInstance.promoteProjectDashboard(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#promoteProjectDashboard");
       System.err.println("Status code: " + e.getCode());
@@ -528,12 +527,12 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
- **dashboardUuid** | **String**| UUID |
+ **project** | **String**| Project |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
-[**V1Dashboard**](V1Dashboard.md)
+null (empty response body)
 
 ### Authorization
 

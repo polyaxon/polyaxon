@@ -18,7 +18,6 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 // Auth specification
@@ -42,7 +41,7 @@ message UserEmail{
   string email = 1;
 }
 
-// User Singup
+// User singup
 message UserSingup{
   // User username
   string username = 1;
@@ -55,6 +54,18 @@ message UserSingup{
 
   // User password
   string password = 4;
+}
+
+// User password change
+message PasswordChange{
+  // Old password
+  string old_password = 1;
+
+  // New password
+  string new_password1 = 2;
+
+  // New password confirmation
+  string new_password2 = 4;
 }
 
 // Token specification

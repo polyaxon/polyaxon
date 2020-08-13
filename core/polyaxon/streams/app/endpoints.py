@@ -58,8 +58,6 @@ async def health(request):
 
 
 async def get_logs(request):
-    owner = request.path_params["owner"]
-    project = request.path_params["project"]
     run_uuid = request.path_params["run_uuid"]
     force = to_bool(request.query_params.get("force"), handle_none=True)
     last_time = QueryParams(request.url.query).get("last_time")
@@ -70,7 +68,6 @@ async def get_logs(request):
 
     if last_time:
         resource_name = get_resource_name(run_uuid=run_uuid)
-        operation = get_run_instance(owner=owner, project=project, run_uuid=run_uuid)
 
         k8s_manager = AsyncK8SManager(
             namespace=settings.CLIENT_CONFIG.namespace,
@@ -84,7 +81,7 @@ async def get_logs(request):
             operation_logs, last_time = await get_operation_logs(
                 k8s_manager=k8s_manager,
                 k8s_operation=k8s_operation,
-                operation=operation,
+                instance=run_uuid,
                 last_time=last_time,
             )
         else:
@@ -105,11 +102,8 @@ async def get_logs(request):
 
 
 async def collect_logs(request):
-    owner = request.path_params["owner"]
-    project = request.path_params["project"]
     run_uuid = request.path_params["run_uuid"]
     resource_name = get_resource_name(run_uuid=run_uuid)
-    operation = get_run_instance(owner=owner, project=project, run_uuid=run_uuid)
     k8s_manager = AsyncK8SManager(
         namespace=settings.CLIENT_CONFIG.namespace,
         in_cluster=settings.CLIENT_CONFIG.in_cluster,
@@ -124,7 +118,7 @@ async def collect_logs(request):
             status_code=status.HTTP_400_BAD_REQUEST,
         )
     operation_logs, _ = await query_k8s_operation_logs(
-        operation=operation, k8s_manager=k8s_manager, last_time=None
+        instance=run_uuid, k8s_manager=k8s_manager, last_time=None
     )
     if k8s_manager:
         await k8s_manager.close()

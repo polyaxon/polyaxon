@@ -1,1 +1,1 @@
-polyaxon==1.1.6.post1
+polyaxon==1.1.7

@@ -1890,7 +1890,7 @@ Name | Type | Description  | Notes
 
 ## listBookmarkedRuns
 
-> V1ListRunsResponse listBookmarkedRuns(user, opts)
+> V1ListBookmarksResponse listBookmarkedRuns(user, opts)
 
 List bookmarked runs for user
 
@@ -1935,7 +1935,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ListRunsResponse**](V1ListRunsResponse.md)
+[**V1ListBookmarksResponse**](V1ListBookmarksResponse.md)
 
 ### Authorization
 

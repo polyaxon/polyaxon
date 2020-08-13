@@ -43,11 +43,12 @@ def get_dockerfile_init_container(
     dockerfile_args: V1DockerfileType,
     contexts: PluginsContextsSpec,
     run_path: str,
+    run_instance: str,
     env: List[k8s_schemas.V1EnvVar] = None,
     mount_path: Optional[str] = None,
 ) -> k8s_schemas.V1Container:
     env = to_list(env, check_none=True)
-    env = env + [get_run_instance_env_var()]
+    env = env + [get_run_instance_env_var(run_instance)]
 
     volume_name = (
         get_volume_name(mount_path)

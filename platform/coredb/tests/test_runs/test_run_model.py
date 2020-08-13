@@ -21,7 +21,7 @@ from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
 from coredb.managers.deleted import ArchivedManager, LiveManager
-from coredb.managers.run_time import set_finished_at, set_started_at
+from coredb.managers.duration import set_finished_at, set_started_at
 from coredb.managers.statuses import new_run_status
 from coredb.models.runs import Run
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses

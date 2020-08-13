@@ -52,6 +52,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
             api_version="core.polyaxon.com/v1",
             labels={"foo": "bar"},
             custom_object=custom_object,
+            annotations={"foo": "long-foo-bar" * 300},
         )
 
         crd = get_pytorch_job_custom_resource(
@@ -65,6 +66,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
             sync_statuses=False,
             notifications=None,
             labels=environment.labels,
+            annotations={"foo": "long-foo-bar" * 300},
         )
 
         assert crd == expected_crd
@@ -108,6 +110,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
             kind="Operation",
             api_version="core.polyaxon.com/v1",
             labels={"foo": "bar"},
+            annotations={"foo": "bar"},
             custom_object=custom_object,
         )
 
@@ -119,6 +122,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
             clean_pod_policy="Running",
             termination=termination,
             labels=environment.labels,
+            annotations={"foo": "bar"},
             notifications=notifications,
             collect_logs=True,
             sync_statuses=True,

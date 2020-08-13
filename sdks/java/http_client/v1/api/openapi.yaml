@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.1.6
+  version: 1.1.7
 servers:
 - url: /
 security:
@@ -146,6 +146,49 @@ paths:
       tags:
       - RunsV1
       x-accepts: application/json
+  /api/v1/auth/change-password:
+    post:
+      operationId: ChangePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1PasswordChange'
+        required: true
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Change password
+      tags:
+      - AuthV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
   /api/v1/auth/reset-password:
     post:
       operationId: ResetPassword
@@ -183,7 +226,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response
-      summary: ResetPAssword
+      summary: Reset password
       tags:
       - AuthV1
       x-codegen-request-body-name: body
@@ -315,7 +358,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v1ListProjectsResponse'
+                $ref: '#/components/schemas/v1ListBookmarksResponse'
           description: A successful response.
         "204":
           content:
@@ -382,7 +425,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v1ListRunsResponse'
+                $ref: '#/components/schemas/v1ListBookmarksResponse'
           description: A successful response.
         "204":
           content:
@@ -7923,63 +7966,6 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
-  /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote:
-    post:
-      operationId: PromoteProjectDashboard
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Project under namesapce
-        in: path
-        name: project
-        required: true
-        schema:
-          type: string
-      - description: UUID
-        in: path
-        name: dashboard.uuid
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1Dashboard'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
-      summary: Promote project dashboard
-      tags:
-      - ProjectDashboardsV1
-      x-accepts: application/json
   /api/v1/{owner}/{project}/dashboards/{uuid}:
     delete:
       operationId: DeleteProjectDashboard
@@ -8087,6 +8073,60 @@ paths:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response
       summary: Get project dashboard
+      tags:
+      - ProjectDashboardsV1
+      x-accepts: application/json
+  /api/v1/{owner}/{project}/dashboards/{uuid}/promote:
+    post:
+      operationId: PromoteProjectDashboard
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Project
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+      - description: Uuid identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Promote project dashboard
       tags:
       - ProjectDashboardsV1
       x-accepts: application/json
@@ -12116,6 +12156,18 @@ components:
           title: A flag to tell the agent that the queues are still full
           type: boolean
       type: object
+    DashboardView:
+      default: any
+      description: |-
+        - any: Any view
+         - single: Single run dashboard
+         - compare: Compare runs dashboard
+      enum:
+      - any
+      - single
+      - compare
+      title: Dashboard view
+      type: string
     NotificationTrigger:
       default: succeeded
       enum:
@@ -13890,7 +13942,6 @@ components:
         tags:
         - tags
         - tags
-        run_view: true
       properties:
         uuid:
           title: UUID
@@ -13914,10 +13965,8 @@ components:
           format: boolean
           title: Optional if the entity has been deleted
           type: boolean
-        run_view:
-          format: boolean
-          title: Optional dashboard search
-          type: boolean
+        view:
+          $ref: '#/components/schemas/DashboardView'
         spec:
           properties: {}
           title: Optional dashboard specification
@@ -16036,6 +16085,33 @@ components:
           type: string
       title: Contains list agents
       type: object
+    v1ListBookmarksResponse:
+      example:
+        next: next
+        previous: previous
+        count: 0
+        results:
+        - '{}'
+        - '{}'
+      properties:
+        count:
+          format: int32
+          title: Count of the entities
+          type: integer
+        results:
+          items:
+            properties: {}
+            type: object
+          title: List of all entities
+          type: array
+        previous:
+          title: Previous page
+          type: string
+        next:
+          title: Next page
+          type: string
+      title: Contains list of bookmarks
+      type: object
     v1ListComponentHubsResponse:
       example:
         next: next
@@ -16145,7 +16221,6 @@ components:
           tags:
           - tags
           - tags
-          run_view: true
         - deleted: true
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -16157,7 +16232,6 @@ components:
           tags:
           - tags
           - tags
-          run_view: true
       properties:
         count:
           format: int32
@@ -16522,6 +16596,7 @@ components:
           created_at: 2000-01-23T04:56:07.000+00:00
           uuid: uuid
           content: content
+          duration: 6
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
           owner: owner
@@ -16543,10 +16618,10 @@ components:
             - name: name
               uuid: uuid
             concurrency: 1
+          raw_content: raw_content
           original:
             name: name
             uuid: uuid
-          run_time: 6
           bookmarked: true
           tags:
           - tags
@@ -16581,6 +16656,7 @@ components:
           created_at: 2000-01-23T04:56:07.000+00:00
           uuid: uuid
           content: content
+          duration: 6
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
           owner: owner
@@ -16602,10 +16678,10 @@ components:
             - name: name
               uuid: uuid
             concurrency: 1
+          raw_content: raw_content
           original:
             name: name
             uuid: uuid
-          run_time: 6
           bookmarked: true
           tags:
           - tags
@@ -17836,6 +17912,19 @@ components:
           type: string
       title: Param search specification
       type: object
+    v1PasswordChange:
+      properties:
+        old_password:
+          title: Old password
+          type: string
+        new_password1:
+          title: New password
+          type: string
+        new_password2:
+          title: New password confirmation
+          type: string
+      title: User password change
+      type: object
     v1PathRef:
       example:
         path: path
@@ -18538,6 +18627,7 @@ components:
         created_at: 2000-01-23T04:56:07.000+00:00
         uuid: uuid
         content: content
+        duration: 6
         updated_at: 2000-01-23T04:56:07.000+00:00
         meta_info: '{}'
         owner: owner
@@ -18559,10 +18649,10 @@ components:
           - name: name
             uuid: uuid
           concurrency: 1
+        raw_content: raw_content
         original:
           name: name
           uuid: uuid
-        run_time: 6
         bookmarked: true
         tags:
         - tags
@@ -18631,7 +18721,7 @@ components:
           format: date-time
           title: Optional last time the entity was started
           type: string
-        run_time:
+        duration:
           format: int32
           title: Optional run time of the entity
           type: integer
@@ -18639,6 +18729,9 @@ components:
           title: Optional flag to tell if this entity is managed by the platform
           type: string
         content:
+          title: Optional content of the entity's spec
+          type: string
+        raw_content:
           title: Optional content of the entity's spec
           type: string
         status:
@@ -25127,7 +25220,7 @@ components:
         password:
           title: User password
           type: string
-      title: User Singup
+      title: User singup
       type: object
     v1Uuids:
       properties:

@@ -67,6 +67,7 @@ class JobConverter(JobMixin, BaseConverter):
             sync_statuses=contexts.sync_statuses,
             notifications=plugins.notifications,
             labels=replica_spec.labels,
+            annotations=self.annotations,
         )
 
 

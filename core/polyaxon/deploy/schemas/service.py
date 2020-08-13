@@ -184,6 +184,41 @@ class AgentServiceConfig(Service):
         self.token = token
 
 
+class OperatorServiceSchema(ServiceSchema):
+    skip_crd = fields.Bool(allow_none=True, data_key="skipCRD")
+
+    @staticmethod
+    def schema_config():
+        return OperatorServiceConfig
+
+
+class OperatorServiceConfig(Service):
+    SCHEMA = OperatorServiceSchema
+    REDUCED_ATTRIBUTES = Service.REDUCED_ATTRIBUTES + ["skipCRD"]
+
+    def __init__(
+        self,
+        enabled=None,
+        image=None,
+        image_tag=None,
+        image_pull_policy=None,
+        replicas=None,
+        concurrency=None,
+        resources=None,
+        skip_crd=None,
+    ):
+        super().__init__(
+            enabled=enabled,
+            image=image,
+            image_tag=image_tag,
+            image_pull_policy=image_pull_policy,
+            replicas=replicas,
+            concurrency=concurrency,
+            resources=resources,
+        )
+        self.skip_crd = skip_crd
+
+
 class ApiServiceSchema(ServiceSchema):
     service = fields.Dict(allow_none=True)
 

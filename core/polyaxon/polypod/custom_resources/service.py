@@ -42,6 +42,7 @@ def get_service_custom_resource(
     environment: V1Environment,
     ports: List[int],
     labels: Dict[str, str],
+    annotations: Dict[str, str],
 ) -> Dict:
     metadata, pod_spec = get_pod_spec(
         namespace=namespace,
@@ -77,5 +78,6 @@ def get_service_custom_resource(
         namespace=namespace,
         resource_name=resource_name,
         labels=labels,
+        annotations=annotations,
         custom_object=custom_object,
     )

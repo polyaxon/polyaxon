@@ -30,8 +30,8 @@ def get_default_notification_container():
             "--kind={{kind}}",
             "--owner={{owner}}",
             "--project={{project}}",
-            "--run_uuid={{run_uuid}}",
-            "--run_name={{run_name}}",
+            "--run-uuid={{run_uuid}}",
+            "--run-name={{run_name}}",
             "--condition={{condition}}",
         ],
         resources=k8s_schemas.V1ResourceRequirements(

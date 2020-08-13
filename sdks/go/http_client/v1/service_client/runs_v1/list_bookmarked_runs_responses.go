@@ -83,20 +83,20 @@ func NewListBookmarkedRunsOK() *ListBookmarkedRunsOK {
 A successful response.
 */
 type ListBookmarkedRunsOK struct {
-	Payload *service_model.V1ListRunsResponse
+	Payload *service_model.V1ListBookmarksResponse
 }
 
 func (o *ListBookmarkedRunsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/runs][%d] listBookmarkedRunsOK  %+v", 200, o.Payload)
 }
 
-func (o *ListBookmarkedRunsOK) GetPayload() *service_model.V1ListRunsResponse {
+func (o *ListBookmarkedRunsOK) GetPayload() *service_model.V1ListBookmarksResponse {
 	return o.Payload
 }
 
 func (o *ListBookmarkedRunsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(service_model.V1ListRunsResponse)
+	o.Payload = new(service_model.V1ListBookmarksResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

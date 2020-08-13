@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Union
+from typing import Dict, Set, Union
 
 from coredb import operations
 from coredb.abstracts.runs import BaseRun
@@ -35,6 +35,7 @@ def compile_operation_run(
     readme: str = None,
     pipeline_id: int = None,
     controller_id: int = None,
+    supported_kinds: Set[str] = None,
 ) -> BaseRun:
     compiled_operation, instance = operations.init_run(
         project_id=project_id,
@@ -50,6 +51,7 @@ def compile_operation_run(
         pipeline_id=pipeline_id,
         controller_id=controller_id,
         tags=tags,
+        supported_kinds=supported_kinds,
     )
     instance.save()
     return instance

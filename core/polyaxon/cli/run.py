@@ -94,6 +94,7 @@ from polyaxon.utils.validation import validate_tags
 @click.option("--profile", type=str, help="Name of the profile to use for this run.")
 @click.option(
     "--queue",
+    "-q",
     type=str,
     help="Name of the queue to use for this run. "
     "If the name is not namespaced by the agent name the default agent is used: "

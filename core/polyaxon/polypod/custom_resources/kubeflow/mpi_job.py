@@ -42,6 +42,7 @@ def get_mpi_job_custom_resource(
     clean_pod_policy: Optional[str],
     slots_per_worker: Optional[int],
     labels: Dict[str, str],
+    annotations: Dict[str, str],
 ) -> Dict:
     template_spec = {}
 
@@ -86,5 +87,6 @@ def get_mpi_job_custom_resource(
         namespace=namespace,
         resource_name=resource_name,
         labels=labels,
+        annotations=annotations,
         custom_object=custom_object,
     )

@@ -239,12 +239,15 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.ldap is None
         assert config.artifacts_store is not None
         assert config.connections is None
+        assert config.operator.enabled is False
+        assert config.operator.skip_crd is False
 
     def test_read_deploy_config_values6(self):
         config = reader.read("tests/fixtures/deployment/values6.yml")
         assert isinstance(config, DeploymentConfig)
         assert config.deployment_chart == "agent"
         assert config.deployment_type == "kubernetes"
+        assert config.release_name == "plx"
         assert config.namespace == "polyaxon"
         assert config.limit_resources is False
         assert config.rbac.enabled is True
@@ -258,6 +261,8 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.auth.enabled is True
         assert config.auth.external == "test"
         assert config.auth.use_resolver is True
+        assert config.operator.enabled is False
+        assert config.operator.skip_crd is True
 
     def test_read_deploy_config_pgsql_values(self):
         config = reader.read("tests/fixtures/deployment/external_pgsql_values.yml")

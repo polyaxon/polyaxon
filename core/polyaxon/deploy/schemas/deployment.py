@@ -31,6 +31,7 @@ from polyaxon.deploy.schemas.service import (
     ExternalServicesSchema,
     HelperServiceSchema,
     HooksSchema,
+    OperatorServiceSchema,
     PostgresqlSchema,
     RabbitmqSchema,
     RedisSchema,
@@ -175,6 +176,7 @@ class DeploymentSchema(BaseCamelSchema):
         default=DeploymentCharts.PLATFORM,
     )
     deployment_version = fields.Str(allow_none=True)
+    release_name = fields.Str(allow_none=True)
     namespace = fields.Str(allow_none=True)
     rbac = fields.Nested(RBACSchema, allow_none=True)
     polyaxon_secret = fields.Str(allow_none=True)
@@ -201,7 +203,7 @@ class DeploymentSchema(BaseCamelSchema):
     worker = fields.Nested(WorkerServiceSchema, allow_none=True)
     beat = fields.Nested(ServiceSchema, allow_none=True)
     agent = fields.Nested(AgentServiceSchema, allow_none=True)
-    operator = fields.Nested(ServiceSchema, allow_none=True)
+    operator = fields.Nested(OperatorServiceSchema, allow_none=True)
     init = fields.Nested(HelperServiceSchema, allow_none=True)
     sidecar = fields.Nested(HelperServiceSchema, allow_none=True)
     tables_hook = fields.Nested(ServiceSchema, allow_none=True)
@@ -293,6 +295,7 @@ class DeploymentConfig(BaseConfig):
         deployment_type=None,
         deployment_chart=None,
         deployment_version=None,
+        release_name=None,
         namespace=None,
         rbac=None,
         polyaxon_secret=None,
@@ -368,6 +371,7 @@ class DeploymentConfig(BaseConfig):
         self.deployment_type = deployment_type
         self.deployment_chart = deployment_chart or DeploymentCharts.PLATFORM
         self.deployment_version = deployment_version
+        self.release_name = release_name
         self.namespace = namespace
         self.rbac = rbac
         self.polyaxon_secret = polyaxon_secret

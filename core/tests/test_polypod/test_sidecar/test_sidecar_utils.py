@@ -74,15 +74,15 @@ class TestSidecarUtils(BaseTestCase):
     def test_get_sidecar_args(self):
         assert get_sidecar_args(
             container_id="job.2", sleep_interval=23, sync_interval=2, monitor_logs=None
-        ) == ["--container_id=job.2", "--sleep_interval=23", "--sync_interval=2",]
+        ) == ["--container-id=job.2", "--sleep-interval=23", "--sync-interval=2"]
         assert get_sidecar_args(
             container_id="job.2", sleep_interval=23, sync_interval=2, monitor_logs=False
-        ) == ["--container_id=job.2", "--sleep_interval=23", "--sync_interval=2",]
+        ) == ["--container-id=job.2", "--sleep-interval=23", "--sync-interval=2"]
         assert get_sidecar_args(
             container_id="job.2", sleep_interval=23, sync_interval=2, monitor_logs=True
         ) == [
-            "--container_id=job.2",
-            "--sleep_interval=23",
-            "--sync_interval=2",
+            "--container-id=job.2",
+            "--sleep-interval=23",
+            "--sync-interval=2",
             "--monitor-logs",
         ]

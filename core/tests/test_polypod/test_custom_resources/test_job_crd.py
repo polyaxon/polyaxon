@@ -70,6 +70,7 @@ class TestJobCRD(BaseTestCase):
             api_version="core.polyaxon.com/v1",
             labels={"foo": "bar"},
             custom_object=custom_object,
+            annotations={"foo": "long-foo-bar" * 300},
         )
 
         crd = get_job_custom_resource(
@@ -85,6 +86,7 @@ class TestJobCRD(BaseTestCase):
             sync_statuses=True,
             notifications=notifications,
             labels=environment.labels,
+            annotations={"foo": "long-foo-bar" * 300},
         )
 
         assert crd == expected_crd

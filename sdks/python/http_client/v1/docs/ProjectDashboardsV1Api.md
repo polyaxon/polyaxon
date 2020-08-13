@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**list_project_dashboard_names**](ProjectDashboardsV1Api.md#list_project_dashboard_names) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
 [**list_project_dashboards**](ProjectDashboardsV1Api.md#list_project_dashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
 [**patch_project_dashboard**](ProjectDashboardsV1Api.md#patch_project_dashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**promote_project_dashboard**](ProjectDashboardsV1Api.md#promote_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+[**promote_project_dashboard**](ProjectDashboardsV1Api.md#promote_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{uuid}/promote | Promote project dashboard
 [**update_project_dashboard**](ProjectDashboardsV1Api.md#update_project_dashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
@@ -527,7 +527,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **promote_project_dashboard**
-> V1Dashboard promote_project_dashboard(owner, project, dashboard_uuid)
+> promote_project_dashboard(owner, project, uuid)
 
 Promote project dashboard
 
@@ -566,13 +566,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project under namesapce
-dashboard_uuid = 'dashboard_uuid_example' # str | UUID
+project = 'project_example' # str | Project
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Promote project dashboard
-        api_response = api_instance.promote_project_dashboard(owner, project, dashboard_uuid)
-        pprint(api_response)
+        api_instance.promote_project_dashboard(owner, project, uuid)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->promote_project_dashboard: %s\n" % e)
 ```
@@ -582,12 +581,12 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project under namesapce | 
- **dashboard_uuid** | **str**| UUID | 
+ **project** | **str**| Project | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
-[**V1Dashboard**](V1Dashboard.md)
+void (empty response body)
 
 ### Authorization
 

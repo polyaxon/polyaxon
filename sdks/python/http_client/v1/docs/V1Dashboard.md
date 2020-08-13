@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **tags** | **list[str]** |  | [optional] 
 **disabled** | **bool** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
-**run_view** | **bool** |  | [optional] 
+**view** | [**DashboardView**](DashboardView.md) |  | [optional] 
 **spec** | [**object**](.md) |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 

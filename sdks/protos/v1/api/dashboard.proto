@@ -43,8 +43,19 @@ message Dashboard {
     // Optional if the entity has been deleted
     bool deleted = 6;
 
-    // Optional dashboard search
-    bool run_view = 7;
+    // Dashboard view
+    enum View {
+      // Any view
+      any = 0;
+
+      // Single run dashboard
+      single = 1;
+
+      // Compare runs dashboard
+      compare = 2;
+    }
+    // Optional dashboard level
+    View view = 7;
 
     // Optional dashboard specification
     google.protobuf.Struct spec = 8;

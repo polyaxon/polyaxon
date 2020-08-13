@@ -49,7 +49,7 @@ def get_repo_context_args(
     if not url:
         raise PolypodException("A repo url is required to create a repo context.")
 
-    args = ["--repo_path={}/{}".format(mount_path, name), "--url={}".format(url)]
+    args = ["--repo-path={}/{}".format(mount_path, name), "--url={}".format(url)]
 
     if revision:
         args.append("--revision={}".format(revision))

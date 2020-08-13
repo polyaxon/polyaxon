@@ -77,7 +77,7 @@ def bayesian(matrix, configs, metrics):
 )
 @click.option("--iteration", type=int, help="The current hyperband iteration.")
 @click.option(
-    "--bracket_iteration", type=int, help="The current hyperband bracket iteration."
+    "--bracket-iteration", type=int, help="The current hyperband bracket iteration."
 )
 @click.option(
     "--configs",

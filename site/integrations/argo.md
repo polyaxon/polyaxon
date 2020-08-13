@@ -40,7 +40,7 @@ spec:
     ...
   - name: polyaxon-job
     container:
-      image: polyaxon/polyaxon-cli:1.1.6
+      image: polyaxon/polyaxon-cli:1.x.x
       command: ["polyaxon"]
       args: ["run", "-f", "path/to/polyaxonfile.yaml"]
 ```

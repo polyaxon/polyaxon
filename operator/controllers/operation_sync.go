@@ -17,7 +17,6 @@ limitations under the License.
 package controllers
 
 import (
-	"strings"
 	"time"
 
 	operationv1 "github.com/polyaxon/polyaxon/operator/api/v1"
@@ -34,6 +33,25 @@ func (r *OperationReconciler) instanceSyncStatus(instance *operationv1.Operation
 	return r.syncStatus(instance, lastCond)
 }
 
+func (r *OperationReconciler) getInstanceInfo(instance *operationv1.Operation) (string, string, string, bool) {
+	instanceID, ok := instance.ObjectMeta.Labels["app.kubernetes.io/instance"]
+	if !ok || instanceID == "" {
+		return "", "", "", false
+	}
+
+	instanceOwner, ok := instance.ObjectMeta.Annotations["operation.polyaxon.com/owner"]
+	if !ok || instanceOwner == "" {
+		return "", "", "", false
+	}
+
+	instanceProject, ok := instance.ObjectMeta.Annotations["operation.polyaxon.com/project"]
+	if !ok || instanceProject == "" {
+		return "", "", "", false
+	}
+
+	return instanceOwner, instanceProject, instanceID, true
+}
+
 func (r *OperationReconciler) syncStatus(instance *operationv1.Operation, statusCond operationv1.OperationCondition) error {
 	if !config.GetBoolEnv("POLYAXON_AGENT_ENABLED", true) || !instance.SyncStatuses {
 		return nil
@@ -42,19 +60,12 @@ func (r *OperationReconciler) syncStatus(instance *operationv1.Operation, status
 	log := r.Log
 
 	log.Info("Operation sync status", "Syncing", instance.GetName(), "Status", statusCond.Type)
-
-	instanceName, ok := instance.ObjectMeta.Labels["app.kubernetes.io/instance"]
-	if !ok || instanceName == "" {
-		log.Info("Operation cannot be synced", "Instance", instance.Name, "Does not exist", instance.GetName())
+	owner, project, instanceID, ok := r.getInstanceInfo(instance)
+	if !ok {
+		log.Info("Operation cannot be synced", "Instance", instance.Name, "Uuid Does not exist", instance.GetName())
 		return nil
 	}
-	jobName := strings.Split(instanceName, ".")
-	if len(jobName) != 4 {
-		log.Info("Operation cannot be synced", "Instance", instance.Name, "Job name is not valid", instanceName)
-		return nil
-	}
-
-	return plugins.LogPolyaxonRunStatus(jobName[0], jobName[1], jobName[3], statusCond, r.Log)
+	return plugins.LogPolyaxonRunStatus(owner, project, instanceID, statusCond, r.Log)
 }
 
 func (r *OperationReconciler) notify(instance *operationv1.Operation) error {
@@ -67,19 +78,14 @@ func (r *OperationReconciler) notify(instance *operationv1.Operation) error {
 
 	log.Info("Operation notify status", "Notifying", instance.GetName())
 
-	instanceName, ok := instance.ObjectMeta.Labels["app.kubernetes.io/instance"]
-	if !ok || instanceName == "" {
-		log.Info("Operation cannot be notified", "Instance", instance.Name, "Does not exist", instance.GetName())
-		return nil
-	}
-	jobName := strings.Split(instanceName, ".")
-	if len(jobName) != 4 {
-		log.Info("Operation cannot be notified", "Instance", instance.Name, "Job name is not valid", instanceName)
+	owner, project, instanceID, ok := r.getInstanceInfo(instance)
+	if !ok {
+		log.Info("Operation cannot be synced", "Instance", instance.Name, "Uuid Does not exist", instance.GetName())
 		return nil
 	}
 
-	name, ok := instance.ObjectMeta.Labels["app.kubernetes.io/name"]
-	if !ok || instanceName == "" {
+	name, ok := instance.ObjectMeta.Annotations["operation.polyaxon.com/name"]
+	if !ok {
 		name = ""
 	}
 
@@ -102,7 +108,7 @@ func (r *OperationReconciler) notify(instance *operationv1.Operation) error {
 	}
 
 	log.Info("Operation notify status", "Status", lastCond.Type, "Instance", instance.GetName())
-	return plugins.NotifyPolyaxonRunStatus(instance.Namespace, name, jobName[0], jobName[1], jobName[3], lastCond, connections, r.Log)
+	return plugins.NotifyPolyaxonRunStatus(instance.Namespace, name, owner, project, instanceID, lastCond, connections, r.Log)
 }
 
 func (r *OperationReconciler) collectLogs(instance *operationv1.Operation) error {
@@ -113,17 +119,12 @@ func (r *OperationReconciler) collectLogs(instance *operationv1.Operation) error
 
 	log := r.Log
 
-	instanceName, ok := instance.ObjectMeta.Labels["app.kubernetes.io/instance"]
-	if !ok || instanceName == "" {
-		log.Info("Operation cannot be synced", "Instance", instance.Name, "Does not exist", instance.GetName())
-		return nil
-	}
-	jobName := strings.Split(instanceName, ".")
-	if len(jobName) != 4 {
-		log.Info("Operation cannot be synced", "Instance", instance.Name, "Job name is not valid", instanceName)
+	owner, project, instanceID, ok := r.getInstanceInfo(instance)
+	if !ok {
+		log.Info("Operation cannot be synced", "Instance", instance.Name, "Uuid Does not exist", instance.GetName())
 		return nil
 	}
 
 	log.Info("Operation collect logs", "Instance", instance.GetName())
-	return plugins.CollectPolyaxonRunLogs(instance.Namespace, jobName[0], jobName[1], jobName[3], r.Log)
+	return plugins.CollectPolyaxonRunLogs(instance.Namespace, owner, project, instanceID, r.Log)
 }

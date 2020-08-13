@@ -762,7 +762,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedProjects"></a>
 # **listBookmarkedProjects**
-> V1ListProjectsResponse listBookmarkedProjects(user, offset, limit, sort, query)
+> V1ListBookmarksResponse listBookmarkedProjects(user, offset, limit, sort, query)
 
 List bookmarked projects for user
 
@@ -794,7 +794,7 @@ public class Example {
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search search.
     try {
-      V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(user, offset, limit, sort, query);
+      V1ListBookmarksResponse result = apiInstance.listBookmarkedProjects(user, offset, limit, sort, query);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#listBookmarkedProjects");
@@ -819,7 +819,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ListProjectsResponse**](V1ListProjectsResponse.md)
+[**V1ListBookmarksResponse**](V1ListBookmarksResponse.md)
 
 ### Authorization
 

@@ -1,5 +1,6 @@
 deploymentChart: "agent"
 deploymentType: "kubernetes"
+releaseName: "plxAgent"
 namespace: polyaxon
 limitResources: false
 
@@ -136,6 +137,7 @@ agent:
 
 operator:
   enabled: false
+  skipCRD: true
   image: polyaxon/polyaxon-operator
   imageTag: 1.0.9
   imagePullPolicy: Always

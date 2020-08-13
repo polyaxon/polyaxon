@@ -32,6 +32,7 @@ class RunSerializer(serializers.ModelSerializer, CloningMixin, SettingsMixin):
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
     settings = fields.SerializerMethodField()
+    meta_kind = fields.SerializerMethodField()
 
     class Meta:
         model = get_run_model()
@@ -43,8 +44,9 @@ class RunSerializer(serializers.ModelSerializer, CloningMixin, SettingsMixin):
             "updated_at",
             "started_at",
             "finished_at",
-            "run_time",
+            "duration",
             "kind",
+            "meta_kind",
             "meta_info",
             "status",
             "original",
@@ -59,6 +61,10 @@ class RunSerializer(serializers.ModelSerializer, CloningMixin, SettingsMixin):
             "is_managed": {"read_only": True},
             "cloning_kind": {"read_only": True},
         }
+
+    def get_meta_kind(self, obj):
+        meta_info = obj.meta_info or {}
+        return meta_info.get("meta_kind")
 
 
 class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
@@ -104,6 +110,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                 name=validated_data.get("name"),
                 description=validated_data.get("description"),
                 tags=validated_data.get("tags"),
+                supported_kinds=validated_data.get("supported_kinds"),
             )
         else:
             return create_run(

@@ -27,12 +27,8 @@ import click
 @click.option(
     "--project", help="The project containing the operation.",
 )
-@click.option(
-    "--run_uuid", "--run-uuid", help="The run uuid.",
-)
-@click.option(
-    "--run_name", "--run-name", help="The run name.",
-)
+@click.option("--run-uuid", help="The run uuid.")
+@click.option("--run-name", help="The run name.")
 @click.option(
     "--condition", help="The run condition to notify.",
 )

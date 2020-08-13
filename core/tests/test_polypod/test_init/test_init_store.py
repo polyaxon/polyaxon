@@ -78,23 +78,23 @@ class TestInitStore(BaseTestCase):
 
     def test_files_cp_gcs_args(self):
         assert cp_gcs_args(path_from="gcs://foo", path_to="/local", is_file=True) == (
-            "polyaxon initializer gcs --path_from=gcs://foo --path_to=/local --is_file;"
+            "polyaxon initializer gcs --path-from=gcs://foo --path-to=/local --is-file;"
         )
 
     def test_dirs_cp_gcs_args(self):
         assert cp_gcs_args(path_from="gcs://foo", path_to="/local", is_file=False) == (
-            "polyaxon initializer gcs --path_from=gcs://foo --path_to=/local ;"
+            "polyaxon initializer gcs --path-from=gcs://foo --path-to=/local ;"
         )
 
     def test_files_cp_wasb_args(self):
         assert cp_wasb_args(path_from="wasb://foo", path_to="/local", is_file=True) == (
-            "polyaxon initializer wasb --path_from=wasb://foo --path_to=/local --is_file;"
+            "polyaxon initializer wasb --path-from=wasb://foo --path-to=/local --is-file;"
         )
 
     def test_cp_wasb_args(self):
         assert (
             cp_wasb_args(path_from="wasb://foo", path_to="/local", is_file=False)
-            == "polyaxon initializer wasb --path_from=wasb://foo --path_to=/local ;"
+            == "polyaxon initializer wasb --path-from=wasb://foo --path-to=/local ;"
         )
 
     def test_get_volume_args_s3(self):

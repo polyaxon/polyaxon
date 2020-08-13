@@ -18,7 +18,6 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 // Model regsitry specification

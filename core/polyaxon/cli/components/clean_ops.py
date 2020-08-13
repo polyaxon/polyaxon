@@ -21,12 +21,8 @@ import click
 
 @click.command()
 @click.option("--namespace", type=str)
-@click.option(
-    "--in_cluster", "--in-cluster", is_flag=True, default=False,
-)
-@click.option(
-    "--delete", is_flag=True, default=False,
-)
+@click.option("--in-cluster", is_flag=True, default=False)
+@click.option("--delete", is_flag=True, default=False)
 def clean_ops(namespace, in_cluster, delete):
     """clean-ops command."""
     from polyaxon.k8s.manager import K8SManager

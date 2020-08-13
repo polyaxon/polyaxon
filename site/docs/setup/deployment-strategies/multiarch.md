@@ -21,24 +21,24 @@ The default images shared on docker-hub are amd64, which means that the containe
 
 Polyaxon provides multiarch docker manifests for its core components, which allows to deploy Polyaxon and schedule experiments on the entire cluster, independently of the node architecture.
 
-Every Polyaxon component shared on dockerhub gets released with two tags: `release-tag` and `multiarch-release-tag`, e.g. `polyaxon/polyaxon-api:1.1.6` and `polyaxon/polyaxon-api:multiarch-1.1.6`.
+Every Polyaxon component shared on dockerhub gets released with two tags: `release-tag` and `multiarch-release-tag`, e.g. `polyaxon/polyaxon-api:1.x.x` and `polyaxon/polyaxon-api:multiarch-1.x.x`.
 
 ## Changing the deployment config file
 
-You need to override the default tag that comes with the Polyaxon version you are deploying, for instance, if you are deploying Polyaxon v1.1.6, 
-all images will be using a tag: `1.1.6`, in the deployment config file you need to override that value with `multiarch-1.1.6`: 
+You need to override the default tag that comes with the Polyaxon version you are deploying, for instance, if you are deploying Polyaxon v1.x.x, 
+all images will be using a tag: `1.x.x`, in the deployment config file you need to override that value with `multiarch-1.x.x`: 
 
 ```yaml
 api:
-  imageTag: multiarch-1.1.6
+  imageTag: multiarch-1.x.x
 scheduler:
-  imageTag: multiarch-1.1.6
+  imageTag: multiarch-1.x.x
 streams:
-  imageTag: multiarch-1.1.6
+  imageTag: multiarch-1.x.x
 gateway:
-  imageTag: multiarch-1.1.6
+  imageTag: multiarch-1.x.x
 init:
-  imageTag: multiarch-1.1.6
+  imageTag: multiarch-1.x.x
 sidecar:
-  imageTag: multiarch-1.1.6
+  imageTag: multiarch-1.x.x
 ```
