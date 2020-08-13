@@ -28,7 +28,7 @@ jobs:
           helm repo add stable https://kubernetes-charts.storage.googleapis.com
           cmd/helm/all
           cmd/helm/build
-      - uses: actions/setup-python@v2.1.1
+      - uses: actions/setup-python@v2.1.2
         with:
           python-version: 3.7
       - name: test
