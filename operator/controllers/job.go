@@ -62,6 +62,13 @@ func (r *OperationReconciler) reconcileJob(ctx context.Context, instance *operat
 		log.V(1).Info("Creating Job", "namespace", job.Namespace, "name", job.Name)
 		err = r.Create(ctx, job)
 		if err != nil {
+			if updated := instance.LogWarning("Error creating Job", err.Error()); updated {
+				log.V(1).Info("Warning unable to create Job")
+				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
+					return statusErr
+				}
+				r.instanceSyncStatus(instance)
+			}
 			return err
 		}
 		justCreated = true

@@ -99,6 +99,13 @@ func (r *OperationReconciler) reconcileDeployment(ctx context.Context, instance 
 		log.V(1).Info("Creating Service Deployment", "namespace", deployment.Namespace, "name", deployment.Name)
 		err = r.Create(ctx, deployment)
 		if err != nil {
+			if updated := instance.LogWarning("Error creating Deployment", err.Error()); updated {
+				log.V(1).Info("Warning unable to create Deployment")
+				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
+					return statusErr
+				}
+				r.instanceSyncStatus(instance)
+			}
 			return err
 		}
 		justCreated = true
@@ -169,10 +176,17 @@ func (r *OperationReconciler) reconcileBaseService(ctx context.Context, instance
 	if err != nil && apierrs.IsNotFound(err) {
 		log.V(1).Info("Creating Service", "namespace", service.Namespace, "name", service.Name)
 		err = r.Create(ctx, service)
-		justCreated = true
 		if err != nil {
+			if updated := instance.LogWarning("Error creating Service", err.Error()); updated {
+				log.V(1).Info("Warning unable to create Service")
+				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
+					return statusErr
+				}
+				r.instanceSyncStatus(instance)
+			}
 			return err
 		}
+		justCreated = true
 	} else if err != nil {
 		return err
 	}

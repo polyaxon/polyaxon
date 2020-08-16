@@ -67,6 +67,13 @@ func (r *OperationReconciler) reconcileTFJob(ctx context.Context, instance *oper
 		log.V(1).Info("Creating TFJob", "namespace", instance.Namespace, "name", instance.Name)
 		err = r.Create(ctx, job)
 		if err != nil {
+			if updated := instance.LogWarning("Error creating TFJob", err.Error()); updated {
+				log.V(1).Info("Warning unable to create TFJob")
+				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
+					return statusErr
+				}
+				r.instanceSyncStatus(instance)
+			}
 			return err
 		}
 		justCreated = true
