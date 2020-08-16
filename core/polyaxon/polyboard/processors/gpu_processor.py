@@ -41,14 +41,14 @@ def can_log_gpu_resources():
         return False
 
 
-def query_gpu(handle: int) -> Dict:
+def query_gpu(handle_idx: int, handle: any) -> Dict:
     memory = pynvml.nvmlDeviceGetMemoryInfo(handle)  # in Bytes
     utilization = pynvml.nvmlDeviceGetUtilizationRates(handle)
 
     return {
-        "gpu_{}_memory_free".format(handle): int(memory.free),
-        "gpu_{}_memory_used".format(handle): int(memory.used),
-        "gpu_{}_utilization".format(handle): utilization.gpu,
+        "gpu_{}_memory_free".format(handle_idx): int(memory.free),
+        "gpu_{}_memory_used".format(handle_idx): int(memory.used),
+        "gpu_{}_utilization".format(handle_idx): utilization.gpu,
     }
 
 
@@ -60,7 +60,7 @@ def get_gpu_metrics() -> List:
 
         for i in range(device_count):
             handle = pynvml.nvmlDeviceGetHandleByIndex(i)
-            results += metrics_dict_to_list(query_gpu(handle))
+            results += metrics_dict_to_list(query_gpu(i, handle))
         return results
     except pynvml.NVMLError:
         logger.debug("Failed to collect gpu resources", exc_info=True)
