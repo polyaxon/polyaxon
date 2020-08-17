@@ -34,7 +34,7 @@ def get_db_model(name: str) -> str:
         )
     except LookupError:
         raise ImproperlyConfigured(
-            "{} refers to model '%s' that has not been installed".format(
+            "{} refers to model '{}' that has not been installed".format(
                 name, model_name
             )
         )

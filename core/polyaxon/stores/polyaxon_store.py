@@ -38,7 +38,7 @@ class PolyaxonStore(StoreMixin):
     By default, this store requires a valid run.
     """
 
-    URL = "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact"
+    URL = "streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/{subpath}"
 
     def __init__(self, client: "RunClient"):  # noqa
         self._client = client
@@ -162,15 +162,16 @@ class PolyaxonStore(StoreMixin):
             )
 
     def download_file(self, url, path, **kwargs):
-        local_path = kwargs.pop(
-            "path_to",
-            get_path(settings.CLIENT_CONFIG.archive_root, self._client.run_uuid,),
+        local_path = kwargs.pop("path_to", None)
+        local_path = local_path or get_path(
+            settings.CLIENT_CONFIG.archive_root, self._client.run_uuid
         )
         _local_path = local_path
         if path:
             _local_path = get_path(local_path, path)
-        if kwargs.get("untar"):
-            _local_path = _local_path + ".tar.gz"
+        _local_path = _local_path + ".tar.gz"
+        if not kwargs.get("untar"):
+            local_path = _local_path
         check_or_create_path(_local_path, is_dir=False)
         if not os.path.exists(_local_path):
             self.download(
