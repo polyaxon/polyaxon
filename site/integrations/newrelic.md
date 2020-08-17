@@ -38,6 +38,7 @@ Add instrumentation and send Polyaxon metrics emitted to the New Relic.
 ```yaml
 externalServices:
   metrics:
+    enabled: true
     backend: newrelic
     options:
       license_key:

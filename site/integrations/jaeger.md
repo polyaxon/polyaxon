@@ -36,6 +36,7 @@ metrics:
 ```yaml
 externalServices:
   metrics:
+    enabled: true
     backend: jaeger
     options:
 ```

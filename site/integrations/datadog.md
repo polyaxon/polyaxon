@@ -38,6 +38,7 @@ Send Polyaxon metrics emitted to the Datadog REST API over HTTPS.
 ```yaml
 externalServices:
   metrics:
+    enabled: true
     backend: datadog
     options:
       api_key:
@@ -53,6 +54,7 @@ Use the DogStatsD backend requires a [Datadog Agent](https://docs.datadoghq.com/
 ```yaml
 externalServices:
   metrics:
+    enabled: true
     backend: datadog-statsd
     options:
       statsd_host:

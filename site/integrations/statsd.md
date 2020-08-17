@@ -38,6 +38,7 @@ metrics:
 ```yaml
 externalServices:
   metrics:
+    enabled: true
     backend: statsd
     options: {host: host, port: 8125}
 ```

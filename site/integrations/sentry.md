@@ -47,7 +47,7 @@ externalServices:
 ```yaml
 externalServices:
   errors:
-    default: true
+    enabled: true
     backend: sentry
     options: {platform_dsn: key, cli_dsn: key}
 ```
