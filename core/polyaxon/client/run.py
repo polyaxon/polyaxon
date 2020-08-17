@@ -696,27 +696,29 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def download_artifact(self, path: str, force: bool = False):
-        """Downloads run artifact.
+    def download_artifact(self, path: str, force: bool = False, path_to: str = None):
+        """Downloads a single run artifact.
 
         Args:
             path: str, the relative path of the artifact to return.
+            path_to: str, optional, path to download to.
             force: bool, force reload the artifact.
 
         Returns:
             str
         """
-        url = "{host}/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact".format(
-            host=clean_host(self.client.config.host),
+        url = PolyaxonStore.URL.format(
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,
             uuid=self.run_uuid,
+            subpath="artifact",
         )
+        url = "{host}/{url}".format(host=clean_host(self.client.config.host), url=url)
         if force:
             url = "{}?force=true".format(url)
 
-        return PolyaxonStore(client=self).download_file(url=url, path=path, force=force)
+        return PolyaxonStore(client=self).download_file(url=url, path=path, path_to=path_to)
 
     @check_no_op
     @check_offline
@@ -728,7 +730,7 @@ class RunClient:
         delete_tar: bool = True,
         extract_path: str = None,
     ):
-        """Downloads a list of run artifacts.
+        """Downloads a subpath containing multiple run artifacts.
 
         Args:
             path: str, the relative path of the artifact to return.
@@ -740,20 +742,21 @@ class RunClient:
         Returns:
             str.
         """
-        url = "{host}/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts".format(
-            host=clean_host(self.client.config.host),
+        url = PolyaxonStore.URL.format(
             namespace=self.namespace,
             owner=self.owner,
             project=self.project,
             uuid=self.run_uuid,
+            subpath="artifacts",
         )
+        url = "{host}/{url}".format(host=clean_host(self.client.config.host), url=url)
 
         return PolyaxonStore(client=self).download_file(
             url=url,
             path=path,
             untar=untar,
             path_to=path_to,
-            delete_tar=delete_tar,
+            delete_tar=delete_tar and untar,
             extract_path=extract_path,
         )
 

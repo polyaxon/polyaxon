@@ -55,8 +55,8 @@ class PolyaxonClient:
     >>> client.auth_v1
     >>> client.users_v1
     >>> client.agents_v1
-    >>> client.hub_v1
-    >>> client.models_v1
+    >>> client.component_hub_v1
+    >>> client.model_registry_v1
     ```
     """
 

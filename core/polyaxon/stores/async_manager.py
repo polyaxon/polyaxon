@@ -61,7 +61,7 @@ async def download_file(subpath: str, check_cache=True) -> Optional[str]:
             is_file=True,
         )
     except (OSError, PolyaxonException) as e:
-        logger.warning("Could not download %s. Error %s".format(path_from, e))
+        logger.warning("Could not download %s. Error %s" % (path_from, e))
         return None
 
 
@@ -79,7 +79,7 @@ async def download_dir(subpath: str, to_tar: bool = False) -> Optional[str]:
             to_tar=to_tar,
         )
     except (OSError, PolyaxonException) as e:
-        logger.warning("Could not download %s. Error %s".format(path_from, e))
+        logger.warning("Could not download %s. Error %s" % (path_from, e))
         return None
 
 
@@ -100,7 +100,7 @@ async def delete_file(subpath: str) -> bool:
         )
         return True
     except (OSError, PolyaxonException) as e:
-        logger.warning("Could not delete %s. Error %s".format(subpath, e))
+        logger.warning("Could not delete %s. Error %s" % (subpath, e))
         return False
 
 
@@ -114,5 +114,5 @@ async def delete_dir(subpath: str) -> bool:
         )
         return True
     except (OSError, PolyaxonException) as e:
-        logger.warning("Could not delete %s. Error %s".format(subpath, e))
+        logger.warning("Could not delete %s. Error %s" % (subpath, e))
         return False

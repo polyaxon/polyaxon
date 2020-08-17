@@ -668,8 +668,24 @@ def logs(ctx, follow, hide_time, all_info):
 
 
 @ops.command()
+@click.option(
+    "--path",
+    type=str,
+    help="Path to download, if not provided the full run's  artifacts will downloaded."
+)
+@click.option(
+    "--path-to",
+    type=click.Path(exists=False),
+    help="The destination where to download the artifacts.",
+)
+@click.option(
+    "--no-untar",
+    is_flag=True,
+    default=False,
+    help="Disable the automatic untar of the downloaded the artifacts.",
+)
 @click.pass_context
-def artifacts(ctx):
+def artifacts(ctx, path, path_to, no_untar):
     """Download outputs/artifacts for run.
 
     Uses /docs/core/cli/#caching
@@ -678,19 +694,25 @@ def artifacts(ctx):
 
     \b
     $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 artifacts
+
+    \b
+    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 artifacts path="events/only"
+
+    \b
+    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 artifacts path_to="this/path"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
-        client.download_artifacts()
+        download_path = client.download_artifacts(path=path or "", path_to=path_to, untar=not no_untar)
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e, message="Could not download outputs for run `{}`.".format(run_uuid)
         )
         sys.exit(1)
-    Printer.print_success("Files downloaded.")
+    Printer.print_success("Files downloaded: path: {}".format(download_path))
 
 
 @ops.command()
