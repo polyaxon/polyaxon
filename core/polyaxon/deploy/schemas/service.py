@@ -609,7 +609,6 @@ class ExternalServicesSchema(BaseCamelSchema):
     analytics = fields.Nested(ExternalBackendSchema, allow_none=True)
     metrics = fields.Nested(ExternalBackendSchema, allow_none=True)
     errors = fields.Nested(ExternalBackendSchema, allow_none=True)
-    tracing = fields.Nested(ExternalBackendSchema, allow_none=True)
     auth = fields.Nested(AuthServicesSchema, allow_none=True)
 
     @staticmethod
@@ -628,7 +627,6 @@ class ExternalServicesConfig(BaseConfig):
         "analytics",
         "metrics",
         "errors",
-        "tracing",
         "auth",
     ]
 
@@ -642,7 +640,6 @@ class ExternalServicesConfig(BaseConfig):
         analytics=None,
         metrics=None,
         errors=None,
-        tracing=None,
         auth=None,
     ):
         self.redis = redis
@@ -653,5 +650,4 @@ class ExternalServicesConfig(BaseConfig):
         self.analytics = analytics
         self.metrics = metrics
         self.errors = errors
-        self.tracing = tracing
         self.auth = auth

@@ -30,10 +30,6 @@ externalServices:
     enabled: true
     backend: sentry
     options: {foo: bar}
-  tracing:
-    enabled: true
-    backend: jaeger
-    options: {foo: bar}
 
 artifactsStore:
   name: test

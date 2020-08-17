@@ -19,7 +19,9 @@ visibility: public
 status: EE
 ---
 
-Polyaxon provides an abstraction called ‘stats’ which is used for internal monitoring, generally timings and various counters. The default backend `noop` simply discards them.
+Polyaxon provides an abstraction called ‘metrics’ which is used for internal monitoring, generally timings and various counters. 
+The default backend `noop` simply discards them.
+
 This guide will help you set up a statsd backend to sends these metrics.
 
 ## Using the default Helm metrics deployment

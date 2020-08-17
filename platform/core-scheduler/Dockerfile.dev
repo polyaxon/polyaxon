@@ -3,8 +3,6 @@ FROM polyaxon-base-dev
 # This dockerfile is intended for dev only purposes
 LABEL maintainer="Polyaxon, Inc. <contact@polyaxon.com>"
 
-VOLUME /tmp/plx/logs_uploads
-VOLUME /tmp/plx/artifacts_uploads
 VOLUME /polyaxon
 COPY /core /polyaxon/core
 COPY /sdks/python/http_client/v1 /polyaxon/sdks/python/http_client/v1

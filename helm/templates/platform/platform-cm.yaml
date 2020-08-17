@@ -80,10 +80,6 @@ data:
   {{- if .Values.externalServices.errors.enabled }}
   POLYAXON_ERRORS_BACKEND: {{ default "default" .Values.externalServices.errors.backend | quote }}
   {{- end }}
-  {{- if .Values.externalServices.tracing.enabled }}
-  POLYAXON_TRACING_BACKEND: {{ default "default" .Values.externalServices.tracing.backend | quote }}
-  POLYAXON_TRACING_OPTIONS: {{ toJson .Values.externalServices.tracing.options | quote }}
-  {{- end }}
   # Auth
   {{- if .Values.ldap.enabled }}
   POLYAXON_AUTH_LDAP: "true"

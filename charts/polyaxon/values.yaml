@@ -327,11 +327,6 @@ externalServices:
     backend:
     options:
 
-  tracing:
-    enabled: false
-    backend:
-    options:
-
   auth:
     github:
       enabled: false

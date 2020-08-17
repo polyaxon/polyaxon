@@ -13,8 +13,6 @@ RUN apt-get -y update && \
 COPY /platform/coreapi/requirements /requirements/
 RUN pip3 install --no-cache-dir -r /requirements/requirements-dev.txt
 
-VOLUME /tmp/plx/logs_uploads
-VOLUME /tmp/plx/artifacts_uploads
 VOLUME /polyaxon
 COPY /core /polyaxon/core
 COPY /sdks/python/http_client/v1 /polyaxon/sdks/python/http_client/v1
