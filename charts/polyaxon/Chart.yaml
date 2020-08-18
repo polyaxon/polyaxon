@@ -11,7 +11,7 @@ keywords:
 sources:
   - https://github.com/polyaxon
 home: https://polyaxon.com
-icon: https://polyaxon.com/img/icon.png
+icon: https://cdn.polyaxon.com/static/v1/images/logo_small.png
 maintainers:
   - name: Polyaxon
     email: contact@polyaxon.com
