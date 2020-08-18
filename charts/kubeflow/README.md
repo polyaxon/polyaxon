@@ -15,7 +15,7 @@ To learn more about how you can easily switch backends for your distributed expe
 
 ### Setup Helm
 
-To install the TFJob operator make sure you have helm installed, please see this [guide](/docs/guides/setup-helm/).
+To install the TFJob operator make sure you have [Helm](https://helm.sh/docs/intro/install/) installed.
 
 ### Namespace
 
@@ -27,9 +27,9 @@ $ kubectl create namespace polyaxon
 namespace "polyaxon" created
 ```
 
-### Polyaxon's charts repo
+### Polyaxon charts repo
 
-You can add the Polyaxon helm repository to your helm, so you can install Polyaxon and other charts provided by Polyaxon from it. 
+You can add the Polyaxon charts repo repository to your helm, so you can install Polyaxon and other charts provided by Polyaxon from it. 
 This makes it easy to refer to the chart without having to use a long URL each time.
 
 ```bash

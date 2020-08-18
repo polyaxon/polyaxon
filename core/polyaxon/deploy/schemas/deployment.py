@@ -82,8 +82,9 @@ def check_rabbitmq(rabbitmq, external_services, broker):
 
 def check_redis(redis, external_services, broker):
     redis_enabled = redis and redis.enabled
+    redis_non_broker = redis and redis.non_broker
     external_redis = None
-    redis_borker = broker == "redis"
+    redis_broker = broker == "redis"
     if external_services:
         external_redis = external_services.redis
 
@@ -94,12 +95,12 @@ def check_redis(redis, external_services, broker):
         )
 
     redis_used = redis_enabled or external_redis
-    if redis_used and not redis_borker:
+    if redis_used and not redis_broker and not redis_non_broker:
         raise ValidationError(
             "redis is enabled but you are using a different broker backend!"
         )
 
-    return redis_used
+    return redis_used, not redis_non_broker
 
 
 def broker_is_required(services):
@@ -126,11 +127,12 @@ def validate_platform_deployment(
     postgresql, redis, rabbitmq, broker, scheduler, worker, beat, external_services
 ):
     check_postgres(postgresql, external_services)
-    redis_used = check_redis(redis, external_services, broker)
+    redis_used, redis_is_broker = check_redis(redis, external_services, broker)
     rabbitmq_used = check_rabbitmq(rabbitmq, external_services, broker)
-    if rabbitmq_used and redis_used:
+    if rabbitmq_used and redis_used and redis_is_broker:
         raise ValidationError(
-            "You can only enable rabbitmq or redis, you don't need to deploy both!"
+            "You only need to enable rabbitmq or redis for the broker, "
+            "you don't need to deploy both!"
         )
     broker_defined = rabbitmq_used or redis_used
     services = [scheduler, worker, beat]

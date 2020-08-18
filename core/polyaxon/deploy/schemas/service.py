@@ -400,6 +400,7 @@ class PostgresqlConfig(ThirdPartyService):
 
 class RedisSchema(ThirdPartyServiceSchema):
     image = fields.Raw(allow_none=True)
+    non_broker = fields.Bool(allow_none=True)
     use_password = fields.Bool(allow_none=True)
     password = fields.Str(allow_none=True)
 
@@ -411,6 +412,7 @@ class RedisSchema(ThirdPartyServiceSchema):
 class RedisConfig(ThirdPartyService):
     SCHEMA = RedisSchema
     REDUCED_ATTRIBUTES = ThirdPartyService.REDUCED_ATTRIBUTES + [
+        "nonBroker",
         "usePassword",
         "password",
     ]
@@ -418,6 +420,7 @@ class RedisConfig(ThirdPartyService):
     def __init__(
         self,
         enabled=None,
+        non_broker=None,
         use_password=None,
         password=None,
         image=None,
@@ -442,6 +445,7 @@ class RedisConfig(ThirdPartyService):
             affinity=affinity,
             tolerations=tolerations,
         )
+        self.non_broker = non_broker
         self.use_password = use_password
         self.password = password
 

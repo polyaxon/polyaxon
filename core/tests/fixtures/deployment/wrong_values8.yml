@@ -1,5 +1,4 @@
-deploymentType: kubernetes
-deploymentChart: agent
+deploymentType: docker-compose
 
 rbac:
   enabled: true
@@ -13,9 +12,14 @@ environment: staging
 user:
   password: root
 
-scheduler:
+postgresql:
+  enabled: true
+
+redis:
   enabled: true
 
 rabbitmq-ha:
-  enabled: false   # Requires external service
+  enabled: true
 
+scheduler:
+  enabled: true

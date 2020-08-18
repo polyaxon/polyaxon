@@ -1,0 +1,25 @@
+rbac:
+  enabled: true
+
+gateway:
+ service:
+   type: ClusterIP
+
+environment: staging
+
+user:
+  password: root
+
+rabbitmq-ha:
+  enabled: true
+
+redis:
+  enabled: true
+  nonBroker: true
+
+broker: rabbitmq
+
+artifactsStore:
+  name: test
+  kind: host_path
+  schema: {"hostPath": "/tmp", "mountPath": "/tmp"}
