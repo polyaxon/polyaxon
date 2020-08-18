@@ -75,7 +75,6 @@ data:
   POLYAXON_METRICS_OPTIONS: {{ include "config.metrics.options" . | fromJson | toJson | quote }}
   {{- else if .Values.externalServices.metrics.enabled }}
   POLYAXON_METRICS_BACKEND: {{ default "default" .Values.externalServices.metrics.backend | quote }}
-  POLYAXON_METRICS_OPTIONS: {{ toJson .Values.externalServices.metrics.options | quote }}
   {{- end }}
   {{- if .Values.externalServices.errors.enabled }}
   POLYAXON_ERRORS_BACKEND: {{ default "default" .Values.externalServices.errors.backend | quote }}
