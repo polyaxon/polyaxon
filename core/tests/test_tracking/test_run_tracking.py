@@ -267,9 +267,9 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_metrics:
             self.run.log_metrics()
-        assert log_dashboard.call_count == 1
+        assert log_metrics.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.METRIC))
@@ -289,9 +289,9 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_metrics:
             self.run.log_metrics(step=1, metric1=1.1)
-        assert log_dashboard.call_count == 1
+        assert log_metrics.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))
@@ -317,9 +317,9 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_metrics:
             self.run.log_metrics(step=1, metric1=1.1, metric2=21.1)
-        assert log_dashboard.call_count == 1
+        assert log_metrics.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))
@@ -385,9 +385,9 @@ class TestRunLogging(TestEnvVarsCase):
         )
         image_file = tempfile.mkdtemp() + "/file.png"
         self.touch(image_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_image:
             self.run.log_image(name="my_image", data=image_file)
-        assert log_dashboard.call_count == 1
+        assert log_image.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.IMAGE))
@@ -420,9 +420,9 @@ class TestRunLogging(TestEnvVarsCase):
         )
         image_file = tempfile.mkdtemp() + "/file.png"
         self.touch(image_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_image:
             self.run.log_image(name="my_image", data=image_file, step=1)
-        assert log_dashboard.call_count == 1
+        assert log_image.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.IMAGE))
@@ -453,11 +453,11 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.IMAGE))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_image:
             self.run.log_image(
                 name="my_image", data=tensor_np(shape=(1, 8, 8)), dataformats="CHW"
             )
-        assert log_dashboard.call_count == 1
+        assert log_image.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.IMAGE))
@@ -490,13 +490,13 @@ class TestRunLogging(TestEnvVarsCase):
         )
         image_file = tempfile.mkdtemp() + "/file.png"
         self.touch(image_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_image_with_boxes:
             self.run.log_image_with_boxes(
                 name="my_image",
                 tensor_image=tensor_np(shape=(3, 32, 32)),
                 tensor_boxes=np.array([[10, 10, 40, 40]]),
             )
-        assert log_dashboard.call_count == 1
+        assert log_image_with_boxes.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.IMAGE))
@@ -536,9 +536,9 @@ class TestRunLogging(TestEnvVarsCase):
         plt.axis("scaled")
         plt.tight_layout()
 
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_mpl_image:
             self.run.log_mpl_image(name="figure", data=figure, step=1, close=False)
-        assert log_dashboard.call_count == 1
+        assert log_mpl_image.call_count == 1
         assert plt.fignum_exists(figure.number) is True
 
         self.event_logger.flush()
@@ -609,9 +609,9 @@ class TestRunLogging(TestEnvVarsCase):
             plt.tight_layout()
             figures.append(figure)
 
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_mpl_image:
             self.run.log_mpl_image(name="figure", data=figures, step=1, close=False)
-        assert log_dashboard.call_count == 1
+        assert log_mpl_image.call_count == 1
         assert all([plt.fignum_exists(figure.number) is True for figure in figures])
 
         self.event_logger.flush()
@@ -630,9 +630,9 @@ class TestRunLogging(TestEnvVarsCase):
         results = V1Events.read(kind="image", name="figure", data=events_file)
         assert len(results.df.values) == 1
 
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_mpl_image:
             self.run.log_mpl_image(name="figure", data=figures, step=2)
-        assert log_dashboard.call_count == 1
+        assert log_mpl_image.call_count == 1
         assert all([plt.fignum_exists(figure.number) is False for figure in figures])
 
         self.event_logger.flush()
@@ -675,9 +675,9 @@ class TestRunLogging(TestEnvVarsCase):
         plt.axis("scaled")
         plt.tight_layout()
 
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_mpl_plotly_chart:
             self.run.log_mpl_plotly_chart(name="figure", figure=figure, step=1)
-        assert log_dashboard.call_count == 1
+        assert log_mpl_plotly_chart.call_count == 1
 
         self.event_logger.flush()
         assert (
@@ -695,9 +695,9 @@ class TestRunLogging(TestEnvVarsCase):
         results = V1Events.read(kind="image", name="figure", data=events_file)
         assert len(results.df.values) == 1
 
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_mpl_plotly_chart:
             self.run.log_mpl_plotly_chart(name="figure", figure=figure, step=2)
-        assert log_dashboard.call_count == 1
+        assert log_mpl_plotly_chart.call_count == 1
         assert plt.fignum_exists(figure.number) is False
 
         self.event_logger.flush()
@@ -727,9 +727,9 @@ class TestRunLogging(TestEnvVarsCase):
         )
         video_file = tempfile.mkdtemp() + "/video.gif"
         self.touch(video_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_video:
             self.run.log_video(name="my_video", data=video_file)
-        assert log_dashboard.call_count == 1
+        assert log_video.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.VIDEO))
@@ -795,9 +795,9 @@ class TestRunLogging(TestEnvVarsCase):
         )
         audio_file = tempfile.mkdtemp() + "/audio.wav"
         self.touch(audio_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_audio:
             self.run.log_audio(name="my_audio", data=audio_file)
-        assert log_dashboard.call_count == 1
+        assert log_audio.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.AUDIO))
@@ -828,9 +828,9 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.AUDIO))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_audio:
             self.run.log_audio(name="my_audio", data=tensor_np(shape=(42,)))
-        assert log_dashboard.call_count == 1
+        assert log_audio.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.AUDIO))
@@ -861,9 +861,9 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.TEXT))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_text:
             self.run.log_text(name="my_text", text="some text", step=1)
-        assert log_dashboard.call_count == 1
+        assert log_text.call_count == 1
 
         self.event_logger.flush()
         assert (
@@ -890,9 +890,9 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.HTML))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_html:
             self.run.log_html(name="my_div", html="<div>test<div/>", step=1)
-        assert log_dashboard.call_count == 1
+        assert log_html.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.HTML))
@@ -918,7 +918,7 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.HISTOGRAM))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_histogram:
             self.run.log_histogram(
                 name="histo", values=tensor_np(shape=(1024,)), bins="auto", step=1
             )
@@ -928,7 +928,7 @@ class TestRunLogging(TestEnvVarsCase):
             self.run.log_histogram(
                 name="histo", values=tensor_np(shape=(1024,)), bins="doane", step=1
             )
-        assert log_dashboard.call_count == 3
+        assert log_histogram.call_count == 3
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.HISTOGRAM))
@@ -955,11 +955,11 @@ class TestRunLogging(TestEnvVarsCase):
             is False
         )
         values, counts = np.histogram(np.random.randint(255, size=(1000,)))
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_np_histogram:
             self.run.log_np_histogram(
                 name="histo", values=values, counts=counts, step=1
             )
-        assert log_dashboard.call_count == 1
+        assert log_np_histogram.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.HISTOGRAM))
@@ -1063,11 +1063,11 @@ class TestRunLogging(TestEnvVarsCase):
         )
         model_file = tempfile.mkdtemp() + "/df.pkl"
         self.touch(model_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dataframe:
             self.run.log_dataframe(
                 name="dataframe", path=model_file, content_type="pickel"
             )
-        assert log_dashboard.call_count == 1
+        assert log_dataframe.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.DATAFRAME))
@@ -1100,11 +1100,11 @@ class TestRunLogging(TestEnvVarsCase):
         )
         tsv_file = tempfile.mkdtemp() + "/file.tsv"
         self.touch(tsv_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
             self.run.log_artifact(
                 name="file", path=tsv_file, artifact_kind=V1ArtifactKind.TSV
             )
-        assert log_dashboard.call_count == 1
+        assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.TSV))
@@ -1137,11 +1137,11 @@ class TestRunLogging(TestEnvVarsCase):
         )
         tsv_file = tempfile.mkdtemp() + "/file.tsv"
         self.touch(tsv_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
             self.run.log_artifact(
                 path=tsv_file, artifact_kind=V1ArtifactKind.TSV
             )
-        assert log_dashboard.call_count == 1
+        assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.TSV))
@@ -1174,11 +1174,11 @@ class TestRunLogging(TestEnvVarsCase):
         )
         tar_file = tempfile.mkdtemp() + "/file.tar.gz"
         self.touch(tar_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
             self.run.log_artifact(
                 path=tar_file, artifact_kind=V1ArtifactKind.FILE
             )
-        assert log_dashboard.call_count == 1
+        assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.FILE))
@@ -1219,18 +1219,18 @@ class TestRunLogging(TestEnvVarsCase):
         )
         tsv_file = tempfile.mkdtemp() + "/file.tsv"
         self.touch(tsv_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
             self.run.log_artifact(
                 name="file", path=tsv_file, artifact_kind=V1ArtifactKind.TSV
             )
-        assert log_dashboard.call_count == 1
+        assert log_artifact.call_count == 1
         pd_file = tempfile.mkdtemp() + "/dataframe"
         self.touch(pd_file)
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
             self.run.log_artifact(
                 name="file2", path=pd_file, artifact_kind=V1ArtifactKind.DATAFRAME
             )
-        assert log_dashboard.call_count == 1
+        assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.TSV))
@@ -1301,11 +1301,11 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.CHART))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_charts:
             self.run.log_bokeh_chart(name="bokeh_test", figure=bokeh_test, step=1)
             self.run.log_plotly_chart(name="plotly_test", figure=plotly_test, step=1)
             self.run.log_altair_chart(name="alt_test", figure=alt_test, step=1)
-        assert log_dashboard.call_count == 3
+        assert log_charts.call_count == 3
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.CHART))
@@ -1347,13 +1347,13 @@ class TestRunLogging(TestEnvVarsCase):
         x = [1, 2, 3, 4, 5]
         y = [6, 7, 2, 4, 5]
 
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_curves:
             self.run.log_roc_auc_curve(name="roc_test", fpr=x, tpr=y, auc=0.6, step=1)
             self.run.log_pr_curve(
                 name="pr_test", precision=x, recall=y, average_precision=0.6, step=1
             )
             self.run.log_curve(name="curve_test", x=x, y=y, annotation=0.6, step=1)
-        assert log_dashboard.call_count == 3
+        assert log_curves.call_count == 3
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.CURVE))
