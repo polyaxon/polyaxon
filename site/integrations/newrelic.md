@@ -42,4 +42,5 @@ externalServices:
     backend: newrelic
     options:
       license_key:
+      app_name:
 ```

@@ -24,7 +24,7 @@ Polyaxon in-cluster NFS provisioner to simplify the creation of ReadWriteMany an
 
 ## Install Helm
 
-To install the nfs-provisioner, make sure you have helm installed, please see this [guide](/docs/guides/setup-helm/).
+To install the nfs-provisioner, make sure you have [Helm](https://helm.sh/docs/intro/install/) installed.
 
 
 ## Create Namespace

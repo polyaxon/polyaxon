@@ -67,7 +67,7 @@ In Polyaxon UI you can get an starter deployment config:
 ## Install Polyaxon Agent
 
 First of all, you need to [add](https://github.com/kubernetes/helm/blob/master/docs/chart_repository.md) the [Polyaxon helm repository](https://charts.polyaxon.com/)
-to your helm, so you can install Polyaxon from it.
+to your Helm, so you can install Polyaxon from it.
 This makes it easy to refer to the Polyaxon chart without having to use a long URL each time.
 
 ```bash

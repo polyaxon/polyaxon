@@ -13,7 +13,7 @@ tags:
 sidebar: "setup"
 ---
 
-If you are here, we assume that you have a Kubernetes cluster and [helm](/docs/guides/setup-helm/) setup.
+If you are here, we assume that you have a Kubernetes cluster and [Helm](https://helm.sh/docs/intro/install/) setup.
 
 This section includes guides to deploy:
  * Polyaxon [Community Edition](/docs/setup/platform/community-edition/).
@@ -25,7 +25,7 @@ This guide is a reference with commands to deploy, upgrade, and teardown a clust
 
 Please consider reading the other configuration sections to have a deeper knowledge about how to configure and customize Polyaxon to fit your needs.
 
-If you are deploying Polyaxon in production mode, you should take some time to read about some [best practices](/docs/guides/best-practices-for-deploying-polyaxon/) when deploying Polyaxon.
+If you are deploying Polyaxon in production mode, you should take some time to read about some [best practices](/docs/setup/deployment-strategies/best-practices/) when deploying Polyaxon.
 
 > **Tip**: The full list of the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
 
@@ -64,9 +64,8 @@ postgresql:
 ## Install Polyaxon
 
 First of all, you need to [add](https://github.com/kubernetes/helm/blob/master/docs/chart_repository.md) the [Polyaxon helm repository](https://charts.polyaxon.com/)
-to your helm, so you can install Polyaxon from it.
+to your Helm, so you can install Polyaxon from it.
 This makes it easy to refer to the Polyaxon chart without having to use a long URL each time.
-
 
 ```bash
 helm repo add polyaxon https://charts.polyaxon.com

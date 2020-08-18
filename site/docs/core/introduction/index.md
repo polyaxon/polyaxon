@@ -107,7 +107,7 @@ Here are the easiest ways to keep track of Polyaxon:
 
 ### Guides &  Tutorials
 
-We publish some [guides and tutorials](/docs/guides/) from time to time to explain or clarify how to use our tools in practical ways.
+We publish some [guides and tutorials](https://blog.polyaxon.com) from time to time to explain or clarify how to use our tools in practical ways.
 These guides have tags, you can for instance show all guides for a particular tag to gain deeper knowledge about that area.
 
 ### Frequently asked questions

@@ -30,7 +30,7 @@ The [nfs-provisioner chart](https://github.com/helm/charts/tree/master/stable/nf
 
 ## Install Helm
 
-To install the nfs-provisioner, make sure you have helm installed, please see this [guide](/docs/guides/setup-helm/).
+To install the nfs-provisioner, make sure you have [Helm](https://helm.sh/docs/intro/install/) installed.
 
 
 ## Create Namespace

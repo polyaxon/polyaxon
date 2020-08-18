@@ -29,7 +29,7 @@ If you are running Polyaxon in the cloud, then you can consider a managed servic
 
 ## Setup Helm
 
-You need Helm to both setup Polyaxon as well as Elastic stack. You can follow this [guide](/docs/guides/setup-helm/) to set up Helm.
+You need [Helm](https://helm.sh/docs/intro/install/) to deploy Polyaxon as well as Elastic stack.
 
 ## Install ElasticSearch
 

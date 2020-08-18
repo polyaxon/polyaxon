@@ -44,9 +44,9 @@ These Helm charts will be maintained and supported by Polyaxon to allow users to
  * [PytorchJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/pytorchjob)
  * [MPIJob](https://github.com/polyaxon/polyaxon-charts/tree/master/kubeflow/tfjob)
  
-These operators require Helm to be installed, you can have a look at this guide to [setup Helm](/docs/guides/setup-helm/)
+These operators require [Helm](https://helm.sh/docs/intro/install/) to be installed.
 
-We are also distributing these charts directly on our official charts repo [https://charts.polyaxon.com](https://charts.polyaxon.com)
+We are also distributing these charts directly on our official Helm charts repo [https://charts.polyaxon.com](https://charts.polyaxon.com)
 
 ```bash
 $ helm repo add polyaxon https://charts.polyaxon.com

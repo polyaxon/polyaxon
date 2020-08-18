@@ -29,6 +29,12 @@ Before you can deploy Polyaxon, make sure you have the following:
  * [Helm](https://helm.sh/docs/intro/install/).
  * [Polyaxon CLI](/docs/setup/cli/).
 
+Add Polyaxon charts repo:
+
+```bash
+helm repo add polyaxon https://charts.polyaxon.com
+```
+
 Deploy Polyaxon with default config values on Minikube:
 
 ```bash
