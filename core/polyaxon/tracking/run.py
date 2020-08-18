@@ -42,7 +42,7 @@ from polyaxon.polyboard.events import LoggedEventSpec, V1Event, get_asset_path
 from polyaxon.polyboard.processors import events_processors
 from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
 from polyaxon.utils.env import get_run_env
-from polyaxon.utils.path_utils import get_path_extension
+from polyaxon.utils.path_utils import get_base_filename, get_path_extension
 
 TEMP_RUN_ARTIFACTS = "/tmp/.plxartifacts"
 
@@ -505,7 +505,7 @@ class Run(RunClient):
         is_file = isinstance(data, str) and os.path.exists(data)
         ext = "png"
         if is_file:
-            name = name or os.path.basename(data)
+            name = name or get_base_filename(data)
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "image"
@@ -672,7 +672,7 @@ class Run(RunClient):
         is_file = isinstance(data, str) and os.path.exists(data)
         content_type = content_type or "gif"
         if is_file:
-            name = name or os.path.basename(data)
+            name = name or get_base_filename(data)
             content_type = get_path_extension(filepath=data) or content_type
         else:
             name = name or "video"
@@ -743,7 +743,7 @@ class Run(RunClient):
         is_file = isinstance(data, str) and os.path.exists(data)
         ext = content_type or "wav"
         if is_file:
-            name = name or os.path.basename(data)
+            name = name or get_base_filename(data)
             ext = get_path_extension(filepath=data) or ext
         else:
             name = name or "audio"
@@ -918,7 +918,7 @@ class Run(RunClient):
         """
         self._log_has_model()
 
-        name = name or os.path.basename(path)
+        name = name or get_base_filename(path)
         ext = None
         if os.path.isfile(path):
             ext = get_path_extension(filepath=path)
@@ -962,7 +962,7 @@ class Run(RunClient):
         """
         self._log_has_events()
 
-        name = name or os.path.basename(path)
+        name = name or get_base_filename(path)
         ext = get_path_extension(filepath=path)
 
         asset_path = get_asset_path(
@@ -1003,7 +1003,7 @@ class Run(RunClient):
         """
         self._log_has_events()
 
-        name = name or os.path.basename(name)
+        name = name or get_base_filename(path)
         ext = get_path_extension(filepath=path)
         artifact_kind = artifact_kind or V1ArtifactKind.FILE
 

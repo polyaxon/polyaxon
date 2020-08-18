@@ -308,7 +308,7 @@ class TestRunLogging(TestEnvVarsCase):
         results = V1Events.read(kind="metric", name="metric1", data=events_file)
         assert len(results.df.values) == 1
 
-    def test_log_multiple_metric(self):
+    def test_log_multiple_metrics(self):
         assert (
             os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.METRIC))
             is False
@@ -1123,6 +1123,80 @@ class TestRunLogging(TestEnvVarsCase):
 
         asset_file = get_asset_path(
             self.run_path, kind=V1ArtifactKind.TSV, name="file", ext="tsv"
+        )
+        assert os.path.exists(asset_file) is True
+
+    def test_log_artifact_without_name(self):
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.TSV))
+            is False
+        )
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.TSV))
+            is False
+        )
+        tsv_file = tempfile.mkdtemp() + "/file.tsv"
+        self.touch(tsv_file)
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+            self.run.log_artifact(
+                path=tsv_file, artifact_kind=V1ArtifactKind.TSV
+            )
+        assert log_dashboard.call_count == 1
+        self.event_logger.flush()
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.TSV))
+            is True
+        )
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.TSV))
+            is True
+        )
+        events_file = get_event_path(
+            self.run_path, kind=V1ArtifactKind.TSV, name="file"
+        )
+        assert os.path.exists(events_file) is True
+        results = V1Events.read(kind=V1ArtifactKind.TSV, name="file", data=events_file)
+        assert len(results.df.values) == 1
+
+        asset_file = get_asset_path(
+            self.run_path, kind=V1ArtifactKind.TSV, name="file", ext="tsv"
+        )
+        assert os.path.exists(asset_file) is True
+
+    def test_log_artifact_without_name_and_filename_with_several_dots(self):
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.FILE))
+            is False
+        )
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.FILE))
+            is False
+        )
+        tar_file = tempfile.mkdtemp() + "/file.tar.gz"
+        self.touch(tar_file)
+        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+            self.run.log_artifact(
+                path=tar_file, artifact_kind=V1ArtifactKind.FILE
+            )
+        assert log_dashboard.call_count == 1
+        self.event_logger.flush()
+        assert (
+            os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.FILE))
+            is True
+        )
+        assert (
+            os.path.exists(get_event_path(self.run_path, kind=V1ArtifactKind.FILE))
+            is True
+        )
+        events_file = get_event_path(
+            self.run_path, kind=V1ArtifactKind.FILE, name="file"
+        )
+        assert os.path.exists(events_file) is True
+        results = V1Events.read(kind=V1ArtifactKind.FILE, name="file", data=events_file)
+        assert len(results.df.values) == 1
+
+        asset_file = get_asset_path(
+            self.run_path, kind=V1ArtifactKind.FILE, name="file", ext="tar.gz"
         )
         assert os.path.exists(asset_file) is True
 

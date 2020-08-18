@@ -253,9 +253,12 @@ def create_polyaxon_tmp():
     return base_path
 
 
-def get_path_extension(filepath):
-    _, ext = os.path.splitext(filepath)
-    return ext[1:].lower()
+def get_path_extension(filepath: str):
+    return ".".join(os.path.basename(filepath).split('.')[1:]).lower()
+
+
+def get_base_filename(filepath: str):
+    return os.path.basename(filepath).split('.')[0]
 
 
 def module_type(obj, type_pattern):
