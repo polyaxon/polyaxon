@@ -162,15 +162,24 @@ class PolyaxonStore(StoreMixin):
             )
 
     def download_file(self, url, path, **kwargs):
+        """This function downloads a single file a several files compressed in tar.gz.
+
+        If the untar args is not specified it assumes a single file.
+        If untar is provided: False or True it appends the tar.gz extension.
+        If untar is True: it extracts the file.
+        If untar is File: it keeps the file compressed.
+        """
         local_path = kwargs.pop("path_to", None)
         local_path = local_path or get_path(
             settings.CLIENT_CONFIG.archive_root, self._client.run_uuid
         )
-        _local_path = local_path
         if path:
-            _local_path = get_path(local_path, path)
-        _local_path = _local_path + ".tar.gz"
-        if not kwargs.get("untar"):
+            local_path = get_path(local_path, path)
+        _local_path = local_path
+        untar = kwargs.get("untar")
+        if untar is not None:
+            _local_path = _local_path + ".tar.gz"
+        if untar is False:
             local_path = _local_path
         check_or_create_path(_local_path, is_dir=False)
         if not os.path.exists(_local_path):

@@ -1138,9 +1138,7 @@ class TestRunLogging(TestEnvVarsCase):
         tsv_file = tempfile.mkdtemp() + "/file.tsv"
         self.touch(tsv_file)
         with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
-            self.run.log_artifact(
-                path=tsv_file, artifact_kind=V1ArtifactKind.TSV
-            )
+            self.run.log_artifact(path=tsv_file, artifact_kind=V1ArtifactKind.TSV)
         assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
@@ -1175,9 +1173,7 @@ class TestRunLogging(TestEnvVarsCase):
         tar_file = tempfile.mkdtemp() + "/file.tar.gz"
         self.touch(tar_file)
         with patch("polyaxon.tracking.run.Run._log_has_events") as log_artifact:
-            self.run.log_artifact(
-                path=tar_file, artifact_kind=V1ArtifactKind.FILE
-            )
+            self.run.log_artifact(path=tar_file, artifact_kind=V1ArtifactKind.FILE)
         assert log_artifact.call_count == 1
         self.event_logger.flush()
         assert (
