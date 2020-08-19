@@ -8,8 +8,8 @@ scikit-learn==0.22.2
 hyperopt==0.2.4
 
 azure-storage-blob==12.3.1
-boto3==1.13.0
-botocore==1.16.0
+boto3==1.14.45
+botocore==1.17.45
 google-cloud-storage==1.28.0
 
 httpretty==1.0.2
