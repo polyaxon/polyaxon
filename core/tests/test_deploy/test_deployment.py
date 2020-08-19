@@ -396,7 +396,9 @@ class TestDeploymentConfig(BaseTestCase):
         }
 
     def test_read_deploy_config_redis_rabbitmq_values(self):
-        config = reader.read("tests/fixtures/deployment/internal_redis_rabbitmq_values.yml")
+        config = reader.read(
+            "tests/fixtures/deployment/internal_redis_rabbitmq_values.yml"
+        )
         assert isinstance(config, DeploymentConfig)
         assert config.namespace is None
         assert config.rbac.enabled is True
