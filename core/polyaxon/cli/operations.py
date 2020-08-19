@@ -671,7 +671,7 @@ def logs(ctx, follow, hide_time, all_info):
 @click.option(
     "--path",
     type=str,
-    help="Path to download, if not provided the full run's  artifacts will downloaded."
+    help="Path to download, if not provided the full run's  artifacts will downloaded.",
 )
 @click.option(
     "--path-to",
@@ -706,7 +706,9 @@ def artifacts(ctx, path, path_to, no_untar):
     )
     try:
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
-        download_path = client.download_artifacts(path=path or "", path_to=path_to, untar=not no_untar)
+        download_path = client.download_artifacts(
+            path=path or "", path_to=path_to, untar=not no_untar
+        )
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e, message="Could not download outputs for run `{}`.".format(run_uuid)
