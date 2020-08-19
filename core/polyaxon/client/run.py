@@ -718,7 +718,9 @@ class RunClient:
         if force:
             url = "{}?force=true".format(url)
 
-        return PolyaxonStore(client=self).download_file(url=url, path=path, path_to=path_to)
+        return PolyaxonStore(client=self).download_file(
+            url=url, path=path, path_to=path_to
+        )
 
     @check_no_op
     @check_offline
