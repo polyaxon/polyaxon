@@ -3,4 +3,5 @@ chart-dirs:
 all: true
 chart-repos:
   - stable=https://kubernetes-charts.storage.googleapis.com/
+  - bitnami=https://charts.bitnami.com/bitnami
 helm-extra-args: --timeout 600s

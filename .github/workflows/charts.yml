@@ -26,6 +26,7 @@ jobs:
       - name: generate
         run: |
           helm repo add stable https://kubernetes-charts.storage.googleapis.com
+          helm repo add bitnami https://charts.bitnami.com/bitnami
           cmd/helm/all
           cmd/helm/build
       - uses: actions/setup-python@v2.1.2
