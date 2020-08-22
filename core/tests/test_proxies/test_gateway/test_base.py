@@ -62,6 +62,11 @@ error_page 401 403 /static/errors/permission.html;
 error_page 404 /static/errors/404.html;
 
 
+location = /robots.txt {
+    rewrite ^ /static/robots.txt;
+}
+
+
 location = /favicon.ico {
     rewrite ^ /static/images/favicon.ico;
 }
@@ -212,6 +217,11 @@ keepalive_requests 10000;
 error_page 500 502 503 504 /static/errors/50x.html;
 error_page 401 403 /static/errors/permission.html;
 error_page 404 /static/errors/404.html;
+
+
+location = /robots.txt {
+    rewrite ^ /static/robots.txt;
+}
 
 
 location = /favicon.ico {

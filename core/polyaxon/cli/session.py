@@ -54,7 +54,7 @@ def session_expired():
 def get_server_installation(polyaxon_client=None):
     polyaxon_client = polyaxon_client or PolyaxonClient()
     try:
-        return polyaxon_client.versions_v1.get_installation()
+        return polyaxon_client.versions_v1.get_installation(_request_timeout=15)
     except ApiException as e:
         if e.status == 403:
             session_expired()
@@ -79,7 +79,7 @@ def get_compatibility(key: str, service: str, version: str, is_cli=True):
     polyaxon_client = PolyaxonClient(config=ClientConfig(), token=NO_AUTH)
     try:
         return polyaxon_client.versions_v1.get_compatibility(
-            uuid=key, service=service, version=version
+            uuid=key, service=service, version=version, _request_timeout=15,
         )
     except ApiException as e:
         if e.status == 403:
@@ -94,6 +94,14 @@ def get_compatibility(key: str, service: str, version: str, is_cli=True):
         if is_cli:
             Printer.print_error(
                 "Could not connect to remote server to fetch compatibility versions.",
+            )
+    except Exception as e:
+        CliConfigManager.reset(last_check=now())
+        if is_cli:
+            Printer.print_error(
+                "Unexpected error %s, "
+                "could not connect to remote server to fetch compatibility versions."
+                % e,
             )
 
 

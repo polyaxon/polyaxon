@@ -7,7 +7,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **connections** | **List&lt;String&gt;** |  |  [optional]
-**trigger** | [**NotificationTrigger**](NotificationTrigger.md) |  |  [optional]
+**trigger** | [**V1NotificationTrigger**](V1NotificationTrigger.md) |  |  [optional]
 
 
 

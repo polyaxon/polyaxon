@@ -5,8 +5,8 @@ LABEL maintainer="Polyaxon, Inc. <contact@polyaxon.com>"
 
 RUN apt-get -y update && \
     apt-get -y install curl unzip && \
-    apt-get autoremove && \
-    apt-get clean && \
+    apt-get autoremove -y && \
+    apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Go

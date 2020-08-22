@@ -110,9 +110,6 @@ def get_model_path(rel_path: str = "model"):
     return TRACKING_RUN.get_model_path(rel_path=rel_path)
 
 
-get_model_path.__doc__ = Run.get_model_path.__doc__
-
-
 def get_tensorboard_path(rel_path: str = "tensorboard"):
     global TRACKING_RUN
     return TRACKING_RUN.get_tensorboard_path(rel_path=rel_path)

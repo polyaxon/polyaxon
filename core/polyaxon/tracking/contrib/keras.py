@@ -53,7 +53,7 @@ class PolyaxonKerasModelCheckpoint(ModelCheckpoint):
 
     def __init__(self, run=None, filepath=None, **kwargs):
         self.run = tracking.get_or_create_run(run)
-        filepath = filepath or self.run.get_model_path()
+        filepath = filepath or "/tmp/model"
         super().__init__(filepath, **kwargs)
 
     def on_epoch_end(self, epoch, logs=None):

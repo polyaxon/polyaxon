@@ -21,7 +21,7 @@ from marshmallow import fields, validate
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
-class V1NotificationTrigger(polyaxon_sdk.NotificationTrigger):
+class V1NotificationTrigger(polyaxon_sdk.V1NotificationTrigger):
     pass
 
 

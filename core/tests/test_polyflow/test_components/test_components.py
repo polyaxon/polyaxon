@@ -627,3 +627,19 @@ class TestComponentsConfigs(BaseTestCase):
         }
         config = V1Component.from_dict(config_dict)
         assert config.to_dict() == config_dict
+
+    def test_component_actions_and_hooks(self):
+        config_dict = {
+            "kind": "component",
+            "actions": [
+                {"hubRef": "ref1"},
+                {"hubRef": "ref2", "label": "customLabel", "many": True},
+            ],
+            "hooks": [
+                {"trigger": "succeeded", "connection": "connection1"},
+                {"connection": "connection1", "hubRef": "ref2"},
+            ],
+            "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+        }
+        config = V1Component.from_dict(config_dict)
+        assert config.to_dict() == config_dict

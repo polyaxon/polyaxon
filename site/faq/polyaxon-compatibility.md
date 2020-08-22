@@ -1,6 +1,6 @@
 ---
-title: "What is Polyaxon compatibility Beacon?"
-meta_title: "What is Polyaxon Beacon? - FAQ"
+title: "What is Polyaxon compatibility check?"
+meta_title: "What is Polyaxon compatibility check? - FAQ"
 meta_description: "Polyaxon will periodically communicate with a remote compatibility server to check compatibility version."
 featured: false
 custom_excerpt: "Polyaxon will periodically communicate with a remote compatibility server to check compatibility version."
@@ -13,7 +13,7 @@ author:
 visibility: public
 status: published
 tags:
-    - beacon
+    - api
 ---
 
 Polyaxon will periodically communicate with a remote compatibility server.

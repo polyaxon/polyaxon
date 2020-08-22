@@ -57,7 +57,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         auto_resume: bool, optional, default: True
         sync_statuses: bool, optional, default: True
         log_level: str, optional
-        notifications: List[[V1Notification](/docs/core/specification/notifications/)]
+        notifications: List[[V1Notification](/docs/core/specification/notifications/)], deprecated.
 
     ## YAML usage
 
@@ -272,6 +272,9 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     ### notifications
 
     <blockquote class="light">Default is None.</blockquote>
+    <blockquote class="Warning">
+        This field is deprecated and will be removed in favor of the component level field "hooks".
+    </blockquote>
 
     Polyaxon used to only expose a global way for sending notifications about runs.
 

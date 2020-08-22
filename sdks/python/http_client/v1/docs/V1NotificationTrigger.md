@@ -1,4 +1,4 @@
-# NotificationTrigger
+# V1NotificationTrigger
 
 ## Properties
 Name | Type | Description | Notes

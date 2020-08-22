@@ -307,3 +307,26 @@ class TestV1Operations(BaseTestCase):
         }
         with self.assertRaises(ValidationError):
             V1Operation.from_dict(config_dict)
+
+    def test_op_actions_and_hooks(self):
+        config_dict = {
+            "actions": [
+                {"hubRef": "ref1"},
+                {"hubRef": "ref2", "label": "customLabel", "many": True},
+            ],
+            "hooks": [
+                {"trigger": "succeeded", "connection": "connection1"},
+                {"connection": "connection1", "hubRef": "ref2"},
+            ],
+            "component": {
+                "run": {
+                    "kind": V1RunKind.JOB,
+                    "environment": {
+                        "nodeSelector": {"polyaxon.com": "node_for_notebook_jobs"}
+                    },
+                    "container": {"image": "jupyterlab"},
+                },
+            },
+        }
+        config = V1Operation.from_dict(config_dict)
+        assert config.to_dict() == config_dict

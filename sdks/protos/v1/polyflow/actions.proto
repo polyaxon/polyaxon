@@ -1,0 +1,42 @@
+/**
+ * Copyright 2018-2020 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+import "v1/polyflow/io.proto";
+
+// Action defintion
+message Action {
+    // Component name to use, if not provided Polyaxon will check the action name isntead
+    string hub_ref = 1;
+
+    // UI label to use for the button, if not provided it will default to the component's hub reference
+    string label = 2;
+
+    // A flag to tell if the action should be applied on a single or multiple runs
+    string many = 3;
+
+    // Optional dict of params
+    map<string, Param> params = 4;
+
+    // Optional a run section to override  the content of the run in the template
+    // should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
+    google.protobuf.Struct run_patch = 5;
+}

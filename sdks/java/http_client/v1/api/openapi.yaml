@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.1.7
+  version: 1.1.8-rc0
 servers:
 - url: /
 security:
@@ -12168,15 +12168,6 @@ components:
       - compare
       title: Dashboard view
       type: string
-    NotificationTrigger:
-      default: succeeded
-      enum:
-      - succeeded
-      - failed
-      - stopped
-      - done
-      title: NotificationTrigger enum
-      type: string
     SparkDeployMode:
       default: cluster
       enum:
@@ -12382,6 +12373,47 @@ components:
           title: Optional if the entity has been deleted
           type: boolean
       title: Config resource specification
+      type: object
+    v1Action:
+      example:
+        run_patch: '{}'
+        hub_ref: hub_ref
+        label: label
+        many: many
+        params:
+          key:
+            ref: ref
+            search:
+              query: query
+              limit: limit
+              sort: sort
+            context_only: true
+            value: '{}'
+      properties:
+        hub_ref:
+          title: Component name to use, if not provided Polyaxon will check the action
+            name isntead
+          type: string
+        label:
+          title: UI label to use for the button, if not provided it will default to
+            the component's hub reference
+          type: string
+        many:
+          title: A flag to tell if the action should be applied on a single or multiple
+            runs
+          type: string
+        params:
+          additionalProperties:
+            $ref: '#/components/schemas/v1Param'
+          title: Optional dict of params
+          type: object
+        run_patch:
+          properties: {}
+          title: |-
+            Optional a run section to override  the content of the run in the template
+            should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
+          type: object
+      title: Action defintion
       type: object
     v1Affinity:
       title: Placeholder for Affinity
@@ -12900,10 +12932,62 @@ components:
         conditions:
         - '{}'
         - '{}'
+        actions:
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          label: label
+          many: many
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          label: label
+          many: many
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        hooks:
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          connection: connection
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          connection: connection
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
         queue: queue
         events:
-        - '{}'
-        - '{}'
+        - events
+        - events
       properties:
         version:
           format: float
@@ -12931,15 +13015,28 @@ components:
           type: string
         cache:
           $ref: '#/components/schemas/v1Cache'
+        termination:
+          $ref: '#/components/schemas/v1Termination'
+        plugins:
+          $ref: '#/components/schemas/v1Plugins'
         schedule:
           properties: {}
           title: Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
           type: object
         events:
           items:
-            properties: {}
-            type: object
+            type: string
           title: Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+          type: array
+        actions:
+          items:
+            $ref: '#/components/schemas/v1Action'
+          title: Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+          type: array
+        hooks:
+          items:
+            $ref: '#/components/schemas/v1Hook'
+          title: Optional hooks section
           type: array
         matrix:
           properties: {}
@@ -12963,10 +13060,6 @@ components:
           format: boolean
           title: Optional flag to skip this run if upstream was skipped
           type: boolean
-        termination:
-          $ref: '#/components/schemas/v1Termination'
-        plugins:
-          $ref: '#/components/schemas/v1Plugins'
         inputs:
           items:
             $ref: '#/components/schemas/v1IO'
@@ -13067,6 +13160,58 @@ components:
         - tags
         - tags
         name: name
+        actions:
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          label: label
+          many: many
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          label: label
+          many: many
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        hooks:
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          connection: connection
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          connection: connection
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
         queue: queue
       properties:
         version:
@@ -13100,6 +13245,16 @@ components:
           $ref: '#/components/schemas/v1Termination'
         plugins:
           $ref: '#/components/schemas/v1Plugins'
+        actions:
+          items:
+            $ref: '#/components/schemas/v1Action'
+          title: Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+          type: array
+        hooks:
+          items:
+            $ref: '#/components/schemas/v1Hook'
+          title: Optional hooks section
+          type: array
         inputs:
           items:
             $ref: '#/components/schemas/v1IO'
@@ -13460,6 +13615,58 @@ components:
           - tags
           - tags
           name: name
+          actions:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          hooks:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
           queue: queue
         - termination:
             max_retries: 0
@@ -13543,6 +13750,58 @@ components:
           - tags
           - tags
           name: name
+          actions:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          hooks:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
           queue: queue
         environment:
           service_account_name: service_account_name
@@ -13573,20 +13832,7 @@ components:
           affinity: '{}'
           hostPID: hostPID
         operations:
-        - termination:
-            max_retries: 0
-            ttl: 4
-            timeout: 8
-          path_ref: path_ref
-          cache:
-            disable: true
-            inputs:
-            - inputs
-            - inputs
-            ttl: 6
-          url_ref: url_ref
-          kind: kind
-          plugins:
+        - plugins:
             collect_logs: true
             auth: true
             collect_resources: collect_resources
@@ -13603,11 +13849,54 @@ components:
               - connections
               - connections
             docker: true
-          profile: profile
           description: description
           hub_ref: hub_ref
           skip_on_upstream_skip: true
           matrix: '{}'
+          run_patch: '{}'
+          dag_ref: dag_ref
+          hooks:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          events:
+          - events
+          - events
+          termination:
+            max_retries: 0
+            ttl: 4
+            timeout: 8
+          path_ref: path_ref
+          cache:
+            disable: true
+            inputs:
+            - inputs
+            - inputs
+            ttl: 6
+          url_ref: url_ref
+          kind: kind
+          profile: profile
           params:
             key:
               ref: ref
@@ -13624,7 +13913,6 @@ components:
           dependencies:
           - dependencies
           - dependencies
-          run_patch: '{}'
           schedule: '{}'
           component:
             termination:
@@ -13709,30 +13997,92 @@ components:
             - tags
             - tags
             name: name
+            actions:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            hooks:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
             queue: queue
-          dag_ref: dag_ref
           name: name
           conditions:
           - conditions
           - conditions
+          actions:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
           queue: queue
-          events:
-          - '{}'
-          - '{}'
-        - termination:
-            max_retries: 0
-            ttl: 4
-            timeout: 8
-          path_ref: path_ref
-          cache:
-            disable: true
-            inputs:
-            - inputs
-            - inputs
-            ttl: 6
-          url_ref: url_ref
-          kind: kind
-          plugins:
+        - plugins:
             collect_logs: true
             auth: true
             collect_resources: collect_resources
@@ -13749,11 +14099,54 @@ components:
               - connections
               - connections
             docker: true
-          profile: profile
           description: description
           hub_ref: hub_ref
           skip_on_upstream_skip: true
           matrix: '{}'
+          run_patch: '{}'
+          dag_ref: dag_ref
+          hooks:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          events:
+          - events
+          - events
+          termination:
+            max_retries: 0
+            ttl: 4
+            timeout: 8
+          path_ref: path_ref
+          cache:
+            disable: true
+            inputs:
+            - inputs
+            - inputs
+            ttl: 6
+          url_ref: url_ref
+          kind: kind
+          profile: profile
           params:
             key:
               ref: ref
@@ -13770,7 +14163,6 @@ components:
           dependencies:
           - dependencies
           - dependencies
-          run_patch: '{}'
           schedule: '{}'
           component:
             termination:
@@ -13855,16 +14247,91 @@ components:
             - tags
             - tags
             name: name
+            actions:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            hooks:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
             queue: queue
-          dag_ref: dag_ref
           name: name
           conditions:
           - conditions
           - conditions
+          actions:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
           queue: queue
-          events:
-          - '{}'
-          - '{}'
         kind: dag
         volumes:
         - null
@@ -14958,6 +15425,52 @@ components:
           type: array
       title: Matrix based on grid/cartesian product generated search space
       type: object
+    v1Hook:
+      example:
+        run_patch: '{}'
+        hub_ref: hub_ref
+        connection: connection
+        params:
+          key:
+            ref: ref
+            search:
+              query: query
+              limit: limit
+              sort: sort
+            context_only: true
+            value: '{}'
+      properties:
+        hub_ref:
+          title: Component name to use, if not provided Polyaxon will check the action
+            name isntead
+          type: string
+        trigger:
+          $ref: '#/components/schemas/v1HookTrigger'
+        connection:
+          title: Connection to use for notification
+          type: string
+        params:
+          additionalProperties:
+            $ref: '#/components/schemas/v1Param'
+          title: Optional dict of params
+          type: object
+        run_patch:
+          properties: {}
+          title: |-
+            Optional a run section to override  the content of the run in the template
+            should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
+          type: object
+      title: Hook defintion
+      type: object
+    v1HookTrigger:
+      default: succeeded
+      enum:
+      - succeeded
+      - failed
+      - stopped
+      - done
+      title: NotificationTrigger enum
+      type: string
     v1HostAlias:
       title: Placeholder for HostAlias
       type: object
@@ -17489,24 +18002,20 @@ components:
           title: Connections to use for notification
           type: array
         trigger:
-          $ref: '#/components/schemas/NotificationTrigger'
+          $ref: '#/components/schemas/v1NotificationTrigger'
       title: Notification message
       type: object
+    v1NotificationTrigger:
+      default: succeeded
+      enum:
+      - succeeded
+      - failed
+      - stopped
+      - done
+      title: NotificationTrigger enum
+      type: string
     v1Operation:
       example:
-        termination:
-          max_retries: 0
-          ttl: 4
-          timeout: 8
-        path_ref: path_ref
-        cache:
-          disable: true
-          inputs:
-          - inputs
-          - inputs
-          ttl: 6
-        url_ref: url_ref
-        kind: kind
         plugins:
           collect_logs: true
           auth: true
@@ -17524,11 +18033,54 @@ components:
             - connections
             - connections
           docker: true
-        profile: profile
         description: description
         hub_ref: hub_ref
         skip_on_upstream_skip: true
         matrix: '{}'
+        run_patch: '{}'
+        dag_ref: dag_ref
+        hooks:
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          connection: connection
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          connection: connection
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        events:
+        - events
+        - events
+        termination:
+          max_retries: 0
+          ttl: 4
+          timeout: 8
+        path_ref: path_ref
+        cache:
+          disable: true
+          inputs:
+          - inputs
+          - inputs
+          ttl: 6
+        url_ref: url_ref
+        kind: kind
+        profile: profile
         params:
           key:
             ref: ref
@@ -17545,7 +18097,6 @@ components:
         dependencies:
         - dependencies
         - dependencies
-        run_patch: '{}'
         schedule: '{}'
         component:
           termination:
@@ -17630,16 +18181,91 @@ components:
           - tags
           - tags
           name: name
+          actions:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          hooks:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
           queue: queue
-        dag_ref: dag_ref
         name: name
         conditions:
         - conditions
         - conditions
+        actions:
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          label: label
+          many: many
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
+        - run_patch: '{}'
+          hub_ref: hub_ref
+          label: label
+          many: many
+          params:
+            key:
+              ref: ref
+              search:
+                query: query
+                limit: limit
+                sort: sort
+              context_only: true
+              value: '{}'
         queue: queue
-        events:
-        - '{}'
-        - '{}'
       properties:
         version:
           format: float
@@ -17667,15 +18293,28 @@ components:
           type: string
         cache:
           $ref: '#/components/schemas/v1Cache'
+        termination:
+          $ref: '#/components/schemas/v1Termination'
+        plugins:
+          $ref: '#/components/schemas/v1Plugins'
         schedule:
           properties: {}
           title: Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
           type: object
         events:
           items:
-            properties: {}
-            type: object
+            type: string
           title: Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+          type: array
+        actions:
+          items:
+            $ref: '#/components/schemas/v1Action'
+          title: Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+          type: array
+        hooks:
+          items:
+            $ref: '#/components/schemas/v1Hook'
+          title: Optional hooks section
           type: array
         matrix:
           properties: {}
@@ -17698,10 +18337,6 @@ components:
           format: boolean
           title: Optional flag to skip this run if upstream was skipped
           type: boolean
-        termination:
-          $ref: '#/components/schemas/v1Termination'
-        plugins:
-          $ref: '#/components/schemas/v1Plugins'
         params:
           additionalProperties:
             $ref: '#/components/schemas/v1Param'
@@ -18019,7 +18654,7 @@ components:
         notifications:
           items:
             $ref: '#/components/schemas/v1Notification'
-          title: Option Notifications
+          title: 'Option Notifications: Deprecated'
           type: array
       title: Plugins specification
       type: object
@@ -19584,6 +20219,58 @@ components:
             - tags
             - tags
             name: name
+            actions:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            hooks:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
             queue: queue
           - termination:
               max_retries: 0
@@ -19667,6 +20354,58 @@ components:
             - tags
             - tags
             name: name
+            actions:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            hooks:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
             queue: queue
           environment:
             service_account_name: service_account_name
@@ -19697,20 +20436,7 @@ components:
             affinity: '{}'
             hostPID: hostPID
           operations:
-          - termination:
-              max_retries: 0
-              ttl: 4
-              timeout: 8
-            path_ref: path_ref
-            cache:
-              disable: true
-              inputs:
-              - inputs
-              - inputs
-              ttl: 6
-            url_ref: url_ref
-            kind: kind
-            plugins:
+          - plugins:
               collect_logs: true
               auth: true
               collect_resources: collect_resources
@@ -19727,11 +20453,54 @@ components:
                 - connections
                 - connections
               docker: true
-            profile: profile
             description: description
             hub_ref: hub_ref
             skip_on_upstream_skip: true
             matrix: '{}'
+            run_patch: '{}'
+            dag_ref: dag_ref
+            hooks:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            events:
+            - events
+            - events
+            termination:
+              max_retries: 0
+              ttl: 4
+              timeout: 8
+            path_ref: path_ref
+            cache:
+              disable: true
+              inputs:
+              - inputs
+              - inputs
+              ttl: 6
+            url_ref: url_ref
+            kind: kind
+            profile: profile
             params:
               key:
                 ref: ref
@@ -19748,7 +20517,6 @@ components:
             dependencies:
             - dependencies
             - dependencies
-            run_patch: '{}'
             schedule: '{}'
             component:
               termination:
@@ -19833,30 +20601,92 @@ components:
               - tags
               - tags
               name: name
+              actions:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              hooks:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
               queue: queue
-            dag_ref: dag_ref
             name: name
             conditions:
             - conditions
             - conditions
+            actions:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
             queue: queue
-            events:
-            - '{}'
-            - '{}'
-          - termination:
-              max_retries: 0
-              ttl: 4
-              timeout: 8
-            path_ref: path_ref
-            cache:
-              disable: true
-              inputs:
-              - inputs
-              - inputs
-              ttl: 6
-            url_ref: url_ref
-            kind: kind
-            plugins:
+          - plugins:
               collect_logs: true
               auth: true
               collect_resources: collect_resources
@@ -19873,11 +20703,54 @@ components:
                 - connections
                 - connections
               docker: true
-            profile: profile
             description: description
             hub_ref: hub_ref
             skip_on_upstream_skip: true
             matrix: '{}'
+            run_patch: '{}'
+            dag_ref: dag_ref
+            hooks:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            events:
+            - events
+            - events
+            termination:
+              max_retries: 0
+              ttl: 4
+              timeout: 8
+            path_ref: path_ref
+            cache:
+              disable: true
+              inputs:
+              - inputs
+              - inputs
+              ttl: 6
+            url_ref: url_ref
+            kind: kind
+            profile: profile
             params:
               key:
                 ref: ref
@@ -19894,7 +20767,6 @@ components:
             dependencies:
             - dependencies
             - dependencies
-            run_patch: '{}'
             schedule: '{}'
             component:
               termination:
@@ -19979,16 +20851,91 @@ components:
               - tags
               - tags
               name: name
+              actions:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              hooks:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
               queue: queue
-            dag_ref: dag_ref
             name: name
             conditions:
             - conditions
             - conditions
+            actions:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
             queue: queue
-            events:
-            - '{}'
-            - '{}'
           kind: dag
           volumes:
           - null
@@ -21151,10 +22098,62 @@ components:
           conditions:
           - '{}'
           - '{}'
+          actions:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          hooks:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
           queue: queue
           events:
-          - '{}'
-          - '{}'
+          - events
+          - events
         run:
           flink:
             kind: flink
@@ -21826,6 +22825,58 @@ components:
               - tags
               - tags
               name: name
+              actions:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              hooks:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
               queue: queue
             - termination:
                 max_retries: 0
@@ -21909,6 +22960,58 @@ components:
               - tags
               - tags
               name: name
+              actions:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              hooks:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
               queue: queue
             environment:
               service_account_name: service_account_name
@@ -21939,20 +23042,7 @@ components:
               affinity: '{}'
               hostPID: hostPID
             operations:
-            - termination:
-                max_retries: 0
-                ttl: 4
-                timeout: 8
-              path_ref: path_ref
-              cache:
-                disable: true
-                inputs:
-                - inputs
-                - inputs
-                ttl: 6
-              url_ref: url_ref
-              kind: kind
-              plugins:
+            - plugins:
                 collect_logs: true
                 auth: true
                 collect_resources: collect_resources
@@ -21969,11 +23059,54 @@ components:
                   - connections
                   - connections
                 docker: true
-              profile: profile
               description: description
               hub_ref: hub_ref
               skip_on_upstream_skip: true
               matrix: '{}'
+              run_patch: '{}'
+              dag_ref: dag_ref
+              hooks:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              events:
+              - events
+              - events
+              termination:
+                max_retries: 0
+                ttl: 4
+                timeout: 8
+              path_ref: path_ref
+              cache:
+                disable: true
+                inputs:
+                - inputs
+                - inputs
+                ttl: 6
+              url_ref: url_ref
+              kind: kind
+              profile: profile
               params:
                 key:
                   ref: ref
@@ -21990,7 +23123,6 @@ components:
               dependencies:
               - dependencies
               - dependencies
-              run_patch: '{}'
               schedule: '{}'
               component:
                 termination:
@@ -22075,30 +23207,92 @@ components:
                 - tags
                 - tags
                 name: name
+                actions:
+                - run_patch: '{}'
+                  hub_ref: hub_ref
+                  label: label
+                  many: many
+                  params:
+                    key:
+                      ref: ref
+                      search:
+                        query: query
+                        limit: limit
+                        sort: sort
+                      context_only: true
+                      value: '{}'
+                - run_patch: '{}'
+                  hub_ref: hub_ref
+                  label: label
+                  many: many
+                  params:
+                    key:
+                      ref: ref
+                      search:
+                        query: query
+                        limit: limit
+                        sort: sort
+                      context_only: true
+                      value: '{}'
+                hooks:
+                - run_patch: '{}'
+                  hub_ref: hub_ref
+                  connection: connection
+                  params:
+                    key:
+                      ref: ref
+                      search:
+                        query: query
+                        limit: limit
+                        sort: sort
+                      context_only: true
+                      value: '{}'
+                - run_patch: '{}'
+                  hub_ref: hub_ref
+                  connection: connection
+                  params:
+                    key:
+                      ref: ref
+                      search:
+                        query: query
+                        limit: limit
+                        sort: sort
+                      context_only: true
+                      value: '{}'
                 queue: queue
-              dag_ref: dag_ref
               name: name
               conditions:
               - conditions
               - conditions
+              actions:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
               queue: queue
-              events:
-              - '{}'
-              - '{}'
-            - termination:
-                max_retries: 0
-                ttl: 4
-                timeout: 8
-              path_ref: path_ref
-              cache:
-                disable: true
-                inputs:
-                - inputs
-                - inputs
-                ttl: 6
-              url_ref: url_ref
-              kind: kind
-              plugins:
+            - plugins:
                 collect_logs: true
                 auth: true
                 collect_resources: collect_resources
@@ -22115,11 +23309,54 @@ components:
                   - connections
                   - connections
                 docker: true
-              profile: profile
               description: description
               hub_ref: hub_ref
               skip_on_upstream_skip: true
               matrix: '{}'
+              run_patch: '{}'
+              dag_ref: dag_ref
+              hooks:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                connection: connection
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              events:
+              - events
+              - events
+              termination:
+                max_retries: 0
+                ttl: 4
+                timeout: 8
+              path_ref: path_ref
+              cache:
+                disable: true
+                inputs:
+                - inputs
+                - inputs
+                ttl: 6
+              url_ref: url_ref
+              kind: kind
+              profile: profile
               params:
                 key:
                   ref: ref
@@ -22136,7 +23373,6 @@ components:
               dependencies:
               - dependencies
               - dependencies
-              run_patch: '{}'
               schedule: '{}'
               component:
                 termination:
@@ -22221,16 +23457,91 @@ components:
                 - tags
                 - tags
                 name: name
+                actions:
+                - run_patch: '{}'
+                  hub_ref: hub_ref
+                  label: label
+                  many: many
+                  params:
+                    key:
+                      ref: ref
+                      search:
+                        query: query
+                        limit: limit
+                        sort: sort
+                      context_only: true
+                      value: '{}'
+                - run_patch: '{}'
+                  hub_ref: hub_ref
+                  label: label
+                  many: many
+                  params:
+                    key:
+                      ref: ref
+                      search:
+                        query: query
+                        limit: limit
+                        sort: sort
+                      context_only: true
+                      value: '{}'
+                hooks:
+                - run_patch: '{}'
+                  hub_ref: hub_ref
+                  connection: connection
+                  params:
+                    key:
+                      ref: ref
+                      search:
+                        query: query
+                        limit: limit
+                        sort: sort
+                      context_only: true
+                      value: '{}'
+                - run_patch: '{}'
+                  hub_ref: hub_ref
+                  connection: connection
+                  params:
+                    key:
+                      ref: ref
+                      search:
+                        query: query
+                        limit: limit
+                        sort: sort
+                      context_only: true
+                      value: '{}'
                 queue: queue
-              dag_ref: dag_ref
               name: name
               conditions:
               - conditions
               - conditions
+              actions:
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
+              - run_patch: '{}'
+                hub_ref: hub_ref
+                label: label
+                many: many
+                params:
+                  key:
+                    ref: ref
+                    search:
+                      query: query
+                      limit: limit
+                      sort: sort
+                    context_only: true
+                    value: '{}'
               queue: queue
-              events:
-              - '{}'
-              - '{}'
             kind: dag
             volumes:
             - null
@@ -23497,19 +24808,6 @@ components:
             kind: qnormal
             value: '{}'
         operation:
-          termination:
-            max_retries: 0
-            ttl: 4
-            timeout: 8
-          path_ref: path_ref
-          cache:
-            disable: true
-            inputs:
-            - inputs
-            - inputs
-            ttl: 6
-          url_ref: url_ref
-          kind: kind
           plugins:
             collect_logs: true
             auth: true
@@ -23527,11 +24825,54 @@ components:
               - connections
               - connections
             docker: true
-          profile: profile
           description: description
           hub_ref: hub_ref
           skip_on_upstream_skip: true
           matrix: '{}'
+          run_patch: '{}'
+          dag_ref: dag_ref
+          hooks:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            connection: connection
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          events:
+          - events
+          - events
+          termination:
+            max_retries: 0
+            ttl: 4
+            timeout: 8
+          path_ref: path_ref
+          cache:
+            disable: true
+            inputs:
+            - inputs
+            - inputs
+            ttl: 6
+          url_ref: url_ref
+          kind: kind
+          profile: profile
           params:
             key:
               ref: ref
@@ -23548,7 +24889,6 @@ components:
           dependencies:
           - dependencies
           - dependencies
-          run_patch: '{}'
           schedule: '{}'
           component:
             termination:
@@ -23633,16 +24973,91 @@ components:
             - tags
             - tags
             name: name
+            actions:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              label: label
+              many: many
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            hooks:
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
+            - run_patch: '{}'
+              hub_ref: hub_ref
+              connection: connection
+              params:
+                key:
+                  ref: ref
+                  search:
+                    query: query
+                    limit: limit
+                    sort: sort
+                  context_only: true
+                  value: '{}'
             queue: queue
-          dag_ref: dag_ref
           name: name
           conditions:
           - conditions
           - conditions
+          actions:
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
+          - run_patch: '{}'
+            hub_ref: hub_ref
+            label: label
+            many: many
+            params:
+              key:
+                ref: ref
+                search:
+                  query: query
+                  limit: limit
+                  sort: sort
+                context_only: true
+                value: '{}'
           queue: queue
-          events:
-          - '{}'
-          - '{}'
       properties:
         operation_cond:
           $ref: '#/components/schemas/v1OperationCond'

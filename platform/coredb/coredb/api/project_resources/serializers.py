@@ -23,6 +23,7 @@ from coredb.api.base.is_managed import IsManagedMixin
 from coredb.api.base.settings import SettingsMixin
 from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import create_run
+from polyaxon.exceptions import PolyaxonException
 from polyaxon.polyaxonfile import OperationSpecification
 
 
@@ -103,15 +104,18 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                 op_spec = OperationSpecification.read(content)
             except Exception as e:
                 raise ValidationError(e)
-            return compile_operation_run(
-                project_id=validated_data["project"].id,
-                user_id=user.id if user else None,
-                op_spec=op_spec,
-                name=validated_data.get("name"),
-                description=validated_data.get("description"),
-                tags=validated_data.get("tags"),
-                supported_kinds=validated_data.get("supported_kinds"),
-            )
+            try:
+                return compile_operation_run(
+                    project_id=validated_data["project"].id,
+                    user_id=user.id if user else None,
+                    op_spec=op_spec,
+                    name=validated_data.get("name"),
+                    description=validated_data.get("description"),
+                    tags=validated_data.get("tags"),
+                    supported_kinds=validated_data.get("supported_kinds"),
+                )
+            except (PolyaxonException, ValueError) as e:
+                raise ValidationError(e)
         else:
             return create_run(
                 project_id=validated_data["project"].id,
