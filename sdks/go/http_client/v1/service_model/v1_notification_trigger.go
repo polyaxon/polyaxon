@@ -27,52 +27,52 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NotificationTrigger NotificationTrigger enum
+// V1NotificationTrigger NotificationTrigger enum
 //
-// swagger:model NotificationTrigger
-type NotificationTrigger string
+// swagger:model v1NotificationTrigger
+type V1NotificationTrigger string
 
 const (
 
-	// NotificationTriggerSucceeded captures enum value "succeeded"
-	NotificationTriggerSucceeded NotificationTrigger = "succeeded"
+	// V1NotificationTriggerSucceeded captures enum value "succeeded"
+	V1NotificationTriggerSucceeded V1NotificationTrigger = "succeeded"
 
-	// NotificationTriggerFailed captures enum value "failed"
-	NotificationTriggerFailed NotificationTrigger = "failed"
+	// V1NotificationTriggerFailed captures enum value "failed"
+	V1NotificationTriggerFailed V1NotificationTrigger = "failed"
 
-	// NotificationTriggerStopped captures enum value "stopped"
-	NotificationTriggerStopped NotificationTrigger = "stopped"
+	// V1NotificationTriggerStopped captures enum value "stopped"
+	V1NotificationTriggerStopped V1NotificationTrigger = "stopped"
 
-	// NotificationTriggerDone captures enum value "done"
-	NotificationTriggerDone NotificationTrigger = "done"
+	// V1NotificationTriggerDone captures enum value "done"
+	V1NotificationTriggerDone V1NotificationTrigger = "done"
 )
 
 // for schema
-var notificationTriggerEnum []interface{}
+var v1NotificationTriggerEnum []interface{}
 
 func init() {
-	var res []NotificationTrigger
+	var res []V1NotificationTrigger
 	if err := json.Unmarshal([]byte(`["succeeded","failed","stopped","done"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		notificationTriggerEnum = append(notificationTriggerEnum, v)
+		v1NotificationTriggerEnum = append(v1NotificationTriggerEnum, v)
 	}
 }
 
-func (m NotificationTrigger) validateNotificationTriggerEnum(path, location string, value NotificationTrigger) error {
-	if err := validate.EnumCase(path, location, value, notificationTriggerEnum, true); err != nil {
+func (m V1NotificationTrigger) validateV1NotificationTriggerEnum(path, location string, value V1NotificationTrigger) error {
+	if err := validate.EnumCase(path, location, value, v1NotificationTriggerEnum, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-// Validate validates this notification trigger
-func (m NotificationTrigger) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 notification trigger
+func (m V1NotificationTrigger) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	// value enum
-	if err := m.validateNotificationTriggerEnum("", "body", m); err != nil {
+	if err := m.validateV1NotificationTriggerEnum("", "body", m); err != nil {
 		return err
 	}
 

@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.7",
+    "version": "1.1.8-rc0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -12495,17 +12495,6 @@
       "description": "- any: Any view\n - single: Single run dashboard\n - compare: Compare runs dashboard",
       "title": "Dashboard view"
     },
-    "NotificationTrigger": {
-      "type": "string",
-      "enum": [
-        "succeeded",
-        "failed",
-        "stopped",
-        "done"
-      ],
-      "default": "succeeded",
-      "title": "NotificationTrigger enum"
-    },
     "SparkDeployMode": {
       "type": "string",
       "enum": [
@@ -12612,6 +12601,35 @@
         }
       },
       "title": "Config resource specification"
+    },
+    "v1Action": {
+      "type": "object",
+      "properties": {
+        "hub_ref": {
+          "type": "string",
+          "title": "Component name to use, if not provided Polyaxon will check the action name isntead"
+        },
+        "label": {
+          "type": "string",
+          "title": "UI label to use for the button, if not provided it will default to the component's hub reference"
+        },
+        "many": {
+          "type": "string",
+          "title": "A flag to tell if the action should be applied on a single or multiple runs"
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Param"
+          },
+          "title": "Optional dict of params"
+        },
+        "run_patch": {
+          "type": "object",
+          "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
+        }
+      },
+      "title": "Action defintion"
     },
     "v1Affinity": {
       "type": "object",
@@ -13049,6 +13067,14 @@
           "$ref": "#/definitions/v1Cache",
           "title": "Optional flag to disable cache validation and force run this component"
         },
+        "termination": {
+          "$ref": "#/definitions/v1Termination",
+          "title": "optional termination section"
+        },
+        "plugins": {
+          "$ref": "#/definitions/v1Plugins",
+          "title": "Optional plugins to enable"
+        },
         "schedule": {
           "type": "object",
           "title": "Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)"
@@ -13056,9 +13082,23 @@
         "events": {
           "type": "array",
           "items": {
-            "type": "object"
+            "type": "string"
           },
           "title": "Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Action"
+          },
+          "title": "Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+        },
+        "hooks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Hook"
+          },
+          "title": "Optional hooks section"
         },
         "matrix": {
           "type": "object",
@@ -13086,14 +13126,6 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional flag to skip this run if upstream was skipped"
-        },
-        "termination": {
-          "$ref": "#/definitions/v1Termination",
-          "title": "optional termination section"
-        },
-        "plugins": {
-          "$ref": "#/definitions/v1Plugins",
-          "title": "Optional plugins to enable"
         },
         "inputs": {
           "type": "array",
@@ -13162,6 +13194,20 @@
         "plugins": {
           "$ref": "#/definitions/v1Plugins",
           "title": "Optional plugins to enable"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Action"
+          },
+          "title": "Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+        },
+        "hooks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Hook"
+          },
+          "title": "Optional hooks section"
         },
         "inputs": {
           "type": "array",
@@ -14355,6 +14401,46 @@
         }
       },
       "title": "Matrix based on grid/cartesian product generated search space"
+    },
+    "v1Hook": {
+      "type": "object",
+      "properties": {
+        "hub_ref": {
+          "type": "string",
+          "title": "Component name to use, if not provided Polyaxon will check the action name isntead"
+        },
+        "trigger": {
+          "$ref": "#/definitions/v1HookTrigger",
+          "title": "Optional trigger policy, default done"
+        },
+        "connection": {
+          "type": "string",
+          "title": "Connection to use for notification"
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Param"
+          },
+          "title": "Optional dict of params"
+        },
+        "run_patch": {
+          "type": "object",
+          "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
+        }
+      },
+      "title": "Hook defintion"
+    },
+    "v1HookTrigger": {
+      "type": "string",
+      "enum": [
+        "succeeded",
+        "failed",
+        "stopped",
+        "done"
+      ],
+      "default": "succeeded",
+      "title": "NotificationTrigger enum"
     },
     "v1HostAlias": {
       "type": "object",
@@ -15866,11 +15952,22 @@
           "title": "Connections to use for notification"
         },
         "trigger": {
-          "$ref": "#/definitions/NotificationTrigger",
+          "$ref": "#/definitions/v1NotificationTrigger",
           "title": "Optional trigger policy, default done"
         }
       },
       "title": "Notification message"
+    },
+    "v1NotificationTrigger": {
+      "type": "string",
+      "enum": [
+        "succeeded",
+        "failed",
+        "stopped",
+        "done"
+      ],
+      "default": "succeeded",
+      "title": "NotificationTrigger enum"
     },
     "v1Operation": {
       "type": "object",
@@ -15911,6 +16008,14 @@
           "$ref": "#/definitions/v1Cache",
           "title": "Optional flag to disable cache validation and force run this component"
         },
+        "termination": {
+          "$ref": "#/definitions/v1Termination",
+          "title": "optional termination section"
+        },
+        "plugins": {
+          "$ref": "#/definitions/v1Plugins",
+          "title": "Optional plugins to enable"
+        },
         "schedule": {
           "type": "object",
           "title": "Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)"
@@ -15918,9 +16023,23 @@
         "events": {
           "type": "array",
           "items": {
-            "type": "object"
+            "type": "string"
           },
           "title": "Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Action"
+          },
+          "title": "Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+        },
+        "hooks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Hook"
+          },
+          "title": "Optional hooks section"
         },
         "matrix": {
           "type": "object",
@@ -15948,14 +16067,6 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional flag to skip this run if upstream was skipped"
-        },
-        "termination": {
-          "$ref": "#/definitions/v1Termination",
-          "title": "optional termination section"
-        },
-        "plugins": {
-          "$ref": "#/definitions/v1Plugins",
-          "title": "Optional plugins to enable"
         },
         "params": {
           "type": "object",
@@ -16288,7 +16399,7 @@
           "items": {
             "$ref": "#/definitions/v1Notification"
           },
-          "title": "Option Notifications"
+          "title": "Option Notifications: Deprecated"
         }
       },
       "title": "Plugins specification"

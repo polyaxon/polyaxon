@@ -24,7 +24,7 @@ from polyaxon.polyflow.trigger_policies import V1TriggerPolicy
 
 class BaseOpSchema(BaseComponentSchema):
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
-    events = fields.List(fields.Raw(), allow_none=True)
+    events = fields.List(fields.Str(), allow_none=True)
     matrix = fields.Nested(MatrixSchema, allow_none=True)
     dependencies = fields.List(fields.Str(), allow_none=True)
     trigger = fields.Str(

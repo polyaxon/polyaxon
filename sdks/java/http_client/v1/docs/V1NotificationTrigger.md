@@ -1,6 +1,6 @@
 
 
-# NotificationTrigger
+# V1NotificationTrigger
 
 ## Enum
 

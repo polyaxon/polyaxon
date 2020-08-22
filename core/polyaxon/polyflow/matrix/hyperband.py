@@ -76,7 +76,7 @@ class V1Hyperband(BaseConfig, polyaxon_sdk.V1Hyperband):
     Args:
         kind: string, should be equal to `hyperband`
         params: List[Dict[str,
-        [params](/docs/automation/optimization-engine/params/#discrete-values)]]
+            [params](/docs/automation/optimization-engine/params/#discrete-values)]]
         max_iterations: int
         eta: int
         resource: V1OptimizationResource

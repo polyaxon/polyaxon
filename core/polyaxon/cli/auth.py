@@ -38,7 +38,7 @@ from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 @click.option("--username", "-u", help="Polyaxon username or email.")
 @click.option("--password", "-p", help="Polyaxon password.")
 def login(token, username, password):
-    """Login to Polyaxon."""
+    """Login to Polyaxon Cloud or Polyaxon EE."""
     polyaxon_client = PolyaxonClient()
     if username and not token:
         # Use user or email / password login
@@ -113,7 +113,7 @@ def login(token, username, password):
 
 @click.command()
 def logout():
-    """Logout of Polyaxon."""
+    """Logout Login to Polyaxon Cloud or Polyaxon EE."""
     AuthConfigManager.purge()
     CliConfigManager.purge()
     Printer.print_success("You are logged out")
@@ -121,7 +121,7 @@ def logout():
 
 @click.command()
 def whoami():
-    """Show current logged Polyaxon user."""
+    """Show current logged Polyaxon Cloud or Polyaxon EE user."""
     try:
         polyaxon_client = PolyaxonClient()
         user = polyaxon_client.users_v1.get_user()

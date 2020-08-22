@@ -110,8 +110,9 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
                   [V1IntervalSchedule](/docs/automation/schedules/interval/),
                   [V1RepeatableSchedule](/docs/automation/schedules/repeatable/),
                   [V1ExactTimeSchedule](/docs/automation/schedules/exact-time/)], optional
-        events: [events](/docs/automation/optimization-engine/events/),
-                optional
+        events: List[str](/docs/automation/events/), optional
+        actions: List[[V1Notification](/docs/core/automation/actions/)], optional
+        hooks: List[[V1Notification](/docs/core/automation/hooks/)], optional
         matrix: Union[[V1Mapping](/docs/automation/mapping/),
                   [V1GridSearch](/docs/automation/optimization-engine/grid-search/),
                   [V1RandomSearch](/docs/automation/optimization-engine/random-search/),
@@ -150,11 +151,14 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>>   cache:
     >>>   termination:
     >>>   plugins:
+    >>>   events:
+    >>>   actions:
+    >>>   hooks:
     >>>   params:
     >>>   runPatch:
     >>>   hubRef:
     >>>   dagRef:
-    >>>   dagRef:
+    >>>   pathRef:
     >>>   component:
     ```
 
@@ -162,7 +166,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     ```python
     >>> from polyaxon.polyflow import (
-    >>>     V1Cache, V1Component, V1Param, V1Plugins, V1Operation, V1Termination
+    >>>     V1Action, V1Cache, V1Component, V1Hook, V1Param, V1Plugins, V1Operation, V1Termination
     >>> )
     >>> operation = V1Operation(
     >>>     name="test",
@@ -173,6 +177,9 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>>     cache=V1Cache(...),
     >>>     termination=V1Termination(...),
     >>>     plugins=V1Plugins(...),
+    >>>     events=["event-ref1", "event-ref2"],
+    >>>     actions=[V1Action(...)],
+    >>>     hooks=[V1Hook(...)],
     >>>     outputs={"param1": V1Param(...), ...},
     >>>     component=V1Component(...),
     >>> )
@@ -309,7 +316,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     The [params](/docs/core/specification/params/)  to pass to the component,
     they will be validated against the inputs/outputs.
-    If a param is passed and the component does not define a corresponding inputs/outputs,
+    If a parameter is passed and the component does not define a corresponding inputs/outputs,
     a validation error will be raised unless the param has the contextOnly flag enabled.
 
     ```yaml
@@ -321,7 +328,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>>   ...
     ```
 
-    ### run_patch
+    ### runPatch
 
     The run patch provides a way to override information about the component's run section,
     for example the container's resources or the environment section.
@@ -387,10 +394,10 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     By applying a run patch you can effectively share components while having
     full control over customizable details.
 
-    ### hub_ref
+    ### hubRef
 
     Polyaxon provides a [Component Hub](/docs/management/component-hub/)
-    for hosting versioned components with access control system to improve
+    for hosting versioned components with an access control system to improve
     the productivity of your team.
 
     To run a component hosted on Polyaxon Component Hub, you can use `hubRef`
@@ -402,14 +409,14 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     ...
     ```
 
-    ### dag_ref
+    ### dagRef
 
     If you building a dag and you have a component that can be used by several operation,
     you can define a component and reuse it in all operations using `dagRef`.
     Please check Polyaxon automation's [flow engine section](/docs/automation/flow-engine/)
     for more details.
 
-    ### url_ref
+    ### urlRef
 
     You can host your components on an accessible url, e.g github,
     and reference those components without downloading the data manually.
@@ -423,7 +430,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     > Please note that you can only use this reference when using the CLI tool.
 
-    ### path_ref
+    ### pathRef
 
     In many situations, components can be placed in different folders within a project, e.g.
     data-processing, data-exploration, ml-modeling, ...

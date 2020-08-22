@@ -53,7 +53,7 @@ type V1Plugins struct {
 	// Optional log level
 	LogLevel string `json:"log_level,omitempty"`
 
-	// Option Notifications
+	// Option Notifications: Deprecated
 	Notifications []*V1Notification `json:"notifications"`
 
 	// Optional flag to tell Polyaxon if it should set a shm context for the run, default false

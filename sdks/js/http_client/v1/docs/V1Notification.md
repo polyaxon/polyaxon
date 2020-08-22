@@ -5,6 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **connections** | **[String]** |  | [optional] 
-**trigger** | [**NotificationTrigger**](NotificationTrigger.md) |  | [optional] 
+**trigger** | [**V1NotificationTrigger**](V1NotificationTrigger.md) |  | [optional] 
 
 

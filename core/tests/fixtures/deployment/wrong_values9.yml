@@ -1,0 +1,6 @@
+email:
+  host: "smtp.gmail.com"
+  port: 587
+  useTLS: true  # must be useTls
+  hostUser: "foo"
+  hostPassword: "bar"

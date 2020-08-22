@@ -279,7 +279,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>>     value: 1.1
     ```
 
-    ### is_optional
+    ### isOptional
 
     A flag to tell if an input/output is optional.
 
@@ -292,7 +292,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>>     isOptional: true
     ```
 
-    ### is_list
+    ### isList
 
     A flag to tell if an input/output is a list of the type passed.
 
@@ -306,7 +306,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     In this case the input name `learning_rates` will expect a value of type `List[float]`,
     e.g. [0.1 0.01, 0.0001]
 
-    ### is_flag
+    ### isFlag
 
     A flag to tell if an input/output is a flag. This only works and makes sense for inputs
     of type `bool`.

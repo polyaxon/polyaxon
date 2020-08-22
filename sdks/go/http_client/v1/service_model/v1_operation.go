@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -30,6 +32,9 @@ import (
 //
 // swagger:model v1Operation
 type V1Operation struct {
+
+	// Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+	Actions []*V1Action `json:"actions"`
 
 	// Optional flag to disable cache validation and force run this component
 	Cache *V1Cache `json:"cache,omitempty"`
@@ -50,7 +55,10 @@ type V1Operation struct {
 	Description string `json:"description,omitempty"`
 
 	// Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
-	Events []interface{} `json:"events"`
+	Events []string `json:"events"`
+
+	// Optional hooks section
+	Hooks []*V1Hook `json:"hooks"`
 
 	// hub ref
 	HubRef string `json:"hub_ref,omitempty"`
@@ -109,11 +117,19 @@ type V1Operation struct {
 func (m *V1Operation) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateActions(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateCache(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateComponent(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateHooks(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -136,6 +152,31 @@ func (m *V1Operation) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *V1Operation) validateActions(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Actions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Actions); i++ {
+		if swag.IsZero(m.Actions[i]) { // not required
+			continue
+		}
+
+		if m.Actions[i] != nil {
+			if err := m.Actions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("actions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -170,6 +211,31 @@ func (m *V1Operation) validateComponent(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1Operation) validateHooks(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Hooks) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Hooks); i++ {
+		if swag.IsZero(m.Hooks[i]) { // not required
+			continue
+		}
+
+		if m.Hooks[i] != nil {
+			if err := m.Hooks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

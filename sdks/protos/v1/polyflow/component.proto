@@ -20,8 +20,10 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
+import "v1/polyflow/actions.proto";
 import "v1/polyflow/cache.proto";
 import "v1/polyflow/environment.proto";
+import "v1/polyflow/hooks.proto";
 import "v1/polyflow/io.proto";
 import "v1/polyflow/plugins.proto";
 import "v1/polyflow/termination.proto";
@@ -58,12 +60,18 @@ message Component {
     // Optional plugins to enable
     Plugins plugins = 10;
 
+    // Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+    repeated Action actions = 11;
+
+    // Optional hooks section
+    repeated Hook hooks = 12;
+
     // Optional inputs definition
-    repeated IO inputs = 11;
+    repeated IO inputs = 13;
 
     // Optional outputs definition
-    repeated IO outputs = 12;
+    repeated IO outputs = 14;
 
     // Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 13;
+    google.protobuf.Struct run = 15;
 }

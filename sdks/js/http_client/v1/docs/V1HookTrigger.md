@@ -1,4 +1,4 @@
-# PolyaxonSdk.NotificationTrigger
+# PolyaxonSdk.V1HookTrigger
 
 ## Enum
 

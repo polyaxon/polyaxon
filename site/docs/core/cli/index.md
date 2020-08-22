@@ -37,17 +37,18 @@ $ polyaxon command --help
 
 ## Commands References
 
- * [Auth](auth/)
+ * [Auth](auth/) **(Polyaxon Cloud and Polyaxon EE)**
  * [Admin](admin/)
  * [Completion](completion/)
  * [Check](check/)
  * [Config](config/)
- * [Init](init/)
  * [Project](project/)
- * [Upload](Upload/)
  * [Run](run/)
  * [Ops](ops/)
  * [Dashboard](dashboard/)
+ * [Init](init/)
+ * [Upload](upload/)
+ * [Completion](completion/)
  * [Version](version/)
 
 ## Caching

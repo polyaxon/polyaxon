@@ -25,6 +25,7 @@ from polyaxon.proxies.schemas.gzip import get_gzip_config
 from polyaxon.proxies.schemas.listen import get_listen_config
 from polyaxon.proxies.schemas.locations import get_api_locations_config
 from polyaxon.proxies.schemas.logging import get_logging_config
+from polyaxon.proxies.schemas.robots import get_robots_config
 from polyaxon.proxies.schemas.timeout import get_timeout_config
 
 
@@ -38,6 +39,7 @@ def get_base_config():
         get_timeout_config(),
         get_uwsgi_config(),
         get_error_page_config(),
+        get_robots_config(),
         get_favicon_config(),
         get_api_locations_config(),
     ]

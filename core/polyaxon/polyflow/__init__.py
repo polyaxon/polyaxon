@@ -14,6 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from polyaxon.polyflow.actions import (
+    ActionSchema,
+    V1Action,
+)
 from polyaxon.polyflow.cache import CacheSchema, V1Cache
 from polyaxon.polyflow.component import ComponentSchema, V1Component
 from polyaxon.polyflow.dags import DagOpSpec
@@ -32,6 +36,11 @@ from polyaxon.polyflow.early_stopping import (
     V1TruncationStoppingPolicy,
 )
 from polyaxon.polyflow.environment import EnvironmentSchema, V1Environment
+from polyaxon.polyflow.hooks import (
+    HookSchema,
+    V1Hook,
+    V1HookTrigger,
+)
 from polyaxon.polyflow.init import InitSchema, V1Init
 from polyaxon.polyflow.io import V1IO, IOSchema
 from polyaxon.polyflow.mounts import ArtifactsMountSchema, V1ArtifactsMount

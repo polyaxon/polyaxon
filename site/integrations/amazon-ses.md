@@ -28,11 +28,11 @@ Integrate Polyaxon with Amazon SES to receive email notifications.
 
 ## Add your Email notification using Amazon SES to Polyaxon deployment config
 
-Now you can set the email section using your Amazon SES's information:
+Now you can set the email section using your Amazon SES's SMTP information:
 
 ```yaml
 email:
-  host: 
+  host: 'email-smtp.us-west-1.amazonaws.com'  # Set correct region
   port: 587
   useTls: true
   hostUser: 

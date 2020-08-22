@@ -164,18 +164,8 @@ class Run(RunClient):
 
     @check_no_op
     def get_model_path(self, rel_path: str = "model"):
-        """Returns a model path for this run relative to the outputs path.
-
-        Args:
-             rel_path: str, optional, default "model",
-                       the relative path to the `outputs` context.
-        Returns:
-            str, outputs_path/rel_path
-        """
-        path = self._outputs_path
-        if rel_path:
-            path = os.path.join(path, rel_path)
-        return path
+        """Do not use"""
+        return "/tmp/{}".format(rel_path)
 
     @check_no_op
     @check_offline

@@ -465,6 +465,7 @@ affinity:
 passwordLength: 8
 
 email:
+  from: foo@bar.com
   host: smtp
   port: 25
   useTls: false

@@ -34,7 +34,7 @@ type V1Notification struct {
 	Connections []string `json:"connections"`
 
 	// Optional trigger policy, default done
-	Trigger NotificationTrigger `json:"trigger,omitempty"`
+	Trigger V1NotificationTrigger `json:"trigger,omitempty"`
 }
 
 // Validate validates this v1 notification

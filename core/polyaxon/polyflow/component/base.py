@@ -16,7 +16,9 @@
 
 from marshmallow import fields, validate
 
+from polyaxon.polyflow.actions import ActionSchema
 from polyaxon.polyflow.cache import CacheSchema
+from polyaxon.polyflow.hooks import HookSchema
 from polyaxon.polyflow.plugins import PluginsSchema
 from polyaxon.polyflow.termination import TerminationSchema
 from polyaxon.schemas.base import NAME_REGEX, BaseCamelSchema, BaseConfig
@@ -34,6 +36,8 @@ class BaseComponentSchema(BaseCamelSchema):
     cache = fields.Nested(CacheSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     plugins = fields.Nested(PluginsSchema, allow_none=True)
+    actions = fields.List(fields.Nested(ActionSchema), allow_none=True)
+    hooks = fields.List(fields.Nested(HookSchema), allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -53,4 +57,6 @@ class BaseComponent(BaseConfig):
         "cache",
         "termination",
         "plugins",
+        "actions",
+        "hooks",
     ]

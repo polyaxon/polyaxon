@@ -35,12 +35,17 @@ def get_event_path(run_path: str, kind: str = None, name: str = None) -> str:
     return _path
 
 
-def get_asset_path(
-    run_path: str, kind: str = None, name: str = None, step: int = None, ext=None
-) -> str:
+def get_event_assets_path(run_path: str, kind: str = None) -> str:
     _path = "{}/assets".format(run_path)
     if kind:
         _path = "{}/{}".format(_path, kind)
+    return _path
+
+
+def get_asset_path(
+    run_path: str, kind: str = None, name: str = None, step: int = None, ext=None
+) -> str:
+    _path = get_event_assets_path(run_path, kind)
     if name:
         _path = "{}/{}".format(_path, name)
     if step is not None:

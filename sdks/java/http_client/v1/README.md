@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.1.7
+- API version: 1.1.8-rc0
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.1.7</version>
+  <version>1.1.8-rc0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.1.7"
+compile "org.openapitools:openapi-java-client:1.1.8-rc0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.1.7.jar`
+* `target/openapi-java-client-1.1.8-rc0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -327,12 +327,12 @@ Class | Method | HTTP request | Description
 
  - [AgentStateResponseAgentState](docs/AgentStateResponseAgentState.md)
  - [DashboardView](docs/DashboardView.md)
- - [NotificationTrigger](docs/NotificationTrigger.md)
  - [ProtobufAny](docs/ProtobufAny.md)
  - [ProtobufNullValue](docs/ProtobufNullValue.md)
  - [RuntimeError](docs/RuntimeError.md)
  - [SparkDeployMode](docs/SparkDeployMode.md)
  - [V1AccessResource](docs/V1AccessResource.md)
+ - [V1Action](docs/V1Action.md)
  - [V1Agent](docs/V1Agent.md)
  - [V1AgentStateResponse](docs/V1AgentStateResponse.md)
  - [V1AgentStatusBodyRequest](docs/V1AgentStatusBodyRequest.md)
@@ -392,6 +392,8 @@ Class | Method | HTTP request | Description
  - [V1GitConnection](docs/V1GitConnection.md)
  - [V1GitType](docs/V1GitType.md)
  - [V1GridSearch](docs/V1GridSearch.md)
+ - [V1Hook](docs/V1Hook.md)
+ - [V1HookTrigger](docs/V1HookTrigger.md)
  - [V1HostConnection](docs/V1HostConnection.md)
  - [V1HostPathConnection](docs/V1HostPathConnection.md)
  - [V1HpChoice](docs/V1HpChoice.md)
@@ -453,6 +455,7 @@ Class | Method | HTTP request | Description
  - [V1MetricEarlyStopping](docs/V1MetricEarlyStopping.md)
  - [V1ModelRegistry](docs/V1ModelRegistry.md)
  - [V1Notification](docs/V1Notification.md)
+ - [V1NotificationTrigger](docs/V1NotificationTrigger.md)
  - [V1Operation](docs/V1Operation.md)
  - [V1OperationBody](docs/V1OperationBody.md)
  - [V1OperationCond](docs/V1OperationCond.md)

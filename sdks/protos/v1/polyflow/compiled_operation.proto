@@ -20,8 +20,10 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
+import "v1/polyflow/actions.proto";
 import "v1/polyflow/cache.proto";
 import "v1/polyflow/io.proto";
+import "v1/polyflow/hooks.proto";
 import "v1/polyflow/plugins.proto";
 import "v1/polyflow/termination.proto";
 import "v1/polyflow/trigger_policy.proto";
@@ -52,39 +54,45 @@ message CompiledOperation {
     // Optional flag to disable cache validation and force run this component
     Cache cache = 8;
 
-    // Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
-    google.protobuf.Struct schedule = 9;
-
-    // Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
-    repeated google.protobuf.Struct events = 10;
-
-    // Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-    google.protobuf.Struct matrix = 11;
-
-    // Optional graph dependencies of this op
-    repeated string dependencies = 12;
-
-    // Optional trigger policy
-    TriggerPolicy trigger = 13;
-
-    // An optional list of condition to check before starting the run, entities should be a valid Condition
-    repeated google.protobuf.Struct conditions = 14;
-
-    // Optional flag to skip this run if upstream was skipped
-    bool skip_on_upstream_skip = 15;
-
     // optional termination section
-    Termination termination = 16;
+    Termination termination = 9;
 
     // Optional plugins to enable
-    Plugins plugins = 17;
+    Plugins plugins = 10;
+
+    // Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
+    google.protobuf.Struct schedule = 11;
+
+    // Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+    repeated string events = 12;
+
+    // Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+    repeated Action actions = 13;
+
+    // Optional hooks section
+    repeated Hook hooks = 14;
+
+    // Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
+    google.protobuf.Struct matrix = 15;
+
+    // Optional graph dependencies of this op
+    repeated string dependencies = 16;
+
+    // Optional trigger policy
+    TriggerPolicy trigger = 17;
+
+    // An optional list of condition to check before starting the run, entities should be a valid Condition
+    repeated google.protobuf.Struct conditions = 18;
+
+    // Optional flag to skip this run if upstream was skipped
+    bool skip_on_upstream_skip = 19;
 
     // Optional inputs definition
-    repeated IO inputs = 18;
+    repeated IO inputs = 20;
 
     // Optional outputs definition
-    repeated IO outputs = 19;
+    repeated IO outputs = 21;
 
     // Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 20;
+    google.protobuf.Struct run = 22;
 }

@@ -33,6 +33,7 @@ from polyaxon.proxies.schemas.gateway.streams import get_streams_location_config
 from polyaxon.proxies.schemas.gzip import get_gzip_config
 from polyaxon.proxies.schemas.listen import get_listen_config
 from polyaxon.proxies.schemas.logging import get_logging_config
+from polyaxon.proxies.schemas.robots import get_robots_config
 from polyaxon.proxies.schemas.timeout import get_timeout_config
 
 
@@ -49,6 +50,7 @@ def get_base_config():
         get_buffering_config(),
         get_timeout_config(),
         get_error_page_config(),
+        get_robots_config(),
         get_favicon_config(),
         get_healthz_location_config(),
         get_auth_location_config(resolver=resolver),

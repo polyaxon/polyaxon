@@ -280,11 +280,11 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     concurrency and other queue priority definitions.
 
     Operations can reference components using:
-        * [dagRef](/docs/core/specification/operation/#hub_ref)
+        * [dagRef](/docs/core/specification/operation/#dagRef)
             (reusable component defined inside the dag)
-        * [hubRef](/docs/core/specification/operation/#hub_ref)
-        * [pathRef](/docs/core/specification/operation/#path_ref)
-        * [urlRef](/docs/core/specification/operation/#url_ref)
+        * [hubRef](/docs/core/specification/operation/#hubRef)
+        * [pathRef](/docs/core/specification/operation/#pathRef)
+        * [urlRef](/docs/core/specification/operation/#urlRef)
         * [inline component](/docs/core/specification/operation/#component)
 
     ```yaml

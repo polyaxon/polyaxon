@@ -69,7 +69,9 @@ data:
   {{- if .Values.externalServices.analytics.enabled }}
   POLYAXON_ANALYTICS_BACKEND: {{ default "default" .Values.externalServices.analytics.backend | quote }}
   {{- end }}
-  # Metrics
+  {{- if .Values.externalServices.transactions.enabled }}
+  POLYAXON_TRANSACTIONS_BACKEND: {{ default "default" .Values.externalServices.transactions.backend | quote }}
+  {{- end }}
   {{- if .Values.metrics.enabled }}
   POLYAXON_METRICS_BACKEND: "statsd"
   POLYAXON_METRICS_OPTIONS: {{ include "config.metrics.options" . | fromJson | toJson | quote }}
