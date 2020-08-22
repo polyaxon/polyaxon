@@ -37,7 +37,9 @@ class ActionSchema(BaseCamelSchema):
 
 
 class V1Action(BaseConfig, polyaxon_sdk.V1Action):
-    """In order to extend Polyaxon UI and CLI, you can set actions on your operations.
+    """> **Note**: Coming soon
+
+    In order to extend Polyaxon UI and CLI, you can set actions on your operations.
     Every action is a reference to a component that can be executed based
     on the context of this run.
 
@@ -50,11 +52,13 @@ class V1Action(BaseConfig, polyaxon_sdk.V1Action):
 
 
     **UI**
+
     Polyaxon UI will display up-to 3 actions in the run's dropdown,
     and allow users to view all of them (if there are more than 3),
     users interacting with the dashboard can start an action by clicking the buttons.
 
     **CLI**
+
     Polyaxon CLI will also allow to start actions in a much usable than passing
     params to another component, and it will make the CLI much usable,
     for instance, this is the behavior for starting a Keras operation and running a Tensorboard:
@@ -80,11 +84,11 @@ class V1Action(BaseConfig, polyaxon_sdk.V1Action):
     the table comparison will also provide an action for the group.
 
      Args:
-        hub_ref: str
-        label: str, optional
-        many: str, bool
-        params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
-        run_patch: Dict, optional
+         hub_ref: str
+         label: str, optional
+         many: str, bool
+         params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
+         run_patch: Dict, optional
 
     ## YAML usage
 
@@ -143,7 +147,7 @@ class V1Action(BaseConfig, polyaxon_sdk.V1Action):
     This is an optional boolean to tell Polyaxon if this action
     is expected to act on a single run or multiple runs.
 
-    ``yaml
+    ```yaml
     >>> action:
     >>>   hubRef: tensorboard:multi-runs
     >>>   many: true

@@ -43,7 +43,7 @@ For more information please have a look [Polyaxon CLI section](/docs/core/cli/).
 
 ## Login
 
-If you are using Polyaxon Cloud or Polyaxon EE, you can authenticate your CLI by running run the following command
+If you are using **Polyaxon Cloud or Polyaxon EE**, you can authenticate your CLI by running run the following command
 
 ```bash
 $ polyaxon login --username=<USERNAME>

@@ -110,9 +110,9 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
                   [V1IntervalSchedule](/docs/automation/schedules/interval/),
                   [V1RepeatableSchedule](/docs/automation/schedules/repeatable/),
                   [V1ExactTimeSchedule](/docs/automation/schedules/exact-time/)], optional
-        events: List[str](/docs/automation/events/), optional
-        actions: List[[V1Notification](/docs/core/automation/actions/)], optional
-        hooks: List[[V1Notification](/docs/core/automation/hooks/)], optional
+        events: List[[str](/docs/automation/events/)], optional
+        actions: List[[V1Action](/docs/core/specification/actions/)], optional
+        hooks: List[[V1Hook](/docs/core/specification/hooks/)], optional
         matrix: Union[[V1Mapping](/docs/automation/mapping/),
                   [V1GridSearch](/docs/automation/optimization-engine/grid-search/),
                   [V1RandomSearch](/docs/automation/optimization-engine/random-search/),

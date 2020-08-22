@@ -68,8 +68,8 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
         cache: [V1Cache](/docs/automation/helpers/cache/), optional
         termination: [V1Termination](/docs/core/specification/termination/), optional
         plugins: [V1Plugins](/docs/core/specification/plugins/), optional
-        actions: List[[V1Notification](/docs/core/automation/actions/)], optional
-        hooks: List[[V1Notification](/docs/core/automation/hooks/)], optional
+        actions: List[[V1Action](/docs/core/specification/actions/)], optional
+        hooks: List[[V1Hook](/docs/core/specification/hooks/)], optional
         inputs: [V1IO](/docs/core/specification/io/), optional
         outputs: [V1IO](/docs/core/specification/io/), optional
         run: Union[[V1Job](/docs/experimentation/jobs/),

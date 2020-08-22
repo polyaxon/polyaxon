@@ -51,6 +51,10 @@
       link: /docs/core/specification/params/
     - title: Plugins
       link: /docs/core/specification/plugins/
+    - title: Actions
+      link: /docs/core/specification/actions/
+    - title: Hooks
+      link: /docs/core/specification/hooks/
     - title: Notifications
       link: /docs/core/specification/notifications/
     - title: Init

@@ -43,7 +43,9 @@ class HookSchema(BaseCamelSchema):
 
 
 class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
-    """You can configure Polyaxon to send notifications and webhooks to users and systems
+    """> **Note**: Coming soon
+
+    You can configure Polyaxon to send notifications and webhooks to users and systems
     about event changes in your runs.
 
     Hooks also allow you to build or set up integrations and dependencies
