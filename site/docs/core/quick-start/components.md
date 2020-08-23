@@ -93,7 +93,57 @@ In a nutshell, what Polyaxon provides is a simple way to schedule and run contai
 > We will [come back](/docs/core/quick-start/builds/) to the docker image to learn how to build containers later, 
  for now let's assume that we have an image with all requirements installed
 
-## The model
+## The Container section
+
+Polyaxon schedules your logic in containers. The container section exposes all information of the [Kubernetes container specification](https://kubernetes.io/docs/concepts/containers/).
+
+The container section provides several options, the most important options are:
+
+- **command and args**:
+
+Generally when you use the git initializer you will need to provide the path to the git repo in the container:
+
+```yaml
+command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/model.py"]
+```
+
+Or you can use the `workingDir`:
+
+```yaml
+workingDir: "{{ globals.artifacts_path }} + /polyaxon-quick-start/"
+command: [python3, "model.py"]
+```
+
+You can use `bash` or `sh` to combine multiple commands:
+
+```yaml
+command: ["/bin/sh","-c"]
+args: ["command one; command two && command three"]
+```
+
+- **Resources**:
+
+This is how you assign GPUs:
+
+```yaml
+resources:
+  limits:
+    nvidia.com/gpu: 1
+```
+
+Or limit the container's memory and CPU:
+
+```yaml
+resources:
+  limits:
+    cpu: 500m
+    memory: 2000Mi
+  requests:
+    cpu: 100m
+    memory: 50Mi
+```
+
+## Training a model
 
 Let's look now at how Polyaxon logged information and results during the experiment. 
 If you open the file [model.py](https://github.com/polyaxon/polyaxon-quick-start/blob/master/model.py)
