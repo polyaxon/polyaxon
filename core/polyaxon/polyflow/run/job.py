@@ -23,6 +23,7 @@ from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.environment import EnvironmentSchema
 from polyaxon.polyflow.init import InitSchema
 from polyaxon.polyflow.run.kinds import V1RunKind
+from polyaxon.polyflow.run.utils import AddInitMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.swagger import SwaggerField
 
@@ -45,7 +46,7 @@ class JobSchema(BaseCamelSchema):
         return V1Job
 
 
-class V1Job(BaseConfig, polyaxon_sdk.V1Job):
+class V1Job(BaseConfig, AddInitMixin, polyaxon_sdk.V1Job):
     """Jobs are used to train machine learning models,
     process a dataset, execute generic tasks and can be used to perform a variety of functions
     from compiling a model to running an ETL operation.

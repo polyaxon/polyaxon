@@ -31,11 +31,12 @@ Google cloud storage provides an easy way to download the access key as a JSON f
 ## Create a secret on Kubernetes
 
 You can create a secret with an env var of the content of the gcs-key.json:
+
  * `GC_KEYFILE_DICT` or `GOOGLE_KEYFILE_DICT`
  
 Or you can create a secret to be mounted as a volume: 
 
- * `kubectl create secret generic gcs-secret --from-file=gcs-secret.json=path/to/gcs-key.json -n polyaxon`
+ * `kubectl create secret generic gcs-secret --from-file=gc-secret.json=path/to/gcs-key.json -n polyaxon`
 
 
 ## Use the secret name and secret key in your data persistence definition
@@ -53,10 +54,10 @@ artifactsStore:
     mountPath: /plx-context/.gc/gc-secret.json
 ```
 
-You can also use a different mount path `/etc/gcs/gc-secret.json`, in which case you need to provide an env var to tell the SDK where to look:
+You can also use a different mount path, e.g. `/etc/gcs/gc-secret.json`, in which case you need to provide an env var to tell the SDK where to look for the secret:
 
 ```bash
-kubectl create configmap gcs-key-path --from-literal GC_KEY_PATH="/etc/gcs/gcs-secret.json" -n polyaxon
+kubectl create configmap gc-key-path --from-literal GC_KEY_PATH="/etc/gcs/gc-secret.json" -n polyaxon
 ```
 
 ```yaml
@@ -66,10 +67,10 @@ artifactsStore:
   schema:
     bucket: "gs://gcs-datasets"
   secret:
-    name: "gcs-secret"
+    name: "gc-secret"
     mountPath: /etc/gcs
   configMap:
-    name: gcs-key-path
+    name: gc-key-path
 ```
 
 ## Update/Install Polyaxon deployment

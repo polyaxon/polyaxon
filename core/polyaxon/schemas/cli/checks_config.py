@@ -45,8 +45,13 @@ class ChecksConfig(BaseConfig):
     def get_interval(self, interval: int = None):
         if interval is not None:
             return interval
-        return int(
-            os.environ.get(POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK, self.INTERVAL)
+        return max(
+            int(
+                os.environ.get(
+                    POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK, self.INTERVAL
+                )
+            ),
+            self.INTERVAL,
         )
 
     @classmethod

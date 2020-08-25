@@ -19,7 +19,7 @@ from typing import Dict, Optional
 from polyaxon import settings
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyaxonfile import CompiledOperationSpecification
-from polyaxon.polyflow import V1CompiledOperation, V1RunKind
+from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.config import PolypodConfig
 from polyaxon.polypod.compiler.contexts import (
     resolve_contexts,
@@ -51,6 +51,8 @@ class BaseResolver:
         params: Optional[Dict],
         created_at: datetime = None,
         compiled_at: datetime = None,
+        cloning_kind: V1CloningKind = None,
+        original_uuid: str = None,
     ):
         if not compiled_operation:
             raise PolyaxonCompilerError("A run spec is required for resolution.")
@@ -77,6 +79,8 @@ class BaseResolver:
         self.artifacts = []
         self.created_at = created_at
         self.compiled_at = compiled_at
+        self.cloning_kind = cloning_kind
+        self.original_uuid = original_uuid
         self._param_spec = {}
 
     @property
@@ -194,6 +198,8 @@ class BaseResolver:
             iteration=self.iteration,
             created_at=self.created_at,
             compiled_at=self.compiled_at,
+            cloning_kind=self.cloning_kind,
+            original_uuid=self.original_uuid,
         )
         return CompiledOperationSpecification.apply_runtime_contexts(
             self.compiled_operation, contexts=contexts

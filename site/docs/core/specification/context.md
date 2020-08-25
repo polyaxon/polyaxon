@@ -68,6 +68,8 @@ The following information can be accessed by all Polyaxon components:
  * `{{ globals.run_outputs_path }}`: Since the run artifacts will host artifacts and assets that are automatically created by Polyaxon, `/plx_context/artifacts/run_uuid/outputs` is a subpath that the user can use to store anything manually.
  * `{{ globals.created_at }}`: Datetime when the operation was created.
  * `{{ globals.compiled_at }}`: Datetime when the operation was compiled.
+ * `{{ globals.cloning_kind }}`: Is populated if the operation is restarted or copied from another operation.
+ * `{{ globals.original_uuid }}`: The original operation's uuid when the current operation was cloned from.
  * `{{ globals.iteration }}`
 
 ## Services

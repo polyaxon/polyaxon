@@ -20,12 +20,12 @@ from tests.utils import BaseTestCase
 
 from polyaxon.connections.schemas import V1K8sResourceSchema
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_API_HOST,
     POLYAXON_KEYS_API_VERSION,
     POLYAXON_KEYS_AUTH_TOKEN,
     POLYAXON_KEYS_AUTHENTICATION_TYPE,
     POLYAXON_KEYS_HEADER,
     POLYAXON_KEYS_HEADER_SERVICE,
+    POLYAXON_KEYS_HOST,
     POLYAXON_KEYS_IS_MANAGED,
     POLYAXON_KEYS_K8S_NAMESPACE,
     POLYAXON_KEYS_K8S_POD_ID,
@@ -380,11 +380,13 @@ class TestEnvVars(BaseTestCase):
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
         )
-        assert len(env_vars) == 7
+        assert len(env_vars) == 8
+        # TODO: Remove in v1.2 Compatibility API_HOST
+        # assert len(env_vars) == 7
         env_var_names = [env_var.name for env_var in env_vars]
         assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
         assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names
-        assert POLYAXON_KEYS_API_HOST in env_var_names
+        assert POLYAXON_KEYS_HOST in env_var_names
         assert POLYAXON_KEYS_IS_MANAGED in env_var_names
         assert POLYAXON_KEYS_API_VERSION in env_var_names
         assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
@@ -403,11 +405,13 @@ class TestEnvVars(BaseTestCase):
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
         )
-        assert len(env_vars) == 12
+        assert len(env_vars) == 13
+        # TODO: Remove in v1.2 Compatibility API_HOST
+        # assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]
         assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
         assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names
-        assert POLYAXON_KEYS_API_HOST in env_var_names
+        assert POLYAXON_KEYS_HOST in env_var_names
         assert POLYAXON_KEYS_IS_MANAGED in env_var_names
         assert POLYAXON_KEYS_API_VERSION in env_var_names
         assert POLYAXON_KEYS_HEADER in env_var_names
@@ -431,11 +435,13 @@ class TestEnvVars(BaseTestCase):
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
         )
-        assert len(env_vars) == 12
+        assert len(env_vars) == 13
+        # TODO: Remove in v1.2 Compatibility API_HOST
+        # assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]
         assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
         assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names
-        assert POLYAXON_KEYS_API_HOST in env_var_names
+        assert POLYAXON_KEYS_HOST in env_var_names
         assert POLYAXON_KEYS_IS_MANAGED in env_var_names
         assert POLYAXON_KEYS_API_VERSION in env_var_names
         assert POLYAXON_KEYS_HEADER in env_var_names

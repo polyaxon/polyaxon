@@ -17,7 +17,7 @@ from datetime import datetime
 from typing import Dict, Optional
 
 from polyaxon.exceptions import PolyaxonCompilerError
-from polyaxon.polyflow import V1CompiledOperation
+from polyaxon.polyflow import V1CloningKind, V1CompiledOperation
 from polyaxon.polypod.compiler.resolver.base import BaseResolver
 
 
@@ -34,6 +34,8 @@ def resolve(
     resolver_cls=None,
     created_at: datetime = None,
     compiled_at: datetime = None,
+    cloning_kind: V1CloningKind = None,
+    original_uuid: str = None,
 ):
     resolver_cls = resolver_cls or BaseResolver
     run_kind = compiled_operation.get_run_kind()
@@ -57,6 +59,8 @@ def resolve(
         params=params,
         created_at=created_at,
         compiled_at=compiled_at,
+        cloning_kind=cloning_kind,
+        original_uuid=original_uuid,
     )
     if resolver:
         return resolver, resolver.resolve()

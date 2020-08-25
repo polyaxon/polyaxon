@@ -66,7 +66,7 @@ broker: rabbitmq
 gateway:
   enabled: true
   image: polyaxon/polyaxon-gateway
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   replicas: 1
   resources:
@@ -90,7 +90,7 @@ api:
   enabled: true
   useResolver: true
   image: polyaxon/polyaxon-api
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   replicas: 1
   resources:
@@ -118,7 +118,7 @@ api:
 streams:
   enabled: true
   image: polyaxon/polyaxon-streams
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   replicas: 1
   resources:
@@ -145,7 +145,7 @@ streams:
 
 init:
   image: polyaxon/polyaxon-init
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   resources:
     limits:
@@ -157,7 +157,7 @@ init:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   sleepInterval: 10
   syncInterval: 10
@@ -174,7 +174,7 @@ agent:
   instance:
   enabled: false
   image: polyaxon/polyaxon-agent
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   resources:
     limits:
@@ -188,7 +188,7 @@ operator:
   enabled: true
   skipCRD: false
   image: polyaxon/polyaxon-operator
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   resources:
     limits:
@@ -201,7 +201,7 @@ operator:
 scheduler:
   enabled: false
   image: polyaxon/polyaxon-scheduler
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   replicas: 1
   concurrency: 2
@@ -222,7 +222,7 @@ scheduler:
 worker:
   enabled: false
   image:
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   replicas: 1
   concurrency: 2
@@ -243,7 +243,7 @@ worker:
 beat:
   enabled: false
   image:
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   replicas: 1
   resources:
@@ -280,7 +280,7 @@ apiHooks: {}
 
 cleanHooks:
   image: polyaxon/polyaxon-cli
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
 
 tablesHook:

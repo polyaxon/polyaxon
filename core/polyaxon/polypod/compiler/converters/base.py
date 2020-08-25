@@ -261,7 +261,7 @@ class BaseConverter(ConverterAbstract):
     ) -> List[k8s_schemas.V1Container]:
         containers = []
 
-        # Prepare connections that Polyaxon can inti automatically
+        # Prepare connections that Polyaxon can init automatically
         for init_connection in init_connections:
             if init_connection.connection:
                 connection_spec = connection_by_names.get(init_connection.connection)

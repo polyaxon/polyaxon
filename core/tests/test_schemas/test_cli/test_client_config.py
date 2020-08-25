@@ -19,8 +19,8 @@ import pytest
 from tests.utils import BaseTestCase
 
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_API_HOST,
     POLYAXON_KEYS_DEBUG,
+    POLYAXON_KEYS_HOST,
     POLYAXON_KEYS_VERIFY_SSL,
 )
 from polyaxon.schemas.cli.client_config import ClientConfig
@@ -36,7 +36,7 @@ class TestClientConfig(BaseTestCase):
     def test_client_config(self):
         config_dict = {
             POLYAXON_KEYS_DEBUG: True,
-            POLYAXON_KEYS_API_HOST: "http://localhost:8000",
+            POLYAXON_KEYS_HOST: "http://localhost:8000",
             POLYAXON_KEYS_VERIFY_SSL: True,
         }
         config = ClientConfig.from_dict(config_dict)

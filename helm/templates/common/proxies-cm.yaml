@@ -8,7 +8,7 @@ metadata:
 {{ include "config.labels.roles.coreConfig" . | indent 4 }}
 data:
   # Cluster
-  POLYAXON_API_HOST: "{{ template "gateway.scheme" . }}://{{ template "gateway.host" . }}:{{ template "gateway.port" . }}"
+  POLYAXON_HOST: "{{ template "gateway.scheme" . }}://{{ template "gateway.host" . }}:{{ template "gateway.port" . }}"
   {{- if .Values.streams.enabled }}
   POLYAXON_PROXY_STREAMS_PORT: "{{ template "proxies.streams.port" . }}"
   POLYAXON_PROXY_STREAMS_HOST: {{ template "proxies.streams.host" . }}

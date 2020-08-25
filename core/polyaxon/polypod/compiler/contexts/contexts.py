@@ -19,7 +19,7 @@ from typing import Dict
 
 from polyaxon.containers import contexts
 from polyaxon.exceptions import PolyaxonCompilerError
-from polyaxon.polyflow import V1CompiledOperation, V1Plugins, V1RunKind
+from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1Plugins, V1RunKind
 from polyaxon.polypod.compiler.contexts.job import JobContextsManager
 from polyaxon.polypod.compiler.contexts.kubeflow import (
     MPIJobContextsManager,
@@ -54,6 +54,8 @@ def resolve_globals_contexts(
     compiled_at: datetime,
     plugins: V1Plugins = None,
     artifacts_store: V1ConnectionType = None,
+    cloning_kind: V1CloningKind = None,
+    original_uuid: str = None,
 ) -> Dict:
 
     resolved_contexts = {
@@ -71,6 +73,8 @@ def resolve_globals_contexts(
             "artifacts_path": contexts.CONTEXT_MOUNT_ARTIFACTS,
             "created_at": created_at,
             "compiled_at": compiled_at,
+            "cloning_kind": cloning_kind,
+            "original_uuid": original_uuid,
         },
     }
 
@@ -104,6 +108,8 @@ def resolve_contexts(
     iteration: int,
     created_at: datetime,
     compiled_at: datetime,
+    cloning_kind: V1CloningKind = None,
+    original_uuid: str = None,
 ) -> Dict:
     run_kind = compiled_operation.get_run_kind()
     if run_kind not in CONTEXTS_MANAGERS:
@@ -127,6 +133,8 @@ def resolve_contexts(
         compiled_at=compiled_at,
         plugins=compiled_operation.plugins,
         artifacts_store=artifacts_store,
+        cloning_kind=cloning_kind,
+        original_uuid=original_uuid,
     )
 
     return CONTEXTS_MANAGERS[run_kind].resolve(

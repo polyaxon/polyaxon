@@ -18,9 +18,17 @@ from typing import Dict, Optional, Set, Tuple, Union
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
+from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
-from polyaxon.polyflow import V1CompiledOperation, V1Operation, V1RunKind
+from polyaxon.polyflow import (
+    V1CloningKind,
+    V1CompiledOperation,
+    V1Init,
+    V1Operation,
+    V1RunKind,
+)
+from polyaxon.schemas.types import V1ArtifactsType
 from polycommon.service_interface import Service
 
 
@@ -62,7 +70,10 @@ class OperationsService(Service):
     ) -> bool:
         supported_kinds = supported_kinds or set()
         supported_kinds |= cls.DEFAULT_KINDS
-        error_message = "You cannot create this operation, your account does not support operations of kind: {}"
+        error_message = (
+            "You cannot create this operation, "
+            "your account does not support operations of kind: {}"
+        )
         if kind not in supported_kinds:
             raise ValueError(error_message.format(kind))
         if meta_kind and meta_kind not in supported_kinds:
@@ -97,6 +108,7 @@ class OperationsService(Service):
         params: Dict = None,
         readme: str = None,
         original_id: int = None,
+        original_uuid: int = None,
         cloning_kind: str = None,
         supported_kinds: Set[str] = None,
         **kwargs,
@@ -119,13 +131,21 @@ class OperationsService(Service):
         kind = None
         meta_info = {}
         if compiled_operation:
-            content = compiled_operation.to_dict(dump=True)
             name = name or compiled_operation.name
             description = description or compiled_operation.description
             tags = tags or compiled_operation.tags
             kind, meta_kind = self.get_kind(compiled_operation)
             kind, meta_info = self.get_meta_info(compiled_operation, kind, meta_kind)
             self.supports_kind(kind, meta_kind, supported_kinds)
+            if cloning_kind == V1CloningKind.COPY:
+                if meta_kind not in {V1RunKind.JOB, V1RunKind.SERVICE}:
+                    raise ValueError(
+                        "Operation with kind `{}` does not support restart with copy mode."
+                    )
+                compiled_operation.run.add_init(
+                    V1Init(artifacts=V1ArtifactsType(dirs=[original_uuid]))
+                )
+            content = compiled_operation.to_dict(dump=True)
         instance = get_run_model()(
             project_id=project_id,
             user_id=user_id,

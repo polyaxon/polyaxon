@@ -68,7 +68,7 @@ agentSecret:
 gateway:
   enabled: true
   image: polyaxon/polyaxon-gateway
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   replicas: 1
   resources:
@@ -90,7 +90,7 @@ gateway:
 streams:
   enabled: true
   image: polyaxon/polyaxon-streams
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   replicas: 1
   resources:
@@ -117,7 +117,7 @@ streams:
 
 init:
   image: polyaxon/polyaxon-init
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   resources:
     limits:
@@ -129,7 +129,7 @@ init:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   sleepInterval: 10
   syncInterval: 10
@@ -146,7 +146,7 @@ agent:
   instance:
   enabled: true
   image: polyaxon/polyaxon-agent
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   resources:
     limits:
@@ -160,7 +160,7 @@ operator:
   enabled: true
   skipCRD: false
   image: polyaxon/polyaxon-operator
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
   resources:
     limits:
@@ -172,7 +172,7 @@ operator:
 
 cleanHooks:
   image: polyaxon/polyaxon-cli
-  imageTag: 1.1.8-rc0
+  imageTag: 1.1.8-rc1
   imagePullPolicy: Always
 
 securityContext:

@@ -71,6 +71,8 @@ def resolve(run: BaseRun, compiled_at: datetime = None, resolver_cls=None):
             params=None,
             compiled_at=compiled_at,
             created_at=run.created_at,
+            cloning_kind=run.cloning_kind,
+            original_uuid=run.original.uuid.hex if run.original_id else None,
         )
     except (
         AccessNotAuthorized,

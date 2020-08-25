@@ -51,7 +51,7 @@ class ConfigManager(BaseConfigManager):
             "POLYAXON_SCHEDULER_ENABLED", is_optional=True, default=False
         )
         self._chart_version = self.get_string(
-            "POLYAXON_CHART_VERSION", is_optional=True, default="1.1.8-rc0"
+            "POLYAXON_CHART_VERSION", is_optional=True, default="1.1.8-rc1"
         )
         self._redis_protocol = self.get_string(
             "POLYAXON_REDIS_PROTOCOL", is_optional=True, default="redis"

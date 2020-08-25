@@ -111,6 +111,7 @@ def clone_run(
         readme=readme or run.readme,
         op_spec=op_spec,
         original_id=run.id,
+        original_uuid=run.uuid.hex,
         cloning_kind=cloning_kind,
         tags=tags or run.tags,
         override=content,

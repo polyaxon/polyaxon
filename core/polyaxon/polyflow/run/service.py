@@ -23,6 +23,7 @@ from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.environment import EnvironmentSchema
 from polyaxon.polyflow.init import InitSchema
 from polyaxon.polyflow.run.kinds import V1RunKind
+from polyaxon.polyflow.run.utils import AddInitMixin
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.fields.swagger import SwaggerField
@@ -48,7 +49,7 @@ class ServiceSchema(BaseCamelSchema):
         return V1Service
 
 
-class V1Service(BaseConfig, polyaxon_sdk.V1Service):
+class V1Service(BaseConfig, AddInitMixin, polyaxon_sdk.V1Service):
     """Services are used to launch Tensorboards, Notebooks, JupyterHub apps,
     Streamlit/Voila/Bokeh apps, internal tools,
     and dashboards based on your models and data analysis.

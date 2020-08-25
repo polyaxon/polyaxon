@@ -21,10 +21,14 @@ from tests.utils import BaseTestCase
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1ClaimConnection
 from polyaxon.polyaxonfile.specs import kinds
-from polyaxon.polyflow import V1CompiledOperation, V1RunKind
+from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.contexts import resolve_contexts
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.tz_utils import now
+
+
+class V1CloningKin(object):
+    pass
 
 
 @pytest.mark.polypod_mark
@@ -74,6 +78,8 @@ class TestResolveContexts(BaseTestCase):
                 "iteration": None,
                 "created_at": None,
                 "compiled_at": None,
+                "cloning_kind": None,
+                "original_uuid": None,
             },
             "init": {},
             "connections": {},
@@ -122,6 +128,8 @@ class TestResolveContexts(BaseTestCase):
             iteration=12,
             created_at=date_value,
             compiled_at=date_value,
+            cloning_kind=V1CloningKind.COPY,
+            original_uuid="uuid-copy",
         )
         assert spec == {
             "globals": {
@@ -140,6 +148,8 @@ class TestResolveContexts(BaseTestCase):
                 "run_info": "user.project.runs.uuid",
                 "created_at": date_value,
                 "compiled_at": date_value,
+                "cloning_kind": V1CloningKind.COPY,
+                "original_uuid": "uuid-copy",
             },
             "init": {"test_claim": store.schema.to_dict()},
             "connections": {"test_claim": store.schema.to_dict()},
@@ -204,6 +214,8 @@ class TestResolveContexts(BaseTestCase):
                 "iteration": 12,
                 "created_at": None,
                 "compiled_at": None,
+                "cloning_kind": None,
+                "original_uuid": None,
             },
             "init": {"test_claim": store.schema.to_dict()},
             "connections": {"test_claim": store.schema.to_dict()},
@@ -262,6 +274,8 @@ class TestResolveContexts(BaseTestCase):
                 "base_url": "/services/v1/test/user/project/runs/uuid",
                 "created_at": None,
                 "compiled_at": None,
+                "cloning_kind": None,
+                "original_uuid": None,
             },
             "init": {},
             "connections": {},

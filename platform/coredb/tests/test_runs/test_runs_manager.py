@@ -24,7 +24,7 @@ from coredb.factories.users import UserFactory
 from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import copy_run, restart_run, resume_run
 from polyaxon.lifecycle import V1Statuses
-from polyaxon.polyaxonfile import OperationSpecification
+from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
 from polyaxon.polyflow import V1CloningKind
 from polycommon.events.registry import run as run_events
 from polycommon.test_cases.fixtures.jobs import get_fxt_job_with_inputs
@@ -69,7 +69,10 @@ class TestRunManager(TestCase):
         assert run.project == self.run.project
         assert run.name == self.run.name
         assert run.description == self.run.description
-        assert run.content == self.run.content
+        assert run.content != self.run.content
+        config = CompiledOperationSpecification.read(run.content)
+        original_config = CompiledOperationSpecification.read(self.run.content)
+        assert len(config.run.init or []) == len(original_config.run.init or []) + 1
         assert run.raw_content == self.run.raw_content
         assert run.readme == self.run.readme
         assert run.tags == self.run.tags

@@ -35,7 +35,7 @@ You can create a secret with an env var of the content of the gcs-key.json:
  
 Or you can create a secret to be mounted as a volume: 
 
- * `kubectl create secret generic gcs-secret --from-file=gcs-secret.json=path/to/gcs-key.json -n polyaxon`
+ * `kubectl create secret generic gcs-secret --from-file=gc-secret.json=path/to/gcs-key.json -n polyaxon`
 
 ## Use the secret name and secret key in your data persistence definition
 
@@ -55,7 +55,7 @@ connections:
 You can also use a different mount path `/etc/gcs/gc-secret.json`, in which case you need to provide an env var to tell the SDK where to look:
 
 ```bash
-kubectl create configmap gcs-key-path --from-literal GC_KEY_PATH="/etc/gcs/gcs-secret.json" -n polyaxon
+kubectl create configmap gcs-key-path --from-literal GC_KEY_PATH="/etc/gcs/gc-secret.json" -n polyaxon
 ```
 
 ```yaml

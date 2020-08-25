@@ -14,4 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VERSION = "1.1.8rc1"
+from typing import List
+
+from polyaxon.utils.list_utils import to_list
+
+
+class AddInitMixin:
+    def add_init(self, init: List):
+        init = to_list(init, check_none=True)
+        if self.init:
+            self.init += init
+        else:
+            self.init = init

@@ -206,7 +206,7 @@ class ComposeOperator(CmdOperator):
         env += cls._generate_email(config)
 
         if config.host_name:
-            env.append(template.format("POLYAXON_API_HOST", config.host_name))
+            env.append(template.format("POLYAXON_HOST", config.host_name))
         if config.allowed_hosts:
             env.append(template.format("POLYAXON_ALLOWED_HOSTS", config.allowed_hosts))
 

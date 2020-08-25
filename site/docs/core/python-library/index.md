@@ -105,7 +105,7 @@ When you need to  authenticate a client in an environment outside of a Polyaxon 
 You can set environment variables containing:
     
     * `POLYAXON_AUTH_TOKEN`
-    * `POLYAXON_API_HOST`
+    * `POLYAXON_HOST`
 
 Once these environment variables are set, you can instantiate your client, e.g.
 

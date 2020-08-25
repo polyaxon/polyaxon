@@ -21,7 +21,6 @@ from marshmallow import EXCLUDE, fields
 from polyaxon.api import get_default_host
 from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_API_HOST,
     POLYAXON_KEYS_API_VERSION,
     POLYAXON_KEYS_ARCHIVE_ROOT,
     POLYAXON_KEYS_ASSERT_HOSTNAME,
@@ -32,6 +31,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_DISABLE_ERRORS_REPORTING,
     POLYAXON_KEYS_HEADER,
     POLYAXON_KEYS_HEADER_SERVICE,
+    POLYAXON_KEYS_HOST,
     POLYAXON_KEYS_INTERVAL,
     POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK,
     POLYAXON_KEYS_IS_MANAGED,
@@ -61,7 +61,7 @@ from polyaxon.utils.http_utils import clean_host, clean_verify_ssl
 
 class ClientSchema(BaseSchema):
     service = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_SERVICE)
-    host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_API_HOST)
+    host = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HOST)
     version = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_API_VERSION)
     debug = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_DEBUG)
     log_level = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_LOG_LEVEL)
@@ -122,7 +122,7 @@ class ClientConfig(BaseConfig):
 
     REDUCED_ATTRIBUTES = [
         POLYAXON_KEYS_SERVICE,
-        POLYAXON_KEYS_API_HOST,
+        POLYAXON_KEYS_HOST,
         POLYAXON_KEYS_API_VERSION,
         POLYAXON_KEYS_ASSERT_HOSTNAME,
         POLYAXON_KEYS_AUTHENTICATION_TYPE,

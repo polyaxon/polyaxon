@@ -29,6 +29,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AUTHENTICATION_TYPE,
     POLYAXON_KEYS_HEADER,
     POLYAXON_KEYS_HEADER_SERVICE,
+    POLYAXON_KEYS_HOST,
     POLYAXON_KEYS_IS_MANAGED,
     POLYAXON_KEYS_K8S_NAMESPACE,
     POLYAXON_KEYS_K8S_NODE_NAME,
@@ -232,7 +233,10 @@ def get_service_env_vars(
     run_instance: str,
 ) -> List[k8s_schemas.V1EnvVar]:
     env_vars = [
-        get_env_var(name=POLYAXON_KEYS_API_HOST, value=api_host),
+        get_env_var(name=POLYAXON_KEYS_HOST, value=api_host),
+        get_env_var(
+            name=POLYAXON_KEYS_API_HOST, value=api_host
+        ),  # TODO: Remove in v1.2
         get_env_var(name=POLYAXON_KEYS_IS_MANAGED, value=True),
         get_env_var(name=POLYAXON_KEYS_API_VERSION, value=api_version),
         # Pod info
