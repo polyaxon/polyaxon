@@ -2,10 +2,17 @@ version: 1.1
 kind: component
 name: vscode
 
+inputs:
+- name: context
+  description: The workspace context, defaults to the current run's outputs
+  isOptional: true
+  type: str
+
 run:
   kind: service
   ports: [8080]
   rewritePath: true
   container:
     image: codercom/code-server
-    args: ["--auth", "none"]
+    workingDir: "{{ context or globals.run_outputs_path }}"
+    args: ["--auth", "none", "--disable-telemetry"]
