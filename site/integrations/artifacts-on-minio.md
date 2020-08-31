@@ -25,7 +25,11 @@ You can use one or multiple buckets on Minio to store logs, job outputs, and exp
 
 Before using Minio, you need to deploy it and create a bucket to host your outputs.
 
-For that, you can use the Helm stable chart: `helm install stable/minio --name=plx-minio --namespace=polyaxon`
+For that, you can use the Helm stable chart:
+
+```bash
+helm install plx-minio stable/minio --namespace=polyaxon
+```
 
 ## Create a bucket on Minio
 
@@ -33,7 +37,7 @@ You should create a bucket (e.g. plx-artifacts) where you will host your data.
 
 ## Use the bucket in Polyaxon
 
-In order to use the buckets with Polyaxon, you can follow the [S3 DataStore integration](/integrations/data-on-s3/).
+In order to use the buckets with Polyaxon, you can follow the [S3 Artifacts integration](/integrations/artifacts-on-s3/).
 
 
 > **Note**: When Minio is installed via Helm with default values, it uses the following hard-wired default credentials, which you will use to login to the UI and setup access to Polyaxon:

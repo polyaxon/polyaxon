@@ -34,7 +34,7 @@ You need [Helm](https://helm.sh/docs/intro/install/) to deploy Polyaxon as well 
 ## Install ElasticSearch
 
 ```bash
-helm install --name elasticsearch elasticsearch --version 7.1.1 --namespace=logging  -f elastic-config.yaml --repo https://helm.elastic.co
+helm install elasticsearch elasticsearch --version 7.1.1 --namespace=logging  -f elastic-config.yaml --repo https://helm.elastic.co
 ```
 
 You can read more about how to customize your ElasticSearch instance and provide `elastic-config.yaml` to override the default values.
@@ -42,7 +42,7 @@ You can read more about how to customize your ElasticSearch instance and provide
 ## Install Fluentd
 
 ```bash
-helm install fluentd --name fluentd --namespace=logging -f fluentd-config.yaml --repo https://kiwigrid.github.io
+helm install fluentd fluentd --namespace=logging -f fluentd-config.yaml --repo https://kiwigrid.github.io
 ```
 
 You can read more about how to customize your Fluentd instance and provide `fluentd-config.yaml` to override the default values.

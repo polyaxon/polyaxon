@@ -40,7 +40,7 @@ namespace "polyaxon" created
 ## Install the nfs provisioner
 
 ```yaml
-helm install stable/nfs-server-provisioner --name=plx-nfs --namespace=polyaxon
+helm install plx-nfs stable/nfs-server-provisioner --namespace=polyaxon
 ```
 
 Create volumes to be used as [artifacts store](https://github.com/helm/charts/tree/master/stable/nfs-server-provisioner#recommended-persistence-configuration-examples).

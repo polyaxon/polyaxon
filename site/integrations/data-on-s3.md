@@ -51,7 +51,7 @@ kubectl create secret -n polyaxon generic s3-secret --from-literal=AWS_ACCESS_KE
 ```yaml
 connections:
 - name: s3-dataset1
-  kind: wasb
+  kind: s3
   schema:
     bucket: "s3://bucket/"
   secret:
@@ -63,13 +63,13 @@ If you want ot access multiple datasets using the same secret:
 ```yaml
 connections:
 - name: s3-dataset1
-  kind: wasb
+  kind: s3
   schema:
     bucket: "s3://bucket/path1"
   secret:
     name: "s3-secret"
 - name: s3-dataset1
-  kind: wasb
+  kind: s3
   schema:
     bucket: "s3://bucket/path2"
   secret:

@@ -59,7 +59,7 @@ In order to use Kubeflow as a backend for running [distributed Tensorflow experi
 you need to deploy TFJob on the same namespace where Polyaxon was deployed
 
 ```bash
-helm install polyaxon/tfjob --name=plxtf --namespace=polyaxon
+helm install plxtf polyaxon/tfjob --namespace=polyaxon
 ```
 
 ```bash
@@ -72,7 +72,7 @@ In order to use Kubeflow as a backend for running [distributed Pytorch experimen
 you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
 
 ```bash
-helm install polyaxon/pytorchjob --name=plxpytorch --namespace=polyaxon
+helm install plxpytorch polyaxon/pytorchjob --namespace=polyaxon
 ```
 
 ```bash
@@ -85,7 +85,7 @@ In order to use Kubeflow as a backend for running [distributed experiments using
 you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
 
 ```bash
-helm install polyaxon/mpijob --name=plxmpi --namespace=polyaxon
+helm install plxmpi polyaxon/mpijob --namespace=polyaxon
 ```
 
 ```bash

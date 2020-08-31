@@ -51,8 +51,8 @@ kubectl create secret -n polyaxon generic s3-secret --from-literal=AWS_ACCESS_KE
 
 ```yaml
 artifactsStore:
-  name: s3-dataset1
-  kind: wasb
+  name: s3-artifacts
+  kind: s3
   schema:
     bucket: "s3://bucket/"
   secret:

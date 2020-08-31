@@ -25,7 +25,7 @@ Polyaxon provides support for an Ingress resource compatible with the NGINX stab
 In order to use NGINX Ingress controller with Polyaxon, you need to install the controller w/o RBAC depending on your cluster:
 
 ```yaml
-helm install -n polyaxon --name=nginx stable/nginx-ingress
+helm install nginx stable/nginx-ingress -n polyaxon
 ```
 
 ## Enable ingress in your Polyaxon's config deployment

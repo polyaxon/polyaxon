@@ -25,7 +25,11 @@ You can use one or multiple buckets on Minio to access data directly on your mac
 
 Before using Minio, you need to deploy it and create a bucket (or several) to host your data.
 
-For that, you can use the Helm stable chart: `helm install stable/minio --name=plx-minio --namespace=polyaxon`
+For that, you can use the Helm stable chart:
+
+```bash
+helm install plx-minio stable/minio --namespace=polyaxon
+```
 
 ## Create a bucket on Minio
 

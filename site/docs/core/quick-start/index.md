@@ -41,10 +41,10 @@ Deploy Polyaxon with default config values on Minikube:
 polyaxon admin deploy -t minikube
 ``` 
 
-Wait for all pods to reach the running state:
+Wait for all deployments to be ready:
 
 ```bash
-kubectl get pods -n polyaxon
+kubectl get deployment -n polyaxon -w
 ```
 
 Expose Polyaxon UI on your localhost:

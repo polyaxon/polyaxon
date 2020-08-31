@@ -100,8 +100,8 @@ grid_search_config = V1GridSearch(
 ) 
 
 suggestions = GridSearchManager(grid_search_config).get_suggestions()
-for suggesion in suggestions:
-    client.create_from_url(url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml", params={k: {"value": v} for k, v in suggesion.items()})
+for suggestion in suggestions:
+    client.create_from_url(url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml", params=suggestion)
 ```
 
 
