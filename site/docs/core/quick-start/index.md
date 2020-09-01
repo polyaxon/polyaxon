@@ -13,12 +13,12 @@ tags:
 sidebar: "core"
 ---
 
-Let’s look at an example of how you can use Polyaxon for running deep learning experiments. 
+Let’s look at an example of how you can use Polyaxon for running deep learning experiments.
 
 ## Deploy local cluster
 
-This example assumes a functional [Polyaxon Deployment](/docs/setup/). 
-If you have Polyaxon already deployed and running, you can skip this section and proceed to [create a project](/docs/core/quick-start/#create-a-project). 
+This example assumes a functional [Polyaxon Deployment](/docs/setup/).
+If you have Polyaxon already deployed and running, you can skip this section and proceed to [create a project](/docs/core/quick-start/#create-a-project).
 Otherwise, this section will help you deploy a local Polyaxon cluster with default values.
 
 > **Note**: Minikube is not meant to be a production environment.
@@ -39,7 +39,7 @@ Deploy Polyaxon with default config values on Minikube:
 
 ```bash
 polyaxon admin deploy -t minikube
-``` 
+```
 
 Wait for all deployments to be ready:
 
@@ -55,11 +55,11 @@ polyaxon port-forward -t minikube
 
 > **Tip**: You can learn more about how to customize your Polyaxon Deployment in the [setup section](/docs/setup/).
 
-## Create a project 
+## Create a project
 
 You can create a project using [Polyaxon UI](/docs/management/ui/projects/) or with [Polyaxon CLI](/docs/core/cli/project/#project-create)
 
-This example uses a [public Github repo](https://github.com/polyaxon/polyaxon-quick-start) 
+This example uses a [public Github repo](https://github.com/polyaxon/polyaxon-quick-start)
 for hosting the project and the Polyaxonfile manifests, similar results can be achieved using a local folder or other platforms, e.g. GitLab, Bitbucket, ...
 
 ## Start an experiment
@@ -70,13 +70,13 @@ Let's run a first experiment
 $ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yml -l
 ```
 
-> For more details about this command please run `polyaxon run --help`, 
+> For more details about this command please run `polyaxon run --help`,
 or check the [command reference](/docs/core/cli/run/)
 
 The `-l` flag indicates that we want to stream the logs after starting the experiment.
 
 
-## Start a Tensorboard 
+## Start a Tensorboard
 
 Let's start a tensorboard to see the results:
 
@@ -92,20 +92,20 @@ $ polyaxon run --hub tensorboard:single-run -P uuid=UUID -w
 $ polyaxon dashboard -y
 ```
 
-> For more details about this command please run `polyaxon dashboard --help`, 
+> For more details about this command please run `polyaxon dashboard --help`,
 or check the [command reference](/docs/core/cli/dashboard/)
 
 We can see that Polyaxon has logged some information automatically about our run:
 
- 
+
 ![run-dashboards-many](../../../../content/images/dashboard/runs/dashboards-many.png)
 
-Please check the [runs dashboard](/docs/management/runs-dashboard/) and the 
-[visualization section](/docs/experimentation/visualizations/) for more details. 
+Please check the [runs dashboard](/docs/management/runs-dashboard/) and the
+[visualization section](/docs/experimentation/visualizations/) for more details.
 
-## Congratulations 
+## Congratulations
 
-You've trained your first experiments with Polyaxon, visualized the results in Tensorboard and tracked metrics, with two commands. 
+You've trained your first experiments with Polyaxon, visualized the results in Tensorboard and tracked metrics, with two commands.
 
 Behind the scene a couple of things have happened:
 

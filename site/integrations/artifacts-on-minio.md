@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - artifacts
   - storage
 featured: false
@@ -33,7 +33,7 @@ helm install plx-minio stable/minio --namespace=polyaxon
 
 ## Create a bucket on Minio
 
-You should create a bucket (e.g. plx-artifacts) where you will host your data. 
+You should create a bucket (e.g. plx-artifacts) where you will host your data.
 
 ## Use the bucket in Polyaxon
 

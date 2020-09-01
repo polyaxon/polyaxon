@@ -15,8 +15,8 @@ sidebar: "experimentation"
 
 Polyaxon supports distributed jobs for model training or data processing via several Kubernetes operators.
 
-By default, Polyaxon does not deploy the operators required for running distributed jobs to keep the deployment process lightweight. 
-In order to use a distributed jobs operator, you need to make sure that your namespace/cluster has the operator deployed 
+By default, Polyaxon does not deploy the operators required for running distributed jobs to keep the deployment process lightweight.
+In order to use a distributed jobs operator, you need to make sure that your namespace/cluster has the operator deployed
 or you should deploy the operator(s) before starting an execution.
 
 > When you start a distributed job, Polyaxon will stream and archive logs from all replicas.
@@ -24,14 +24,14 @@ or you should deploy the operator(s) before starting an execution.
 ## TFJob
 
 In order to run TFJobs you will need to deploy TFJob operator before executing a job from Polyaxon.
- 
+
 Please check the [TFJob](/docs/experimentation/distributed/tf-jobs/) guide to learn about all details for running TfJobs in Polyaxon.
 
 ## MpiJob
 
 In order to run MpiJobs you will need to deploy MpiJob operator before executing a job from Polyaxon.
 
-Please check the [MpiJob](/docs/experimentation/distributed/mpi-jobs/) guide to learn about all details for running MpiJobs in Polyaxon. 
+Please check the [MpiJob](/docs/experimentation/distributed/mpi-jobs/) guide to learn about all details for running MpiJobs in Polyaxon.
 
 ## PytorchJob
 

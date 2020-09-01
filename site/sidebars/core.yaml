@@ -9,8 +9,12 @@
       link: /docs/core/quick-start/operations/
     - title: Iterate
       link: /docs/core/quick-start/iterate/
-    - title: Scale
-      link: /docs/core/quick-start/scale/
+    - title: Distributed Training
+      link: /docs/core/quick-start/distributed-training/
+    - title: Hyperparameter Tuning
+      link: /docs/core/quick-start/hyperparameter-tuning/
+    - title: Automation
+      link: /docs/core/quick-start/automation/
     - title: Builds
       link: /docs/core/quick-start/builds/
   - group: Introduction

@@ -19,7 +19,7 @@ with more details in pages dedicated to each concept.
 ### Manual process
 
 Often times users will drive the machine learning experimentation and iteration process manually.
-Polyaxon provides several APIs, clients, UI, and CLI commands to submit and monitor operations.  
+Polyaxon provides several APIs, clients, UI, and CLI commands to submit and monitor operations.
 
 ### Schedules
 
@@ -29,7 +29,7 @@ Schedules provide a time-based mechanism to drive scheduling on Polyaxon, and ca
  * Periodic execution (Distributed Cron)
  * Interval execution
  * Repeatable execution
- * Exact time execution 
+ * Exact time execution
 
 <blockquote class="light">Please refer to <a href="/docs/automation/schedules/">automation/schedules</a> for more details.</blockquote>
 
@@ -40,7 +40,7 @@ Many machine learning workflows make more sense to be triggered by listening to 
  * Based on a new commit.
  * Based on data availability.
  * Based on metrics.
- 
+
 Polyaxon is a good fit for many of these use cases and it has direct support for asynchronous events (aka signals).
 
 There are two ways to achieve event-driven scheduling:
@@ -57,7 +57,7 @@ Each DAG or Hyperparameter tuning operation can leverage a set of automation fea
  * Caching
  * Early stopping
  * Conditions
- 
+
 <blockquote class="light">Please refer to <a href="/docs/core/specification/operation/">core/specification/operation</a> for more details.</blockquote>
 
 ### Agents/Queues
@@ -70,8 +70,8 @@ Polyaxon provides several interfaces designed to achieve fairness when a limited
 
 ### Run Profile
 
-A `run Profile` allows admin to preset several meta information about runs, e.g. node scheduling and routing, which facilitate attaching quotas to a user/team/project, 
-so that the entities they create, i.e. builds/jobs/experiments/notebooks, cannot exceed the parallelism and may not consume more 
+A `run Profile` allows admin to preset several meta information about runs, e.g. node scheduling and routing, which facilitate attaching quotas to a user/team/project,
+so that the entities they create, i.e. builds/jobs/experiments/notebooks, cannot exceed the parallelism and may not consume more
 resources than the quota specification allows.
 
 <blockquote class="light">Please refer to <a href="/docs/core/scheduling-strategies/run-profiles/">scheduling-strategies/run-profiles</a> and <a href="/docs/management/ui/run-profiles/">management/run-profiles</a> for more details.</blockquote>

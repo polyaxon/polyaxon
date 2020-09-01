@@ -18,7 +18,7 @@ If you are here, we assume that you have a Kubernetes cluster and [Helm](https:/
 This section includes guides to deploy:
  * Polyaxon [Community Edition](/docs/setup/platform/community-edition/).
  * Polyaxon [Enterprise Edition Control Plane](/docs/setup/platform/enterprise-control-plane/).
- 
+
 Both deployments share some [common Helm options](/docs/setup/platform/common-reference/).
 
 This guide is a reference with commands to deploy, upgrade, and teardown a cluster.
@@ -73,7 +73,7 @@ helm repo update
 ```
 
 ### Validate
- 
+
 You can validate that your deployment `config.yml` file is compatible with the version you are trying to deploy:
 
 ```bash
@@ -92,7 +92,7 @@ polyaxon admin deploy -f config.yaml --dry_run
 
 Now you can install Polyaxon with your `config.yml` file.
 
-> **Note**: it's important to know that there's an initial delay before you can access Polyaxon API, and before some pods will turn green, which is set to 2 minutes. 
+> **Note**: it's important to know that there's an initial delay before you can access Polyaxon API, and before some pods will turn green, which is set to 2 minutes.
 
 You can use Polyaxon CLI to manage the deployment
 
@@ -152,15 +152,15 @@ these note will be different depending on your configuration (the service type u
 NOTES: ...
 ```
 
-These notes are important for setting the CLI, and getting access to the dashboard. 
+These notes are important for setting the CLI, and getting access to the dashboard.
 
-Next step you need the [Polyaxon CLI installed](/setup/cli/), and you need to configure 
+Next step you need the [Polyaxon CLI installed](/setup/cli/), and you need to configure
 the host and the ports based on these notes.
 
 ## Port forward
 
-If you are deploying Polyaxon Community Edition and you don't want to deal with securing your load balancer or ingress, 
-you can use the default values and the command `polyaxon port-forward`. this command will expose the Polyaxon API 
+If you are deploying Polyaxon Community Edition and you don't want to deal with securing your load balancer or ingress,
+you can use the default values and the command `polyaxon port-forward`. this command will expose the Polyaxon API
 and dashboard on your localhost and auto-configure the cli.
 
 ## Upgrade Polyaxon
@@ -216,8 +216,8 @@ Or
 
 ### Stop/Delete running experiments/jobs
 
-Polyaxon will by default stop all running jobs/experiments before a teardown, 
-unless you prefer not to trigger the pre-delete hooks, in that case you should clean them on your own.  
+Polyaxon will by default stop all running jobs/experiments before a teardown,
+unless you prefer not to trigger the pre-delete hooks, in that case you should clean them on your own.
 
 
 ### Delete Helm release
@@ -234,7 +234,7 @@ If you used the default values, the command should be,
 $ helm delete polyaxon --purge
 ```
 
-If for some reason, your deployment did not succeed, 
+If for some reason, your deployment did not succeed,
 you might need to delete Polyaxon with this command instead, to avoid triggering pre-delete hooks
 
 ```bash

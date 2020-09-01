@@ -24,8 +24,8 @@ Users can use the `{{}}` to inject information that will be provided to the cont
 ## Top level information
 
 Information in the top level of a context can be used without a prefix.
-Inputs and outputs are set on the top level, this means that when you are developing your components, 
-you can use the variables defined in your inputs and outputs without any prefix: 
+Inputs and outputs are set on the top level, this means that when you are developing your components,
+you can use the variables defined in your inputs and outputs without any prefix:
 
 ```yaml
 version: 1.1
@@ -49,7 +49,7 @@ run:
 
 ## Globals
 
-Several information is organized in a `globals` prefix, 
+Several information is organized in a `globals` prefix,
 this prevents information about a run to not conflict with the inputs and outputs you provide.
 
 The following information can be accessed by all Polyaxon components:
@@ -59,7 +59,7 @@ The following information can be accessed by all Polyaxon components:
  * `{{ globals.project_unique_name }}`: Unique name of the project `owner.project_name`.
  * `{{ globals.project_uuid }}`: Project uuid.
  * `{{ globals.run_info }}`: `owner.project_name.uuid` unique name of the run.
- * `{{ globals.name }}`: The run name if available. 
+ * `{{ globals.name }}`: The run name if available.
  * `{{ globals.uuid }}`: The run uuid.
  * `{{ globals.namespace }}`: The k8s namespace where the operation will be scheduled.
  * `{{ globals.context_path }}`: The context that Polyaxon will share with the main container: `/plx_context`. This context contains all artifacts and other configs.
@@ -115,5 +115,5 @@ run:
 
 ## Distributed jobs
 
-If your Polyaxonfile defines a distributed job, each replica will receive a context with information from the `globals` level augmented with 
-information about the connections and init sections specific to each replica.  
+If your Polyaxonfile defines a distributed job, each replica will receive a context with information from the `globals` level augmented with
+information about the connections and init sections specific to each replica.

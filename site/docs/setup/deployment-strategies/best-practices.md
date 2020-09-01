@@ -17,10 +17,10 @@ Polyaxon uses Kubernetes, a tool that is rapidly getting adopted by several team
 
 ## Scheduling
 
-Polyaxon depends on some core components to function correctly, these core components include the API, the scheduler, other helper services, 
+Polyaxon depends on some core components to function correctly, these core components include the API, the scheduler, other helper services,
 and third party services like a database for example. In addition to these core components, Polyaxon schedules jobs and experiments that data scientists submit to the platform.
 
-In order to keep the core components highly responsive, we recommend that users should deploy them on separate nodes than those used for running the user's workload. 
+In order to keep the core components highly responsive, we recommend that users should deploy them on separate nodes than those used for running the user's workload.
 This ensures that experiments, jobs, dashboards, and apps, won't consume CPU and/or memory that could be essential to the database or the API to be responsive.
 
 In order to achieve such behavior, Polyaxon provides:
@@ -30,17 +30,17 @@ In order to achieve such behavior, Polyaxon provides:
 
 You can also decide to just use at a minimum 2 selectors one for core components and one for the workload to keep them separated.
 
-Several teams have advanced setups where they take advantage of Node Selectors, Affinity, and Tolerations to setup the default platform behavior, 
+Several teams have advanced setups where they take advantage of Node Selectors, Affinity, and Tolerations to setup the default platform behavior,
 and use a custom scheduling per experiment/job when needed. Please refer to this section for a full reference of the [node scheduling behavior](/configuration/custom-node-scheduling/).
 
-If you are running Polyaxon Enterprise Edition, you can also deploy the control plane in a separate namespace or even cluster than the data plane(workloads) 
+If you are running Polyaxon Enterprise Edition, you can also deploy the control plane in a separate namespace or even cluster than the data plane(workloads)
 
-> **Note**: make sure that Polyaxon's dependencies are not deployed on the same node where you are running your experiments and jobs, 
+> **Note**: make sure that Polyaxon's dependencies are not deployed on the same node where you are running your experiments and jobs,
 this way you won't impact the stability of these components if one of the runs has a high CPU/Memory consumption or being preempted.
 
 ## Database high availability
 
-If you are running Polyaxon in production mode, we suggest that you keep your database "safe" and highly available. 
+If you are running Polyaxon in production mode, we suggest that you keep your database "safe" and highly available.
 We provide a reference document on how to achieve High Available Database on Polyaxon in this [guide](/docs/setup/platform/postgresql-ha/).
 
 Stateful applications are very hard to set up correctly on a Kubernetes cluster, so to achieve Postgres HA, we suggest that you look at setting an external Database with Polyaxon.
@@ -56,29 +56,29 @@ If you are running Polyaxon in production mode and using a scheduler, you might 
 
 ## Storages
 
-Your experiments' and jobs' outputs, logs, models, and artifacts should be stored using a highly available storage backend. 
+Your experiments' and jobs' outputs, logs, models, and artifacts should be stored using a highly available storage backend.
 
 In order to enable durable, i.e. available after a node failure, we recommend that you read the following guides: [artifacts store](/docs/setup/connections/artifacts/).
 
 Polyaxon supports several artifacts stores for your on-premise or cloud deployment.
 
-If you are using Polyaxon EE or Polyaxon Cloud you can deploy several agents backed by different artifacts stores depending on your requirements. 
-  
+If you are using Polyaxon EE or Polyaxon Cloud you can deploy several agents backed by different artifacts stores depending on your requirements.
+
 > **Note**: The default configuration uses a temporary storages
 
 ## SSL & Network Security
 
 Security is important and we strongly recommend that you deploy Polyaxon on a network that you control.
 If you expose the gateway to the internet we recommend that you use SSL for your Polyaxon deployment.
- 
-Please read this [SSL reference](/configuration/ssl/), 
-our [FAQ on using custom domain](/faq/use-custom-domain/), 
-[Nginx Ingress](/integrations/nginx/), 
+
+Please read this [SSL reference](/configuration/ssl/),
+our [FAQ on using custom domain](/faq/use-custom-domain/),
+[Nginx Ingress](/integrations/nginx/),
 and [Let's encrypt](/integrations/letsencrypt/).
 
-If you can't deploy Polyaxon with SSL or if you don't control the network, 
+If you can't deploy Polyaxon with SSL or if you don't control the network,
 we suggest that you keep the default network configuration: `ClusterIP` and use port forwarding to access Polyaxon API and UI.
-Please check this [section](/docs/setup/platform/#port-forward) for more details.  
+Please check this [section](/docs/setup/platform/#port-forward) for more details.
 
 ## Security context
 

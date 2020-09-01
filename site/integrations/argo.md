@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - automation
   - pipelines
   - scheduling
@@ -22,8 +22,8 @@ visibility: public
 status: published
 ---
 
-You can easily use Polyaxon in your Argo workflows. 
-Argo is a container-native workflow engine, which means you can use Polyaxon as a step or in multiple steps in an Argo workflow. 
+You can easily use Polyaxon in your Argo workflows.
+Argo is a container-native workflow engine, which means you can use Polyaxon as a step or in multiple steps in an Argo workflow.
 
 
 ## Polyaxon as an Argo step

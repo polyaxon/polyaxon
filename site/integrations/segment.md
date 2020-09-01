@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - analytics
 featured: false
 popularity: 0
@@ -18,19 +18,19 @@ visibility: public
 status: EE
 ---
 
-Get in-depth metrics usage of your Polyaxon deployment, number of experiments, jobs, builds, and their statuses directly to Segment for further analysis. 
-[Segment](https://segment.com/) is a platform for collecting and analyzing your on-premise Polyaxon deployment. 
+Get in-depth metrics usage of your Polyaxon deployment, number of experiments, jobs, builds, and their statuses directly to Segment for further analysis.
+[Segment](https://segment.com/) is a platform for collecting and analyzing your on-premise Polyaxon deployment.
 
 ## Set up a new Segment source
 
-When you create a new Segment account, follow the instructions to create your first data source for your Polyaxon. 
+When you create a new Segment account, follow the instructions to create your first data source for your Polyaxon.
 
 ## Get the tracking key
 
-Once you've created the new source, you'll be taken to the project settings area. 
+Once you've created the new source, you'll be taken to the project settings area.
 From here, copy the tracking code to your clipboard.
 
-## Add the tracking key to your Polyaxon deployment config 
+## Add the tracking key to your Polyaxon deployment config
 
 Once you add the tracking to your deployment, Polyaxon will start sending events to segments, so you can connect to as many
 third party data services as you like and enjoy the event pipeline which Segment provides.

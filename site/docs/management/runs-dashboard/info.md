@@ -10,7 +10,7 @@ tags:
 sidebar: "management"
 ---
 
-Every time you run a component whether it contains a machine learning model training, a tensorboard, a hyperparameter optimization, or a workflow, 
+Every time you run a component whether it contains a machine learning model training, a tensorboard, a hyperparameter optimization, or a workflow,
 Polyaxon will log that execution as a run and connection any information related to it, e.g. params, artifacts, upstream/downstream runs, ...
 
 ## Overview

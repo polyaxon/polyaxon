@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - notifications
 featured: false
 popularity: 0
@@ -22,7 +22,7 @@ Notify PagerDuty when an experiment, a job, or a build fails so that your team s
 
 ## Visit PagerDuty to create webhook integration
 
-First, you'll need to set up a new incoming webhook in your team's [PagerDuty](https://support.pagerduty.com/docs/webhooks) configuration. 
+First, you'll need to set up a new incoming webhook in your team's [PagerDuty](https://support.pagerduty.com/docs/webhooks) configuration.
 An incoming webhook is a method for PagerDuty to receive incoming messages to be posted to your PagerDuty team from external services.
 
 ## Configure your webhook

@@ -49,7 +49,7 @@ Polyaxon uses safe/escaped strings used everywhere.
 
 ### Dependency management
 
-All dependencies used in Polyaxon are scanned and reviewed carefully. 
+All dependencies used in Polyaxon are scanned and reviewed carefully.
 
 
 ## Responsible disclosure guidelines
@@ -61,7 +61,7 @@ We invite any Polyaxon user to take part in responsible disclosure of any vulner
 - Give reasonable time to correct the issue before making any information public
 
 Security issues always take precedence over bug fixes and feature work. We can and we will make expedite releases/patches mark releases for serious security issues.
-  
+
 ## Issue triage
 
 We're always interested in hearing about any reproducible vulnerability that affects the security of Polyaxon users, including...

@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - notifications
 featured: false
 popularity: 0

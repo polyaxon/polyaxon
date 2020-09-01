@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - artifacts
   - storage
   - gcp
@@ -33,8 +33,8 @@ Google cloud storage provides an easy way to download the access key as a JSON f
 You can create a secret with an env var of the content of the gcs-key.json:
 
  * `GC_KEYFILE_DICT` or `GOOGLE_KEYFILE_DICT`
- 
-Or you can create a secret to be mounted as a volume: 
+
+Or you can create a secret to be mounted as a volume:
 
  * `kubectl create secret generic gcs-secret --from-file=gc-secret.json=path/to/gcs-key.json -n polyaxon`
 

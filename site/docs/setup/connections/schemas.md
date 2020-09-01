@@ -2,7 +2,7 @@
 title: "Connection Schemas"
 sub_link: "connections/schemas"
 meta_title: "Connections schemas in Polyaxon - Connections"
-meta_description: " In order to leverage some built-in functionalities in Polyaxon, connections' 
+meta_description: " In order to leverage some built-in functionalities in Polyaxon, connections'
 schema must follow a specification"
 tags:
   - setup

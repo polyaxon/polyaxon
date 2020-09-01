@@ -31,7 +31,7 @@ You need to expose information about how to connect to the blob storage, the sta
  * `AZURE_ACCOUNT_NAME`
  * `AZURE_ACCOUNT_KEY`
  * `AZURE_CONNECTION_STRING`
- 
+
 ## Create a secret or a config map for storing these keys
 
 We recommend using a secret to store your access information json object:
@@ -110,11 +110,11 @@ This is optional, you can use any language or logic to interacts with Azure Stor
 
 Polyaxon has some built-in logic that you can leverage if you want.
 
-To use that logic:  
+To use that logic:
 
 ```bash
 pip install polyaxon[azure]
-``` 
+```
 
 All possible functions to use:
 

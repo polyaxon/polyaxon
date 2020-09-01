@@ -16,9 +16,9 @@ tags:
     - logging
 ---
 
-Polyaxon provides several [resources](/docs/resources/) and documentation about the roadmap, release notes, 
+Polyaxon provides several [resources](/docs/resources/) and documentation about the roadmap, release notes,
 guides on how to contribute to the platform development or security.
 
 There's also a full list of all [references](/docs/references/) to learn about our APIs, clients, and language SDKs.
 
-We manage most of the issues and feature requests on our [public Github repo](https://github.com/polyaxon/polyaxon).    
+We manage most of the issues and feature requests on our [public Github repo](https://github.com/polyaxon/polyaxon).

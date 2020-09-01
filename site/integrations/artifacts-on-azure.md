@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - artifacts
   - storage
   - azure
@@ -24,7 +24,7 @@ You can use one or multiple blobs on Azure Storage to store logs, job outputs, a
 
 ## Create an Azure Storage account
 
-You should create a storage account (e.g. plx-storage) and a blob (e.g. artifacts). 
+You should create a storage account (e.g. plx-storage) and a blob (e.g. artifacts).
 
 You need to expose information about how to connect to the blob storage, the standard way is to expose these keys:
 

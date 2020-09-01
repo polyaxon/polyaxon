@@ -22,7 +22,7 @@ You can create teams to manage scoped permissions to your projects.
 
 ## Add / Invite team members
 
-You can add organization members to teams 
+You can add organization members to teams
 
 ![team-add](../../../../content/images/dashboard/teams/add.png)
 
@@ -30,7 +30,7 @@ You can add organization members to teams
 
 You can invite members to a team and give them higher roles within the team.
 
-e.g. A user can be an outsider of an organization and can be invited to a single project 
+e.g. A user can be an outsider of an organization and can be invited to a single project
 as an admin without having access to other projects.
 
 ![team-invite](../../../../content/images/dashboard/teams/invite.png)

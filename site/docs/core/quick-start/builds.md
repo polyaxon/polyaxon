@@ -12,10 +12,10 @@ tags:
 sidebar: "core"
 ---
 
-During this quick-start tutorial, we have been using a docker image `polyaxon/polyaxon-quick-start`, 
+During this quick-start tutorial, we have been using a docker image `polyaxon/polyaxon-quick-start`,
 which was built using a Polyaxonfile as well.
 
-N.B. you can build docker images outside of Polyaxon, or use your own system. 
+N.B. you can build docker images outside of Polyaxon, or use your own system.
 
 ## Docker images
 
@@ -42,23 +42,23 @@ runPatch:
 hubRef: kaniko
 ```
 
-This configuration is using a public component called Kaniko, 
+This configuration is using a public component called Kaniko,
 it uses an initializer [dockerfile](/docs/core/specification/init/) which generates simple dockerfile.
 
 > **Note**: We could have created a dockerfile, and used a git initializer to clone the repo containing the dockerfile.
 
-Since we do not want to create or modify the Kaniko component, 
+Since we do not want to create or modify the Kaniko component,
 we are using the `runPatch` section to add the init section to the job.
-The `runPatch` allows us to patch the component definition without having to rewrite it from scratch, 
+The `runPatch` allows us to patch the component definition without having to rewrite it from scratch,
 in this case, we are generating a dockerfile.
-The dockerfile we are generating is a based on a tensorflow docker image and 
+The dockerfile we are generating is a based on a tensorflow docker image and
 we are just installing `polyaxon` library and some extra dependencies to use the [tracking module](/docs/experimentation/tracking/).
 
 The `hubRef` is the reference of the component we are going to run, in this case, it's a Kaniko component for building the image.
 
-We are also passing a parameter `destination` which is of type [image](/docs/core/specification/types/), 
+We are also passing a parameter `destination` which is of type [image](/docs/core/specification/types/),
 it defines the name of the image and the connection to use for pushing the image.
-The [docker-connection](/docs/setup/connections/registry/) is a [connection](/docs/setup/connections/) 
+The [docker-connection](/docs/setup/connections/registry/) is a [connection](/docs/setup/connections/)
 that we configured to authenticate Kaniko to push images.
 
 
@@ -67,5 +67,5 @@ that we configured to authenticate Kaniko to push images.
 To run the operation:
 
 ```bash
-polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/helpers/build.yaml -l 
+polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/helpers/build.yaml -l
 ```

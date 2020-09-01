@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - notifications
 featured: false
 popularity: 0
@@ -22,7 +22,7 @@ Notify Discord when an experiment, a job, or a build is finished so that your te
 
 ## Visit Discord to create webhook integration
 
-First, you'll need to set up a new incoming webhook in your team's [Discord](https://discordapp.com/developers/docs/resources/webhook) configuration. 
+First, you'll need to set up a new incoming webhook in your team's [Discord](https://discordapp.com/developers/docs/resources/webhook) configuration.
 An incoming webhook is a method for Discord to receive incoming messages to be posted to your Discord team from external services.
 
 ## Configure your webhook

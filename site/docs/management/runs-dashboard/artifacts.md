@@ -10,16 +10,16 @@ tags:
 sidebar: "management"
 ---
 
-## Overview 
+## Overview
 
-Polyaxon allows to track several artifacts. The outputs page in the UI allows to download single artifacts, subpaths or pull everything 
-that was stored in the artifacts store for a specific run. 
+Polyaxon allows to track several artifacts. The outputs page in the UI allows to download single artifacts, subpaths or pull everything
+that was stored in the artifacts store for a specific run.
 
 > The same experience is also possible through the API and the Python client.
 
 ![run-artifacts](../../../../content/images/dashboard/runs/artifacts.png)
 
-## Rendering 
+## Rendering
 
 The artifacts tab allows you to render text files
 
@@ -31,7 +31,7 @@ It also detects programming language to render the code editors for code files
 
 ## Media
 
-The artifacts tab has also an enhanced filetype detection with proper rendering for media. 
+The artifacts tab has also an enhanced filetype detection with proper rendering for media.
 
 ![run-artifacts-audio](../../../../content/images/dashboard/runs/artifacts-audio.png)
 

@@ -12,9 +12,9 @@ sidebar: "management"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-Organizations are an entity where businesses can collaborate across many projects at once. 
+Organizations are an entity where businesses can collaborate across many projects at once.
 Owners and administrators can manage member access to the organization's data, projects, models, and components with sophisticated security and administrative features.
-Organizations can also have analytics, activities, and insights. 
+Organizations can also have analytics, activities, and insights.
 
 ## Create a new organization
 
@@ -24,7 +24,7 @@ If you have access you can create a new organization.
 
 ## Selecting an organization
 
-Users can be members of multiple organizations, 
+Users can be members of multiple organizations,
 you can visit your organization's dashboard to stay updated on recent activity and keep track of recent changes.
 
 ![organization-select](../../../../content/images/dashboard/orgs/select.png)
@@ -48,7 +48,7 @@ The general settings page lets you change the organization's details
 
 ## Organization members
 
-After creating an organization, 
+After creating an organization,
 you can invite or remove members of your organization.
 
 ![organization-invite](../../../../content/images/dashboard/orgs/invite.png)
@@ -66,7 +66,7 @@ Member roles dictate access within an organization.
 
 Unrestricted access to the organization, its data, and settings.
 
- * Gains full permission across the organization. 
+ * Gains full permission across the organization.
  * Can add, modify, and delete projects, components, models, and members.
  * Can manage members.
  * Can make billing and plan changes.
@@ -92,7 +92,7 @@ Unrestricted access to the organization, its data, and settings.
 
 ## Organization Management
 
-An organization can be further tuned to reflect the kind of access and scale you want to achieve. 
+An organization can be further tuned to reflect the kind of access and scale you want to achieve.
 
  * You can create and manage projects.
  * You can manage the component hub.

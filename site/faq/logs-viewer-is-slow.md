@@ -21,5 +21,5 @@ Polyaxon provides two modes for viewing jobs, experiments, and services:
 
  * Flyout mode
  * Full-view mode
- 
+
 We recommend using the full-view mode when the logs viewer or the dashboard is rendering a large amount of data.

@@ -14,14 +14,14 @@ sidebar: "management"
 
 Dashboards let you create visualizations, render assets, and widgets to analyze a run or a selection of runs.
 
-Oftentimes, a dashboard might be generic and useful to save and reuse for future runs. 
-Polyaxon lets you save and describe dashboards and share them with the rest of your teams. 
+Oftentimes, a dashboard might be generic and useful to save and reuse for future runs.
+Polyaxon lets you save and describe dashboards and share them with the rest of your teams.
 
 
 ## Create dashboards
 
-Saved dashboards are created on the project level, only users having write access to the project can create a dashboard, 
-and they can be used by any user who has read access to the project.  
+Saved dashboards are created on the project level, only users having write access to the project can create a dashboard,
+and they can be used by any user who has read access to the project.
 
 ![dashboard-create](../../../../content/images/dashboard/dashboards/create.png)
 

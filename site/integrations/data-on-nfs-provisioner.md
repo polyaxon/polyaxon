@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - data-stores
   - storage
 featured: false
@@ -24,9 +24,9 @@ You can deploy an in-cluster NFS provisioner to simplify the creation of ReadWri
 
 ## Overview
 
-This guide shows how to use the NFS provisioner to mount data to your jobs and experiments. 
+This guide shows how to use the NFS provisioner to mount data to your jobs and experiments.
 
-The [nfs-provisioner chart](https://github.com/helm/charts/tree/master/stable/nfs-server-provisioner) provides a stable Helm chart, to easily deploy and spin NFS-volumes to use with Polyaxon. 
+The [nfs-provisioner chart](https://github.com/helm/charts/tree/master/stable/nfs-server-provisioner) provides a stable Helm chart, to easily deploy and spin NFS-volumes to use with Polyaxon.
 
 ## Install Helm
 

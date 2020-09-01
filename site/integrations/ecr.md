@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - registries
   - aws
 featured: false
@@ -23,8 +23,8 @@ You can use your docker images hosted on [Amazon Elastic Container Registry (ECR
 
 ## Overview
 
-You can use your public images without the need to set any configuration. 
-In order to push private images to ECR, you need to grant the build access. 
+You can use your public images without the need to set any configuration.
+In order to push private images to ECR, you need to grant the build access.
 
 ## Kaniko
 

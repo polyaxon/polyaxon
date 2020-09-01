@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - setup
 featured: false
 popularity: 0
@@ -49,7 +49,7 @@ ingress:
 ingress:
   enabled: true
   hostName: polyaxon.acme.com
-  tls: 
+  tls:
   - secretName: polyaxon.acme-tls
     hosts:
       - polyaxon.acme.com
@@ -57,11 +57,11 @@ ingress:
 
 ## Annotations
 
-> NOTE Depending on your version of nginx ingress you might need to prepend `nginx.` to the annotations. E.g.: 
+> NOTE Depending on your version of nginx ingress you might need to prepend `nginx.` to the annotations. E.g.:
 > ```yaml
 >       nginx.ingress.kubernetes.io/proxy-body-size: 4G
->       # instead of 
->       ingress.kubernetes.io/proxy-body-size: 4G    
+>       # instead of
+>       ingress.kubernetes.io/proxy-body-size: 4G
 > ```
 
 Polyaxon's ingress resource can be customized by providing annotations, we recommend the following annotations
@@ -74,14 +74,14 @@ ingress:
 ```
 
 If you are using the ingress without a tls, you need to set
- 
+
 ```yaml
 ingress:
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
 ```
 
-Also to allow the platform to upload/download large files you need to 
+Also to allow the platform to upload/download large files you need to
 
 ```yaml
 ingress:

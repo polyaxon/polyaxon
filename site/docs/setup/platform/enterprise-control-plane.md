@@ -32,7 +32,7 @@ kubectl create secret generic polyaxon-enterprise-license --from-file=./license 
 
 ## Configure Polyaxon Enterprise Docker registry access
 
-Set up Docker credentials to allow Kubernetes nodes to pull down the Polyaxon Enterprise Docker images, 
+Set up Docker credentials to allow Kubernetes nodes to pull down the Polyaxon Enterprise Docker images,
 which are hosted in a private repository.
 You receive credentials for the Polyaxon Enterprise Docker image when you sign up for Polyaxon Enterprise.
 

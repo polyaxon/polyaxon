@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - tracking
 featured: false
 popularity: 2
@@ -84,8 +84,8 @@ def train(experiment,
           embedding_size,
           kernel_size,
           optimizer,
-          filters, 
-          pool_size, 
+          filters,
+          pool_size,
           lstm_output_size,
           log_learning_rate,
           batch_size,
@@ -107,7 +107,7 @@ def train(experiment,
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
 
-    
+
     model.fit(x_train, y_train,
               batch_size=batch_size,
               epochs=epochs,

@@ -50,7 +50,11 @@ def get_eager_matrix_operations(
         import numpy as np
     except ImportError as e:
         if is_cli:
-            Printer.print_error("numpy is required for this operation", sys_exit=True)
+            Printer.print_error(
+                "numpy is required for this operation, "
+                "please run 'pip install polyaxon[numpy]'",
+                sys_exit=True,
+            )
         raise e
 
     from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager

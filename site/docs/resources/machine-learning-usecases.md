@@ -87,4 +87,4 @@ Polyaxon develops a single platform to help companies solve problems in any vert
    * Maintenance Prediction
    * Inventory Management
    * Price Optimization
- 
+

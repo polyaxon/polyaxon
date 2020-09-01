@@ -16,19 +16,17 @@ tags:
 sidebar: "automation"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
-
-## Overview 
+## Overview
 
 Hyperparameters selection is crucial for creating robust models,
 since they heavily influence the behavior of the learned model.
 Finding good hyperparameters can be very challenging,
 and requires to efficiently search the space of possible hyperparameters as well as
-how to manage, schedule, and monitor a large set of experiments for hyperparameter tuning, 
+how to manage, schedule, and monitor a large set of experiments for hyperparameter tuning,
 
 The way Polyaxon performs hyperparameter tuning is by providing a selection of customizable search algorithms.
 Polyaxon supports both simple approaches such as `random search` and `grid search`, and provides a simple interface for
-advanced approaches, such as `Hyperband` and `Bayesian Optimization`, it also integrates with tools such as `Hyperopt`, 
+advanced approaches, such as `Hyperband` and `Bayesian Optimization`, it also integrates with tools such as `Hyperopt`,
 and provides an interface for running custom iterative processes.
 
 All these search algorithms run in an asynchronous way, and support concurrency and routing to leverage your cluster(s)'s resources to the maximum.
@@ -49,7 +47,7 @@ Some of these approaches are also iterative and improve based on previous experi
  * Define a model to optimize.
  * Optionally define the queuing, routing, concurrency, and early stopping.
 
-## Algorithms 
+## Algorithms
 
 In order to search a hyperparameter space, all search algorithms require a `matrix` section,
 they also share some subsections such as: `params` definition of hyperparameters, `earlyStopping`, and `concurrency`.
@@ -68,18 +66,18 @@ All optimization algorithms can leverage the [pipeline helpers](/docs/automation
 
 ## Search Space
 
-In order to define a search space, users must define how to generate the values that will be used to create 
-the parameters combination for running the component, The `params` are defined as `{key: value}` 
+In order to define a search space, users must define how to generate the values that will be used to create
+the parameters combination for running the component, The `params` are defined as `{key: value}`
 object where the key is the name of the parameter you are defining and the value is one of these options:
 
-### Discrete params 
+### Discrete params
 
  * **choice**
  * **range**
  * **logspace**
  * **linspace**
  * **geomspace**
- 
+
 ### Distributions params
 
  * **pchoice**
@@ -103,7 +101,7 @@ matrix:
       lr:
         kind: logspace
         value: 0.01:0.1:5
-    
+
       loss:
         kind: choice
         value: [MeanSquaredError, AbsoluteDifference]

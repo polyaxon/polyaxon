@@ -11,7 +11,7 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags:
-  - operators 
+  - operators
   - distributed-training
   - scheduling
 featured: false
@@ -23,8 +23,8 @@ Polyaxon allows to schedule distributed Horovod experiments, and supports tracki
 
 ## MPIJob Operator
 
-Polyaxon provides support for Horovod via the [MPIJob Operator](/integrations/mpijob/). 
- 
+Polyaxon provides support for Horovod via the [MPIJob Operator](/integrations/mpijob/).
+
 ## Define the distributed topology
 
-Please check the guide [Running Horovod](https://github.com/horovod/horovod#running-horovod) for more details on how to set a Horovod experiment with MPI. 
+Please check the guide [Running Horovod](https://github.com/horovod/horovod#running-horovod) for more details on how to set a Horovod experiment with MPI.

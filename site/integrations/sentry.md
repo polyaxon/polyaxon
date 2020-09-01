@@ -12,7 +12,7 @@ author:
   github: "polyaxon"
 tags:
   - monitoring
-  - setup 
+  - setup
 featured: false
 popularity: 0
 visibility: public
@@ -23,8 +23,8 @@ Polyaxon EE comes with an opt-in [Sentry](https://sentry.io) integration and pro
 
 This integration is disabled by default, and it's not required for the system to function correctly.
 
-If you wish to use your own [Sentry](https://sentry.io) key and not use Polyaxon's key, you can integrate your deployment 
-of Polyaxon Control Plane and Polyaxon Agents with [Sentry](https://sentry.io),  
+If you wish to use your own [Sentry](https://sentry.io) key and not use Polyaxon's key, you can integrate your deployment
+of Polyaxon Control Plane and Polyaxon Agents with [Sentry](https://sentry.io),
 to get actionable errors and crashes information without leaking any sensitive information, and you can report the issue or open a support ticket.
 
 ## Enable Default

@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - registries
 featured: false
 popularity: 1
@@ -23,8 +23,8 @@ You can use your docker images hosted on [https://hub.docker.com/](https://hub.d
 
 ## Overview
 
-You can use your public images without the need to set any configuration. 
-In order to push private docker images to docker hub, you need to set access credentials. 
+You can use your public images without the need to set any configuration.
+In order to push private docker images to docker hub, you need to set access credentials.
 
 ## Create a secret containing the credentials to use with docker hub
 
@@ -39,7 +39,7 @@ In order to push private docker images to docker hub, you need to set access cre
 }
 ```
 
-or 
+or
 
 ```json
 {
@@ -51,7 +51,7 @@ or
 }
 ```
 
-N.B. that the auth must contain a concatenation of the username, a colon, and the password, i.e. `user:password`, 
+N.B. that the auth must contain a concatenation of the username, a colon, and the password, i.e. `user:password`,
 you can find the auths in your `$HOME/.docker/config.json` for instance, or you can create this auth using a simple Python script:
 
 ```python

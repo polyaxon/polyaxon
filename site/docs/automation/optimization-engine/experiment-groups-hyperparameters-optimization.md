@@ -77,7 +77,7 @@ run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
-> The params section was not completely necessary, 
+> The params section was not completely necessary,
 we could have also just passed the value directly `--batch-size=128`
 
 So what we did is that we declared a constant value for `batch_size`, and a value for `lr` going from `0.01` to `0.1` with `5` steps spaced evenly on a `log scale`.
@@ -121,10 +121,10 @@ Early stopping    deactivated
 
 This command validate the polyaxonfile, and the option `-def` returns the group definition.
 
-> For more details about this command please run `polyaxon check --help`, 
+> For more details about this command please run `polyaxon check --help`,
 or check the [command reference](/references/polyaxon-cli/check/)
 
-> Polyaxon merges the combination values from matrix for a single experiment with the values from params and export under the environment variable name `POLYAXON_DECLARATIONS`. 
+> Polyaxon merges the combination values from matrix for a single experiment with the values from params and export under the environment variable name `POLYAXON_DECLARATIONS`.
 Check how you can [get the experiment params](/docs/experimentation/tracking/in-cluster/#hyperparams) to use them with your models.
 
 ## Running a group of experiments
@@ -139,7 +139,7 @@ Creating an experiment group with 5 experiments.
 Experiment group was created
 ```
 
-> For more details about this command please run `polyaxon run --help`, 
+> For more details about this command please run `polyaxon run --help`,
 or check the [command reference](/references/polyaxon-cli/run/)
 
 Now one thing we did not discuss is how many experiments we want to run in parallel,
@@ -157,7 +157,7 @@ we will do something different this time and override this value with a new file
 
 Create a new file, let's call it polyaxonfile_override.yml
 
-> You can call your Polyaxonfiles anything you want. 
+> You can call your Polyaxonfiles anything you want.
 By default, Polyaxon commands look for files called `polyaxonfile.yml`.
 If you call your files differently or want to override values, you need to use the option `-f`
 
@@ -314,13 +314,13 @@ In these introductory sections we demonstrated how to conduct hyperparameter tun
 [grid search](/references/polyaxon-optimization-engine/grid-search/) and [random search](/references/polyaxon-optimization-engine/random-search/).
 
 Sometimes you might have a large search space where you want to use advanced search algorithms.
-Polyaxon supports, in addition to [grid search](/references/polyaxon-optimization-engine/grid-search/) and [random search](/references/polyaxon-optimization-engine/random-search/), 
+Polyaxon supports, in addition to [grid search](/references/polyaxon-optimization-engine/grid-search/) and [random search](/references/polyaxon-optimization-engine/random-search/),
 [Hyperband](/references/polyaxon-optimization-engine/hyperband/) and [Bayesian Optimization](/references/polyaxon-optimization-engine/bayesian-optimization/).
 
 For more information on hyperparameter tuning and optimization please go to [Optimization Engine Reference](/references/polyaxon-optimization-engine/).
 
 
-> For more details about this command please run `polyaxon group --help`, 
+> For more details about this command please run `polyaxon group --help`,
 or check the [command reference](/references/polyaxon-cli/experiment-group/)
 
 

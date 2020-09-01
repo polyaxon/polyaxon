@@ -33,7 +33,7 @@ Polyaxon comes with a built-in extensive tracking system. You can log informatio
 
 Every operation scheduled with Polyaxon will be auto-documented with lineage information about its inputs and outputs, statuses, metrics, hyperparams, source code, data, visualizations, artifacts, and resources used in each experiment.
 
-Polyaxon provides a dashboard and a CLI to see the full history at a glance, including when, who, and where, 
+Polyaxon provides a dashboard and a CLI to see the full history at a glance, including when, who, and where,
 as well as an advanced insight and comparison of experiments based on results, hyperparams, versions of training data, and source code.
 
 <blockquote class="light">Please refer to <a href="/docs/management/runs-dashboard/">the runs dashboard</a> for more details.</blockquote>

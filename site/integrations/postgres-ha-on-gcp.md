@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - setup
   - database
   - gcp
@@ -48,7 +48,7 @@ gcloud sql users set-password postgres --instance <databse_name> \
 
 ## Setup a private IP address
 
-In order to connect to the Cloud SQL instance, you need to setup a private address to connect from Polyaxon to the database instance. 
+In order to connect to the Cloud SQL instance, you need to setup a private address to connect from Polyaxon to the database instance.
 Please check this [guide](https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine)
 
 
@@ -64,5 +64,5 @@ externalServices:
     password: <password>
     database: <database>
     host: <server_ip>
-``` 
+```
 

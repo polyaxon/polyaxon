@@ -13,8 +13,8 @@ sidebar: "management"
 ## Overview
 
 Polyaxon comes with a powerful and uniform logging experience for all runs.
- 
-The logging features collects and archives logs for all your containers inside a run, and even from distributed runs, experiments, jobs, notebooks, tensorboards, … 
+
+The logging features collects and archives logs for all your containers inside a run, and even from distributed runs, experiments, jobs, notebooks, tensorboards, …
 all runs have a similar logging experience, which helps users detect issues related to why a tensorboard is not loading or a notebook is not accessible.
 
 ## Logs in CLI
@@ -25,12 +25,12 @@ You can streams logs from the CLI or from the UI, which will reduce the need to 
 
 ## Logs in UI
 
-You can stream logs in the dashboard as well with support for progress bars, ANSI standards, and long log lines. 
+You can stream logs in the dashboard as well with support for progress bars, ANSI standards, and long log lines.
 
 ![run-logs-dark](../../../../content/images/dashboard/runs/logs-dark.png)
 
-It’s possible to hide/show information about nodes, pods, and containers, 
-this is especially important for distributed runs, or restarts. 
+It’s possible to hide/show information about nodes, pods, and containers,
+this is especially important for distributed runs, or restarts.
 
 ![run-logs-filter](../../../../content/images/dashboard/runs/logs-filter.png)
 

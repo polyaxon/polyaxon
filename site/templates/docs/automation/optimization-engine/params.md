@@ -1,5 +1,5 @@
 ---
-title: "Hyper Params"
+title: "HyperParams Specification"
 sub_link: "optimization-engine/params"
 code_link: "core/polyaxon/polyflow/matrix/params.py"
 meta_title: "Hyperparameters Tuning Section - Polyaxonfile Specification Sections - Polyaxon References"

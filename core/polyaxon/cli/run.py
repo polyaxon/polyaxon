@@ -111,7 +111,7 @@ from polyaxon.utils.validation import validate_tags
     is_flag=True,
     default=False,
     help="A flag to enable eager mode for pipeline operations, "
-    "currently supports grid, random, and mapping. "
+    "currently this mode supports grid search, random search, and parallel mapping. "
     "Note that this flag requires numpy.",
 )
 @click.pass_context

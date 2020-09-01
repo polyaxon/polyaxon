@@ -49,7 +49,3 @@
       link: /docs/experimentation/visualizations/programmatic/
     - title: Tensorboard
       link: /docs/experimentation/visualizations/tensorboard/
-  - group: Sweeps
-    items:
-    - title: Overview
-      link: /docs/experimentation/sweeps/

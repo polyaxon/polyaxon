@@ -16,15 +16,15 @@ tags:
 sidebar: "setup"
 ---
 
-In order to reduce the amount of configurations in your Polyaxon's components and operations, 
+In order to reduce the amount of configurations in your Polyaxon's components and operations,
 Polyaxon exposes a concept called Connections.
 
-A connection is how you expose and connect your jobs to an artifacts store, 
+A connection is how you expose and connect your jobs to an artifacts store,
 a volume, a git repo, a container registry, a slack channel, and other external systems.
 
-Polyaxon is built on top of Kubernetes, so you can and in some cases will have to configure 
+Polyaxon is built on top of Kubernetes, so you can and in some cases will have to configure
 access to some resources manually.
-However for many use cases, for example, connecting to an S3 bucket, 
+However for many use cases, for example, connecting to an S3 bucket,
 using connections will reduce the amount of boilerplate in your jobs' specification files.
 
 Every Polyaxon Agent deployment can configure:
@@ -32,7 +32,7 @@ Every Polyaxon Agent deployment can configure:
  * `artifactsStore`
  * `connections`
  * `notificationConnections`
- 
+
 All these configurations follow similar [specification](/docs/setup/connections/specification/).
 
 > **Note**: the artifacts store definition will be added by default to the connections list.
@@ -71,37 +71,37 @@ notificationConnections:
 
 ## ArtifactsStore
 
-Every time you deploy Polyaxon Community Edition platform or a Polyaxon Agent, 
+Every time you deploy Polyaxon Community Edition platform or a Polyaxon Agent,
 you will have to configure at least one connection, it's called the artifacts store.
 
 This artifacts store is the default volume or blob storage that Polyaxon will use to save your runs' outputs and logs.
 
-The `artifactsStore` must be of kind: 
+The `artifactsStore` must be of kind:
 `host_path`, `volume_claim`, `gcs`, `s3`, or `wasb`.
 
 For more details please check the [artifacts store section](/docs/setup/connections/artifacts/).
 
 ### Default behavior
 
-When the user does not provide any `artifactsStore` configuration, 
-the default behavior is to use a local path on the host node for storing outputs and logs, 
-this behavior is oftentimes sufficient for users who are just trying the platform, 
+When the user does not provide any `artifactsStore` configuration,
+the default behavior is to use a local path on the host node for storing outputs and logs,
+this behavior is oftentimes sufficient for users who are just trying the platform,
 and don't want to deal with configuration steps.
 
 ## Connections
 
-Polyaxon allows to configure multiple connections, 
-these connections can be multiple 
-[data volumes as well as cloud storages](/docs/setup/connections/artifacts/), 
-[git repos](/docs/setup/connections/git/), 
+Polyaxon allows to configure multiple connections,
+these connections can be multiple
+[data volumes as well as cloud storages](/docs/setup/connections/artifacts/),
+[git repos](/docs/setup/connections/git/),
 [docker containers](/docs/setup/connections/registry/), database accesses, ...
-this catalog of connections makes it very easy to organize access to several external systems and resources, 
+this catalog of connections makes it very easy to organize access to several external systems and resources,
 and there's no limitation on the number of connections you can define in this catalog.
 
-You can define a custom catalog of connections per namespace if you want to isolate accessible resources by your users/teams, 
+You can define a custom catalog of connections per namespace if you want to isolate accessible resources by your users/teams,
 or you can duplicate some or all connections in some namespaces and clusters.
 
-For more details please check the [connection specification](/docs/setup/connections/specification/). 
+For more details please check the [connection specification](/docs/setup/connections/specification/).
 
 ### Default behavior
 

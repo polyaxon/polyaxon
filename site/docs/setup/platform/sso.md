@@ -73,7 +73,7 @@ You need to register a new [application on gitlab](http://doc.gitlab.com/ce/inte
 
 You should provide a callback URL: [Domain/IP]`/sso/gitlab`
 
-And use your client id and secret token using the settings page (auth section). 
+And use your client id and secret token using the settings page (auth section).
 If you have an on-premise Gitlab installation you can additionally provide your Gitlab url.
 
 Please see this [section for more details](/integrations/sso-gitlab/).

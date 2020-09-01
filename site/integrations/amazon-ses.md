@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - notifications
   - email
   - aws
@@ -24,7 +24,7 @@ Integrate Polyaxon with Amazon SES to receive email notifications.
 
 ## Setup Amazon SES
 
-[Amazon SES](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-smtp.html) is one of the easiest ways to get an outgoing email working reliably. 
+[Amazon SES](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-smtp.html) is one of the easiest ways to get an outgoing email working reliably.
 
 ## Add your Email notification using Amazon SES to Polyaxon deployment config
 
@@ -35,6 +35,6 @@ email:
   host: 'email-smtp.us-west-1.amazonaws.com'  # Set correct region
   port: 587
   useTls: true
-  hostUser: 
-  hostPassword: 
+  hostUser:
+  hostPassword:
 ```

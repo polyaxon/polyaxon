@@ -18,11 +18,10 @@ Polyaxon supports scaling of it's services (API and workers) in a horizontal way
 
 ## Services Replication
 
-To replicate the platform or one of the services (api or workers), 
+To replicate the platform or one of the services (api or workers),
 you just need to modify the `replicas` field of that service you want to scale horizontally.
 
-> There's an hpa for horizontal pod auto-scaling that can be enabled for all services 
-
+> There's an hpa for horizontal pod auto-scaling that can be enabled for all services
 
 ## Gateway
 
@@ -61,9 +60,9 @@ streams:
 
 ## Concurrency
 
-Replication might be easier to scale Polyaxon, but it comes at a memory cost, as it's not always efficient, 
-Polyaxon provides a way to scale it's services' concurrency as well, 
-the rule of thumb is to set the concurrency of the worker you wish to scale to the number of cores available. 
+Replication might be easier to scale Polyaxon, but it comes at a memory cost, as it's not always efficient,
+Polyaxon provides a way to scale it's services' concurrency as well,
+the rule of thumb is to set the concurrency of the worker you wish to scale to the number of cores available.
 This will allow to reduce the memory footprint on your cluster and allow the worker to consume more events/tasks.
 
 For example you may want to increase the concurrency of the scheduler:
@@ -71,10 +70,10 @@ For example you may want to increase the concurrency of the scheduler:
 ```yaml
 scheduler:
   replicas: 2
-  concurrency: 10  
+  concurrency: 10
 worker:
   replicas: 2
   concurrency: 5
-``` 
+```
 
 This will create 2 replicas for the scheduler, with 10 concurrent processes each.

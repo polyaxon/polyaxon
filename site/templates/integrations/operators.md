@@ -23,8 +23,8 @@ status: {{status}}
 
 ## Deploy the {{title}} operator
 
-Before you can use the {{name}} runtime, you need to make sure that {{title}} operator and the CRD (custom resource definition) 
-are deployed in your cluster. 
+Before you can use the {{name}} runtime, you need to make sure that {{title}} operator and the CRD (custom resource definition)
+are deployed in your cluster.
 
 ## Enable the operator
 
@@ -39,7 +39,7 @@ operators:
 
 ## Create a component with the {{name}} runtime
 
-Once you have the {{title}} operator running on a Kubernetes namespace managed by Polyaxon, 
+Once you have the {{title}} operator running on a Kubernetes namespace managed by Polyaxon,
 you can check the specification for creating components with the {{name}} runtime:
 
 ```bash
@@ -50,13 +50,13 @@ run:
   ...
 ```
 
-For more details about the specification for creating {{name}} runtime, please check please check this 
+For more details about the specification for creating {{name}} runtime, please check please check this
 [section](/docs/experimentation/distributed/{{link}}/).
 
 ## Run the distributed job
 
 
-Running components with the {{name}} runtime is similar to running any other component: 
+Running components with the {{name}} runtime is similar to running any other component:
 
 ```bash
 polyaxon run --hub component -P ...

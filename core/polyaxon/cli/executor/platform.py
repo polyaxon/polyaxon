@@ -63,9 +63,7 @@ def run(
                 content=op_spec,
                 is_managed=is_manged,
             )
-            Printer.print_success(
-                "A new run `{}` was created".format(response.uuid)
-            )
+            Printer.print_success("A new run `{}` was created".format(response.uuid))
             if not eager:
                 cache_run(response)
                 click.echo(

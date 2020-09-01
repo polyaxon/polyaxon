@@ -18,7 +18,6 @@ tags:
 
 Polyaxon uses some default values for deploying and managing Polyaxon deployment.
 
-if you used a custom config with specific values that diverge from the default values, you will need to pass the config file to all these commands to construct a full context of your deployment.  
+if you used a custom config with specific values that diverge from the default values, you will need to pass the config file to all these commands to construct a full context of your deployment.
 
 All Polyaxon admin commands accept a -f/--file argument for specifying the configuration to deploy/upgrade/teardown.
-

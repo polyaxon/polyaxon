@@ -7,7 +7,7 @@ inputs:
 - name: image
   isOptional: true
   type: str
-  value: tensorflow/tensorflow:2.0.1-py3
+  value: tensorflow/tensorflow:2.3.0
 - name: path
   type: s3
 

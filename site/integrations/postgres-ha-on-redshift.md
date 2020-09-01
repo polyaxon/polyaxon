@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - setup
   - database
   - aws
@@ -26,7 +26,7 @@ This integration is about using AWS RDS for postgres server to provide a High Av
 
 ## Create an RDS instance
 
-Log into your [AWS Console](https://console.aws.amazon.com/console/home), click the EC2 link to go to the [RDS Console](https://console.aws.amazon.com/rds/home), 
+Log into your [AWS Console](https://console.aws.amazon.com/console/home), click the EC2 link to go to the [RDS Console](https://console.aws.amazon.com/rds/home),
 and click the blue “Create Database” button:
 
 ![create-db](../../content/images/integrations/aws/create-db.png)
@@ -41,7 +41,7 @@ Click “Next” and choose “Production” or “Dev/Test” based on your use
 
 ![create-postgresql](../../content/images/integrations/aws/db-resource.png)
 
-Scroll down and setup the credentials. Keep note of the credentials (master username and password, database name etc.), which will be required later. 
+Scroll down and setup the credentials. Keep note of the credentials (master username and password, database name etc.), which will be required later.
 
 ## VPC and security group
 
@@ -64,4 +64,4 @@ externalServices:
     password: <password>
     database: <database>
     host: <server_ip>
-``` 
+```

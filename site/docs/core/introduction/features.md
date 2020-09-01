@@ -30,7 +30,7 @@ Polyaxon provides a powerful and interactive workspace including:
 - A dashboard with visualizations and advanced insights
 - Possibility to create custom dashboards and visualizations
 - Advanced Query & search interface
-- Uniform logs management and streaming for all operations 
+- Uniform logs management and streaming for all operations
 - Jupyter Notebook & Jupyter Lab integration
 - Matplotlib, Plotly, Bokeh, Altair, and Vega integrations
 - Tensorboard integration
@@ -46,7 +46,7 @@ Polyaxon provides a powerful and interactive workspace including:
 
 ## Reproducible results
 
-Polyaxon makes your experiments reproducible, portable, and repeatable while being language and framework agnostic. 
+Polyaxon makes your experiments reproducible, portable, and repeatable while being language and framework agnostic.
 
 - Powerful packaging format `Polyaxonfile`: A specification for packaging dependencies, inputs, outputs, artifacts, environments, and runtime of an operation to schedule on Kubernetes.
 - Extensive tracking API for source code, parameters, data, metrics, tags, and logs.
@@ -57,8 +57,8 @@ Polyaxon makes your experiments reproducible, portable, and repeatable while bei
 
 ## Developer-friendly API
 
-At its core, Polyaxon is a self-consuming, RESTful JSON API with decoupled clients and front-end. 
-We provide lots of tooling to improve data scientists work, but at the end of the day it's **Just JSON**️, 
+At its core, Polyaxon is a self-consuming, RESTful JSON API with decoupled clients and front-end.
+We provide lots of tooling to improve data scientists work, but at the end of the day it's **Just JSON**️,
 so if you want to use Polyaxon completely headless and write your own frontend or clients... you can!
 
 Equally, Polyaxon is heavily designed for performance and scalability with replication and concurrency.
@@ -86,16 +86,16 @@ Polyaxon exposes an ensemble of hyperparameter tuning algorithms that can effect
 
 Our optimization engine is based on open-source tools, and can intelligently choose the best parameters for your problem by balancing exploration and exploitation of your parameter search space to obtain high-performing results.
 
-With the robust scheduling provided by the platform, you can fully leverage and maximize your cluster resources and compute infrastructure, 
-to run a high number of parallel jobs and optimize experiments across up to thousands of workers. 
+With the robust scheduling provided by the platform, you can fully leverage and maximize your cluster resources and compute infrastructure,
+to run a high number of parallel jobs and optimize experiments across up to thousands of workers.
 
 ## Components, Plugins, & integrations
 
-Polyaxon components can be developed by anyone, we share some generic components in an open-source public hub, 
-and we welcome users to contribute more components. 
+Polyaxon components can be developed by anyone, we share some generic components in an open-source public hub,
+and we welcome users to contribute more components.
 
-And since Polyaxon's core is open-source, built as a JSON API, has webhooks, and gives you full control over your container workload: 
-It essentially integrates with absolutely everything. 
+And since Polyaxon's core is open-source, built as a JSON API, has webhooks, and gives you full control over your container workload:
+It essentially integrates with absolutely everything.
 Some things are easier than others, but almost anything is possible with a little scripting.
 
 You can browse our [directory of integrations](/integrations/) with instructions, or build any custom integration yourself.
@@ -115,5 +115,5 @@ Deploy Polyaxon with sensible user roles and permissions from the start.
 
 ## Queuing & Scheduling
 
-Polyaxon supports several scheduling strategies based on node management and queues routing. 
+Polyaxon supports several scheduling strategies based on node management and queues routing.
 Queues in Polyaxon provides an abstraction to manage how your resources can be accessed, every queue has a priority and a concurrency limit.

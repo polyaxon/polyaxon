@@ -56,7 +56,7 @@ A model in the registry can be traced back and reproduced easily using the linea
 
 ### Component Hub
 
-A `component` is the model that describes the discrete and containerized logic you want to run, 
+A `component` is the model that describes the discrete and containerized logic you want to run,
 they optionally take inputs, perform some work, and optionally return some outputs.
 
 A `Component Hub` is a centralized store, set of APIs, and UI, to collaboratively manage the reusable components within an organization.

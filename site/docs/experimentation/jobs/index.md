@@ -14,7 +14,7 @@ sidebar: "experimentation"
 ---
 
 Jobs are used to train machine learning models,
-process a dataset, build container images, execute generic tasks and can be used to perform a variety of functions 
+process a dataset, build container images, execute generic tasks and can be used to perform a variety of functions
 from compiling a model to running an ETL operation.
 
 In order to run a job you will need to create a component with a `kind: job` as a runtime:
@@ -40,7 +40,7 @@ job = V1Job(
 )
 
 component = V1Component(run=job)
-``` 
+```
 
 ### Specification
 

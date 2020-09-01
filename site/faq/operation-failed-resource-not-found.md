@@ -19,7 +19,7 @@ tags:
 
 Please make sure that Polyaxon Operation CRD is installed in the namespace.
 
-Please check that the operator is enabled in your Polyaxon CE or Polyaxon Agent deployment  
+Please check that the operator is enabled in your Polyaxon CE or Polyaxon Agent deployment
 
 If both the CRD and the operator are deployed and are running, you won't see this error:
 

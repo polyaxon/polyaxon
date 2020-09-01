@@ -15,8 +15,8 @@ Polyaxon UI tracks additional information about your artifacts and runs dependen
 ## Overview
 
 The dashboard comes with a lineage tab with deeper information about inputs and outputs artifacts, with special handling for several types: git, dockerfiles, files, events, metrics, …
- 
-The dashboard shows also any dependent jobs, experiments, and services, if an experiment was restarted, resumed, information about the upstream and downstream operations. 
+
+The dashboard shows also any dependent jobs, experiments, and services, if an experiment was restarted, resumed, information about the upstream and downstream operations.
 
 ![run-lineage](../../../../content/images/dashboard/runs/lineage.png)
 

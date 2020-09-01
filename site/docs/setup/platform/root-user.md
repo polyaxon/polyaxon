@@ -20,7 +20,7 @@ user:
   username: "root"
   email: "root@polyaxon.local"
   password: "rootpassword"
-``` 
+```
 
 ## Admin view
 

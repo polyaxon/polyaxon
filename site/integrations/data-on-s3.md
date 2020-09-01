@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - data-stores
   - storage
   - aws
@@ -24,7 +24,7 @@ You can use one or multiple buckets on S3 to access data directly on your machin
 
 ## Create an S3 bucket
 
-You should create an S3 bucket (e.g. plx-storage). 
+You should create an S3 bucket (e.g. plx-storage).
 
 You need to expose information about how to connect to the blob storage, the standard way is to expose these keys:
 
@@ -116,11 +116,11 @@ This is optional, you can use any language or logic to interacts with S3 buckets
 
 Polyaxon has some built-in logic that you can leverage if you want.
 
-To use that logic:  
+To use that logic:
 
 ```bash
 pip install polyaxon[s3]
-``` 
+```
 
 All possible functions to use:
 

@@ -75,14 +75,14 @@ All commands and sub-command of `project` and `ops` support caching:
  * `$ polyaxon ops get`
  * `$ polyaxon ops logs`
  * ...
- 
+
 ## Caching visibility
 
 By default, Polyaxon will cache all information on the global path, if you want to enable caching on local project folder(s), you can use the init command:
 
 ```bash
 $ polyaxon init PROJECT_NAME
-``` 
+```
 
 This will create a local cache folder for the project and its runs.
 
@@ -99,16 +99,16 @@ You can as well check other users/organizations projects without initializing th
 Here are some examples:
 
  * Getting other projects experiments:
- 
+
     * `polyaxon project -p mnist ops -s "-created_at"`
     * `polyaxon project --project=adam/mnist ops -q "status: failed"`
-    
+
  * Getting services named `tensorboard` for some projects:
- 
+
     * `polyaxon ops --project=mnist ls --query="name: tensorboard" --sort="-created_at"`
     * `polyaxon tensorboards -p adam/mnist ls --query="name: tensorboard, status: running"`
 
  * Getting information about a specific experiment:
- 
+
     * `polyaxon ops -p mnist -uid UUID get`
     * `polyaxon ops -p adam/mnist --uid=UUID get`

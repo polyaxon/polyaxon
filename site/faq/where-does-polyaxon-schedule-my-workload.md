@@ -23,6 +23,5 @@ Polyaxon can be setup on your own cloud subscription, on-premises hardware or a 
 
  * When you deploy Polyaxon EE or Polyaxon CE, you deploy and manage both the control plane and the data plane(workloads).
  * When you subscribe to Polyaxon Cloud and deploy Polyaxon Agent(s), you manage the data plane(workloads).
- 
-In both cases, you manage data plane(workloads) on your own resources and all of your data and executions stay in your environment and your control.
 
+In both cases, you manage data plane(workloads) on your own resources and all of your data and executions stay in your environment and your control.

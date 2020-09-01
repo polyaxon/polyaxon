@@ -3,7 +3,7 @@ title: "Run Profiles"
 sub_link: "ui/run-profiles"
 meta_title: "Polyaxon management tools and UI - Run Profiles"
 meta_description: "Run profiles is a feature for injecting certain information into operations at compilation time to preset configuration for node scheduling,
-queue routing, resources requirements and definition, connections, and access level control." 
+queue routing, resources requirements and definition, connections, and access level control."
 tags:
     - concepts
     - polyaxon

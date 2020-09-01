@@ -18,7 +18,7 @@ tags:
 
 Yes, Polyaxon supports running tensorboards for your experiments.
 
-You can start a tensorboard for individual experiments, for a selection of experiments, or for all experiments under a project. 
+You can start a tensorboard for individual experiments, for a selection of experiments, or for all experiments under a project.
 
 Polyaxon also supports running TensorboardX for your experiments, you can fully control the docker image used for creating the tensorboard service.
 

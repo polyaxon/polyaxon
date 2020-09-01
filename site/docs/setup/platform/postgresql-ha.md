@@ -59,8 +59,8 @@ you need to define a PVC and assign it to the `persistence.existingClaim`.
 If you prefer to have the postgresql database managed and hosted outside of Kubernetes,
 instead of the in-cluster one provided by Polyaxon, e.g.
 [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/),
-[Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/services/postgresql/), 
-[GCP Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/), 
+[Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/services/postgresql/),
+[GCP Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/),
 or [DigitalOcean managed PostgreSQL](https://www.digitalocean.com/products/managed-databases/).
 You need to disable the in-cluster database, and provide the information needed to establish a connection to the external one, e.g.:
 
@@ -82,15 +82,15 @@ Please check this [integration guide](/integrations/database/) for cloud specifi
 
 ## Scheduling
 
-If you decided to deploy Polyaxon in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/) 
-to avoid running high load runs on the same node hosting the database. 
+If you decided to deploy Polyaxon in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/)
+to avoid running high load runs on the same node hosting the database.
 
 
 ## Connexion Max Age
 
 `default: 60`
 
-`connMaxAge` allows you to set the lifetime of a database connection, in seconds. 
+`connMaxAge` allows you to set the lifetime of a database connection, in seconds.
 Use `0` to close database connections at the end of each request and `None` for unlimited persistent connections.
 
 ## Transaction pooling with pgbouncer

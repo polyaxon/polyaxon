@@ -16,13 +16,13 @@ tags:
 sidebar: "automation"
 ---
 
-<blockquote class="commercial">This is part of our commercial offering.</blockquote>
+> **Note**: Mapping in Polyaxon CE is only supported in eager mode with no concurrency management.
 
 ## Overview
 
 Polyaxon mapping is an automation tool to apply a list of parameters combination to a component sequentially or in parallel following a concurrency.
 
-When a mapping is defined a pipeline is created to watch generated executions and manage their lifecycle and concurrency. 
+When a mapping is defined a pipeline is created to watch generated executions and manage their lifecycle and concurrency.
 Because the mapping generates a pipeline, the [pipeline helpers](/docs/automation/helpers/) can be used for managing concurrency, early stopping, caching, ...
 
  * [Mapping specification](/docs/automation/mapping/specification/) for more details
@@ -34,4 +34,4 @@ Because the mapping generates a pipeline, the [pipeline helpers](/docs/automatio
 Polyaxon Mapping can be used to:
  * Run a component in parallel using a user defined list of parameters
  * Train a machine learning model using an external optimization and suggestion service
- * Leverage a map/reduce style pattern 
+ * Leverage a map/reduce style pattern

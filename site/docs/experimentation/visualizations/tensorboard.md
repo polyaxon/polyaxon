@@ -18,7 +18,7 @@ Tensorboard is a tool that is used by data scientists to visualize and debug dee
 
  * Tensorboard for a single run
  * Tensorboard for a multi-runs
- * Tensorboard based on metric(s) performance or a search 
+ * Tensorboard based on metric(s) performance or a search
 
 ## Single run
 

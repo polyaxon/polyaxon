@@ -18,19 +18,19 @@ with more details in pages dedicated to each concept.
 
 ### Runtime of a Component
 
-A `component` is the model that describes the discrete and containerized logic you want to run, 
+A `component` is the model that describes the discrete and containerized logic you want to run,
 they optionally take inputs, perform some work, and optionally return some outputs.
 
-Components can process data directly, train a model, or orchestrate external systems, they can be built using any programming language. 
+Components can process data directly, train a model, or orchestrate external systems, they can be built using any programming language.
 There are almost no restrictions on what a component can do.
 
-Furthermore, each component receives metadata about its environment and upstream dependencies (if it's defined in a DAG) before it runs, 
-it's called the [context](/docs/core/specification/context/), even if it does not receive any explicit data inputs, 
+Furthermore, each component receives metadata about its environment and upstream dependencies (if it's defined in a DAG) before it runs,
+it's called the [context](/docs/core/specification/context/), even if it does not receive any explicit data inputs,
 giving it an opportunity to change its behavior depending on the context it's running inside.
 
 Since Polyaxon runs containers, it is agnostic to the code each component runs and there are no restrictions on what inputs and outputs can be.
 
-<blockquote class="light">Please refer to <a href="/docs/core/specification/component/">core/specification/component</a> 
+<blockquote class="light">Please refer to <a href="/docs/core/specification/component/">core/specification/component</a>
 to learn about the component specification and <a href="/docs/management/component-hub/">management/Component Hub</a> for details about the Component Hub.</blockquote>
 
 Each component can have one runtime that it's specified in the [run section of a component](/docs/core/specification/component/#run).
@@ -45,7 +45,7 @@ Polyaxon supports several runtimes:
 A `job` is the execution of your code with data/connections and the provided parameters on the Kubernetes cluster.
 
 A Job can be:
- 
+
  * A machine learning experiment.
  * A data processing job.
  * An ETL task.
@@ -71,7 +71,7 @@ Polyaxon supports distributed jobs for model training or data processing via sev
 A `service` allows to run dashboards, apps, and APIs.
 
 A service can be:
- 
+
  * A Tensorboard.
  * A Notebook.
  * A custom dashboard.
@@ -82,7 +82,7 @@ A service can be:
 
 ### DAG
 
-A `DAG` is a powerful tool to describe dependencies between operations, 
+A `DAG` is a powerful tool to describe dependencies between operations,
 it allows to author a directed acyclic graph of operation with first class support for states and artifacts dependencies.
 
 <blockquote class="light">Please refer to <a href="/docs/automation/flow-engine/">automation/flow-engine</a> for more details.</blockquote>
@@ -91,7 +91,7 @@ it allows to author a directed acyclic graph of operation with first class suppo
 ### Operation
 
 An `operation` is how you execute your components, it allows you to:
- 
+
  * pass the parameters for required inputs or override the default values of optional inputs.
  * patch the definition of the component to set environments, initializers, and resources.
  * set termination logic and retries.
@@ -104,7 +104,7 @@ An `operation` is how you execute your components, it allows you to:
 Please refer to <a href="/docs/core/specification/operation/">core/specification/operation</a> and <a href="/docs/management/runs-dashboard/">management/Runs Dashboard</a> to learn about the operation specification.
 </blockquote>
 
- 
+
 ### Matrix
 
 A `matrix` is an automatic and practical way to run a component with different parameters based on a mapping or a hyperparameter search algorithm.

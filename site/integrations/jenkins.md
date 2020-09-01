@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - pipelines
   - scheduling
   - dags
@@ -23,7 +23,7 @@ status: published
 
 You can easily use Polyaxon in your Jenkins pipelines.
 
-Starting with Jenkins Pipeline versions 2.5 and higher, Jenkins Pipeline has built-in support for interacting with Docker from within a Jenkinsfile. 
+Starting with Jenkins Pipeline versions 2.5 and higher, Jenkins Pipeline has built-in support for interacting with Docker from within a Jenkinsfile.
 
 ## Polyaxon as a Jenkins Pipeline stage
 
@@ -43,4 +43,4 @@ pipeline {
 }
 ```
 
-> **Tip**: Polyaxon provides a native [DAG](/docs/automation/) runtime for managing your operations dependencies in a simple and efficient way. 
+> **Tip**: Polyaxon provides a native [DAG](/docs/automation/) runtime for managing your operations dependencies in a simple and efficient way.

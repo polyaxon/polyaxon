@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - notifications
 featured: false
 popularity: 0
@@ -22,7 +22,7 @@ Notify Mattermost when an experiment, a job, or a build is finished so that your
 
 ## Visit Mattermost to create webhook integration
 
-First, you'll need to set up a new incoming webhook in your team's [Mattermost](https://docs.mattermost.com/developer/webhooks-incoming.html) configuration. 
+First, you'll need to set up a new incoming webhook in your team's [Mattermost](https://docs.mattermost.com/developer/webhooks-incoming.html) configuration.
 An incoming webhook is a method for Mattermost to receive incoming messages to be posted to your Mattermost team from external services.
 
 ## Configure your webhook

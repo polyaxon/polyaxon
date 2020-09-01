@@ -18,8 +18,8 @@ Polyaxon schedules workload on Kubernetes, which means you can enable GPU, TPU, 
 
 ## Prerequisites
 
-If you have not seen this article about [node scheduling](/docs/core/scheduling-strategies/node-scheduling/), 
-we suggest that you check it out for more details about the options provided 
+If you have not seen this article about [node scheduling](/docs/core/scheduling-strategies/node-scheduling/),
+we suggest that you check it out for more details about the options provided
 to select which nodes should be used for running your operations.
 
 ## Using GPUs
@@ -50,7 +50,7 @@ container = k8s_schemas.V1Container(
 )
 ```
 
-If the cluster has multiple node pools with different GPU types, 
+If the cluster has multiple node pools with different GPU types,
 you can specify the GPU type by using a node selector in the [environment section](/docs/core/specification/environment/), e.g. GKE:
 
 ```yaml
@@ -83,12 +83,12 @@ container = k8s_schemas.V1Container(
 )
 ```
 
-> **Note**: You might need to install [NVIDIA Device Plugin](https://github.com/NVIDIA/k8s-device-plugin). 
+> **Note**: You might need to install [NVIDIA Device Plugin](https://github.com/NVIDIA/k8s-device-plugin).
 
 ## Using TPUs
 
-To use [TPUs](https://cloud.google.com/tpu/docs/kubernetes-engine-setup) for your Polyaxon workload on GKE, 
-you just need to set the TPU limits/requests on the container resources section, similar to Kubernetes, 
+To use [TPUs](https://cloud.google.com/tpu/docs/kubernetes-engine-setup) for your Polyaxon workload on GKE,
+you just need to set the TPU limits/requests on the container resources section, similar to Kubernetes,
 additionally you need to set the required annotations on the [environment section](/docs/core/specification/environment/).
 
 ```yaml
@@ -121,7 +121,7 @@ container = k8s_schemas.V1Container(
 
 ## Using other resources
 
-If your cluster has special resources schedulable with Kubernetes, you can use them with Polyaxon, 
+If your cluster has special resources schedulable with Kubernetes, you can use them with Polyaxon,
 for instance [AMD GPU](https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/#deploying-amd-gpu-device-plugin).
 
 ## Sharing GPUs

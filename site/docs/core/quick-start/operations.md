@@ -12,7 +12,7 @@ tags:
 sidebar: "core"
 ---
 
-In the previous section we looked at components, we also saw how to create components with inputs/outputs 
+In the previous section we looked at components, we also saw how to create components with inputs/outputs
 to run our model with different parameters without changing the code or the component itself.
 
 In this sections we will look at what happened when we run a component w/o params.
@@ -25,7 +25,7 @@ Let's first run this polyaxonfile:
 $ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yml
 ```
 
-> For more details about this command please run `polyaxon run --help`, 
+> For more details about this command please run `polyaxon run --help`,
 or check the [command reference](/docs/core/cli/run/)
 
 This file `operation.yml` also creates a new run, but its content does not include a component, it includes an operation.
@@ -43,16 +43,16 @@ An operation just defines how to run a component, running this file does not req
 
 ## The run command
 
-When a user runs the command `polyaxon run`, Polyaxon checks if the file contains a component or an operation: 
+When a user runs the command `polyaxon run`, Polyaxon checks if the file contains a component or an operation:
  * If it contains a component it will create an operation based on the params passed, the name, description, tags, queue, profile if provided.
  * If the file contains an operation, then it checks if it can be executed.
 
 But why create a file when we can just run the command with parameters and some flags?
-Creating a file with an operation allows to define more complex executables for our components, 
+Creating a file with an operation allows to define more complex executables for our components,
 for instance if we want to run the same component with GPU, we have 2 options:
  * We can parametrize the resource section and Add inputs to define the number of GPUs. This not ideal because the number of inputs will grow fast every time we need to pass an information.
  * Use an operation to patch the component with all information required to run it in the environment of our choice without changing the component itself.
- 
+
 ```yaml
 version: 1.1
 kind: operation
@@ -69,7 +69,7 @@ urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/e
 
 Using the operation we will keep the options to use other resources or no resources at all, you can also patch the environment, init, sidecars ...
 
-Sometime you might want to create a component with predefined values or sometimes the values might not need to change often, 
+Sometime you might want to create a component with predefined values or sometimes the values might not need to change often,
 in that case it will make sense to push more information to the component.
 
 ## Referencing a component

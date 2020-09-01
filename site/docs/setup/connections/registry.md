@@ -22,9 +22,9 @@ Polyaxon allows to pull and push images from private container registries.
 
 ## Pulling docker image
 
-If you only want to pull images from private registry, 
-you don't need to configure a registry connection, 
-you can use the [imagePullSecret](/docs/core/specification/environment/#imagepullsecrets) 
+If you only want to pull images from private registry,
+you don't need to configure a registry connection,
+you can use the [imagePullSecret](/docs/core/specification/environment/#imagepullsecrets)
 field in the environment section.
 
 
@@ -89,14 +89,14 @@ You need to create a secret containing docker credentials config, e.g.
     },
     "credsStore": "secretservice"
 }
-``` 
+```
 
 Please see how you can integrate Polyaxon with different [cloud providers docker registries](/integrations/registries/).
 
 ### Add the access information to your connections catalog
 
-After creating the secret with a docker credentials config authorizing access 
-to one or many Docker registries, 
+After creating the secret with a docker credentials config authorizing access
+to one or many Docker registries,
 you need to add a new access to your connections catalog:
 
 ```yaml

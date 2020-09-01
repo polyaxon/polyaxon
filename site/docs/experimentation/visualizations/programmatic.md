@@ -35,7 +35,7 @@ client.bar()
 ![run-dashboards-df-tidy](../../../../content/images/dashboard/runs/programmatic-plotly-tidy.png)
 
 ![run-dashboards-metric](../../../../content/images/dashboard/runs/programmatic-plotly-metric.png)
- 
+
 ## HiPlot
 
 You can use the module `MultiRunPlot` which requires `hiplot` to create interactive parallel coordinates inside a notebook or jupyter lab.

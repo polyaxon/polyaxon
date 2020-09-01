@@ -36,14 +36,14 @@ Create a [MemoryStore instance](https://console.cloud.google.com/memorystore)
 
 ## Update polyaxon deployment
 
-Update your config deployment file and upgrade. 
+Update your config deployment file and upgrade.
 
 ```yaml
 redis:
   enabled: false
-  
+
 externalServices:
   redis:
     host: "10.0.16.3"
-``` 
+```
 

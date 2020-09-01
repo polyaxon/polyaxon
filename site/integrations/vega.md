@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - tracking
   - visualizations
 featured: false
@@ -36,5 +36,5 @@ You can also consume any events or charts tracked in your experiments using the 
 
 ## Downloading events
 
-All charts and events are stored on your artifacts store, and follow any networking or security policy you set for your cluster. 
-You can download any chart tracked to either render it manually or to archive it to a different location using the [Python Library](/docs/core/python-library/run-client/#get_events) 
+All charts and events are stored on your artifacts store, and follow any networking or security policy you set for your cluster.
+You can download any chart tracked to either render it manually or to archive it to a different location using the [Python Library](/docs/core/python-library/run-client/#get_events)

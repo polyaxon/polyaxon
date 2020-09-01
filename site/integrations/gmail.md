@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - notifications
   - email
 featured: false
@@ -25,7 +25,7 @@ Get email notifications when an experiment, a job, or a build is finished using 
 
 ## Create a Gmail to use for sending emails to your team members
 
-In order to use [Gmail](https://gmail.com) to receive email notifications from Polyaxon, 
+In order to use [Gmail](https://gmail.com) to receive email notifications from Polyaxon,
 you should create an account in Gmail.
 
 ## Add your Email notification using GMail to Polyaxon deployment config

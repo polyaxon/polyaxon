@@ -153,20 +153,20 @@ You can read more about how to customize your ElasticSearch instance and provide
 
 ## Check the logs on the Kibana UI
 
-You can inspect the logs on the Kibana UI, by port-forwarding for example. 
+You can inspect the logs on the Kibana UI, by port-forwarding for example.
 
- 1. When Kibana appears click Explore on my own. 
-     From the top-left or from the Visualize and Explore Data panel select the Discover item. 
-     In the form field Index pattern enter `logstash-*` It should read “Success!” and Click the > Next step button. 
+ 1. When Kibana appears click Explore on my own.
+     From the top-left or from the Visualize and Explore Data panel select the Discover item.
+     In the form field Index pattern enter `logstash-*` It should read “Success!” and Click the > Next step button.
 
  2. In the next form select timestamp from the dropdown labeled Time Filter field name.
- 
- 3. From the bottom-right of the form select Create index pattern. In a moment a list of fields will appear. 
- 
- 4. From the top-left of the home screen’s Visualize and Explore Data panel, select the Discover item. The logs list will appear. 
+
+ 3. From the bottom-right of the form select Create index pattern. In a moment a list of fields will appear.
+
+ 4. From the top-left of the home screen’s Visualize and Explore Data panel, select the Discover item. The logs list will appear.
 
 
 ## Notes
 
-Polyaxon will persist by default all runs' logs to a persistent volume or a cloud bucket provided by the user. 
+Polyaxon will persist by default all runs' logs to a persistent volume or a cloud bucket provided by the user.
 Please check the [Logs storage configuration](/configuration/custom-logs-storage/) for more details.

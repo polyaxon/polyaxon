@@ -18,7 +18,7 @@ tags:
     - enterprise
 ---
 
-If you deploy the community open-source version, 
+If you deploy the community open-source version,
 the billing is not handled by Polyaxon and is done by the cloud provider of your choice.
 
-For the **Polyaxon Cloud** and **Polyaxon EE**, please check our pricing page. 
+For the **Polyaxon Cloud** and **Polyaxon EE**, please check our pricing page.

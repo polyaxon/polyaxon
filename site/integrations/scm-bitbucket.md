@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - scm
 featured: false
 popularity: 0
@@ -22,17 +22,17 @@ You can use code from your Bitbucket repositories directly in Polyaxon projects 
 
 ## Overview
 
-Polyaxon supports repos hosted on Bitbucket (cloud and on-premise). 
-You can use code from your Bitbucket repositories directly in Polyaxon projects without 
-having to check them out on your local machine first. 
+Polyaxon supports repos hosted on Bitbucket (cloud and on-premise).
+You can use code from your Bitbucket repositories directly in Polyaxon projects without
+having to check them out on your local machine first.
 
 N.B. Polyaxon supports public and private Bitbucket repos, you don't need to have a Bitbucket account
 to use code from public Bitbucket repositories.
 
 ## Access token
 
-Bitbucket allows to create [app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html), 
-you can also create a user `polyaxon` with read-only access to your organization repos, and use the username/password. 
+Bitbucket allows to create [app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html),
+you can also create a user `polyaxon` with read-only access to your organization repos, and use the username/password.
 
 ## Create a secret
 

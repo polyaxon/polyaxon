@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - data-stores
   - storage
 featured: false
@@ -23,14 +23,14 @@ You can use one or multiple  NFS servers to access data directly on your machine
 
 ## Overview
 
-This guide shows how to use an NFS server to mount data to your jobs and experiments. 
+This guide shows how to use an NFS server to mount data to your jobs and experiments.
 
-This guide uses the [click-to-deploy single-node file server](https://console.cloud.google.com/marketplace/details/click-to-deploy-images/singlefs) 
-on Google Cloud Platform to create a ZFS file server running on a single Google Compute Engine instance, but the same principle applies to an NFS server running on any platform. 
+This guide uses the [click-to-deploy single-node file server](https://console.cloud.google.com/marketplace/details/click-to-deploy-images/singlefs)
+on Google Cloud Platform to create a ZFS file server running on a single Google Compute Engine instance, but the same principle applies to an NFS server running on any platform.
 
 ## Create a Single Node Filer
 
-Using [click-to-deploy single-node file server](https://console.cloud.google.com/marketplace/details/click-to-deploy-images/singlefs), 
+Using [click-to-deploy single-node file server](https://console.cloud.google.com/marketplace/details/click-to-deploy-images/singlefs),
 you need to create a filer: `polyaxon-nfs`, and keep the default value `data`, and check `enable NFS sharing`. You can set the storage to 50GB for example.
 
 

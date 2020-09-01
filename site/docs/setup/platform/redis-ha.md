@@ -20,7 +20,7 @@ You can check the chart values to extend its configuration.
 
 ## External Redis
 
-If you prefer to have Redis managed by you or hosted outside of Kubernetes, 
+If you prefer to have Redis managed by you or hosted outside of Kubernetes,
 you need to disable the in-cluster redis, and provide the information needed to establish a connection to the external one, e.g.:
 
 
@@ -58,7 +58,7 @@ externalServices:
 
 ### Memorystore for Redis
 
-You can use [Cloud MemoryStore for Redis](https://cloud.google.com/memorystore/) if you are running Polyaxon on GKE, 
+You can use [Cloud MemoryStore for Redis](https://cloud.google.com/memorystore/) if you are running Polyaxon on GKE,
 please follow this [integration guide](/integrations/redis/).
 
 ## Using Redis as broker
@@ -67,5 +67,5 @@ You can also use Redis for as async worker broker, please check this section on 
 
 ## Scheduling
 
-If you decided to deploy Redis in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/) 
+If you decided to deploy Redis in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/)
 to avoid running high load runs on the same node hosting Redis.

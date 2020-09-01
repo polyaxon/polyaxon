@@ -19,7 +19,7 @@ tags:
 
 Kubernetes recommends a set of labels to describe resources, called Recommended Labels.
 
-Several tools allow to visualize and manage Kubernetes objects other than kubectl and the dashboard. 
+Several tools allow to visualize and manage Kubernetes objects other than kubectl and the dashboard.
 A common set of labels allows tools to work interoperably, describing objects in a common manner that all tools can understand.
 
 Polyaxon takes full advantage of using these labels, and schedules every resource object with a set of labels based on the [Kubernetes Recommended Labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#labels).

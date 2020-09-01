@@ -12,7 +12,7 @@ tags:
 sidebar: "setup"
 ---
 
-This is a set of guides to assist you through the process of deploying, managing, and scaling a Polyaxon Deployment with common strategies and best practices. 
+This is a set of guides to assist you through the process of deploying, managing, and scaling a Polyaxon Deployment with common strategies and best practices.
 
 ## Overview
 

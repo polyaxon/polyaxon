@@ -19,7 +19,7 @@ Polyaxon dashboard provides several visualizations and charts based on events lo
 ## Single runs:
 
 ![run-dashboards](../../../../content/images/dashboard/runs/dashboards.png)
- 
+
  * Line charts
 ![run-dashboards-lines](../../../../content/images/dashboard/runs/dashboards-lines.png)
 
@@ -28,20 +28,20 @@ Polyaxon dashboard provides several visualizations and charts based on events lo
  * Bar charts
 
 ![run-dashboards-lines](../../../../content/images/dashboard/runs/dashboards-bars.png)
- 
+
  * Stats charts
- 
+
 ![run-dashboards-lines](../../../../content/images/dashboard/runs/dashboards-stats.png)
 
  * Histogram charts
  * Curve charts: PR curves, AUC/ROC curves, custom curves (<x, y> arrays)
- 
+
 ![run-dashboards-pr-curve](../../../../content/images/dashboard/runs/dashboard-pr-curve.png)
 
 ![run-dashboards-roc-curve](../../../../content/images/dashboard/runs/dashboards-roc-curve.png)
 
 ## Multi-runs
- 
+
 For multi-runs you can compare metrics and curves from several runs, as well as charts for hyperparameter values and metrics:
 
 ![runs-comparison-new](../../../../content/images/dashboard/comparison/charts-new.png)
@@ -53,13 +53,13 @@ For multi-runs you can compare metrics and curves from several runs, as well as 
 ![runs-comparison-lines](../../../../content/images/dashboard/comparison/charts-lines.png)
 
  * Bar charts
- 
+
 ![runs-comparison-bars](../../../../content/images/dashboard/comparison/charts-bars.png)
 
  * Stats charts
- 
+
 ![runs-comparison-stats](../../../../content/images/dashboard/comparison/charts-stats.png)
- 
+
  * Curve charts: PR curves, AUC/ROC curves, custom curves (<x, y> arrays)
 
 ![runs-comparison-pr-curves](../../../../content/images/dashboard/comparison/charts-pr-curves.png)
@@ -73,7 +73,7 @@ For multi-runs you can compare metrics and curves from several runs, as well as 
  * Parallel coordinates
  * Contour plots
 
-![runs-comparison-multi](../../../../content/images/dashboard/comparison/charts-multi.png) 
+![runs-comparison-multi](../../../../content/images/dashboard/comparison/charts-multi.png)
 
 ## Media rendering
 

@@ -18,9 +18,9 @@ sidebar: "management"
  * Setting permissions and authorizations.
  * Monitoring agents and runs.
  * Profiling runs and connections' access.
- 
+
 ## Runs dashboard
- 
+
  * Dashboarding capabilities and collaboration.
  * Native visualizations.
  * Custom visualizations with Plotly, Bokeh, Vega.
@@ -29,7 +29,7 @@ sidebar: "management"
  * Flexible comparison table for hyperparameters and metrics with built-in search, query, sort, limit to navigate millions of runs.
  * Native integration with the tracking API.
  * Automate your process from training to deriving insights from results.
- * Collaborative by design.  
+ * Collaborative by design.
 
 ## Component Hub
 

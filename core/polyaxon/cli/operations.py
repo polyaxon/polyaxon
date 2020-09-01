@@ -228,7 +228,9 @@ def ls(ctx, io, to_csv, query, sort, limit, offset, columns):
             )
     if objects:
         if to_csv:
-            write_csv(objects)
+            filename = "./results.csv"
+            write_csv(objects, filename=filename)
+            Printer.print_success("CSV file generated: `{}`".format(filename))
         else:
             Printer.print_header("Runs:")
             objects.pop("project_name", None)

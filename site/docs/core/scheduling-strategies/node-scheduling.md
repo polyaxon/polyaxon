@@ -16,10 +16,10 @@ sidebar: "core"
 
 Polyaxon provides a list of options to select which nodes should be used for running operations.
 
-Every component in Polyaxon can set an [environment section](/docs/core/specification/environment/) 
-which exposes many pod level options. 
+Every component in Polyaxon can set an [environment section](/docs/core/specification/environment/)
+which exposes many pod level options.
 
-Component's environment section can be [patched](/docs/core/specification/operation/#runPatch) 
+Component's environment section can be [patched](/docs/core/specification/operation/#runPatch)
 by the operation to override the default environment section per execution.
 
 The environment section can be used as well to configure a particular job of a distributed experiment on a specific node,
@@ -102,7 +102,7 @@ If you are using a cloud provider, you can leverage spot instances to reduce you
 
 Configuring spot instances or preemptible VMs should follow similar guides provided by your cloud provider.
 
-For example, following this guide from [GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms), 
+For example, following this guide from [GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms),
 we can configure Polyaxon operations to use a preemptible VMs node pool.
 
 ```yaml

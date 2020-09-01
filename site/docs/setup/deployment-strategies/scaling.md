@@ -19,16 +19,15 @@ Scaling a Polyaxon deployment depends on the type of strategy you want to achiev
 
 ## Scaling horizontally and vertically
 
-In both Polyaxon CE and Polyaxon EE, you can scale your deployment horizontally by increasing the number of replicas of 
+In both Polyaxon CE and Polyaxon EE, you can scale your deployment horizontally by increasing the number of replicas of
 the core components and services to handle more traffic and more users.
 
 > Please check the services replication [guide](/docs/setup/platform/replication-concurrency/#services-replication) for more details.
 
-Polyaxon also comes with a scheduler for handling and processing events and submissions in the background using async workers. 
-This scheduler can be enabled to handle more incoming submissions to compile them and queue them before sending them to Kubernetes to be executed. 
+Polyaxon also comes with a scheduler for handling and processing events and submissions in the background using async workers.
+This scheduler can be enabled to handle more incoming submissions to compile them and queue them before sending them to Kubernetes to be executed.
 
 > Please check [Celery integration guide](/integrations/celery/) for more details.
-
 
 You can combine both of these scaling approaches and tune your configuration to handle any amount of traffic you expect for your Polyaxon deployment.
 

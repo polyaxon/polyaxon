@@ -18,11 +18,11 @@ sidebar: "setup"
 ---
 
 You can connect as many datasets, volumes, and artifacts stores in Polyaxon.
- 
-It's better to set a connection for each dataset, or artifacts store, or volume path holding some data, 
+
+It's better to set a connection for each dataset, or artifacts store, or volume path holding some data,
 to get more visibility and granular control over who is using that connection and how often.
 
-Exposing each dataset or artifacts as a connection also gives you the possibility to 
+Exposing each dataset or artifacts as a connection also gives you the possibility to
 effectively version your data, and expose information about the changes from one dataset version to another in the description.
 By using connections you can also migrate and find jobs that use a dataset, and take necessary actions.
 
@@ -33,7 +33,7 @@ This section tries to explain how Polyaxon mounts these volumes for experiments 
 
 ## Default behavior
 
-When no connection is provided, the default behavior is to use a local path on the host node for storing outputs and logs. 
+When no connection is provided, the default behavior is to use a local path on the host node for storing outputs and logs.
 Oftentimes this default behavior is sufficient for users who are just trying the platform, and don't want to deal with configuration steps.
 
 ## Host paths
@@ -107,17 +107,17 @@ connections:
 
 If you are using a persistent volume with one node access you need to be aware that you can only use it with experiment/jobs running on that same node at the same time.
 
-There are some options that support multi-nodes access, e.g. a PVC backed with an [NFS](/integrations/outputs-on-nfs/)/Glusterfs server, 
-where you can use multiple nodes and schedule experiments on all the nodes to access the artifacts/datasets. 
+There are some options that support multi-nodes access, e.g. a PVC backed with an [NFS](/integrations/outputs-on-nfs/)/Glusterfs server,
+where you can use multiple nodes and schedule experiments on all the nodes to access the artifacts/datasets.
 Please refer to [this section](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) to learn more about access modes.
 
 ## Cloud stores
 
-In order to mount a cloud storage, 
+In order to mount a cloud storage,
 you need to provide authentication access to Polyaxon for the storage needed during the scheduling.
 
-The way to do that is by creating a secret of your cloud storage access, 
-and providing the secret name. 
+The way to do that is by creating a secret of your cloud storage access,
+and providing the secret name.
 
 > **Tip**: You can use the same k8s secret to configure multiple connections.
 

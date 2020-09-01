@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - registries
   - azure
 featured: false
@@ -28,56 +28,56 @@ In order to push private docker images to ACR, you need to set access credential
 
 ## Create a service principal and ArcPush
 
-To use Azure Container Registry (ACR), you will need to provide proper credentials. 
-You can do so by creating a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) 
+To use Azure Container Registry (ACR), you will need to provide proper credentials.
+You can do so by creating a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
 that has the [AcrPush](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#acrpush) role.
 
  1. Login to your Azure account:
-    
+
     ```bash
     az login
     ```
 
  2. Select your chosen subscription:
- 
+
     ```bash
     az account set -s <SUBSCRIPTION>
     ```
 
  3. If you do not have a Resource Group, then create one:
- 
+
     ```bash
     az group create --name <RESOURCE_GROUP_NAME> --location <RESOURCE_GROUP_LOCATION> --output table
-    ```    
-    
+    ```
+
     > <RESOURCE_GROUP_LOCATION> refers to a data centre region. See a list of regions [here](https://azure.microsoft.com/en-us/global-infrastructure/locations/).
-    
+
  4. Create the ACR if not you don't have one already
- 
+
     ```bash
     az acr create --name <ACR_NAME> --resource-group <RESOURCE_GROUP_NAME> --sku Basic --output table
     ```
- 
+
  5. Login in the ACR:
 
     ```bash
     az acr login --name <ACR_NAME>
     ```
- 
+
  6. Note down the AppID of the ACR:
- 
+
     ```bash
     az acr show --name <ACR_NAME> --query "id" -o tsv
     ```
-    
+
     We need this in order to assign the AcrPush role which will allow Polyaxon to push images to the registry. You can save this to a bash variable like so:
-    
+
     ```bash
     ACR_ID=$(az acr show --name <ACR_NAME> --query "id" -o tsv)
     ```
-    
+
  7. Create a Service Principal with the AcrPush role assignment:
- 
+
     ```bash
     az ad sp create-for-rbac --name <SP_NAME> --role AcrPush --scope <ACR_ID>
     ```
@@ -85,7 +85,7 @@ that has the [AcrPush](https://docs.microsoft.com/en-us/azure/role-based-access-
     > <SP_NAME> is a recognisable name for your Service Principal
 
     > <ACR_ID> is the AppID we retrieved in step 6 above. You can replace this with ${ACR_ID} if you saved it to a bash variable.
-    
+
     Note down the AppID and password that are output by this step. These are the login credentials Polyaxon will use to access the registry.
 
 ## Create a secret to allow access to ACR

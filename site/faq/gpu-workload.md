@@ -17,4 +17,4 @@ tags:
     - deployment
 ---
 
-Polyaxon discovers your cluster's graphics processing units (GPUs) and enables you to leverage their compute power for your experiments, jobs, and Jupyter notebooks. 
+Polyaxon discovers your cluster's graphics processing units (GPUs) and enables you to leverage their compute power for your experiments, jobs, and Jupyter notebooks.

@@ -16,8 +16,8 @@ tags:
     - logging
 ---
 
-Polyaxon provides several ways for storing the [logs](/configuration/custom-logs-storage/), the default method uses a local path on the host node. 
-This is option is sufficient if you are trying the platform and don't want to deal with extra configuration steps, however, when using Polyaxon in a production mode, 
+Polyaxon provides several ways for storing the [logs](/configuration/custom-logs-storage/), the default method uses a local path on the host node.
+This is option is sufficient if you are trying the platform and don't want to deal with extra configuration steps, however, when using Polyaxon in a production mode,
 you should definitely look at the other persistence strategies.
 
 When the user uses a local path to store logs, a couple of things could happen:
@@ -25,5 +25,5 @@ When the user uses a local path to store logs, a couple of things could happen:
  * If the user scales the platform, the API, scheduler, and other components might be deployed on different nodes, which means that only some of these components will be able to access the logs.
  * If the API is replicated on different nodes the same thing could happen as well.
  * After an upgrade, all your components might be scheduled on a different node.
- 
-Polyaxon provides several options to make robust persistence of your logs.   
+
+Polyaxon provides several options to make robust persistence of your logs.

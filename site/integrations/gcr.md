@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - registries
   - gcp
 featured: false
@@ -23,8 +23,8 @@ Integrate your Google GCR (Google container registry) with Polyaxon to start you
 
 ## Overview
 
-You can use your public images without the need to set any configuration. 
-In order to push private docker images to GCR, you need to set access credentials. 
+You can use your public images without the need to set any configuration.
+In order to push private docker images to GCR, you need to set access credentials.
 
 ## Enable Container Registry API
 

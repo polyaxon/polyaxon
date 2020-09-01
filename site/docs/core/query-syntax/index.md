@@ -132,5 +132,5 @@ Polyaxon supports searching all entities using this syntax, most common entities
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-You can save searches to access and apply filters to several projects and runs, saved searches can be accessed by other team members to avoid reconstructing similar filters. 
+You can save searches to access and apply filters to several projects and runs, saved searches can be accessed by other team members to avoid reconstructing similar filters.
 Please check [management - searches](/docs/management/ui/searches/).

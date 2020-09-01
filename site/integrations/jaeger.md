@@ -19,7 +19,7 @@ visibility: public
 status: EE
 ---
 
-Polyaxon provides an abstraction called `metrics` which is used for internal monitoring, generally timings and various counters. 
+Polyaxon provides an abstraction called `metrics` which is used for internal monitoring, generally timings and various counters.
 The default backend `noop` simply discards them.
 
 To enable tracing for Polyaxon EE Control Plane, you can use Jaeger, which is a popular choice for request tracing.
@@ -31,7 +31,7 @@ metrics:
   enabled: false
 ```
 
-## Set the external service 
+## Set the external service
 
 ```yaml
 externalServices:

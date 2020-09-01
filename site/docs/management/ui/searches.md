@@ -23,9 +23,9 @@ A search allows to:
  * Create a tensorboard showing only top experiments using the search filters.
  * Have quick access to the runs using the search filters.
 
-Oftentimes, a search might be useful to save and reuse to quickly filter all runs. 
-Saved searches let you save and describe a query and sort condition. 
-You can easily then monitor the results on an ongoing basis and find the desired results easily.  
+Oftentimes, a search might be useful to save and reuse to quickly filter all runs.
+Saved searches let you save and describe a query and sort condition.
+You can easily then monitor the results on an ongoing basis and find the desired results easily.
 
 > We are also working on Alerts for saved searches so that you can subscribe and get notified based on specific conditions, or trigger an operation or a workflow.
 
@@ -35,12 +35,12 @@ You can easily then monitor the results on an ongoing basis and find the desired
 
  * query: `status: succeeded | failed | stopped`
  * sort: `-finished_at`
- 
+
 ### Best performing experiments based on specific metrics:
 
  * query: `metrics.loss: <=0.3, metrics.precision: >=0.89`
  * sort: `metrics.loss, -metrics.precision`
- 
+
 ### Experiment with specific code commit:
 
  * query: `commit: COMMIT-HASH`
@@ -50,8 +50,8 @@ You can easily then monitor the results on an ongoing basis and find the desired
 
 A saved search consists of a name (must be a slug) describing the search, and query/sort based on the specification.
 
-Saved searches are created on the project level, only users having write access to the project can create a search, 
-and they can be used by any user who has read access to the project.  
+Saved searches are created on the project level, only users having write access to the project can create a search,
+and they can be used by any user who has read access to the project.
 
 ![search-create](../../../../content/images/dashboard/searches/create.png)
 

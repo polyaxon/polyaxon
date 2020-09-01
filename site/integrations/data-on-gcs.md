@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - data-stores
   - storage
   - gcp
@@ -32,8 +32,8 @@ Google cloud storage provides an easy way to download the access key as a JSON f
 
 You can create a secret with an env var of the content of the gcs-key.json:
  * `GC_KEYFILE_DICT` or `GOOGLE_KEYFILE_DICT`
- 
-Or you can create a secret to be mounted as a volume: 
+
+Or you can create a secret to be mounted as a volume:
 
  * `kubectl create secret generic gcs-secret --from-file=gc-secret.json=path/to/gcs-key.json -n polyaxon`
 
@@ -135,11 +135,11 @@ This is optional, you can use any language or logic to interacts with Azure Stor
 
 Polyaxon has some built-in logic that you can leverage if you want.
 
-To use that logic:  
+To use that logic:
 
 ```bash
 pip install polyaxon[gcs]
-``` 
+```
 
 All possible functions to use:
 

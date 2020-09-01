@@ -27,7 +27,7 @@ Projects could be `private` (default behavior) or `public`.
 $ polyaxon project create --name=mnist --description='Classification of handwritten images.'
 ```
 
-> For more details about this command please run `polyaxon project create --help`, 
+> For more details about this command please run `polyaxon project create --help`,
 or check the [command reference](/references/polyaxon-cli/project/#create)
 
 All projects are created by default `private`, you can change this behavior by adding `--public`
@@ -56,7 +56,7 @@ The general settings page lets you change the project's details
 ## Default settings
 
 By default, when a project is created, it will be accessible to all the organization's members following their roles on the organization level.
-In order to restrict teams, connections, profiles, ..., you need to manually define the resources and teams that can access using the settings tabs. 
+In order to restrict teams, connections, profiles, ..., you need to manually define the resources and teams that can access using the settings tabs.
 
 Example restricting teams access
 

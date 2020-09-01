@@ -17,15 +17,15 @@ sidebar: "automation"
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-## Overview 
+## Overview
 
-Polyaxon DAGs is a tool that provides a container-native engine for running machine learning pipelines on Polyaxon. 
-A DAG manages multiple operations with dependencies. 
+Polyaxon DAGs is a tool that provides a container-native engine for running machine learning pipelines on Polyaxon.
+A DAG manages multiple operations with dependencies.
 Each operation in a DAG (directed acyclic graph) is defined by its component runtime.
 This means that operations in a DAG can be jobs, services, distributed jobs, parallel executions, or nested DAGs.
 
-Oftentimes, Polyaxon's users tend to run complex jobs and experiments that depend on each other. 
-Polyaxon defines main primitives, Component/Operation, that can run independently. 
+Oftentimes, Polyaxon's users tend to run complex jobs and experiments that depend on each other.
+Polyaxon defines main primitives, Component/Operation, that can run independently.
 The flow engine is an extension to these primitives to allow the users to automate workflows and define complex interactions.
 
 Polyaxon DAGs can be used with other Polyaxon experimentation and automation features:
@@ -43,10 +43,10 @@ Polyaxon flow engine provides several features to reduce the complexity and incr
  * Easy-to-use: It is easy to use and does not add any extra complexity or extra dependencies to a cluster already running Polyaxon.
  * Scalability: It scales massively with scheduling and routing capabilities, it defines extra API endpoints, and it reuses the same logic for tracking and monitoring runs.
  * Flexibility: It allows users to run anything that can be run in a container.
- * Reusability: A Dag is a runtime of a component, they can be parameterized and shared like any other component, all operations in a DAG are also running other components which means you can reuse common logic. 
+ * Reusability: A Dag is a runtime of a component, they can be parameterized and shared like any other component, all operations in a DAG are also running other components which means you can reuse common logic.
  * Kubernetes and container Native: It integrates natively with the rest of Polyaxon and reuses its components, which allows you to leverage Kubernetes services such as volumes, secrets, and RBAC, as well as concepts such as routes and connections.
  * Interoperability: It can be used to leverage and interact with external systems.
- 
+
 ## Specification
 
 Please check the [DAG specification](/docs/automation/flow-engine/specification/) guide to learn about all details for DAGs in Polyaxon.

@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - scm
 featured: true
 popularity: 0
@@ -22,9 +22,9 @@ You can use code from your GitHub repositories directly in Polyaxon projects wit
 
 ## Overview
 
-Polyaxon supports repos hosted on GitHub. 
-You can use code from your GitHub repositories directly in Polyaxon projects without 
-having to check them out on your local machine first. 
+Polyaxon supports repos hosted on GitHub.
+You can use code from your GitHub repositories directly in Polyaxon projects without
+having to check them out on your local machine first.
 
 N.B. Polyaxon supports public and private GitHub repos, you don't need to have a GitHub account
 to use code from public GitHub repositories. e.g. `https://github.com/polyaxon/polyaxon-quick-start`
@@ -41,16 +41,16 @@ Select the Personal access tokens link on the left. On that page, click the Gene
 
 ## Generate a new token
 
-Choose a name for the token (e.g. "Polyaxon"), 
-then grant the token "repo" and "admin:repo_hook" permissions. 
-This will enable Polyaxon to read your repositories and detect new commits. 
+Choose a name for the token (e.g. "Polyaxon"),
+then grant the token "repo" and "admin:repo_hook" permissions.
+This will enable Polyaxon to read your repositories and detect new commits.
 Click the Generate Token button at the bottom to create the token.
 
 ![github-integration1](../../content/images/integrations/github/img3.png)
 
 ## Copy the token
 
-Select the token and copy it. Alternatively, 
+Select the token and copy it. Alternatively,
 you can click the blue icon next to the token to automatically copy it to the clipboard.
 
 ![github-integration1](../../content/images/integrations/github/img4.png)

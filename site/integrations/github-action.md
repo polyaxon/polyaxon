@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - pipelines
   - scheduling
   - dags
@@ -25,7 +25,7 @@ You can use Polyaxon CLI in your Github Actions to lint and check your Polyaxonf
 
 ## Lint & Check
 
-In order to automate the process of checking and linting your Polyaxonfile, you can use `polyaxon/polyaxon-cli` 
+In order to automate the process of checking and linting your Polyaxonfile, you can use `polyaxon/polyaxon-cli`
 docker image in your Github Actions similarly to how you would do in your local machine:
 
 ```yaml
@@ -49,7 +49,7 @@ jobs:
 
 ## Submit runs
 
-In order to submit runs from a Github action, you need to provide information about your `host` if you are using Polyaxon CE, 
+In order to submit runs from a Github action, you need to provide information about your `host` if you are using Polyaxon CE,
 and your token if you are using one of Polyaxon commercial products.
 
 This example assumes that the user changes the `operation.yaml` file with new params and/or new information about the environment (e.g. GPU) on every push.

@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - artifacts
   - storage
   - aws
@@ -24,7 +24,7 @@ You can use one or multiple buckets on S3 to store logs, job outputs, and experi
 
 ## Create an S3 bucket
 
-You should create an S3 bucket (e.g. plx-storage). 
+You should create an S3 bucket (e.g. plx-storage).
 
 You need to expose information about how to connect to the blob storage, the standard way is to expose these keys:
 

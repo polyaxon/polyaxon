@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - setup
   - database
   - azure
@@ -54,7 +54,7 @@ externalServices:
     password: <password>
     database: <database>
     host: <server_name>
-``` 
+```
 
 You need to replace the user, password, database, and host, based on the information you filled in the form, you can always find this information on the entity overview of Azure dashboard.
 
@@ -114,4 +114,4 @@ externalServices:
     password: <password>
     database: <database>
     host: <server_name>
-``` 
+```

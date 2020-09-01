@@ -13,7 +13,7 @@ tags:
 sidebar: "core"
 ---
 
-Use Polyaxon Python library to create Polyaxonfile specification, to interact with Polyaxon API in a programmatic way, 
+Use Polyaxon Python library to create Polyaxonfile specification, to interact with Polyaxon API in a programmatic way,
 to instrument your machine learning model and track experiments, create custom visualizations, and to extend Polyaxon's behavior.
 
 ## Install
@@ -26,7 +26,7 @@ N.B. `polyaxon` library is Python 3.5+ package, if you are still using Python 2 
 
 ## CLI
 
-[Polyaxon CLI](/docs/core/cli/) is a tool and a client to interact with Polyaxon, it allows you to manage your cluster, projects, and experiments. 
+[Polyaxon CLI](/docs/core/cli/) is a tool and a client to interact with Polyaxon, it allows you to manage your cluster, projects, and experiments.
 
 ## Clients
 
@@ -40,13 +40,13 @@ This module includes a client that can be used to interact with Polyaxon API in 
 
 ## Tracking Client
 
-The [tracking client](/docs/experimentation/tracking/) is an extension and a subclass 
+The [tracking client](/docs/experimentation/tracking/) is an extension and a subclass
 of the [Run Client](/docs/core/python-library/run-client/) with more methods for machine learning experiment tracking.
 
 ## Run Plot client
 
-The [RunPlot and MultiRunPlot classes](/docs/experimentation/visualizations/) are also extensions and a subclasses 
-of the [Run Client](/docs/core/python-library/run-client/) with more functionalities 
+The [RunPlot and MultiRunPlot classes](/docs/experimentation/visualizations/) are also extensions and a subclasses
+of the [Run Client](/docs/core/python-library/run-client/) with more functionalities
 to drive visualization programmatically using [Plotly Express](https://plotly.com/python/plotly-express/) and [HiPlot](https://github.com/facebookresearch/hiplot).
 
 
@@ -60,20 +60,20 @@ experiment = Run()
 # training code ...
 # Metrics reporting
 experiment.log_metrics(step=1000, loss=0.01, accuracy=0.97)
-``` 
+```
 
-Users might need to run the same code outside of a Polyaxon context, 
+Users might need to run the same code outside of a Polyaxon context,
 which will break since Polyaxon related operations perform API calls.
-  
-Users won't need to perform any change to their code, 
-they just need to set an environment variable `POLYAXON_NO_OP` to true/1, and the Polyaxon related code will be ignored.   
+
+Users won't need to perform any change to their code,
+they just need to set an environment variable `POLYAXON_NO_OP` to true/1, and the Polyaxon related code will be ignored.
 
 
 ## Authentication
 
 ### In-cluster
 
-All Polyaxon clients and libraries will be configured automatically if used in-cluster. 
+All Polyaxon clients and libraries will be configured automatically if used in-cluster.
 
 e.g.
 
@@ -85,7 +85,7 @@ Polyaxon provides a context for all its runs enabling users to access scoped tok
 
 ### Locally with an authenticated Polyaxon CLI
 
-If your Polyaxon CLI is authenticated, the Polyaxon client will be configured 
+If your Polyaxon CLI is authenticated, the Polyaxon client will be configured
 automatically with the CLI authentication information.
 
 e.g.
@@ -101,9 +101,9 @@ The client will check for the currently authenticated user and raise if non foun
 When you need to  authenticate a client in an environment outside of a Polyaxon cluster and no authenticated CLI, Polyaxon provides several options:
 
 #### Authentication with Environment variables:
-    
+
 You can set environment variables containing:
-    
+
     * `POLYAXON_AUTH_TOKEN`
     * `POLYAXON_HOST`
 
@@ -114,7 +114,7 @@ run_client = RunClient()
 ```
 
 Authentication using environment variables could be useful to keep your code behave similarly in different environments.
-    
+
 #### Provide an authenticated client:
 
 ```python
@@ -126,7 +126,7 @@ run_client = RunClient(owner="org1", project="project-name", run_uuid="uuid", cl
 
 In order to use Polyaxon users have to create and execute Polyaxonfiles, these files use a
 [specification](/docs/core/specification/) to describe how experiments, jobs, services should be scheduled and executed.
-Users can author and read Polyaxonfiles in a programmatic way using Python. 
+Users can author and read Polyaxonfiles in a programmatic way using Python.
 
 
 You can use the Python library to read and validate YAML/Json files, Python objects, or Python dictionaries:
@@ -172,7 +172,7 @@ plx_file = ComponentSpecification.read([group_dict, {'run': {'cmd': 'override_co
 
 ### Reading a single file
 
-Sometimes you might not know the content of a file, Polyaxon provides a generic function to resolve the content of a file(s) to the correct specification kind. 
+Sometimes you might not know the content of a file, Polyaxon provides a generic function to resolve the content of a file(s) to the correct specification kind.
 
 ```python
 from polyaxon.polyaxonfile import check_polyaxonfile
@@ -206,7 +206,7 @@ plx_file = get_specification(['path/to/yaml_file.yaml', 'path/to/json_file.json'
 
 ### Using PolyaxonFiles
 
-Once you read the content of Polyaxonfile, you will get a Python class if the file passed and is valid, 
+Once you read the content of Polyaxonfile, you will get a Python class if the file passed and is valid,
 and you will be able to interact with it as any Python object.
 
 ```yaml

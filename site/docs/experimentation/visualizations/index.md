@@ -28,7 +28,7 @@ For single runs:
  * Stats charts
  * Histogram charts
  * Curve charts: PR curves, AUC/ROC curves, custom curves (<x, y> arrays)
- 
+
 For multi-runs you can compare metrics and curves from several runs, as well as charts for hyperparameter values and metrics:
 
  * Line charts
@@ -67,16 +67,16 @@ Polyaxon has a programmatic experience for generating visualizations for single 
 
  * Plotly express
  * HiPlot
- 
+
 ## Tensorboard
 
 Tensorboard is a tool that is used by data scientists to visualize and debug deep learning models. Polyaxon provides several ways for using tensorboard:
 
  * Tensorboard for a single run
  * Tensorboard for a multi-runs
- * Tensorboard based on metric(s) performance or a search 
+ * Tensorboard based on metric(s) performance or a search
 
 
 ## Example
 
-You can run [the artifacts example](https://github.com/polyaxon/polyaxon-examples/tree/master/in_cluster/artifacts) which calls several tracking methods and logs several metadata and artifact types. 
+You can run [the artifacts example](https://github.com/polyaxon/polyaxon-examples/tree/master/in_cluster/artifacts) which calls several tracking methods and logs several metadata and artifact types.

@@ -17,4 +17,3 @@ tags:
 ---
 
 Yes, we are in the process of making a free or discounted offering for academia, please reach out to us at: _**contact@polyaxon.com**_
-

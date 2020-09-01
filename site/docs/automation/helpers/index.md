@@ -13,9 +13,11 @@ tags:
 sidebar: "automation"
 ---
 
+<blockquote class="commercial">This is part of our commercial offering.</blockquote>
+
 ## Overview
 
-Running dags and hyperparameter tuning is often important to optimize and build strong models, 
+Running dags and hyperparameter tuning is often important to optimize and build strong models,
 but it could be costly, Polyaxon provides several useful helpers to manage concurrency, cache state, early termination...
 
 ## Concepts

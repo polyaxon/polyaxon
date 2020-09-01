@@ -28,8 +28,7 @@ except ImportError:
         sys.exit(1)
 
 
-def write_csv(objects: Dict):
-    filename = "./results.csv"
+def write_csv(objects: Dict, filename: str):
     if pd:
         df = pd.DataFrame(objects)
         df.to_csv(filename)

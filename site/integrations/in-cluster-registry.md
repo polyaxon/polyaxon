@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - registries
 featured: false
 popularity: 0
@@ -26,7 +26,7 @@ A local docker registry can be used to push container images directly to the clu
  * Your jobs have no Internet access, so container images cannot be downloaded directly from an external registry.
  * You are iterating on new experiments and you want to test your changes before uploading the image to the official docker repository.
 
-> **Note**: Insecure registries can be used for development and trials. 
+> **Note**: Insecure registries can be used for development and trials.
  You should not use this in production. To deploy a secure registry, please consider customizing the chart or use an external registry provider.
 
 ## Deploy a docker registry using Helm
@@ -40,7 +40,7 @@ helm install polyaxon-containers stable/docker-registry --set service.nodePort=3
 > You can exposes the registry on a different port.
 
 
-## Add catalog connections 
+## Add catalog connections
 
 If you want to build images using Kaniko component:
 

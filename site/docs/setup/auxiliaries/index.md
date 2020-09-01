@@ -14,7 +14,7 @@ sidebar: "setup"
 
 If you are here, we assume that you are about to deploy or upgrade Polyaxon CE or Polyaxon Agent.
 
-## Overview 
+## Overview
 
 ![polyaxonfile operation](../../../../content/images/references/specification/operation.png)
 
@@ -22,8 +22,8 @@ For each operation executed by a user, Polyaxon will inject:
  * init containers: containers that run before the main container containing the user's logic. For more details, see the [init specification section](/docs/core/specification/sidecars/).
  * sidecars: specialized containers that run as sidecars to the main container. For more details, see the [sidecars specification section](/docs/core/specification/sidecars/)
 
-Polyaxon by default injects its own sidecar and init containers, these auxiliary containers act as helpers to facilitate several functionalities 
-and ensure that the user's workload has access to the required environment. 
+Polyaxon by default injects its own sidecar and init containers, these auxiliary containers act as helpers to facilitate several functionalities
+and ensure that the user's workload has access to the required environment.
 
 ## Customization
 

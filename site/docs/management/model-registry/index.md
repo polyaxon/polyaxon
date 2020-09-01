@@ -37,7 +37,7 @@ Each model can list all versions, their stage, their model artifacts used, their
 
 ![production-stage](../../../../content/images/dashboard/registry/production.png)
 
-Polyaxon provides a special tag to signal the stage of your components' versions. 
+Polyaxon provides a special tag to signal the stage of your components' versions.
 
 ![testing-stage](../../../../content/images/dashboard/registry/testing.png)
 

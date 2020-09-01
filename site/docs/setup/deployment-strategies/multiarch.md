@@ -25,8 +25,8 @@ Every Polyaxon component shared on dockerhub gets released with two tags: `relea
 
 ## Changing the deployment config file
 
-You need to override the default tag that comes with the Polyaxon version you are deploying, for instance, if you are deploying Polyaxon v1.x.x, 
-all images will be using a tag: `1.x.x`, in the deployment config file you need to override that value with `multiarch-1.x.x`: 
+You need to override the default tag that comes with the Polyaxon version you are deploying, for instance, if you are deploying Polyaxon v1.x.x,
+all images will be using a tag: `1.x.x`, in the deployment config file you need to override that value with `multiarch-1.x.x`:
 
 ```yaml
 api:

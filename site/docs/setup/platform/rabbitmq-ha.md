@@ -20,7 +20,7 @@ You can check the chart values to extend its configuration.
 
 ## External Rabbitmq
 
-If you prefer to have Rabbitmq managed by you or hosted outside of Kubernetes, 
+If you prefer to have Rabbitmq managed by you or hosted outside of Kubernetes,
 you need to disable the in-cluster Rabbitmq, and provide the information needed to establish a connection to the external one, e.g.:
 
 
@@ -44,5 +44,5 @@ If you decide not to use Rabbitmq, and use Redis for handling events, please che
 
 ## Scheduling
 
-If you decided to deploy Rabbitmq in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/) 
+If you decided to deploy Rabbitmq in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/)
 to avoid running high load runs on the same node hosting Rabbitmq.

@@ -25,7 +25,7 @@ Polyaxon is structured as a modern, decoupled, micro-service oriented architectu
 6. **An optimization engine to search automatically and concurrently for the best hyperparameters in a search space based on state of the art algorithms**
 7. **A CI system to trigger experiments/hyperparameter tuning/pipelines automatically based on some event and track their execution and report results to users**
 
-These components work together to make every Polyaxon deployment function smoothly, 
+These components work together to make every Polyaxon deployment function smoothly,
 but because they're decoupled there's plenty of room for customization.
 
 In fact, users can decide for example to deploy only the core and using an external tracking service, or replace the built-in scheduler, pipeline, and optimization engine with other platforms.
@@ -40,7 +40,7 @@ Polyaxon relies on several components to function smoothly:
  * Postgres database
  * redis
  * rabbitmq
- * connections: docker registries, artifacts stores, git connections, ... 
+ * connections: docker registries, artifacts stores, git connections, ...
 
 Polyaxon schedules your workload to Kubernetes, so you will need:
 

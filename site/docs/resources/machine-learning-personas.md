@@ -23,14 +23,14 @@ We have features that enable project managers and team leads to effectively mana
 
 ### Devops
 
-Our tool is simple to deploy and we have several documentation resources to scale and configure the platform. 
+Our tool is simple to deploy and we have several documentation resources to scale and configure the platform.
 We have features that give visibility about who accesses what and when for auditing and security.
 
 We are developing more features to enable better monitoring of the cluster resources for the core components and scheduled jobs.
 
 ### Data engineers and analysts
 
-We have a product called PolyFlow, that enables, not only data scientists but also data engineers to author workflows and DAGs. 
+We have a product called PolyFlow, that enables, not only data scientists but also data engineers to author workflows and DAGs.
 Our development philosophy is not to completely remove the tools you are using, but to enable your teams to do more by integrating with their favorite pipeline engines.
 
 ### Release Managers

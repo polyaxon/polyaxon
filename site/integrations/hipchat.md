@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - notifications
 featured: false
 popularity: 0
@@ -22,7 +22,7 @@ Notify Hipchat when an experiment, a job, or a build is finished so that your te
 
 ## Visit Hipchat to create webhook integration
 
-First, you'll need to set up a new incoming webhook in your team's [Hipchat](https://www.hipchat.com/docs/apiv2/method/create_webhook?_ga=2.203509264.1443225380.1545584678-263232814.1545584678) configuration. 
+First, you'll need to set up a new incoming webhook in your team's [Hipchat](https://www.hipchat.com/docs/apiv2/method/create_webhook?_ga=2.203509264.1443225380.1545584678-263232814.1545584678) configuration.
 An incoming webhook is a method for Hipchat to receive incoming messages to be posted to your Hipchat team from external services.
 
 ## Configure your webhook

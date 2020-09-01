@@ -10,7 +10,7 @@ author:
   website: "https://polyaxon.com"
   twitter: "polyaxonAI"
   github: "polyaxon"
-tags: 
+tags:
   - automation
   - custom
 featured: false
@@ -23,8 +23,8 @@ You can integrate Polyaxon with Zapier to gain full access to several other non-
 
 ## Available events
 
-Polyaxon has some available [webhook events](/docs/references/polyaxon-webhooks/) that can be used to trigger Zaps. 
+Polyaxon has some available [webhook events](/docs/references/polyaxon-webhooks/) that can be used to trigger Zaps.
 
 ## Usage
 
-Once set up, Zaps will run completely in the background without you needing to do anything else. 
+Once set up, Zaps will run completely in the background without you needing to do anything else.

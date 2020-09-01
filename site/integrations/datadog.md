@@ -19,7 +19,7 @@ visibility: public
 status: EE
 ---
 
-Polyaxon provides an abstraction called `metrics` which is used for internal monitoring, generally timings and various counters. 
+Polyaxon provides an abstraction called `metrics` which is used for internal monitoring, generally timings and various counters.
 The default backend `noop` simply discards them.
 
 This guide will help you set up to a [Datadog](https://www.datadoghq.com/) backend to sends these metrics.

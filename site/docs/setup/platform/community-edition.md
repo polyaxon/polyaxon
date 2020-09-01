@@ -12,20 +12,20 @@ sidebar: "setup"
 
 ## Overview
 
-Polyaxon Community Edition is based on Polyaxon's [open-source project](https://github.com/polyaxon/polyaxon), 
+Polyaxon Community Edition is based on Polyaxon's [open-source project](https://github.com/polyaxon/polyaxon),
 and it deploys on a single cluster and a single namespace, there's no limitation on the number of nodes you can use.
 The deployment comes with an in-cluster agent deployment for managing workload.
 
-The best way to deploy and try Polyaxon is to keep the default `ClusterIp` service type, 
-and use `polyaxon port-forward` command to expose the API and dashboard on your localhost in a secure way, 
+The best way to deploy and try Polyaxon is to keep the default `ClusterIp` service type,
+and use `polyaxon port-forward` command to expose the API and dashboard on your localhost in a secure way,
 the command will auto-configure the client and the cli for future interactions:
 
 ```bash
 polyaxon admin deploy ...
 polyaxon port-forward
-``` 
+```
 
-If you wish to expose your Polyaxon deployment to several users, each user can port-forward the traffic to localhost, 
+If you wish to expose your Polyaxon deployment to several users, each user can port-forward the traffic to localhost,
 or you can also spend some time to configure a load balancer or ingress.
 
 ## Enable agent services
@@ -41,8 +41,8 @@ streams:
 
 ## Enable extra services
 
-Polyaxon API can be easily scaled horizontally if you have a growing traffic, 
-but you are submitting a large number of operations, and you think that you can benefit from using a background worker, 
+Polyaxon API can be easily scaled horizontally if you have a growing traffic,
+but you are submitting a large number of operations, and you think that you can benefit from using a background worker,
 you can enable the open-source scheduler to process events and submission in an asynchronous fashion.
 
 ```yaml
@@ -66,10 +66,10 @@ You need to configure the connection to authorize for the platform. Please check
 
 ## Community UI
 
-The community UI is an optional free tool that can be used to view information about your jobs and services, 
-it's enabled by default for all deployments. 
+The community UI is an optional free tool that can be used to view information about your jobs and services,
+it's enabled by default for all deployments.
 
-If your main use of Polyaxon is to schedule jobs, use the packaging format, and interact with the platform using the CLI/Client/APIs, 
+If your main use of Polyaxon is to schedule jobs, use the packaging format, and interact with the platform using the CLI/Client/APIs,
 you can disable the UI:
 
 ```yaml
@@ -79,6 +79,6 @@ ui:
 
 ## Security
 
-Polyaxon will deploy by default using a ClusterIp service, and provides a command to port-forward the traffic to localhost in a secure way. 
-If you decide to deploy Polyaxon CE using a LoadBalancer or an Ingress, 
-we strongly recommend that users only use environments they control by locking the deployment down at the network level. 
+Polyaxon will deploy by default using a ClusterIp service, and provides a command to port-forward the traffic to localhost in a secure way.
+If you decide to deploy Polyaxon CE using a LoadBalancer or an Ingress,
+we strongly recommend that users only use environments they control by locking the deployment down at the network level.

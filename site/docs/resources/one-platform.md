@@ -17,43 +17,43 @@ Other solutions currently in the market offer a kit plane you have to assemble y
 
 ## One access interface
 
-Users on your teams have to access to one and only one platform to perform most of the operations needed to develop and manage ML models. 
+Users on your teams have to access to one and only one platform to perform most of the operations needed to develop and manage ML models.
 No time is wasted switching between platforms with different access interfaces.
 
-Teams can set one high-level authorization for managing access to the different aspects of the platform. 
+Teams can set one high-level authorization for managing access to the different aspects of the platform.
 This means that you set permissions once and everyone in your organization has the right access to every component.
 
 One interface can have a major impact on distributing knowledge within and between teams, which will result in improving all your employees' productivity.
 
 ## One project interface
 
-Polyaxon provides one interface for managing the lifecycle of your projects, with all needed components, steps, and plugins, 
-this gives Polyaxon all information needed at every step to expose the relevant context to users. 
-This allows natural, fast, and intuitive access to the needed information in an easy and optimal way. 
+Polyaxon provides one interface for managing the lifecycle of your projects, with all needed components, steps, and plugins,
+this gives Polyaxon all information needed at every step to expose the relevant context to users.
+This allows natural, fast, and intuitive access to the needed information in an easy and optimal way.
 Finally, the single project interface reduces information dissipation due to the nonexistent context switching, which results in more productivity.
 
 ## One on-boarding process
 
-New team members only need to learn about a single, simple, and intuitive interface and tools. Our tools and documentation are integrated, non-dependent on other unestablished projects, and open-source. 
+New team members only need to learn about a single, simple, and intuitive interface and tools. Our tools and documentation are integrated, non-dependent on other unestablished projects, and open-source.
 This means that not only you don't have to write your own documentation, but you can contribute to make on-boarding your users, as well as anyone in the community a breeze.
 
 ## One deployment
 
 Running Polyaxon means that you only need to install, maintain, scale, backup, network, and secure one deployment.
-One deployment results in saving time from your developers, reduces risk, increases reliability, and lowers the bill.        
+One deployment results in saving time from your developers, reduces risk, increases reliability, and lowers the bill.
 
 ## One upgrade
 
-Features and plugins developed and maintained by Polyaxon are guaranteed to work properly after every upgrade. 
-Maintaining several different ad-hoc applications and components increase the complexity of your deployments, 
+Features and plugins developed and maintained by Polyaxon are guaranteed to work properly after every upgrade.
+Maintaining several different ad-hoc applications and components increase the complexity of your deployments,
 and makes upgrades a complex process prone to errors and incompatibilities.
 
 ## One centralized database
 
-Managing the state of an application is hard, so imagine what it means to manage several stateful applications with different scalability, migrations, and backup processes. 
+Managing the state of an application is hard, so imagine what it means to manage several stateful applications with different scalability, migrations, and backup processes.
 In addition to the non-necessary complexity, several applications plane will result in redundant, and eventually inconsistent, data.
 
-Polyaxon comes with one database, PostgreSQL, providing you with one consistent source of truth about the state of your deployment, so you don't have to manually extract data or create a warehouse.   
+Polyaxon comes with one database, PostgreSQL, providing you with one consistent source of truth about the state of your deployment, so you don't have to manually extract data or create a warehouse.
 
 ## One Vendor
 

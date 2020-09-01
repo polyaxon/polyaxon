@@ -20,7 +20,7 @@ Run status is at the heart of every run. It is used to represent the current sta
 
 Polyaxon has now features for observability and monitoring for resources as well as statuses, events, and conditions.
 
-The CLI has a command argument `--watch -w` for watching statuses and events in real-time, same with the UI, 
+The CLI has a command argument `--watch -w` for watching statuses and events in real-time, same with the UI,
 it streams the statuses and provides much deeper insight about the conditions of the underlying pods.
 
 ![run-statuses](../../../../content/images/dashboard/runs/statuses.png)

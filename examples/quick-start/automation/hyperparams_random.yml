@@ -2,8 +2,7 @@ version: 1.1
 kind: operation
 matrix:
   kind: random
-  concurrency: 2
-  numRuns: 20
+  numRuns: 10
   params:
     learning_rate:
       kind: linspace

@@ -17,4 +17,3 @@ tags:
 ---
 
 Yes, we offer training and workshop sessions, please reach out to us at: _**contact@polyaxon.com**_
-

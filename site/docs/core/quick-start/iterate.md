@@ -15,10 +15,10 @@ sidebar: "core"
 
 ![notebooks](../../../../content/images/concepts/dashboard/notebooks.png)
 
-We previously learned how to create components and how to run them using operations. 
+We previously learned how to create components and how to run them using operations.
 In this sections we will learn how to run components interactively inside a Jupyter notebook.
 
-> Same principle applies to running other interactive environments, e.g. zeppelin, or any other service.  
+> Same principle applies to running other interactive environments, e.g. zeppelin, or any other service.
 
 ## Overview
 
@@ -37,10 +37,10 @@ Let's run one of the public notebook components:
 $ polyaxon run --hub jupyter-lab:tensorflow -w
 ```
 
-> For more details about this command please run `polyaxon run --help`, 
+> For more details about this command please run `polyaxon run --help`,
 or check the [command reference](/docs/core/cli/run/)
 
-Since the notebook is created with a Polyaxonfile, it can be customized in the same way as any other job, e.g. instead of just executing `polyaxon run` 
+Since the notebook is created with a Polyaxonfile, it can be customized in the same way as any other job, e.g. instead of just executing `polyaxon run`
 we can create an operation to customize the resources, request GPUs ... in case the component itself is limiting, users can create their own component:
 
 ```yaml
@@ -77,10 +77,10 @@ Otherwise, you need to pass a UUID
 $ polyaxon ops -uid UUID stop
 ```
 
-> For more details about this command please run `polyaxon ops --help`, 
+> For more details about this command please run `polyaxon ops --help`,
 or check the [command reference](/docs/core/cli/ops/)
 
-> You can also start and stop notebooks, and any other operation from the UI. 
+> You can also start and stop notebooks, and any other operation from the UI.
 
 
 ## Start experiments
@@ -97,7 +97,7 @@ client = RunClient()
 grid_search_config = V1GridSearch(
     params={"optimizer": V1HpChoice(value=["adam", "sgd", "rmsprop"]), "dropout": V1HpLinSpace(value={'num': 20, 'start': 0.1, 'stop': 0.5}), "epochs": V1HpChoice(value=[5, 10])},
     num_runs=5
-) 
+)
 
 suggestions = GridSearchManager(grid_search_config).get_suggestions()
 for suggestion in suggestions:
@@ -136,6 +136,12 @@ Tidy dataframe
 run_client.get_tidy_df()
 ```
 
+Install some plotting dependencies
+
+```yaml
+!pip install plotly hiplot
+```
+
 Plot a line chart
 
 ```python
@@ -154,8 +160,8 @@ Let's compare runs:
 from polyaxon.polyplot import MultiRunPlot
 
 client = MultiRunPlot()
-# This is an example of getting top 100 based on loss of all experiment 
-# that have one of the tags experiment or examples 
+# This is an example of getting top 100 based on loss of all experiment
+# that have one of the tags experiment or examples
 hiplot_experiment = client.get_hiplot(query="tags:experiment|examples", sort="-metrics.loss", limit=100)
 hiplot_experiment.display()
 ```

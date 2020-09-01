@@ -217,10 +217,10 @@ Polyaxon's helm chart comes with an ingress resource that you can use with an in
     ```bash
     kubectl create secret tls polyaxon-tls --key $PATH_TO_KEY --cert $PATH_TO_CERT
     ```
-    
+
 
  2. Add the tls configuration to Polyaxon's Ingress values. (**Do not use CluserIP on GKE**)
- 
+
     ```yaml
     serviceType: ClusterIP
     ingress:
@@ -230,14 +230,14 @@ Polyaxon's helm chart comes with an ingress resource that you can use with an in
       - secretName: polyaxon.acme-tls
         hosts:
           - polyaxon.acme.com
-    ```   
+    ```
 
     For more information visit the [Nginx Ingress Integration](/integrations/nginx/)
 
 ### NGINX for NodePort service
 
 To enable ssl for Polyaxon API running with NodePort service on Kubernetes, you need to provide an ssl certificate and SSL certificate key.
- 
+
 you can provide a self-signed certificate or a browser trusted certificate.
 
  1. Create a secret for your certificate:
@@ -247,14 +247,14 @@ you can provide a self-signed certificate or a browser trusted certificate.
     ```
 
  2. Make sure to update your deployment config with reference to the certificate
- 
+
     ```yaml
     ssl:
-      enabled: true  
+      enabled: true
       secretName: 'polyaxon-cert'
     ```
  3. Set the service type to `NodePort` and update the API's service port to 443.
- 
+
  N.B. By default, Polyaxon mounts the ssl certificate and key to `/etc/ssl`, this value can be updated using the `.Values.ssl.path`.
 
 ## CLI setup
@@ -273,12 +273,12 @@ polyaxon config set --host=IP/Host --port=443 --use_https=true [--verify_ssl]
 | `dns`     | DNS configuration for cluster running with custom dns setup             | `{}`
 
 
-Several users deploy Polyaxon on Kubernetes cluster created with [kubespray](https://github.com/kubernetes-sigs/kubespray), 
+Several users deploy Polyaxon on Kubernetes cluster created with [kubespray](https://github.com/kubernetes-sigs/kubespray),
 and by default Kubespray creates Kubernetes with CoreDNS as a cluster DNS server.
 
 ### Update DNS backend
 
-Although we could provide logic to detect the DNS used in the cluster, this would require cluster wide RBAC that we think it's unnecessary. 
+Although we could provide logic to detect the DNS used in the cluster, this would require cluster wide RBAC that we think it's unnecessary.
 The default DNS backend used by Polyaxon is KubeDNS, to set it to a different DNS, you can provide this value in your Polyaxon's deployment config:
 
 ```yaml
@@ -294,8 +294,8 @@ You can also provide the complete DNS prefix, and not use the DNS backend option
 
 ```yaml
 dns:
-  prefix: kube-dns.other-kube-system  
-``` 
+  prefix: kube-dns.other-kube-system
+```
 
 ### Update DNS cluster
 
@@ -557,7 +557,7 @@ particular nodes or to prefer to run on particular nodes.
 ```yaml
 nodeSelector:
   ...
-  
+
 postgresql:
   nodeSelector:
     ...
@@ -572,7 +572,7 @@ redis:
 
 rabbitmq-ha:
   nodeSelector:
-    ...   
+    ...
 ```
 
 ### Tolerations
@@ -584,7 +584,7 @@ Polyaxon provides tolerations option for the core platform, as well as for all d
 ```yaml
 tolerations:
   ...
-  
+
 postgresql:
   tolerations:
     ...
@@ -599,7 +599,7 @@ redis:
 
 rabbitmq-ha:
   tolerations:
-    ... 
+    ...
 ```
 
 ### Affinity
@@ -630,7 +630,7 @@ You can update your config deployment file to set affinity for each dependency:
 ```yaml
 affinity:
   ...
-  
+
 postgresql:
   affinity:
     ...
@@ -652,8 +652,8 @@ rabbitmq-ha:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `resourcesDaemon.enabled`          | resourcesDaemon enabled                                      | `true` 
-| `resourcesDaemon.tolerations`      | Tolerations for resourcesDaemon pod assignment               | `[]` 
+| `resourcesDaemon.enabled`          | resourcesDaemon enabled                                      | `true`
+| `resourcesDaemon.tolerations`      | Tolerations for resourcesDaemon pod assignment               | `[]`
 
 
 ### IPs/Hosts White list
@@ -695,15 +695,15 @@ ui:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `securityContext.enabled`          | enable security context                                      | `false` 
+| `securityContext.enabled`          | enable security context                                      | `false`
 | `user`                             | security context UID                                         | `2222`
 | `group`                            | security context GID                                         | `2222`
 
 
-Polyaxon runs all containers as root by default, this configuration is often fine for several deployment, 
+Polyaxon runs all containers as root by default, this configuration is often fine for several deployment,
 however, in some use cases it can expose a compliance issue for some teams.
 
-Polyaxon provides a simple way to enable a security context for all core components, experiments, and jobs.  
+Polyaxon provides a simple way to enable a security context for all core components, experiments, and jobs.
 
 Default configuration:
 

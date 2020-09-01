@@ -13,7 +13,7 @@ tags:
 sidebar: "experimentation"
 ---
 
-Services are used to launch Tensorboards, Notebooks, JupyterHub apps, Streamlit/Voila/Bokeh apps, internal tools, 
+Services are used to launch Tensorboards, Notebooks, JupyterHub apps, Streamlit/Voila/Bokeh apps, internal tools,
 and dashboards based on your models and data analysis.
 
 In order to run a service you will need to create a component with a `kind: service` as a runtime:
@@ -67,7 +67,7 @@ service = V1Service(
 )
 
 component = V1Component(name="notebook", run=service)
-``` 
+```
 
 ### Specification
 
