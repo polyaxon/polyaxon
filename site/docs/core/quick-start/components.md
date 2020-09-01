@@ -28,24 +28,24 @@ $ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-s
 
 The run command consumes configuration files, also called Polyaxonfile, from different sources:
 
- * From local files using the `-f` flag: 
+ * From local files using the `-f` flag:
     * `polyaxon run -f path/to/polyaxonfile.yaml`
     * `polyaxon run -f path/to/polyaxonfile.yml -f path/to/polyaxonfile_override.yml`
  * From local Python files using `--python-module` or `-pm` flag:
     * `polyaxon run -pm path/to/pythonfile.py` in this case Polyaxon will look for a variable `main` which will contain your component.
     * `polyaxon run -pm path/to/pythonfile.py:component-name` if you have multiple components in your Python file you can specify which one to run.
- * From urls using the `--url` flag: 
+ * From urls using the `--url` flag:
     * `polyaxon run --url=https://public-site.com/polyaxonfile.yaml` this is the command we used to avoid cloning the project locally.
  * From a registry `--hub` flag:
     * `polyaxon run --hub=tensorboard:single-run` this is the command we used to run the Tensorboard.
       Oftentimes, components can be reusable and generic, some of these components are distributed in a public registry.
       Polyaxon also provides a managed registry integrated with the auth, access management, and team management, please check [Component Hub docs](/docs/management/component-hub/).
-  
 
-## Understanding the Polyaxonfile 
 
-The Polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/Typescript, 
-files to check that they can be compiled and executed by Polyaxon.   
+## Understanding the Polyaxonfile
+
+The Polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/Typescript,
+files to check that they can be compiled and executed by Polyaxon.
 
 Let's first look at the content of the url:
 
@@ -65,8 +65,8 @@ run:
 ```
 
 This is a simple Polyaxonfile.
- 
-the file can be made simpler by removing the optional fields `name`, `description`, and `tags`, 
+
+the file can be made simpler by removing the optional fields `name`, `description`, and `tags`,
 and if the docker image had an entry point, the file would have looked like this:
 
 ```yaml
@@ -79,18 +79,18 @@ run:
 ```
 
 Every Polyaxonfile must have a kind [component](/docs/core/specification/component/) or [operation](/docs/core/specification/operation/).
-In this section, we will explore the component, and in the next part of the tutorial we will dive into the operation kind. 
+In this section, we will explore the component, and in the next part of the tutorial we will dive into the operation kind.
 
- 
+
 This simple file runs a container with a custom image `polyaxon/polyaxon-quick-start`, the image is based on Tensorflow, and a command that executes our custom code.
-The component also clones the quick start repo, this allows us to change the repo without having to rebuild the docker image, 
+The component also clones the quick start repo, this allows us to change the repo without having to rebuild the docker image,
 every time we run this component, Polyaxon will clone the repo and inject it in a context inside our main container.
 
 > Please check this section to learn more about [initializers](/docs/core/specification/init/)
 
 In a nutshell, what Polyaxon provides is a simple way to schedule and run containerized workload.
 
-> We will [come back](/docs/core/quick-start/builds/) to the docker image to learn how to build containers later, 
+> We will [come back](/docs/core/quick-start/builds/) to the docker image to learn how to build containers later,
  for now let's assume that we have an image with all requirements installed
 
 ## The Container section
@@ -145,7 +145,7 @@ resources:
 
 ## Training a model
 
-Let's look now at how Polyaxon logged information and results during the experiment. 
+Let's look now at how Polyaxon logged information and results during the experiment.
 If you open the file [model.py](https://github.com/polyaxon/polyaxon-quick-start/blob/master/model.py)
 
 ```python
@@ -192,30 +192,30 @@ In this Python file you can see that we are importing some information from `pol
  * We are importing a tracking module
  * We are loading some Keras callbacks
 
-You can also see that this is a simple TF.Keras model and we have a small section where we use `polyaxon.tracking` module to track information about the run. 
-In this case the keras callbacks, and one line for getting a path for logging Tensorboard information. Polyaxon will take care of archiving the assets, outputs, 
-logs to the artifacts store (NFS, S3, GCS, Azure, ...) you configured in an async way without impacting your model training. 
+You can also see that this is a simple TF.Keras model and we have a small section where we use `polyaxon.tracking` module to track information about the run.
+In this case the keras callbacks, and one line for getting a path for logging Tensorboard information. Polyaxon will take care of archiving the assets, outputs,
+logs to the artifacts store (NFS, S3, GCS, Azure, ...) you configured in an async way without impacting your model training.
 
-This module allows Polyaxon to track several information about the experiment, 
+This module allows Polyaxon to track several information about the experiment,
 and it also provides a workflow for organizing outputs and logs.
-Furthermore, anything tracked by Polyaxon, e.g. artifacts, assets, models ... will build a lineage graph so that 
+Furthermore, anything tracked by Polyaxon, e.g. artifacts, assets, models ... will build a lineage graph so that
 you can have a full provenance path if you decide to deploy/retire a model to/from production.
 
-> This module is optional, Polyaxon logs all your information to whatever artifacts store you configure, 
-you always keep control of the assets you produce.  
+> This module is optional, Polyaxon logs all your information to whatever artifacts store you configure,
+you always keep control of the assets you produce.
 
-## Start a new experiment 
+## Start a new experiment
 
-Let's start a new experiment, we can just run the same command as before. 
+Let's start a new experiment, we can just run the same command as before.
 But we might want to change some parameters, e.g. the learning rate or the dropout for instance.
 
-This component does not provide inputs/outputs definition, 
-so the only way to change the parameters is by changing the Python 
+This component does not provide inputs/outputs definition,
+so the only way to change the parameters is by changing the Python
 file and pushing a new commit, then starting a new experiment, which is not ideal, especially that our program has arguments.
 
 ## Inputs / Outputs
 
-Instead of changing files and pushing and then starting a new experiment, 
+Instead of changing files and pushing and then starting a new experiment,
 we can use the [inputs and outputs](/docs/core/specification/io/) sections to parametrize our program.
 
 Let's look at the typed file:
@@ -275,14 +275,14 @@ $ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-s
 ```
 
 > The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
-If you want to validate an output eagerly, you need to set `delayValidation: false`. 
+If you want to validate an output eagerly, you need to set `delayValidation: false`.
 
-> You don't have to define outputs or inputs, and you can still log information during the run, 
+> You don't have to define outputs or inputs, and you can still log information during the run,
 for instance we defined 2 outputs, but our program will log 4 results (val_loss and val_accuracy as well)
 
 When you run this experiment you will notice that Polyaxon will populate the inputs section in the dashboard automatically.
 
-## List the operations 
+## List the operations
 
 Let's check the list of experiments we've created so far:
 
@@ -298,7 +298,7 @@ Otherwise, you need to run
 $ polyaxon ops -p quick-start ls
 ```
 
-## Check the logs 
+## Check the logs
 
 Check the experiment logs
 
@@ -329,12 +329,12 @@ $ polyaxon run run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-qui
 
 ![comparison-many](../../../../content/images/dashboard/comparison/charts-many.png)
 
-And we can also start a tensorboard for multiple runs: 
+And we can also start a tensorboard for multiple runs:
 
 ![comparison-tensorboard-compare](../../../../content/images/dashboard/comparison/tensorboard-compare.png)
 
-## Congratulations 
+## Congratulations
 
-You made your component more generic and you can use parameters to run different versions effortlessly.  
+You made your component more generic and you can use parameters to run different versions effortlessly.
 
 The next section of [this tutorial](/docs/core/quick-start/operations/) we will explore what happens when we run an experiment or when we pass a param.

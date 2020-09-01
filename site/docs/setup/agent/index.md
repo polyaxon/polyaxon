@@ -16,12 +16,12 @@ sidebar: "setup"
 
 If you are here, we assume that you have access to a Polyaxon EE Control Plane or Polyaxon Cloud.
 
-## Overview 
+## Overview
 
 ![polyaxon agent](../../../../content/images/references/agent/agent-operator.png)
 
  * Agents interact with Polyaxon Control Plane to check the queues that they manage for operations to start, stop, or update.
- * Agents can deploy different artifacts store and connections to ensure isolation, it's also possible to deploy similar configurations on different clusters to enable access to new resources, e.g. on-prem GPU and GKE for TPUs. 
+ * Agents can deploy different artifacts store and connections to ensure isolation, it's also possible to deploy similar configurations on different clusters to enable access to new resources, e.g. on-prem GPU and GKE for TPUs.
  * Agents can be used to deploy jobs / distributed jobs workload, but they can also deploy and expose services.
 
 It's important to note that Polyaxon Agent is an important piece in Polyaxon's architecture to enable complete isolation of workload and artifacts and a hybrid execution and management of resources.
@@ -76,7 +76,7 @@ helm repo update
 ```
 
 ### Validate
- 
+
 You can validate that your deployment `config.yml` file is compatible with the version you are trying to deploy:
 
 ```bash
@@ -95,7 +95,7 @@ polyaxon admin deploy -f config.yaml --dry_run
 
 Now you can install Polyaxon Agent with your `config.yml` file.
 
-> **Note**: it's important to know that there's an initial delay before you can access Polyaxon API, and before some pods will turn green, which is set to 2 minutes. 
+> **Note**: it's important to know that there's an initial delay before you can access Polyaxon API, and before some pods will turn green, which is set to 2 minutes.
 
 You can use Polyaxon CLI to manage the deployment
 
@@ -155,9 +155,9 @@ these note will be different depending on your configuration (the service type u
 NOTES: ...
 ```
 
-These notes are important for setting the CLI, and getting access to the dashboard. 
+These notes are important for setting the CLI, and getting access to the dashboard.
 
-Next step you need the [Polyaxon CLI installed](/setup/cli/), and you need to configure 
+Next step you need the [Polyaxon CLI installed](/setup/cli/), and you need to configure
 the host and the ports based on these notes.
 
 ## Upgrade Polyaxon Agent
