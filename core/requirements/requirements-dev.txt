@@ -1,6 +1,6 @@
 -r ../../requirements/base.txt
 
-docker
+docker==4.3.1
 gitpython
 
 numpy>=1.15.2
