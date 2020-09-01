@@ -636,6 +636,23 @@ class TestEventsV1(BaseTestCase):
         for i in range(3):
             assert events.get_event_at(i).to_dict() == values[i].to_dict()
 
+        # Test single event
+        events = V1Events.read(
+            name="foo",
+            kind="model",
+            data=os.path.abspath(
+                "tests/fixtures/polyboard/model/model_events_without_step.plx"
+            ),
+        )
+        assert events.name == "foo"
+        assert len(events.df.values) == 1
+        event = V1Event(
+            timestamp=dt_parser.parse("2018-12-11 10:24:57"),
+            model=V1EventModel(framework="tensorflow", path="path1"),
+        )
+        events.get_event_at(0).to_dict()
+        assert events.get_event_at(0).to_dict() == event.to_dict()
+
     def test_dataframe(self):
         events = LoggedEventListSpec(
             name="foo",

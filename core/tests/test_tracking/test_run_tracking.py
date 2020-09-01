@@ -31,7 +31,7 @@ from plotly import figure_factory
 from tests.utils import TestEnvVarsCase, tensor_np
 
 from polyaxon import settings
-from polyaxon.constants import DEFAULT
+from polyaxon.constants import DEFAULT, PLATFORM_DIST_CE
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS_FORMAT,
     CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
@@ -139,7 +139,12 @@ class TestRunTracking(TestEnvVarsCase):
         with self.assertRaises(PolyaxonClientException):
             Run()
 
-        # Uses default as owner
+        # Uses default as owner in non CE
+        with self.assertRaises(PolyaxonClientException):
+            Run(project="test")
+
+        # Uses default as owner in CE
+        settings.CLI_CONFIG.installation = {"dist": PLATFORM_DIST_CE}
         run = Run(project="test")
         assert run.owner == DEFAULT
 
@@ -155,10 +160,26 @@ class TestRunTracking(TestEnvVarsCase):
         with self.assertRaises(PolyaxonClientException):
             Run()
 
-        # Uses default as owner
+        settings.CLI_CONFIG.installation = None
+        # Uses default as owner in non CE
+        with self.assertRaises(PolyaxonClientException):
+            Run(project="test")
+
+        # Uses default as owner in CE
+        settings.CLI_CONFIG.installation = {"dist": PLATFORM_DIST_CE}
         run = Run(project="test")
         assert run.owner == DEFAULT
 
+        # FQN non CE
+        settings.CLI_CONFIG.installation = None
+        os.environ[POLYAXON_KEYS_RUN_INSTANCE] = "user.project_bar.runs.uid"
+        run = Run()
+        assert run.owner == "user"
+        assert run.project == "project_bar"
+        assert run.run_uuid == "uid"
+
+        # FQN CE
+        settings.CLI_CONFIG.installation = {"dist": PLATFORM_DIST_CE}
         os.environ[POLYAXON_KEYS_RUN_INSTANCE] = "user.project_bar.runs.uid"
         run = Run()
         assert run.owner == "user"

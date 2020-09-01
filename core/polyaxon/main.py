@@ -142,6 +142,7 @@ def cli(context, verbose, offline):
         settings.CLIENT_CONFIG.compatibility_check_interval
     ):
         cli_config = set_versions_config()
+        settings.CLI_CONFIG = cli_config
         check_cli_version(cli_config)
 
 

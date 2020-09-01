@@ -18,6 +18,7 @@ import json
 import sys
 
 from collections import OrderedDict
+from typing import Dict, List, Tuple
 
 import click
 
@@ -58,7 +59,11 @@ def humanize_attrs(key, value, rounding=2):
 
 
 def list_dicts_to_tabulate(
-    list_dicts, exclude_attrs=None, include_attrs=None, humanize_values=True
+    list_dicts,
+    exclude_attrs=None,
+    include_attrs=None,
+    humanize_values=True,
+    upper_keys: bool = True,
 ):
     exclude_attrs = exclude_attrs or {}
     results = OrderedDict()
@@ -74,11 +79,32 @@ def list_dicts_to_tabulate(
             if humanize_values:
                 v = humanize_attrs(k, v)
 
-            k = k.upper()
+            if upper_keys:
+                k = k.upper()
             if k in results:
                 results[k].append(v)
             else:
                 results[k] = [v]
+
+    return results
+
+
+def list_dicts_to_csv(
+    list_dicts, exclude_attrs=None, include_attrs=None,
+):
+    exclude_attrs = exclude_attrs or {}
+    results = []
+    if include_attrs:  # If include_attrs disable exclude_attrs
+        exclude_attrs = {}
+    for d_value in list_dicts:
+        result = OrderedDict()
+        for k, v in d_value.items():
+            if k in exclude_attrs:
+                continue
+            if include_attrs and k not in include_attrs:
+                continue
+            result[k] = v
+        results.append(result)
 
     return results
 
@@ -241,21 +267,37 @@ class Printer:
         sys.stdout.flush()
 
 
-def get_runs_with_keys(objects, params_keys):
+def flatten_keys(
+    objects: List[Dict], columns: List[str], columns_prefix: Dict = None
+) -> Tuple[List[Dict], Dict]:
     # Extend run with params_keys
     keys = set([])
-    for params_key in params_keys:
+    columns_prefix = columns_prefix or {}
+    prefixed_columns = {}
+
+    def process_objects():
+        results = {}
+        for k, v in col_values.items():
+            results["{}.{}".format(column_prefix, k)] = v
+            prefixed_columns[k] = "{}.{}".format(column_prefix, k)
+        return results
+
+    for col in columns:
         for obj in objects:
-            params = obj.pop(params_key, {}) or {}
-            keys |= set(params.keys())
-            obj.update(params)
+            col_values = obj.pop(col, {}) or {}
+            if col in columns_prefix:
+                column_prefix = columns_prefix[col]
+                col_values = process_objects()
+            col_keys = col_values.keys()
+            keys |= set(col_keys)
+            obj.update(col_values)
 
     # Check that all obj have all metrics
     # TODO: optimize this process
     for obj in objects:
         obj_keys = set(obj.keys())
-        for param in keys:
-            if param not in obj_keys:
-                obj[param] = None
+        for key in keys:
+            if key not in obj_keys:
+                obj[key] = None
 
-    return objects
+    return objects, prefixed_columns

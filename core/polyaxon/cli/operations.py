@@ -33,15 +33,34 @@ from polyaxon.lifecycle import LifeCycle, V1Statuses
 from polyaxon.managers.run import RunManager
 from polyaxon.polyflow import V1RunKind
 from polyaxon.utils import cache
+from polyaxon.utils.csv_utils import write_csv
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
     dict_to_tabulate,
+    flatten_keys,
     get_meta_response,
-    get_runs_with_keys,
+    list_dicts_to_csv,
     list_dicts_to_tabulate,
 )
 from polyaxon.utils.validation import validate_tags
+
+DEFAULT_EXCLUDE = [
+    "owner",
+    "project",
+    "description",
+    "content",
+    "raw_content",
+    "deleted",
+    "readme",
+    "settings",
+    "meta_info",
+    "original",
+    "pipeline",
+    "role",
+    "status_conditions",
+    "is_helper",
+]
 
 
 def get_run_details(run):  # pylint:disable=redefined-outer-name
@@ -99,16 +118,21 @@ def ops(ctx, project, uid):
     help="List runs with their inputs/outputs (params, metrics, results, ...).",
 )
 @click.option(
+    "--to-csv",
+    is_flag=True,
+    help="Saves the results to a csv file. Note that this flag requires pandas",
+)
+@click.option(
     "--query", "-q", type=str, help="To filter the runs based on this query spec."
 )
 @click.option(
     "--sort", "-s", type=str, help="To order the runs based on this sort spec."
 )
-@click.option("--limit", type=int, help="To limit the list of runs.")
-@click.option("--offset", type=int, help="To offset the list of runs.")
+@click.option("--limit", "-l", type=int, help="To limit the list of runs.")
+@click.option("--offset", "-off", type=int, help="To offset the list of runs.")
 @click.option("--columns", "-c", type=str, help="The columns to show.")
 @click.pass_context
-def ls(ctx, io, query, sort, limit, offset, columns):
+def ls(ctx, io, to_csv, query, sort, limit, offset, columns):
     """List runs for this project.
 
     Uses /docs/core/cli/#caching
@@ -168,56 +192,47 @@ def ls(ctx, io, query, sort, limit, offset, columns):
         )
 
     objects = [Printer.add_status_color(o.to_dict()) for o in response.results]
-
+    columns = validate_tags(columns)
     if io:
-        objects = get_runs_with_keys(objects=objects, params_keys=["inputs", "outputs"])
-        objects = list_dicts_to_tabulate(
-            objects,
-            include_attrs=validate_tags(columns),
-            exclude_attrs=[
-                "owner",
-                "project",
-                "description",
-                "content",
-                "raw_content",
-                "deleted",
-                "readme",
-                "settings",
-                "meta_info",
-                "original",
-                "pipeline",
-                "role",
-                "status_conditions",
-                "is_helper",
-            ],
+        objects, prefixed_columns = flatten_keys(
+            objects=objects,
+            columns=["inputs", "outputs"],
+            columns_prefix={"inputs": "in", "outputs": "out"},
         )
+        if columns:
+            columns = {prefixed_columns.get(col, col) for col in columns}
+        if to_csv:
+            objects = list_dicts_to_csv(
+                objects, include_attrs=columns, exclude_attrs=DEFAULT_EXCLUDE,
+            )
+        else:
+            objects = list_dicts_to_tabulate(
+                objects,
+                include_attrs=columns,
+                exclude_attrs=DEFAULT_EXCLUDE,
+                humanize_values=True,
+                upper_keys=True,
+            )
     else:
-        objects = list_dicts_to_tabulate(
-            objects,
-            include_attrs=validate_tags(columns),
-            exclude_attrs=[
-                "owner",
-                "project",
-                "description",
-                "content",
-                "raw_content",
-                "deleted",
-                "readme",
-                "inputs",
-                "outputs",
-                "settings",
-                "meta_info",
-                "original",
-                "pipeline",
-                "role",
-                "status_conditions",
-                "is_helper",
-            ],
-        )
+        if to_csv:
+            objects = list_dicts_to_csv(
+                objects, include_attrs=columns, exclude_attrs=DEFAULT_EXCLUDE,
+            )
+        else:
+            objects = list_dicts_to_tabulate(
+                objects,
+                include_attrs=columns,
+                exclude_attrs=DEFAULT_EXCLUDE,
+                humanize_values=True,
+                upper_keys=True,
+            )
     if objects:
-        Printer.print_header("Runs:")
-        objects.pop("project_name", None)
-        dict_tabulate(objects, is_list_dict=True)
+        if to_csv:
+            write_csv(objects)
+        else:
+            Printer.print_header("Runs:")
+            objects.pop("project_name", None)
+            dict_tabulate(objects, is_list_dict=True)
 
 
 @ops.command()
@@ -630,14 +645,20 @@ def statuses(ctx, watch):
     help="Whether or not to hide timestamps from the log stream.",
 )
 @click.option(
-    "--all-info",
-    "-a",
+    "--all-containers",
     is_flag=True,
     default=False,
     help="Whether to stream logs from all containers.",
 )
+@click.option(
+    "--all-info",
+    "-a",
+    is_flag=True,
+    default=False,
+    help="Whether to show all information including container names, pod names, and node names.",
+)
 @click.pass_context
-def logs(ctx, follow, hide_time, all_info):
+def logs(ctx, follow, hide_time, all_containers, all_info):
     """Get run or run job logs.
 
     Uses /docs/core/cli/#caching
@@ -658,7 +679,11 @@ def logs(ctx, follow, hide_time, all_info):
 
     try:
         get_run_logs(
-            client=client, hide_time=hide_time, all_info=all_info, follow=follow,
+            client=client,
+            hide_time=hide_time,
+            all_containers=all_containers,
+            all_info=all_info,
+            follow=follow,
         )
     except (ApiException, HTTPError, PolyaxonClientException) as e:
         handle_cli_error(

@@ -103,7 +103,7 @@ class V1WasbType(BaseTypeConfig, polyaxon_sdk.V1WasbType):
     REDUCED_ATTRIBUTES = ["container", "storageAccount", "path"]
 
     def __str__(self):
-        return "{}@{}.blob.core.windows.net".format(
+        return "wasbs://{}@{}.blob.core.windows.net".format(
             self.container, self.storage_account, self.path
         )
 

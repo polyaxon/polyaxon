@@ -38,3 +38,9 @@ def handle_cli_error(e, message=None, sys_exit: bool = False):
             Printer.print_error("Error message: {}.".format(e), sys_exit=sys_exit)
     else:
         Printer.print_error("Error message: {}.".format(e), sys_exit=sys_exit)
+
+
+def handle_command_no_in_ce():
+    Printer.print_error(
+        "You are running Polyaxon CE which does not support this command!", True
+    )

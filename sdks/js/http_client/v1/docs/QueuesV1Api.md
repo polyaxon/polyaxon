@@ -13,8 +13,8 @@ Method | HTTP request | Description
 [**listOrganizationQueues**](QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
 [**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
 [**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
-[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch queue
-[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update queue
+[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Patch queue
+[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Update queue
 
 
 
@@ -419,7 +419,7 @@ Name | Type | Description  | Notes
 
 ## patchQueue
 
-> V1Queue patchQueue(owner, queue_agent, queue_uuid, body)
+> V1Queue patchQueue(owner, agent, queue_uuid, body)
 
 Patch queue
 
@@ -436,10 +436,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.QueuesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let queue_agent = "queue_agent_example"; // String | Agent
+let agent = "agent_example"; // String | Agent that consumes the queue
 let queue_uuid = "queue_uuid_example"; // String | UUID
 let body = new PolyaxonSdk.V1Queue(); // V1Queue | Queue body
-apiInstance.patchQueue(owner, queue_agent, queue_uuid, body, (error, data, response) => {
+apiInstance.patchQueue(owner, agent, queue_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -454,7 +454,7 @@ apiInstance.patchQueue(owner, queue_agent, queue_uuid, body, (error, data, respo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **queue_agent** | **String**| Agent | 
+ **agent** | **String**| Agent that consumes the queue | 
  **queue_uuid** | **String**| UUID | 
  **body** | [**V1Queue**](V1Queue.md)| Queue body | 
 
@@ -474,7 +474,7 @@ Name | Type | Description  | Notes
 
 ## updateQueue
 
-> V1Queue updateQueue(owner, queue_agent, queue_uuid, body)
+> V1Queue updateQueue(owner, agent, queue_uuid, body)
 
 Update queue
 
@@ -491,10 +491,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.QueuesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let queue_agent = "queue_agent_example"; // String | Agent
+let agent = "agent_example"; // String | Agent that consumes the queue
 let queue_uuid = "queue_uuid_example"; // String | UUID
 let body = new PolyaxonSdk.V1Queue(); // V1Queue | Queue body
-apiInstance.updateQueue(owner, queue_agent, queue_uuid, body, (error, data, response) => {
+apiInstance.updateQueue(owner, agent, queue_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -509,7 +509,7 @@ apiInstance.updateQueue(owner, queue_agent, queue_uuid, body, (error, data, resp
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **queue_agent** | **String**| Agent | 
+ **agent** | **String**| Agent that consumes the queue | 
  **queue_uuid** | **String**| UUID | 
  **body** | [**V1Queue**](V1Queue.md)| Queue body | 
 

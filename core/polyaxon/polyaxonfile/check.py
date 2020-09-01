@@ -22,7 +22,10 @@ from typing import Dict
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonfileError
-from polyaxon.polyaxonfile.manager import check_default_path, get_op_specification
+from polyaxon.polyaxonfile.manager import (
+    get_op_specification,
+    is_supported_in_eager_mode,
+)
 from polyaxon.polyaxonfile.params import parse_params
 from polyaxon.polyaxonfile.specs import get_specification, kinds
 from polyaxon.polyflow import V1Operation
@@ -75,11 +78,12 @@ def check_polyaxonfile(
     profile: str = None,
     queue: str = None,
     nocache: bool = None,
-    log: bool = True,
+    verbose: bool = True,
     eager_hub: bool = True,
     is_cli: bool = True,
     to_op: bool = True,
     validate_params: bool = True,
+    eager: bool = False,
 ):
     if sum([1 for i in [polyaxonfile, python_module, url, hub] if i]) > 1:
         message = (
@@ -159,8 +163,10 @@ def check_polyaxonfile(
                 path_context=path_context,
                 validate_params=validate_params,
             )
-        if log and not is_cli:
+        if verbose and is_cli:
             Printer.print_success("Polyaxonfile valid")
+        if eager:
+            is_supported_in_eager_mode(spec=plx_file)
         return plx_file
     except Exception as e:
         message = "Polyaxonfile is not valid."
@@ -192,3 +198,23 @@ def get_matrix_info(kind, concurrency, early_stopping=False, **kwargs):
         info["Num of runs to create"] = kwargs["num_runs"]
 
     dict_tabulate(info)
+
+
+DEFAULT_POLYAXON_FILE_NAME = [
+    "polyaxon",
+    "polyaxonci",
+    "polyaxon-ci",
+    "polyaxon.ci",
+    "polyaxonfile",
+]
+
+DEFAULT_POLYAXON_FILE_EXTENSION = ["yaml", "yml", "json"]
+
+
+def check_default_path(path):
+    path = os.path.abspath(path)
+    for filename in DEFAULT_POLYAXON_FILE_NAME:
+        for ext in DEFAULT_POLYAXON_FILE_EXTENSION:
+            filepath = os.path.join(path, "{}.{}".format(filename, ext))
+            if os.path.isfile(filepath):
+                return filepath

@@ -9,17 +9,21 @@ Method | HTTP request | Description
 [**createOrganization**](OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | Create organization
 [**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Create organization member
 [**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
+[**deleteOrganizationInvitation**](OrganizationsV1Api.md#deleteOrganizationInvitation) | **DELETE** /api/v1/orgs/{owner}/invitations | Delete organization invitation details
 [**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
 [**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Get organization
+[**getOrganizationInvitation**](OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 [**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
 [**getOrganizationSettings**](OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 [**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
 [**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations
 [**patchOrganization**](OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | Patch organization
+[**patchOrganizationInvitation**](OrganizationsV1Api.md#patchOrganizationInvitation) | **PATCH** /api/v1/orgs/{owner}/invitations | Patch organization invitation
 [**patchOrganizationMember**](OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
 [**patchOrganizationSettings**](OrganizationsV1Api.md#patchOrganizationSettings) | **PATCH** /api/v1/orgs/{owner}/settings | Patch oranization settings
 [**updateOrganization**](OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | Update organization
+[**updateOrganizationInvitation**](OrganizationsV1Api.md#updateOrganizationInvitation) | **PUT** /api/v1/orgs/{owner}/invitations | Update organization invitation
 [**updateOrganizationMember**](OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Update organization member
 [**updateOrganizationSettings**](OrganizationsV1Api.md#updateOrganizationSettings) | **PUT** /api/v1/orgs/{owner}/settings | Update organization settings
 
@@ -76,7 +80,7 @@ Name | Type | Description  | Notes
 
 ## createOrganizationMember
 
-> V1OrganizationMember createOrganizationMember(owner, body)
+> V1OrganizationMember createOrganizationMember(owner, body, opts)
 
 Create organization member
 
@@ -94,7 +98,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
 let body = new PolyaxonSdk.V1OrganizationMember(); // V1OrganizationMember | Organization body
-apiInstance.createOrganizationMember(owner, body, (error, data, response) => {
+let opts = {
+  'email': "email_example" // String | Optional email.
+};
+apiInstance.createOrganizationMember(owner, body, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -110,6 +117,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **body** | [**V1OrganizationMember**](V1OrganizationMember.md)| Organization body | 
+ **email** | **String**| Optional email. | [optional] 
 
 ### Return type
 
@@ -159,6 +167,69 @@ apiInstance.deleteOrganization(owner, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## deleteOrganizationInvitation
+
+> deleteOrganizationInvitation(owner, opts)
+
+Delete organization invitation details
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
+  'member_user': "member_user_example", // String | User.
+  'member_user_email': "member_user_email_example", // String | Read-only User email.
+  'member_role': "member_role_example", // String | Role.
+  'member_created_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time when the entity was created.
+  'member_updated_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional last time the entity was updated.
+  'email': "email_example" // String | Optional email.
+};
+apiInstance.deleteOrganizationInvitation(owner, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **member_user** | **String**| User. | [optional] 
+ **member_user_email** | **String**| Read-only User email. | [optional] 
+ **member_role** | **String**| Role. | [optional] 
+ **member_created_at** | **Date**| Optional time when the entity was created. | [optional] 
+ **member_updated_at** | **Date**| Optional last time the entity was updated. | [optional] 
+ **email** | **String**| Optional email. | [optional] 
 
 ### Return type
 
@@ -263,6 +334,69 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Organization**](V1Organization.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## getOrganizationInvitation
+
+> V1OrganizationMember getOrganizationInvitation(owner, opts)
+
+Get organization invitation details
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
+  'member_user': "member_user_example", // String | User.
+  'member_user_email': "member_user_email_example", // String | Read-only User email.
+  'member_role': "member_role_example", // String | Role.
+  'member_created_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time when the entity was created.
+  'member_updated_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional last time the entity was updated.
+  'email': "email_example" // String | Optional email.
+};
+apiInstance.getOrganizationInvitation(owner, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **member_user** | **String**| User. | [optional] 
+ **member_user_email** | **String**| Read-only User email. | [optional] 
+ **member_role** | **String**| Role. | [optional] 
+ **member_created_at** | **Date**| Optional time when the entity was created. | [optional] 
+ **member_updated_at** | **Date**| Optional last time the entity was updated. | [optional] 
+ **email** | **String**| Optional email. | [optional] 
+
+### Return type
+
+[**V1OrganizationMember**](V1OrganizationMember.md)
 
 ### Authorization
 
@@ -590,9 +724,64 @@ Name | Type | Description  | Notes
 - **Accept**: application/json
 
 
+## patchOrganizationInvitation
+
+> V1OrganizationMember patchOrganizationInvitation(owner, body, opts)
+
+Patch organization invitation
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let body = new PolyaxonSdk.V1OrganizationMember(); // V1OrganizationMember | Organization body
+let opts = {
+  'email': "email_example" // String | Optional email.
+};
+apiInstance.patchOrganizationInvitation(owner, body, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **body** | [**V1OrganizationMember**](V1OrganizationMember.md)| Organization body | 
+ **email** | **String**| Optional email. | [optional] 
+
+### Return type
+
+[**V1OrganizationMember**](V1OrganizationMember.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
 ## patchOrganizationMember
 
-> V1OrganizationMember patchOrganizationMember(owner, member_user, body)
+> V1OrganizationMember patchOrganizationMember(owner, member_user, body, opts)
 
 Patch organization member
 
@@ -611,7 +800,10 @@ let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
 let member_user = "member_user_example"; // String | User
 let body = new PolyaxonSdk.V1OrganizationMember(); // V1OrganizationMember | Organization body
-apiInstance.patchOrganizationMember(owner, member_user, body, (error, data, response) => {
+let opts = {
+  'email': "email_example" // String | Optional email.
+};
+apiInstance.patchOrganizationMember(owner, member_user, body, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -628,6 +820,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **member_user** | **String**| User | 
  **body** | [**V1OrganizationMember**](V1OrganizationMember.md)| Organization body | 
+ **email** | **String**| Optional email. | [optional] 
 
 ### Return type
 
@@ -745,9 +938,64 @@ Name | Type | Description  | Notes
 - **Accept**: application/json
 
 
+## updateOrganizationInvitation
+
+> V1OrganizationMember updateOrganizationInvitation(owner, body, opts)
+
+Update organization invitation
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let body = new PolyaxonSdk.V1OrganizationMember(); // V1OrganizationMember | Organization body
+let opts = {
+  'email': "email_example" // String | Optional email.
+};
+apiInstance.updateOrganizationInvitation(owner, body, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **body** | [**V1OrganizationMember**](V1OrganizationMember.md)| Organization body | 
+ **email** | **String**| Optional email. | [optional] 
+
+### Return type
+
+[**V1OrganizationMember**](V1OrganizationMember.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
 ## updateOrganizationMember
 
-> V1OrganizationMember updateOrganizationMember(owner, member_user, body)
+> V1OrganizationMember updateOrganizationMember(owner, member_user, body, opts)
 
 Update organization member
 
@@ -766,7 +1014,10 @@ let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
 let member_user = "member_user_example"; // String | User
 let body = new PolyaxonSdk.V1OrganizationMember(); // V1OrganizationMember | Organization body
-apiInstance.updateOrganizationMember(owner, member_user, body, (error, data, response) => {
+let opts = {
+  'email': "email_example" // String | Optional email.
+};
+apiInstance.updateOrganizationMember(owner, member_user, body, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -783,6 +1034,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **member_user** | **String**| User | 
  **body** | [**V1OrganizationMember**](V1OrganizationMember.md)| Organization body | 
+ **email** | **String**| Optional email. | [optional] 
 
 ### Return type
 

@@ -18,7 +18,6 @@ from typing import Dict, Optional, Set, Tuple, Union
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import (
@@ -40,6 +39,9 @@ class OperationsService(Service):
         V1RunKind.TFJOB,
         V1RunKind.PYTORCHJOB,
         V1RunKind.NOTIFIER,
+    }
+    EAGER_KINDS = {
+        V1RunKind.MATRIX,
     }
     __all__ = ("init_run",)
 
@@ -66,7 +68,7 @@ class OperationsService(Service):
 
     @classmethod
     def supports_kind(
-        cls, kind: str, meta_kind: str, supported_kinds: Set[str]
+        cls, kind: str, meta_kind: str, supported_kinds: Set[str], is_managed: bool
     ) -> bool:
         supported_kinds = supported_kinds or set()
         supported_kinds |= cls.DEFAULT_KINDS
@@ -75,20 +77,30 @@ class OperationsService(Service):
             "your account does not support operations of kind: {}"
         )
         if kind not in supported_kinds:
-            raise ValueError(error_message.format(kind))
+            if is_managed or kind not in cls.EAGER_KINDS:
+                raise ValueError(error_message.format(kind))
         if meta_kind and meta_kind not in supported_kinds:
-            raise ValueError(error_message.format(meta_kind))
+            if is_managed or meta_kind not in cls.EAGER_KINDS:
+                raise ValueError(error_message.format(meta_kind))
         return True
 
     @staticmethod
     def get_meta_info(
         compiled_operation: V1CompiledOperation, kind: str, meta_kind: str
     ) -> Tuple[str, Dict]:
-        meta = {"meta_kind": meta_kind}
-        if compiled_operation.is_service_run:
-            if compiled_operation.run.rewrite_path:
-                meta["rewrite_path"] = True
-        return kind, meta
+        meta_info = {}
+        if compiled_operation.matrix:
+            if kind == V1RunKind.JOB:
+                meta_info["has_jobs"] = True
+            elif kind == V1RunKind.SERVICE:
+                meta_info["has_services"] = True
+            elif kind == V1RunKind.DAG:
+                meta_info["has_dags"] = True
+            kind = V1RunKind.MATRIX
+            meta_kind = compiled_operation.matrix.kind
+
+        meta_info["meta_kind"] = meta_kind
+        return kind, meta_info
 
     @staticmethod
     def sanitize_kwargs(**kwargs):
@@ -110,6 +122,7 @@ class OperationsService(Service):
         original_id: int = None,
         original_uuid: int = None,
         cloning_kind: str = None,
+        is_managed: bool = True,
         supported_kinds: Set[str] = None,
         **kwargs,
     ) -> Tuple[V1CompiledOperation, BaseRun]:
@@ -136,7 +149,7 @@ class OperationsService(Service):
             tags = tags or compiled_operation.tags
             kind, meta_kind = self.get_kind(compiled_operation)
             kind, meta_info = self.get_meta_info(compiled_operation, kind, meta_kind)
-            self.supports_kind(kind, meta_kind, supported_kinds)
+            self.supports_kind(kind, meta_kind, supported_kinds, is_managed)
             if cloning_kind == V1CloningKind.COPY:
                 if meta_kind not in {V1RunKind.JOB, V1RunKind.SERVICE}:
                     raise ValueError(
@@ -161,6 +174,7 @@ class OperationsService(Service):
             meta_info=meta_info,
             original_id=original_id,
             cloning_kind=cloning_kind,
+            is_managed=is_managed,
             status_conditions=[
                 V1StatusCondition.get_condition(
                     type=V1Statuses.CREATED,

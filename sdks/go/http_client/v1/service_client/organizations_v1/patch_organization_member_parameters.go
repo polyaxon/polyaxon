@@ -81,6 +81,11 @@ type PatchOrganizationMemberParams struct {
 
 	*/
 	Body *service_model.V1OrganizationMember
+	/*Email
+	  Optional email.
+
+	*/
+	Email *string
 	/*MemberUser
 	  User
 
@@ -141,6 +146,17 @@ func (o *PatchOrganizationMemberParams) SetBody(body *service_model.V1Organizati
 	o.Body = body
 }
 
+// WithEmail adds the email to the patch organization member params
+func (o *PatchOrganizationMemberParams) WithEmail(email *string) *PatchOrganizationMemberParams {
+	o.SetEmail(email)
+	return o
+}
+
+// SetEmail adds the email to the patch organization member params
+func (o *PatchOrganizationMemberParams) SetEmail(email *string) {
+	o.Email = email
+}
+
 // WithMemberUser adds the memberUser to the patch organization member params
 func (o *PatchOrganizationMemberParams) WithMemberUser(memberUser string) *PatchOrganizationMemberParams {
 	o.SetMemberUser(memberUser)
@@ -175,6 +191,22 @@ func (o *PatchOrganizationMemberParams) WriteToRequest(r runtime.ClientRequest, 
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
 		}
+	}
+
+	if o.Email != nil {
+
+		// query param email
+		var qrEmail string
+		if o.Email != nil {
+			qrEmail = *o.Email
+		}
+		qEmail := qrEmail
+		if qEmail != "" {
+			if err := r.SetQueryParam("email", qEmail); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	// path param member.user

@@ -47,6 +47,7 @@ class TestRunSerializer(BaseTestRunSerializer):
         "kind",
         "meta_kind",
         "meta_info",
+        "pipeline",
         "original",
         "is_managed",
         "tags",
@@ -64,6 +65,7 @@ class TestRunSerializer(BaseTestRunSerializer):
         run = self.factory_class(project=self.project, user=self.user)
         return self.factory_class(
             project=self.project,
+            pipeline=run,
             original=run,
             cloning_kind=V1CloningKind.CACHE,
             status=V1Statuses.RUNNING,
@@ -80,6 +82,11 @@ class TestRunSerializer(BaseTestRunSerializer):
             "uuid": obj1.original.uuid.hex,
             "name": obj1.original.name,
             "kind": obj1.cloning_kind,
+        }
+        assert data.pop("pipeline") == {
+            "uuid": obj1.pipeline.uuid.hex,
+            "name": obj1.pipeline.name,
+            "kind": obj1.pipeline.kind,
         }
         assert data.pop("meta_kind") == obj1.meta_info.get("meta_kind")
         assert data.pop("settings") == {"namespace": conf.get(K8S_NAMESPACE)}

@@ -12,8 +12,8 @@ Method | HTTP request | Description
 [**list_organization_queues**](QueuesV1Api.md#list_organization_queues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
 [**list_queue_names**](QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
 [**list_queues**](QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
-[**patch_queue**](QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch queue
-[**update_queue**](QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update queue
+[**patch_queue**](QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Patch queue
+[**update_queue**](QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Update queue
 
 
 # **create_queue**
@@ -617,7 +617,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_queue**
-> V1Queue patch_queue(owner, queue_agent, queue_uuid, body)
+> V1Queue patch_queue(owner, agent, queue_uuid, body)
 
 Patch queue
 
@@ -656,13 +656,13 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.QueuesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-queue_agent = 'queue_agent_example' # str | Agent
+agent = 'agent_example' # str | Agent that consumes the queue
 queue_uuid = 'queue_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 
     try:
         # Patch queue
-        api_response = api_instance.patch_queue(owner, queue_agent, queue_uuid, body)
+        api_response = api_instance.patch_queue(owner, agent, queue_uuid, body)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling QueuesV1Api->patch_queue: %s\n" % e)
@@ -673,7 +673,7 @@ body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **queue_agent** | **str**| Agent | 
+ **agent** | **str**| Agent that consumes the queue | 
  **queue_uuid** | **str**| UUID | 
  **body** | [**V1Queue**](V1Queue.md)| Queue body | 
 
@@ -702,7 +702,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_queue**
-> V1Queue update_queue(owner, queue_agent, queue_uuid, body)
+> V1Queue update_queue(owner, agent, queue_uuid, body)
 
 Update queue
 
@@ -741,13 +741,13 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.QueuesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-queue_agent = 'queue_agent_example' # str | Agent
+agent = 'agent_example' # str | Agent that consumes the queue
 queue_uuid = 'queue_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 
     try:
         # Update queue
-        api_response = api_instance.update_queue(owner, queue_agent, queue_uuid, body)
+        api_response = api_instance.update_queue(owner, agent, queue_uuid, body)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling QueuesV1Api->update_queue: %s\n" % e)
@@ -758,7 +758,7 @@ body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **queue_agent** | **str**| Agent | 
+ **agent** | **str**| Agent that consumes the queue | 
  **queue_uuid** | **str**| UUID | 
  **body** | [**V1Queue**](V1Queue.md)| Queue body | 
 

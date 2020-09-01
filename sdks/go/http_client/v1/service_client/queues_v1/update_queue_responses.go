@@ -87,7 +87,7 @@ type UpdateQueueOK struct {
 }
 
 func (o *UpdateQueueOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] updateQueueOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] updateQueueOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateQueueOK) GetPayload() *service_model.V1Queue {
@@ -120,7 +120,7 @@ type UpdateQueueNoContent struct {
 }
 
 func (o *UpdateQueueNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] updateQueueNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] updateQueueNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UpdateQueueNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type UpdateQueueForbidden struct {
 }
 
 func (o *UpdateQueueForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] updateQueueForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] updateQueueForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateQueueForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type UpdateQueueNotFound struct {
 }
 
 func (o *UpdateQueueNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] updateQueueNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] updateQueueNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateQueueNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *UpdateQueueDefault) Code() int {
 }
 
 func (o *UpdateQueueDefault) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] UpdateQueue default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] UpdateQueue default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *UpdateQueueDefault) GetPayload() *service_model.RuntimeError {

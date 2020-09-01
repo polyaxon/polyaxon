@@ -12,8 +12,8 @@ Method | HTTP request | Description
 [**listOrganizationQueues**](QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
 [**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
 [**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
-[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch queue
-[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update queue
+[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Patch queue
+[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Update queue
 
 
 <a name="createQueue"></a>
@@ -562,7 +562,7 @@ Name | Type | Description  | Notes
 
 <a name="patchQueue"></a>
 # **patchQueue**
-> V1Queue patchQueue(owner, queueAgent, queueUuid, body)
+> V1Queue patchQueue(owner, agent, queueUuid, body)
 
 Patch queue
 
@@ -589,11 +589,11 @@ public class Example {
 
     QueuesV1Api apiInstance = new QueuesV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String queueAgent = "queueAgent_example"; // String | Agent
+    String agent = "agent_example"; // String | Agent that consumes the queue
     String queueUuid = "queueUuid_example"; // String | UUID
     V1Queue body = new V1Queue(); // V1Queue | Queue body
     try {
-      V1Queue result = apiInstance.patchQueue(owner, queueAgent, queueUuid, body);
+      V1Queue result = apiInstance.patchQueue(owner, agent, queueUuid, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#patchQueue");
@@ -611,7 +611,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **queueAgent** | **String**| Agent |
+ **agent** | **String**| Agent that consumes the queue |
  **queueUuid** | **String**| UUID |
  **body** | [**V1Queue**](V1Queue.md)| Queue body |
 
@@ -639,7 +639,7 @@ Name | Type | Description  | Notes
 
 <a name="updateQueue"></a>
 # **updateQueue**
-> V1Queue updateQueue(owner, queueAgent, queueUuid, body)
+> V1Queue updateQueue(owner, agent, queueUuid, body)
 
 Update queue
 
@@ -666,11 +666,11 @@ public class Example {
 
     QueuesV1Api apiInstance = new QueuesV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String queueAgent = "queueAgent_example"; // String | Agent
+    String agent = "agent_example"; // String | Agent that consumes the queue
     String queueUuid = "queueUuid_example"; // String | UUID
     V1Queue body = new V1Queue(); // V1Queue | Queue body
     try {
-      V1Queue result = apiInstance.updateQueue(owner, queueAgent, queueUuid, body);
+      V1Queue result = apiInstance.updateQueue(owner, agent, queueUuid, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#updateQueue");
@@ -688,7 +688,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **queueAgent** | **String**| Agent |
+ **agent** | **String**| Agent that consumes the queue |
  **queueUuid** | **String**| UUID |
  **body** | [**V1Queue**](V1Queue.md)| Queue body |
 

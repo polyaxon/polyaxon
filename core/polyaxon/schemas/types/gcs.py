@@ -97,7 +97,7 @@ class V1GcsType(BaseTypeConfig, polyaxon_sdk.V1GcsType):
     REDUCED_ATTRIBUTES = ["bucket", "blob"]
 
     def __str__(self):
-        path = "gs:{}".format(self.bucket)
+        path = "gs://{}".format(self.bucket)
         if self.blob:
             path = "{}/{}".format(path, self.blob)
         return path

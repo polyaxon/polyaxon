@@ -153,7 +153,6 @@ class MultiRunPlot(RunClient):
     def get_runs_io(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ):
-        # TODO: replace with runs io API
         runs = self.get_runs(query=query, sort=sort, limit=limit, offset=offset)
         data = []
         for r in runs:

@@ -54,7 +54,7 @@ def validate_params(
 
             raise ValidationError(message)
     elif not accepts_params(inputs, outputs) and params:
-        message = "Received unexpected params `{}`.".format(params)
+        message = "Received unexpected params `{}`".format(params)
         if extra_info:
             message += " Please check: {}".format(extra_info)
         raise ValidationError(message)
@@ -148,7 +148,7 @@ def validate_params(
             )
     extra_params = set(params.keys()) - set(processed_params)
     if extra_params:
-        message = "Received unexpected params `{}`.".format(extra_params)
+        message = "Received unexpected params `{}`".format(extra_params)
         if extra_info:
             message += " Please check: {}".format(extra_info)
         raise ValidationError(message)

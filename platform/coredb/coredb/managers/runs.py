@@ -31,6 +31,7 @@ def create_run(
     description: str = None,
     readme: str = None,
     tags: List[int] = None,
+    raw_content: str = None,
 ) -> BaseRun:
     instance = get_run_model().objects.create(
         project_id=project_id,
@@ -41,6 +42,7 @@ def create_run(
         tags=tags,
         kind=V1RunKind.JOB,
         is_managed=False,
+        raw_content=raw_content,
         status_conditions=[
             V1StatusCondition.get_condition(
                 type=V1Statuses.CREATED,

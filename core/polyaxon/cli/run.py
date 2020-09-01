@@ -103,8 +103,16 @@ from polyaxon.utils.validation import validate_tags
 @click.option(
     "--nocache",
     is_flag=True,
-    default=None,
+    default=False,
     help="Disable cache check before starting this operation.",
+)
+@click.option(
+    "--eager",
+    is_flag=True,
+    default=False,
+    help="A flag to enable eager mode for pipeline operations, "
+    "currently supports grid, random, and mapping. "
+    "Note that this flag requires numpy.",
 )
 @click.pass_context
 def run(
@@ -124,6 +132,7 @@ def run(
     profile,
     queue,
     nocache,
+    eager,
 ):
     """Run polyaxonfile specification.
 
@@ -172,7 +181,8 @@ def run(
         profile=profile,
         queue=queue,
         nocache=nocache,
-        log=False,
+        verbose=False,
+        eager=eager,
     )
 
     owner, project_name = get_project_or_local(project, is_cli=True)
@@ -222,4 +232,5 @@ def run(
             op_spec=op_spec,
             log=log,
             watch=watch,
+            eager=eager,
         )

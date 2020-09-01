@@ -1,0 +1,98 @@
+#!/usr/bin/python
+#
+# Copyright 2018-2020 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from typing import Dict, List, Union
+
+from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.polyaxonfile.specs.libs.parser import Parser
+from polyaxon.polyflow import V1CompiledOperation, V1Operation, V1Param
+from polyaxon.utils.formatting import Printer
+
+
+def get_ops_from_suggestions(
+    content: str, compiled_operation: V1CompiledOperation, suggestions: List[Dict]
+) -> List[V1Operation]:
+    ops = []
+    for suggestion in suggestions:
+        params = {
+            k: V1Param(value=Parser.parse_expression(v, {}))
+            for (k, v) in suggestion.items()
+        }
+        op_spec = V1Operation.read(content)
+        op_spec.matrix = None  # remove matrix
+        op_spec.params = params
+        op_spec.component.inputs = compiled_operation.inputs
+        op_spec.component.outputs = compiled_operation.outputs
+        ops.append(op_spec)
+
+    return ops
+
+
+def get_eager_matrix_operations(
+    content: str, compiled_operation: V1CompiledOperation, is_cli: bool = False,
+) -> List[V1Operation]:
+    is_supported_in_eager_mode(compiled_operation)
+
+    try:
+        import numpy as np
+    except ImportError as e:
+        if is_cli:
+            Printer.print_error("numpy is required for this operation", sys_exit=True)
+        raise e
+
+    from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager
+    from polyaxon.polytune.search_managers.mapping.manager import MappingManager
+    from polyaxon.polytune.search_managers.random_search.manager import (
+        RandomSearchManager,
+    )
+
+    if compiled_operation.has_random_search_matrix:
+        suggestions = RandomSearchManager(compiled_operation.matrix).get_suggestions()
+    elif compiled_operation.has_grid_search_matrix:
+        suggestions = GridSearchManager(compiled_operation.matrix).get_suggestions()
+    elif compiled_operation.has_mapping_matrix:
+        suggestions = MappingManager(compiled_operation.matrix).get_suggestions()
+    else:
+        raise PolyaxonSchemaError(
+            "Received a bad configuration, eager mode not supported, "
+            "I should not be here!"
+        )
+    return get_ops_from_suggestions(
+        content=content, compiled_operation=compiled_operation, suggestions=suggestions
+    )
+
+
+def is_supported_in_eager_mode(spec: Union[V1Operation, V1CompiledOperation]):
+    if not spec.matrix:
+        if spec.component and spec.component.run:
+            raise PolyaxonSchemaError(
+                "This operation with runtime `{}` "
+                "is not supported in eager mode".format(spec.component.run.kind)
+            )
+        else:
+            raise PolyaxonSchemaError(
+                "Received a bad configuration, eager mode not supported"
+            )
+
+    if (
+        not spec.has_random_search_matrix
+        and not spec.has_grid_search_matrix
+        and not spec.has_mapping_matrix
+    ):
+        raise PolyaxonSchemaError(
+            "This operation is defining a matrix kind `{}` "
+            "which is not supported in eager mode".format(spec.get_matrix_kind())
+        )

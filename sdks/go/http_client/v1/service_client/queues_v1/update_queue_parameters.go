@@ -76,6 +76,11 @@ for the update queue operation typically these are written to a http.Request
 */
 type UpdateQueueParams struct {
 
+	/*Agent
+	  Agent that consumes the queue
+
+	*/
+	Agent string
 	/*Body
 	  Queue body
 
@@ -86,11 +91,6 @@ type UpdateQueueParams struct {
 
 	*/
 	Owner string
-	/*QueueAgent
-	  Agent
-
-	*/
-	QueueAgent string
 	/*QueueUUID
 	  UUID
 
@@ -135,6 +135,17 @@ func (o *UpdateQueueParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithAgent adds the agent to the update queue params
+func (o *UpdateQueueParams) WithAgent(agent string) *UpdateQueueParams {
+	o.SetAgent(agent)
+	return o
+}
+
+// SetAgent adds the agent to the update queue params
+func (o *UpdateQueueParams) SetAgent(agent string) {
+	o.Agent = agent
+}
+
 // WithBody adds the body to the update queue params
 func (o *UpdateQueueParams) WithBody(body *service_model.V1Queue) *UpdateQueueParams {
 	o.SetBody(body)
@@ -157,17 +168,6 @@ func (o *UpdateQueueParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithQueueAgent adds the queueAgent to the update queue params
-func (o *UpdateQueueParams) WithQueueAgent(queueAgent string) *UpdateQueueParams {
-	o.SetQueueAgent(queueAgent)
-	return o
-}
-
-// SetQueueAgent adds the queueAgent to the update queue params
-func (o *UpdateQueueParams) SetQueueAgent(queueAgent string) {
-	o.QueueAgent = queueAgent
-}
-
 // WithQueueUUID adds the queueUUID to the update queue params
 func (o *UpdateQueueParams) WithQueueUUID(queueUUID string) *UpdateQueueParams {
 	o.SetQueueUUID(queueUUID)
@@ -187,6 +187,11 @@ func (o *UpdateQueueParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 	}
 	var res []error
 
+	// path param agent
+	if err := r.SetPathParam("agent", o.Agent); err != nil {
+		return err
+	}
+
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
@@ -195,11 +200,6 @@ func (o *UpdateQueueParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
-		return err
-	}
-
-	// path param queue.agent
-	if err := r.SetPathParam("queue.agent", o.QueueAgent); err != nil {
 		return err
 	}
 

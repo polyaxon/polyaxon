@@ -8,5 +8,6 @@ Name | Type | Description | Notes
 **email** | **String** |  | [optional] 
 **organization** | **String** |  | [optional] 
 **password** | **String** |  | [optional] 
+**invitation_key** | **String** |  | [optional] 
 
 

@@ -9,7 +9,7 @@ inputs:
   type: str
   value: tensorflow/tensorflow:2.0.1-py3
 - name: path
-  type: str
+  type: s3
 
 run:
   kind: service
