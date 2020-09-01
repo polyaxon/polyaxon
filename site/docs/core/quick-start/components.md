@@ -189,7 +189,7 @@ model.fit(x=X_train,
 
 In this Python file you can see that we are importing some information from `polyaxon library`.
 
- * We are important a tracking module
+ * We are importing a tracking module
  * We are loading some Keras callbacks
 
 You can also see that this is a simple TF.Keras model and we have a small section where we use `polyaxon.tracking` module to track information about the run. 
