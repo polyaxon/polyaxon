@@ -64,6 +64,13 @@ class BaseRun(
     original = models.ForeignKey(
         "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="clones",
     )
+    pipeline = models.ForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="pipeline_runs",
+    )
     cloning_kind = models.CharField(
         max_length=12, blank=True, null=True, choices=V1CloningKind.CHOICES,
     )
@@ -108,3 +115,15 @@ class BaseRun(
     @property
     def is_service(self):
         return self.kind == V1RunKind.SERVICE
+
+    @property
+    def is_dag(self):
+        return self.kind == V1RunKind.DAG
+
+    @property
+    def is_matrix(self):
+        return self.kind == V1RunKind.MATRIX
+
+    @property
+    def has_pipeline(self):
+        return self.is_dag or self.is_matrix

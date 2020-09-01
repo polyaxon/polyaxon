@@ -16,6 +16,7 @@
 
 from marshmallow import fields
 
+from polyaxon.constants import PLATFORM_DIST_CE
 from polyaxon.schemas.api.log_handler import LogHandlerSchema
 from polyaxon.schemas.cli.checks_config import ChecksConfig, ChecksSchema
 
@@ -63,3 +64,7 @@ class CliConfig(ChecksConfig):
             return None
         cli_version = self.compatibility["cli"] or {}
         return cli_version.get("latest")
+
+    @property
+    def is_ce(self):
+        return self.installation and self.installation.get("dist") == PLATFORM_DIST_CE

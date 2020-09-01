@@ -97,7 +97,7 @@ class V1S3Type(BaseTypeConfig, polyaxon_sdk.V1S3Type):
     REDUCED_ATTRIBUTES = ["bucket", "key"]
 
     def __str__(self):
-        path = "s3:{}".format(self.bucket)
+        path = "s3://{}".format(self.bucket)
         if self.key:
             path = "{}/{}".format(path, self.key)
         return path

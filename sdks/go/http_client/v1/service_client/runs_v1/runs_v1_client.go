@@ -109,8 +109,6 @@ type ClientService interface {
 
 	ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, *ListRunsNoContent, error)
 
-	ListRunsIo(params *ListRunsIoParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsIoOK, *ListRunsIoNoContent, error)
-
 	NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*NotifyRunStatusOK, *NotifyRunStatusNoContent, error)
 
 	PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunOK, *PatchRunNoContent, error)
@@ -1363,42 +1361,6 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ListRunsDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  ListRunsIo lists runs io
-*/
-func (a *Client) ListRunsIo(params *ListRunsIoParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsIoOK, *ListRunsIoNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewListRunsIoParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListRunsIo",
-		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/io",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &ListRunsIoReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *ListRunsIoOK:
-		return value, nil, nil
-	case *ListRunsIoNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ListRunsIoDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

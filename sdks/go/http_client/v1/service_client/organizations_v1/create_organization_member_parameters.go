@@ -81,6 +81,11 @@ type CreateOrganizationMemberParams struct {
 
 	*/
 	Body *service_model.V1OrganizationMember
+	/*Email
+	  Optional email.
+
+	*/
+	Email *string
 	/*Owner
 	  Owner of the namespace
 
@@ -136,6 +141,17 @@ func (o *CreateOrganizationMemberParams) SetBody(body *service_model.V1Organizat
 	o.Body = body
 }
 
+// WithEmail adds the email to the create organization member params
+func (o *CreateOrganizationMemberParams) WithEmail(email *string) *CreateOrganizationMemberParams {
+	o.SetEmail(email)
+	return o
+}
+
+// SetEmail adds the email to the create organization member params
+func (o *CreateOrganizationMemberParams) SetEmail(email *string) {
+	o.Email = email
+}
+
 // WithOwner adds the owner to the create organization member params
 func (o *CreateOrganizationMemberParams) WithOwner(owner string) *CreateOrganizationMemberParams {
 	o.SetOwner(owner)
@@ -159,6 +175,22 @@ func (o *CreateOrganizationMemberParams) WriteToRequest(r runtime.ClientRequest,
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
 		}
+	}
+
+	if o.Email != nil {
+
+		// query param email
+		var qrEmail string
+		if o.Email != nil {
+			qrEmail = *o.Email
+		}
+		qEmail := qrEmail
+		if qEmail != "" {
+			if err := r.SetQueryParam("email", qEmail); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	// path param owner

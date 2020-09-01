@@ -81,9 +81,6 @@ message OrganizationMember {
     // Read-only User email
     string user_email = 2;
 
-    // Write-only email for inviting new user
-    string email = 3;
-
     // Role
     string role = 4;
 
@@ -102,6 +99,9 @@ message OrganizationMemberBodyRequest {
 
     // Organization body
     OrganizationMember member = 2;
+
+    // Optional email
+    string email = 3;
  }
 
 // Contains list organization members

@@ -324,7 +324,7 @@ func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchQueue",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -360,7 +360,7 @@ func (a *Client) UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientA
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateQueue",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polyaxonfile.check import check_polyaxonfile
-from polyaxon.polyaxonfile.manager import (
+from polyaxon.polyaxonfile.check import (
     DEFAULT_POLYAXON_FILE_EXTENSION,
     DEFAULT_POLYAXON_FILE_NAME,
     check_default_path,
-    get_op_specification,
+    check_polyaxonfile,
 )
+from polyaxon.polyaxonfile.manager import get_op_specification
 from polyaxon.polyaxonfile.params import parse_params
 from polyaxon.polyaxonfile.specs import (
     BaseSpecification,

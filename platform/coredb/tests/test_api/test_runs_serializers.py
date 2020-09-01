@@ -47,6 +47,7 @@ class TestRunDetailSerializer(BaseTestRunSerializer):
         "kind",
         "meta_kind",
         "meta_info",
+        "pipeline",
         "original",
         "is_managed",
         "tags",

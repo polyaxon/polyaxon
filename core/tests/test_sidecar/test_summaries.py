@@ -278,25 +278,44 @@ class TestEventsSummaries(BaseTestCase):
             events_kind="model",
             last_check=None,
         )
+        summaries = {s.name: s for s in summaries}
         events = V1Events.read(
             name="model_events",
             kind="model",
             data=os.path.abspath("tests/fixtures/polyboard/model/model_events.plx"),
         )
         assert events.name == "model_events"
-        assert summaries == [
-            V1RunArtifact(
-                name="model_events",
-                kind="model",
-                connection=None,
-                summary=events.get_summary(),
-                path=os.path.relpath(
-                    "tests/fixtures/polyboard/model/model_events.plx",
-                    CONTEXT_MOUNT_ARTIFACTS,
-                ),
-                is_input=False,
-            )
-        ]
+        assert summaries["model_events"] == V1RunArtifact(
+            name="model_events",
+            kind="model",
+            connection=None,
+            summary=events.get_summary(),
+            path=os.path.relpath(
+                "tests/fixtures/polyboard/model/model_events.plx",
+                CONTEXT_MOUNT_ARTIFACTS,
+            ),
+            is_input=False,
+        )
+
+        events_without_step = V1Events.read(
+            name="model_events_without_step",
+            kind="model",
+            data=os.path.abspath(
+                "tests/fixtures/polyboard/model/model_events_without_step.plx"
+            ),
+        )
+        assert events_without_step.name == "model_events_without_step"
+        assert summaries["model_events_without_step"] == V1RunArtifact(
+            name="model_events_without_step",
+            kind="model",
+            connection=None,
+            summary=events_without_step.get_summary(),
+            path=os.path.relpath(
+                "tests/fixtures/polyboard/model/model_events_without_step.plx",
+                CONTEXT_MOUNT_ARTIFACTS,
+            ),
+            is_input=False,
+        )
         assert last_values == {}
 
     def test_dataframes_summaries(self):

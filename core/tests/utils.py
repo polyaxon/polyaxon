@@ -25,6 +25,7 @@ import ujson
 from polyaxon import settings
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 from polyaxon.schemas.cli.agent_config import AgentConfig
+from polyaxon.schemas.cli.cli_config import CliConfig
 from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon.schemas.cli.proxies_config import ProxiesConfig
 
@@ -84,6 +85,7 @@ def assert_equal_layers(config, expected_layer):
 def patch_settings(
     set_auth: bool = True,
     set_client: bool = True,
+    set_cli: bool = True,
     set_agent: bool = True,
     set_proxies: bool = True,
 ):
@@ -94,6 +96,10 @@ def patch_settings(
     settings.CLIENT_CONFIG = None
     if set_client:
         settings.CLIENT_CONFIG = ClientConfig(host="1.2.3.4")
+
+    settings.CLI_CONFIG = None
+    if set_cli:
+        settings.CLI_CONFIG = CliConfig()
 
     settings.AGENT_CONFIG = None
     if set_agent:
@@ -109,6 +115,7 @@ def patch_settings(
 class BaseTestCase(TestCase):
     SET_AUTH_SETTINGS = True
     SET_CLIENT_SETTINGS = True
+    SET_CLI_SETTINGS = True
     SET_AGENT_SETTINGS = False
     SET_PROXIES_SETTINGS = False
 
@@ -117,6 +124,7 @@ class BaseTestCase(TestCase):
         patch_settings(
             set_auth=self.SET_AUTH_SETTINGS,
             set_client=self.SET_CLIENT_SETTINGS,
+            set_cli=self.SET_CLI_SETTINGS,
             set_agent=self.SET_AGENT_SETTINGS,
             set_proxies=self.SET_PROXIES_SETTINGS,
         )

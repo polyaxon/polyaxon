@@ -95,7 +95,7 @@ def generate(
             polyaxonfile=polyaxonfile,
             python_module=python_module,
             params=params,
-            log=False,
+            verbose=False,
         )
 
         try:

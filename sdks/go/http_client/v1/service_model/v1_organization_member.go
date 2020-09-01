@@ -35,9 +35,6 @@ type V1OrganizationMember struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
-	// Write-only email for inviting new user
-	Email string `json:"email,omitempty"`
-
 	// Role
 	Role string `json:"role,omitempty"`
 

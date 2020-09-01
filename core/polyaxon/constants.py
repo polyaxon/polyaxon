@@ -17,3 +17,4 @@
 UNKNOWN = "unknown"
 DEFAULT = "default"
 NO_AUTH = "no-auth"
+PLATFORM_DIST_CE = "ce"

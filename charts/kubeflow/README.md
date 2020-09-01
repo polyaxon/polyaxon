@@ -40,17 +40,17 @@ $ helm repo update
 ### TFJob
 
 ```bash
-helm install polyaxon/tfjob --name=plxtf --namespace=polyaxon
+helm install plxtf polyaxon/tfjob --namespace=polyaxon
 ```
 
 ### PytorchJob
 
 ```bash
-helm install polyaxon/pytorchjob --name=plxpytorch --namespace=polyaxon
+helm install plxpytorch polyaxon/pytorchjob --namespace=polyaxon
 ```
 
 ### MpiJob 
 
 ```bash
-helm install polyaxon/mpijob --name=plxmpi --namespace=polyaxon
+helm install plxmpi polyaxon/mpijob --namespace=polyaxon
 ````

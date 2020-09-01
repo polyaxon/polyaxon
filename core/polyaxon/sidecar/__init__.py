@@ -105,7 +105,7 @@ async def start_sidecar(
             try:
                 await monitor()
             except Exception as e:
-                logger.warning("Polyaxon sidecar error: %e", e)
+                logger.warning("Polyaxon sidecar error: %s" % repr(e))
 
     await monitor()
     logger.info("Cleaning non main containers")

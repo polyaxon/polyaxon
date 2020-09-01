@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.8-rc0",
+    "version": "1.1.8-rc4",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -253,13 +253,61 @@
         ]
       }
     },
+    "/api/v1/auth/reset-password-confirm": {
+      "post": {
+        "summary": "Reset password confirm",
+        "operationId": "ResetPasswordConfirm",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Auth"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PasswordChange"
+            }
+          }
+        ],
+        "tags": [
+          "AuthV1"
+        ]
+      }
+    },
     "/api/v1/auth/signup": {
       "post": {
         "summary": "Signup",
         "operationId": "Signup",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Auth"
+            }
           },
           "204": {
             "description": "No content.",
@@ -1924,6 +1972,138 @@
         ]
       }
     },
+    "/api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}": {
+      "put": {
+        "summary": "Update queue",
+        "operationId": "UpdateQueue",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent that consumes the queue",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "queue.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Queue body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      },
+      "patch": {
+        "summary": "Patch queue",
+        "operationId": "PatchQueue",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent that consumes the queue",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "queue.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Queue body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      }
+    },
     "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}": {
       "get": {
         "summary": "Get queue",
@@ -2206,138 +2386,6 @@
         ],
         "tags": [
           "AgentsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}": {
-      "put": {
-        "summary": "Update queue",
-        "operationId": "UpdateQueue",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Queue"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "queue.agent",
-            "description": "Agent",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "queue.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Queue body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1Queue"
-            }
-          }
-        ],
-        "tags": [
-          "QueuesV1"
-        ]
-      },
-      "patch": {
-        "summary": "Patch queue",
-        "operationId": "PatchQueue",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Queue"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "queue.agent",
-            "description": "Agent",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "queue.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Queue body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1Queue"
-            }
-          }
-        ],
-        "tags": [
-          "QueuesV1"
         ]
       }
     },
@@ -3839,6 +3887,293 @@
         ]
       }
     },
+    "/api/v1/orgs/{owner}/invitations": {
+      "get": {
+        "summary": "Get organization invitation details",
+        "operationId": "GetOrganizationInvitation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.user_email",
+            "description": "Read-only User email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.role",
+            "description": "Role.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.created_at",
+            "description": "Optional time when the entity was created.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "member.updated_at",
+            "description": "Optional last time the entity was updated.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "email",
+            "description": "Optional email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Delete organization invitation details",
+        "operationId": "DeleteOrganizationInvitation",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.user_email",
+            "description": "Read-only User email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.role",
+            "description": "Role.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.created_at",
+            "description": "Optional time when the entity was created.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "member.updated_at",
+            "description": "Optional last time the entity was updated.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "email",
+            "description": "Optional email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "put": {
+        "summary": "Update organization invitation",
+        "operationId": "UpdateOrganizationInvitation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          {
+            "name": "email",
+            "description": "Optional email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Patch organization invitation",
+        "operationId": "PatchOrganizationInvitation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          {
+            "name": "email",
+            "description": "Optional email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
     "/api/v1/orgs/{owner}/members": {
       "get": {
         "summary": "Get organization members",
@@ -3957,6 +4292,13 @@
             "schema": {
               "$ref": "#/definitions/v1OrganizationMember"
             }
+          },
+          {
+            "name": "email",
+            "description": "Optional email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -4017,6 +4359,13 @@
             "schema": {
               "$ref": "#/definitions/v1OrganizationMember"
             }
+          },
+          {
+            "name": "email",
+            "description": "Optional email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -4075,6 +4424,13 @@
             "schema": {
               "$ref": "#/definitions/v1OrganizationMember"
             }
+          },
+          {
+            "name": "email",
+            "description": "Optional email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -8739,87 +9095,6 @@
             "schema": {
               "$ref": "#/definitions/v1Uuids"
             }
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/runs/io": {
-      "get": {
-        "summary": "List runs io",
-        "operationId": "ListRunsIo",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListRunsResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           }
         ],
         "tags": [
@@ -16228,10 +16503,6 @@
           "type": "string",
           "title": "Read-only User email"
         },
-        "email": {
-          "type": "string",
-          "title": "Write-only email for inviting new user"
-        },
         "role": {
           "type": "string",
           "title": "Role"
@@ -17916,6 +18187,10 @@
         "password": {
           "type": "string",
           "title": "User password"
+        },
+        "invitation_key": {
+          "type": "string",
+          "title": "Invitation key"
         }
       },
       "title": "User singup"

@@ -17,14 +17,19 @@
 from collections import deque
 from typing import Callable
 
+from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.polyboard.logging.schemas import V1Log, V1Logs
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.tz_utils import local_datetime
 
 
-def get_logs_handler(show_timestamp=True, all_info=False) -> Callable:
+def get_logs_handler(
+    show_timestamp=True, all_containers=False, all_info=False
+) -> Callable:
     colors = deque(Printer.COLORS)
     job_to_color = {}
+    if all_info:
+        all_containers = True
 
     def handle_log_line(log: V1Log):
         log_dict = log.to_dict()
@@ -42,6 +47,9 @@ def get_logs_handler(show_timestamp=True, all_info=False) -> Callable:
                 job_to_color[container_info] = color
             return Printer.add_color(container_info, color) + " | "
 
+        if not all_containers and log.container != MAIN_JOB_CONTAINER:
+            return log_line
+
         if all_info:
             container_info = ""
             if log.node:
@@ -54,11 +62,11 @@ def get_logs_handler(show_timestamp=True, all_info=False) -> Callable:
             log_line += get_container_info()
 
         log_line += log_dict.get("value")
-        return log_line
+        Printer.log(log_line, nl=True)
 
     def handle_log_lines(logs: V1Logs):
         for log in logs.logs:
             if log:
-                Printer.log(handle_log_line(log=log), nl=True)
+                handle_log_line(log=log)
 
     return handle_log_lines

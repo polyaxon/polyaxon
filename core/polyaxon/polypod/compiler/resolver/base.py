@@ -206,7 +206,7 @@ class BaseResolver:
         )
 
     def _apply_pipeline_contexts(self):
-        raise NotImplementedError()
+        pass
 
     def apply_runtime_contexts(self):
         if self.compiled_operation.has_pipeline:

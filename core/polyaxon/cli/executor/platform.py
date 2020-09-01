@@ -29,7 +29,7 @@ from polyaxon.cli.operations import logs as run_logs
 from polyaxon.cli.operations import statuses
 from polyaxon.client import RunClient
 from polyaxon.managers.run import RunManager
-from polyaxon.polyflow import V1Operation
+from polyaxon.polyflow import V1CompiledOperation, V1Operation
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
 
@@ -44,36 +44,67 @@ def run(
     op_spec: V1Operation,
     log: bool,
     watch: bool,
+    eager: bool,
 ):
-    def create_run():
-        click.echo("Creating a run.")
+    polyaxon_client = RunClient(owner=owner, project=project_name)
+
+    def cache_run(data):
+        config = polyaxon_client.client.sanitize_for_serialization(data)
+        cache.cache(
+            config_manager=RunManager, config=config, owner=owner, project=project_name,
+        )
+
+    def create_run(is_manged: bool = True):
         try:
-            polyaxon_client = RunClient(owner=owner, project=project_name)
             response = polyaxon_client.create(
-                name=name, description=description, tags=tags, content=op_spec
+                name=name,
+                description=description,
+                tags=tags,
+                content=op_spec,
+                is_managed=is_manged,
             )
-            config = polyaxon_client.client.sanitize_for_serialization(response)
-            cache.cache(
-                config_manager=RunManager,
-                config=config,
-                owner=owner,
-                project=project_name,
+            Printer.print_success(
+                "A new run `{}` was created".format(response.uuid)
             )
-            Printer.print_success("A new run `{}` was created".format(response.uuid))
-            click.echo(
-                "You can view this run on Polyaxon UI: {}".format(
-                    get_dashboard_url(
-                        subpath="{}/{}/runs/{}".format(
-                            owner, project_name, response.uuid
+            if not eager:
+                cache_run(response)
+                click.echo(
+                    "You can view this run on Polyaxon UI: {}".format(
+                        get_dashboard_url(
+                            subpath="{}/{}/runs/{}".format(
+                                owner, project_name, response.uuid
+                            )
                         )
                     )
                 )
-            )
         except (ApiException, HTTPError) as e:
             handle_cli_error(e, message="Could not create a run.")
             sys.exit(1)
 
-    create_run()
+    def refresh():
+        try:
+            polyaxon_client.refresh_data()
+        except (ApiException, HTTPError) as e:
+            handle_cli_error(e, message="Could not create a run.")
+            sys.exit(1)
+
+    click.echo("Creating a new run...")
+    create_run(not eager)
+    if eager:
+        from polyaxon.polyaxonfile.manager import get_eager_matrix_operations
+
+        refresh()
+        click.echo("Starting eager mode...")
+        compiled_operation = V1CompiledOperation.read(polyaxon_client.run_data.content)
+        op_specs = get_eager_matrix_operations(
+            content=polyaxon_client.run_data.raw_content,
+            compiled_operation=compiled_operation,
+            is_cli=True,
+        )
+        click.echo("Creating {} operations".format(len(op_specs)))
+        for op_spec in op_specs:
+            create_run()
+        return
 
     # Check if we need to invoke logs
     if watch:

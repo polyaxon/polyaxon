@@ -54,6 +54,9 @@ message UserSingup{
 
   // User password
   string password = 4;
+
+  // Invitation key
+  string invitation_key = 5;
 }
 
 // User password change

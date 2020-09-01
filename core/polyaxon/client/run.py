@@ -19,11 +19,12 @@ import sys
 import time
 
 from collections.abc import Mapping
-from typing import Dict, List, Sequence, Union
+from typing import Dict, List, Sequence, Tuple, Union
 
 import click
 import polyaxon_sdk
 
+from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
@@ -132,11 +133,11 @@ class RunClient:
         self._namespace = None
 
     @property
-    def status(self):
+    def status(self) -> str:
         return self._run_data.status
 
     @property
-    def namespace(self):
+    def namespace(self) -> str:
         if self._namespace:
             return self._namespace
         if (
@@ -150,15 +151,15 @@ class RunClient:
         return self._namespace
 
     @property
-    def owner(self):
+    def owner(self) -> str:
         return self._owner
 
     @property
-    def project(self):
+    def project(self) -> str:
         return self._project
 
     @property
-    def run_uuid(self):
+    def run_uuid(self) -> str:
         return self._run_uuid
 
     @property
@@ -166,7 +167,7 @@ class RunClient:
         return self._run_data
 
     @check_no_op
-    def get_inputs(self):
+    def get_inputs(self) -> Dict:
         """Gets the run's inputs.
         Returns:
             dict, all the run inputs/params.
@@ -174,7 +175,7 @@ class RunClient:
         return self._run_data.inputs
 
     @check_no_op
-    def get_outputs(self):
+    def get_outputs(self) -> Dict:
         """Gets the run's outputs.
         Returns:
              dict, all the run outputs/metrics.
@@ -189,7 +190,9 @@ class RunClient:
             self.owner, self.project, self.run_uuid
         )
 
-    def _update(self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = True):
+    def _update(
+        self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = True
+    ) -> V1Run:
         response = self.client.runs_v1.patch_run(
             owner=self.owner,
             project=self.project,
@@ -203,7 +206,9 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def update(self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = False):
+    def update(
+        self, data: Union[Dict, polyaxon_sdk.V1Run], async_req: bool = False
+    ) -> V1Run:
         """Updates a run based on the data passed.
 
         [Run API](/docs/api/#operation/PatchRun)
@@ -221,7 +226,7 @@ class RunClient:
     @check_offline
     def _create(
         self, data: Union[Dict, polyaxon_sdk.V1OperationBody], async_req: bool = False
-    ):
+    ) -> V1Run:
         response = self.client.runs_v1.create_run(
             owner=self.owner, project=self.project, body=data, async_req=async_req,
         )
@@ -241,7 +246,8 @@ class RunClient:
         description: str = None,
         tags: Union[str, Sequence[str]] = None,
         content: Union[str, Dict, V1Operation] = None,
-    ):
+        is_managed: bool = True,
+    ) -> V1Run:
         """Creates a new run based on the data passed.
 
         N.B. Create methods are only useful if you want to create a run programmatically,
@@ -264,11 +270,11 @@ class RunClient:
             tags: str or List[str], optional, list of tags,
                 it will override the tags in the operation if provided.
             content: str or Dict or V1Operation, optional.
+            is_managed: bool flag to create a managed run.
 
         Returns:
             V1Run, run instance from the response.
         """
-        is_managed = True
         if not content:
             is_managed = False
         elif not isinstance(content, (str, Mapping, V1Operation)):
@@ -304,7 +310,7 @@ class RunClient:
         profile: str = None,
         queue: str = None,
         nocache: bool = True,
-    ):
+    ) -> V1Run:
         """Creates a new run based on a polyaxonfile.
 
         N.B. Create methods are only useful if you want to create a run programmatically,
@@ -343,7 +349,7 @@ class RunClient:
             profile=profile,
             queue=queue,
             nocache=nocache,
-            log=False,
+            verbose=False,
         )
         return self.create(
             name=name, description=description, tags=tags, content=op_spec
@@ -361,7 +367,7 @@ class RunClient:
         profile: str = None,
         queue: str = None,
         nocache: bool = True,
-    ):
+    ) -> V1Run:
         """Creates a new run from a url containing a Polyaxonfile specification.
 
         N.B. Create methods are only useful if you want to create a run programmatically,
@@ -399,7 +405,7 @@ class RunClient:
             profile=profile,
             queue=queue,
             nocache=nocache,
-            log=False,
+            verbose=False,
         )
         return self.create(
             name=name, description=description, tags=tags, content=op_spec
@@ -417,7 +423,7 @@ class RunClient:
         profile: str = None,
         queue: str = None,
         nocache: bool = True,
-    ):
+    ) -> V1Run:
         """Creates a new run from the hub based on the component name.
 
         N.B. Create methods are only useful if you want to create a run programmatically,
@@ -454,7 +460,7 @@ class RunClient:
             profile=profile,
             queue=queue,
             nocache=nocache,
-            log=False,
+            verbose=False,
         )
         return self.create(
             name=name, description=description, tags=tags, content=op_spec
@@ -497,7 +503,9 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def get_statuses(self, last_status: str = None):
+    def get_statuses(
+        self, last_status: str = None
+    ) -> Tuple[str, List[V1StatusCondition]]:
         """Gets the run's statuses.
 
         [Run API](/docs/api/#operation/GetRunStatus)
@@ -586,7 +594,7 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def get_logs(self, last_file=None, last_time=None):
+    def get_logs(self, last_file=None, last_time=None) -> "V1Logs":
         """Gets the run's logs.
 
         This method return up-to 2000 line logs per request.
@@ -1263,13 +1271,18 @@ class RunClient:
 def get_run_logs(
     client: RunClient,
     hide_time: bool = False,
+    all_containers: bool = False,
     all_info: bool = False,
     follow: bool = False,
 ):
     def get_logs(last_file=None, last_time=None):
         try:
             response = client.get_logs(last_file=last_file, last_time=last_time)
-            get_logs_handler(show_timestamp=not hide_time, all_info=all_info)(response)
+            get_logs_handler(
+                show_timestamp=not hide_time,
+                all_containers=all_containers,
+                all_info=all_info,
+            )(response)
             return response
         except (ApiException, HTTPError) as e:
             if not follow:

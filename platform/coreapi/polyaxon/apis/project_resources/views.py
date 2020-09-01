@@ -71,7 +71,6 @@ class ProjectRunsListView(ProjectResourceListEndpoint, ListEndpoint, CreateEndpo
 
 
 class ProjectRunsArtifactsView(ProjectResourceListEndpoint, ListEndpoint):
-
     queryset = runs_artifacts_queries.project_runs_artifacts
     serializer_class = RunArtifactLightSerializer
     filter_backends = (QueryFilter, OrderingFilter)

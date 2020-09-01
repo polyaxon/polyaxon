@@ -27,3 +27,6 @@ def validate_url(url):
     if not parsed.hostname:
         return False
     return True
+
+
+URL_FORMAT = "{protocol}://{domain}{path}"

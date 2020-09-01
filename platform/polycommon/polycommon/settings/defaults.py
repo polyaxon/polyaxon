@@ -16,6 +16,7 @@
 
 # Setting values to None means using defaults
 
+from polyaxon.constants import PLATFORM_DIST_CE
 from polycommon import pkg
 
 ENCRYPTION_BACKEND = None
@@ -28,7 +29,7 @@ WORKERS_SERVICE = "polycommon.workers"
 EXECUTOR_SERVICE = "coredb.executor"
 OPERATIONS_BACKEND = None
 PLATFORM_VERSION = pkg.VERSION
-PLATFORM_DIST = "ce"
+PLATFORM_DIST = PLATFORM_DIST_CE
 CONF_BACKEND = "polycommon.conf.service.ConfService"
 STORE_OPTION = "env"
 AUTH_USER_MODEL = "coredb.User"

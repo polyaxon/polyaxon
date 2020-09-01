@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.1.8-rc0
+- API version: 1.1.8-rc4
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.1.8-rc0</version>
+  <version>1.1.8-rc4</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.1.8-rc0"
+compile "org.openapitools:openapi-java-client:1.1.8-rc4"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.1.8-rc0.jar`
+* `target/openapi-java-client-1.1.8-rc4.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -140,6 +140,7 @@ Class | Method | HTTP request | Description
 *AuthV1Api* | [**changePassword**](docs/AuthV1Api.md#changePassword) | **POST** /api/v1/auth/change-password | Change password
 *AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/auth/token | Login
 *AuthV1Api* | [**resetPassword**](docs/AuthV1Api.md#resetPassword) | **POST** /api/v1/auth/reset-password | Reset password
+*AuthV1Api* | [**resetPasswordConfirm**](docs/AuthV1Api.md#resetPasswordConfirm) | **POST** /api/v1/auth/reset-password-confirm | Reset password confirm
 *AuthV1Api* | [**signup**](docs/AuthV1Api.md#signup) | **POST** /api/v1/auth/signup | Signup
 *ComponentHubV1Api* | [**createComponentHub**](docs/ComponentHubV1Api.md#createComponentHub) | **POST** /api/v1/orgs/{owner}/components | Create hub component
 *ComponentHubV1Api* | [**deleteComponentHub**](docs/ComponentHubV1Api.md#deleteComponentHub) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
@@ -172,17 +173,21 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**createOrganization**](docs/OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | Create organization
 *OrganizationsV1Api* | [**createOrganizationMember**](docs/OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Create organization member
 *OrganizationsV1Api* | [**deleteOrganization**](docs/OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
+*OrganizationsV1Api* | [**deleteOrganizationInvitation**](docs/OrganizationsV1Api.md#deleteOrganizationInvitation) | **DELETE** /api/v1/orgs/{owner}/invitations | Delete organization invitation details
 *OrganizationsV1Api* | [**deleteOrganizationMember**](docs/OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
 *OrganizationsV1Api* | [**getOrganization**](docs/OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Get organization
+*OrganizationsV1Api* | [**getOrganizationInvitation**](docs/OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 *OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
 *OrganizationsV1Api* | [**getOrganizationSettings**](docs/OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
 *OrganizationsV1Api* | [**listOrganizationMembers**](docs/OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 *OrganizationsV1Api* | [**listOrganizationNames**](docs/OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
 *OrganizationsV1Api* | [**listOrganizations**](docs/OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations
 *OrganizationsV1Api* | [**patchOrganization**](docs/OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | Patch organization
+*OrganizationsV1Api* | [**patchOrganizationInvitation**](docs/OrganizationsV1Api.md#patchOrganizationInvitation) | **PATCH** /api/v1/orgs/{owner}/invitations | Patch organization invitation
 *OrganizationsV1Api* | [**patchOrganizationMember**](docs/OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
 *OrganizationsV1Api* | [**patchOrganizationSettings**](docs/OrganizationsV1Api.md#patchOrganizationSettings) | **PATCH** /api/v1/orgs/{owner}/settings | Patch oranization settings
 *OrganizationsV1Api* | [**updateOrganization**](docs/OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | Update organization
+*OrganizationsV1Api* | [**updateOrganizationInvitation**](docs/OrganizationsV1Api.md#updateOrganizationInvitation) | **PUT** /api/v1/orgs/{owner}/invitations | Update organization invitation
 *OrganizationsV1Api* | [**updateOrganizationMember**](docs/OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Update organization member
 *OrganizationsV1Api* | [**updateOrganizationSettings**](docs/OrganizationsV1Api.md#updateOrganizationSettings) | **PUT** /api/v1/orgs/{owner}/settings | Update organization settings
 *ProjectDashboardsV1Api* | [**createProjectDashboard**](docs/ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
@@ -230,8 +235,8 @@ Class | Method | HTTP request | Description
 *QueuesV1Api* | [**listOrganizationQueues**](docs/QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
 *QueuesV1Api* | [**listQueueNames**](docs/QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
 *QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
-*QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch queue
-*QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update queue
+*QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Patch queue
+*QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Update queue
 *RunProfilesV1Api* | [**createRunProfile**](docs/RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create run profile
 *RunProfilesV1Api* | [**deleteRunProfile**](docs/RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete run profile
 *RunProfilesV1Api* | [**getRunProfile**](docs/RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get run profile
@@ -273,7 +278,6 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**listArchivedRuns**](docs/RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 *RunsV1Api* | [**listBookmarkedRuns**](docs/RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 *RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
-*RunsV1Api* | [**listRunsIo**](docs/RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
 *RunsV1Api* | [**notifyRunStatus**](docs/RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 *RunsV1Api* | [**patchRun**](docs/RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 *RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run

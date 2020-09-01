@@ -83,13 +83,25 @@ func NewSignupOK() *SignupOK {
 A successful response.
 */
 type SignupOK struct {
+	Payload *service_model.V1Auth
 }
 
 func (o *SignupOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/auth/signup][%d] signupOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/auth/signup][%d] signupOK  %+v", 200, o.Payload)
+}
+
+func (o *SignupOK) GetPayload() *service_model.V1Auth {
+	return o.Payload
 }
 
 func (o *SignupOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.V1Auth)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.1.8-rc0
+  version: 1.1.8-rc4
 servers:
 - url: /
 security:
@@ -232,6 +232,52 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
+  /api/v1/auth/reset-password-confirm:
+    post:
+      operationId: ResetPasswordConfirm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1PasswordChange'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Auth'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Reset password confirm
+      tags:
+      - AuthV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
   /api/v1/auth/signup:
     post:
       operationId: Signup
@@ -243,7 +289,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Auth'
           description: A successful response.
         "204":
           content:
@@ -1874,6 +1923,137 @@ paths:
       tags:
       - QueuesV1
       x-accepts: application/json
+  /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}:
+    patch:
+      operationId: PatchQueue
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Agent that consumes the queue
+        in: path
+        name: agent
+        required: true
+        schema:
+          type: string
+      - description: UUID
+        in: path
+        name: queue.uuid
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1Queue'
+        description: Queue body
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Queue'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Patch queue
+      tags:
+      - QueuesV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      operationId: UpdateQueue
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Agent that consumes the queue
+        in: path
+        name: agent
+        required: true
+        schema:
+          type: string
+      - description: UUID
+        in: path
+        name: queue.uuid
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1Queue'
+        description: Queue body
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Queue'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Update queue
+      tags:
+      - QueuesV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
   /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}:
     delete:
       operationId: DeleteQueue
@@ -2155,137 +2335,6 @@ paths:
       summary: Update agent token
       tags:
       - AgentsV1
-      x-codegen-request-body-name: body
-      x-contentType: application/json
-      x-accepts: application/json
-  /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}:
-    patch:
-      operationId: PatchQueue
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Agent
-        in: path
-        name: queue.agent
-        required: true
-        schema:
-          type: string
-      - description: UUID
-        in: path
-        name: queue.uuid
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/v1Queue'
-        description: Queue body
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1Queue'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
-      summary: Patch queue
-      tags:
-      - QueuesV1
-      x-codegen-request-body-name: body
-      x-contentType: application/json
-      x-accepts: application/json
-    put:
-      operationId: UpdateQueue
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Agent
-        in: path
-        name: queue.agent
-        required: true
-        schema:
-          type: string
-      - description: UUID
-        in: path
-        name: queue.uuid
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/v1Queue'
-        description: Queue body
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1Queue'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
-      summary: Update queue
-      tags:
-      - QueuesV1
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
@@ -3759,6 +3808,272 @@ paths:
       tags:
       - DashboardsV1
       x-accepts: application/json
+  /api/v1/orgs/{owner}/invitations:
+    delete:
+      operationId: DeleteOrganizationInvitation
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: User.
+        in: query
+        name: member.user
+        schema:
+          type: string
+      - description: Read-only User email.
+        in: query
+        name: member.user_email
+        schema:
+          type: string
+      - description: Role.
+        in: query
+        name: member.role
+        schema:
+          type: string
+      - description: Optional time when the entity was created.
+        in: query
+        name: member.created_at
+        schema:
+          format: date-time
+          type: string
+      - description: Optional last time the entity was updated.
+        in: query
+        name: member.updated_at
+        schema:
+          format: date-time
+          type: string
+      - description: Optional email.
+        in: query
+        name: email
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Delete organization invitation details
+      tags:
+      - OrganizationsV1
+      x-accepts: application/json
+    get:
+      operationId: GetOrganizationInvitation
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: User.
+        in: query
+        name: member.user
+        schema:
+          type: string
+      - description: Read-only User email.
+        in: query
+        name: member.user_email
+        schema:
+          type: string
+      - description: Role.
+        in: query
+        name: member.role
+        schema:
+          type: string
+      - description: Optional time when the entity was created.
+        in: query
+        name: member.created_at
+        schema:
+          format: date-time
+          type: string
+      - description: Optional last time the entity was updated.
+        in: query
+        name: member.updated_at
+        schema:
+          format: date-time
+          type: string
+      - description: Optional email.
+        in: query
+        name: email
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1OrganizationMember'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Get organization invitation details
+      tags:
+      - OrganizationsV1
+      x-accepts: application/json
+    patch:
+      operationId: PatchOrganizationInvitation
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Optional email.
+        in: query
+        name: email
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1OrganizationMember'
+        description: Organization body
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1OrganizationMember'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Patch organization invitation
+      tags:
+      - OrganizationsV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      operationId: UpdateOrganizationInvitation
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Optional email.
+        in: query
+        name: email
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1OrganizationMember'
+        description: Organization body
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1OrganizationMember'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Update organization invitation
+      tags:
+      - OrganizationsV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
   /api/v1/orgs/{owner}/members:
     get:
       operationId: ListOrganizationMembers
@@ -3835,6 +4150,11 @@ paths:
         required: true
         schema:
           type: string
+      - description: Optional email.
+        in: query
+        name: email
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -3895,6 +4215,11 @@ paths:
         required: true
         schema:
           type: string
+      - description: Optional email.
+        in: query
+        name: email
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -3952,6 +4277,11 @@ paths:
         in: path
         name: member.user
         required: true
+        schema:
+          type: string
+      - description: Optional email.
+        in: query
+        name: email
         schema:
           type: string
       requestBody:
@@ -8553,79 +8883,6 @@ paths:
       - RunsV1
       x-codegen-request-body-name: body
       x-contentType: application/json
-      x-accepts: application/json
-  /api/v1/{owner}/{project}/runs/io:
-    get:
-      operationId: ListRunsIo
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Project under namesapce
-        in: path
-        name: project
-        required: true
-        schema:
-          type: string
-      - description: Pagination offset.
-        in: query
-        name: offset
-        schema:
-          format: int32
-          type: integer
-      - description: Limit size.
-        in: query
-        name: limit
-        schema:
-          format: int32
-          type: integer
-      - description: Sort to order the search.
-        in: query
-        name: sort
-        schema:
-          type: string
-      - description: Query filter the search search.
-        in: query
-        name: query
-        schema:
-          type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1ListRunsResponse'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
-      summary: List runs io
-      tags:
-      - RunsV1
       x-accepts: application/json
   /api/v1/{owner}/{project}/runs/stop:
     post:
@@ -16820,13 +17077,11 @@ components:
           updated_at: 2000-01-23T04:56:07.000+00:00
           created_at: 2000-01-23T04:56:07.000+00:00
           user: user
-          email: email
         - user_email: user_email
           role: role
           updated_at: 2000-01-23T04:56:07.000+00:00
           created_at: 2000-01-23T04:56:07.000+00:00
           user: user
-          email: email
       properties:
         count:
           format: int32
@@ -18479,16 +18734,12 @@ components:
         updated_at: 2000-01-23T04:56:07.000+00:00
         created_at: 2000-01-23T04:56:07.000+00:00
         user: user
-        email: email
       properties:
         user:
           title: User
           type: string
         user_email:
           title: Read-only User email
-          type: string
-        email:
-          title: Write-only email for inviting new user
           type: string
         role:
           title: Role
@@ -26634,6 +26885,9 @@ components:
           type: string
         password:
           title: User password
+          type: string
+        invitation_key:
+          title: Invitation key
           type: string
       title: User singup
       type: object

@@ -20,6 +20,7 @@ from rest_framework.exceptions import ValidationError
 from coredb.abstracts.getter import get_run_model
 from coredb.api.base.cloning import CloningMixin
 from coredb.api.base.is_managed import IsManagedMixin
+from coredb.api.base.pipeline import PipelineMixin
 from coredb.api.base.settings import SettingsMixin
 from coredb.managers.operations import compile_operation_run
 from coredb.managers.runs import create_run
@@ -27,9 +28,12 @@ from polyaxon.exceptions import PolyaxonException
 from polyaxon.polyaxonfile import OperationSpecification
 
 
-class RunSerializer(serializers.ModelSerializer, CloningMixin, SettingsMixin):
+class RunSerializer(
+    serializers.ModelSerializer, CloningMixin, PipelineMixin, SettingsMixin
+):
     uuid = fields.UUIDField(format="hex", read_only=True)
     original = fields.SerializerMethodField()
+    pipeline = fields.SerializerMethodField()
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
     settings = fields.SerializerMethodField()
@@ -50,6 +54,7 @@ class RunSerializer(serializers.ModelSerializer, CloningMixin, SettingsMixin):
             "meta_kind",
             "meta_info",
             "status",
+            "pipeline",
             "original",
             "is_managed",
             "inputs",
@@ -98,29 +103,35 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                 "Managed runs require a content with valid specification"
             )
 
+        project_id = validated_data["project"].id
         user = validated_data.get("user")
-        if is_managed:
+        name = validated_data.get("name")
+        description = validated_data.get("description")
+        tags = validated_data.get("tags")
+
+        if is_managed or content:
             try:
                 op_spec = OperationSpecification.read(content)
             except Exception as e:
                 raise ValidationError(e)
             try:
                 return compile_operation_run(
-                    project_id=validated_data["project"].id,
+                    project_id=project_id,
                     user_id=user.id if user else None,
                     op_spec=op_spec,
-                    name=validated_data.get("name"),
-                    description=validated_data.get("description"),
-                    tags=validated_data.get("tags"),
+                    name=name,
+                    description=description,
+                    tags=tags,
+                    is_managed=is_managed,
                     supported_kinds=validated_data.get("supported_kinds"),
                 )
             except (PolyaxonException, ValueError) as e:
                 raise ValidationError(e)
         else:
             return create_run(
-                project_id=validated_data["project"].id,
+                project_id=project_id,
                 user_id=user.id if user else None,
-                name=validated_data.get("name"),
-                description=validated_data.get("description"),
-                tags=validated_data.get("tags"),
+                name=name,
+                description=description,
+                tags=tags,
             )

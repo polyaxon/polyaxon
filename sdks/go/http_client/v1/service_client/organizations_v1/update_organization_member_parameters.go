@@ -81,6 +81,11 @@ type UpdateOrganizationMemberParams struct {
 
 	*/
 	Body *service_model.V1OrganizationMember
+	/*Email
+	  Optional email.
+
+	*/
+	Email *string
 	/*MemberUser
 	  User
 
@@ -141,6 +146,17 @@ func (o *UpdateOrganizationMemberParams) SetBody(body *service_model.V1Organizat
 	o.Body = body
 }
 
+// WithEmail adds the email to the update organization member params
+func (o *UpdateOrganizationMemberParams) WithEmail(email *string) *UpdateOrganizationMemberParams {
+	o.SetEmail(email)
+	return o
+}
+
+// SetEmail adds the email to the update organization member params
+func (o *UpdateOrganizationMemberParams) SetEmail(email *string) {
+	o.Email = email
+}
+
 // WithMemberUser adds the memberUser to the update organization member params
 func (o *UpdateOrganizationMemberParams) WithMemberUser(memberUser string) *UpdateOrganizationMemberParams {
 	o.SetMemberUser(memberUser)
@@ -175,6 +191,22 @@ func (o *UpdateOrganizationMemberParams) WriteToRequest(r runtime.ClientRequest,
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
 		}
+	}
+
+	if o.Email != nil {
+
+		// query param email
+		var qrEmail string
+		if o.Email != nil {
+			qrEmail = *o.Email
+		}
+		qEmail := qrEmail
+		if qEmail != "" {
+			if err := r.SetQueryParam("email", qEmail); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	// path param member.user

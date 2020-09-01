@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **email** | **String** |  |  [optional]
 **organization** | **String** |  |  [optional]
 **password** | **String** |  |  [optional]
+**invitationKey** | **String** |  |  [optional]
 
 
 

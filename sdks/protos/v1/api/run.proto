@@ -179,12 +179,16 @@ message Run {
 message OperationBody{
     // The Operation body content as dump string
     string content = 1;
+
     // Optional, if the run is managed, true by default, this flag should be false if starting a non-managed run
     bool is_managed = 2;
+
     // Optional, only usefule if is_managed is false
     string name = 3;
+
     // Optional, only useful if is_managed is false
     string description = 4;
+
     // Optional, only useful if is_managed is false
     repeated string tags = 5;
 }

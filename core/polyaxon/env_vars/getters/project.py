@@ -42,6 +42,8 @@ def get_project_info(project):
 
 
 def get_project_or_local(project=None, is_cli: bool = False):
+    from polyaxon import settings
+
     if not project and not ProjectManager.is_initialized():
         if is_cli:
             Printer.print_error("Please provide a valid project.")
@@ -55,7 +57,7 @@ def get_project_or_local(project=None, is_cli: bool = False):
         project = ProjectManager.get_config()
         owner, project_name = project.owner, project.name
 
-    if not owner:
+    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
         owner = DEFAULT
 
     if not all([owner, project_name]):

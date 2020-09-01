@@ -40,7 +40,6 @@ Method | HTTP request | Description
 [**listArchivedRuns**](RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**listBookmarkedRuns**](RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 [**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
-[**listRunsIo**](RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
 [**notifyRunStatus**](RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
@@ -1974,67 +1973,6 @@ let opts = {
   'query': "query_example" // String | Query filter the search search.
 };
 apiInstance.listRuns(owner, project, opts, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-});
-```
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project under namesapce | 
- **offset** | **Number**| Pagination offset. | [optional] 
- **limit** | **Number**| Limit size. | [optional] 
- **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
-
-### Return type
-
-[**V1ListRunsResponse**](V1ListRunsResponse.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-
-## listRunsIo
-
-> V1ListRunsResponse listRunsIo(owner, project, opts)
-
-List runs io
-
-### Example
-
-```javascript
-import PolyaxonSdk from 'polyaxon-sdk';
-let defaultClient = PolyaxonSdk.ApiClient.instance;
-// Configure API key authorization: ApiKey
-let ApiKey = defaultClient.authentications['ApiKey'];
-ApiKey.apiKey = 'YOUR API KEY';
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.apiKeyPrefix = 'Token';
-
-let apiInstance = new PolyaxonSdk.RunsV1Api();
-let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project under namesapce
-let opts = {
-  'offset': 56, // Number | Pagination offset.
-  'limit': 56, // Number | Limit size.
-  'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
-};
-apiInstance.listRunsIo(owner, project, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {

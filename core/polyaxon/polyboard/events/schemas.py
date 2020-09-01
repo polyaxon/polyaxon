@@ -444,6 +444,7 @@ class V1Events:
     def get_event_at(self, index):
         event = self.df.iloc[index].to_dict()
         event["timestamp"] = event["timestamp"].isoformat()
+        event["step"] = sanitize_np_types(event["step"])
         return V1Event.from_dict(event)
 
     def _get_step_summary(self) -> Optional[Dict]:
@@ -474,7 +475,7 @@ class V1Events:
             summary["step"] = step_summary
 
         ts_summary = self._get_ts_summary()
-        if step_summary:
+        if ts_summary:
             summary["timestamp"] = ts_summary
 
         if self.kind == V1ArtifactKind.METRIC:

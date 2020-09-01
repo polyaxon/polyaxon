@@ -22,14 +22,15 @@ from polycommon.options.registry.core import SCHEDULER_ENABLED
 
 def handle_run_created(workers_backend, event: "Event") -> None:  # noqa: F821
     """Handles creation, resume, and restart"""
+    eager = not event.data["is_managed"] and event.instance and event.instance.content
     # Run is not managed by Polyaxon
-    if not event.data["is_managed"]:
+    if not event.data["is_managed"] and not eager:
         return
     # Run is managed by a pipeline
     if event.data.get("pipeline_id") is not None:
         return
 
-    if conf.get(SCHEDULER_ENABLED):
+    if conf.get(SCHEDULER_ENABLED) and not eager:
         workers_backend.send(
             CoreSchedulerCeleryTasks.RUNS_PREPARE, kwargs={"run_id": event.instance_id}
         )

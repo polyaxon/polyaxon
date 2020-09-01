@@ -33,6 +33,7 @@ def compile_operation_run(
     override_post: bool = True,
     params: Dict = None,
     readme: str = None,
+    is_managed: bool = True,
     pipeline_id: int = None,
     controller_id: int = None,
     supported_kinds: Set[str] = None,
@@ -51,6 +52,7 @@ def compile_operation_run(
         pipeline_id=pipeline_id,
         controller_id=controller_id,
         tags=tags,
+        is_managed=is_managed,
         supported_kinds=supported_kinds,
     )
     instance.save()

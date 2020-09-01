@@ -32,6 +32,9 @@ type V1UserSingup struct {
 	// User email
 	Email string `json:"email,omitempty"`
 
+	// Invitation key
+	InvitationKey string `json:"invitation_key,omitempty"`
+
 	// User organization
 	Organization string `json:"organization,omitempty"`
 

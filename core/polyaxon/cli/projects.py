@@ -95,7 +95,10 @@ def create(ctx, name, owner, description, tags, private, init):
     \b
     $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
     """
-    owner = owner or settings.AUTH_CONFIG.username or DEFAULT
+    owner = owner or settings.AUTH_CONFIG.username
+    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
+        owner = DEFAULT
+
     tags = validate_tags(tags)
 
     if not owner:
@@ -152,7 +155,9 @@ def ls(owner, query, sort, limit, offset):
 
     Uses /docs/core/cli/#caching
     """
-    owner = owner or settings.AUTH_CONFIG.username or DEFAULT
+    owner = owner or settings.AUTH_CONFIG.username
+    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
+        owner = DEFAULT
     if not owner:
         Printer.print_error(
             "Please login first or provide a valid owner --owner. "

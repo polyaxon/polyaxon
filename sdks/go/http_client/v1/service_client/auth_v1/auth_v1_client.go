@@ -45,6 +45,8 @@ type ClientService interface {
 
 	ResetPassword(params *ResetPasswordParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordOK, *ResetPasswordNoContent, error)
 
+	ResetPasswordConfirm(params *ResetPasswordConfirmParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordConfirmOK, *ResetPasswordConfirmNoContent, error)
+
 	Signup(params *SignupParams, authInfo runtime.ClientAuthInfoWriter) (*SignupOK, *SignupNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
@@ -155,6 +157,42 @@ func (a *Client) ResetPassword(params *ResetPasswordParams, authInfo runtime.Cli
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ResetPasswordDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ResetPasswordConfirm resets password confirm
+*/
+func (a *Client) ResetPasswordConfirm(params *ResetPasswordConfirmParams, authInfo runtime.ClientAuthInfoWriter) (*ResetPasswordConfirmOK, *ResetPasswordConfirmNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewResetPasswordConfirmParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ResetPasswordConfirm",
+		Method:             "POST",
+		PathPattern:        "/api/v1/auth/reset-password-confirm",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ResetPasswordConfirmReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ResetPasswordConfirmOK:
+		return value, nil, nil
+	case *ResetPasswordConfirmNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ResetPasswordConfirmDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
