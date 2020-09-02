@@ -19,8 +19,7 @@ import time
 
 import mock
 
-from azure.storage.blob import BlobProperties
-from azure.storage.blob._models import BlobPrefix
+from azure.storage.blob import BlobProperties, BlobPrefix
 from tests.utils import BaseTestCase
 
 from polyaxon.connections.azure.azure_blobstore import AzureBlobStoreService

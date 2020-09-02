@@ -125,7 +125,13 @@ async def collect_logs(request):
     if not operation_logs:
         return Response()
 
-    await upload_logs(run_uuid=run_uuid, logs=operation_logs)
+    try:
+        await upload_logs(run_uuid=run_uuid, logs=operation_logs)
+    except Exception as e:
+        raise HTTPException(
+            detail="Run's logs was not collected, an error was riased while uploading %s." % e,
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
     task = BackgroundTask(clean_tmp_logs, run_uuid=run_uuid)
     return Response(background=task)
 

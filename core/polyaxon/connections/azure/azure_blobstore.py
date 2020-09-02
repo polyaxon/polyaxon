@@ -20,8 +20,7 @@ from concurrent import futures
 from typing import List, Optional
 
 from azure.core.exceptions import HttpResponseError
-from azure.storage.blob import BlobServiceClient
-from azure.storage.blob._models import BlobPrefix
+from azure.storage.blob import BlobServiceClient, BlobPrefix
 
 from polyaxon.connections.azure.base import (
     AzureService,

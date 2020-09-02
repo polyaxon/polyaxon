@@ -90,7 +90,7 @@ setup(
         "docker": ["docker"],
         "git": ["gitpython"],
         "numpy": ["numpy"],
-        "polytune": ["scikit-learn==0.22.2", "hyperopt==0.2.4"],
+        "polytune": ["scikit-learn==0.23.2", "hyperopt==0.2.4"],
         "polyboard": [
             "Pillow",
             "matplotlib",
@@ -101,8 +101,8 @@ setup(
             "altair",
         ],
         "streams": [
-            "kubernetes_asyncio==11.2.0",
-            "starlette==0.13.6",
+            "kubernetes_asyncio==11.3.0",
+            "starlette==0.13.8",
             "aiofiles==0.5.0",
             "uvicorn==0.11.8",
             "pandas",

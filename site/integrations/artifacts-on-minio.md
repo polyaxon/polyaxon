@@ -25,11 +25,22 @@ You can use one or multiple buckets on Minio to store logs, job outputs, and exp
 
 Before using Minio, you need to deploy it and create a bucket to host your outputs.
 
-For that, you can use the Helm stable chart:
+There are different ways to deploy [Minio on Kubernetes](https://docs.min.io/docs/deploy-minio-on-kubernetes), 
+if you want to deploy Minio using the Helm Chart, you need to:
+
+ * Add Minio's repo:
+ 
+```bash
+helm install stable/minio
+```
+
+ * Deploy Minio's chart:
 
 ```bash
-helm install plx-minio stable/minio --namespace=polyaxon
+helm install plx-minio minio/minio --namespace=polyaxon
 ```
+
+You can also deploy with different configuration by using a config.yaml or passing the values as params, e.g. `--set accessKey=myaccesskey,secretKey=mysecretkey`
 
 ## Create a bucket on Minio
 
@@ -42,10 +53,10 @@ In order to use the buckets with Polyaxon, you can follow the [S3 Artifacts inte
 
 > **Note**: When Minio is installed via Helm with default values, it uses the following hard-wired default credentials, which you will use to login to the UI and setup access to Polyaxon:
 ```
-AccessKey: AKIAIOSFODNN7EXAMPLE
-SecretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+AccessKey: myaccesskey
+SecretKey: mysecretkey
 ```
 This means that the default secret keys should be:
 * AWS_ENDPOINT_URL: "http://plx-minio:9000"
-* AWS_ACCESS_KEY_ID: "AKIAIOSFODNN7EXAMPLE",
-* AWS_SECRET_ACCESS_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+* AWS_ACCESS_KEY_ID: "myaccesskey",
+* AWS_SECRET_ACCESS_KEY: "mysecretkey"
