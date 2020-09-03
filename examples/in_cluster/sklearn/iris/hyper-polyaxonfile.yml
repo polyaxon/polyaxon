@@ -1,0 +1,19 @@
+version: 1.1
+kind: operation
+matrix:
+  kind: random
+  numRuns: 15
+  params:
+    n_neighbors:
+      kind: range
+      value: "3:50:5"
+    leaf_size:
+      kind: choice
+      value: [5, 10, 20, 30]
+    metric:
+      kind: pchoice
+      value: [[minkowski, 0.8], [euclidean, 0.2]]
+    test_size:
+      kind: choice
+      value: [0.2, 0.3, 0.4]
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-examples/master/in_cluster/sklearn/iris/polyaxonfile.yml
