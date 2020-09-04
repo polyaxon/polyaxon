@@ -149,7 +149,6 @@
   is_service: true
   versions:
   - latest
-  - custom
 - name: tensorboard
   title: Tensorboard
   meta_title: Tensorboard

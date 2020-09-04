@@ -18,5 +18,5 @@ run:
   container:
     image: polyaxon/polyaxon-contrib
     workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/sklearn/iris"
-    command: [sh, -c]
-    args: ["streamlit run app.py -- --model-path={{ globals.artifacts_path }}/{{ uuid }}/assets/model/iris-model.joblib"]
+    command: [streamlit, run, app.py]
+    args: ["--", "--model-path={{ globals.artifacts_path }}/{{ uuid }}/assets/model/iris-model.joblib"]
