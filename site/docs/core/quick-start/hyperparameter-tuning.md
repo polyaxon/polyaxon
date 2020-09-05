@@ -118,7 +118,7 @@ Mapping is how you can provide a predefined space.
 
 Mapping can be also used to parallelize a job for fetching data, or loading information from a source to a destination concurrently.
 
-The `mapping.yaml` polyaxonfile defines all the values that we want to use for running our components:
+The `mapping.yaml` polyaxonfile defines all the values that we want to use for running our component:
 
 ```yaml
 version: 1.1
@@ -143,7 +143,7 @@ Starting a mapping is also similar to any other operation:
 $ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/automation/mapping.yml --eager
 ```
 
-> For more details check the [random search reference](/docs/automation/mapping/)
+> For more details check the [mapping reference](/docs/automation/mapping/)
 
 ## Learn More
 
