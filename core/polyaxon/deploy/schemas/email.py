@@ -20,6 +20,7 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
 class EmailSchema(BaseCamelSchema):
+    enabled = fields.Bool(allow_none=True)
     email_from = fields.Str(allow_none=True, data_key="from")
     host = fields.Str(allow_none=True)
     port = fields.Int(allow_none=True)
@@ -36,6 +37,7 @@ class EmailSchema(BaseCamelSchema):
 class EmailConfig(BaseConfig):
     SCHEMA = EmailSchema
     REDUCED_ATTRIBUTES = [
+        "enabled",
         "from",
         "host",
         "port",
@@ -47,6 +49,7 @@ class EmailConfig(BaseConfig):
 
     def __init__(
         self,  # noqa
+        enabled=None,
         email_from=None,
         host=None,
         port=None,
@@ -55,6 +58,7 @@ class EmailConfig(BaseConfig):
         host_password=None,
         backend=None,
     ):
+        self.enabled = enabled
         self.email_from = email_from
         self.host = host
         self.port = port

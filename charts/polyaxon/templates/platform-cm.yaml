@@ -17,7 +17,6 @@ data:
   POLYAXON_PASSWORD_LENGTH: {{ default "6" .Values.passwordLength | quote }}
   # Email
   {{- if .Values.email.enabled }}
-  EMAIL_ENABLED: {{ .Values.enabled | quote }}
   {{- if .Values.email.from }}
   POLYAXON_EMAIL_FROM: {{ .Values.email.from | quote }}
   {{- end }}
