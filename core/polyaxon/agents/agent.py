@@ -49,6 +49,7 @@ class Agent(BaseAgent):
                 return
             self.sync()
             self.log_agent_running()
+            logger.info("Agent is running.")
         except (ApiException, HTTPError) as e:
             self.log_agent_failed(
                 message="Could not start the agent {}.".format(repr(e))

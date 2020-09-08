@@ -25,13 +25,14 @@ from polycommon.config_manager import ConfigManager
 
 def set_api(context, config: ConfigManager, processors: List[str] = None):
     context["ROOT_URLCONF"] = "polyconf.urls"
+    platform_host = config.get_string("POLYAXON_PLATFORM_HOST", is_optional=True)
+    context["PLATFORM_HOST"] = platform_host
 
     def get_allowed_hosts():
         allowed_hosts = config.get_string(
             "POLYAXON_ALLOWED_HOSTS", is_optional=True, is_list=True, default=["*"]
         )
         allowed_hosts.append(".polyaxon.com")
-        platform_host = config.get_string("POLYAXON_PLATFORM_HOST", is_optional=True)
         if platform_host:
             allowed_hosts.append(platform_host)
 

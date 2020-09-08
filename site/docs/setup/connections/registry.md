@@ -91,7 +91,7 @@ You need to create a secret containing docker credentials config, e.g.
 }
 ```
 
-Please see how you can integrate Polyaxon with different [cloud providers docker registries](/integrations/registries/).
+Please see how you can integrate Polyaxon with different [docker registry providers](/integrations/registries/).
 
 ### Add the access information to your connections catalog
 

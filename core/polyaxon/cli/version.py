@@ -50,7 +50,7 @@ def check_cli_version(config):
     """Check if the current cli version satisfies the server requirements"""
     from distutils.version import LooseVersion  # pylint:disable=import-error
 
-    click.echo("Checking CLI compatibility version ...")
+    click.echo("Checking CLI compatibility version.")
 
     min_version = clean_version_for_check(config.min_version)
     latest_version = clean_version_for_check(config.latest_version)
