@@ -142,22 +142,22 @@ class V1DockerfileType(BaseTypeConfig, polyaxon_sdk.V1DockerfileType):
     ### Example
 
     ```yaml
-    image: image:tag
-    env:
-      KEY1: value1
-      KEY2: value2
-    path:
-    - module/add/to/path
-    copy:
-    - copy/local/path
-    run:
-    - pip install ...
-    - mv foo bar
-    langEnv: en_US.UTF-8
-    uid: 2222
-    gid: 1111
-    filename: Dockerfile2
-    workdir: ../my-code
+    >>> image: image:tag
+    >>> env:
+    >>>   KEY1: value1
+    >>>   KEY2: value2
+    >>> path:
+    >>> - module/add/to/path
+    >>> copy:
+    >>> - copy/local/path
+    >>> run:
+    >>> - pip install ...
+    >>> - mv foo bar
+    >>> langEnv: en_US.UTF-8
+    >>> uid: 2222
+    >>> gid: 1111
+    >>> filename: Dockerfile2
+    >>> workdir: ../my-code
     ```
     """
 
