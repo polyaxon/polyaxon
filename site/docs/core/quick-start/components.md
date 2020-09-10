@@ -319,7 +319,7 @@ $ polyaxon ops -p quick-start -uuid UUID logs
 We can start another run based on the same component, but this time we will pass some more params to modify the default inputs' values:
 
 ```bash
-$ polyaxon run run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml -P lr=0.005 -P epochs=8
+$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml -P lr=0.005 -P epochs=8
 ```
 
 
