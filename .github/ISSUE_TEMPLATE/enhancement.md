@@ -10,4 +10,4 @@ about: Suggest an enhancement of an existing feature
 
 ### Enhancement
 
-<!-- Describe your propsed changes, or the ideal solution. -->
+<!-- Describe your proposed changes, or the ideal solution. -->
