@@ -44,7 +44,7 @@ Every project can manage jobs, services, dags, and matrix executions.
 
 ## Project settings
 
-The project settings page provides several tabs to manage accessible members, teams, run profiles, connections, ...
+The project settings page provides several tabs to manage accessible members, teams, presets, connections, ...
 
 ![project-settings-select](../../../../content/images/dashboard/projects/settings-select.png)
 

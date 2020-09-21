@@ -72,22 +72,31 @@ Unrestricted access to the organization, its data, and settings.
  * Can make billing and plan changes.
  * Can delete an organization.
 
-
 ### Admin
 
- * Admin privileges on any teams of which they're a member.
- * They can create new teams and projects.
- * Can remove teams and projects which they already hold membership on.
+ * Has admin privileges on any teams of which they're a member.
+ * Can admin projects and set restrictions on connections, presets, members access, agents, queues.
+ * Can create new teams, projects, model registry and component hub entries.
+ * Can remove teams, projects, model registry and component hub entries which they already hold membership on.
+ * Can promote searches and dashboards to organization level.
+ * Can promote experiments to model registry.
 
 ### Member
+ 
+ * Can view project, models, components.
+ * Can view experiments, jobs, builds, services, dashboards, pipelines.
+ * Can act on experiments, jobs, builds, services, dashboards, pipelines.
+ * Can view most other data within the organization.
 
- * Members can view and act on experiments/jobs/builds/services/pipelines.
+### Viewer
+
+ * Can view experiments, jobs, builds, services, dashboards, pipelines.
  * Can view most other data within the organization.
 
 ### Outsider
 
- * Outsider is a person who isn't explicitly a member of your organization.
- * Outsider can Read, Write, or Admin permissions to one or more projects in your organization if invited.
+ * Is a person who isn't explicitly a member of your organization.
+ * Can read, write, or have admin permissions to one or more projects in your organization if invited and provided with such permissions.
 
 
 ## Organization Management
@@ -98,3 +107,4 @@ An organization can be further tuned to reflect the kind of access and scale you
  * You can manage the component hub.
  * You can manage the model registry.
  * You can create and manage agents to isolate and scale your workload over multiple namespaces and clusters.
+ * You can create and manage queues to set priorities, routing, and scheduling strategies.
