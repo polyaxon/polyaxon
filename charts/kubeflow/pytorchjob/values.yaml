@@ -1,2 +1,3 @@
 image: gcr.io/kubeflow-images-public/pytorch-operator
 imageTag: v1.0.0-g047cf0f
+skipCRD: false
