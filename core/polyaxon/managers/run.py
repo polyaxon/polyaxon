@@ -22,7 +22,7 @@ from polyaxon.managers.base import BaseConfigManager
 from polyaxon.utils.formatting import Printer
 
 
-class RunManager(BaseConfigManager):
+class RunConfigManager(BaseConfigManager):
     """Manages run configuration .run file."""
 
     VISIBILITY = BaseConfigManager.VISIBILITY_ALL

@@ -28,6 +28,7 @@ from marshmallow import ValidationError, fields
 
 from polyaxon import types
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.logger import logger
 from polyaxon.parser.constants import NO_VALUE_FOUND
 from polyaxon.schemas.types import (
     V1ArtifactsType,
@@ -40,7 +41,6 @@ from polyaxon.schemas.types import (
     V1WasbType,
 )
 from polyaxon.schemas.types.event import V1EventType
-from polyaxon.schemas.types.image import V1ImageType
 
 
 def get_int(key, value, is_list=False, is_optional=False, default=None, options=None):
@@ -653,7 +653,7 @@ def get_image_init(
 ):
     """
     Get the value corresponding to the key and converts
-    it to `V1ImageType`/`list(V1ImageType)`.
+    it to `str`/`list(str)`.
 
     Args:
         key: the dict key.
@@ -668,15 +668,37 @@ def get_image_init(
     """
 
     def convert_to_image_init(x):
+        if isinstance(x, Mapping):
+            if "name" not in x:
+                raise PolyaxonSchemaError(
+                    "Polyaxon received an image that does not contain an image"
+                )
+            logger.info(
+                "Polyaxon received a legacy image format. "
+                "The operation will not run correctly"
+            )
+            return x.get("name")
         if not isinstance(x, Mapping):
-            x = convert_to_dict(x, key)
-        return V1ImageType.from_dict(x)
+            try:
+                x = convert_to_dict(x, key)
+            except:
+                return x
+
+        if "name" not in x:
+            raise PolyaxonSchemaError(
+                "Polyaxon received an image that does not contain an image"
+            )
+        logger.info(
+            "Polyaxon received a legacy image format. "
+            "The operation will not run correctly"
+        )
+        return x.get("name")
 
     if is_list:
         return _get_typed_list_value(
             key=key,
             value=value,
-            target_type=V1ImageType,
+            target_type=str,
             type_convert=convert_to_image_init,
             is_optional=is_optional,
             default=default,
@@ -687,7 +709,7 @@ def get_image_init(
     return _get_typed_value(
         key=key,
         value=value,
-        target_type=V1ImageType,
+        target_type=str,
         type_convert=convert_to_image_init,
         is_optional=is_optional,
         default=default,

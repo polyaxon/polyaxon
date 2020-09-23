@@ -23,6 +23,7 @@ import polyaxon_sdk
 
 from marshmallow import ValidationError, fields, validates_schema
 
+from polyaxon import types
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.params import PARAM_REGEX
 
@@ -103,6 +104,8 @@ class ParamSchema(BaseCamelSchema):
     search = fields.Nested(ParamSearchSchema, allow_none=True)
     ref = fields.Str(allow_none=True)
     context_only = fields.Bool(allow_none=True)
+    connection = fields.Str(allow_none=True)
+    to_init = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -135,10 +138,12 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     defined in the [component](/docs/core/specification/component/)
 
     Args:
-         * value: any
-         * search: V1SearchParam, optional
-         * ref: str, optional
-         * context_only: bool, optional
+         value: any
+         search: V1SearchParam, optional
+         ref: str, optional
+         context_only: bool, optional
+         connection: str, optional
+         to_init: bool, optional
 
     ## YAML usage
 
@@ -260,6 +265,16 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     Polyaxon will not check if this param was required by an input/output,
     and will inject it automatically in the context to be used.
     You can use for example `{{ convolutions.conv1 }}` in the specification.
+
+    ### connection
+
+    A connection to use with the parame.
+    if the initial Input/Output definition has a predefined connection and this connection
+    is provided, it will override the that value and will be added to the context.
+
+    ### to_init
+
+    if True the param will be converted to an init container.
     """
 
     SCHEMA = ParamSchema
@@ -268,6 +283,8 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
         "search",
         "ref",
         "contextOnly",
+        "connection",
+        "toInit",
     ]
 
     def validate(self):
@@ -334,7 +351,15 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
             return ""
         return "{}.{}".format(self.ref, self.value)
 
-    def get_spec(self, name: str, iotype: str, is_flag: bool, is_list: bool):
+    def get_spec(
+        self,
+        name: str,
+        iotype: str,
+        is_flag: bool,
+        is_list: bool,
+        is_context: bool,
+        arg_format: str,
+    ):
         """
         Checks if the value is param ref and validates it.
 
@@ -412,16 +437,50 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
                     )
 
         return ParamSpec(
-            name=name, iotype=iotype, param=self, is_flag=is_flag, is_list=is_list
+            name=name,
+            iotype=iotype,
+            param=self,
+            is_flag=is_flag,
+            is_list=is_list,
+            is_context=is_context,
+            arg_format=arg_format,
         )
 
 
-class ParamSpec(namedtuple("ParamSpec", "name iotype param is_flag is_list")):
-    @property
-    def display_value(self):
+class ParamSpec(
+    namedtuple("ParamSpec", "name iotype param is_flag is_list is_context arg_format")
+):
+    def get_display_value(self):
         if self.is_flag:
             return "--{}".format(self.name) if self.param.value else ""
         return self.param.value
+
+    def __repr__(self):
+        return str(self.get_display_value())
+
+    def as_str(self):
+        return str(self)
+
+    def as_arg(self):
+        if self.iotype == types.BOOL:
+            return "--{}".format(self.name) if self.param.value else ""
+        if self.arg_format:
+            return (
+                self.arg_format.format(**{self.name: self.param.value})
+                if self.param.value
+                else ""
+            )
+        return "--{}={}".format(self.name, self.param.value)
+
+    def to_parsed_param(self):
+        parsed_param = {
+            "connection": self.param.connection,
+            "value": self.param.value,
+            "type": self.iotype,
+            "as_str": self.as_str(),
+            "as_arg": self.as_arg(),
+        }
+        return parsed_param
 
     def validate_ref(
         self,

@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
 **disabled** | **bool** |  | [optional] 
-**deleted** | **bool** |  | [optional] 
 **namespace** | **str** |  | [optional] 
 **version_api** | [**object**](.md) |  | [optional] 
 **content** | **str** |  | [optional] 

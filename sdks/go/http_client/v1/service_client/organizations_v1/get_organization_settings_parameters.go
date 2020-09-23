@@ -90,6 +90,16 @@ type GetOrganizationSettingsParams struct {
 
 	*/
 	OrganizationName *string
+	/*OrganizationPreset
+	  Default preset.
+
+	*/
+	OrganizationPreset *string
+	/*OrganizationQueue
+	  Default queue.
+
+	*/
+	OrganizationQueue *string
 	/*OrganizationRole
 	  Current user's role in this org.
 
@@ -185,6 +195,28 @@ func (o *GetOrganizationSettingsParams) WithOrganizationName(organizationName *s
 // SetOrganizationName adds the organizationName to the get organization settings params
 func (o *GetOrganizationSettingsParams) SetOrganizationName(organizationName *string) {
 	o.OrganizationName = organizationName
+}
+
+// WithOrganizationPreset adds the organizationPreset to the get organization settings params
+func (o *GetOrganizationSettingsParams) WithOrganizationPreset(organizationPreset *string) *GetOrganizationSettingsParams {
+	o.SetOrganizationPreset(organizationPreset)
+	return o
+}
+
+// SetOrganizationPreset adds the organizationPreset to the get organization settings params
+func (o *GetOrganizationSettingsParams) SetOrganizationPreset(organizationPreset *string) {
+	o.OrganizationPreset = organizationPreset
+}
+
+// WithOrganizationQueue adds the organizationQueue to the get organization settings params
+func (o *GetOrganizationSettingsParams) WithOrganizationQueue(organizationQueue *string) *GetOrganizationSettingsParams {
+	o.SetOrganizationQueue(organizationQueue)
+	return o
+}
+
+// SetOrganizationQueue adds the organizationQueue to the get organization settings params
+func (o *GetOrganizationSettingsParams) SetOrganizationQueue(organizationQueue *string) {
+	o.OrganizationQueue = organizationQueue
 }
 
 // WithOrganizationRole adds the organizationRole to the get organization settings params
@@ -292,6 +324,38 @@ func (o *GetOrganizationSettingsParams) WriteToRequest(r runtime.ClientRequest, 
 		qOrganizationName := qrOrganizationName
 		if qOrganizationName != "" {
 			if err := r.SetQueryParam("organization.name", qOrganizationName); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.OrganizationPreset != nil {
+
+		// query param organization.preset
+		var qrOrganizationPreset string
+		if o.OrganizationPreset != nil {
+			qrOrganizationPreset = *o.OrganizationPreset
+		}
+		qOrganizationPreset := qrOrganizationPreset
+		if qOrganizationPreset != "" {
+			if err := r.SetQueryParam("organization.preset", qOrganizationPreset); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.OrganizationQueue != nil {
+
+		// query param organization.queue
+		var qrOrganizationQueue string
+		if o.OrganizationQueue != nil {
+			qrOrganizationQueue = *o.OrganizationQueue
+		}
+		qOrganizationQueue := qrOrganizationQueue
+		if qOrganizationQueue != "" {
+			if err := r.SetQueryParam("organization.queue", qOrganizationQueue); err != nil {
 				return err
 			}
 		}

@@ -26,7 +26,7 @@ from polyaxon.managers.base import BaseConfigManager
 from polyaxon.schemas.cli.agent_config import AgentConfig
 
 
-class AgentManager(BaseConfigManager):
+class AgentConfigManager(BaseConfigManager):
     """Manages agent configuration .agent file."""
 
     VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL

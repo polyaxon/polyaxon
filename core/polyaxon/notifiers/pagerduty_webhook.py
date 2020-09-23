@@ -17,17 +17,17 @@
 from typing import Dict
 
 from polyaxon.connections.kinds import V1ConnectionKind
-from polyaxon.notifiers.keys import INTEGRATIONS_WEBHOOKS_PAGER_DUTY
+from polyaxon.notifiers.keys import INTEGRATIONS_WEBHOOKS_PAGERDUTY
 from polyaxon.notifiers.spec import NotificationSpec
 from polyaxon.notifiers.webhook import WebHookNotifier
 
 
 class PagerDutyWebHookNotifier(WebHookNotifier):
-    notification_key = V1ConnectionKind.PAGER_DUTY
+    notification_key = V1ConnectionKind.PAGERDUTY
     name = "PagerDuty WebHook"
     description = "PagerDuty webhooks to send event payload to pagerduty."
     raise_empty_context = True
-    config_key = INTEGRATIONS_WEBHOOKS_PAGER_DUTY
+    config_key = INTEGRATIONS_WEBHOOKS_PAGERDUTY
     validate_keys = ["service_key"]
 
     @classmethod

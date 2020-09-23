@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
 **disabled** | **Boolean** |  | [optional] 
-**deleted** | **Boolean** |  | [optional] 
 **spec** | [**V1SearchSpec**](V1SearchSpec.md) |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 

@@ -116,7 +116,6 @@ class OperationsService(Service):
         description: str = None,
         tags: str = None,
         override: Union[str, Dict] = None,
-        override_post: bool = True,
         params: Dict = None,
         readme: str = None,
         original_id: int = None,
@@ -134,7 +133,7 @@ class OperationsService(Service):
         if op_spec:
             if not compiled_operation or override:
                 compiled_operation = OperationSpecification.compile_operation(
-                    op_spec, override=override, override_post=override_post
+                    op_spec, override=override
                 )
             params = op_spec.params
 

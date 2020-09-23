@@ -22,19 +22,22 @@ from marshmallow import ValidationError
 
 from polyaxon import settings
 from polyaxon.cli.executor import docker_run, k8s_run, platform_run
+from polyaxon.cli.options import OPTIONS_PROJECT
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.managers.git import GitConfigManager
 from polyaxon.polyaxonfile import (
     CompiledOperationSpecification,
     OperationSpecification,
     check_polyaxonfile,
 )
+from polyaxon.utils import code_reference
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.validation import validate_tags
 
 
 @click.command()
-@click.option("--project", "-p", type=str)
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(
     "-f",
     "--file",
@@ -91,7 +94,7 @@ from polyaxon.utils.validation import validate_tags
     multiple=True,
     help="A parameter to override the default params of the run, form -P name=value.",
 )
-@click.option("--profile", type=str, help="Name of the profile to use for this run.")
+@click.option("--presets", type=str, help="Name of the presets to use for this run.")
 @click.option(
     "--queue",
     "-q",
@@ -114,6 +117,27 @@ from polyaxon.utils.validation import validate_tags
     "currently this mode supports grid search, random search, and parallel mapping. "
     "Note that this flag requires numpy.",
 )
+@click.option(
+    "--git-preset",
+    is_flag=True,
+    default=False,
+    help="A flag to enable automatic injection of a git initializer as a preset "
+    "using the initialized git connection.",
+)
+@click.option(
+    "--git-revision",
+    type=str,
+    help="If provided, Polyaxon will use this git revision "
+    "instead of trying to detected and use the latest commit. "
+    "The git revision could be a commit or a branch or any valid tree-ish.",
+)
+@click.option(
+    "--ignore-template",
+    is_flag=True,
+    default=False,
+    help="If provided, Polyaxon will ignore template definition and "
+    "submit the manifest to be checked by the API.",
+)
 @click.pass_context
 def run(
     ctx,
@@ -129,10 +153,13 @@ def run(
     watch,
     local,
     params,
-    profile,
+    presets,
     queue,
     nocache,
     eager,
+    git_preset,
+    git_revision,
+    ignore_template,
 ):
     """Run polyaxonfile specification.
 
@@ -172,18 +199,55 @@ def run(
     \b
     polyaxon run -pm path/to/my-component.py:componentA
     """
+    git_init = None
+    if git_preset:
+        # Check that the current path was initialized
+        if not GitConfigManager.is_initialized():
+            Printer.print_error(
+                "You can't use --git-init, "
+                "the current path is not initialized with a valid git connection or a git url, "
+                "please run `polyaxon init [--git-connection] [--git-url]` "
+                "to set a valid git configuration."
+            )
+            sys.exit(1)
+        git_init = GitConfigManager.get_config()
+        if git_revision:
+            git_init.git.revision = git_revision
+        elif code_reference.is_git_initialized(path="."):
+            if code_reference.is_dirty(path="."):
+                Printer.print_warning(
+                    "Polyaxon detected uncommitted changes in the current git repo!"
+                )
+            commit_hash = code_reference.get_commit()
+            git_init.git.revision = commit_hash
+        else:
+            Printer.print_warning(
+                "Polyaxon could not find a valid git repo, "
+                "and will not add the current commit to the git initializer."
+            )
+
+    presets = validate_tags(presets)
+
     op_spec = check_polyaxonfile(
         polyaxonfile=polyaxonfile,
         python_module=python_module,
         url=url,
         hub=hub,
         params=params,
-        profile=profile,
+        presets=presets,
         queue=queue,
         nocache=nocache,
         verbose=False,
         eager=eager,
+        git_init=git_init,
+        ignore_template=ignore_template,
     )
+
+    if ignore_template:
+        op_spec.disable_template()
+    if op_spec.is_template():
+        click.echo("Please customize the specification or disable the template.")
+        sys.exit(1)
 
     owner, project_name = get_project_or_local(project, is_cli=True)
     tags = validate_tags(tags)

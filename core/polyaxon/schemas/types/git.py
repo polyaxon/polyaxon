@@ -26,8 +26,6 @@ from polyaxon.schemas.types.base import BaseTypeConfig
 class GitTypeSchema(BaseCamelSchema):
     url = RefOrObject(fields.Str(allow_none=True))
     revision = RefOrObject(fields.Str(allow_none=True))
-    connection = RefOrObject(fields.Str(allow_none=True))
-    init = RefOrObject(fields.Bool(allow_none=True))
 
     @staticmethod
     def schema_config():
@@ -39,14 +37,12 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
 
     If used as an input type, Polyaxon can resolve several git connections
     and will turn this input type into an initializer with logic to clone
-    the repo with support of branches and commits,
+    the repo with support for branches and commits,
     the requested repo will be exposed as a context for your jobs and operations.
 
     Args:
         url: str, optional.
         revision: str, optional.
-        connection: str, optional.
-        init: bool, optioanl.
 
     ### YAML usage
 
@@ -65,7 +61,7 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
     ```yaml
     >>> params:
     >>>   test1: {value: {"url": "https://github.com/tensorflow/models"}}
-    >>>   test2: {value: {connection: "my-git-connection", revision: "branchA"}}
+    >>>   test2: {value: {revision: "branchA"}, connection: "my-git-connection"}
     ```
 
     ### Python usage
@@ -99,7 +95,8 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
     >>>         value=types.V1GitType(url="https://github.com/tensorflow/models")
     >>>     ),
     >>>     "test2": V1Param(
-    >>>         value=types.V1GitType(connection="my-git-connection", revision="branchA")
+    >>>         value=types.V1GitType(revision="branchA"),
+    >>>         connection="my-git-connection",
     >>>     ),
     >>> }
     ```
@@ -107,7 +104,7 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
 
     IDENTIFIER = "git"
     SCHEMA = GitTypeSchema
-    REDUCED_ATTRIBUTES = ["url", "revision", "connection", "init"]
+    REDUCED_ATTRIBUTES = ["url", "revision"]
 
     def get_name(self):
         if self.url:

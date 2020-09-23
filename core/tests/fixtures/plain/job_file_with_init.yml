@@ -2,7 +2,7 @@
 version:  1.1
 kind: component
 tags: [tensorflow]
-profile: "profile A"
+presets: ["profile A"]
 plugins:
   logLevel: INFO
   docker: true

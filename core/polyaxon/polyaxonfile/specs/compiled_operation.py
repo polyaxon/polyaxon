@@ -44,7 +44,7 @@ class CompiledOperationSpecification(BaseSpecification):
         return cls.CONFIG.read(parsed_data)
 
     @staticmethod
-    def dict_to_param_spec(contexts: Dict = None):
+    def dict_to_param_spec(contexts: Dict = None, is_context: bool = False):
         contexts = contexts or {}
         return {
             k: ParamSpec(
@@ -53,6 +53,8 @@ class CompiledOperationSpecification(BaseSpecification):
                 iotype=types.ANY,
                 is_flag=False,
                 is_list=None,
+                is_context=is_context,
+                arg_format=None,
             )
             for k, v in contexts.items()
         }
@@ -77,7 +79,7 @@ class CompiledOperationSpecification(BaseSpecification):
                         )
                     )
         param_spec = {param.name: param for param in param_spec}
-        param_spec.update(cls.dict_to_param_spec(contexts=contexts))
+        param_spec.update(cls.dict_to_param_spec(contexts=contexts, is_context=True))
         return param_spec
 
     @classmethod
@@ -246,7 +248,9 @@ class CompiledOperationSpecification(BaseSpecification):
             param_spec = {}
             for k in contexts:
                 param_spec[k] = copy.copy(replica_param_spec)
-                param_spec[k].update(cls.dict_to_param_spec(contexts=contexts[k]))
+                param_spec[k].update(
+                    cls.dict_to_param_spec(contexts=contexts[k], is_context=True)
+                )
         parsed_data = Parser.parse_distributed_runtime(config.to_dict(), param_spec)
         return cls.CONFIG.read(parsed_data)
 

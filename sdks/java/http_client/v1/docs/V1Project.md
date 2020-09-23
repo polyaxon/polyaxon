@@ -16,7 +16,6 @@ Name | Type | Description | Notes
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **isPublic** | **Boolean** |  |  [optional]
-**deleted** | **Boolean** |  |  [optional]
 **bookmarked** | **Boolean** |  |  [optional]
 **readme** | **String** |  |  [optional]
 **settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  |  [optional]

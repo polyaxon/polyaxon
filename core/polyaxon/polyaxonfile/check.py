@@ -17,7 +17,7 @@
 import os
 
 from collections import OrderedDict
-from typing import Dict
+from typing import Dict, List
 
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
@@ -28,7 +28,7 @@ from polyaxon.polyaxonfile.manager import (
 )
 from polyaxon.polyaxonfile.params import parse_params
 from polyaxon.polyaxonfile.specs import get_specification, kinds
-from polyaxon.polyflow import V1Operation
+from polyaxon.polyflow import V1Init, V1Operation
 from polyaxon.utils.formatting import Printer, dict_tabulate
 from polyaxon.utils.list_utils import to_list
 
@@ -75,7 +75,7 @@ def check_polyaxonfile(
     url: str = None,
     hub: str = None,
     params: Dict = None,
-    profile: str = None,
+    presets: List[str] = None,
     queue: str = None,
     nocache: bool = None,
     verbose: bool = True,
@@ -84,11 +84,13 @@ def check_polyaxonfile(
     to_op: bool = True,
     validate_params: bool = True,
     eager: bool = False,
+    git_init: V1Init = None,
+    ignore_template: bool = False,
 ):
-    if sum([1 for i in [polyaxonfile, python_module, url, hub] if i]) > 1:
+    if sum([1 for i in [python_module, url, hub] if i]) > 1:
         message = (
             "You can only use one and only one option: "
-            "hub, url, module, or path or polyaxonfile.".format(hub)
+            "hub, url, or a python module.".format(hub)
         )
         if is_cli:
             Printer.print_error(message, sys_exit=True)
@@ -97,7 +99,14 @@ def check_polyaxonfile(
     if not any([polyaxonfile, python_module, url, hub]):
         polyaxonfile = check_default_path(path=".")
     if not any([polyaxonfile, python_module, url, hub]):
-        polyaxonfile = ""
+        message = (
+            "Something went wrong, `check_polyaxonfile` was called without a polyaxonfile, "
+            "a hub component reference, a url or a python module."
+        )
+        if is_cli:
+            Printer.print_error(message, sys_exit=True)
+        else:
+            raise PolyaxonfileError(message)
     if hub and not to_op:
         message = "Something went wrong, calling hub component `{}` without operation.".format(
             hub
@@ -116,9 +125,7 @@ def check_polyaxonfile(
     if not any([os.path.isfile(f) for f in polyaxonfile]) and not any(
         [python_module, url, hub]
     ):
-        message = (
-            "Please pass a valid polyaxonfile, a python module, url, or component name"
-        )
+        message = "Please pass a valid polyaxonfile, a python module, a url, or a component name"
         if is_cli:
             Printer.print_error(message, sys_exit=True)
         else:
@@ -145,8 +152,8 @@ def check_polyaxonfile(
                 plx_file = ConfigSpec.get_from(hub, "hub").read()
 
             else:
-                path_context = polyaxonfile[0]
-                plx_file = ConfigSpec.read_from(polyaxonfile)
+                path_context = polyaxonfile.pop(0)
+                plx_file = ConfigSpec.read_from(path_context)
 
             plx_file = get_specification(data=plx_file)
             if plx_file.kind == kinds.OPERATION:
@@ -157,14 +164,29 @@ def check_polyaxonfile(
                 hub=hub,
                 config=plx_file,
                 params=parsed_params,
-                profile=profile,
+                presets=presets,
                 queue=queue,
                 nocache=nocache,
                 path_context=path_context,
                 validate_params=validate_params,
+                preset_files=polyaxonfile,
+                git_init=git_init,
             )
         if verbose and is_cli:
             Printer.print_success("Polyaxonfile valid")
+        if ignore_template:
+            plx_file.disable_template()
+        if plx_file.is_template():
+            template_message = "This polyaxonfile was marked as template by the owner:"
+            if plx_file.template.description:
+                template_message += "\ntemplate description: {}".format(
+                    plx_file.template.description
+                )
+            if plx_file.template.fields:
+                template_message += "\ntemplate fields that need changes: {}".format(
+                    plx_file.template.fields
+                )
+            Printer.print_warning(template_message)
         if eager:
             is_supported_in_eager_mode(spec=plx_file)
         return plx_file

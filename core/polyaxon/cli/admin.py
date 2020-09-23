@@ -20,12 +20,12 @@ import click
 
 from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.managers.deploy import DeployManager
+from polyaxon.managers.deploy import DeployConfigManager
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.list_utils import to_list
 
 
-def read_deployment_config(filepaths):
+def read_deployment_config(filepaths, command: str):
     from polyaxon.deploy import reader
 
     if not filepaths:
@@ -35,7 +35,9 @@ def read_deployment_config(filepaths):
     for filepath in filepaths:
         if not os.path.isfile(filepath):
             Printer.print_error(
-                "`{}` must be a valid file".format(filepath), sys_exit=True
+                "`{}` must be a valid file".format(filepath),
+                sys_exit=True,
+                command_help="admin {}".format(command),
             )
     try:
         deployment_config = reader.read(filepaths)
@@ -81,8 +83,8 @@ def admin():
 )
 def deploy(config_file, deployment_type, manager_path, check, dry_run):
     """Deploy polyaxon."""
-    config = read_deployment_config(config_file)
-    manager = DeployManager(
+    config = read_deployment_config(config_file, command="deploy")
+    manager = DeployConfigManager(
         config=config,
         filepath=config_file,
         deployment_type=deployment_type,
@@ -143,8 +145,8 @@ def deploy(config_file, deployment_type, manager_path, check, dry_run):
 )
 def upgrade(config_file, deployment_type, manager_path, check, dry_run):
     """Upgrade a Polyaxon deployment."""
-    config = read_deployment_config(config_file)
-    manager = DeployManager(
+    config = read_deployment_config(config_file, command="upgrade")
+    manager = DeployConfigManager(
         config=config,
         filepath=config_file,
         deployment_type=deployment_type,
@@ -189,8 +191,8 @@ def upgrade(config_file, deployment_type, manager_path, check, dry_run):
 )
 def teardown(config_file, manager_path):
     """Teardown a polyaxon deployment given a config file."""
-    config = read_deployment_config(config_file)
-    manager = DeployManager(
+    config = read_deployment_config(config_file, command="teardown")
+    manager = DeployConfigManager(
         config=config, filepath=config_file, manager_path=manager_path
     )
     exception = None

@@ -1,0 +1,40 @@
+- groups:
+  - group: Quick Start
+    items:
+    - title: Get Started
+      link: /docs/intro/quick-start/
+    - title: Components
+      link: /docs/intro/quick-start/components/
+    - title: Operations
+      link: /docs/intro/quick-start/operations/
+    - title: Iterate in Notebooks
+      link: /docs/intro/quick-start/iterate-in-notebooks/
+    - title: Distributed Training
+      link: /docs/intro/quick-start/distributed-training/
+    - title: Hyperparameter Tuning
+      link: /docs/intro/quick-start/hyperparameter-tuning/
+    - title: Iterate with Polyaxon CLI
+      link: /docs/intro/quick-start/iterate-with-cli/
+    - title: Automation
+      link: /docs/intro/quick-start/automation/
+    - title: Deploying ML apps
+      link: /docs/intro/quick-start/deploying-ml-apps/
+    - title: Builds
+      link: /docs/intro/quick-start/builds/
+  - group: Features & Architecture
+    items:
+    - title: Features
+      link: /docs/intro/information/features/
+    - title: Architecture
+      link: /docs/intro/information/architecture/
+  - group: Concepts
+    items:
+    - title: Organization Concepts
+      link: /docs/intro/concepts/organization-concepts/
+    - title: Runtime Concepts
+      link: /docs/intro/concepts/runtime-concepts/
+    - title: Scheduling Concepts
+      link: /docs/intro/concepts/scheduling-concepts/
+    - title: Reproducibility Concepts
+      link: /docs/intro/concepts/reproducibility-concepts/
+

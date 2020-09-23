@@ -40,32 +40,29 @@ message Agent {
     // Optional a flag to disable the agent
     bool disabled = 5;
 
-    // Optional if the entity has been deleted
-    bool deleted = 6;
-
     // Namespace where the agent is deployed
-    string namespace = 7;
+    string namespace = 6;
 
     // Optional version api
-    google.protobuf.Struct version_api = 9;
+    google.protobuf.Struct version_api = 7;
 
     // Content of the agent config
-    string content = 10;
+    string content = 8;
 
     // The agent max concurrency
-    int32 concurrency = 11;
+    int32 concurrency = 9;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 12;
+    google.protobuf.Timestamp created_at = 10;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 13;
+    google.protobuf.Timestamp updated_at = 11;
 
     // Optional latest status of this entity
-    Statuses status = 14;
+    Statuses status = 12;
 
     // Optional settings
-    google.protobuf.Struct settings = 15;
+    google.protobuf.Struct settings = 13;
 }
 
  // Request data to create/update agents
@@ -105,17 +102,23 @@ message Queue {
     // Name
     string name = 3;
 
+    // Optional description
+    string description = 4;
+
+    // Optional tags of this entity
+    repeated string tags = 5;
+
     // The queue priority
-    int32 priority = 4;
+    int32 priority = 6;
 
     // The queue concurrency
-    int32 concurrency = 5;
+    int32 concurrency = 7;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp created_at = 8;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 7;
+    google.protobuf.Timestamp updated_at = 9;
 
 }
 

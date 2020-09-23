@@ -40,7 +40,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             "tags",
             "created_at",
             "updated_at",
-            "deleted",
         )
 
 

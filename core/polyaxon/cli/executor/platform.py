@@ -28,7 +28,7 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.operations import logs as run_logs
 from polyaxon.cli.operations import statuses
 from polyaxon.client import RunClient
-from polyaxon.managers.run import RunManager
+from polyaxon.managers.run import RunConfigManager
 from polyaxon.polyflow import V1CompiledOperation, V1Operation
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
@@ -51,7 +51,10 @@ def run(
     def cache_run(data):
         config = polyaxon_client.client.sanitize_for_serialization(data)
         cache.cache(
-            config_manager=RunManager, config=config, owner=owner, project=project_name,
+            config_manager=RunConfigManager,
+            config=config,
+            owner=owner,
+            project=project_name,
         )
 
     def create_run(is_manged: bool = True):
@@ -75,6 +78,7 @@ def run(
                         )
                     )
                 )
+                return response.uuid
         except (ApiException, HTTPError) as e:
             handle_cli_error(e, message="Could not create a run.")
             sys.exit(1)
@@ -87,7 +91,7 @@ def run(
             sys.exit(1)
 
     click.echo("Creating a new run...")
-    create_run(not eager)
+    run_uuid = create_run(not eager)
     if eager:
         from polyaxon.polyaxonfile.manager import get_eager_matrix_operations
 
@@ -105,11 +109,11 @@ def run(
         return
 
     # Check if we need to invoke logs
-    if watch:
-        ctx.obj = {"project": "{}/{}".format(owner, project_name)}
+    if watch and not eager:
+        ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
         ctx.invoke(statuses, watch=True)
 
     # Check if we need to invoke logs
-    if log:
-        ctx.obj = {"project": "{}/{}".format(owner, project_name)}
+    if log and not eager:
+        ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
         ctx.invoke(run_logs)

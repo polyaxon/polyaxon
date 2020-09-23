@@ -24,10 +24,8 @@ from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class ArtifactsTypeSchema(BaseCamelSchema):
-    connection = RefOrObject(fields.Str(allow_none=True))
     files = RefOrObject(fields.List(fields.Str(), allow_none=True))
     dirs = RefOrObject(fields.List(fields.Str(), allow_none=True))
-    init = RefOrObject(fields.Bool(allow_none=True))
     workers = RefOrObject(fields.Int(allow_none=True))
 
     @staticmethod
@@ -45,12 +43,8 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
 
 
     Args:
-        connection: str, optional, the connection to use,
-                    if not provided the default artifacts store is used
         files: List[str], optional, list of file subpaths
         dirs: List[str], optional, list of directory subpaths
-        init: bool, optional, if True the files and the dirs will be automatically
-              downloaded/provided in the run's artifacts context.
         workers: int, optional, number of threads for downloading data from S3/GCS/Azure.
 
     ### YAML usage
@@ -72,15 +66,15 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
     ```yaml
     >>> params:
     >>>   some-file-names: {value: {files: ["file1", "/path/to/file2"]}}
-    >>>   tensorboard-log-dir: {value: {dirs: ["/tensorboard-logs"], connection: "foo", init: True}}
-    >>>   dataset1: {value: {connection: "s3-dataset", init: True}}
+    >>>   tensorboard-log-dir: {value: {dirs: ["/tensorboard-logs"]}, connection: "foo", toInit: True}
+    >>>   dataset1: {value: {value: {dirs: ["/"]}, connection: "s3-dataset", init: True}
     ```
 
     The first param will be just a list of files definition that
     the user should know how to handle in their program.
 
     The second param, Polyaxon will load only that directory path from connection "foo".
-    This connection could be any bycket or volume.
+    This connection could be any a bucket or a volume.
 
     In the third param, `dataset1` will be resolved automatically because
     Polyaxon knows about that connection and that it's of type S3.
@@ -119,10 +113,14 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
     >>> params = {
     >>>     "test1": V1Param(value=types.V1ArtifactsType(files=["file1", "/path/to/file2"])),
     >>>     "test2": V1Param(
-    >>>         value=types.V1ArtifactsType(dirs=["/tensorboard-logs"], connection="foo", init=True)
+    >>>         value=types.V1ArtifactsType(dirs=["/tensorboard-logs"]),
+    >>>         connection="foo",
+    >>>         to_init=True
     >>>     ),
     >>>     "test3": V1Param(
-    >>>         value=types.V1ArtifactsType(connection="s3-dataset", init=True, workers=10)
+    >>>         value=types.V1ArtifactsType(dirs=["/"], workers=10),
+    >>>         connection="s3-dataset",
+    >>>         to_init=True
     >>>     ),
     >>> }
     ```
@@ -130,4 +128,4 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
 
     IDENTIFIER = "artifacts"
     SCHEMA = ArtifactsTypeSchema
-    REDUCED_ATTRIBUTES = ["files", "dirs", "connection", "init", "workers"]
+    REDUCED_ATTRIBUTES = ["files", "dirs", "workers"]

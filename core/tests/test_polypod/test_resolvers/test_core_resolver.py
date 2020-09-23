@@ -28,7 +28,7 @@ from polyaxon.auxiliaries import (
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1BucketConnection, V1K8sResourceSchema
 from polyaxon.exceptions import PolyaxonCompilerError
-from polyaxon.managers.agent import AgentManager
+from polyaxon.managers.agent import AgentConfigManager
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyflow import V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.resolver import BaseResolver
@@ -117,7 +117,7 @@ class TestResolver(BaseTestCase):
 
     def test_resolve_connections_with_invalid_config(self):
         fpath = tempfile.mkdtemp()
-        AgentManager.CONFIG_PATH = fpath
+        AgentConfigManager.CONFIG_PATH = fpath
         secret1 = V1K8sResourceType(
             name="secret1",
             schema=V1K8sResourceSchema(name="secret1"),

@@ -35,9 +35,6 @@ type V1Dashboard struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
-	// Optional if the entity has been deleted
-	Deleted bool `json:"deleted,omitempty"`
-
 	// Optional description
 	Description string `json:"description,omitempty"`
 

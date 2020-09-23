@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
-**deleted** | **bool** |  | [optional] 
 **user** | **str** |  | [optional] 
 **owner** | **str** |  | [optional] 
 **project** | **str** |  | [optional] 

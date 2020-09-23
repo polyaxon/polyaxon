@@ -4,9 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**artifacts_store** | **String** |  | [optional] 
 **connections** | **[String]** |  | [optional] 
-**run_profile** | **String** |  | [optional] 
-**run_profiles** | **[String]** |  | [optional] 
+**preset** | **String** |  | [optional] 
+**presets** | **[String]** |  | [optional] 
+**queue** | **String** |  | [optional] 
+**queues** | **[String]** |  | [optional] 
+**agents** | **[String]** |  | [optional] 
+**teams** | **[String]** |  | [optional] 
 
 

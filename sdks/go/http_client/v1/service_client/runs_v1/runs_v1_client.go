@@ -357,7 +357,7 @@ func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthI
 }
 
 /*
-  CreateRunArtifactsLineage creates bulk run run artifacts lineage
+  CreateRunArtifactsLineage creates bulk run artifacts lineage
 */
 func (a *Client) CreateRunArtifactsLineage(params *CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunArtifactsLineageOK, *CreateRunArtifactsLineageNoContent, error) {
 	// TODO: Validate the params before sending

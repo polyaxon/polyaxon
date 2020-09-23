@@ -55,17 +55,14 @@ message Search {
     // Optional a flag to disable the store
     bool disabled = 5;
 
-    // Optional if the entity has been deleted
-    bool deleted = 6;
-
     // Search spec
-    SearchSpec spec = 7;
+    SearchSpec spec = 6;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 7;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 8;
 }
 
  // Request data to create/update search

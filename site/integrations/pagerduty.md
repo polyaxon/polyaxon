@@ -50,7 +50,7 @@ Now you can add your PagerDuty's webhook to the integrations' section:
 ```yaml
 notificationConnections:
   - name: pagerduty-connection1
-    kind: pager_duty
+    kind: pagerduty
     secret:
       name: notification-secret
 ```

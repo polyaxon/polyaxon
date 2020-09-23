@@ -330,3 +330,30 @@ class TestV1Operations(BaseTestCase):
         }
         config = V1Operation.from_dict(config_dict)
         assert config.to_dict() == config_dict
+
+    def test_op_template(self):
+        config_dict = {
+            "actions": [
+                {"hubRef": "ref1"},
+                {"hubRef": "ref2", "label": "customLabel", "many": True},
+            ],
+            "hooks": [
+                {"trigger": "succeeded", "connection": "connection1"},
+                {"connection": "connection1", "hubRef": "ref2"},
+            ],
+            "component": {
+                "run": {
+                    "kind": V1RunKind.JOB,
+                    "environment": {
+                        "nodeSelector": {"polyaxon.com": "node_for_notebook_jobs"}
+                    },
+                    "container": {"image": "jupyterlab"},
+                },
+            },
+            "template": {
+                "description": "This is a template, check the fields",
+                "fields": ["actions[1].hubRef", "hooks[0].trigger"],
+            },
+        }
+        config = V1Operation.from_dict(config_dict)
+        assert config.to_dict() == config_dict

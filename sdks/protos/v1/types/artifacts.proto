@@ -20,20 +20,14 @@ package v1;
 
 // Artifacts type specification
 message ArtifactsType {
-    // Optional connection, if not provided the default artifacts store is used
-    string connection = 1;
-
     // Optional files to initialize
-    repeated string files = 2;
+    repeated string files = 1;
 
     // Optional dirs to initialize
-    repeated string dirs = 3;
-
-    // Optional bool to initialize this param
-    bool init = 4;
+    repeated string dirs = 2;
 
     // Optional number of concurrent threads to use
-    int32 workers = 5;
+    int32 workers = 3;
 }
 
 // Wasb type specification

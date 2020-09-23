@@ -6,10 +6,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**artifactsStore** | **String** |  |  [optional]
 **connections** | **List&lt;String&gt;** |  |  [optional]
-**runProfile** | **String** |  |  [optional]
-**runProfiles** | **List&lt;String&gt;** |  |  [optional]
+**preset** | **String** |  |  [optional]
+**presets** | **List&lt;String&gt;** |  |  [optional]
+**queue** | **String** |  |  [optional]
+**queues** | **List&lt;String&gt;** |  |  [optional]
+**agents** | **List&lt;String&gt;** |  |  [optional]
+**teams** | **List&lt;String&gt;** |  |  [optional]
 
 
 

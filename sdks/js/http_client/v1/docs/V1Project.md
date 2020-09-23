@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 **is_public** | **Boolean** |  | [optional] 
-**deleted** | **Boolean** |  | [optional] 
 **bookmarked** | **Boolean** |  | [optional] 
 **readme** | **String** |  | [optional] 
 **settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  | [optional] 

@@ -26,10 +26,11 @@ from marshmallow.utils import EXCLUDE
 
 from polyaxon import pkg
 from polyaxon.config_reader.spec import ConfigSpec
+from polyaxon.config_reader.utils import deep_update
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.schemas.patch_strategy import V1PatchStrategy
 from polyaxon.schemas.utils import to_camel_case
 from polyaxon.utils.humanize import humanize_timesince
-from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.tz_utils import get_timezone
 from polyaxon.utils.units import to_percentage, to_unit_memory
 
@@ -74,6 +75,8 @@ class BaseConfig:
     ROUNDING = 2
     UNKNOWN_BEHAVIOUR = RAISE
     WRITE_MODE = 0o777
+    FIELDS_MANUAL_PATCH = []
+    FIELDS_SAME_KIND_PATCH = []
 
     def to_light_dict(
         self,
@@ -194,13 +197,123 @@ class BaseConfig:
         with open(filepath, "w") as config_file:
             config_file.write(self.to_dict(dump=True))
 
-    @classmethod
-    def patch_obj(cls, config, values):
-        values = [config.to_dict()] + to_list(values)
-        return cls.read(values=values)
+    @staticmethod
+    def patch_normal_merge(current_value, value, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
 
-    def patch(self, values):
-        return self.patch_obj(self, values)
+        if isinstance(current_value, Mapping):
+            if strategy == V1PatchStrategy.POST_MERGE:
+                return deep_update(current_value, value)
+            elif strategy == V1PatchStrategy.PRE_MERGE:
+                return deep_update(value, current_value)
+        elif isinstance(current_value, list):
+            if strategy == V1PatchStrategy.POST_MERGE:
+                return current_value + [i for i in value if i not in current_value]
+            elif strategy == V1PatchStrategy.PRE_MERGE:
+                return value + [i for i in current_value if i not in value]
+        elif isinstance(current_value, BaseConfig):
+            return current_value.patch(value, strategy=strategy)
+        elif hasattr(current_value, "to_dict"):
+            if strategy == V1PatchStrategy.POST_MERGE:
+                return deep_update(current_value.to_dict(), value.to_dict())
+            elif strategy == V1PatchStrategy.PRE_MERGE:
+                return deep_update(value.to_dict(), current_value.to_dict())
+        else:
+            if strategy == V1PatchStrategy.POST_MERGE:
+                return value
+            elif strategy == V1PatchStrategy.PRE_MERGE:
+                return current_value
+
+    @classmethod
+    def patch_swagger_field(cls, config, values, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
+
+        openapi_types = getattr(config, "openapi_types", {})
+        for key in openapi_types:
+            value = getattr(values, key, None)
+            if value is None:
+                continue
+
+            current_value = getattr(config, key, None)
+            if current_value is None:
+                setattr(
+                    config, key, value
+                )  # handles also V1PatchStrategy.ISNULL implicitly
+                continue
+
+            if strategy == V1PatchStrategy.ISNULL:
+                continue
+            if strategy == V1PatchStrategy.REPLACE:
+                setattr(config, key, value)
+                continue
+
+            setattr(config, key, cls.patch_normal_merge(current_value, value, strategy))
+
+    @classmethod
+    def patch_obj(cls, config, values, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
+
+        for key in config.SCHEMA._declared_fields.keys():
+            if key in cls.FIELDS_MANUAL_PATCH:
+                continue
+
+            value = getattr(values, key, None)
+            if value is None:
+                continue
+
+            current_value = getattr(config, key, None)
+            if current_value is None:
+                setattr(
+                    config, key, value
+                )  # handles also V1PatchStrategy.ISNULL implicitly
+                continue
+
+            if (
+                isinstance(current_value, BaseConfig)
+                and key not in cls.FIELDS_SAME_KIND_PATCH
+            ):
+                current_value.patch(value, strategy=strategy)
+                continue
+
+            if not isinstance(current_value, BaseConfig) and hasattr(
+                current_value, "openapi_types"
+            ):
+                cls.patch_swagger_field(current_value, value, strategy)
+                continue
+
+            if strategy == V1PatchStrategy.ISNULL:
+                continue
+            if strategy == V1PatchStrategy.REPLACE:
+                setattr(config, key, value)
+                continue
+
+            # We only handle merge strategies
+            def normal_merge():
+                setattr(
+                    config, key, cls.patch_normal_merge(current_value, value, strategy)
+                )
+
+            def same_kind_merge():
+                # If the same kind resume merge patch using base logic
+                if current_value.kind == value.kind:
+                    normal_merge()
+                # Not same kind use post/pre replace
+                else:
+                    if strategy == V1PatchStrategy.POST_MERGE:
+                        setattr(config, key, value)
+                    elif strategy == V1PatchStrategy.PRE_MERGE:
+                        setattr(config, key, current_value)
+
+            if key in cls.FIELDS_SAME_KIND_PATCH:
+                same_kind_merge()
+            else:
+                normal_merge()
+
+        return config
+
+    def patch(self, values, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
+        return self.patch_obj(self, values, strategy)
 
     @staticmethod
     def localize_date(dt):
@@ -211,10 +324,18 @@ class BaseConfig:
         return dt.astimezone(get_timezone())
 
     @classmethod
-    def to_jsonschema(cls):
+    def to_jsonschema(cls, dump: bool = True):
         from marshmallow_jsonschema import JSONSchema  # pylint:disable=import-error
 
-        return JSONSchema().dump(cls.SCHEMA())  # pylint:disable=not-callable
+        value = JSONSchema().dump(cls.SCHEMA())  # pylint:disable=not-callable
+        if dump:
+            return ujson.dumps(value)
+        return value
+
+    @classmethod
+    def write_jsonschema(cls, filepath: str):
+        with open(filepath, "w") as config_file:
+            config_file.write(cls.to_jsonschema(dump=True))
 
 
 class BaseOneOfSchema(Schema):

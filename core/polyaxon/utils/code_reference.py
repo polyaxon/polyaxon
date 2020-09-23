@@ -58,12 +58,12 @@ def undo(repo_path):
     run_command(cmd="git clean -fd", data=None, location=repo_path, chw=True)
 
 
-def commit(repo_path, user_email, user_name, message="updated"):
+def commit(repo_path=".", user_email=None, user_name=None, message=None):
+    message = message or "updated"
     run_command(cmd="git add -A", data=None, location=repo_path, chw=True)
+    git_auth = "-c user.email=<{}> -c user.name={}".format(user_email, user_name)
     run_command(
-        cmd='git -c user.email=<{}> -c user.name={} commit -m "{}"'.format(
-            user_email, user_name, message
-        ),
+        cmd='git {} commit -m "{}"'.format(git_auth, message),
         data=None,
         location=repo_path,
         chw=True,

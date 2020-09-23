@@ -52,7 +52,7 @@ spec:
               - name: Host
                 value: {{ template "polyaxon.fullname" . }}-api
             {{- end }}
-          initialDelaySeconds: 120
+          initialDelaySeconds: 60
           periodSeconds: 30
           successThreshold: 1
           failureThreshold: 10
@@ -67,7 +67,7 @@ spec:
               - name: Host
                 value: {{ template "polyaxon.fullname" . }}-api
             {{- end }}
-          initialDelaySeconds: 120
+          initialDelaySeconds: 60
           periodSeconds: 30
           successThreshold: 1
           failureThreshold: 10

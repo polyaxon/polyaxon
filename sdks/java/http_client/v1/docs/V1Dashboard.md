@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **disabled** | **Boolean** |  |  [optional]
-**deleted** | **Boolean** |  |  [optional]
 **view** | [**DashboardView**](DashboardView.md) |  |  [optional]
 **spec** | [**Object**](.md) |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]

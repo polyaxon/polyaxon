@@ -14,11 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict
+from collections.abc import Mapping
+from typing import Dict, Union
 
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyaxonfile.specs.base import BaseSpecification
-from polyaxon.polyflow import V1CompiledOperation, V1Operation
+from polyaxon.polyflow import (
+    V1CompiledOperation,
+    V1Component,
+    V1Operation,
+    validate_run_patch,
+)
+from polyaxon.utils.list_utils import to_list
 
 
 class OperationSpecification(BaseSpecification):
@@ -30,58 +37,91 @@ class OperationSpecification(BaseSpecification):
 
     @classmethod
     def compile_operation(
-        cls, config: V1Operation, override: Dict = None, override_post: bool = True
+        cls, config: V1Operation, override: Dict = None
     ) -> V1CompiledOperation:
-        return V1CompiledOperation.read(
-            cls.generate_run_data(config, override, override_post)
+        if override:
+            preset = OperationSpecification.read(override, is_preset=True)
+            config = config.patch(preset, preset.patch_strategy)
+        # Patch run
+        component = config.component  # type: V1Component
+        if config.run_patch:
+            component.run = component.run.patch(
+                validate_run_patch(config.run_patch, component.run.kind),
+                strategy=config.patch_strategy,
+            )
+        patch_compiled = V1CompiledOperation(
+            name=config.name,
+            description=config.description,
+            tags=config.tags,
+            presets=config.presets,
+            queue=config.queue,
+            cache=config.cache,
+            hooks=config.hooks,
+            actions=config.actions,
+            events=config.events,
+            plugins=config.plugins,
+            termination=config.termination,
+            matrix=config.matrix,
+            schedule=config.schedule,
+            dependencies=config.dependencies,
+            trigger=config.trigger,
+            conditions=config.conditions,
+            skip_on_upstream_skip=config.skip_on_upstream_skip,
         )
 
-    @classmethod
-    def generate_run_data(cls, config: V1Operation, override=None, override_post=True):
-        op_config = config.to_light_dict()
-        name = None
-        if config.component:
-            name = config.component.get_name()
-        component_config = op_config.pop("component", {})
-        if name:
-            component_config["name"] = name
         values = [
-            {"version": config.version},
-            component_config,
-            {"kind": kinds.COMPILED_OPERATION},
+            {cls.VERSION: config.version},
+            component.to_dict(),
+            {cls.KIND: kinds.COMPILED_OPERATION},
         ]
-        op_override = {}
-        for field in [
-            cls.NAME,
-            cls.DESCRIPTION,
-            cls.TAGS,
-            cls.PROFILE,
-            cls.QUEUE,
-            cls.CACHE,
-            cls.PLUGINS,
-            cls.TERMINATION,
-            cls.MATRIX,
-            cls.SCHEDULE,
-            cls.DEPENDENCIES,
-            cls.TRIGGER,
-            cls.CONDITIONS,
-            cls.SKIP_ON_UPSTREAM_SKIP,
-        ]:
-            override_field = op_config.get(field)
-            if override_field:
-                op_override[field] = override_field
-        # Patch run
-        run_patch = op_config.get(cls.RUN_PATCH)
-        if run_patch:
-            op_override[cls.RUN] = run_patch
-        if override_post:
-            if op_override:
-                values.append(op_override)
-            if override:
-                values.append(override)
-        else:
-            if override:
-                values.append(override)
-            if op_override:
-                values.append(op_override)
-        return values
+        compiled = V1CompiledOperation.read(values)  # type: V1CompiledOperation
+        return compiled.patch(patch_compiled, strategy=config.patch_strategy)
+
+    @classmethod
+    def apply_preset(
+        cls, config: V1CompiledOperation, preset: Union[Dict, str] = None
+    ) -> V1CompiledOperation:
+        if not preset:
+            return config
+        preset = OperationSpecification.read(
+            preset, is_preset=True
+        )  # type: V1Operation
+        if preset.run_patch:
+            config.run = config.run.patch(
+                validate_run_patch(preset.run_patch, config.run.kind),
+                strategy=preset.patch_strategy,
+            )
+        patch_compiled = V1CompiledOperation(
+            name=preset.name,
+            description=preset.description,
+            tags=preset.tags,
+            presets=preset.presets,
+            queue=preset.queue,
+            cache=preset.cache,
+            hooks=preset.hooks,
+            actions=preset.actions,
+            events=preset.events,
+            plugins=preset.plugins,
+            termination=preset.termination,
+            matrix=preset.matrix,
+            schedule=preset.schedule,
+            dependencies=preset.dependencies,
+            trigger=preset.trigger,
+            conditions=preset.conditions,
+            skip_on_upstream_skip=preset.skip_on_upstream_skip,
+        )
+        return config.patch(patch_compiled, strategy=preset.patch_strategy)
+
+    @classmethod
+    def read(cls, values, is_preset: bool = False):
+        if is_preset:
+            if isinstance(values, cls.CONFIG):
+                values.is_preset = True
+                return values
+            elif isinstance(values, Mapping):
+                values[cls.IS_PRESET] = True
+            else:
+                values = to_list(values)
+                values = [{cls.IS_PRESET: True}] + values
+
+        return super().read(values)

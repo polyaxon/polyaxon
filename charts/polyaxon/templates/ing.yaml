@@ -6,7 +6,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ template "polyaxon.fullname" . }}-ingress
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-ingress
 {{ include "config.labels.common" . | indent 4 }}

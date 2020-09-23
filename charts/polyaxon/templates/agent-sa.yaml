@@ -4,7 +4,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ template "polyaxon.fullname" . }}-agent-sa
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-sa
 {{ include "config.labels.common" . | indent 4 }}
@@ -34,7 +34,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ template "polyaxon.fullname" . }}-agent-role
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-role
 {{ include "config.labels.common" . | indent 4 }}
@@ -72,7 +72,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ template "polyaxon.fullname" . }}-agent-role-binding
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-role-binding
 {{ include "config.labels.common" . | indent 4 }}
@@ -84,7 +84,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ template "polyaxon.fullname" . }}-agent-sa
-    namespace: {{ .Values.namespace }}
+    namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -101,6 +101,6 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ template "polyaxon.fullname" . }}-agent-sa
-    namespace: {{ .Values.namespace }}
+    namespace: {{ .Release.Namespace }}
 {{- end }}
 {{- end }}

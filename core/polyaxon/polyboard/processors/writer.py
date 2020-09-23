@@ -147,7 +147,7 @@ class BaseFileWriter:
 
 
 class EventFileWriter(BaseFileWriter):
-    def __init__(self, run_path: str, max_queue_size: int = 20, flush_secs: int = 120):
+    def __init__(self, run_path: str, max_queue_size: int = 20, flush_secs: int = 10):
         """Creates a `EventFileWriter`.
 
         Args:
@@ -169,7 +169,7 @@ class EventFileWriter(BaseFileWriter):
 
 
 class ResourceFileWriter(BaseFileWriter):
-    def __init__(self, run_path: str, max_queue_size: int = 20, flush_secs: int = 20):
+    def __init__(self, run_path: str, max_queue_size: int = 20, flush_secs: int = 10):
         """Creates a `ResourceFileWriter`.
 
         Args:
@@ -244,7 +244,7 @@ class EventAsyncManager(BaseAsyncManager):
     """Writes events to files by name by event kind."""
 
     def __init__(
-        self, event_writer: EventWriter, max_queue_size: int = 20, flush_secs: int = 120
+        self, event_writer: EventWriter, max_queue_size: int = 20, flush_secs: int = 10
     ):
         super().__init__(event_writer=event_writer, max_queue_size=max_queue_size)
         self._worker = EventWriterThread(
@@ -319,7 +319,7 @@ class ResourceAsyncManager(BaseAsyncManager):
     """Writes resource events to files by name by event kind."""
 
     def __init__(
-        self, event_writer: EventWriter, max_queue_size: int = 20, flush_secs: int = 20
+        self, event_writer: EventWriter, max_queue_size: int = 20, flush_secs: int = 10
     ):
         super().__init__(event_writer=event_writer, max_queue_size=max_queue_size)
         self._worker = ResourceWriterThread(

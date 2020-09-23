@@ -41,7 +41,7 @@ spec:
         livenessProbe:
           exec:
             command: ["/bin/bash", "./entrypoint.sh", "healthz"]
-          initialDelaySeconds: 120
+          initialDelaySeconds: 60
           periodSeconds: 60
           successThreshold: 1
           failureThreshold: 10
@@ -49,7 +49,7 @@ spec:
         readinessProbe:
           exec:
             command: ["/bin/bash", "./entrypoint.sh", "healthz"]
-          initialDelaySeconds: 120
+          initialDelaySeconds: 60
           periodSeconds: 60
           successThreshold: 1
           failureThreshold: 10

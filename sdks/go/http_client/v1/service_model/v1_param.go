@@ -30,6 +30,9 @@ import (
 // swagger:model v1Param
 type V1Param struct {
 
+	// A flag to signal to Polyaxon that this param is used with a connection
+	Connection string `json:"connection,omitempty"`
+
 	// A flag to signal to Polyaxon that this param should not be validated against io
 	ContextOnly bool `json:"context_only,omitempty"`
 
@@ -38,6 +41,9 @@ type V1Param struct {
 
 	// Search corresponds to a valid search that can be resolved
 	Search *V1ParamSearch `json:"search,omitempty"`
+
+	// A flag to signal to Polyaxon that this param must be tranformed to an init container
+	ToInit bool `json:"to_init,omitempty"`
 
 	// The value to pass, if no ref or search is passed then it corresponds to a literal value
 	Value interface{} `json:"value,omitempty"`

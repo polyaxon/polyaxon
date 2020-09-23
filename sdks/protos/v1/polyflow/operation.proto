@@ -28,31 +28,33 @@ import "v1/polyflow/hooks.proto";
 import "v1/polyflow/plugins.proto";
 import "v1/polyflow/termination.proto";
 import "v1/polyflow/trigger_policy.proto";
+import "v1/polyflow/patch_strategy.proto";
+import "v1/polyflow/template.proto";
 
 // Operation specification
 message Operation {
     // Spec version
     float version = 1;
 
-    // Optional component kind, should be equal to "component"
+    // Optional component kind, should be equal to "operation"
     string kind = 2;
 
-    // Optional component name, should a valid slug
+    // Optional component name override, should a valid slug
     string name = 3;
 
-    // Optional component description
+    // Optional component description override
     string description = 4;
 
-    // Optional component tags
+    // Optional component tags override
     repeated string tags = 5;
 
-    // Optional profile to use for running this component
-    string profile = 6;
+    // Optional preset to use for running this operation
+    repeated string presets = 6;
 
-    // Optional queue to use for running this component
+    // Optional queue to use for running this operation
     string queue = 7;
 
-    // Optional flag to disable cache validation and force run this component
+    // Optional flag to disable cache validation and force run this operation
     Cache cache = 8;
 
     // optional termination section
@@ -67,7 +69,7 @@ message Operation {
     // Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
     repeated string events = 12;
 
-    // Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+    // Optional actions section
     repeated Action actions = 13;
 
     // Optional hooks section
@@ -95,12 +97,21 @@ message Operation {
     // should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
     google.protobuf.Struct run_patch = 21;
 
+    // Optional patch startegy, default post_merge
+    PatchStrategy patch_strategy = 22;
+
+    // Optional flag to mark this specification as preset
+    bool is_preset = 23;
+
+    // Optional to mark this specification as template with instructions
+    Template template = 24;
+
     // Component template specification
-    oneof template {
-        string dag_ref = 22;
-        string url_ref = 23;
-        string path_ref = 24;
-        string hub_ref = 25;
-        Component component = 26;
+    oneof definition {
+        string dag_ref = 25;
+        string url_ref = 26;
+        string path_ref = 27;
+        string hub_ref = 28;
+        Component component = 29;
     }
 }

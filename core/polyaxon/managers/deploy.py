@@ -31,7 +31,7 @@ from polyaxon.managers.compose import ComposeConfigManager
 from polyaxon.utils.formatting import Printer
 
 
-class DeployManager:
+class DeployConfigManager:
     def __init__(
         self,
         config: DeploymentConfig = None,

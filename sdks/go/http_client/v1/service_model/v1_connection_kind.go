@@ -151,8 +151,8 @@ const (
 	// V1ConnectionKindMattermost captures enum value "mattermost"
 	V1ConnectionKindMattermost V1ConnectionKind = "mattermost"
 
-	// V1ConnectionKindPagerDuty captures enum value "pager_duty"
-	V1ConnectionKindPagerDuty V1ConnectionKind = "pager_duty"
+	// V1ConnectionKindPagerduty captures enum value "pagerduty"
+	V1ConnectionKindPagerduty V1ConnectionKind = "pagerduty"
 
 	// V1ConnectionKindHipchat captures enum value "hipchat"
 	V1ConnectionKindHipchat V1ConnectionKind = "hipchat"
@@ -169,7 +169,7 @@ var v1ConnectionKindEnum []interface{}
 
 func init() {
 	var res []V1ConnectionKind
-	if err := json.Unmarshal([]byte(`["host_path","volume_claim","gcs","s3","wasb","registry","git","aws","gcp","azure","mysql","postgres","oracle","vertica","sqlite","mssql","redis","presto","mongo","cassandra","ftp","grpc","hdfs","http","pig_cli","hive_cli","hive_metastore","hive_server2","jdbc","jenkins","samba","snowflake","ssh","cloudant","databricks","segment","slack","discord","mattermost","pager_duty","hipchat","webhook","custom"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["host_path","volume_claim","gcs","s3","wasb","registry","git","aws","gcp","azure","mysql","postgres","oracle","vertica","sqlite","mssql","redis","presto","mongo","cassandra","ftp","grpc","hdfs","http","pig_cli","hive_cli","hive_metastore","hive_server2","jdbc","jenkins","samba","snowflake","ssh","cloudant","databricks","segment","slack","discord","mattermost","pagerduty","hipchat","webhook","custom"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

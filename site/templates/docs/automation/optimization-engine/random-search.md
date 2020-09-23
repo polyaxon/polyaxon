@@ -14,7 +14,7 @@ tags:
 sidebar: "automation"
 ---
 
-> **Note**: Random Search in Polyaxon CE is only supported in eager mode with no concurrency management.
+> **Note**: Random Search in Polyaxon CE is supported in eager mode only with no concurrency management.
 
 ![random](../../../../content/images/references/optimization-engine/random-search.png)
 

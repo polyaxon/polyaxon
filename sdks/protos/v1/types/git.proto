@@ -25,10 +25,4 @@ message GitType {
 
     // Optional revision
     bool revision = 2;
-
-    // Optional connection to resolve the git definition
-    string connection = 3;
-
-    // Optional bool to initialize this param
-    bool init = 4;
 }

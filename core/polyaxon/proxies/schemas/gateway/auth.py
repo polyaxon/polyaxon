@@ -19,7 +19,7 @@ from polyaxon.api import AUTH_V1_LOCATION
 from polyaxon.proxies.schemas.base import get_config
 from polyaxon.proxies.schemas.urls import get_service_url, get_ssl_server_name
 
-AUTH_OPTIONS = """
+AUTH_OPTIONS = r"""
     auth_request     {auth_api};
     auth_request_set $auth_status $upstream_status;
 """  # noqa
@@ -33,7 +33,7 @@ def get_auth_config():
     )
 
 
-AUTH_LOCATION_CONFIG = """
+AUTH_LOCATION_CONFIG = r"""
 location = {auth_api} {{
     {resolver}
     {ssl_server_name}

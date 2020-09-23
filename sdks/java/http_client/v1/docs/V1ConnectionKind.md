@@ -83,7 +83,7 @@
 
 * `MATTERMOST` (value: `"mattermost"`)
 
-* `PAGER_DUTY` (value: `"pager_duty"`)
+* `PAGERDUTY` (value: `"pagerduty"`)
 
 * `HIPCHAT` (value: `"hipchat"`)
 

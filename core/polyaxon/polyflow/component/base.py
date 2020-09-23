@@ -31,7 +31,7 @@ class BaseComponentSchema(BaseCamelSchema):
     name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     description = fields.Str(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
-    profile = RefOrObject(fields.Str(allow_none=True))
+    presets = fields.List(fields.Str(allow_none=True))
     queue = RefOrObject(fields.Str(allow_none=True))
     cache = fields.Nested(CacheSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
@@ -52,7 +52,7 @@ class BaseComponent(BaseConfig):
         "name",
         "description",
         "tags",
-        "profile",
+        "presets",
         "queue",
         "cache",
         "termination",

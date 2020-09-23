@@ -21,20 +21,20 @@ from tests.utils import BaseTestCase
 from polyaxon.deploy.operators.helm import HelmOperator
 from polyaxon.deploy.operators.kubectl import KubectlOperator
 from polyaxon.deploy.schemas.deployment import DeploymentConfig, DeploymentTypes
-from polyaxon.managers.deploy import DeployManager
+from polyaxon.managers.deploy import DeployConfigManager
 
 
 @pytest.mark.managers_mark
-class TestDeployManager(BaseTestCase):
+class TestDeployConfigManager(BaseTestCase):
     def test_default_props(self):
-        manager = DeployManager()
+        manager = DeployConfigManager()
         assert manager.deployment_type == DeploymentTypes.KUBERNETES
         assert manager.is_kubernetes is True
         assert isinstance(manager.helm, HelmOperator)
         assert isinstance(manager.kubectl, KubectlOperator)
 
     def test_deployment_type(self):
-        manager = DeployManager(
+        manager = DeployConfigManager(
             config=DeploymentConfig.from_dict(
                 {"deploymentType": DeploymentTypes.DOCKER_COMPOSE}
             )
@@ -42,7 +42,7 @@ class TestDeployManager(BaseTestCase):
         assert manager.deployment_type == DeploymentTypes.DOCKER_COMPOSE
         assert manager.is_docker_compose is True
 
-        manager = DeployManager(
+        manager = DeployConfigManager(
             config=DeploymentConfig.from_dict(
                 {"deploymentType": DeploymentTypes.KUBERNETES}
             )
@@ -50,7 +50,7 @@ class TestDeployManager(BaseTestCase):
         assert manager.deployment_type == DeploymentTypes.KUBERNETES
         assert manager.is_kubernetes is True
 
-        manager = DeployManager(
+        manager = DeployConfigManager(
             config=DeploymentConfig.from_dict(
                 {"deploymentType": DeploymentTypes.HEROKU}
             )
@@ -58,7 +58,7 @@ class TestDeployManager(BaseTestCase):
         assert manager.deployment_type == DeploymentTypes.HEROKU
         assert manager.is_heroku is True
 
-        manager = DeployManager(
+        manager = DeployConfigManager(
             config=DeploymentConfig.from_dict(
                 {"deploymentType": DeploymentTypes.DOCKER}
             )

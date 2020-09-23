@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
-**profile** | **str** |  | [optional] 
+**presets** | **list[str]** |  | [optional] 
 **queue** | **str** |  | [optional] 
 **cache** | [**V1Cache**](V1Cache.md) |  | [optional] 
 **termination** | [**V1Termination**](V1Termination.md) |  | [optional] 

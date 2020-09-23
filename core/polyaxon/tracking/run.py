@@ -19,6 +19,8 @@ import os
 import sys
 import time
 
+from typing import List
+
 import polyaxon_sdk
 import ujson
 
@@ -37,6 +39,7 @@ from polyaxon.env_vars.getters import (
     get_collect_resources,
     get_log_level,
 )
+from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import LoggedEventSpec, V1Event, get_asset_path
 from polyaxon.polyboard.processors import events_processors
@@ -145,6 +148,24 @@ class Run(RunClient):
 
         if settings.CLIENT_CONFIG.is_managed:
             self._register_wait()
+
+    def _add_event(self, event: LoggedEventSpec):
+        if self._event_logger:
+            self._event_logger.add_event(event)
+        else:
+            logger.warning(
+                "Could not log event {}, "
+                "the event logger was not configured properly".format(event.name)
+            )
+
+    def _add_events(self, events: List[LoggedEventSpec]):
+        if self._event_logger:
+            self._event_logger.add_events(events)
+        else:
+            logger.warning(
+                "Could not log events {}, "
+                "the event logger was not configured properly".format(len(events))
+            )
 
     @check_no_op
     def get_artifacts_path(self):
@@ -281,7 +302,7 @@ class Run(RunClient):
             )
         )
         if events:
-            self._event_logger.add_events(events)
+            self._add_events(events)
             self._results[name] = event_value
 
     @check_no_op
@@ -320,7 +341,7 @@ class Run(RunClient):
                 )
             )
         if events:
-            self._event_logger.add_events(events)
+            self._add_events(events)
 
     @check_no_op
     @check_offline
@@ -347,7 +368,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CURVE,
             event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -378,7 +399,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CURVE,
             event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -409,7 +430,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CURVE,
             event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -438,7 +459,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CURVE,
             event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -466,7 +487,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CURVE,
             event=V1Event.make(timestamp=timestamp, step=step, curve=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -533,7 +554,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.IMAGE,
             event=V1Event.make(timestamp=timestamp, step=step, image=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -593,7 +614,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.IMAGE,
             event=V1Event.make(timestamp=timestamp, step=step, image=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -699,7 +720,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.VIDEO,
             event=V1Event.make(timestamp=timestamp, step=step, video=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -770,7 +791,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.AUDIO,
             event=V1Event.make(timestamp=timestamp, step=step, audio=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -795,7 +816,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.TEXT,
             event=V1Event.make(timestamp=timestamp, step=step, text=text),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -820,7 +841,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.HTML,
             event=V1Event.make(timestamp=timestamp, step=step, html=html),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -852,7 +873,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.HISTOGRAM,
             event=V1Event.make(timestamp=timestamp, step=step, histogram=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -888,7 +909,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.HISTOGRAM,
             event=V1Event.make(timestamp=timestamp, step=step, histogram=event_value),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -933,7 +954,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.MODEL,
             event=V1Event.make(timestamp=timestamp, step=step, model=model),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -974,7 +995,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.DATAFRAME,
             event=V1Event.make(timestamp=timestamp, step=step, dataframe=df),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -1017,7 +1038,7 @@ class Run(RunClient):
             kind=artifact_kind,
             event=V1Event.make(timestamp=timestamp, step=step, artifact=artifact),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -1039,7 +1060,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CHART,
             event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -1061,7 +1082,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CHART,
             event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -1083,7 +1104,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CHART,
             event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     @check_offline
@@ -1105,7 +1126,7 @@ class Run(RunClient):
             kind=V1ArtifactKind.CHART,
             event=V1Event.make(timestamp=timestamp, step=step, chart=chart),
         )
-        self._event_logger.add_event(logged_event)
+        self._add_event(logged_event)
 
     @check_no_op
     def get_log_level(self):
@@ -1154,6 +1175,8 @@ class Run(RunClient):
 
         Called automatically if track_env is set to True.
         """
+        if not os.path.exists(self._outputs_path):
+            return
         env_data = get_run_env()
         with open(os.path.join(self._outputs_path, "env.json"), "w") as env_file:
             env_file.write(ujson.dumps(env_data))

@@ -95,7 +95,7 @@ class TestCreateRunManager(TestCase):
         assert run.kind == V1RunKind.SERVICE
         assert run.name == "foo"
         assert run.description == "a description"
-        assert set(run.tags) == {"tag1", "tag2"}
+        assert set(run.tags) == {"backend", "lab", "tag1", "tag2"}
         service_spec = CompiledOperationSpecification.read(run.content)
         assert service_spec.run.container.image == "jupyter"
 

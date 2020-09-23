@@ -47,6 +47,9 @@ type V1ConnectionType struct {
 
 	// Secret resource schema
 	Secret *V1K8sResourceSchema `json:"secret,omitempty"`
+
+	// Optional connection tags
+	Tags string `json:"tags,omitempty"`
 }
 
 // Validate validates this v1 connection type

@@ -51,3 +51,13 @@
       link: /docs/automation/schedules/repeatable/
     - title: Exact time Schedule
       link: /docs/automation/schedules/exact-time/
+  - group: Extensions
+    items:
+    - title: Overview
+      link: /docs/automation/extensions/
+    - title: Actions
+      link: /docs/automation/extensions/actions/
+    - title: Hooks
+      link: /docs/automation/extensions/hooks/
+    - title: Events
+      link: /docs/automation/extensions/events/

@@ -29,17 +29,11 @@ import (
 // swagger:model v1ArtifactsType
 type V1ArtifactsType struct {
 
-	// Optional connection, if not provided the default artifacts store is used
-	Connection string `json:"connection,omitempty"`
-
 	// Optional dirs to initialize
 	Dirs []string `json:"dirs"`
 
 	// Optional files to initialize
 	Files []string `json:"files"`
-
-	// Optional bool to initialize this param
-	Init bool `json:"init,omitempty"`
 
 	// Optional number of concurrent threads to use
 	Workers int32 `json:"workers,omitempty"`

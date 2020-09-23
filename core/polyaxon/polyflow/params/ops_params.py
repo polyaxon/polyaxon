@@ -89,6 +89,8 @@ def validate_params(
                 iotype=inp.iotype,
                 is_flag=inp.is_flag,
                 is_list=inp.is_list,
+                is_context=False,
+                arg_format=inp.arg_format,
             )
             if param_spec.param.is_ref:
                 param_spec.validate_ref(context, is_template, check_runs)
@@ -96,6 +98,10 @@ def validate_params(
                 parsed_value = inp.validate_value(param_value.value)
                 if parse_values:
                     param_spec.param.value = parsed_value
+                    if not param_spec.param.connection and param_value.connection:
+                        param_spec.param.connection = inp.connection
+                    if not param_spec.param.to_init and param_value.to_init:
+                        param_spec.param.to_init = inp.to_init
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(inp.name)
@@ -110,10 +116,14 @@ def validate_params(
             validated_params.append(
                 ParamSpec(
                     name=inp.name,
-                    param=V1Param(value=inp.value),
+                    param=V1Param(
+                        value=inp.value, connection=inp.connection, to_init=inp.to_init
+                    ),
                     iotype=inp.iotype,
                     is_flag=inp.is_flag,
                     is_list=inp.is_list,
+                    is_context=False,
+                    arg_format=inp.arg_format,
                 )
             )
 
@@ -125,6 +135,8 @@ def validate_params(
                 iotype=out.iotype,
                 is_flag=out.is_flag,
                 is_list=out.is_list,
+                is_context=False,
+                arg_format=out.arg_format,
             )
             if param_spec.param.is_ref:
                 param_spec.validate_ref(None, is_template=False, check_runs=check_runs)
@@ -132,6 +144,10 @@ def validate_params(
                 parsed_value = out.validate_value(param_value.value)
                 if parse_values:
                     param_spec.param.value = parsed_value
+                    if not param_spec.param.connection and param_value.connection:
+                        param_spec.param.connection = out.connection
+                    if not param_spec.param.to_init and param_value.to_init:
+                        param_spec.param.to_init = out.to_init
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(out.name)
@@ -140,10 +156,14 @@ def validate_params(
             validated_params.append(
                 ParamSpec(
                     name=out.name,
-                    param=V1Param(value=out.value),
+                    param=V1Param(
+                        value=out.value, connection=out.connection, to_init=out.to_init
+                    ),
                     iotype=out.iotype,
                     is_flag=out.is_flag,
                     is_list=out.is_list,
+                    is_context=False,
+                    arg_format=out.arg_format,
                 )
             )
     extra_params = set(params.keys()) - set(processed_params)
@@ -194,7 +214,12 @@ def get_upstream_op_params_by_names(params: Dict[str, V1Param]):
 
     for param in params:
         param_ref = params[param].get_spec(
-            name=param, iotype=None, is_flag=None, is_list=None
+            name=param,
+            iotype=None,
+            is_flag=None,
+            is_list=None,
+            is_context=None,
+            arg_format=None,
         )
         if param_ref and param_ref.param.is_ops_ref:
             if param_ref.param.entity_ref in upstream:
@@ -213,7 +238,12 @@ def get_upstream_run_params_by_names(params: Dict[str, V1Param]):
 
     for param in params:
         param_ref = params[param].get_spec(
-            name=param, iotype=None, is_flag=None, is_list=None
+            name=param,
+            iotype=None,
+            is_flag=None,
+            is_list=None,
+            is_context=None,
+            arg_format=None,
         )
         if param_ref and param_ref.param.is_runs_ref:
             if param_ref.param.entity_ref in upstream:
@@ -232,7 +262,12 @@ def get_dag_params_by_names(params: Dict[str, V1Param]):
 
     for param in params:
         param_ref = params[param].get_spec(
-            name=param, iotype=None, is_flag=None, is_list=None
+            name=param,
+            iotype=None,
+            is_flag=None,
+            is_list=None,
+            is_context=None,
+            arg_format=None,
         )
         if param_ref and param_ref.param.is_dag_ref:
             if param_ref.param.entity_ref in upstream:

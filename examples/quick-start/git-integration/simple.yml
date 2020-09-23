@@ -1,0 +1,12 @@
+version: 1.1
+kind: component
+name: simple-experiment
+description: Minimum information to run this TF.Keras example
+tags: [examples]
+run:
+  kind: job
+  container:
+    image: polyaxon/polyaxon-quick-start
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
+    command: [python3, model.py]
+

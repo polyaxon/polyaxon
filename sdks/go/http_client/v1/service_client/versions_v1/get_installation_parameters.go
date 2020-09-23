@@ -28,12 +28,13 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewGetInstallationParams creates a new GetInstallationParams object
 // with the default values initialized.
 func NewGetInstallationParams() *GetInstallationParams {
-
+	var ()
 	return &GetInstallationParams{
 
 		timeout: cr.DefaultTimeout,
@@ -43,7 +44,7 @@ func NewGetInstallationParams() *GetInstallationParams {
 // NewGetInstallationParamsWithTimeout creates a new GetInstallationParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewGetInstallationParamsWithTimeout(timeout time.Duration) *GetInstallationParams {
-
+	var ()
 	return &GetInstallationParams{
 
 		timeout: timeout,
@@ -53,7 +54,7 @@ func NewGetInstallationParamsWithTimeout(timeout time.Duration) *GetInstallation
 // NewGetInstallationParamsWithContext creates a new GetInstallationParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewGetInstallationParamsWithContext(ctx context.Context) *GetInstallationParams {
-
+	var ()
 	return &GetInstallationParams{
 
 		Context: ctx,
@@ -63,7 +64,7 @@ func NewGetInstallationParamsWithContext(ctx context.Context) *GetInstallationPa
 // NewGetInstallationParamsWithHTTPClient creates a new GetInstallationParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewGetInstallationParamsWithHTTPClient(client *http.Client) *GetInstallationParams {
-
+	var ()
 	return &GetInstallationParams{
 		HTTPClient: client,
 	}
@@ -73,6 +74,13 @@ func NewGetInstallationParamsWithHTTPClient(client *http.Client) *GetInstallatio
 for the get installation operation typically these are written to a http.Request
 */
 type GetInstallationParams struct {
+
+	/*Auth
+	  auth.
+
+	*/
+	Auth *bool
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -111,6 +119,17 @@ func (o *GetInstallationParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithAuth adds the auth to the get installation params
+func (o *GetInstallationParams) WithAuth(auth *bool) *GetInstallationParams {
+	o.SetAuth(auth)
+	return o
+}
+
+// SetAuth adds the auth to the get installation params
+func (o *GetInstallationParams) SetAuth(auth *bool) {
+	o.Auth = auth
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *GetInstallationParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -118,6 +137,22 @@ func (o *GetInstallationParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
+
+	if o.Auth != nil {
+
+		// query param auth
+		var qrAuth bool
+		if o.Auth != nil {
+			qrAuth = *o.Auth
+		}
+		qAuth := swag.FormatBool(qrAuth)
+		if qAuth != "" {
+			if err := r.SetQueryParam("auth", qAuth); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

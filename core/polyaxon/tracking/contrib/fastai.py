@@ -18,27 +18,89 @@ from polyaxon import tracking
 from polyaxon.exceptions import PolyaxonClientException
 
 try:
-    from fastai.callbacks import TrackerCallback
-except ImportError:
+    from fastai.vision.all import *
+    from fastai.basics import *
+    from fastai.learner import Callback
+except:
     raise PolyaxonClientException("Fastai is required to use PolyaxonFastai")
 
 
-class PolyaxonFastai(TrackerCallback):
-    def __init__(self, learn, run=None, monitor="auto", mode="auto"):
-        super().__init__(learn, monitor=monitor, mode=mode)
-        if monitor is None:
-            # use default TrackerCallback monitor value
-            super().__init__(learn, mode=mode)
-        self.run = tracking.get_or_create_run(run)
+class PolyaxonFastaiCallback(Callback):
+    """Log losses, metrics, model weights, model architecture summary to polyaxon"""
 
-    def on_epoch_end(self, epoch, smooth_loss, last_metrics, **kwargs):
-        if not self.run:
+    def __init__(self, log_model=False, run=None):
+        self.log_model = log_model
+        self.plx_run = tracking.get_or_create_run(run)
+        self._plx_step = 0
+
+    def before_fit(self):
+        if not self.plx_run:
             return
-        metrics = {
-            name: stat
-            for name, stat in list(
-                zip(self.learn.recorder.names, [epoch, smooth_loss] + last_metrics)
-            )[1:]
-        }
+        try:
+            self.plx_run.log_inputs(
+                n_epoch=str(self.learn.n_epoch), model_class=str(type(self.learn.model))
+            )
+        except:
+            print("Did not log all properties to Polyaxon.")
 
-        self.run.log_metrics(**metrics)
+        try:
+            model_summary_path = "{}/model_summary.txt".format(
+                self.plx_run.get_outputs_path()
+            )
+            with open(model_summary_path, "w") as g:
+                g.write(repr(self.learn.model))
+            self.plx_run.log_file_ref(path=model_summary_path, name="model_summary")
+        except:
+            print(
+                "Did not log model summary. "
+                "Check if your model is PyTorch model and the Polyaxon has correctly initialized "
+                "the artifacts/outputs path."
+            )
+
+        if self.log_model and not hasattr(self.learn, "save_model"):
+            print(
+                "Unable to log model to Polyaxon.\n",
+                'Use "SaveModelCallback" to save model checkpoints '
+                "that will be logged to Polyaxon.",
+            )
+
+    def after_batch(self):
+        # log loss and opt.hypers
+        if self.learn.training:
+            self._plx_step += 1
+            metrics = {
+                "smooth_loss": to_detach(self.smooth_loss.clone()),
+                "raw_loss": to_detach(self.loss.clone()),
+                "train_iter": self.learn.train_iter,
+            }
+            for i, h in enumerate(self.learn.opt.hypers):
+                for k, v in h.items():
+                    metrics[f"hypers_{k}"] = v
+            self.plx_run.log_metrics(step=self._plx_step, **metrics)
+
+    def after_epoch(self):
+        # log metrics
+        self.plx_run.log_metrics(
+            step=self._plx_step,
+            **{
+                n: v
+                for n, v in zip(self.recorder.metric_names, self.recorder.log)
+                if n not in ["train_loss", "epoch", "time"]
+            },
+        )
+
+        # log model weights
+        if self.log_model and hasattr(self.learn, "save_model"):
+            if self.learn.save_model.every_epoch:
+                _file = join_path_file(
+                    f"{self.learn.save_model.fname}_{self.learn.save_model.epoch}",
+                    self.learn.path / self.learn.model_dir,
+                    ext=".pth",
+                )
+            else:
+                _file = join_path_file(
+                    self.learn.save_model.fname,
+                    self.learn.path / self.learn.model_dir,
+                    ext=".pth",
+                )
+            self.plx_run.log_model(_file, framework="fastai", step=self._plx_step)

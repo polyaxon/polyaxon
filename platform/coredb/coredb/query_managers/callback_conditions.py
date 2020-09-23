@@ -18,6 +18,7 @@ from typing import Any, Iterable, Union
 
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.list_utils import to_list
+from polycommon import live_state
 
 
 def archived_condition(
@@ -34,9 +35,11 @@ def archived_condition(
     params = to_list(params)
     if len(params) == 1 and to_bool(params[0]) is True:
         return (
-            queryset.filter(deleted=True) if queryset else query_backend(deleted=True)
+            queryset.filter(live_state=live_state.STATE_ARCHIVED)
+            if queryset
+            else query_backend(live_state=live_state.STATE_ARCHIVED)
         )
-    return query_backend(deleted=False)
+    return query_backend(live_state=live_state.STATE_LIVE)
 
 
 def independent_condition(

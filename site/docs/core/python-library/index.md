@@ -96,16 +96,16 @@ run_client = RunClient()
 
 The client will check for the currently authenticated user and raise if non found.
 
-### Not in-cluster and no authenticated CLI
+### Not in-cluster and no configured CLI
 
-When you need to  authenticate a client in an environment outside of a Polyaxon cluster and no authenticated CLI, Polyaxon provides several options:
+When you need to configure (and authenticate for Cloud and EE) a client in an environment outside of a Polyaxon cluster and no authenticated CLI, Polyaxon provides several options:
 
 #### Authentication with Environment variables:
 
 You can set environment variables containing:
 
-    * `POLYAXON_AUTH_TOKEN`
-    * `POLYAXON_HOST`
+ * `POLYAXON_HOST`
+ * `POLYAXON_AUTH_TOKEN`  (for EE and Cloud)
 
 Once these environment variables are set, you can instantiate your client, e.g.
 
@@ -113,14 +113,16 @@ Once these environment variables are set, you can instantiate your client, e.g.
 run_client = RunClient()
 ```
 
-Authentication using environment variables could be useful to keep your code behave similarly in different environments.
+Configuring and authenticating a client using environment variables could be useful to keep your code behave similarly in different environments.
 
-#### Provide an authenticated client:
+#### Provide a configured client:
 
 ```python
 client = PolyaxonClient(token=MY_TOKEN, config=ClientConfig(host=HOST, use_https=None, verify_ssl=None))
 run_client = RunClient(owner="org1", project="project-name", run_uuid="uuid", client=client)
 ```
+
+> MY_TOKEN is only required for EE and Cloud
 
 ## Reading Polyaxonfiles
 

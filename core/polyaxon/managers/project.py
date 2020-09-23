@@ -23,7 +23,7 @@ from polyaxon.utils import constants
 from polyaxon.utils.formatting import Printer
 
 
-class ProjectManager(BaseConfigManager):
+class ProjectConfigManager(BaseConfigManager):
     """Manages project configuration .project file."""
 
     VISIBILITY = BaseConfigManager.VISIBILITY_ALL

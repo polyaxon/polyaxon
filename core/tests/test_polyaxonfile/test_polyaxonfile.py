@@ -494,3 +494,81 @@ class TestPolyaxonfiles(BaseTestCase):
         run_config = V1CompiledOperation.read(run_config.to_dict())
         run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         assert run_config.run.to_dict() == expected_run
+
+    def test_specification_with_context_requirement(self):
+        contexts = {
+            "globals": {
+                "owner_name": "user",
+                "project_name": "project",
+                "project_unique_name": "user.project",
+                "project_uuid": "uuid",
+                "run_info": "user.project.runs.uuid",
+                "name": "run",
+                "uuid": "uuid",
+                "context_path": "/plx-context",
+                "artifacts_path": "/plx-context/artifacts",
+                "run_artifacts_path": "/plx-context/artifacts/test",
+                "run_outputs_path": "/plx-context/artifacts/test/outputs",
+                "namespace": "test",
+                "iteration": 12,
+                "ports": [1212, 1234],
+                "base_url": "/services/v1/test/user/project/runs/uuid",
+                "created_at": None,
+                "compiled_at": None,
+                "cloning_kind": None,
+                "original_uuid": None,
+            },
+            "init": {},
+            "connections": {"foo": {"key": "connection-value"}},
+        }
+        run_config = CompiledOperationSpecification.read(
+            [
+                os.path.abspath(
+                    "tests/fixtures/plain/polyaxonfile_with_contexts_requirements.yaml"
+                ),
+                {"kind": "compiled_operation"},
+            ]
+        )
+
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        expected_run = {
+            "kind": V1RunKind.JOB,
+            "init": [
+                {
+                    "artifacts": {"files": ["{{globals.run_outputs_path}}/foo"]},
+                    "connection": "{{connections['foo']['key']}}",
+                }
+            ],
+            "container": {
+                "image": "continuumio/miniconda3",
+                "command": ["python"],
+                "workingDir": "{{ globals.artifacts_path }}/polyaxon-quick-start",
+                "args": ["-c \"print('Tweet tweet')\""],
+                "name": "polyaxon-main",
+            },
+        }
+        assert run_config.run.to_dict() == expected_run
+        run_config = V1CompiledOperation.read(run_config.to_dict())
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        assert run_config.run.to_dict() == expected_run
+
+        expected_run = {
+            "kind": V1RunKind.JOB,
+            "init": [
+                {
+                    "artifacts": {"files": ["/plx-context/artifacts/test/outputs/foo"]},
+                    "connection": "connection-value",
+                }
+            ],
+            "container": {
+                "image": "continuumio/miniconda3",
+                "command": ["python"],
+                "workingDir": "/plx-context/artifacts/polyaxon-quick-start",
+                "args": ["-c \"print('Tweet tweet')\""],
+                "name": "polyaxon-main",
+            },
+        }
+        run_config = CompiledOperationSpecification.apply_runtime_contexts(
+            run_config, contexts=contexts
+        )
+        assert run_config.run.to_dict() == expected_run

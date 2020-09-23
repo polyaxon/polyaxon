@@ -37,17 +37,16 @@ class ActionSchema(BaseCamelSchema):
 
 
 class V1Action(BaseConfig, polyaxon_sdk.V1Action):
-    """> **Note**: Coming soon
-
-    In order to extend Polyaxon UI and CLI, you can set actions on your operations.
-    Every action is a reference to a component that can be executed based
-    on the context of this run.
+    """In order to extend Polyaxon UI and CLI, you can set actions on your operations.
+    Every action is a reference to a component that can be executed
+    based on the context of the operation where it's defined
 
     **Use cases**
+
      * A training job can have Tensorboard as an action, this will automatically
     add a UI button in the dashboard so that you can start a Tensorboard based
     on the outputs of the run.
-     * A streamlit app that can consume the outputs of some specific jobs.
+     * Streamlit app that can consume the outputs of some specific jobs.
      * Papermill for parametrized notebooks.
 
 

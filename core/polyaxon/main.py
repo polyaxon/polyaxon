@@ -33,7 +33,6 @@ from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
 from polyaxon.cli.run import run
 from polyaxon.cli.session import set_versions_config
-from polyaxon.cli.upload import upload
 from polyaxon.cli.version import check_cli_version, upgrade, version
 from polyaxon.logger import configure_logger
 from polyaxon.utils.bool_utils import to_bool
@@ -68,7 +67,7 @@ def cli(context, verbose, offline):
 
     This CLI tool comes with a caching mechanism:
 
-      - You can initialize a project with: polyaxon init [project name]
+      - You can initialize a project with: polyaxon init -p [project name]
 
       - Otherwise Polyaxon will the default global path will be used for the cache.
 
@@ -162,7 +161,6 @@ cli.add_command(dashboard)
 cli.add_command(admin)
 cli.add_command(port_forward)
 cli.add_command(completion)
-cli.add_command(upload)
 if settings.CLIENT_CONFIG.is_ops:
 
     from polyaxon.cli.components.agent import agent

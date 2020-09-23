@@ -24,7 +24,6 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/access_resources_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/agents_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/artifacts_stores_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/auth_v1"
@@ -33,11 +32,11 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/dashboards_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/model_registry_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/organizations_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/presets_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/project_dashboards_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/project_searches_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/projects_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/queues_v1"
-	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/run_profiles_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/runs_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/schemas_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/searches_v1"
@@ -88,7 +87,6 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 
 	cli := new(PolyaxonSdk)
 	cli.Transport = transport
-	cli.AccessResourcesV1 = access_resources_v1.New(transport, formats)
 	cli.AgentsV1 = agents_v1.New(transport, formats)
 	cli.ArtifactsStoresV1 = artifacts_stores_v1.New(transport, formats)
 	cli.AuthV1 = auth_v1.New(transport, formats)
@@ -97,11 +95,11 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 	cli.DashboardsV1 = dashboards_v1.New(transport, formats)
 	cli.ModelRegistryV1 = model_registry_v1.New(transport, formats)
 	cli.OrganizationsV1 = organizations_v1.New(transport, formats)
+	cli.PresetsV1 = presets_v1.New(transport, formats)
 	cli.ProjectDashboardsV1 = project_dashboards_v1.New(transport, formats)
 	cli.ProjectSearchesV1 = project_searches_v1.New(transport, formats)
 	cli.ProjectsV1 = projects_v1.New(transport, formats)
 	cli.QueuesV1 = queues_v1.New(transport, formats)
-	cli.RunProfilesV1 = run_profiles_v1.New(transport, formats)
 	cli.RunsV1 = runs_v1.New(transport, formats)
 	cli.SchemasV1 = schemas_v1.New(transport, formats)
 	cli.SearchesV1 = searches_v1.New(transport, formats)
@@ -152,8 +150,6 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // PolyaxonSdk is a client for polyaxon sdk
 type PolyaxonSdk struct {
-	AccessResourcesV1 access_resources_v1.ClientService
-
 	AgentsV1 agents_v1.ClientService
 
 	ArtifactsStoresV1 artifacts_stores_v1.ClientService
@@ -170,6 +166,8 @@ type PolyaxonSdk struct {
 
 	OrganizationsV1 organizations_v1.ClientService
 
+	PresetsV1 presets_v1.ClientService
+
 	ProjectDashboardsV1 project_dashboards_v1.ClientService
 
 	ProjectSearchesV1 project_searches_v1.ClientService
@@ -177,8 +175,6 @@ type PolyaxonSdk struct {
 	ProjectsV1 projects_v1.ClientService
 
 	QueuesV1 queues_v1.ClientService
-
-	RunProfilesV1 run_profiles_v1.ClientService
 
 	RunsV1 runs_v1.ClientService
 
@@ -198,7 +194,6 @@ type PolyaxonSdk struct {
 // SetTransport changes the transport on the client and all its subresources
 func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
-	c.AccessResourcesV1.SetTransport(transport)
 	c.AgentsV1.SetTransport(transport)
 	c.ArtifactsStoresV1.SetTransport(transport)
 	c.AuthV1.SetTransport(transport)
@@ -207,11 +202,11 @@ func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 	c.DashboardsV1.SetTransport(transport)
 	c.ModelRegistryV1.SetTransport(transport)
 	c.OrganizationsV1.SetTransport(transport)
+	c.PresetsV1.SetTransport(transport)
 	c.ProjectDashboardsV1.SetTransport(transport)
 	c.ProjectSearchesV1.SetTransport(transport)
 	c.ProjectsV1.SetTransport(transport)
 	c.QueuesV1.SetTransport(transport)
-	c.RunProfilesV1.SetTransport(transport)
 	c.RunsV1.SetTransport(transport)
 	c.SchemasV1.SetTransport(transport)
 	c.SearchesV1.SetTransport(transport)

@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**collect_run_logs**](RunsV1Api.md#collect_run_logs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs | Collect run logs
 [**copy_run**](RunsV1Api.md#copy_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 [**create_run**](RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-[**create_run_artifacts_lineage**](RunsV1Api.md#create_run_artifacts_lineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
+[**create_run_artifacts_lineage**](RunsV1Api.md#create_run_artifacts_lineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run artifacts lineage
 [**create_run_status**](RunsV1Api.md#create_run_status) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**delete_run**](RunsV1Api.md#delete_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 [**delete_run_artifact**](RunsV1Api.md#delete_run_artifact) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Delete run artifact
@@ -556,7 +556,7 @@ Name | Type | Description  | Notes
 # **create_run_artifacts_lineage**
 > create_run_artifacts_lineage(owner, project, uuid, body)
 
-Create bulk run run artifacts lineage
+Create bulk run artifacts lineage
 
 ### Example
 
@@ -598,7 +598,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1RunArtifacts() # V1RunArtifacts | Run Artifacts
 
     try:
-        # Create bulk run run artifacts lineage
+        # Create bulk run artifacts lineage
         api_instance.create_run_artifacts_lineage(owner, project, uuid, body)
     except ApiException as e:
         print("Exception when calling RunsV1Api->create_run_artifacts_lineage: %s\n" % e)

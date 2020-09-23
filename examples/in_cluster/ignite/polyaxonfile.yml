@@ -1,0 +1,30 @@
+version: 1.1
+kind: component
+name: mnist
+tags: [examples]
+
+inputs:
+- {name: epochs, type: int, value: 2, isOptional: true}
+- {name: batch_size, type: int, value: 256, isOptional: true}
+- {name: val_batch_size, type: int, value: 100, isOptional: true}
+- {name: lr, type: float, value: 0.001, isOptional: true}
+- {name: momentum, type: float, value: 0.1, isOptional: true}
+- {name: log_interval, type: int, value: 10, isOptional: true}
+
+run:
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/ignite"
+    command: ["python", "-u", "mnist.py"]
+    imagePullPolicy: "Always"
+    args: [
+      "{{ params.epochs.as_arg }}",
+      "{{ params.batch_size.as_arg }}",
+      "{{ params.val_batch_size.as_arg }}",
+      "{{ params.lr.as_arg }}",
+      "{{ params.momentum.as_arg }}",
+      "{{ params.log_interval.as_arg }}",
+    ]

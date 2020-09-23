@@ -300,7 +300,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -308,7 +308,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "url_ref",
             "url": "https://url-to-temaplte.com",
         }
@@ -316,7 +316,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "my-template",
         }
@@ -324,7 +324,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "path_ref",
             "path": "./relative/path/to/my-template.yaml",
         }
@@ -362,7 +362,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert len(config.sort_topologically(dag=dag)[0]) == 4  # order can be any
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -370,7 +370,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == set()
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -378,7 +378,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == set()
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -386,7 +386,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == set()
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "bar",
         }
@@ -425,7 +425,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -433,7 +433,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -441,7 +441,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"C"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -449,7 +449,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "bar",
         }
@@ -501,7 +501,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[1] == ["A"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -509,7 +509,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == set()
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -517,7 +517,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"A"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event2",
         }
@@ -525,7 +525,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"A"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event3",
         }
@@ -565,7 +565,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             dags.sort_topologically(dag=dag)
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -573,7 +573,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -581,7 +581,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"A"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -621,7 +621,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             dags.sort_topologically(dag=dag)
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -629,7 +629,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -637,7 +637,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"C"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -674,7 +674,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -682,7 +682,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -690,7 +690,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == set()
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -723,7 +723,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -731,7 +731,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C", "E"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -739,7 +739,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -747,7 +747,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action4",
         }
@@ -755,7 +755,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["D"].downstream == set()
 
         assert config.dag["E"].op.name == "E"
-        assert config.dag["E"].op.template.to_dict() == {
+        assert config.dag["E"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action4",
         }
@@ -785,7 +785,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -793,7 +793,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C", "E"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -801,7 +801,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -809,7 +809,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action4",
         }
@@ -817,7 +817,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["D"].downstream == set()
 
         assert config.dag["E"].op.name == "E"
-        assert config.dag["E"].op.template.to_dict() == {
+        assert config.dag["E"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action4",
         }
@@ -856,7 +856,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -864,7 +864,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -872,7 +872,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == set()
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -902,7 +902,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -910,7 +910,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C", "E"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -918,7 +918,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -926,7 +926,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action4",
         }
@@ -934,7 +934,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["D"].downstream == set()
 
         assert config.dag["E"].op.name == "E"
-        assert config.dag["E"].op.template.to_dict() == {
+        assert config.dag["E"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action4",
         }
@@ -965,7 +965,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -973,7 +973,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C", "E"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -981,7 +981,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -989,7 +989,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action4",
         }
@@ -997,7 +997,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["D"].downstream == set()
 
         assert config.dag["E"].op.name == "E"
-        assert config.dag["E"].op.template.to_dict() == {
+        assert config.dag["E"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action4",
         }
@@ -1058,7 +1058,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1066,7 +1066,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1074,7 +1074,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"C", "D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1082,7 +1082,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1144,7 +1144,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1152,7 +1152,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1160,7 +1160,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"C", "D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1168,7 +1168,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1228,7 +1228,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1236,7 +1236,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1244,7 +1244,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == {"C", "D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1252,7 +1252,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {
+        assert config.dag["D"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "echo",
         }
@@ -1292,7 +1292,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {
+        assert config.dag["A"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "action1",
         }
@@ -1300,7 +1300,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {
+        assert config.dag["B"].op.definition.to_dict() == {
             "kind": "hub_ref",
             "name": "event1",
         }
@@ -1308,7 +1308,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].downstream == set()
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {
+        assert config.dag["C"].op.definition.to_dict() == {
             "kind": "dag_ref",
             "name": "foo",
         }
@@ -1420,12 +1420,13 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].op.has_component_reference is False
         assert config.dag["A"].op.has_component_reference is True
         assert (
-            config.dag["A"].op.template == config._components_by_names["build-template"]
+            config.dag["A"].op.definition
+            == config._components_by_names["build-template"]
         )
         config.set_op_component("B")
         assert config.dag["B"].op.has_component_reference is True
         assert (
-            config.dag["B"].op.template == config._components_by_names["job-template"]
+            config.dag["B"].op.definition == config._components_by_names["job-template"]
         )
 
     def test_dag_with_template_not_defining_inputs_and_ops_with_params(self):
@@ -1732,12 +1733,12 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["B"].op.has_component_reference is False
         assert config.dag["A"].op.has_component_reference is True
         assert (
-            config.dag["A"].op.template == config._components_by_names["job-template"]
+            config.dag["A"].op.definition == config._components_by_names["job-template"]
         )
         config.set_op_component("B")
         assert config.dag["B"].op.has_component_reference is True
         assert (
-            config.dag["B"].op.template == config._components_by_names["job-template"]
+            config.dag["B"].op.definition == config._components_by_names["job-template"]
         )
 
     def test_dag_with_wrong_refs(self):
@@ -2221,6 +2222,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="ops.B", value="outputs.output1"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
             assert op_upstream_by_names["B"][1] == ops_params.ParamSpec(
                 name="input2",
@@ -2228,6 +2231,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="ops.B", value="outputs.output2"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
 
         else:
@@ -2237,6 +2242,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="ops.B", value="outputs.output1"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
             assert op_upstream_by_names["B"][0] == ops_params.ParamSpec(
                 name="input2",
@@ -2244,6 +2251,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="ops.B", value="outputs.output2"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
 
         # run upstreams
@@ -2263,6 +2272,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 ),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
         ]
         run_upstream_by_names = ops_params.get_upstream_run_params_by_names(
@@ -2404,6 +2415,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="ops.A", value="inputs.input4"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
             assert op_upstream_by_names["A"][1] == ops_params.ParamSpec(
                 name="input2",
@@ -2411,6 +2424,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="ops.A", value="outputs.output1"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
 
         else:
@@ -2420,6 +2435,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="ops.A", value="inputs.input4"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
             assert op_upstream_by_names["A"][0] == ops_params.ParamSpec(
                 name="input2",
@@ -2427,6 +2444,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="ops.A", value="outputs.output1"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
         op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
             params=config.dag["C"].op.params
@@ -2439,6 +2458,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                     param=V1Param(ref="ops.A", value="status"),
                     is_flag=None,
                     is_list=None,
+                    is_context=None,
+                    arg_format=None,
                 )
             ],
             "B": [
@@ -2448,6 +2469,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                     param=V1Param(ref="ops.B", value="outputs.output1"),
                     is_flag=None,
                     is_list=None,
+                    is_context=None,
+                    arg_format=None,
                 ),
                 ops_params.ParamSpec(
                     name="input4",
@@ -2455,6 +2478,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                     param=V1Param(ref="ops.B", value="inputs"),
                     is_flag=None,
                     is_list=None,
+                    is_context=None,
+                    arg_format=None,
                 ),
             ],
         }
@@ -2472,6 +2497,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                 ),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
         ]
         run_upstream_by_names = ops_params.get_upstream_run_params_by_names(
@@ -2502,5 +2529,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                 param=V1Param(ref="dag", value="inputs.input_pipe"),
                 is_flag=None,
                 is_list=None,
+                is_context=None,
+                arg_format=None,
             )
         ]

@@ -30,14 +30,14 @@ def collect_artifacts_from_io(
         return None
 
     if io.iotype == IMAGE:
-        image = io.value["name"]
-        connection = connection_by_names.get(io.value["connection"])
+        image = io.value
+        connection = connection_by_names.get(io.connection)
         if connection and connection.schema and connection.schema.url:
-            image = "{}/{}".format(connection.schema.url, io.value["name"])
+            image = "{}/{}".format(connection.schema.url, image)
         return V1RunArtifact(
             name=io.name,
             kind=V1ArtifactKind.DOCKER_IMAGE,
-            connection=io.value["connection"],
+            connection=io.connection,
             summary={"image": image},
             is_input=is_input,
         )

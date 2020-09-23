@@ -36,6 +36,18 @@ class PolyaxonServices:  # noqa
     RUNNER = "runner"
     AGENT = "agent"
     OPERATOR = "operator"
+    BILLING = "billing"
 
-    VALUES = {PLATFORM, CLI, UI, AUTH, INITIALIZER, SIDECAR, RUNNER, AGENT, OPERATOR}
+    VALUES = {
+        PLATFORM,
+        CLI,
+        UI,
+        AUTH,
+        INITIALIZER,
+        SIDECAR,
+        RUNNER,
+        AGENT,
+        OPERATOR,
+        BILLING,
+    }
     AGENT_VALUES = [PLATFORM, CLI, UI, OPERATOR, AGENT, INITIALIZER, SIDECAR]

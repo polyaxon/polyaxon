@@ -34,7 +34,9 @@ message Installation {
     string key = 1;
     string version = 2;
     string dist = 3;
-    repeated string auth = 4;
+    string host = 4;
+    string hmac = 5;
+    repeated string auth = 6;
 }
 
 message Compatibility {
@@ -48,6 +50,12 @@ message LogHandler {
     string dsn = 1;
     string environment = 2;
 }
+
+message InstallationResourceRequest {
+  // auth
+  bool auth = 1;
+}
+
 
 message ServiceResourceRequest {
   // UUid

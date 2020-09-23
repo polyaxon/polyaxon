@@ -70,7 +70,7 @@ polyaxon ops dashboard
 or
 
 ```bash
-polyaxon ops -p [project-name] -uid [run-uuid] dashboard -y
+polyaxon ops dashboard -p [project-name] -uid [run-uuid] -y
 ```
 
 {{service_command}}
@@ -85,7 +85,7 @@ polyaxon ops stop
 or
 
 ```bash
-polyaxon ops -p [project-name] -uid [run-uuid] stop
+polyaxon ops stop -p [project-name] -uid [run-uuid]
 ```
 
 ## Run this component using the client

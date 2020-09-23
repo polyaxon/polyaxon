@@ -24,7 +24,7 @@ Users can use the `{{}}` to inject information that will be provided to the cont
 ## Top level information
 
 Information in the top level of a context can be used without a prefix.
-Inputs and outputs are set on the top level, this means that when you are developing your components,
+The values of the inputs and the outputs are set on the top level, this means that when you are developing your components,
 you can use the variables defined in your inputs and outputs without any prefix:
 
 ```yaml
@@ -46,6 +46,54 @@ run:
       "--param2={{input2}}",
     ]
 ```
+
+## Params
+
+Sometimes you need to access the meta=information about your inputs and outputs and not just the values, 
+for instance let take the example of a component that outputs a docker image:
+
+```yaml
+version: 1.1
+kind: component
+
+outputs:
+- name: destination
+  type: image
+
+run:
+  kind: job
+  connections: ["{{ params.destination.connection }}"]
+  container:
+    image: "image:test"
+    command: ["command"]
+    args: [{{connections[params.destination.connection].url + '/' + destination}}]
+```
+
+this is an example of an operation to use with this component:
+
+```yaml
+version: 1.1
+kind: component
+name: build
+params:
+  destination:
+    connection: docker-connection
+    value: polyaxon-quick-start:dev
+...
+```
+
+This component is using the params to pass the destination value as well as a connection that will be used to authenticate the registry, 
+both the parameter' value and connection are used in this component:
+
+`{{ destination }}` is only a shortcut for exposing inputs/outputs params' values which also exists on the `params` prefix, e.g. `{{ params.destination.value }}`.
+The `params` prefix exposes several other information if the user needs to access metadata and not just the value, these are all the information exposed under the `params` prefix for each input/output:
+
+ * `{{params.param-name.value}}`: The value that will be checked against the IO type.
+ * `{{params.param-name.connection}}`: A connection that is passed with the param.
+ * `{{params.param-name.as_arg}}`: A string representing an argument representation of the param's value, this only get injected if the value is not null, i.e. `--param-name={{ value }}` or `--param-name` if the value is of type boolean.
+ * `{{params.param-name.as_str}}`: A string representing of the param's value.
+ * `{{params.param-name.type}}`: The type of the param based on the Input/Output configuration.
+
 
 ## Globals
 
@@ -101,7 +149,7 @@ run:
     container:
       image: "custom-container"
       command: ["echo"]
-      args: ["{{ init[connection-with-schema] }}"]
+      args: ["{{ init[connection-with-schema].schemaKey }}"]
   connections: ["some-git-connection"]
   container:
     image: "image:test"

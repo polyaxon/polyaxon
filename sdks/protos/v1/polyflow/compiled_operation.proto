@@ -45,8 +45,8 @@ message CompiledOperation {
     // Optional component tags
     repeated string tags = 5;
 
-    // Optional profile to use for running this component
-    string profile = 6;
+    // Optional presets to use for running this component
+    repeated string presets = 6;
 
     // Optional queue to use for running this component
     string queue = 7;
@@ -66,7 +66,7 @@ message CompiledOperation {
     // Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
     repeated string events = 12;
 
-    // Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+    // Optional actions section
     repeated Action actions = 13;
 
     // Optional hooks section

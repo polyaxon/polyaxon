@@ -44,8 +44,20 @@ message Organization {
     // Current user's role in this org
     string role = 7;
 
-    // Settings
-    google.protobuf.Struct settings = 8;
+    // Default queue
+    string queue = 8;
+
+    // Default preset
+    string preset = 9;
+
+    // Auth Settings
+    google.protobuf.Struct auth = 10;
+
+    // Plan settings
+    google.protobuf.Struct plan = 11;
+
+    // Usage info
+    google.protobuf.Struct usage = 12;
 }
 
  // Request data to update organizations

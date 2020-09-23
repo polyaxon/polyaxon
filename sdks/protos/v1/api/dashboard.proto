@@ -40,9 +40,6 @@ message Dashboard {
     // Optional a flag to disable the store
     bool disabled = 5;
 
-    // Optional if the entity has been deleted
-    bool deleted = 6;
-
     // Dashboard view
     enum View {
       // Any view
@@ -55,16 +52,16 @@ message Dashboard {
       compare = 2;
     }
     // Optional dashboard level
-    View view = 7;
+    View view = 6;
 
     // Optional dashboard specification
-    google.protobuf.Struct spec = 8;
+    google.protobuf.Struct spec = 7;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 9;
+    google.protobuf.Timestamp created_at = 8;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 10;
+    google.protobuf.Timestamp updated_at = 9;
 }
 
  // Request data to create/update dashboard

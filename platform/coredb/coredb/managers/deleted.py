@@ -16,14 +16,16 @@
 
 from django.db import models
 
+from polycommon import live_state
+
 
 class LiveManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(deleted=False)
+        return qs.filter(live_state=live_state.STATE_LIVE)
 
 
 class ArchivedManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(deleted=True)
+        return qs.filter(live_state=live_state.STATE_ARCHIVED)

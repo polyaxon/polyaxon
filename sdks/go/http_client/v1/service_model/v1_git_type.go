@@ -29,12 +29,6 @@ import (
 // swagger:model v1GitType
 type V1GitType struct {
 
-	// Optional connection to resolve the git definition
-	Connection string `json:"connection,omitempty"`
-
-	// Optional bool to initialize this param
-	Init bool `json:"init,omitempty"`
-
 	// Optional revision
 	Revision bool `json:"revision,omitempty"`
 

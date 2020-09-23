@@ -42,22 +42,19 @@ def get_component_details(polyaxonfile, specification):
         Printer.print_header("Component outputs:")
         objects = list_dicts_to_tabulate([o.to_dict() for o in specification.outputs])
         dict_tabulate(objects, is_list_dict=True)
-        dict_tabulate(specification.outputs)
 
     Printer.print_header("Component:")
     click.echo(polyaxonfile)
 
 
 @click.group()
-@click.option("--name", type=str, help="The component name.")
-@click.pass_context
-def hub(ctx, name):
+def hub():
     """Commands for ops/runs."""
-    ctx.obj = ctx.obj or {}
-    ctx.obj["name"] = name
+    pass
 
 
 @hub.command()
+@click.option("--name", type=str, help="The component name.")
 @click.option(
     "--save",
     is_flag=True,
@@ -69,8 +66,7 @@ def hub(ctx, name):
     type=str,
     help="The filename to use for saving the polyaxonfile, default to `polyaxonfile.yaml`.",
 )
-@click.pass_context
-def get(ctx, save, filename):
+def get(name, save, filename):
     """Get a component info by component_name, or owner/component_name.
 
     Uses /docs/core/cli/#caching
@@ -87,9 +83,10 @@ def get(ctx, save, filename):
     \b
     $ polyaxon hub get owner/component_name
     """
-    name = ctx.obj.get("name")
     if not name:
-        Printer.print_error("Please provide a valid component name!")
+        Printer.print_error(
+            "Please provide a valid component name!", command_help="hub get"
+        )
         sys.exit(0)
     try:
         polyaxonfile = ConfigSpec.get_from(name, "hub").read()

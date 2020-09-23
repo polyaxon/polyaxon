@@ -18,7 +18,7 @@ import sys
 
 from polyaxon.constants import DEFAULT
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.managers.project import ProjectManager
+from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.utils.formatting import Printer
 
 
@@ -44,7 +44,7 @@ def get_project_info(project):
 def get_project_or_local(project=None, is_cli: bool = False):
     from polyaxon import settings
 
-    if not project and not ProjectManager.is_initialized():
+    if not project and not ProjectConfigManager.is_initialized():
         if is_cli:
             Printer.print_error("Please provide a valid project.")
             sys.exit(1)
@@ -54,7 +54,7 @@ def get_project_or_local(project=None, is_cli: bool = False):
     if project:
         owner, project_name = get_project_info(project)
     else:
-        project = ProjectManager.get_config()
+        project = ProjectConfigManager.get_config()
         owner, project_name = project.owner, project.name
 
     if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):

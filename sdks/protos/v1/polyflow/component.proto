@@ -27,6 +27,7 @@ import "v1/polyflow/hooks.proto";
 import "v1/polyflow/io.proto";
 import "v1/polyflow/plugins.proto";
 import "v1/polyflow/termination.proto";
+import "v1/polyflow/template.proto";
 
 // Component specification
 message Component {
@@ -45,8 +46,8 @@ message Component {
     // Optional component tags
     repeated string tags = 5;
 
-    // Optional profile to use for running this component
-    string profile = 6;
+    // Optional presets to use for running this component
+    repeated string presets = 6;
 
     // Optional queue to use for running this component
     string queue = 7;
@@ -60,7 +61,7 @@ message Component {
     // Optional plugins to enable
     Plugins plugins = 10;
 
-    // Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+    // Optional actions section
     repeated Action actions = 11;
 
     // Optional hooks section
@@ -74,4 +75,7 @@ message Component {
 
     // Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
     google.protobuf.Struct run = 15;
+
+    // Optional flag to mark this specification as template
+    Template template = 16;
 }

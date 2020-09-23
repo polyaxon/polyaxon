@@ -16,7 +16,7 @@ tags:
 sidebar: "automation"
 ---
 
-> **Note**: Mapping in Polyaxon CE is only supported in eager mode with no concurrency management.
+> **Note**: Mapping in Polyaxon CE is supported in eager mode only with no concurrency management.
 
 ## Overview
 

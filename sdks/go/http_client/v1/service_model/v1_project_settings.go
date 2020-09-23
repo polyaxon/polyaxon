@@ -29,17 +29,26 @@ import (
 // swagger:model v1ProjectSettings
 type V1ProjectSettings struct {
 
-	// Artifacts Store
-	ArtifactsStore string `json:"artifacts_store,omitempty"`
+	// Authorized agents
+	Agents []string `json:"agents"`
 
-	// Connections
+	// Authorized connections
 	Connections []string `json:"connections"`
 
-	// Run profile
-	RunProfile string `json:"run_profile,omitempty"`
+	// Default Preset
+	Preset string `json:"preset,omitempty"`
 
-	// Run profiles
-	RunProfiles []string `json:"run_profiles"`
+	// Authorized Presets
+	Presets []string `json:"presets"`
+
+	// Default Queue
+	Queue string `json:"queue,omitempty"`
+
+	// Authorized queues
+	Queues []string `json:"queues"`
+
+	// Authorized teams
+	Teams []string `json:"teams"`
 }
 
 // Validate validates this v1 project settings

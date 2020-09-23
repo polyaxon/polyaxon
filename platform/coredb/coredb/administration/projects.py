@@ -21,7 +21,7 @@ class ProjectAdmin(DiffModelAdmin):
     list_display = ("uuid", "name", "created_at", "updated_at")
     list_display_links = ("uuid", "name")
     readonly_fields = DiffModelAdmin.readonly_fields + ("name",)
-    fields = ("name", "deleted", "created_at", "updated_at")
+    fields = ("name", "live_state", "created_at", "updated_at")
 
     def get_queryset(self, request):
         qs = self.model.all.get_queryset()

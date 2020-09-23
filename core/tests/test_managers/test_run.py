@@ -19,13 +19,13 @@ import pytest
 from polyaxon_sdk import V1Run
 from tests.utils import BaseTestCase
 
-from polyaxon.managers.run import RunManager
+from polyaxon.managers.run import RunConfigManager
 
 
 @pytest.mark.managers_mark
-class TestRunManager(BaseTestCase):
+class TestRunConfigManager(BaseTestCase):
     def test_default_props(self):
-        assert RunManager.is_all_visibility() is True
-        assert RunManager.IS_POLYAXON_DIR is True
-        assert RunManager.CONFIG_FILE_NAME == ".run"
-        assert RunManager.CONFIG == V1Run
+        assert RunConfigManager.is_all_visibility() is True
+        assert RunConfigManager.IS_POLYAXON_DIR is True
+        assert RunConfigManager.CONFIG_FILE_NAME == ".run"
+        assert RunConfigManager.CONFIG == V1Run

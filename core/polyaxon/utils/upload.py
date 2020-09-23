@@ -29,13 +29,13 @@ def upload():
         PolyaxonHTTPError,
         PolyaxonShouldExitError,
     )
-    from polyaxon.managers.ignore import IgnoreManager
-    from polyaxon.managers.project import ProjectManager
+    from polyaxon.managers.ignore import IgnoreConfigManager
+    from polyaxon.managers.project import ProjectConfigManager
     from polyaxon.utils.formatting import Printer
     from polyaxon.utils.path_utils import create_project_tarfile, get_files_by_paths
 
-    project = ProjectManager.get_config_or_raise()
-    files = IgnoreManager.get_unignored_filepaths()
+    project = ProjectConfigManager.get_config_or_raise()
+    files = IgnoreConfigManager.get_unignored_filepaths()
     try:
         with create_project_tarfile(files, project.name) as filepath:
             with get_files_by_paths("repo", [filepath]) as (files, files_size):
@@ -55,7 +55,7 @@ def upload():
                         ),
                     )
                     Printer.print_error(
-                        "Check the project exists, "
+                        "Check that the project exists, "
                         "and that you have access rights, "
                         "this could happen as well when uploading large files. "
                         "Please also make sure that you have enough space to upload the data."

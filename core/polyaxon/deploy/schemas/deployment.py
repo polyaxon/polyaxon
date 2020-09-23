@@ -45,6 +45,22 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.types import ConnectionTypeSchema
 
 
+def validate_connections(artifacts_store, connections):
+    connections = connections or []
+
+    connection_names = set()
+
+    if artifacts_store:
+        connection_names.add(artifacts_store.name)
+
+    for c in connections:
+        if c.name in connection_names:
+            raise ValidationError(
+                "A connection with name `{}` must be unique.".format(c.name)
+            )
+        connection_names.add(c.name)
+
+
 def check_postgres(postgresql, external_services):
     postgresql_disabled = postgresql.enabled is False if postgresql else False
     external_postgresql = None
@@ -164,7 +180,7 @@ def validate_gateway(gateway):
     service_type = gateway.service.get("type")
     if service_type and service_type not in ServiceTypes.VALUES:
         raise ValidationError(
-            "Receive an invalid gateway service type: {}".format(service_type)
+            "Received an invalid gateway service type: {}".format(service_type)
         )
 
 
@@ -243,6 +259,10 @@ class DeploymentSchema(BaseCamelSchema):
     @staticmethod
     def schema_config():
         return DeploymentConfig
+
+    @validates_schema
+    def validate_connections(self, data, **kwargs):
+        validate_connections(data.get("artifacts_store"), data.get("connections"))
 
     @validates_schema
     def validate_deployment(self, data, **kwargs):

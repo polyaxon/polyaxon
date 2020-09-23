@@ -38,9 +38,6 @@ type V1Project struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
-	// Optional flag to tell if this project is deleted
-	Deleted bool `json:"deleted,omitempty"`
-
 	// Optional description
 	Description string `json:"description,omitempty"`
 

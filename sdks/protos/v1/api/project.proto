@@ -54,23 +54,20 @@ message Project {
     // Optional flag to tell if this project is public
     bool is_public = 10;
 
-    // Optional flag to tell if this project is deleted
-    bool deleted = 11;
-
     // Optional if this entity was bookmarked
-    bool bookmarked = 12;
+    bool bookmarked = 11;
 
     // Optional a readme text describing this entity
-    string readme = 13;
+    string readme = 12;
 
     // Optional project settings
-    ProjectSettings settings = 14;
+    ProjectSettings settings = 13;
 
     // Optional teams assigned to a project
-    repeated string teams = 15;
+    repeated string teams = 14;
 
     // Current user's role in this (org/teams)/project
-    string role = 16;
+    string role = 15;
 }
 
  // Request data to create/update project
@@ -99,17 +96,26 @@ message Project {
 
 // Project Settings specification
 message ProjectSettings {
-    // Artifacts Store
-    string artifacts_store = 1;
+    // Authorized connections
+    repeated string connections = 1;
 
-    // Connections
-    repeated string connections = 2;
+    // Default Preset
+    string preset = 2;
 
-    // Run profile
-    string run_profile = 3;
+    // Authorized Presets
+    repeated string presets = 3;
 
-    // Run profiles
-    repeated string run_profiles = 4;
+    // Default Queue
+    string queue = 4;
+
+    // Authorized queues
+    repeated string queues = 5;
+
+    // Authorized agents
+    repeated string agents = 6;
+
+    // Authorized teams
+    repeated string teams = 7;
 }
 
 // Request data to update project settings

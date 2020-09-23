@@ -78,7 +78,7 @@ def validate_io(name, iotype, value, is_optional, is_list, is_flag, options):
 
     if is_flag and iotype != types.BOOL:
         raise ValidationError(
-            "IO type `{}` cannot be a flag, iut must be a `{}`".format(
+            "IO type `{}` cannot be a flag, it must be of type `{}`".format(
                 iotype, types.BOOL
             )
         )
@@ -94,8 +94,11 @@ class IOSchema(BaseCamelSchema):
     is_optional = fields.Bool(allow_none=True)
     is_list = fields.Bool(allow_none=True)
     is_flag = fields.Bool(allow_none=True)
+    arg_format = fields.Str(allow_none=True)
     delay_validation = fields.Bool(allow_none=True)
     options = fields.List(fields.Raw(), allow_none=True)
+    connection = fields.Str(allow_none=True)
+    to_init = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -133,8 +136,16 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     An input/output section includes a name, a description, a type to check the value passed,
     a flag to tell if the input/output is optional, and a default value if it's optional.
 
-    For inputs with type `bool`, users can additionally use
-    the field `isFlag` which will transform the input to a flag.
+    Sometimes users prefer to pass a param to the `command` or `args`
+    section only if the value is not null. Polyaxon provides a way to do that using
+    `{{ params.PARAM_NAME.as_arg }}`,
+    this will be empty if the value is null or `--PARAM_NAME=value` if the value is not null.
+    If the value is of type bool, it will be `--PARAM_NAME`.
+    It's also possible to control how the param should be
+    converted to an argument using the `arg_format`.
+
+    To learn how to pass valid values,
+    please check the [param section](/docs/core/specification/params/).
 
     Args:
         name: str
@@ -146,8 +157,11 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
         is_optional: bool, optional
         is_list: bool, optional
         is_flag: bool, optional
+        arg_format: str, optional
         delay_validation: bool, optional
         options: List[any], optional
+        connection: str, optional
+        to_init: bool, optional
 
     ## YAML usage
 
@@ -159,7 +173,6 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>>     value: MeanSquaredError
     >>>   - name: preprocess
     >>>     type: bool
-    >>>     isFlag: true
     >>> outputs:
     >>>   - name: accuracy
     >>>     type: float
@@ -184,7 +197,6 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     >>>         name="preprocess",
     >>>         iotype=types.BOOL,
     >>>         description="A flag to preprocess data before training",
-    >>>         is_flag=True
     >>>     )
     >>> ]
     >>> outputs = [
@@ -202,7 +214,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     These inputs/outputs declarations can be used to pass values to our program:
 
     ```bash
-     ... --loss={{ loss }} {{ preprocess }}
+     ... --loss={{ loss }} {{ params.preprocess.as_arg }}
     ```
 
     ## Fields
@@ -306,27 +318,81 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     In this case the input name `learning_rates` will expect a value of type `List[float]`,
     e.g. [0.1 0.01, 0.0001]
 
-    ### isFlag
+    ### argFormat
 
-    A flag to tell if an input/output is a flag. This only works and makes sense for inputs
-    of type `bool`.
+    A key to control how to convert an input/output to a CLI argument if the value is not null,
+    the default behavior:
 
-    When this flag is enabled, it will turn the usage of the input to `--...`
+      * For bool type: If the resolved value of the input is True,
+        `"{{ params.PARAM_NAME.as_arg }}"` will be resolved to `"--PARAM_NAME"`
+        otherwise it will be an empty string `""`.
+      * For non-bool types: If the resolved value of the input is not null,
+      `"{{ params.PARAM_NAME.as_arg }}"` will be resolved to `"--PARAM_NAME=value"`
+      otherwise it will be an empty string `""`.
+
+    Let's look at the flowing example:
 
     ```yaml
     >>> inputs:
+    >>>   - name: lr
+    >>>     type: float
     >>>   - name: check
     >>>     type: bool
-    >>>     isFlag: true
     ```
+
+    **This manifest**:
 
     ```yaml
     >>> container:
-    >>>    command: ["run", "model.py", "--param1=1.1", "{{ check }}"]
+    >>>    command: ["{{ lr }}", "{{ check }}"]
     ```
 
-    If the resolved value of the input `check` is True, `"{{ check }}"`
-    will be resolved to `"--check"` otherwise it will be an empty string `""`.
+    Will be transformed to:
+
+    ```yaml
+    >>> container:
+    >>>    command: ["0.01", "true"]
+    ```
+
+    **This manifest**:
+
+    ```yaml
+    >>> container:
+    >>>    command: ["{{ params.lr.as_arg }}", "{{ params.check.as_arg }}"]
+    ```
+
+    Will be transformed to:
+
+    ```yaml
+    >>> container:
+    >>>    command: ["--lr=0.01", "--check"]
+    ```
+
+    Changing the behavior with `argFormat`:
+
+    ```yaml
+    >>> inputs:
+    >>>   - name: lr
+    >>>     type: float
+    >>>     argFormat: "lr={{ lr }}"
+    >>>   - name: check
+    >>>     type: bool
+    >>>     argFormat: "{{ 1 if check else 0 }}"
+    ```
+
+    **This manifest**:
+
+    ```yaml
+    >>> container:
+    >>>    command: ["{{ params.lr.as_arg }}", "{{ params.check.as_arg }}"]
+    ```
+
+    Will be transformed to:
+
+    ```yaml
+    >>> container:
+    >>>    command: ["lr=0.01", "1"]
+    ```
 
     ### delayValidation
 
@@ -336,6 +402,14 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
     This flag is enabled by default for outputs, since they can only be
     resolved after or during the run. To request validation at compilation time for outputs,
     you need to set this flag to `False`.
+
+    ### connection
+
+    A connection to use with the input/outputs.
+
+    ### toInit
+
+    if True, it will be converted to an init container.
 
     ### options
 
@@ -441,8 +515,11 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
         "isOptional",
         "isFlag",
         "isList",
+        "argFormat",
         "delayValidation",
         "options",
+        "connection",
+        "toInit",
     ]
 
     def validate_value(self, value: Any, parse: bool = True):

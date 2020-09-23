@@ -63,6 +63,8 @@ type ClientService interface {
 
 	ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationsOK, *ListOrganizationsNoContent, error)
 
+	OrganizationPlan(params *OrganizationPlanParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationPlanOK, *OrganizationPlanNoContent, error)
+
 	PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationOK, *PatchOrganizationNoContent, error)
 
 	PatchOrganizationInvitation(params *PatchOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationInvitationOK, *PatchOrganizationInvitationNoContent, error)
@@ -511,6 +513,42 @@ func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo run
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ListOrganizationsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  OrganizationPlan organizations plan
+*/
+func (a *Client) OrganizationPlan(params *OrganizationPlanParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationPlanOK, *OrganizationPlanNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewOrganizationPlanParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "OrganizationPlan",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/plan",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &OrganizationPlanReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *OrganizationPlanOK:
+		return value, nil, nil
+	case *OrganizationPlanNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*OrganizationPlanDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

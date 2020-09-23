@@ -17,7 +17,6 @@
 from coredb.query_managers.manager import BaseQueryManager
 from polyaxon.pql.builder import (
     ArrayCondition,
-    BoolCondition,
     ComparisonCondition,
     DateTimeCondition,
     SearchCondition,
@@ -42,7 +41,6 @@ class RunQueryManager(BaseQueryManager):
         "id": "uuid",
         "uid": "uuid",
         "user": "user__username",
-        "archived": "deleted",
     }
     FIELDS_ORDERING = (
         "created_at",
@@ -112,8 +110,8 @@ class RunQueryManager(BaseQueryManager):
         "metrics": parse_scalar_operation,
         # Tags
         "tags": parse_value_operation,
-        # Archived
-        "archived": parse_value_operation,
+        # Live state
+        "live_state": parse_value_operation,
         # Duration
         "duration": parse_scalar_operation,
     }
@@ -164,8 +162,8 @@ class RunQueryManager(BaseQueryManager):
         "metrics": ComparisonCondition,
         # Tags
         "tags": ArrayCondition,
-        # archived
-        "archived": BoolCondition,
+        # Live state
+        "live_state": ValueCondition,
         # run time
         "duration": ComparisonCondition,
     }

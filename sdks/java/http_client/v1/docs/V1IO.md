@@ -13,8 +13,11 @@ Name | Type | Description | Notes
 **isOptional** | **Boolean** |  |  [optional]
 **isList** | **Boolean** |  |  [optional]
 **isFlag** | **Boolean** |  |  [optional]
+**argFormat** | **String** |  |  [optional]
 **delayValidation** | **Boolean** |  |  [optional]
 **options** | **List&lt;Object&gt;** |  |  [optional]
+**connection** | **String** |  |  [optional]
+**toInit** | **Boolean** |  |  [optional]
 
 
 

@@ -2,7 +2,7 @@
 title: "Users"
 sub_link: "ui/users"
 meta_title: "Polyaxon management tools and UI - Users"
-meta_description: "Member' profile page to manage token and profile settings."
+meta_description: "Member' profile page to manage token, bookmakrs, and profile settings."
 tags:
     - concepts
     - polyaxon

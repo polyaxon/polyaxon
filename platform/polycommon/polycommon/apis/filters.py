@@ -49,9 +49,9 @@ class QueryFilter(BaseFilterBackend):
 
     def process_alive(self, query_spec: str) -> str:
         if not query_spec:
-            query_spec = "archived:false"
-        elif "archived" not in query_spec:
-            query_spec += ",archived:false"
+            query_spec = "live_state:1"
+        elif "live_state" not in query_spec:
+            query_spec += ",live_state:1"
 
         return query_spec
 

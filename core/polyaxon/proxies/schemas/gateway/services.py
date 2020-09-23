@@ -17,7 +17,7 @@
 from polyaxon import settings
 from polyaxon.proxies.schemas.base import get_config
 
-PLUGIN_OPTIONS = """
+PLUGIN_OPTIONS = r"""
 location ~ /{plugin_name}/proxy/([-_.:\w]+)/(.*) {{
     {auth}
     {resolver}
@@ -59,7 +59,7 @@ def get_plugins_location_config(resolver: str, auth: str, proxy_services=None):
     return plugins
 
 
-SERVICES_OPTIONS = """
+SERVICES_OPTIONS = r"""
 location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {{
     {auth}
     {resolver}
@@ -75,7 +75,7 @@ location ~ /services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*
 }}
 """  # noqa
 
-SERVICES_REWRITE_OPTIONS = """
+SERVICES_REWRITE_OPTIONS = r"""
 location ~ /rewrite-services/v1/([-_.:\w]+)/([-_.:\w]+)/([-_.:\w]+)/runs/([-_.:\w]+)/(.*) {{
     {auth}
     {resolver}

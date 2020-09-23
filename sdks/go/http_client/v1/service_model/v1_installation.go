@@ -35,6 +35,12 @@ type V1Installation struct {
 	// dist
 	Dist string `json:"dist,omitempty"`
 
+	// hmac
+	Hmac string `json:"hmac,omitempty"`
+
+	// host
+	Host string `json:"host,omitempty"`
+
 	// key
 	Key string `json:"key,omitempty"`
 

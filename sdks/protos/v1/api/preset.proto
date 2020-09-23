@@ -1,0 +1,76 @@
+/**
+ * Copyright 2018-2020 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Preset specification
+message Preset {
+    // UUID
+    string uuid = 1;
+
+    // Name
+    string name = 2;
+
+    // Optional description
+    string description = 3;
+
+    // Optional tags of this entity
+    repeated string tags = 4;
+
+    // Optional time when the entity was created
+    google.protobuf.Timestamp created_at = 7;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 8;
+
+    // Optional a flag to freeze the scheduling preset
+    bool frozen = 9;
+
+    // Optional a flag to disable the scheduling preset
+    bool disabled = 10;
+
+    // The content of the preset
+    string content = 11;
+}
+
+ // Request data to create/update scheduling preset
+ message PresetBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Preset body
+    Preset preset = 2;
+ }
+
+
+// Contains list scheduling presets
+message ListPresetsResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Preset results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

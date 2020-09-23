@@ -57,7 +57,8 @@ def check_cli_version(config):
     current_version = clean_version_for_check(config.current_version)
     if not min_version or not latest_version or not current_version:
         Printer.print_error(
-            "Could get the min/latest versions from compatibility API.", sys_exit=True
+            "Could not get the min/latest versions from compatibility API.",
+            sys_exit=True,
         )
     if LooseVersion(current_version) < LooseVersion(min_version):
         click.echo(

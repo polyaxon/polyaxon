@@ -140,21 +140,32 @@ def pprint(value):
 class Printer:
     COLORS = ["yellow", "blue", "magenta", "green", "cyan", "red", "white"]
 
+    @classmethod
+    def print_help(cls, command_help: str = None):
+        if command_help:
+            cls.print_header(
+                "Please run `polyaxon {} --help` for more details".format(command_help)
+            )
+
     @staticmethod
     def print_header(text):
         click.secho("\n{}\n".format(text), fg="yellow")
 
-    @staticmethod
-    def print_warning(text):
+    @classmethod
+    def print_warning(cls, text, command_help: str = None):
         click.secho("\n{}\n".format(text), fg="magenta")
+        if command_help:
+            cls.print_help(command_help)
 
     @staticmethod
     def print_success(text):
         click.secho(text, fg="green")
 
-    @staticmethod
-    def print_error(text, sys_exit: bool = False):
+    @classmethod
+    def print_error(cls, text, sys_exit: bool = False, command_help: str = None):
         click.secho(text, fg="red")
+        if command_help:
+            cls.print_help(command_help)
         if sys_exit:
             sys.exit(1)
 

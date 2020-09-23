@@ -2,7 +2,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}
-  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ template "tfjob.fullname" . }}-clusterrole-binding
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"

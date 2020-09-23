@@ -95,8 +95,8 @@ class V1ConnectionKind(polyaxon_sdk.V1ConnectionKind):
             polyaxon_sdk.V1ConnectionKind.MATTERMOST,
         ),
         (
-            polyaxon_sdk.V1ConnectionKind.PAGER_DUTY,
-            polyaxon_sdk.V1ConnectionKind.PAGER_DUTY,
+            polyaxon_sdk.V1ConnectionKind.PAGERDUTY,
+            polyaxon_sdk.V1ConnectionKind.PAGERDUTY,
         ),
         (polyaxon_sdk.V1ConnectionKind.HIPCHAT, polyaxon_sdk.V1ConnectionKind.HIPCHAT,),
         (polyaxon_sdk.V1ConnectionKind.WEBHOOK, polyaxon_sdk.V1ConnectionKind.WEBHOOK),

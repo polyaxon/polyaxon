@@ -22,14 +22,13 @@ from polyaxon.polyflow.component.base import BaseComponent, BaseComponentSchema
 from polyaxon.polyflow.io import IOSchema
 from polyaxon.polyflow.references import RefMixin
 from polyaxon.polyflow.run import RunMixin, RunSchema
-from polyaxon.schemas.base import FULLY_QUALIFIED_NAME_REGEX
+from polyaxon.polyflow.templates import TemplateMixinConfig, TemplateMixinSchema
+from polyaxon.schemas.base import NAME_REGEX
 
 
-class ComponentSchema(BaseComponentSchema):
+class ComponentSchema(BaseComponentSchema, TemplateMixinSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("component"))
-    name = fields.Str(
-        validate=validate.Regexp(regex=FULLY_QUALIFIED_NAME_REGEX), allow_none=True
-    )
+    name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     inputs = fields.Nested(IOSchema, allow_none=True, many=True)
     outputs = fields.Nested(IOSchema, allow_none=True, many=True)
     run = fields.Nested(RunSchema, required=True)
@@ -39,7 +38,9 @@ class ComponentSchema(BaseComponentSchema):
         return V1Component
 
 
-class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
+class V1Component(
+    BaseComponent, TemplateMixinConfig, RunMixin, RefMixin, polyaxon_sdk.V1Component
+):
     """Component is a discrete, repeatable, and self-contained action that defines
     an environment and a runtime.
 
@@ -63,13 +64,13 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
         name: str, optional
         description: str, optional
         tags: List[str], optional
-        profile: str, optional
+        presets: List[str], optional
         queue: str, optional
         cache: [V1Cache](/docs/automation/helpers/cache/), optional
         termination: [V1Termination](/docs/core/specification/termination/), optional
         plugins: [V1Plugins](/docs/core/specification/plugins/), optional
-        actions: List[[V1Action](/docs/core/specification/actions/)], optional
-        hooks: List[[V1Hook](/docs/core/specification/hooks/)], optional
+        actions: List[[V1Action](/docs/automation/extensions/actions/)], optional
+        hooks: List[[V1Hook](/docs/automation/extensions/hooks/)], optional
         inputs: [V1IO](/docs/core/specification/io/), optional
         outputs: [V1IO](/docs/core/specification/io/), optional
         run: Union[[V1Job](/docs/experimentation/jobs/),
@@ -80,6 +81,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
              [V1Spark](/docs/experimentation/distributed/spark-jobs/),
              [V1Dask](/docs/experimentation/distributed/dask-jobs/),
              [V1Dag](/docs/automation/flow-engine/specification/)]
+        template: [V1Template](/docs/core/specification/template/), optional
 
     ## YAML usage
 
@@ -90,7 +92,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     >>>   name:
     >>>   description:
     >>>   tags:
-    >>>   profile:
+    >>>   presets:
     >>>   queue:
     >>>   cache:
     >>>   termination:
@@ -100,6 +102,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     >>>   inputs:
     >>>   outputs:
     >>>   run:
+    >>>   template:
     ```
 
     ## Python usage
@@ -110,7 +113,7 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     >>>     name="test",
     >>>     description="test",
     >>>     tags=["test"],
-    >>>     profile="test",
+    >>>     presets=["test"],
     >>>     queue="test",
     >>>     cache=V1Cache(...),
     >>>     termination=V1Termination(...),
@@ -190,17 +193,17 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
     >>>   tags: [test]
     ```
 
-    ### profile
+    ### presets
 
-    The default component [run profile](/docs/core/scheduling-strategies/run-profiles/).
+    The default component [presets](/docs/core/scheduling-strategies/presets/).
 
-    This profile will be passed as the default value to all operations using this component,
-    unless the operations override the profile or `--profile`
+    These presets will be passed as the default value to all operations using this component,
+    unless the operations override the presets or `--presets`
     is passed as an argument to the cli/client.
 
     ```yaml
     >>> component:
-    >>>   profile: test
+    >>>   presets: [test]
     ```
 
     ### queue
@@ -350,11 +353,11 @@ class V1Component(BaseComponent, RunMixin, RefMixin, polyaxon_sdk.V1Component):
 
     SCHEMA = ComponentSchema
     IDENTIFIER = "component"
-    REDUCED_ATTRIBUTES = BaseComponent.REDUCED_ATTRIBUTES + [
-        "inputs",
-        "outputs",
-        "run",
-    ]
+    REDUCED_ATTRIBUTES = (
+        BaseComponent.REDUCED_ATTRIBUTES
+        + TemplateMixinConfig.REDUCED_ATTRIBUTES
+        + ["inputs", "outputs", "run"]
+    )
 
     def get_run_kind(self):
         return self.run.kind if self.run else None

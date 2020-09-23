@@ -425,6 +425,7 @@ class BaseConverter(ConverterAbstract):
             contexts=contexts,
             artifacts_store=artifacts_store,
             init_connections=init_connections,
+            connections=connections,
             connection_by_names=connection_by_names,
             secrets=secrets,
             config_maps=config_maps,

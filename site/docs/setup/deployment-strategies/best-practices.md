@@ -23,10 +23,10 @@ and third party services like a database for example. In addition to these core 
 In order to keep the core components highly responsive, we recommend that users should deploy them on separate nodes than those used for running the user's workload.
 This ensures that experiments, jobs, dashboards, and apps, won't consume CPU and/or memory that could be essential to the database or the API to be responsive.
 
-In order to achieve such behavior, Polyaxon provides:
- * A [node and deployment manipulation](/docs/setup/platform/common-reference/#node-and-deployment-manipulation/) section to configure its core services.
- * A [node scheduling](/docs/core/scheduling-strategies/node-scheduling/) section to configure scheduling for the data scientist's workload.
-
+In order to achieve such behavior, please check:
+ * The [node and deployment manipulation](/docs/setup/platform/common-reference/#node-and-deployment-manipulation/) section to configure its core services.
+ * The [node scheduling](/docs/core/scheduling-strategies/node-scheduling/) section to configure scheduling for the data scientist's workload.
+ * The [presets](/docs/core/scheduling-strategies/presets/) section to create common configuration for your experiments, jobs, builds, scheduling, resources requesting, and other use-cases you need to solve.
 
 You can also decide to just use at a minimum 2 selectors one for core components and one for the workload to keep them separated.
 

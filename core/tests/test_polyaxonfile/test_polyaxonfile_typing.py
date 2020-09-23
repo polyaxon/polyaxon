@@ -161,6 +161,82 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         with self.assertRaises(ValidationError):
             run_config.validate_params(params={"value": {"value": 1.1}})
 
+    def test_required_inputs_with_arg_format(self):
+        run_config = V1CompiledOperation.read(
+            [
+                os.path.abspath(
+                    "tests/fixtures/typing/required_inputs_with_arg_format.yml"
+                ),
+                {"kind": "compiled_operation"},
+            ]
+        )
+
+        with self.assertRaises(ValidationError):
+            CompiledOperationSpecification.apply_operation_contexts(run_config)
+
+        assert run_config.inputs[0].value is None
+        assert run_config.inputs[1].value is None
+        run_config.apply_params(
+            params={"loss": {"value": "bar"}, "flag": {"value": False}}
+        )
+        assert run_config.inputs[0].value == "bar"
+        assert run_config.inputs[1].value is False
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        run_config = CompiledOperationSpecification.apply_runtime_contexts(run_config)
+        assert run_config.version == 1.1
+        assert run_config.tags == ["foo", "bar"]
+        assert run_config.run.container.image == "my_image"
+        assert run_config.run.container.command == ["/bin/sh", "-c"]
+        assert run_config.run.container.args == "video_prediction_train --loss=bar "
+
+        run_config = V1CompiledOperation.read(
+            [
+                os.path.abspath(
+                    "tests/fixtures/typing/required_inputs_with_arg_format.yml"
+                ),
+                {"kind": "compiled_operation"},
+            ]
+        )
+
+        assert run_config.inputs[0].value is None
+        assert run_config.inputs[1].value is None
+        run_config.apply_params(
+            params={"loss": {"value": "bar"}, "flag": {"value": True}}
+        )
+        assert run_config.inputs[0].value == "bar"
+        assert run_config.inputs[1].value is True
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        run_config = CompiledOperationSpecification.apply_runtime_contexts(run_config)
+        assert run_config.version == 1.1
+        assert run_config.tags == ["foo", "bar"]
+        assert run_config.run.container.image == "my_image"
+        assert run_config.run.container.command == ["/bin/sh", "-c"]
+        assert (
+            run_config.run.container.args == "video_prediction_train --loss=bar --flag"
+        )
+
+        # Adding extra value raises
+        with self.assertRaises(ValidationError):
+            run_config.validate_params(
+                params={
+                    "loss": {"value": "bar"},
+                    "flag": {"value": True},
+                    "value": {"value": 1.1},
+                }
+            )
+        with self.assertRaises(PolyaxonfileError):
+            check_polyaxonfile(
+                polyaxonfile=os.path.abspath(
+                    "tests/fixtures/typing/required_inputs.yml"
+                ),
+                params={"loss": {"value": "bar"}, "value": {"value": 1.1}},
+                is_cli=False,
+            )
+
+        # Adding non valid params raises
+        with self.assertRaises(ValidationError):
+            run_config.validate_params(params={"value": {"value": 1.1}})
+
     def test_matrix_file_passes_int_float_types(self):
         plxfile = check_polyaxonfile(
             polyaxonfile=os.path.abspath(

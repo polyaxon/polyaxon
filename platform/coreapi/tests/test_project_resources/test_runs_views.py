@@ -447,7 +447,7 @@ class TestProjectRunListViewV1(BaseTest):
         assert resp.data["count"] == len(self.objects)
 
         # Archived
-        resp = self.client.get(self.url + "?query=archived:true")
+        resp = self.client.get(self.url + "?query=live_state:0")
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["next"] is None
         assert resp.data["count"] == 0

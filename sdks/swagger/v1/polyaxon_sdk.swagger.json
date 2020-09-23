@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.1.8",
+    "version": "1.1.9",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -624,6 +624,16 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "auth",
+            "description": "auth.",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
+          }
+        ],
         "tags": [
           "VersionsV1"
         ]
@@ -816,6 +826,13 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "usage",
+            "description": "Owner usage query param.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -854,6 +871,13 @@
             "description": "Owner of the namespace",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "usage",
+            "description": "Owner usage query param.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -961,420 +985,6 @@
         ],
         "tags": [
           "OrganizationsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/access_resources": {
-      "get": {
-        "summary": "List access resources",
-        "operationId": "ListAccessResources",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListAccessResourcesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "AccessResourcesV1"
-        ]
-      },
-      "post": {
-        "summary": "Create access resource",
-        "operationId": "CreateAccessResource",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1AccessResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1AccessResource"
-            }
-          }
-        ],
-        "tags": [
-          "AccessResourcesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/access_resources/names": {
-      "get": {
-        "summary": "List access resource names",
-        "operationId": "ListAccessResourceNames",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListAccessResourcesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "AccessResourcesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/access_resources/{access_resource.uuid}": {
-      "put": {
-        "summary": "Update access resource",
-        "operationId": "UpdateAccessResource",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1AccessResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "access_resource.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1AccessResource"
-            }
-          }
-        ],
-        "tags": [
-          "AccessResourcesV1"
-        ]
-      },
-      "patch": {
-        "summary": "Patch access resource",
-        "operationId": "PatchAccessResource",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1AccessResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "access_resource.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1AccessResource"
-            }
-          }
-        ],
-        "tags": [
-          "AccessResourcesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/access_resources/{uuid}": {
-      "get": {
-        "summary": "Get access resource",
-        "operationId": "GetAccessResource",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1AccessResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Uuid identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "AccessResourcesV1"
-        ]
-      },
-      "delete": {
-        "summary": "Delete access resource",
-        "operationId": "DeleteAccessResource",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Uuid identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "AccessResourcesV1"
         ]
       }
     },
@@ -4949,6 +4559,473 @@
         ]
       }
     },
+    "/api/v1/orgs/{owner}/plan": {
+      "post": {
+        "summary": "Organization plan",
+        "operationId": "OrganizationPlan",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/presets": {
+      "get": {
+        "summary": "List scheduling presets",
+        "operationId": "ListPresets",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPresetsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PresetsV1"
+        ]
+      },
+      "post": {
+        "summary": "Create scheduling presets",
+        "operationId": "CreatePreset",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Preset"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Preset body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Preset"
+            }
+          }
+        ],
+        "tags": [
+          "PresetsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/presets/names": {
+      "get": {
+        "summary": "List scheduling presets names",
+        "operationId": "ListPresetNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPresetsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PresetsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/presets/{preset.uuid}": {
+      "put": {
+        "summary": "Update scheduling preset",
+        "operationId": "UpdatePreset",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Preset"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "preset.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Preset body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Preset"
+            }
+          }
+        ],
+        "tags": [
+          "PresetsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Patch scheduling preset",
+        "operationId": "PatchPreset",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Preset"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "preset.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Preset body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Preset"
+            }
+          }
+        ],
+        "tags": [
+          "PresetsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/presets/{uuid}": {
+      "get": {
+        "summary": "Get scheduling preset",
+        "operationId": "GetPreset",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Preset"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PresetsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Delete scheduling preset",
+        "operationId": "DeletePreset",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PresetsV1"
+        ]
+      }
+    },
     "/api/v1/orgs/{owner}/queues": {
       "get": {
         "summary": "List organization level queues",
@@ -5094,420 +5171,6 @@
         ],
         "tags": [
           "QueuesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/run_profiles": {
-      "get": {
-        "summary": "List run profiles",
-        "operationId": "ListRunProfiles",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListRunProfilesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RunProfilesV1"
-        ]
-      },
-      "post": {
-        "summary": "Create run profile",
-        "operationId": "CreateRunProfile",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1RunProfile"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1RunProfile"
-            }
-          }
-        ],
-        "tags": [
-          "RunProfilesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/run_profiles/names": {
-      "get": {
-        "summary": "List run profiles names",
-        "operationId": "ListRunProfileNames",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListRunProfilesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RunProfilesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/run_profiles/{run_profile.uuid}": {
-      "put": {
-        "summary": "Update run profile",
-        "operationId": "UpdateRunProfile",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1RunProfile"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "run_profile.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1RunProfile"
-            }
-          }
-        ],
-        "tags": [
-          "RunProfilesV1"
-        ]
-      },
-      "patch": {
-        "summary": "Patch run profile",
-        "operationId": "PatchRunProfile",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1RunProfile"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "run_profile.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1RunProfile"
-            }
-          }
-        ],
-        "tags": [
-          "RunProfilesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/run_profiles/{uuid}": {
-      "get": {
-        "summary": "Get run profile",
-        "operationId": "GetRunProfile",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1RunProfile"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Uuid identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RunProfilesV1"
-        ]
-      },
-      "delete": {
-        "summary": "Delete run profile",
-        "operationId": "DeleteRunProfile",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Uuid identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RunProfilesV1"
         ]
       }
     },
@@ -6011,6 +5674,20 @@
           {
             "name": "organization.role",
             "description": "Current user's role in this org.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "organization.queue",
+            "description": "Default queue.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "organization.preset",
+            "description": "Default preset.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -9602,7 +9279,7 @@
         ]
       },
       "post": {
-        "summary": "Create bulk run run artifacts lineage",
+        "summary": "Create bulk run artifacts lineage",
         "operationId": "CreateRunArtifactsLineage",
         "responses": {
           "200": {
@@ -12823,60 +12500,6 @@
         }
       }
     },
-    "v1AccessResource": {
-      "type": "object",
-      "properties": {
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "name": {
-          "type": "string",
-          "title": "Name"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional tags of this entity"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional time when the entity was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional last time the entity was updated"
-        },
-        "kind": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "frozen": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to freeze the resource"
-        },
-        "disabled": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to disable the resource"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        }
-      },
-      "title": "Config resource specification"
-    },
     "v1Action": {
       "type": "object",
       "properties": {
@@ -12936,11 +12559,6 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional a flag to disable the agent"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
         },
         "namespace": {
           "type": "string",
@@ -13086,10 +12704,6 @@
     "v1ArtifactsType": {
       "type": "object",
       "properties": {
-        "connection": {
-          "type": "string",
-          "title": "Optional connection, if not provided the default artifacts store is used"
-        },
         "files": {
           "type": "array",
           "items": {
@@ -13103,11 +12717,6 @@
             "type": "string"
           },
           "title": "Optional dirs to initialize"
-        },
-        "init": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional bool to initialize this param"
         },
         "workers": {
           "type": "integer",
@@ -13330,9 +12939,12 @@
           },
           "title": "Optional component tags"
         },
-        "profile": {
-          "type": "string",
-          "title": "Optional profile to use for running this component"
+        "presets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional presets to use for running this component"
         },
         "queue": {
           "type": "string",
@@ -13366,7 +12978,7 @@
           "items": {
             "$ref": "#/definitions/v1Action"
           },
-          "title": "Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+          "title": "Optional actions section"
         },
         "hooks": {
           "type": "array",
@@ -13450,9 +13062,12 @@
           },
           "title": "Optional component tags"
         },
-        "profile": {
-          "type": "string",
-          "title": "Optional profile to use for running this component"
+        "presets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional presets to use for running this component"
         },
         "queue": {
           "type": "string",
@@ -13475,7 +13090,7 @@
           "items": {
             "$ref": "#/definitions/v1Action"
           },
-          "title": "Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+          "title": "Optional actions section"
         },
         "hooks": {
           "type": "array",
@@ -13501,6 +13116,10 @@
         "run": {
           "type": "object",
           "title": "Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
+        },
+        "template": {
+          "$ref": "#/definitions/v1Template",
+          "title": "Optional flag to mark this specification as template"
         }
       },
       "title": "Component specification"
@@ -13535,11 +13154,6 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional a flag to disable the model"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
         },
         "created_at": {
           "type": "string",
@@ -13596,7 +13210,7 @@
         "slack",
         "discord",
         "mattermost",
-        "pager_duty",
+        "pagerduty",
         "hipchat",
         "webhook",
         "custom"
@@ -13614,6 +13228,10 @@
         "name": {
           "type": "string",
           "title": "Name"
+        },
+        "agent": {
+          "type": "string",
+          "title": "Agent"
         },
         "description": {
           "type": "string",
@@ -13636,20 +13254,10 @@
           "format": "date-time",
           "title": "Optional last time the entity was updated"
         },
-        "frozen": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to freeze the store"
-        },
         "disabled": {
           "type": "boolean",
           "format": "boolean",
           "title": "Optional a flag to disable the store"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
         },
         "kind": {
           "$ref": "#/definitions/v1ConnectionKind",
@@ -13688,6 +13296,10 @@
         "description": {
           "type": "string",
           "title": "Optional connection description"
+        },
+        "tags": {
+          "type": "string",
+          "title": "Optional connection tags"
         },
         "kind": {
           "$ref": "#/definitions/v1ConnectionKind",
@@ -13851,11 +13463,6 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional a flag to disable the store"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
         },
         "view": {
           "$ref": "#/definitions/DashboardView",
@@ -14624,15 +14231,6 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional revision"
-        },
-        "connection": {
-          "type": "string",
-          "title": "Optional connection to resolve the git definition"
-        },
-        "init": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional bool to initialize this param"
         }
       },
       "title": "Git type specification, url or a connection is required"
@@ -15178,6 +14776,10 @@
           "format": "boolean",
           "title": "A flag to tell if this input/output is flag, only valid for bool type"
         },
+        "arg_format": {
+          "type": "string",
+          "title": "An optional argFromat of the input/output to be used instead of passing the value as is"
+        },
         "delay_validation": {
           "type": "boolean",
           "format": "boolean",
@@ -15189,23 +14791,18 @@
             "type": "object"
           },
           "title": "An optional field to provide possible values for validation"
-        }
-      },
-      "title": "Inputs/Outputs specification"
-    },
-    "v1ImageType": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "title": "Name (name, name:tag, regitsry/name:tag)"
         },
         "connection": {
           "type": "string",
-          "title": "Optional connection to resolve the registry definition"
+          "title": "A flag to signal to Polyaxon that this io is used with a connection"
+        },
+        "to_init": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to signal to Polyaxon that this io must be tranformed to an init container"
         }
       },
-      "title": "Image type specification"
+      "title": "Inputs/Outputs specification"
     },
     "v1Init": {
       "type": "object",
@@ -15247,6 +14844,12 @@
           "type": "string"
         },
         "dist": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        },
+        "hmac": {
           "type": "string"
         },
         "auth": {
@@ -15481,32 +15084,6 @@
       },
       "title": "Distributed Replica specification"
     },
-    "v1ListAccessResourcesResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1AccessResource"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list config resources"
-    },
     "v1ListAgentsResponse": {
       "type": "object",
       "properties": {
@@ -15715,6 +15292,32 @@
       },
       "title": "Contains list organizations"
     },
+    "v1ListPresetsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Preset"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list scheduling presets"
+    },
     "v1ListProjectsResponse": {
       "type": "object",
       "properties": {
@@ -15792,32 +15395,6 @@
         }
       },
       "title": "Contains list run artifacts"
-    },
-    "v1ListRunProfilesResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1RunProfile"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list run profilees"
     },
     "v1ListRunsResponse": {
       "type": "object",
@@ -16198,11 +15775,6 @@
           "format": "boolean",
           "title": "Optional a flag to disable the model"
         },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
         "created_at": {
           "type": "string",
           "format": "date-time",
@@ -16254,34 +15826,37 @@
         },
         "kind": {
           "type": "string",
-          "title": "Optional component kind, should be equal to \"component\""
+          "title": "Optional component kind, should be equal to \"operation\""
         },
         "name": {
           "type": "string",
-          "title": "Optional component name, should a valid slug"
+          "title": "Optional component name override, should a valid slug"
         },
         "description": {
           "type": "string",
-          "title": "Optional component description"
+          "title": "Optional component description override"
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Optional component tags"
+          "title": "Optional component tags override"
         },
-        "profile": {
-          "type": "string",
-          "title": "Optional profile to use for running this component"
+        "presets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional preset to use for running this operation"
         },
         "queue": {
           "type": "string",
-          "title": "Optional queue to use for running this component"
+          "title": "Optional queue to use for running this operation"
         },
         "cache": {
           "$ref": "#/definitions/v1Cache",
-          "title": "Optional flag to disable cache validation and force run this component"
+          "title": "Optional flag to disable cache validation and force run this operation"
         },
         "termination": {
           "$ref": "#/definitions/v1Termination",
@@ -16307,7 +15882,7 @@
           "items": {
             "$ref": "#/definitions/v1Action"
           },
-          "title": "Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
+          "title": "Optional actions section"
         },
         "hooks": {
           "type": "array",
@@ -16353,6 +15928,19 @@
         "run_patch": {
           "type": "object",
           "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
+        },
+        "patch_strategy": {
+          "$ref": "#/definitions/v1PatchStrategy",
+          "title": "Optional patch startegy, default post_merge"
+        },
+        "is_preset": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to mark this specification as preset"
+        },
+        "template": {
+          "$ref": "#/definitions/v1Template",
+          "title": "Optional to mark this specification as template with instructions"
         },
         "dag_ref": {
           "type": "string"
@@ -16485,9 +16073,25 @@
           "type": "string",
           "title": "Current user's role in this org"
         },
-        "settings": {
+        "queue": {
+          "type": "string",
+          "title": "Default queue"
+        },
+        "preset": {
+          "type": "string",
+          "title": "Default preset"
+        },
+        "auth": {
           "type": "object",
-          "title": "Settings"
+          "title": "Auth Settings"
+        },
+        "plan": {
+          "type": "object",
+          "title": "Plan settings"
+        },
+        "usage": {
+          "type": "object",
+          "title": "Usage info"
         }
       },
       "title": "Organization specification"
@@ -16535,6 +16139,15 @@
           "$ref": "#/definitions/v1ParamSearch",
           "title": "Search corresponds to a valid search that can be resolved"
         },
+        "connection": {
+          "type": "string",
+          "title": "A flag to signal to Polyaxon that this param is used with a connection"
+        },
+        "to_init": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to signal to Polyaxon that this param must be tranformed to an init container"
+        },
         "context_only": {
           "type": "boolean",
           "format": "boolean",
@@ -16578,6 +16191,18 @@
         }
       },
       "title": "User password change"
+    },
+    "v1PatchStrategy": {
+      "type": "string",
+      "enum": [
+        "replace",
+        "isnull",
+        "post_merge",
+        "pre_merge"
+      ],
+      "default": "replace",
+      "description": "- replace: Replaces the keys\n - isnull: Only set the keys if they do not exist or if they are null\n - post_merge: Merge the all keys and replace by new one\n - pre_merge: Merge the all keys and keep old ones",
+      "title": "PatchStrategy"
     },
     "v1PathRef": {
       "type": "object",
@@ -16731,6 +16356,55 @@
       },
       "title": "Polyaxon sidecar specification"
     },
+    "v1Preset": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional tags of this entity"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entity was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        },
+        "frozen": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to freeze the scheduling preset"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to disable the scheduling preset"
+        },
+        "content": {
+          "type": "string",
+          "title": "The content of the preset"
+        }
+      },
+      "title": "Preset specification"
+    },
     "v1Project": {
       "type": "object",
       "properties": {
@@ -16780,11 +16454,6 @@
           "format": "boolean",
           "title": "Optional flag to tell if this project is public"
         },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional flag to tell if this project is deleted"
-        },
         "bookmarked": {
           "type": "boolean",
           "format": "boolean",
@@ -16833,27 +16502,48 @@
     "v1ProjectSettings": {
       "type": "object",
       "properties": {
-        "artifacts_store": {
-          "type": "string",
-          "title": "Artifacts Store"
-        },
         "connections": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Connections"
+          "title": "Authorized connections"
         },
-        "run_profile": {
+        "preset": {
           "type": "string",
-          "title": "Run profile"
+          "title": "Default Preset"
         },
-        "run_profiles": {
+        "presets": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Run profiles"
+          "title": "Authorized Presets"
+        },
+        "queue": {
+          "type": "string",
+          "title": "Default Queue"
+        },
+        "queues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authorized queues"
+        },
+        "agents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authorized agents"
+        },
+        "teams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Authorized teams"
         }
       },
       "title": "Project Settings specification"
@@ -16908,6 +16598,17 @@
         "name": {
           "type": "string",
           "title": "Name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional tags of this entity"
         },
         "priority": {
           "type": "integer",
@@ -17060,11 +16761,6 @@
             "type": "string"
           },
           "title": "Optional tags of this entity"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
         },
         "user": {
           "type": "string",
@@ -17248,71 +16944,6 @@
       ],
       "default": "job",
       "title": "Run kind enum\nKinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob\nMeta kinds: job, service, dag, matrix, schedule\nhelper kinds: tuner, watchdog, notifier"
-    },
-    "v1RunProfile": {
-      "type": "object",
-      "properties": {
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "name": {
-          "type": "string",
-          "title": "Name"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional tags of this entity"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional time when the entity was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional last time the entity was updated"
-        },
-        "frozen": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to freeze the run profile"
-        },
-        "disabled": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to disable the run profile"
-        },
-        "agent": {
-          "type": "string",
-          "title": "Optional agent to use for this run profile"
-        },
-        "queue": {
-          "type": "string",
-          "title": "Optional defautl queue to use for this run profile"
-        },
-        "namespace": {
-          "type": "string",
-          "title": "Optional default namespace to use for this run profile"
-        },
-        "termination": {
-          "type": "object",
-          "title": "Optional default termination to use for this run profile"
-        },
-        "environment": {
-          "type": "object",
-          "title": "Optional default environment to use for this run profile"
-        }
-      },
-      "title": "Run profile specification"
     },
     "v1RunSchema": {
       "type": "object",
@@ -17505,9 +17136,6 @@
         "connection": {
           "$ref": "#/definitions/v1ConnectionType"
         },
-        "image": {
-          "$ref": "#/definitions/v1ImageType"
-        },
         "event_type": {
           "$ref": "#/definitions/v1EventType"
         },
@@ -17545,11 +17173,6 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional a flag to disable the store"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
         },
         "spec": {
           "$ref": "#/definitions/v1SearchSpec",
@@ -17971,6 +17594,27 @@
         }
       },
       "title": "Team member specification"
+    },
+    "v1Template": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "title": "Template description"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Fields that require customization"
+        }
+      },
+      "title": "Template specification"
     },
     "v1Termination": {
       "type": "object",

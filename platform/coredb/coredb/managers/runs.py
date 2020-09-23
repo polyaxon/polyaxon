@@ -74,7 +74,6 @@ def resume_run(
         op_spec=op_spec,
         tags=tags or run.tags,
         override=content,
-        override_post=True,
     )
 
     run.user_id = instance.user_id
@@ -117,7 +116,6 @@ def clone_run(
         cloning_kind=cloning_kind,
         tags=tags or run.tags,
         override=content,
-        override_post=True,
     )
     instance.save()
     return instance

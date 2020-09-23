@@ -3,15 +3,18 @@ kind: operation
 name: build
 params:
   destination:
-    value:
-      name: polyaxon/polyaxon-quick-start
-      connection: docker-connection
+    connection: docker-connection
+    value: polyaxon-quick-start:dev
 runPatch:
   init:
   - dockerfile:
       image: "tensorflow/tensorflow:2.2.0"
       run:
       - pip install keras
-      - pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]
+      - pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]==1.1.9
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko
+template:
+  enabled: true
+  description: "This polyaxonfile requires a valid connection, e.g. `docker-connection`"
+  fields: ["destination.connection", "destination.name"]

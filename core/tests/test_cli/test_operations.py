@@ -30,9 +30,9 @@ class TestCliRuns(BaseCommandTestCase):
         assert list_runs.call_count == 1
 
     @patch("polyaxon.client.RunClient.refresh_data")
-    @patch("polyaxon.managers.project.ProjectManager.is_initialized")
-    @patch("polyaxon.managers.project.ProjectManager.get_config")
-    @patch("polyaxon.managers.run.RunManager.set_config")
+    @patch("polyaxon.managers.project.ProjectConfigManager.is_initialized")
+    @patch("polyaxon.managers.project.ProjectConfigManager.get_config")
+    @patch("polyaxon.managers.run.RunConfigManager.set_config")
     @patch("polyaxon.cli.operations.get_run_details")
     def test_get_run(
         self, get_run_details, set_config, is_initialized, get_config, get_run
@@ -48,9 +48,9 @@ class TestCliRuns(BaseCommandTestCase):
         assert get_run_details.call_count == 1
 
     @patch("polyaxon.client.RunClient.refresh_data")
-    @patch("polyaxon.managers.project.ProjectManager.is_initialized")
+    @patch("polyaxon.managers.project.ProjectConfigManager.is_initialized")
     @patch("polyaxon.utils.cache._is_same_project")
-    @patch("polyaxon.managers.run.RunManager.set_config")
+    @patch("polyaxon.managers.run.RunConfigManager.set_config")
     @patch("polyaxon.cli.operations.get_run_details")
     def test_get_run_cache(
         self, get_run_details, set_config, is_same_project, is_initialized, get_run

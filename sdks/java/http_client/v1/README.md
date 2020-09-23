@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.1.8
+- API version: 1.1.9
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.1.8</version>
+  <version>1.1.9</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.1.8"
+compile "org.openapitools:openapi-java-client:1.1.9"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.1.8.jar`
+* `target/openapi-java-client-1.1.9.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -78,7 +78,7 @@ import org.openapitools.client.ApiException;
 import org.openapitools.client.Configuration;
 import org.openapitools.client.auth.*;
 import org.openapitools.client.models.*;
-import org.openapitools.client.api.AccessResourcesV1Api;
+import org.openapitools.client.api.AgentsV1Api;
 
 public class Example {
   public static void main(String[] args) {
@@ -91,14 +91,14 @@ public class Example {
     // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
     //ApiKey.setApiKeyPrefix("Token");
 
-    AccessResourcesV1Api apiInstance = new AccessResourcesV1Api(defaultClient);
+    AgentsV1Api apiInstance = new AgentsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    V1AccessResource body = new V1AccessResource(); // V1AccessResource | Artifact store body
+    V1Agent body = new V1Agent(); // V1Agent | Agent body
     try {
-      V1AccessResource result = apiInstance.createAccessResource(owner, body);
+      V1Agent result = apiInstance.createAgent(owner, body);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling AccessResourcesV1Api#createAccessResource");
+      System.err.println("Exception when calling AgentsV1Api#createAgent");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -115,13 +115,6 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AccessResourcesV1Api* | [**createAccessResource**](docs/AccessResourcesV1Api.md#createAccessResource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
-*AccessResourcesV1Api* | [**deleteAccessResource**](docs/AccessResourcesV1Api.md#deleteAccessResource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
-*AccessResourcesV1Api* | [**getAccessResource**](docs/AccessResourcesV1Api.md#getAccessResource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
-*AccessResourcesV1Api* | [**listAccessResourceNames**](docs/AccessResourcesV1Api.md#listAccessResourceNames) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
-*AccessResourcesV1Api* | [**listAccessResources**](docs/AccessResourcesV1Api.md#listAccessResources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
-*AccessResourcesV1Api* | [**patchAccessResource**](docs/AccessResourcesV1Api.md#patchAccessResource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
-*AccessResourcesV1Api* | [**updateAccessResource**](docs/AccessResourcesV1Api.md#updateAccessResource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
 *AgentsV1Api* | [**createAgent**](docs/AgentsV1Api.md#createAgent) | **POST** /api/v1/orgs/{owner}/agents | Create agent
 *AgentsV1Api* | [**createAgentStatus**](docs/AgentsV1Api.md#createAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Create new run status
 *AgentsV1Api* | [**deleteAgent**](docs/AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete agent
@@ -182,6 +175,7 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**listOrganizationMembers**](docs/OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 *OrganizationsV1Api* | [**listOrganizationNames**](docs/OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
 *OrganizationsV1Api* | [**listOrganizations**](docs/OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations
+*OrganizationsV1Api* | [**organizationPlan**](docs/OrganizationsV1Api.md#organizationPlan) | **POST** /api/v1/orgs/{owner}/plan | Organization plan
 *OrganizationsV1Api* | [**patchOrganization**](docs/OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | Patch organization
 *OrganizationsV1Api* | [**patchOrganizationInvitation**](docs/OrganizationsV1Api.md#patchOrganizationInvitation) | **PATCH** /api/v1/orgs/{owner}/invitations | Patch organization invitation
 *OrganizationsV1Api* | [**patchOrganizationMember**](docs/OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
@@ -190,6 +184,13 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**updateOrganizationInvitation**](docs/OrganizationsV1Api.md#updateOrganizationInvitation) | **PUT** /api/v1/orgs/{owner}/invitations | Update organization invitation
 *OrganizationsV1Api* | [**updateOrganizationMember**](docs/OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Update organization member
 *OrganizationsV1Api* | [**updateOrganizationSettings**](docs/OrganizationsV1Api.md#updateOrganizationSettings) | **PUT** /api/v1/orgs/{owner}/settings | Update organization settings
+*PresetsV1Api* | [**createPreset**](docs/PresetsV1Api.md#createPreset) | **POST** /api/v1/orgs/{owner}/presets | Create scheduling presets
+*PresetsV1Api* | [**deletePreset**](docs/PresetsV1Api.md#deletePreset) | **DELETE** /api/v1/orgs/{owner}/presets/{uuid} | Delete scheduling preset
+*PresetsV1Api* | [**getPreset**](docs/PresetsV1Api.md#getPreset) | **GET** /api/v1/orgs/{owner}/presets/{uuid} | Get scheduling preset
+*PresetsV1Api* | [**listPresetNames**](docs/PresetsV1Api.md#listPresetNames) | **GET** /api/v1/orgs/{owner}/presets/names | List scheduling presets names
+*PresetsV1Api* | [**listPresets**](docs/PresetsV1Api.md#listPresets) | **GET** /api/v1/orgs/{owner}/presets | List scheduling presets
+*PresetsV1Api* | [**patchPreset**](docs/PresetsV1Api.md#patchPreset) | **PATCH** /api/v1/orgs/{owner}/presets/{preset.uuid} | Patch scheduling preset
+*PresetsV1Api* | [**updatePreset**](docs/PresetsV1Api.md#updatePreset) | **PUT** /api/v1/orgs/{owner}/presets/{preset.uuid} | Update scheduling preset
 *ProjectDashboardsV1Api* | [**createProjectDashboard**](docs/ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
 *ProjectDashboardsV1Api* | [**deleteProjectDashboard**](docs/ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
 *ProjectDashboardsV1Api* | [**getProjectDashboard**](docs/ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
@@ -237,20 +238,13 @@ Class | Method | HTTP request | Description
 *QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
 *QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Patch queue
 *QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Update queue
-*RunProfilesV1Api* | [**createRunProfile**](docs/RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create run profile
-*RunProfilesV1Api* | [**deleteRunProfile**](docs/RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete run profile
-*RunProfilesV1Api* | [**getRunProfile**](docs/RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get run profile
-*RunProfilesV1Api* | [**listRunProfileNames**](docs/RunProfilesV1Api.md#listRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List run profiles names
-*RunProfilesV1Api* | [**listRunProfiles**](docs/RunProfilesV1Api.md#listRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List run profiles
-*RunProfilesV1Api* | [**patchRunProfile**](docs/RunProfilesV1Api.md#patchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch run profile
-*RunProfilesV1Api* | [**updateRunProfile**](docs/RunProfilesV1Api.md#updateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update run profile
 *RunsV1Api* | [**archiveRun**](docs/RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 *RunsV1Api* | [**bookmarkRun**](docs/RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 *RunsV1Api* | [**bookmarkRuns**](docs/RunsV1Api.md#bookmarkRuns) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
 *RunsV1Api* | [**collectRunLogs**](docs/RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs | Collect run logs
 *RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 *RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-*RunsV1Api* | [**createRunArtifactsLineage**](docs/RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
+*RunsV1Api* | [**createRunArtifactsLineage**](docs/RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run artifacts lineage
 *RunsV1Api* | [**createRunStatus**](docs/RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 *RunsV1Api* | [**deleteRun**](docs/RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 *RunsV1Api* | [**deleteRunArtifact**](docs/RunsV1Api.md#deleteRunArtifact) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Delete run artifact
@@ -335,7 +329,6 @@ Class | Method | HTTP request | Description
  - [ProtobufNullValue](docs/ProtobufNullValue.md)
  - [RuntimeError](docs/RuntimeError.md)
  - [SparkDeployMode](docs/SparkDeployMode.md)
- - [V1AccessResource](docs/V1AccessResource.md)
  - [V1Action](docs/V1Action.md)
  - [V1Agent](docs/V1Agent.md)
  - [V1AgentStateResponse](docs/V1AgentStateResponse.md)
@@ -420,7 +413,6 @@ Class | Method | HTTP request | Description
  - [V1Hyperopt](docs/V1Hyperopt.md)
  - [V1HyperoptAlgorithms](docs/V1HyperoptAlgorithms.md)
  - [V1IO](docs/V1IO.md)
- - [V1ImageType](docs/V1ImageType.md)
  - [V1Init](docs/V1Init.md)
  - [V1Installation](docs/V1Installation.md)
  - [V1IntervalSchedule](docs/V1IntervalSchedule.md)
@@ -430,7 +422,6 @@ Class | Method | HTTP request | Description
  - [V1K8sResourceSchema](docs/V1K8sResourceSchema.md)
  - [V1K8sResourceType](docs/V1K8sResourceType.md)
  - [V1KFReplica](docs/V1KFReplica.md)
- - [V1ListAccessResourcesResponse](docs/V1ListAccessResourcesResponse.md)
  - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
  - [V1ListBookmarksResponse](docs/V1ListBookmarksResponse.md)
  - [V1ListComponentHubsResponse](docs/V1ListComponentHubsResponse.md)
@@ -439,10 +430,10 @@ Class | Method | HTTP request | Description
  - [V1ListModelRegistryResponse](docs/V1ListModelRegistryResponse.md)
  - [V1ListOrganizationMembersResponse](docs/V1ListOrganizationMembersResponse.md)
  - [V1ListOrganizationsResponse](docs/V1ListOrganizationsResponse.md)
+ - [V1ListPresetsResponse](docs/V1ListPresetsResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListQueuesResponse](docs/V1ListQueuesResponse.md)
  - [V1ListRunArtifactsResponse](docs/V1ListRunArtifactsResponse.md)
- - [V1ListRunProfilesResponse](docs/V1ListRunProfilesResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1ListSearchesResponse](docs/V1ListSearchesResponse.md)
  - [V1ListTeamMembersResponse](docs/V1ListTeamMembersResponse.md)
@@ -471,12 +462,14 @@ Class | Method | HTTP request | Description
  - [V1Param](docs/V1Param.md)
  - [V1ParamSearch](docs/V1ParamSearch.md)
  - [V1PasswordChange](docs/V1PasswordChange.md)
+ - [V1PatchStrategy](docs/V1PatchStrategy.md)
  - [V1PathRef](docs/V1PathRef.md)
  - [V1Pipeline](docs/V1Pipeline.md)
  - [V1PipelineKind](docs/V1PipelineKind.md)
  - [V1Plugins](docs/V1Plugins.md)
  - [V1PolyaxonInitContainer](docs/V1PolyaxonInitContainer.md)
  - [V1PolyaxonSidecarContainer](docs/V1PolyaxonSidecarContainer.md)
+ - [V1Preset](docs/V1Preset.md)
  - [V1Project](docs/V1Project.md)
  - [V1ProjectEntityResourceRequest](docs/V1ProjectEntityResourceRequest.md)
  - [V1ProjectSettings](docs/V1ProjectSettings.md)
@@ -492,7 +485,6 @@ Class | Method | HTTP request | Description
  - [V1RunArtifact](docs/V1RunArtifact.md)
  - [V1RunArtifacts](docs/V1RunArtifacts.md)
  - [V1RunKind](docs/V1RunKind.md)
- - [V1RunProfile](docs/V1RunProfile.md)
  - [V1RunSchema](docs/V1RunSchema.md)
  - [V1RunSettings](docs/V1RunSettings.md)
  - [V1RunSettingsCatalog](docs/V1RunSettingsCatalog.md)
@@ -512,6 +504,7 @@ Class | Method | HTTP request | Description
  - [V1TFJob](docs/V1TFJob.md)
  - [V1Team](docs/V1Team.md)
  - [V1TeamMember](docs/V1TeamMember.md)
+ - [V1Template](docs/V1Template.md)
  - [V1Termination](docs/V1Termination.md)
  - [V1Token](docs/V1Token.md)
  - [V1TriggerPolicy](docs/V1TriggerPolicy.md)

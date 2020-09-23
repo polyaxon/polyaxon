@@ -41,11 +41,17 @@ type V1Queue struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Optional description
+	Description string `json:"description,omitempty"`
+
 	// Name
 	Name string `json:"name,omitempty"`
 
 	// The queue priority
 	Priority int32 `json:"priority,omitempty"`
+
+	// Optional tags of this entity
+	Tags []string `json:"tags"`
 
 	// Optional last time the entity was updated
 	// Format: date-time

@@ -34,6 +34,7 @@ class RunLightAdmin(DiffModelAdmin, ReadOnlyAdmin):
         "name",
         "description",
         "status",
+        "live_state",
         "created_at",
         "updated_at",
         "started_at",

@@ -19,13 +19,13 @@ import pytest
 from polyaxon_sdk import V1Project
 from tests.utils import BaseTestCase
 
-from polyaxon.managers.project import ProjectManager
+from polyaxon.managers.project import ProjectConfigManager
 
 
 @pytest.mark.managers_mark
-class TestProjectManager(BaseTestCase):
+class TestProjectConfigManager(BaseTestCase):
     def test_default_props(self):
-        assert ProjectManager.is_all_visibility() is True
-        assert ProjectManager.IS_POLYAXON_DIR is True
-        assert ProjectManager.CONFIG_FILE_NAME == ".project"
-        assert ProjectManager.CONFIG == V1Project
+        assert ProjectConfigManager.is_all_visibility() is True
+        assert ProjectConfigManager.IS_POLYAXON_DIR is True
+        assert ProjectConfigManager.CONFIG_FILE_NAME == ".project"
+        assert ProjectConfigManager.CONFIG == V1Project

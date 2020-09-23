@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **name** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
-**deleted** | **Boolean** |  | [optional] 
 **user** | **String** |  | [optional] 
 **owner** | **String** |  | [optional] 
 **project** | **String** |  | [optional] 

@@ -107,7 +107,7 @@ def translate(pat):
     return res + "\\Z"
 
 
-class IgnoreManager(BaseConfigManager):
+class IgnoreConfigManager(BaseConfigManager):
     """Manages .polyaxonignore file in the current directory"""
 
     VISIBILITY = BaseConfigManager.VISIBILITY_LOCAL

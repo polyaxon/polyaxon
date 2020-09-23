@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * from './AccessResourcesV1Api';
 export * from './AgentsV1Api';
 export * from './ArtifactsStoresV1Api';
 export * from './AuthV1Api';
@@ -21,11 +20,11 @@ export * from './ConnectionsV1Api';
 export * from './DashboardsV1Api';
 export * from './ModelRegistryV1Api';
 export * from './OrganizationsV1Api';
+export * from './PresetsV1Api';
 export * from './ProjectDashboardsV1Api';
 export * from './ProjectSearchesV1Api';
 export * from './ProjectsV1Api';
 export * from './QueuesV1Api';
-export * from './RunProfilesV1Api';
 export * from './RunsV1Api';
 export * from './SchemasV1Api';
 export * from './SearchesV1Api';

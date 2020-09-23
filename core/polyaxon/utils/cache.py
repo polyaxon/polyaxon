@@ -14,38 +14,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.managers.project import ProjectManager
+from polyaxon.managers.project import ProjectConfigManager
 
 
 def _is_same_project(owner=None, project=None):
-    local_project = ProjectManager.get_config()
+    local_project = ProjectConfigManager.get_config()
     if project and project == local_project.name:
         return not all([owner, local_project.owner]) or owner == local_project.owner
 
 
 def _cache_project(config, owner=None, project=None):
-    if ProjectManager.is_initialized() and ProjectManager.is_locally_initialized():
+    if (
+        ProjectConfigManager.is_initialized()
+        and ProjectConfigManager.is_locally_initialized()
+    ):
         if _is_same_project(owner, project):
-            ProjectManager.set_config(config)
+            ProjectConfigManager.set_config(config)
             return
 
-    ProjectManager.set_config(config, visibility=ProjectManager.VISIBILITY_GLOBAL)
+    ProjectConfigManager.set_config(
+        config, visibility=ProjectConfigManager.VISIBILITY_GLOBAL
+    )
 
 
 def cache(config_manager, config, owner=None, project=None):
-    if config_manager == ProjectManager:
+    if config_manager == ProjectConfigManager:
         _cache_project(config=config, project=project, owner=owner)
 
     # Set caching only if we have an initialized project
-    if not ProjectManager.is_initialized():
+    if not ProjectConfigManager.is_initialized():
         return
 
     if not _is_same_project(owner, project):
         return
 
     visibility = (
-        ProjectManager.VISIBILITY_LOCAL
-        if ProjectManager.is_locally_initialized()
-        else ProjectManager.VISIBILITY_GLOBAL
+        ProjectConfigManager.VISIBILITY_LOCAL
+        if ProjectConfigManager.is_locally_initialized()
+        else ProjectConfigManager.VISIBILITY_GLOBAL
     )
     config_manager.set_config(config, visibility=visibility)

@@ -51,7 +51,7 @@ def get_eager_matrix_operations(
     except ImportError as e:
         if is_cli:
             Printer.print_error(
-                "numpy is required for this operation, "
+                "numpy is required the eager mode, "
                 "please run 'pip install polyaxon[numpy]'",
                 sys_exit=True,
             )

@@ -16,7 +16,7 @@
 import copy
 
 from collections.abc import Mapping
-from typing import Dict, Union
+from typing import Dict, List, Union
 
 from polyaxon import pkg
 from polyaxon.env_vars.getters.queue import get_queue_info
@@ -27,18 +27,21 @@ from polyaxon.polyaxonfile.specs import (
     get_specification,
     kinds,
 )
-from polyaxon.polyflow import V1Component, V1Operation
+from polyaxon.polyflow import V1Component, V1Init, V1Operation
+from polyaxon.schemas import V1PatchStrategy
 
 
 def get_op_specification(
     config: Union[V1Component, V1Operation] = None,
     hub: str = None,
     params: Dict = None,
-    profile: str = None,
+    presets: List[str] = None,
     queue: str = None,
     nocache: bool = None,
     path_context: str = None,
     validate_params: bool = True,
+    preset_files: List[str] = None,
+    git_init: V1Init = None,
 ) -> V1Operation:
     job_data = {
         "version": config.version if config else pkg.SCHEMA_VERSION,
@@ -50,8 +53,8 @@ def get_op_specification(
                 "Params: `{}` must be a valid mapping".format(params)
             )
         job_data["params"] = params
-    if profile:
-        job_data["profile"] = profile
+    if presets:
+        job_data["presets"] = presets
     if queue:
         # Check only
         get_queue_info(queue)
@@ -70,12 +73,26 @@ def get_op_specification(
 
     if hub and config.hub_ref is None:
         config.hub_ref = hub
-    hub = config.hub_ref
-    public_hub = config.has_public_hub_reference
-    params = copy.deepcopy(config.params)
+
+    # Check if there's presets
+    for preset_plx_file in preset_files:
+        preset_plx_file = OperationSpecification.read(preset_plx_file, is_preset=True)
+        config = config.patch(preset_plx_file, strategy=preset_plx_file.patch_strategy)
+    # Turn git_init to a post_merge preset
+    if git_init:
+        git_preset = V1Operation(
+            run_patch={"init": [git_init.to_dict()]}, is_preset=True
+        )
+        config = config.patch(git_preset, strategy=V1PatchStrategy.POST_MERGE)
+
     # Sanity check if params were passed and we are not dealing with a hub component
+    public_hub = config.has_public_hub_reference
+    hub = config.hub_ref
+    params = copy.deepcopy(config.params)
     if validate_params and not (hub and not public_hub):
-        run_config = OperationSpecification.compile_operation(config)
+        # Avoid in-place patch
+        run_config = get_specification(config.to_dict())
+        run_config = OperationSpecification.compile_operation(run_config)
         run_config.validate_params(params=params, is_template=False)
         if run_config.is_dag_run:
             run_config.run.set_path_context(path_context)

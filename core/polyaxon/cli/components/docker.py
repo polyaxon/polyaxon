@@ -24,7 +24,7 @@ from polyaxon.cli.check import check_polyaxonfile
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonBuildException, PolyaxonSchemaError
-from polyaxon.polyaxonfile.specs import CompiledOperationSpecification
+from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
 from polyaxon.schemas.fields.docker_image import validate_image
 from polyaxon.schemas.types import V1DockerfileType
 from polyaxon.utils.formatting import Printer
@@ -99,7 +99,7 @@ def generate(
         )
 
         try:
-            compiled_operation = specification.compile_operation()
+            compiled_operation = OperationSpecification.compile_operation(specification)
             compiled_operation.apply_params(params=specification.config.params)
             compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
                 compiled_operation

@@ -31,6 +31,7 @@ from polyaxon.api import API_V1
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1RunKind
+from polycommon import live_state
 from polycommon.celery.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
 
@@ -201,6 +202,10 @@ class TestRunDetailViewV1(BaseTestRunApi):
         # Deleted
         assert self.model_class.objects.count() == 0
         assert self.model_class.all.count() == 1
+        assert (
+            self.model_class.all.last().live_state
+            == live_state.STATE_DELETION_PROGRESSING
+        )
 
 
 class BaseRerunRunApi(BaseTestRunApi):

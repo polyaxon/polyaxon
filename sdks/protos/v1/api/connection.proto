@@ -30,29 +30,26 @@ message ConnectionResponse {
     // Name
     string name = 2;
 
+    // Agent
+    string agent = 3;
+
     // Optional description
-    string description = 3;
+    string description = 4;
 
     // Optional tags of this entity
-    repeated string tags = 4;
+    repeated string tags = 5;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp created_at = 6;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 6;
-
-    // Optional a flag to freeze the store
-    bool frozen = 7;
+    google.protobuf.Timestamp updated_at = 7;
 
     // Optional a flag to disable the store
     bool disabled = 8;
 
-    // Optional if the entity has been deleted
-    bool deleted = 9;
-
     // The connection kind
-    ConnectionKind kind = 11;
+    ConnectionKind kind = 9;
 }
 
  // Request data to create/update connection

@@ -71,7 +71,7 @@ def run(
                 run_kind=compiled_operation.get_run_kind(),
                 resource=resource,
             )
-            # cache.cache(config_manager=RunManager, response=response)
+            # cache.cache(config_manager=RunConfigManager, response=response)
             run_job_uid = get_resource_name(run_name)
             Printer.print_success("A new run `{}` was created".format(run_job_uid))
         except (PolyaxonCompilerError, PolyaxonK8SError, PolypodException) as e:

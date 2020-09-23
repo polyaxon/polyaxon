@@ -13,9 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+
+from django.http import Http404
 
 from coredb.api.runs import methods, queries
 from coredb.api.runs.serializers import (
@@ -56,7 +57,7 @@ class RunDetailView(RunEndpoint, RetrieveEndpoint, DestroyEndpoint, UpdateEndpoi
     AUDIT_INSTANCE = True
 
     def perform_destroy(self, instance):
-        instance.archive()
+        instance.delete_in_progress()
 
 
 class RunCloneView(RunEndpoint, CreateEndpoint):
@@ -111,7 +112,10 @@ class RunStatusListView(RunEndpoint, RetrieveEndpoint, CreateEndpoint):
     serializer_class = RunStatusSerializer
 
     def perform_create(self, serializer):
-        methods.create_status(view=self, serializer=serializer)
+        try:
+            methods.create_status(view=self, serializer=serializer)
+        except Run.DoesNotExit:
+            raise Http404
 
 
 class RunStopView(RunEndpoint, CreateEndpoint):

@@ -18,6 +18,7 @@ Method | HTTP request | Description
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 [**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
 [**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations
+[**organizationPlan**](OrganizationsV1Api.md#organizationPlan) | **POST** /api/v1/orgs/{owner}/plan | Organization plan
 [**patchOrganization**](OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | Patch organization
 [**patchOrganizationInvitation**](OrganizationsV1Api.md#patchOrganizationInvitation) | **PATCH** /api/v1/orgs/{owner}/invitations | Patch organization invitation
 [**patchOrganizationMember**](OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
@@ -135,7 +136,7 @@ Name | Type | Description  | Notes
 
 ## deleteOrganization
 
-> deleteOrganization(owner)
+> deleteOrganization(owner, opts)
 
 Delete organization
 
@@ -152,7 +153,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-apiInstance.deleteOrganization(owner, (error, data, response) => {
+let opts = {
+  'usage': "usage_example" // String | Owner usage query param.
+};
+apiInstance.deleteOrganization(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -167,6 +171,7 @@ apiInstance.deleteOrganization(owner, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
+ **usage** | **String**| Owner usage query param. | [optional] 
 
 ### Return type
 
@@ -298,7 +303,7 @@ null (empty response body)
 
 ## getOrganization
 
-> V1Organization getOrganization(owner)
+> V1Organization getOrganization(owner, opts)
 
 Get organization
 
@@ -315,7 +320,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-apiInstance.getOrganization(owner, (error, data, response) => {
+let opts = {
+  'usage': "usage_example" // String | Owner usage query param.
+};
+apiInstance.getOrganization(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -330,6 +338,7 @@ apiInstance.getOrganization(owner, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
+ **usage** | **String**| Owner usage query param. | [optional] 
 
 ### Return type
 
@@ -485,7 +494,9 @@ let opts = {
   'organization_is_public': true, // Boolean | Optional flag to tell if this organization is public.
   'organization_created_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time when the entity was created.
   'organization_updated_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional last time the entity was updated.
-  'organization_role': "organization_role_example" // String | Current user's role in this org.
+  'organization_role': "organization_role_example", // String | Current user's role in this org.
+  'organization_queue': "organization_queue_example", // String | Default queue.
+  'organization_preset': "organization_preset_example" // String | Default preset.
 };
 apiInstance.getOrganizationSettings(owner, opts, (error, data, response) => {
   if (error) {
@@ -509,6 +520,8 @@ Name | Type | Description  | Notes
  **organization_created_at** | **Date**| Optional time when the entity was created. | [optional] 
  **organization_updated_at** | **Date**| Optional last time the entity was updated. | [optional] 
  **organization_role** | **String**| Current user&#39;s role in this org. | [optional] 
+ **organization_queue** | **String**| Default queue. | [optional] 
+ **organization_preset** | **String**| Default preset. | [optional] 
 
 ### Return type
 
@@ -670,6 +683,57 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## organizationPlan
+
+> V1Organization organizationPlan(owner, body)
+
+Organization plan
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let body = new PolyaxonSdk.V1Organization(); // V1Organization | Organization body
+apiInstance.organizationPlan(owner, body, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **body** | [**V1Organization**](V1Organization.md)| Organization body | 
+
+### Return type
+
+[**V1Organization**](V1Organization.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

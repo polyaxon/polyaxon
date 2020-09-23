@@ -17,7 +17,7 @@
 from polyaxon import settings
 from polyaxon.proxies.schemas.base import get_config
 
-SSL_REDIRECT_OPTIONS = """
+SSL_REDIRECT_OPTIONS = r"""
 server {{
     listen 80;
     return 301 https://$host$request_uri;

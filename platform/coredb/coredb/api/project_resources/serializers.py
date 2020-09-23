@@ -60,7 +60,6 @@ class RunSerializer(
             "inputs",
             "outputs",
             "tags",
-            "deleted",
             "settings",
         )
         extra_kwargs = {
@@ -114,6 +113,11 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                 op_spec = OperationSpecification.read(content)
             except Exception as e:
                 raise ValidationError(e)
+            if op_spec.is_template():
+                raise ValidationError(
+                    "Received a template polyaxonfile, "
+                    "Please customize the specification or disable the template."
+                )
             try:
                 return compile_operation_run(
                     project_id=project_id,

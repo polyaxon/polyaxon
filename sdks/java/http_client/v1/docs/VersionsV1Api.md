@@ -87,7 +87,7 @@ Name | Type | Description  | Notes
 
 <a name="getInstallation"></a>
 # **getInstallation**
-> V1Installation getInstallation()
+> V1Installation getInstallation(auth)
 
 Get installation versions
 
@@ -113,8 +113,9 @@ public class Example {
     //ApiKey.setApiKeyPrefix("Token");
 
     VersionsV1Api apiInstance = new VersionsV1Api(defaultClient);
+    Boolean auth = true; // Boolean | auth.
     try {
-      V1Installation result = apiInstance.getInstallation();
+      V1Installation result = apiInstance.getInstallation(auth);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling VersionsV1Api#getInstallation");
@@ -128,7 +129,10 @@ public class Example {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **auth** | **Boolean**| auth. | [optional]
 
 ### Return type
 

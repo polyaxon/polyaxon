@@ -79,6 +79,11 @@ type GetOrganizationParams struct {
 
 	*/
 	Owner string
+	/*Usage
+	  Owner usage query param.
+
+	*/
+	Usage *string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -129,6 +134,17 @@ func (o *GetOrganizationParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithUsage adds the usage to the get organization params
+func (o *GetOrganizationParams) WithUsage(usage *string) *GetOrganizationParams {
+	o.SetUsage(usage)
+	return o
+}
+
+// SetUsage adds the usage to the get organization params
+func (o *GetOrganizationParams) SetUsage(usage *string) {
+	o.Usage = usage
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *GetOrganizationParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -140,6 +156,22 @@ func (o *GetOrganizationParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Usage != nil {
+
+		// query param usage
+		var qrUsage string
+		if o.Usage != nil {
+			qrUsage = *o.Usage
+		}
+		qUsage := qrUsage
+		if qUsage != "" {
+			if err := r.SetQueryParam("usage", qUsage); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	if len(res) > 0 {

@@ -54,7 +54,6 @@ class TestRunSerializer(BaseTestRunSerializer):
         "inputs",
         "outputs",
         "settings",
-        "deleted",
     }
     query = Run.objects
 

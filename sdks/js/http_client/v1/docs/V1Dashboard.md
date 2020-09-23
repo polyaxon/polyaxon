@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
 **disabled** | **Boolean** |  | [optional] 
-**deleted** | **Boolean** |  | [optional] 
 **view** | [**DashboardView**](DashboardView.md) |  | [optional] 
 **spec** | [**Object**](.md) |  | [optional] 
 **created_at** | **Date** |  | [optional] 

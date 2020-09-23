@@ -43,11 +43,20 @@ message IO {
     // A flag to tell if this input/output is flag, only valid for bool type
     bool is_flag = 7;
 
+    // An optional argFromat of the input/output to be used instead of passing the value as is
+    string arg_format = 8;
+
     // A flag to tell if param validation for this input/output should be delayed
-    bool delay_validation = 8;
+    bool delay_validation = 9;
 
     // An optional field to provide possible values for validation
-    repeated google.protobuf.Struct options = 9;
+    repeated google.protobuf.Struct options = 10;
+
+    // A flag to signal to Polyaxon that this io is used with a connection
+    string connection = 11;
+
+    // A flag to signal to Polyaxon that this io must be tranformed to an init container
+    bool to_init = 12;
 }
 
 // Param search specification
@@ -73,6 +82,12 @@ message Param {
     // Search corresponds to a valid search that can be resolved
     ParamSearch search = 3;
 
+    // A flag to signal to Polyaxon that this param is used with a connection
+    string connection = 4;
+
+    // A flag to signal to Polyaxon that this param must be tranformed to an init container
+    bool to_init = 5;
+
     // A flag to signal to Polyaxon that this param should not be validated against io
-    bool context_only = 4;
+    bool context_only = 6;
 }

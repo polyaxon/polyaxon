@@ -28,7 +28,10 @@ from polyaxon.connections.schemas import (
     V1HostPathConnection,
     V1K8sResourceSchema,
 )
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
+from polyaxon.containers.contexts import (
+    CONTEXT_MOUNT_ARTIFACTS,
+    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
+)
 from polyaxon.containers.names import (
     INIT_ARTIFACTS_CONTAINER_PREFIX,
     generate_container_name,
@@ -497,7 +500,7 @@ class TestInitStore(BaseTestCase):
         assert container.volume_mounts == [
             get_connections_context_mount(
                 name=constants.CONTEXT_VOLUME_ARTIFACTS,
-                mount_path=CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(store.name),
+                mount_path=CONTEXT_MOUNT_ARTIFACTS,
             ),
             get_mount_from_store(store=store),
         ]

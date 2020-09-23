@@ -20,18 +20,19 @@ import pytest
 
 from tests.utils import BaseTestCase
 
-from polyaxon.managers.ignore import IgnoreManager
+from polyaxon.managers.ignore import IgnoreConfigManager
 
 
 @pytest.mark.managers_mark
-class TestIgnoreManager(BaseTestCase):
+class TestIgnoreConfigManager(BaseTestCase):
     """Mock the config ignore file."""
 
     def test_default_props(self):
-        assert IgnoreManager.is_global() is False
-        assert IgnoreManager.IS_POLYAXON_DIR is False
-        assert IgnoreManager.CONFIG_FILE_NAME == ".polyaxonignore"
-        assert IgnoreManager.CONFIG is None
+        assert IgnoreConfigManager.is_global() is False
+        assert IgnoreConfigManager.is_local() is True
+        assert IgnoreConfigManager.IS_POLYAXON_DIR is False
+        assert IgnoreConfigManager.CONFIG_FILE_NAME == ".polyaxonignore"
+        assert IgnoreConfigManager.CONFIG is None
 
     @staticmethod
     def get_ignored(patterns):
@@ -54,12 +55,12 @@ class TestIgnoreManager(BaseTestCase):
         ]
         for (path, pattern) in configs:
             mock_file.return_value.__enter__.return_value = [pattern]
-            patterns = IgnoreManager.get_config()
+            patterns = IgnoreConfigManager.get_config()
             self.assertEqual(
                 (self.get_ignored(patterns), self.get_whitelisted(patterns)),
                 ([pattern], []),
             )
-            assert list(IgnoreManager.find_matching(path, patterns)) == []
+            assert list(IgnoreConfigManager.find_matching(path, patterns)) == []
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=mock_open)
@@ -85,12 +86,12 @@ class TestIgnoreManager(BaseTestCase):
         ]
         for (path, pattern) in configs:
             mock_file.return_value.__enter__.return_value = [pattern]
-            patterns = IgnoreManager.get_config()
+            patterns = IgnoreConfigManager.get_config()
             self.assertEqual(
                 (self.get_ignored(patterns), self.get_whitelisted(patterns)),
                 ([pattern], []),
             )
-            assert len(list(IgnoreManager.find_matching(path, patterns))) == 1
+            assert len(list(IgnoreConfigManager.find_matching(path, patterns))) == 1
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=mock_open)
@@ -98,7 +99,7 @@ class TestIgnoreManager(BaseTestCase):
         file_data = ["", "# comment", "", "*.py"]
         mock_file.return_value.__enter__.return_value = file_data
 
-        patterns = IgnoreManager.get_config()
+        patterns = IgnoreConfigManager.get_config()
         self.assertEqual(
             (self.get_ignored(patterns), self.get_whitelisted(patterns)), (["*.py"], [])
         )
@@ -109,7 +110,7 @@ class TestIgnoreManager(BaseTestCase):
         file_data = ["/test", "!/ignore"]
         mock_file.return_value.__enter__.return_value = file_data
 
-        patterns = IgnoreManager.get_config()
+        patterns = IgnoreConfigManager.get_config()
         self.assertEqual(
             (self.get_ignored(patterns), self.get_whitelisted(patterns)),
             (["/test"], ["/ignore"]),
@@ -121,7 +122,7 @@ class TestIgnoreManager(BaseTestCase):
         file_data = ["", "# comment", "*.py", "!file1.py"]
         mock_file.return_value.__enter__.return_value = file_data
 
-        patterns = IgnoreManager.get_config()
+        patterns = IgnoreConfigManager.get_config()
         self.assertEqual(
             (self.get_ignored(patterns), self.get_whitelisted(patterns)),
             (["*.py"], ["file1.py"]),
@@ -129,16 +130,16 @@ class TestIgnoreManager(BaseTestCase):
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=False)
     def test_returns_two_empty_lists_if_file_is_not_present(self, _):
-        patterns = IgnoreManager.get_config()
+        patterns = IgnoreConfigManager.get_config()
         self.assertEqual(patterns, [])
 
     @patch("polyaxon.managers.ignore.os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=mock_open)
     def test_escaping_of_globs_that_start_with_reserved_chars(self, mock_file, _):
-        file_data = ["", "# comment", "\#file1", "\!file2"]  # noqa
+        file_data = ["", r"# comment", r"\#file1", r"\!file2"]  # noqa
         mock_file.return_value.__enter__.return_value = file_data
 
-        patterns = IgnoreManager.get_config()
+        patterns = IgnoreConfigManager.get_config()
         self.assertEqual(
             (self.get_ignored(patterns), self.get_whitelisted(patterns)),
             (["#file1", "!file2"], []),

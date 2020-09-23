@@ -27,7 +27,6 @@ Name | Type | Description | Notes
 **uri** | [**V1UriType**](V1UriType.md) |  | [optional] 
 **k8s_resource** | [**V1K8sResourceType**](V1K8sResourceType.md) |  | [optional] 
 **connection** | [**V1ConnectionType**](V1ConnectionType.md) |  | [optional] 
-**image** | [**V1ImageType**](V1ImageType.md) |  | [optional] 
 **event_type** | [**V1EventType**](V1EventType.md) |  | [optional] 
 **event** | [**V1Event**](V1Event.md) |  | [optional] 
 **matrix_kind** | [**V1MatrixKind**](V1MatrixKind.md) |  | [optional] 

@@ -77,17 +77,20 @@ message ConnectionType {
     // Optional connection description
     string description = 2;
 
+    // Optional connection tags
+    string tags = 3;
+
     // Connection kind
-    ConnectionKind kind = 3;
+    ConnectionKind kind = 4;
 
     // The connection schema should be a valid ConnectionSchema
-    google.protobuf.Struct schema = 4;
+    google.protobuf.Struct schema = 5;
 
     // Secret resource schema
-    K8sResourceSchema secret = 5;
+    K8sResourceSchema secret = 6;
 
     // ConfigMap resource schema
-    K8sResourceSchema config_map = 6;
+    K8sResourceSchema config_map = 7;
 }
 
 message ConnectionSchema {
@@ -142,7 +145,7 @@ enum ConnectionKind {
     slack = 36;
     discord = 37;
     mattermost = 38;
-    pager_duty = 39;
+    pagerduty = 39;
     hipchat = 40;
     webhook = 41;
     custom = 42;

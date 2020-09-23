@@ -23,6 +23,7 @@ except ImportError:
 NAME_BLACKLIST = {
     "user",
     "profile",
+    "preset",
     "admin",
     "abstract",
     "experiment",

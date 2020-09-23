@@ -3,9 +3,8 @@ kind: operation
 name: nteract-commuter
 params:
   destination:
-    value:
-      name: polyaxon/polyaxon-commuter
-      connection: docker-connection
+    connection: docker-connection
+    value: polyaxon/polyaxon-commuter
   context:
     value: "{{globals.artifacts_path}}/polyaxon/hub/commuter"
 runPatch:

@@ -40,7 +40,7 @@ class HealthView(APIView):
     def get_config(self):
         try:
             return CliConfig.read(self.HEALTH_FILE, config_type=".json")
-        except:
+        except:  # noqa
             return
 
     def get(self, request, *args, **kwargs):

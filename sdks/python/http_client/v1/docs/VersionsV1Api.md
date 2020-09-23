@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_installation**
-> V1Installation get_installation()
+> V1Installation get_installation(auth=auth)
 
 Get installation versions
 
@@ -132,17 +132,21 @@ configuration = polyaxon_sdk.Configuration(
 with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.VersionsV1Api(api_client)
-    
+    auth = True # bool | auth. (optional)
+
     try:
         # Get installation versions
-        api_response = api_instance.get_installation()
+        api_response = api_instance.get_installation(auth=auth)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling VersionsV1Api->get_installation: %s\n" % e)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **auth** | **bool**| auth. | [optional] 
 
 ### Return type
 

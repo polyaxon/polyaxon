@@ -44,6 +44,8 @@ class BaseSpecification(Sections):
 
     @classmethod
     def check_version(cls, data):
+        if data.get(cls.IS_PRESET):
+            return
         if cls.VERSION not in data:
             raise PolyaxonfileError("The Polyaxonfile `version` must be specified.")
         if not cls.MIN_VERSION <= data[cls.VERSION] <= cls.MAX_VERSION:
@@ -79,13 +81,23 @@ class BaseSpecification(Sections):
                 )
             )
         for key in set(data.keys()) - set(cls.SECTIONS):
+            in_specification = "Polyaxonfile"
+            if data.get(cls.VERSION):
+                in_specification = "Polyaxonfile version `{}`".format(
+                    data.get(cls.VERSION)
+                )
+            if data.get(cls.IS_PRESET):
+                in_specification = "Polyaxonfile preset"
+
             raise PolyaxonfileError(
-                "Unexpected section `{}` in Polyaxonfile version `{}`. "
+                "Unexpected section `{}` in {}. "
                 "Please check the Polyaxonfile specification "
-                "for this version.".format(key, data[cls.VERSION])
+                "for this version.".format(key, in_specification)
             )
 
         for key in cls.REQUIRED_SECTIONS:
+            if data.get(cls.IS_PRESET) and key == cls.VERSION:
+                continue
             if key not in data:
                 raise PolyaxonfileError(
                     "{} is a required section for a valid Polyaxonfile".format(key)

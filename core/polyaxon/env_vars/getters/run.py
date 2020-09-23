@@ -24,7 +24,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_RUN_INSTANCE,
 )
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.managers.run import RunManager
+from polyaxon.managers.run import RunConfigManager
 from polyaxon.utils.bool_utils import to_bool
 
 
@@ -32,9 +32,9 @@ def get_run_or_local(run_uuid=None, is_cli: bool = False):
     if run_uuid:
         return run_uuid
     if is_cli:
-        return RunManager.get_config_or_raise().uuid
+        return RunConfigManager.get_config_or_raise().uuid
 
-    run = RunManager.get_config()
+    run = RunConfigManager.get_config()
     if run:
         return run.uuid
     return None

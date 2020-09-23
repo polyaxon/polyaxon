@@ -28,7 +28,7 @@ class TestCliProject(BaseCommandTestCase):
     def test_create_project(self, create_project):
         self.runner.invoke(project, ["create"])
         assert create_project.call_count == 0
-        self.runner.invoke(project, ["create", "--owner=owner", "--name=foo"])
+        self.runner.invoke(project, ["create", "--name=owner/foo"])
         assert create_project.call_count == 1
 
     @patch("polyaxon.client.ProjectClient.list")

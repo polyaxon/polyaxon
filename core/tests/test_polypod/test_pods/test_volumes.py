@@ -51,25 +51,27 @@ class TestPodVolumes(BaseTestCase):
         # Secrets and config maps
         self.non_mount_resource1 = V1K8sResourceType(
             name="non_mount_test1",
-            schema=V1K8sResourceSchema(name="ref", items=["item1", "item2"]),
+            schema=V1K8sResourceSchema(
+                name="non_mount_test1", items=["item1", "item2"]
+            ),
             is_requested=False,
         )
         self.non_mount_resource2 = V1K8sResourceType(
             name="non_mount_test2",
-            schema=V1K8sResourceSchema(name="ref"),
+            schema=V1K8sResourceSchema(name="non_mount_test2"),
             is_requested=False,
         )
         self.mount_resource1 = V1K8sResourceType(
             name="mount_test1",
             schema=V1K8sResourceSchema(
-                name="ref", items=["item1", "item2"], mount_path="/tmp1"
+                name="mount_test1", items=["item1", "item2"], mount_path="/tmp1"
             ),
             is_requested=False,
         )
         self.mount_resource2 = V1K8sResourceType(
             name="mount_test1",
             schema=V1K8sResourceSchema(
-                name="ref", items=["item1", "item2"], mount_path="/tmp2"
+                name="mount_test1", items=["item1", "item2"], mount_path="/tmp2"
             ),
             is_requested=False,
         )
@@ -115,6 +117,7 @@ class TestPodVolumes(BaseTestCase):
                 contexts=None,
                 artifacts_store=None,
                 init_connections=None,
+                connections=None,
                 connection_by_names=None,
                 secrets=None,
                 config_maps=None,
@@ -128,6 +131,7 @@ class TestPodVolumes(BaseTestCase):
                 contexts=None,
                 artifacts_store=None,
                 init_connections=[],
+                connections=[],
                 connection_by_names={},
                 secrets=[],
                 config_maps=[],
@@ -149,6 +153,7 @@ class TestPodVolumes(BaseTestCase):
                 ),
                 artifacts_store=None,
                 init_connections=[],
+                connections=[],
                 connection_by_names={},
                 secrets=[],
                 config_maps=[],
@@ -169,6 +174,7 @@ class TestPodVolumes(BaseTestCase):
             ),
             artifacts_store=None,
             init_connections=[],
+            connections=[],
             connection_by_names={},
             secrets=[],
             config_maps=[],
@@ -192,6 +198,7 @@ class TestPodVolumes(BaseTestCase):
             ),
             artifacts_store=None,
             init_connections=[],
+            connections=[],
             connection_by_names={},
             secrets=[],
             config_maps=[],
@@ -211,6 +218,7 @@ class TestPodVolumes(BaseTestCase):
             ),
             artifacts_store=None,
             init_connections=[],
+            connections=[],
             connection_by_names={},
             secrets=[],
             config_maps=[],
@@ -230,6 +238,7 @@ class TestPodVolumes(BaseTestCase):
             ),
             artifacts_store=None,
             init_connections=[],
+            connections=[],
             connection_by_names={},
             secrets=[],
             config_maps=[],
@@ -249,6 +258,7 @@ class TestPodVolumes(BaseTestCase):
             ),
             artifacts_store=None,
             init_connections=[],
+            connections=[],
             connection_by_names={},
             secrets=[],
             config_maps=[],
@@ -270,6 +280,7 @@ class TestPodVolumes(BaseTestCase):
                 ),
                 artifacts_store=store,
                 init_connections=[],
+                connections=[],
                 connection_by_names={},
                 secrets=[],
                 config_maps=[],
@@ -311,6 +322,7 @@ class TestPodVolumes(BaseTestCase):
                 artifacts_store=None,
                 init_connections=[],
                 connection_by_names={store.name: store},
+                connections=[],
                 secrets=[],
                 config_maps=[],
                 volumes=[],
@@ -326,6 +338,7 @@ class TestPodVolumes(BaseTestCase):
                 artifacts_store=None,
                 init_connections=[V1Init(connection=store.name)],
                 connection_by_names={store.name: store},
+                connections=[],
                 secrets=[],
                 config_maps=[],
                 volumes=[],
@@ -397,6 +410,7 @@ class TestPodVolumes(BaseTestCase):
                     artifacts_store=None,
                     init_connections=[],
                     connection_by_names=connection_by_names,
+                    connections=[],
                     secrets=[],
                     config_maps=[],
                     volumes=[],
@@ -419,6 +433,7 @@ class TestPodVolumes(BaseTestCase):
                         V1Init(connection=self.host_path_store.name),
                     ],
                     connection_by_names=connection_by_names,
+                    connections=[],
                     secrets=[],
                     config_maps=[],
                     volumes=[],
@@ -434,6 +449,7 @@ class TestPodVolumes(BaseTestCase):
                     artifacts_store=None,
                     init_connections=init_connections,
                     connection_by_names=connection_by_names,
+                    connections=[],
                     secrets=[],
                     config_maps=[],
                     volumes=[],
@@ -449,6 +465,7 @@ class TestPodVolumes(BaseTestCase):
                     artifacts_store=None,
                     init_connections=init_connections,
                     connection_by_names=connection_by_names,
+                    connections=[],
                     secrets=[],
                     config_maps=[],
                     volumes=[],
@@ -472,6 +489,7 @@ class TestPodVolumes(BaseTestCase):
                     artifacts_store=self.claim_store,
                     init_connections=init_connections,
                     connection_by_names=connection_by_names,
+                    connections=[],
                     secrets=[],
                     config_maps=[],
                     volumes=[],
@@ -480,14 +498,51 @@ class TestPodVolumes(BaseTestCase):
             == 11
         )
 
+        assert (
+            len(
+                get_pod_volumes(
+                    contexts=PluginsContextsSpec.from_config(
+                        V1Plugins(
+                            docker=True,
+                            shm=True,
+                            auth=True,
+                            collect_artifacts=True,
+                            collect_logs=True,
+                        )
+                    ),
+                    artifacts_store=self.claim_store,
+                    init_connections=init_connections,
+                    connection_by_names=connection_by_names,
+                    connections=list(connection_by_names.keys()),
+                    secrets=[],
+                    config_maps=[],
+                    volumes=[],
+                )
+            )
+            == 12
+        )
+
     @staticmethod
-    def assert_secret(secret, results):
+    def assert_secret(secret, connection, results):
+        dummy_connection = (
+            V1ConnectionType(
+                name="connection",
+                kind=V1ConnectionKind.S3,
+                schema=None,
+                secret=secret.schema,
+            )
+            if connection
+            else None
+        )
+        connection_by_names = {"connection": dummy_connection} if connection else {}
+        connections = ["connection"] if connection else []
         assert (
             get_pod_volumes(
                 contexts=None,
                 artifacts_store=None,
                 init_connections=[],
-                connection_by_names={},
+                connections=connections,
+                connection_by_names=connection_by_names,
                 secrets=[secret],
                 config_maps=[],
                 volumes=[],
@@ -496,13 +551,26 @@ class TestPodVolumes(BaseTestCase):
         )
 
     @staticmethod
-    def assert_config_map(config_map, results):
+    def assert_config_map(config_map, connection, results):
+        dummy_connection = (
+            V1ConnectionType(
+                name="connection",
+                kind=V1ConnectionKind.S3,
+                schema=None,
+                config_map=config_map.schema,
+            )
+            if connection
+            else None
+        )
+        connection_by_names = {"connection": dummy_connection} if connection else {}
+        connections = ["connection"] if connection else []
         assert (
             get_pod_volumes(
                 contexts=None,
                 artifacts_store=None,
                 init_connections=[],
-                connection_by_names={},
+                connections=connections,
+                connection_by_names=connection_by_names,
                 secrets=[],
                 config_maps=[config_map],
                 volumes=[],
@@ -511,35 +579,135 @@ class TestPodVolumes(BaseTestCase):
         )
 
     def test_secret_volumes(self):
-        self.assert_secret(secret=self.non_mount_resource1, results=[])
-        self.assert_secret(secret=self.non_mount_resource2, results=[])
+        self.assert_secret(
+            secret=self.non_mount_resource1, connection=False, results=[]
+        )
+        self.assert_secret(
+            secret=self.non_mount_resource2, connection=False, results=[]
+        )
+        self.assert_secret(secret=self.mount_resource1, connection=False, results=[])
+        self.assert_secret(secret=self.mount_resource2, connection=False, results=[])
         self.assert_secret(
             secret=self.mount_resource1,
+            connection=True,
             results=[get_volume_from_secret(secret=self.mount_resource1)],
         )
         self.assert_secret(
             secret=self.mount_resource2,
+            connection=True,
             results=[get_volume_from_secret(secret=self.mount_resource2)],
         )
 
     def test_config_map_volumes(self):
-        self.assert_config_map(config_map=self.non_mount_resource1, results=[])
-        self.assert_config_map(config_map=self.non_mount_resource2, results=[])
+        self.assert_config_map(
+            config_map=self.non_mount_resource1, connection=False, results=[]
+        )
+        self.assert_config_map(
+            config_map=self.non_mount_resource2, connection=False, results=[]
+        )
+        self.assert_config_map(
+            config_map=self.mount_resource1, connection=False, results=[]
+        )
+        self.assert_config_map(
+            config_map=self.mount_resource2, connection=False, results=[]
+        )
         self.assert_config_map(
             config_map=self.mount_resource1,
+            connection=True,
             results=[get_volume_from_config_map(config_map=self.mount_resource1)],
         )
         self.assert_config_map(
             config_map=self.mount_resource2,
+            connection=True,
             results=[get_volume_from_config_map(config_map=self.mount_resource2)],
         )
 
     def test_multiple_resources(self):
+        assert (
+            get_pod_volumes(
+                contexts=None,
+                artifacts_store=None,
+                init_connections=[],
+                connection_by_names={},
+                connections=[],
+                secrets=[
+                    self.non_mount_resource1,
+                    self.non_mount_resource1,
+                    self.mount_resource1,
+                    self.mount_resource2,
+                ],
+                config_maps=[
+                    self.non_mount_resource1,
+                    self.non_mount_resource1,
+                    self.mount_resource1,
+                    self.mount_resource2,
+                ],
+                volumes=[],
+            )
+            == []
+        )
+
+        # Make the resources requested
+        self.non_mount_resource1.is_requested = True
+        self.non_mount_resource2.is_requested = True
+        self.mount_resource1.is_requested = True
+        self.mount_resource2.is_requested = True
         assert get_pod_volumes(
             contexts=None,
             artifacts_store=None,
             init_connections=[],
             connection_by_names={},
+            connections=[],
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource2,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource2,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[],
+        ) == [
+            get_volume_from_secret(secret=self.mount_resource1),
+            get_volume_from_secret(secret=self.mount_resource2),
+            get_volume_from_config_map(config_map=self.mount_resource1),
+            get_volume_from_config_map(config_map=self.mount_resource2),
+        ]
+
+    def test_all_volumes_and_init_in_the_same_context(self):
+        connection_by_names = {
+            self.s3_store.name: self.s3_store,
+            self.gcs_store.name: self.gcs_store,
+            self.az_store.name: self.az_store,
+            self.claim_store.name: self.claim_store,
+            self.host_path_store.name: self.host_path_store,
+        }
+
+        # Test all init are in the same context
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                )
+            ),
+            artifacts_store=self.claim_store,
+            init_connections=[
+                V1Init(connection=self.s3_store.name),
+                V1Init(connection=self.gcs_store.name),
+                V1Init(connection=self.az_store.name),
+                V1Init(connection=self.claim_store.name),
+                V1Init(connection=self.host_path_store.name),
+            ],
+            connections=[],
+            connection_by_names=connection_by_names,
             secrets=[
                 self.non_mount_resource1,
                 self.non_mount_resource1,
@@ -552,13 +720,100 @@ class TestPodVolumes(BaseTestCase):
                 self.mount_resource1,
                 self.mount_resource2,
             ],
-            volumes=[],
-        ) == [
-            get_volume_from_secret(secret=self.mount_resource1),
-            get_volume_from_secret(secret=self.mount_resource2),
-            get_volume_from_config_map(config_map=self.mount_resource1),
-            get_volume_from_config_map(config_map=self.mount_resource2),
-        ]
+            volumes=[self.vol1, self.vol2, self.vol3],
+        )
+        # 1: logs/output contexts (same volume) / 1 managed contexts
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 2 mount volumes
+        assert len(pod_volumes) == 1 + 3 + 3 + 2
+
+        # Test all init are in the same context
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                )
+            ),
+            artifacts_store=self.claim_store,
+            init_connections=[
+                V1Init(connection=self.s3_store.name),
+                V1Init(connection=self.gcs_store.name),
+                V1Init(connection=self.az_store.name),
+                V1Init(connection=self.claim_store.name),
+                V1Init(connection=self.host_path_store.name),
+            ],
+            connections=list(connection_by_names.keys()),
+            connection_by_names=connection_by_names,
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
+        )
+        # 1: logs/output contexts (same volume) / 1 managed contexts
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 2 mount volumes
+        # 4: 1 mount resources (secrets + configs)
+        assert len(pod_volumes) == 1 + 3 + 3 + 2 + 1
+
+        # Enable requesting resources
+        self.mount_resource1.is_requested = True
+        self.mount_resource2.is_requested = True
+        # Test all init are in the same context and requested values
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                )
+            ),
+            artifacts_store=self.claim_store,
+            init_connections=[
+                V1Init(connection=self.s3_store.name),
+                V1Init(connection=self.gcs_store.name),
+                V1Init(connection=self.az_store.name),
+                V1Init(connection=self.claim_store.name),
+                V1Init(connection=self.host_path_store.name),
+            ],
+            connections=list(connection_by_names.keys()),
+            connection_by_names=connection_by_names,
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
+        )
+        # 1: logs/output contexts (same volume) / 1 managed contexts
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 2 mount volumes
+        # 4: 4 mount resources (secrets + configs)
+        assert len(pod_volumes) == 1 + 3 + 3 + 2 + 4
 
     def test_all_volumes(self):
         connection_by_names = {
@@ -569,50 +824,163 @@ class TestPodVolumes(BaseTestCase):
             self.host_path_store.name: self.host_path_store,
         }
 
-        # Test all init are in the same context
-        assert (
-            len(
-                get_pod_volumes(
-                    contexts=PluginsContextsSpec.from_config(
-                        V1Plugins(
-                            docker=True,
-                            shm=True,
-                            auth=True,
-                            collect_artifacts=True,
-                            collect_logs=True,
-                        )
-                    ),
-                    artifacts_store=self.claim_store,
-                    init_connections=[
-                        V1Init(connection=self.s3_store.name),
-                        V1Init(connection=self.gcs_store.name),
-                        V1Init(connection=self.az_store.name),
-                        V1Init(connection=self.claim_store.name),
-                        V1Init(connection=self.host_path_store.name),
-                    ],
-                    connection_by_names=connection_by_names,
-                    secrets=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    config_maps=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    volumes=[self.vol1, self.vol2, self.vol3],
+        init_connections = [
+            V1Init(connection=self.s3_store.name, path="/test-1"),
+            V1Init(connection=self.gcs_store.name, path="/test-2"),
+            V1Init(connection=self.az_store.name, path="/test-3"),
+            V1Init(connection=self.claim_store.name, path="/test-4"),
+            V1Init(connection=self.host_path_store.name, path="/test-5"),
+        ]
+
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
                 )
-            )
-            # 1: logs/output contexts (same volume) / 1 managed contexts
-            # 3: 3 context requested constant contexts
-            # 3: 3 volumes
-            # 7: 2 mount volumes
-            # 4: 4 mount resources (secrets + configs)
-            == 1 + 3 + 3 + 2 + 4
+            ),
+            artifacts_store=self.claim_store,
+            init_connections=init_connections,
+            connection_by_names=connection_by_names,
+            connections=[],
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
         )
+        # 1: logs/output contexts (same volume)
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 5 managed contexts + 2 mount volumes
+        assert len(pod_volumes) == 1 + 3 + 3 + 7
+
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                )
+            ),
+            artifacts_store=self.claim_store,
+            init_connections=init_connections,
+            connection_by_names=connection_by_names,
+            connections=list(connection_by_names.keys()),
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
+        )
+        # 1: logs/output contexts (same volume)
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 5 managed contexts + 2 mount volumes
+        assert len(pod_volumes) == 1 + 3 + 3 + 7 + 1
+
+        # Enable requesting resources
+        self.mount_resource1.is_requested = True
+        self.mount_resource2.is_requested = True
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                )
+            ),
+            artifacts_store=self.claim_store,
+            init_connections=init_connections,
+            connection_by_names=connection_by_names,
+            connections=[],
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
+        )
+        # 1: logs/output contexts (same volume)
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 5 managed contexts + 2 mount volumes
+        # 4: 4 mount resources (secrets + configs)
+        assert len(pod_volumes) == 1 + 3 + 3 + 7 + 4
+
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                )
+            ),
+            artifacts_store=self.s3_store,
+            init_connections=init_connections,
+            connections=list(connection_by_names.keys()),
+            connection_by_names=connection_by_names,
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
+        )
+        # 1: logs/output contexts (same volume)
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 5 managed contexts + 2 mount volumes
+        # 4: 4 mount resources (secrets + configs)
+        assert len(pod_volumes) == 1 + 3 + 3 + 7 + 4
+
+    def test_all_volumes_and_artifacts_store(self):
+        connection_by_names = {
+            self.s3_store.name: self.s3_store,
+            self.gcs_store.name: self.gcs_store,
+            self.az_store.name: self.az_store,
+            self.claim_store.name: self.claim_store,
+            self.host_path_store.name: self.host_path_store,
+        }
 
         init_connections = [
             V1Init(connection=self.s3_store.name, path="/test-1"),
@@ -621,190 +989,147 @@ class TestPodVolumes(BaseTestCase):
             V1Init(connection=self.claim_store.name, path="/test-4"),
             V1Init(connection=self.host_path_store.name, path="/test-5"),
         ]
-        assert (
-            len(
-                get_pod_volumes(
-                    contexts=PluginsContextsSpec.from_config(
-                        V1Plugins(
-                            docker=True,
-                            shm=True,
-                            auth=True,
-                            collect_artifacts=True,
-                            collect_logs=True,
-                        )
-                    ),
-                    artifacts_store=self.claim_store,
-                    init_connections=init_connections,
-                    connection_by_names=connection_by_names,
-                    secrets=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    config_maps=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    volumes=[self.vol1, self.vol2, self.vol3],
-                )
-            )
-            # 1: logs/output contexts (same volume)
-            # 3: 3 context requested constant contexts
-            # 3: 3 volumes
-            # 7: 5 managed contexts + 2 mount volumes
-            # 4: 4 mount resources (secrets + configs)
-            == 1 + 3 + 3 + 7 + 4
-        )
-        assert (
-            len(
-                get_pod_volumes(
-                    contexts=PluginsContextsSpec.from_config(
-                        V1Plugins(
-                            docker=True,
-                            shm=True,
-                            auth=True,
-                            collect_artifacts=True,
-                            collect_logs=True,
-                        )
-                    ),
-                    artifacts_store=self.s3_store,
-                    init_connections=init_connections,
-                    connection_by_names=connection_by_names,
-                    secrets=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    config_maps=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    volumes=[self.vol1, self.vol2, self.vol3],
-                )
-            )
-            # 1: logs/output contexts (same volume)
-            # 3: 3 context requested constant contexts
-            # 3: 3 volumes
-            # 7: 5 managed contexts + 2 mount volumes
-            # 4: 4 mount resources (secrets + configs)
-            == 1 + 3 + 3 + 7 + 4
-        )
 
-        assert (
-            len(
-                get_pod_volumes(
-                    contexts=PluginsContextsSpec.from_config(
-                        V1Plugins(
-                            docker=True,
-                            shm=True,
-                            auth=True,
-                            collect_artifacts=False,
-                            collect_logs=False,
-                        )
-                    ),
-                    artifacts_store=None,
-                    init_connections=init_connections,
-                    connection_by_names=connection_by_names,
-                    secrets=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    config_maps=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    volumes=[self.vol1, self.vol2, self.vol3],
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=False,
+                    collect_logs=False,
                 )
-            )
-            # 3: 3 context requested constant contexts
-            # 3: 3 volumes
-            # 7: 5 managed contexts + 2 mount volumes
-            # 4: 4 mount resources (secrets + configs)
-            == 3 + 3 + 7 + 4
+            ),
+            artifacts_store=None,
+            init_connections=init_connections,
+            connection_by_names=connection_by_names,
+            connections=[],
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
         )
-        assert (
-            len(
-                get_pod_volumes(
-                    contexts=PluginsContextsSpec.from_config(
-                        V1Plugins(
-                            docker=True,
-                            shm=True,
-                            auth=True,
-                            collect_artifacts=False,
-                            collect_logs=False,
-                        )
-                    ),
-                    artifacts_store=None,
-                    init_connections=init_connections,
-                    connection_by_names=connection_by_names,
-                    secrets=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    config_maps=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    volumes=[self.vol1, self.vol2, self.vol3],
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 5 managed contexts + 2 mount volumes
+        assert len(pod_volumes) == 3 + 3 + 7
+
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=False,
+                    collect_logs=False,
                 )
-            )
-            # 3: 3 context requested constant contexts
-            # 3: 3 volumes
-            # 7: 5 managed contexts + 2 mount volumes
-            # 4: 4 mount resources (secrets + configs)
-            == 3 + 3 + 7 + 4
+            ),
+            artifacts_store=None,
+            init_connections=init_connections,
+            connections=list(connection_by_names.keys()),
+            connection_by_names=connection_by_names,
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
         )
-        assert (
-            len(
-                get_pod_volumes(
-                    contexts=PluginsContextsSpec.from_config(
-                        V1Plugins(
-                            docker=True,
-                            shm=True,
-                            auth=True,
-                            collect_artifacts=True,
-                            collect_logs=True,
-                        )
-                    ),
-                    artifacts_store=self.host_path_store,
-                    init_connections=[
-                        V1Init(connection=self.s3_store.name),
-                        V1Init(connection=self.gcs_store.name),
-                        V1Init(connection=self.az_store.name),
-                    ],
-                    connection_by_names=connection_by_names,
-                    secrets=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    config_maps=[
-                        self.non_mount_resource1,
-                        self.non_mount_resource1,
-                        self.mount_resource1,
-                        self.mount_resource2,
-                    ],
-                    volumes=[self.vol1, self.vol2, self.vol3],
+        # 3: 3 context requested constant contexts
+        # 3: 3 volumes
+        # 7: 5 managed contexts + 2 mount volumes
+        assert len(pod_volumes) == 3 + 3 + 7 + 1
+
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
                 )
-            )
-            # 4: 4 context requested constant contexts / init volumes contexts
-            # 3: 3 volumes
-            # 2: 2 managed volumes
-            # 4: 4 mount resources (secrets + configs)
-            == 4 + 2 + 3 + 4
+            ),
+            artifacts_store=self.host_path_store,
+            init_connections=[
+                V1Init(connection=self.s3_store.name),
+                V1Init(connection=self.gcs_store.name),
+                V1Init(connection=self.az_store.name),
+            ],
+            connections=list(connection_by_names.keys()),
+            connection_by_names=connection_by_names,
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
         )
+        # 4: 4 context requested constant contexts / init volumes contexts
+        # 3: 3 volumes
+        # 2: 2 managed volumes
+        assert len(pod_volumes) == 4 + 2 + 3 + 1
+
+        # Enable requesting resources
+        self.mount_resource1.is_requested = True
+        self.mount_resource2.is_requested = True
+        pod_volumes = get_pod_volumes(
+            contexts=PluginsContextsSpec.from_config(
+                V1Plugins(
+                    docker=True,
+                    shm=True,
+                    auth=True,
+                    collect_artifacts=True,
+                    collect_logs=True,
+                )
+            ),
+            artifacts_store=self.host_path_store,
+            init_connections=[
+                V1Init(connection=self.s3_store.name),
+                V1Init(connection=self.gcs_store.name),
+                V1Init(connection=self.az_store.name),
+            ],
+            connections=list(connection_by_names.keys()),
+            connection_by_names=connection_by_names,
+            secrets=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            config_maps=[
+                self.non_mount_resource1,
+                self.non_mount_resource1,
+                self.mount_resource1,
+                self.mount_resource2,
+            ],
+            volumes=[self.vol1, self.vol2, self.vol3],
+        )
+        # 4: 4 context requested constant contexts / init volumes contexts
+        # 3: 3 volumes
+        # 2: 2 managed volumes
+        # 4: 4 mount resources (secrets + configs)
+        assert len(pod_volumes) == 4 + 2 + 3 + 4

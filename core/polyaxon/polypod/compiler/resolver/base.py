@@ -126,14 +126,11 @@ class BaseResolver:
             contexts=self.globals,
         )
 
-    def resolve_profile(self):
+    def resolve_presets(self):
         pass
 
     def resolve_agent(self):
         self.agent_config = settings.AGENT_CONFIG
-
-    def patch(self):
-        pass
 
     def apply_operation_contexts(self):
         try:
@@ -222,10 +219,9 @@ class BaseResolver:
         self.resolve_globals_contexts()
         self.resolve_params()
         self.apply_params()
-        self.resolve_profile()
+        self.resolve_presets()
         self.resolve_agent()
         self.resolve_connections_params()
-        self.patch()
         self.apply_operation_contexts()
         self.resolve_io()
         self.resolve_access()

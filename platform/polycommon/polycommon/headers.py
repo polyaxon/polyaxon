@@ -16,8 +16,6 @@
 
 from django.http import HttpRequest
 
-from polyaxon.services.headers import PolyaxonServiceHeaders
-
 try:
     from rest_framework import HTTP_HEADER_ENCODING
 except ImportError:

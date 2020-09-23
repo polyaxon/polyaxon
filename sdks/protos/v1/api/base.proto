@@ -35,6 +35,9 @@ message UserResourceRequest {
 message OwnerResourceRequest {
     // Owner of the namespace
     string owner = 1;
+
+    // Owner usage query param
+    string usage = 2;
 }
 
 message UuidResourceRequest {

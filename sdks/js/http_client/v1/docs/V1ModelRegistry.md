@@ -10,7 +10,6 @@ Name | Type | Description | Notes
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
 **disabled** | **Boolean** |  | [optional] 
-**deleted** | **Boolean** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 

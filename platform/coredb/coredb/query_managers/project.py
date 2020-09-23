@@ -35,7 +35,6 @@ class ProjectQueryManager(BaseQueryManager):
         "id": "uuid",
         "uid": "uuid",
         "user": "user__username",
-        "archived": "deleted",
     }
     FIELDS_ORDERING = ("created_at", "updated_at", "name", "user")
     CHECK_ALIVE = True
@@ -55,8 +54,8 @@ class ProjectQueryManager(BaseQueryManager):
         "tags": parse_value_operation,
         # User
         "user": parse_value_operation,
-        # Archived
-        "archived": parse_value_operation,
+        # Live state
+        "live_state": parse_value_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
@@ -74,6 +73,6 @@ class ProjectQueryManager(BaseQueryManager):
         "user": ValueCondition,
         # Tags
         "tags": ArrayCondition,
-        # archived
-        "archived": BoolCondition,
+        # Live state
+        "live_state": BoolCondition,
     }

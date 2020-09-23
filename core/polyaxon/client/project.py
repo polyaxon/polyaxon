@@ -129,9 +129,9 @@ class ProjectClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                    [Project PQL](/docs/core/query-syntax/projects/#query)
+                    [Project PQL](/docs/core/query-language/projects/#query)
             sort: str, optional, fields to order by, please refer to
-                    [Project PQL](/docs/core/query-syntax/projects/#sort)
+                    [Project PQL](/docs/core/query-language/projects/#sort)
             limit: int, optional, limit of projects to return.
             offset: int, optional, offset pages to paginate projects.
 

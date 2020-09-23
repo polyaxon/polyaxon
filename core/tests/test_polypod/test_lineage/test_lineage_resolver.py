@@ -31,7 +31,7 @@ from polyaxon.connections.schemas import (
     V1HostConnection,
     V1K8sResourceSchema,
 )
-from polyaxon.managers.agent import AgentManager
+from polyaxon.managers.agent import AgentConfigManager
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1CompiledOperation, V1RunKind
@@ -60,13 +60,15 @@ class TestLineageResolver(BaseTestCase):
                         "name": "param1",
                         "type": types.IMAGE,
                         "isOptional": "true",
-                        "value": {"name": "repo1", "connection": "connection1"},
+                        "value": "repo1",
+                        "connection": "connection1",
                     },
                     {
                         "name": "param1",
                         "type": types.IMAGE,
                         "isOptional": "true",
-                        "value": {"name": "repo2", "connection": "connection2"},
+                        "value": "repo2",
+                        "connection": "connection2",
                     },
                 ],
                 "outputs": [
@@ -74,12 +76,13 @@ class TestLineageResolver(BaseTestCase):
                         "name": "repo2",
                         "type": types.IMAGE,
                         "isOptional": "true",
-                        "value": {"name": "repo3", "connection": "connection1"},
+                        "value": "repo3",
+                        "connection": "connection1",
                     }
                 ],
                 "run": {
                     "kind": V1RunKind.JOB,
-                    "connections": {"test_s3", "connection1", "connection2",},
+                    "connections": {"test_s3", "connection1", "connection2"},
                     "container": {"image": "test"},
                 },
             }
@@ -122,7 +125,7 @@ class TestLineageResolver(BaseTestCase):
 
     def test_resolve_connections_with_invalid_config(self):
         fpath = tempfile.mkdtemp()
-        AgentManager.CONFIG_PATH = fpath
+        AgentConfigManager.CONFIG_PATH = fpath
         secret1 = V1K8sResourceType(
             name="secret1",
             schema=V1K8sResourceSchema(name="secret1"),

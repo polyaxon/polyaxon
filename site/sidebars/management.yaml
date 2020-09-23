@@ -15,14 +15,16 @@
       link: /docs/management/ui/agents/
     - title: Queues
       link: /docs/management/ui/queues/
-    - title: Run Profiles
-      link: /docs/management/ui/run-profiles/
+    - title: Presets
+      link: /docs/management/ui/presets/
     - title: Projects
       link: /docs/management/ui/projects/
     - title: Searches
       link: /docs/management/ui/searches/
     - title: Dashboards
       link: /docs/management/ui/dashboards/
+    - title: Connections
+      link: /docs/management/ui/connections/
     - title: Users
       link: /docs/management/ui/users/
   - group: Runs Dashboard

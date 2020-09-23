@@ -24,13 +24,14 @@ from urllib3.exceptions import HTTPError
 from polyaxon.api import REWRITE_SERVICES_V1, SERVICES_V1
 from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
+from polyaxon.cli.options import OPTIONS_PROJECT, OPTIONS_RUN_UID
 from polyaxon.client import RunClient
 from polyaxon.client.run import get_run_logs
-from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.lifecycle import LifeCycle, V1Statuses
-from polyaxon.managers.run import RunManager
+from polyaxon.managers.run import RunConfigManager
+from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1RunKind
 from polyaxon.utils import cache
 from polyaxon.utils.csv_utils import write_csv
@@ -51,7 +52,7 @@ DEFAULT_EXCLUDE = [
     "description",
     "content",
     "raw_content",
-    "deleted",
+    "live_state",
     "readme",
     "settings",
     "meta_info",
@@ -89,6 +90,8 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
             "inputs",
             "outputs",
             "is_managed",
+            "settings",
+            "status_conditions",
         ],
     )
 
@@ -97,20 +100,24 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
 
 
 @click.group()
-@click.option(
-    "--project", "-p", type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'."
-)
-@click.option("--uid", "-uid", type=str, help="The run uuid.")
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
 def ops(ctx, project, uid):
     """Commands for ops/runs."""
     ctx.obj = ctx.obj or {}
+    if project or uid:
+        Printer.print_warning(
+            "Passing arguments to command groups is deprecated and will be removed in v1.2! "
+            "Please use arguments on the sub-command directly: `polyaxon ops SUB_COMMAND --help`"
+        )
     ctx.obj["project"] = project
     if ctx.invoked_subcommand not in ["ls"]:
         ctx.obj["run_uuid"] = uid
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(
     "--io",
     "-io",
@@ -132,7 +139,7 @@ def ops(ctx, project, uid):
 @click.option("--offset", "-off", type=int, help="To offset the list of runs.")
 @click.option("--columns", "-c", type=str, help="The columns to show.")
 @click.pass_context
-def ls(ctx, io, to_csv, query, sort, limit, offset, columns):
+def ls(ctx, project, io, to_csv, query, sort, limit, offset, columns):
     """List runs for this project.
 
     Uses /docs/core/cli/#caching
@@ -168,7 +175,9 @@ def ls(ctx, io, to_csv, query, sort, limit, offset, columns):
     \b
     $ polyaxon ops ls -q "kind: service"
     """
-    owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
+    owner, project_name = get_project_or_local(
+        project or ctx.obj.get("project"), is_cli=True
+    )
 
     try:
         polyaxon_client = RunClient(owner=owner, project=project_name)
@@ -216,13 +225,15 @@ def ls(ctx, io, to_csv, query, sort, limit, offset, columns):
     else:
         if to_csv:
             objects = list_dicts_to_csv(
-                objects, include_attrs=columns, exclude_attrs=DEFAULT_EXCLUDE,
+                objects,
+                include_attrs=columns,
+                exclude_attrs=DEFAULT_EXCLUDE + ["inputs", "outputs"],
             )
         else:
             objects = list_dicts_to_tabulate(
                 objects,
                 include_attrs=columns,
-                exclude_attrs=DEFAULT_EXCLUDE,
+                exclude_attrs=DEFAULT_EXCLUDE + ["inputs", "outputs"],
                 humanize_values=True,
                 upper_keys=True,
             )
@@ -238,8 +249,10 @@ def ls(ctx, io, to_csv, query, sort, limit, offset, columns):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
-def get(ctx):
+def get(ctx, project, uid):
     """Get run.
 
     Uses /docs/core/cli/#caching
@@ -250,17 +263,17 @@ def get(ctx):
     $ polyaxon ops get  # if run is cached
 
     \b
-    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 get  # project is cached
+    $ polyaxon ops get --uid=8aac02e3a62a4f0aaa257c59da5eab80 # project is cached
 
     \b
-    $ polyaxon ops --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80 get
+    $ polyaxon ops get --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops -p alain/cats-vs-dogs --uid=8aac02e3a62a4f0aaa257c59da5eab80 get
+    $ polyaxon ops get -p alain/cats-vs-dogs --uid=8aac02e3a62a4f0aaa257c59da5eab80
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
 
     try:
@@ -272,7 +285,10 @@ def get(ctx):
             polyaxon_client.run_data
         )
         cache.cache(
-            config_manager=RunManager, config=config, owner=owner, project=project_name
+            config_manager=RunConfigManager,
+            config=config,
+            owner=owner,
+            project=project_name,
         )
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not load run `{}` info.".format(run_uuid))
@@ -282,8 +298,10 @@ def get(ctx):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
-def delete(ctx):
+def delete(ctx, project, uid):
     """Delete a run.
 
     Uses /docs/core/cli/#caching
@@ -294,13 +312,13 @@ def delete(ctx):
     $ polyaxon ops delete
 
     \b
-    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 delete  # project is cached
+    $ polyaxon ops delete --uid=8aac02e3a62a4f0aaa257c59da5eab80  # project is cached
 
     \b
-    $ polyaxon ops --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80 delete
+    $ polyaxon ops delete --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     if not click.confirm("Are sure you want to delete run `{}`".format(run_uuid)):
         click.echo("Existing without deleting the run.")
@@ -312,7 +330,7 @@ def delete(ctx):
         )
         polyaxon_client.delete()
         # Purge caching
-        RunManager.purge()
+        RunConfigManager.purge()
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not delete run `{}`.".format(run_uuid))
         sys.exit(1)
@@ -321,13 +339,15 @@ def delete(ctx):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option("--name", type=str, help="Name of the run (optional).")
 @click.option("--description", type=str, help="Description of the run (optional).")
 @click.option(
     "--tags", type=str, help="Tags of the run, comma separated values (optional)."
 )
 @click.pass_context
-def update(ctx, name, description, tags):
+def update(ctx, project, uid, name, description, tags):
     """Update run.
 
     Uses /docs/core/cli/#caching
@@ -335,15 +355,15 @@ def update(ctx, name, description, tags):
     Examples:
 
     \b
-    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 update
+    $ polyaxon ops  update --uid=8aac02e3a62a4f0aaa257c59da5eab80
     --description="new description for my runs"
 
     \b
-    $ polyaxon ops --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80 update
+    $ polyaxon ops  update --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80
     --tags="foo, bar" --name="unique-name"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     update_dict = {}
 
@@ -375,6 +395,8 @@ def update(ctx, name, description, tags):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "--yes",
     "-y",
@@ -384,7 +406,7 @@ def update(ctx, name, description, tags):
     'Assume "yes" as answer to all prompts and run non-interactively.',
 )
 @click.pass_context
-def stop(ctx, yes):
+def stop(ctx, project, uid, yes):
     """Stop run.
 
     Uses /docs/core/cli/#caching
@@ -395,10 +417,10 @@ def stop(ctx, yes):
     $ polyaxon ops stop
 
     \b
-    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 stop
+    $ polyaxon ops stop --uid=8aac02e3a62a4f0aaa257c59da5eab80
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     if not yes and not click.confirm(
         "Are sure you want to stop " "run `{}`".format(run_uuid)
@@ -419,6 +441,8 @@ def stop(ctx, yes):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "--copy",
     "-c",
@@ -432,10 +456,10 @@ def stop(ctx, yes):
     "polyaxonfile",
     multiple=True,
     type=click.Path(exists=True),
-    help="The polyaxonfiles to update with.",
+    help="The polyaxonfiles to update with, they should be an operation preset.",
 )
 @click.pass_context
-def restart(ctx, copy, polyaxonfile):
+def restart(ctx, project, uid, copy, polyaxonfile):
     """Restart run.
 
     Uses /docs/core/cli/#caching
@@ -447,10 +471,12 @@ def restart(ctx, copy, polyaxonfile):
     """
     content = None
     if polyaxonfile:
-        content = "{}".format(ConfigSpec.read_from(polyaxonfile))
+        content = OperationSpecification.read(polyaxonfile, is_preset=True).to_dict(
+            dump=True
+        )
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -468,16 +494,18 @@ def restart(ctx, copy, polyaxonfile):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "-f",
     "--file",
     "polyaxonfile",
     multiple=True,
     type=click.Path(exists=True),
-    help="The polyaxonfiles to update with.",
+    help="The polyaxonfiles to update with, they should be an operation preset.",
 )
 @click.pass_context
-def resume(ctx, polyaxonfile):
+def resume(ctx, project, uid, polyaxonfile):
     """Resume run.
 
     Uses /docs/core/cli/#caching
@@ -485,14 +513,16 @@ def resume(ctx, polyaxonfile):
     Examples:
 
     \b
-    $ polyaxon ops --uid=8aac02e3a62a4f0aaa257c59da5eab80 resume
+    $ polyaxon ops resume --uid=8aac02e3a62a4f0aaa257c59da5eab80
     """
     content = None
     if polyaxonfile:
-        content = "{}".format(ConfigSpec.read_from(polyaxonfile))
+        content = OperationSpecification.read(polyaxonfile, is_preset=True).to_dict(
+            dump=True
+        )
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -506,8 +536,10 @@ def resume(ctx, polyaxonfile):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
-def invalidate(ctx):
+def invalidate(ctx, project, uid):
     """Invalidate the run's cache state.
 
     Uses /docs/core/cli/#caching
@@ -519,7 +551,7 @@ def invalidate(ctx):
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -533,9 +565,11 @@ def invalidate(ctx):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option("--watch", "-w", is_flag=True, help="Watch statuses.")
 @click.pass_context
-def statuses(ctx, watch):
+def statuses(ctx, project, uid, watch):
     """Get run or run job statuses.
 
     Uses /docs/core/cli/#caching
@@ -546,7 +580,7 @@ def statuses(ctx, watch):
     $ polyaxon ops statuses
 
     \b
-    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 statuses
+    $ polyaxon ops statuses -uid=8aac02e3a62a4f0aaa257c59da5eab80
     """
 
     def _handle_run_statuses():
@@ -569,7 +603,7 @@ def statuses(ctx, watch):
             dict_tabulate(objects, is_list_dict=True)
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
 
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
@@ -604,12 +638,12 @@ def statuses(ctx, watch):
 #     Examples for getting run resources:
 #
 #     \b
-#     $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 resources
+#     $ polyaxon ops resources -uid=8aac02e3a62a4f0aaa257c59da5eab80
 #
 #     For GPU resources
 #
 #     \b
-#     $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 resources --gpu
+#     $ polyaxon ops resources -uid=8aac02e3a62a4f0aaa257c59da5eab80 --gpu
 #     """
 #
 #     def get_run_resources():
@@ -632,6 +666,8 @@ def statuses(ctx, watch):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "--follow",
     "-f",
@@ -660,7 +696,7 @@ def statuses(ctx, watch):
     help="Whether to show all information including container names, pod names, and node names.",
 )
 @click.pass_context
-def logs(ctx, follow, hide_time, all_containers, all_info):
+def logs(ctx, project, uid, follow, hide_time, all_containers, all_info):
     """Get run or run job logs.
 
     Uses /docs/core/cli/#caching
@@ -671,11 +707,11 @@ def logs(ctx, follow, hide_time, all_containers, all_info):
     $ polyaxon run logs
 
     \b
-    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 -p mnist logs
+    $ polyaxon ops logs -uid=8aac02e3a62a4f0aaa257c59da5eab80 -p mnist
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
 
@@ -695,6 +731,8 @@ def logs(ctx, follow, hide_time, all_containers, all_info):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "--path",
     type=str,
@@ -712,7 +750,7 @@ def logs(ctx, follow, hide_time, all_containers, all_info):
     help="Disable the automatic untar of the downloaded the artifacts.",
 )
 @click.pass_context
-def artifacts(ctx, path, path_to, no_untar):
+def artifacts(ctx, project, uid, path, path_to, no_untar):
     """Download outputs/artifacts for run.
 
     Uses /docs/core/cli/#caching
@@ -720,16 +758,16 @@ def artifacts(ctx, path, path_to, no_untar):
     Examples:
 
     \b
-    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 artifacts
+    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80
 
     \b
-    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 artifacts path="events/only"
+    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 path="events/only"
 
     \b
-    $ polyaxon ops -uid=8aac02e3a62a4f0aaa257c59da5eab80 artifacts path_to="this/path"
+    $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 path_to="this/path"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     try:
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
@@ -745,6 +783,8 @@ def artifacts(ctx, path, path_to, no_untar):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "--yes",
     "-y",
@@ -760,10 +800,10 @@ def artifacts(ctx, path, path_to, no_untar):
     help="Print the url of the dashboard for this run.",
 )
 @click.pass_context
-def dashboard(ctx, yes, url):
+def dashboard(ctx, project, uid, yes, url):
     """Open this operation's dashboard details in browser."""
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     subpath = "{}/{}/runs/{}".format(owner, project_name, run_uuid)
     get_dashboard(
@@ -772,6 +812,8 @@ def dashboard(ctx, yes, url):
 
 
 @ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option(
     "--yes",
     "-y",
@@ -790,7 +832,7 @@ def dashboard(ctx, yes, url):
     help="Print the url of the dashboard or external service.",
 )
 @click.pass_context
-def service(ctx, yes, external, url):
+def service(ctx, project, uid, yes, external, url):
     """Open the operation service in browser.
 
     N.B. The operation must have a run kind service, otherwise it will raise an error.
@@ -799,7 +841,7 @@ def service(ctx, yes, external, url):
     please use the `--external` flag.
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        ctx.obj.get("project"), ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
     )
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
     client.refresh_data()

@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from coredb.abstracts.getter import get_run_model
 from coredb.api.base.tags import TagsMixin
 from polyaxon.lifecycle import LifeCycle, V1Statuses
-from polycommon import auditor
+from polycommon import auditor, live_state
 from polycommon.events.registry.run import RUN_DELETED_ACTOR, RUN_STOPPED_ACTOR
 
 
@@ -79,6 +79,6 @@ def delete_runs(view, request, actor, *args, **kwargs):
             owner_name=view.owner_name,
             project_name=view.project_name,
         )
-    # Archive
-    runs.update(deleted=True)
+    # Deletion in progress
+    runs.update(live_state=live_state.STATE_DELETION_PROGRESSING)
     return Response(status=status.HTTP_200_OK, data={})

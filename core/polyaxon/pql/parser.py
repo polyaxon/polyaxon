@@ -152,7 +152,7 @@ def parse_scalar_operation(operation: str) -> "QueryOpSpec":
         except (ValueError, TypeError):
             raise PQLException(
                 "Scalar operation requires int or float params, "
-                "receive {}.".format(operation)
+                "received {}.".format(operation)
             )
     return QueryOpSpec(op, negation, _operation)
 

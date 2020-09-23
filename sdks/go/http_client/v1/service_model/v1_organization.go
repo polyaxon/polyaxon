@@ -31,6 +31,9 @@ import (
 // swagger:model v1Organization
 type V1Organization struct {
 
+	// Auth Settings
+	Auth interface{} `json:"auth,omitempty"`
+
 	// Optional time when the entity was created
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
@@ -41,15 +44,24 @@ type V1Organization struct {
 	// Name
 	Name string `json:"name,omitempty"`
 
+	// Plan settings
+	Plan interface{} `json:"plan,omitempty"`
+
+	// Default preset
+	Preset string `json:"preset,omitempty"`
+
+	// Default queue
+	Queue string `json:"queue,omitempty"`
+
 	// Current user's role in this org
 	Role string `json:"role,omitempty"`
-
-	// Settings
-	Settings interface{} `json:"settings,omitempty"`
 
 	// Optional last time the entity was updated
 	// Format: date-time
 	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
+
+	// Usage info
+	Usage interface{} `json:"usage,omitempty"`
 
 	// User
 	User string `json:"user,omitempty"`

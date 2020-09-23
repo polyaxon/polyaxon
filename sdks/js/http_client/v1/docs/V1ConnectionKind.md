@@ -81,7 +81,7 @@
 
 * `mattermost` (value: `"mattermost"`)
 
-* `pager_duty` (value: `"pager_duty"`)
+* `pagerduty` (value: `"pagerduty"`)
 
 * `hipchat` (value: `"hipchat"`)
 

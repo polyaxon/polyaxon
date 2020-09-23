@@ -32,7 +32,7 @@ import (
 // swagger:model v1CompiledOperation
 type V1CompiledOperation struct {
 
-	// Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+	// Optional actions section
 	Actions []*V1Action `json:"actions"`
 
 	// Optional flag to disable cache validation and force run this component
@@ -71,8 +71,8 @@ type V1CompiledOperation struct {
 	// Optional plugins to enable
 	Plugins *V1Plugins `json:"plugins,omitempty"`
 
-	// Optional profile to use for running this component
-	Profile string `json:"profile,omitempty"`
+	// Optional presets to use for running this component
+	Presets []string `json:"presets"`
 
 	// Optional queue to use for running this component
 	Queue string `json:"queue,omitempty"`

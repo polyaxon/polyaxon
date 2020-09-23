@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 
 ## getInstallation
 
-> V1Installation getInstallation()
+> V1Installation getInstallation(opts)
 
 Get installation versions
 
@@ -83,7 +83,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 //ApiKey.apiKeyPrefix = 'Token';
 
 let apiInstance = new PolyaxonSdk.VersionsV1Api();
-apiInstance.getInstallation((error, data, response) => {
+let opts = {
+  'auth': true // Boolean | auth.
+};
+apiInstance.getInstallation(opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -94,7 +97,10 @@ apiInstance.getInstallation((error, data, response) => {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **auth** | **Boolean**| auth. | [optional] 
 
 ### Return type
 

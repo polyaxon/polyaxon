@@ -3,9 +3,9 @@ kind: operation
 name: build
 params:
   destination:
+    connection: docker-connection
     value:
       name: polyaxon/polyaxon-examples
-      connection: docker-connection
 runPatch:
   init:
   - dockerfile:
@@ -17,5 +17,11 @@ runPatch:
       - pip3 install xgboost
       - pip3 install keras
       - pip3 install tensorflow_datasets
+      - pip3 install torch
+      - pip3 install torchvision
+      - pip3 install pytorch-ignite
+      - pip3 install tensorboard
+      - pip3 install matplotlib
+      - pip3 install fastai
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko

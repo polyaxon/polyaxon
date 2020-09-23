@@ -29,6 +29,12 @@ import (
 // swagger:model v1IO
 type V1IO struct {
 
+	// An optional argFromat of the input/output to be used instead of passing the value as is
+	ArgFormat string `json:"arg_format,omitempty"`
+
+	// A flag to signal to Polyaxon that this io is used with a connection
+	Connection string `json:"connection,omitempty"`
+
 	// A flag to tell if param validation for this input/output should be delayed
 	DelayValidation bool `json:"delay_validation,omitempty"`
 
@@ -52,6 +58,9 @@ type V1IO struct {
 
 	// An optional field to provide possible values for validation
 	Options []interface{} `json:"options"`
+
+	// A flag to signal to Polyaxon that this io must be tranformed to an init container
+	ToInit bool `json:"to_init,omitempty"`
 
 	// The value of the input/output should be compatible with the type
 	Value interface{} `json:"value,omitempty"`

@@ -10,7 +10,11 @@ Name | Type | Description | Notes
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 **role** | **str** |  | [optional] 
-**settings** | [**object**](.md) |  | [optional] 
+**queue** | **str** |  | [optional] 
+**preset** | **str** |  | [optional] 
+**auth** | [**object**](.md) |  | [optional] 
+**plan** | [**object**](.md) |  | [optional] 
+**usage** | [**object**](.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

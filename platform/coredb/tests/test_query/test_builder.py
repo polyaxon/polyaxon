@@ -147,7 +147,7 @@ class TestBoolCondition(BaseTestQuery):
         # eq
         queryset = eq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params=0,
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -155,7 +155,7 @@ class TestBoolCondition(BaseTestQuery):
         assert queryset.count() == 1
         queryset = eq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params="false",
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -163,7 +163,7 @@ class TestBoolCondition(BaseTestQuery):
         assert queryset.count() == 1
         queryset = eq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params=False,
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -172,7 +172,7 @@ class TestBoolCondition(BaseTestQuery):
 
         queryset = eq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params=1,
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -180,7 +180,7 @@ class TestBoolCondition(BaseTestQuery):
         assert queryset.count() == 0
         queryset = eq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params="true",
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -188,7 +188,7 @@ class TestBoolCondition(BaseTestQuery):
         assert queryset.count() == 0
         queryset = eq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params=True,
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -198,7 +198,7 @@ class TestBoolCondition(BaseTestQuery):
         # neq
         queryset = neq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params=0,
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -206,7 +206,7 @@ class TestBoolCondition(BaseTestQuery):
         assert queryset.count() == 0
         queryset = neq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params="false",
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -214,7 +214,7 @@ class TestBoolCondition(BaseTestQuery):
         assert queryset.count() == 0
         queryset = neq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params=False,
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -223,7 +223,7 @@ class TestBoolCondition(BaseTestQuery):
 
         queryset = neq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params=1,
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -231,7 +231,7 @@ class TestBoolCondition(BaseTestQuery):
         assert queryset.count() == 1
         queryset = neq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params="true",
             query_backend=Q,
             timezone=settings.TIME_ZONE,
@@ -239,7 +239,7 @@ class TestBoolCondition(BaseTestQuery):
         assert queryset.count() == 1
         queryset = neq_cond.apply(
             queryset=Run.objects,
-            name="deleted",
+            name="is_managed",
             params=True,
             query_backend=Q,
             timezone=settings.TIME_ZONE,

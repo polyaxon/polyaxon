@@ -11,6 +11,10 @@ Name | Type | Description | Notes
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 **role** | **String** |  | [optional] 
-**settings** | [**Object**](.md) |  | [optional] 
+**queue** | **String** |  | [optional] 
+**preset** | **String** |  | [optional] 
+**auth** | [**Object**](.md) |  | [optional] 
+**plan** | [**Object**](.md) |  | [optional] 
+**usage** | [**Object**](.md) |  | [optional] 
 
 

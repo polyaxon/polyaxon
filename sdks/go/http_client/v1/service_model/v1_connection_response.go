@@ -31,21 +31,18 @@ import (
 // swagger:model v1ConnectionResponse
 type V1ConnectionResponse struct {
 
+	// Agent
+	Agent string `json:"agent,omitempty"`
+
 	// Optional time when the entity was created
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
-
-	// Optional if the entity has been deleted
-	Deleted bool `json:"deleted,omitempty"`
 
 	// Optional description
 	Description string `json:"description,omitempty"`
 
 	// Optional a flag to disable the store
 	Disabled bool `json:"disabled,omitempty"`
-
-	// Optional a flag to freeze the store
-	Frozen bool `json:"frozen,omitempty"`
 
 	// The connection kind
 	Kind V1ConnectionKind `json:"kind,omitempty"`

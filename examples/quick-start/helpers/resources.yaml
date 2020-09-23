@@ -1,0 +1,11 @@
+patchStrategy: isnull
+isPreset: true
+runPatch:
+  container:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 200Mi
+      requests:
+        cpu: 10m
+        memory: 5Mi

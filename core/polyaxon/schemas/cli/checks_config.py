@@ -45,14 +45,12 @@ class ChecksConfig(BaseConfig):
     def get_interval(self, interval: int = None):
         if interval is not None:
             return interval
-        return max(
-            int(
-                os.environ.get(
-                    POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK, self.INTERVAL
-                )
-            ),
-            self.INTERVAL,
+        interval = int(
+            os.environ.get(POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK, self.INTERVAL)
         )
+        if interval == -1:
+            return interval
+        return max(interval, self.INTERVAL)
 
     @classmethod
     def get_last_check(cls, last_check):

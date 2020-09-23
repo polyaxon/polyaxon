@@ -11,7 +11,10 @@ Name | Type | Description | Notes
 **is_optional** | **Boolean** |  | [optional] 
 **is_list** | **Boolean** |  | [optional] 
 **is_flag** | **Boolean** |  | [optional] 
+**arg_format** | **String** |  | [optional] 
 **delay_validation** | **Boolean** |  | [optional] 
 **options** | **[Object]** |  | [optional] 
+**connection** | **String** |  | [optional] 
+**to_init** | **Boolean** |  | [optional] 
 
 

@@ -26,7 +26,7 @@ class TestPagerDutyWebHook(TestWebHookNotification):
     webhook = PagerDutyWebHookNotifier
 
     def test_attrs(self):
-        assert self.webhook.notification_key == V1ConnectionKind.PAGER_DUTY
+        assert self.webhook.notification_key == V1ConnectionKind.PAGERDUTY
         assert self.webhook.name == "PagerDuty WebHook"
 
     def test_validate_config(self):

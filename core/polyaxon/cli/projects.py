@@ -26,10 +26,11 @@ from polyaxon import settings
 from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.init import init as init_project
+from polyaxon.cli.options import OPTIONS_OWNER, OPTIONS_PROJECT
 from polyaxon.client import ProjectClient
 from polyaxon.constants import DEFAULT
 from polyaxon.env_vars.getters import get_project_or_local
-from polyaxon.managers.project import ProjectManager
+from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import (
     Printer,
@@ -41,13 +42,13 @@ from polyaxon.utils.formatting import (
 from polyaxon.utils.validation import validate_tags
 
 
-def get_project_details(project):
-    if project.description:
+def get_project_details(_project):
+    if _project.description:
         Printer.print_header("Project description:")
-        click.echo("{}\n".format(project.description))
+        click.echo("{}\n".format(_project.description))
 
     response = dict_to_tabulate(
-        project.to_dict(), humanize_values=True, exclude_attrs=["description"]
+        _project.to_dict(), humanize_values=True, exclude_attrs=["description"]
     )
 
     Printer.print_header("Project info:")
@@ -55,28 +56,24 @@ def get_project_details(project):
 
 
 @click.group()
-@click.option("--project", "-p", type=str)
+@click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.pass_context
-def project(ctx, project):  # pylint:disable=redefined-outer-name
+def project(ctx, _project):  # pylint:disable=redefined-outer-name
     """Commands for projects."""
+    if _project:
+        Printer.print_warning(
+            "Passing arguments to command groups is deprecated and will be removed in v1.2! "
+            "Please use arguments on the sub-command directly: "
+            "`polyaxon project SUB_COMMAND --help`"
+        )
     if ctx.invoked_subcommand not in ["create", "ls"]:
         ctx.obj = ctx.obj or {}
-        ctx.obj["project"] = project
+        ctx.obj["project"] = _project
 
 
 @project.command()
 @click.option(
-    "--name",
-    required=True,
-    type=str,
-    help="Name of the project, must be unique for the owner namespace.",
-)
-@click.option(
-    "--owner",
-    "-o",
-    type=str,
-    help="Name of the owner/namespace, "
-    "if not provided it will default to the namespace of the current user.",
+    "--name", type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'."
 )
 @click.option("--description", type=str, help="Description of the project.")
 @click.option("--tags", type=str, help="Tags of the project, comma separated values.")
@@ -85,7 +82,7 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
 )
 @click.option("--init", is_flag=True, help="Initialize the project after creation.")
 @click.pass_context
-def create(ctx, name, owner, description, tags, private, init):
+def create(ctx, name, description, tags, private, init):
     """Create a new project.
 
     Uses /docs/core/cli/#caching
@@ -93,8 +90,20 @@ def create(ctx, name, owner, description, tags, private, init):
     Example:
 
     \b
-    $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
+    $ polyaxon project create --project=cats-vs-dogs --description="Image Classification with DL"
+
+    \b
+    $ polyaxon project create --project=owner/name --description="Project Description"
     """
+    if not name:
+        Printer.print_error(
+            "Please login provide a name to create a project.",
+            command_help="project create",
+            sys_exit=True,
+        )
+    owner, project_name = get_project_or_local(
+        name or ctx.obj.get("project"), is_cli=True
+    )
     owner = owner or settings.AUTH_CONFIG.username
     if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
         owner = DEFAULT
@@ -103,21 +112,23 @@ def create(ctx, name, owner, description, tags, private, init):
 
     if not owner:
         Printer.print_error(
-            "Please login first or provide a valid owner --owner. "
+            "Please login first or provide a valid name with owner --name=owner/project. "
             "`polyaxon login --help`"
         )
         sys.exit(1)
 
     try:
         project_config = V1Project(
-            name=name, description=description, tags=tags, is_public=not private
+            name=project_name, description=description, tags=tags, is_public=not private
         )
         polyaxon_client = ProjectClient(owner=owner)
         _project = polyaxon_client.create(project_config)
         config = polyaxon_client.client.sanitize_for_serialization(_project)
-        cache.cache(config_manager=ProjectManager, config=config)
+        cache.cache(config_manager=ProjectConfigManager, config=config)
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not create project `{}`.".format(name))
+        handle_cli_error(
+            e, message="Could not create project `{}`.".format(project_name)
+        )
         sys.exit(1)
 
     Printer.print_success(
@@ -131,17 +142,11 @@ def create(ctx, name, owner, description, tags, private, init):
 
     if init:
         ctx.obj = {}
-        ctx.invoke(init_project, project=name)
+        ctx.invoke(init_project, project="{}/{}".format(owner, project_name))
 
 
 @project.command()
-@click.option(
-    "--owner",
-    "-o",
-    type=str,
-    help="Name of the owner/namespace, "
-    "if not provided it will default to the namespace of the current user.",
-)
+@click.option(*OPTIONS_OWNER["args"], **OPTIONS_OWNER["kwargs"])
 @click.option(
     "--query", "-q", type=str, help="To filter the projects based on this query spec."
 )
@@ -189,7 +194,6 @@ def ls(owner, query, sort, limit, offset):
             "uuid",
             "readme",
             "description",
-            "is_deleted",
             "owner",
             "user_email",
             "teams",
@@ -203,8 +207,9 @@ def ls(owner, query, sort, limit, offset):
 
 
 @project.command()
+@click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.pass_context
-def get(ctx):
+def get(ctx, _project):
     """Get info for current project, by project_name, or owner/project_name.
 
     Uses /docs/core/cli/#caching
@@ -219,9 +224,11 @@ def get(ctx):
     To get a project by name
 
     \b
-    $ polyaxon project get owner/project
+    $ polyaxon project get -p owner/project
     """
-    owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
+    owner, project_name = get_project_or_local(
+        _project or ctx.obj.get("project"), is_cli=True
+    )
 
     try:
         polyaxon_client = ProjectClient(owner=owner, project=project_name)
@@ -230,7 +237,7 @@ def get(ctx):
             polyaxon_client.project_data
         )
         cache.cache(
-            config_manager=ProjectManager,
+            config_manager=ProjectConfigManager,
             config=config,
             owner=owner,
             project=project_name,
@@ -243,13 +250,16 @@ def get(ctx):
 
 
 @project.command()
+@click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.pass_context
-def delete(ctx):
+def delete(ctx, _project):
     """Delete project.
 
     Uses /docs/core/cli/#caching
     """
-    owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
+    owner, project_name = get_project_or_local(
+        _project or ctx.obj.get("project"), is_cli=True
+    )
 
     if not click.confirm(
         "Are sure you want to delete project `{}/{}`".format(owner, project_name)
@@ -259,27 +269,27 @@ def delete(ctx):
 
     try:
         polyaxon_client = ProjectClient(owner=owner, project=project_name)
-        response = polyaxon_client.delete()
-        local_project = ProjectManager.get_config()
+        polyaxon_client.delete()
+        local_project = ProjectConfigManager.get_config()
         if local_project and (owner, project_name) == (
             local_project.user,
             local_project.name,
         ):
             # Purge caching
-            ProjectManager.purge()
+            ProjectConfigManager.purge()
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e, message="Could not delete project `{}/{}`.".format(owner, project_name)
         )
         sys.exit(1)
 
-    if response.status_code == 204:
-        Printer.print_success(
-            "Project `{}/{}` was delete successfully".format(owner, project_name)
-        )
+    Printer.print_success(
+        "Project `{}/{}` was delete successfully".format(owner, project_name)
+    )
 
 
 @project.command()
+@click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.option(
     "--name", type=str, help="Name of the project, must be unique for the same user."
 )
@@ -288,7 +298,7 @@ def delete(ctx):
     "--private", type=bool, help="Set the visibility of the project to private/public."
 )
 @click.pass_context
-def update(ctx, name, description, private):
+def update(ctx, _project, name, description, private):
     """Update project.
 
     Uses /docs/core/cli/#caching
@@ -304,7 +314,9 @@ def update(ctx, name, description, private):
     \b
     $ polyaxon update --tags="foo, bar"
     """
-    owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
+    owner, project_name = get_project_or_local(
+        _project or ctx.obj.get("project"), is_cli=True
+    )
 
     update_dict = {}
     if name:
@@ -334,6 +346,7 @@ def update(ctx, name, description, private):
 
 
 @project.command()
+@click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.option(
     "--yes",
     "-y",
@@ -349,9 +362,11 @@ def update(ctx, name, description, private):
     help="Print the url of the dashboard for this project.",
 )
 @click.pass_context
-def dashboard(ctx, yes, url):
+def dashboard(ctx, _project, yes, url):
     """Open this operation's dashboard details in browser."""
-    owner, project_name = get_project_or_local(ctx.obj.get("project"), is_cli=True)
+    owner, project_name = get_project_or_local(
+        _project or ctx.obj.get("project"), is_cli=True
+    )
     project_url = get_dashboard_url(subpath="{}/{}".format(owner, project_name))
     if url:
         Printer.print_header("The dashboard is available at: {}".format(project_url))

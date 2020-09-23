@@ -17,7 +17,7 @@
 from polyaxon import settings
 from polyaxon.proxies.schemas.base import get_config
 
-SSL_OPTIONS = """
+SSL_OPTIONS = r"""
 # SSL
 ssl_session_timeout 1d;
 ssl_session_cache shared:SSL:50m;

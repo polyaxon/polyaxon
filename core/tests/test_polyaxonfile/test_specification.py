@@ -28,9 +28,14 @@ from polyaxon.polyaxonfile.specs import (
     ComponentSpecification,
     OperationSpecification,
 )
-from polyaxon.polyflow import V1CompiledOperation, V1Component, V1Operation, V1RunKind
+from polyaxon.polyflow import (
+    V1CompiledOperation,
+    V1Component,
+    V1Operation,
+    V1Param,
+    V1RunKind,
+)
 from polyaxon.schemas.types import V1GitType
-from polyaxon.schemas.types.image import V1ImageType
 
 
 @pytest.mark.polyaxonfile_mark
@@ -49,7 +54,7 @@ class TestSpecifications(BaseTestCase):
                 os.path.abspath("tests/fixtures/plain/job_missing_container.yml")
             )
 
-    def test_patch_experiment_without_io_and_params_raises(self):
+    def test_spec_without_io_and_params_raises(self):
         content = {
             "version": 1.1,
             "kind": "component",
@@ -82,9 +87,9 @@ class TestSpecifications(BaseTestCase):
         assert config.to_dict() == content
 
         # Add params
-        params = {"params": {"lr": 0.1}}
+        content["params"] = {"lr": 0.1}
         with self.assertRaises(ValidationError):
-            config.patch(values=params)
+            V1CompiledOperation.read(content)
 
     def test_apply_context_raises_with_required_inputs(self):
         content = {
@@ -178,13 +183,18 @@ class TestSpecifications(BaseTestCase):
         with self.assertRaises(ValidationError):
             CompiledOperationSpecification.apply_operation_contexts(run_config)
 
-        params = {"lr": {"value": 0.1}, "num_steps": {"value": 100}}
+        params = {
+            "lr": V1Param(value=0.1),
+            "num_steps": V1Param.from_dict({"value": 100}),
+        }
 
         assert run_config.inputs[0].value is None
         assert run_config.inputs[1].value is None
         validated_params = run_config.validate_params(params=params)
         run_config.apply_params(params=params)
-        assert params == {p.name: p.param.to_dict() for p in validated_params}
+        assert {k: v.to_dict() for k, v in params.items()} == {
+            p.name: p.param.to_dict() for p in validated_params
+        }
         assert run_config.inputs[0].value == 0.1
         assert run_config.inputs[1].value == 100
 
@@ -212,19 +222,14 @@ class TestSpecifications(BaseTestCase):
         }
         assert run_config.to_dict() == updated_content
 
-        env = {
-            "run": {
-                "container": {
-                    "resources": {
-                        "requests": {"gpu": 1, "tpu": 1},
-                        "limits": {"gpu": 1, "tpu": 1},
-                    }
-                }
-            }
+        updated_content["run"]["container"]["resources"] = {
+            "requests": {"gpu": 1, "tpu": 1},
+            "limits": {"gpu": 1, "tpu": 1},
         }
-        run_config = run_config.patch(values=env)
+        run_config = V1CompiledOperation.read(updated_content)
         assert (
-            run_config.run.container.resources == env["run"]["container"]["resources"]
+            run_config.run.container.resources
+            == updated_content["run"]["container"]["resources"]
         )
 
     def test_apply_params_extends_connections_and_init(self):
@@ -237,10 +242,10 @@ class TestSpecifications(BaseTestCase):
             ],
             "run": {
                 "kind": V1RunKind.JOB,
-                "connections": ["{{ docker_image.connection }}"],
+                "connections": ["{{ params.docker_image.connection }}"],
                 "container": {
                     "name": "polyaxon-main",
-                    "image": "{{ docker_image.name }}",
+                    "image": "{{ docker_image }}",
                     "command": "train",
                 },
             },
@@ -252,11 +257,13 @@ class TestSpecifications(BaseTestCase):
 
         params = {
             "docker_image": {
-                "value": V1ImageType(
-                    name="destination:tag", connection="docker-registry"
-                )
+                "value": "destination:tag",
+                "connection": "docker-registry",
             },
-            "git_repo": {"value": V1GitType(connection="repo-connection")},
+            "git_repo": {
+                "value": V1GitType(revision="foo"),
+                "connection": "repo-connection",
+            },
         }
 
         assert run_config.inputs[0].value is None
@@ -264,14 +271,15 @@ class TestSpecifications(BaseTestCase):
         validated_params = run_config.validate_params(params=params)
         run_config.apply_params(params=params)
         assert params == {p.name: p.param.to_dict() for p in validated_params}
-        assert run_config.inputs[0].value["connection"] == "docker-registry"
-        assert run_config.inputs[1].value["connection"] == "repo-connection"
+        assert run_config.inputs[0].connection == "docker-registry"
+        assert run_config.inputs[1].connection == "repo-connection"
         run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
         run_config = CompiledOperationSpecification.apply_params(run_config)
         run_config = CompiledOperationSpecification.apply_runtime_contexts(run_config)
         assert run_config.run.connections == ["docker-registry"]
+        assert run_config.run.container.image == "destination:tag"
 
-    def test_patch_experiment_with_optional_inputs(self):
+    def test_spec_with_optional_inputs(self):
         content = {
             "version": 1.1,
             "kind": "compiled_operation",
@@ -304,37 +312,36 @@ class TestSpecifications(BaseTestCase):
         assert config.inputs[0].value == 0.6
         assert config.inputs[1].value == 16
 
+        # Passing params
+        content["params"] = {"lr": 0.1}
         with self.assertRaises(ValidationError):  # not valid
-            params = {"params": {"lr": 0.1}}
-            config.patch(values=params)
+            V1CompiledOperation.read(content)
+
+        content.pop("params", None)
 
         # Add env
         assert config.run.container.resources is None
-        env = {
-            "run": {
-                "container": {
-                    "resources": {
-                        "requests": {"gpu": 1, "tpu": 1},
-                        "limits": {"gpu": 1, "tpu": 1},
-                    }
-                }
-            }
+        content["run"]["container"]["resources"] = {
+            "requests": {"gpu": 1, "tpu": 1},
+            "limits": {"gpu": 1, "tpu": 1},
         }
-        config = config.patch(values=env)
+        config = V1CompiledOperation.read(content)
         assert config.run.container.resources == {
             "requests": {"gpu": 1, "tpu": 1},
             "limits": {"gpu": 1, "tpu": 1},
         }
 
-        # Patch with unsupported spec
-        matrix = {"hptuning": {"params": {"lr": {"values": [0.1, 0.2]}}}}
+        # Passing unsupported spec
+        content["hptuning"] = {"params": {"lr": {"values": [0.1, 0.2]}}}
         with self.assertRaises(ValidationError):
-            config.patch(values=matrix)
+            V1CompiledOperation.read(content)
+
+        content.pop("hptuning", None)
 
         # Patch with unsupported spec
-        wrong_config = {"lr": {"values": [0.1, 0.2]}}
         with self.assertRaises(ValidationError):
-            config.patch(values=wrong_config)
+            content["lr"] = {"values": [0.1, 0.2]}
+            V1CompiledOperation.read(content)
 
     def test_op_specification_with_override_info(self):
         config_dict = {
@@ -371,7 +378,7 @@ class TestSpecifications(BaseTestCase):
         run_config = OperationSpecification.compile_operation(op_config)
         assert run_config.name == "foo"
         assert run_config.description == "a description"
-        assert run_config.tags == ["value"]
+        assert run_config.tags == ["kaniko", "value"]
         assert [i.to_light_dict() for i in run_config.run.init] == [
             {
                 "connection": "foo",
@@ -380,18 +387,20 @@ class TestSpecifications(BaseTestCase):
         ]
 
         env = {
-            "run": {
+            "version": 1.1,
+            "runPatch": {
                 "container": {
                     "resources": {
                         "requests": {"gpu": 1, "tpu": 1},
                         "limits": {"gpu": 1, "tpu": 1},
                     }
                 }
-            }
+            },
         }
         run_config = OperationSpecification.compile_operation(op_config, env)
         assert (
-            run_config.run.container.resources == env["run"]["container"]["resources"]
+            run_config.run.container.resources
+            == env["runPatch"]["container"]["resources"]
         )
 
     def test_op_specification(self):
@@ -427,7 +436,7 @@ class TestSpecifications(BaseTestCase):
         run_config = OperationSpecification.compile_operation(op_config)
         assert run_config.name == "foo"
         assert run_config.description == "a description"
-        assert run_config.tags == ["value"]
+        assert run_config.tags == ["kaniko", "value"]
         assert [
             {
                 "container": {
@@ -440,7 +449,7 @@ class TestSpecifications(BaseTestCase):
         ] == [{"container": {"name": "polyaxon-init", "image": "foo", "args": "dev"}}]
 
         env = {
-            "run": {
+            "runPatch": {
                 "container": {
                     "resources": {
                         "requests": {"gpu": 1, "tpu": 1},
@@ -451,7 +460,8 @@ class TestSpecifications(BaseTestCase):
         }
         run_config = OperationSpecification.compile_operation(op_config, env)
         assert (
-            run_config.run.container.resources == env["run"]["container"]["resources"]
+            run_config.run.container.resources
+            == env["runPatch"]["container"]["resources"]
         )
 
     def test_op_specification_with_nocache(self):
@@ -479,14 +489,14 @@ class TestSpecifications(BaseTestCase):
         run_config = OperationSpecification.compile_operation(op_config)
         assert run_config.name == "foo"
         assert run_config.description == "a description"
-        assert run_config.tags == ["value"]
+        assert run_config.tags == ["kaniko", "value"]
         assert run_config.cache.to_dict() == {"disable": True, "ttl": 12}
         assert [i.to_light_dict() for i in run_config.run.init] == [
             {"connection": "some-connection"}
         ]
 
         env = {
-            "run": {
+            "runPatch": {
                 "container": {
                     "resources": {
                         "requests": {"gpu": 1, "tpu": 1},
@@ -497,5 +507,6 @@ class TestSpecifications(BaseTestCase):
         }
         run_config = OperationSpecification.compile_operation(op_config, env)
         assert (
-            run_config.run.container.resources == env["run"]["container"]["resources"]
+            run_config.run.container.resources
+            == env["runPatch"]["container"]["resources"]
         )

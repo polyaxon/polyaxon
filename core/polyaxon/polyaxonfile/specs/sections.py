@@ -23,10 +23,16 @@ class Sections:
     NAME = "name"
     DESCRIPTION = "description"
     TAGS = "tags"
-    PROFILE = "profile"
+    IS_PRESET = "isPreset"
+    PRESETS = "presets"
+    PATCH_STRATEGY = "patchStrategy"
+    TEMPLATE = "template"
     QUEUE = "queue"
     CACHE = "cache"
     PLUGINS = "plugins"
+    HOOKS = "hooks"
+    ACTIONS = "actions"
+    EVENTS = "events"
     TERMINATION = "termination"
     INPUTS = "inputs"
     OUTPUTS = "outputs"
@@ -55,10 +61,16 @@ class Sections:
         DESCRIPTION,
         TAGS,
         PARAMS,
-        PROFILE,
+        IS_PRESET,
+        PRESETS,
+        PATCH_STRATEGY,
+        TEMPLATE,
         CACHE,
         QUEUE,
         PLUGINS,
+        HOOKS,
+        ACTIONS,
+        EVENTS,
         TERMINATION,
         CONNECTIONS,
         MATRIX,
@@ -79,7 +91,7 @@ class Sections:
         RUN_PATCH,
     )
 
-    PARSING_SECTIONS = (PROFILE, QUEUE, CACHE, CONNECTIONS, PLUGINS, TERMINATION)
+    PARSING_SECTIONS = (PRESETS, QUEUE, CACHE, CONNECTIONS, PLUGINS, TERMINATION)
     OP_PARSING_SECTIONS = (OPERATIONS, SCHEDULE, DEPENDENCIES, TRIGGER, CONDITIONS)
 
     REQUIRED_SECTIONS = (VERSION, KIND)

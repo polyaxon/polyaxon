@@ -505,7 +505,12 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
         for param in op.params:
             param_spec = op.params[param].get_spec(
-                name=param, iotype=None, is_flag=None, is_list=None
+                name=param,
+                iotype=None,
+                is_flag=None,
+                is_list=None,
+                is_context=None,
+                arg_format=None,
             )
             if param_spec.param.is_ops_ref:
                 upstream.add(param_spec.param.entity_ref)
@@ -617,7 +622,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 inputs = self._components_by_names[component_ref_name].inputs
             else:
                 raise PolyaxonSchemaError(
-                    "Pipeline op has no template field `{}`".format(op_name)
+                    "Pipeline op has no definition field `{}`".format(op_name)
                 )
 
             if outputs:
@@ -662,16 +667,16 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             if op.has_hub_reference:
                 continue
             elif op.has_component_reference:
-                component_ref = op.template.name
-                outputs = op.template.outputs
-                inputs = op.template.inputs
+                component_ref = op.definition.name
+                outputs = op.definition.outputs
+                inputs = op.definition.inputs
             elif op.has_dag_reference:
-                component_ref = op.template.name
+                component_ref = op.definition.name
                 outputs = self._components_by_names[component_ref].outputs
                 inputs = self._components_by_names[component_ref].inputs
             else:
                 raise PolyaxonSchemaError(
-                    "Pipeline op has no template field `{}`".format(op.name)
+                    "Pipeline op has no definition field `{}`".format(op.name)
                 )
             ops_params.validate_params(
                 params=op.params,
@@ -700,12 +705,12 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 "which is not defined on this pipeline, "
                 "make sure to run `process_components`".format(
                     op_name,
-                    op_spec.op.template.kind,
-                    op_spec.op.template.get_kind_value(),
+                    op_spec.op.definition.kind,
+                    op_spec.op.definition.get_kind_value(),
                 )
             )
         component_ref_name = self._op_component_mapping[op_name]
-        op_spec.op.set_template(self._components_by_names[component_ref_name])
+        op_spec.op.set_definition(self._components_by_names[component_ref_name])
 
     def get_op_spec_by_index(self, idx):
         from polyaxon.polyaxonfile import OperationSpecification

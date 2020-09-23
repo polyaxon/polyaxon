@@ -33,7 +33,6 @@ from polyaxon.schemas.types import (
     V1UriType,
     V1WasbType,
 )
-from polyaxon.schemas.types.image import V1ImageType
 
 
 @pytest.mark.parser_mark
@@ -1183,11 +1182,8 @@ class TestParser(BaseTestCase):
         value = parser.get_git_init(key="dict_key_1", value={"revision": "foo"})
         self.assertEqual(value, V1GitType(revision="foo"))
 
-        value = parser.get_git_init(
-            key="dict_key_1",
-            value={"revision": "foo", "connection": "foo", "init": True},
-        )
-        self.assertEqual(value, V1GitType(revision="foo", connection="foo", init=True))
+        value = parser.get_git_init(key="dict_key_1", value={"revision": "foo"},)
+        self.assertEqual(value, V1GitType(revision="foo"))
 
         value = parser.get_git_init(
             key="dict_key_1", value={"url": "https://github.com", "revision": "foo"}
@@ -1219,6 +1215,22 @@ class TestParser(BaseTestCase):
                 V1GitType(url="https://github.com"),
             ],
         )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_git_init(
+                key="dict_error_key_1",
+                value=dict(revision="foo", connection="foo", init=True),
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_git_init(
+                key="dict_error_key_1", value=dict(revision="foo", init=True)
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_git_init(
+                key="dict_error_key_1", value=dict(revision="foo", connection="foo")
+            )
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_git_init(key="dict_error_key_1", value="foo")
@@ -1281,37 +1293,42 @@ class TestParser(BaseTestCase):
         )
 
     def test_get_image_init(self):
+        value = parser.get_image_init(key="dict_key_1", value="foo")
+        self.assertEqual(value, "foo")
+
         value = parser.get_image_init(key="dict_key_1", value={"name": "foo"})
-        self.assertEqual(value, V1ImageType(name="foo"))
+        self.assertEqual(value, "foo")
+
+        value = parser.get_image_init(key="dict_key_1", value="foo:bar")
+        self.assertEqual(value, "foo:bar")
 
         value = parser.get_image_init(
             key="dict_key_1", value={"name": "foo:bar", "connection": "foo"}
         )
-        self.assertEqual(value, V1ImageType(name="foo:bar", connection="foo"))
+        self.assertEqual(value, "foo:bar")
+
+        value = parser.get_image_init(
+            key="dict_key_1", value="https://registry.com/foo:bar"
+        )
+        self.assertEqual(value, "https://registry.com/foo:bar")
 
         value = parser.get_image_init(
             key="dict_key_1", value='{"name": "https://registry.com/foo:bar"}'
         )
-        self.assertEqual(value, V1ImageType(name="https://registry.com/foo:bar"))
+        self.assertEqual(value, "https://registry.com/foo:bar")
 
         value = parser.get_image_init(
             key="dict_list_key_1",
             value=[
                 {"name": "https://registry.com/foo:bar"},
                 {"name": "test", "connection": "registry"},
+                "foo:bar",
             ],
             is_list=True,
         )
         self.assertEqual(
-            value,
-            [
-                V1ImageType(name="https://registry.com/foo:bar"),
-                V1ImageType(name="test", connection="registry"),
-            ],
+            value, ["https://registry.com/foo:bar", "test", "foo:bar",],
         )
-
-        with self.assertRaises(PolyaxonSchemaError):
-            parser.get_image_init(key="dict_error_key_1", value="foo")
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_image_init(key="dict_error_key_2", value=1)
@@ -1372,37 +1389,45 @@ class TestParser(BaseTestCase):
 
     def test_get_artifacts_init(self):
         value = parser.get_artifacts_init(
-            key="dict_key_1", value={"files": ["foo", "bar"], "connection": "foo"}
+            key="dict_key_1", value={"files": ["foo", "bar"]}
         )
-        self.assertEqual(value, V1ArtifactsType(connection="foo", files=["foo", "bar"]))
+        self.assertEqual(value, V1ArtifactsType(files=["foo", "bar"]))
 
         value = parser.get_artifacts_init(
-            key="dict_key_1", value={"connection": "foo", "init": True}
+            key="dict_key_1", value='{"dirs": ["foo", "bar"]}'
         )
-        self.assertEqual(value, V1ArtifactsType(connection="foo", init=True))
-
-        value = parser.get_artifacts_init(
-            key="dict_key_1", value='{"connection": "foo", "dirs": ["foo", "bar"]}'
-        )
-        self.assertEqual(value, V1ArtifactsType(connection="foo", dirs=["foo", "bar"]))
+        self.assertEqual(value, V1ArtifactsType(dirs=["foo", "bar"]))
 
         value = parser.get_artifacts_init(
             key="dict_list_key_1",
             value=[
-                {"connection": "foo", "dirs": ["foo", "bar"], "files": ["foo", "bar"]},
-                {"connection": "foo", "init": True},
+                {"dirs": ["foo", "bar"], "files": ["foo", "bar"]},
+                {"files": ["foo", "bar"]},
             ],
             is_list=True,
         )
         self.assertEqual(
             value,
             [
-                V1ArtifactsType(
-                    connection="foo", dirs=["foo", "bar"], files=["foo", "bar"]
-                ),
-                V1ArtifactsType(connection="foo", init=True),
+                V1ArtifactsType(dirs=["foo", "bar"], files=["foo", "bar"]),
+                V1ArtifactsType(files=["foo", "bar"]),
             ],
         )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_artifacts_init(
+                key="dict_key_1", value={"connection": "foo", "init": True}
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_artifacts_init(
+                key="dict_key_1", value={"init": True, "dirs": ["foo", "bar"]}
+            )
+
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_artifacts_init(
+                key="dict_key_1", value={"connection": "foo", "files": ["foo", "bar"]}
+            )
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_artifacts_init(

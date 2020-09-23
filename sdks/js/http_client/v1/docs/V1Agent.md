@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
 **disabled** | **Boolean** |  | [optional] 
-**deleted** | **Boolean** |  | [optional] 
 **namespace** | **String** |  | [optional] 
 **version_api** | [**Object**](.md) |  | [optional] 
 **content** | **String** |  | [optional] 

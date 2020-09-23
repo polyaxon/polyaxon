@@ -22,8 +22,10 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.client import ClientConfigManager
-from polyaxon.managers.project import ProjectManager
-from polyaxon.managers.run import RunManager
+from polyaxon.managers.git import GitConfigManager
+from polyaxon.managers.ignore import IgnoreConfigManager
+from polyaxon.managers.project import ProjectConfigManager
+from polyaxon.managers.run import RunConfigManager
 from polyaxon.utils.formatting import Printer, dict_tabulate
 
 
@@ -122,11 +124,17 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 
 
 @config.command()
-def purge():
+@click.option(
+    "--cache-only", is_flag=True, help="To purge cache only.",
+)
+def purge(cache_only):
     """Purge the global config values."""
-    ClientConfigManager.purge()
-    CliConfigManager.purge()
-    AuthConfigManager.purge()
-    ProjectManager.purge()
-    RunManager.purge()
-    Printer.print_success("Config was removed.")
+    if not cache_only:
+        ClientConfigManager.purge()
+        CliConfigManager.purge()
+        AuthConfigManager.purge()
+    ProjectConfigManager.purge()
+    RunConfigManager.purge()
+    IgnoreConfigManager.purge()
+    GitConfigManager.purge()
+    Printer.print_success("Configs was removed.")

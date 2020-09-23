@@ -54,12 +54,22 @@ class Parser:
 
         return cls._get_section_data(section_data)
 
+    @staticmethod
+    def get_parsed_params(param_spec: Dict[str, ParamSpec]) -> Dict:
+        parsed_params = {"params": {}}
+        for param in param_spec or {}:
+            parsed_params[param] = param_spec[param].get_display_value()
+            # Add params level
+            if not param_spec[param].is_context:
+                parsed_params["params"][param] = param_spec[param].to_parsed_param()
+
+        return parsed_params
+
     @classmethod
     def parse(
         cls, config, param_spec: Dict[str, ParamSpec]
     ):  # pylint:disable=too-many-branches
-        param_spec = param_spec or {}
-        parsed_params = {param: param_spec[param].display_value for param in param_spec}
+        parsed_params = cls.get_parsed_params(param_spec)
 
         parsed_data = {Sections.VERSION: config.version, Sections.KIND: config.kind}
 
@@ -84,9 +94,6 @@ class Parser:
             parsed_data[Sections.MATRIX] = cls.parse_expression(
                 matrix_section, parsed_params
             )
-            matrix_params = copy.copy(parsed_data[Sections.MATRIX])
-            if matrix_params:
-                parsed_params = deep_update(matrix_params, parsed_params)
 
         for section in Sections.PARSING_SECTIONS:
             config_section = cls._get_section(config, section)
@@ -138,11 +145,8 @@ class Parser:
     def parse_section(
         cls, config_section, param_spec: Dict[str, ParamSpec], parse_params: bool = True
     ):
-        param_spec = param_spec or {}
         if parse_params:
-            param_spec = {
-                param: param_spec[param].display_value for param in param_spec
-            }
+            param_spec = cls.get_parsed_params(param_spec)
         if config_section:
             return cls.parse_expression(config_section, param_spec)
         return config_section

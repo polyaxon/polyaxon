@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 **uuid** | **str** |  | [optional] 
 **agent** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
+**description** | **str** |  | [optional] 
+**tags** | **list[str]** |  | [optional] 
 **priority** | **int** |  | [optional] 
 **concurrency** | **int** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 

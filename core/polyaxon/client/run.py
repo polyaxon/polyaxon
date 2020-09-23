@@ -307,7 +307,7 @@ class RunClient:
         description: str = None,
         tags: Union[str, Sequence[str]] = None,
         params: Dict = None,
-        profile: str = None,
+        presets: List[str] = None,
         queue: str = None,
         nocache: bool = True,
     ) -> V1Run:
@@ -331,8 +331,8 @@ class RunClient:
                 it will override the tags in the operation if provided.
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
-            profile: str, optional, the name of the
-                [run profile](/docs/core/introduction/concepts/#run-profile).
+            presets: List[str], optional, the name of the
+                [presets](/docs/core/introduction/concepts/#preset).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, to disable
@@ -346,7 +346,7 @@ class RunClient:
         op_spec = check_polyaxonfile(
             polyaxonfile=polyaxonfile,
             params=params,
-            profile=profile,
+            presets=presets,
             queue=queue,
             nocache=nocache,
             verbose=False,
@@ -364,7 +364,7 @@ class RunClient:
         description: str = None,
         tags: Union[str, Sequence[str]] = None,
         params: Dict = None,
-        profile: str = None,
+        presets: List[str] = None,
         queue: str = None,
         nocache: bool = True,
     ) -> V1Run:
@@ -387,8 +387,8 @@ class RunClient:
                 it will override the tags in the operation if provided.
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
-            profile: str, optional, the name of the
-                [run profile](/docs/core/introduction/concepts/#run-profile).
+            presets: List[str], optional, the name of the
+                [presets](/docs/core/introduction/concepts/#preset).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, to disable
@@ -402,7 +402,7 @@ class RunClient:
         op_spec = check_polyaxonfile(
             url=url,
             params=params,
-            profile=profile,
+            presets=presets,
             queue=queue,
             nocache=nocache,
             verbose=False,
@@ -420,7 +420,7 @@ class RunClient:
         description: str = None,
         tags: Union[str, Sequence[str]] = None,
         params: Dict = None,
-        profile: str = None,
+        presets: str = None,
         queue: str = None,
         nocache: bool = True,
     ) -> V1Run:
@@ -442,8 +442,8 @@ class RunClient:
                 it will override the tags in the component if provided.
             params: dict, optional, a dictionary of parameters that will be
                 used to resolve the component's inputs/outputs.
-            profile: str, optional, the name of the
-                [run profile](/docs/core/introduction/concepts/#run-profile).
+            presets: List[str], optional, the name of the
+                [presets](/docs/core/introduction/concepts/#preset).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
             nocache: bool, optional, to disable
@@ -457,7 +457,7 @@ class RunClient:
         op_spec = check_polyaxonfile(
             hub=component,
             params=params,
-            profile=profile,
+            presets=presets,
             queue=queue,
             nocache=nocache,
             verbose=False,
@@ -1227,9 +1227,9 @@ class RunClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                [Project PQL](/docs/core/query-syntax/runs/#query)
+                [Project PQL](/docs/core/query-language/runs/#query)
             sort: str, optional, fields to order by, please refer to
-                [Project PQL](/docs/core/query-syntax/runs/#sort)
+                [Project PQL](/docs/core/query-language/runs/#sort)
             limit: int, optional, limit of runs to return.
             offset: int, optional, offset pages to paginate runs.
 
@@ -1250,9 +1250,9 @@ class RunClient:
 
         Args:
             query: str, optional, query filters, please refer to
-                [Project PQL](/docs/core/query-syntax/runs/#query)
+                [Project PQL](/docs/core/query-language/runs/#query)
             sort: str, optional, fields to order by, please refer to
-                [Project PQL](/docs/core/query-syntax/runs/#sort)
+                [Project PQL](/docs/core/query-language/runs/#sort)
             limit: int, optional, limit of runs to return.
             offset: int, optional, offset pages to paginate runs.
 

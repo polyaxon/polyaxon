@@ -2,7 +2,7 @@
 title: "Queues"
 sub_link: "ui/queues"
 meta_title: "Polyaxon management tools and UI - Queues"
-meta_description: "Polyaxon Queue manage, queue, route, prioritize, and throttle operations."
+meta_description: "Polyaxon manage, queue, route, prioritize, and throttle operations."
 tags:
     - concepts
     - polyaxon
@@ -39,3 +39,15 @@ You can list, review, and manage all queues for each agent.
 You can update or delete a queue.
 
 ![queue-settings](../../../../content/images/dashboard/queues/settings.png)
+
+## Queues viewer
+
+Users without admin or owner rights can view the table of available queues in your organization.
+
+![queue-viewer.png](../../../../content/images/dashboard/queues/viewer.png)
+
+## Queues usage
+
+They can also view details on how to use them in their workload.
+
+![queue-definition.png](../../../../content/images/dashboard/queues/definition.png)

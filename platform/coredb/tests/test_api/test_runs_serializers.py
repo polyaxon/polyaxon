@@ -53,7 +53,6 @@ class TestRunDetailSerializer(BaseTestRunSerializer):
         "tags",
         "inputs",
         "outputs",
-        "deleted",
         "settings",
         "readme",
         "content",

@@ -23,9 +23,11 @@ from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
 from polyaxon.polyflow.params import ParamSchema
 from polyaxon.polyflow.references import V1DagRef, V1HubRef, V1PathRef, V1UrlRef
 from polyaxon.polyflow.run.patch import validate_run_patch
+from polyaxon.polyflow.templates import TemplateMixinConfig, TemplateMixinSchema
+from polyaxon.schemas.patch_strategy import V1PatchStrategy
 
 
-class OperationSchema(BaseOpSchema):
+class OperationSchema(BaseOpSchema, TemplateMixinSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("operation"))
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(ParamSchema), allow_none=True
@@ -36,6 +38,10 @@ class OperationSchema(BaseOpSchema):
     url_ref = fields.Str(allow_none=True)
     path_ref = fields.Str(allow_none=True)
     component = fields.Nested(ComponentSchema, allow_none=True)
+    patch_strategy = fields.Str(
+        allow_none=True, validate=validate.OneOf(V1PatchStrategy.allowable_values)
+    )
+    is_preset = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -52,6 +58,8 @@ class OperationSchema(BaseOpSchema):
 
     @validates_schema
     def validate_reference(self, data, **kwargs):
+        if data.get("is_preset"):
+            return
         count = 0
         hub_ref = data.get("hub_ref")
         if hub_ref:
@@ -76,7 +84,7 @@ class OperationSchema(BaseOpSchema):
             )
 
 
-class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
+class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     """An operation is how Polyaxon executes a component by passing parameters,
     connections, and a run environment.
 
@@ -97,10 +105,12 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     Args:
         version: str
         kind: str, should be equal to `operation`
+        patch_strategy: str, optional, defaults to post_merge.
+        is_preset: bool, optional
         name: str, optional
         description: str, optional
         tags: List[str], optional
-        profile: str, optional
+        presets: str, optional
         queue: str, optional
         cache: [V1Cache](/docs/automation/helpers/cache/), optional
         termination: [V1Termination](/docs/core/specification/termination/), optional
@@ -110,9 +120,9 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
                   [V1IntervalSchedule](/docs/automation/schedules/interval/),
                   [V1RepeatableSchedule](/docs/automation/schedules/repeatable/),
                   [V1ExactTimeSchedule](/docs/automation/schedules/exact-time/)], optional
-        events: List[[str](/docs/automation/events/)], optional
-        actions: List[[V1Action](/docs/core/specification/actions/)], optional
-        hooks: List[[V1Hook](/docs/core/specification/hooks/)], optional
+        events: List[[str](/docs/automation/extensions/events/)], optional
+        actions: List[[V1Action](/docs/automation/extensions/actions/)], optional
+        hooks: List[[V1Hook](/docs/automation/extensions/hooks/)], optional
         matrix: Union[[V1Mapping](/docs/automation/mapping/),
                   [V1GridSearch](/docs/automation/optimization-engine/grid-search/),
                   [V1RandomSearch](/docs/automation/optimization-engine/random-search/),
@@ -136,6 +146,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
         url_ref: str, optional
         path_ref: str, optional
         component: [V1Component](/docs/core/specification/component/), optional
+        template: [V1Template](/docs/core/specification/template/), optional
 
     ## YAML usage
 
@@ -143,10 +154,12 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>> operation:
     >>>   version: 1.1
     >>>   kind: operation
+    >>>   patchStrategy:
+    >>>   isPreset:
     >>>   name:
     >>>   description:
     >>>   tags:
-    >>>   profile:
+    >>>   presets:
     >>>   queue:
     >>>   cache:
     >>>   termination:
@@ -160,6 +173,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>>   dagRef:
     >>>   pathRef:
     >>>   component:
+    >>>   template:
     ```
 
     ## Python usage
@@ -168,11 +182,13 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>> from polyaxon.polyflow import (
     >>>     V1Action, V1Cache, V1Component, V1Hook, V1Param, V1Plugins, V1Operation, V1Termination
     >>> )
+    >>> from polyaxon.schemas import V1PatchStrategy
     >>> operation = V1Operation(
+    >>>     patch_strategy=V1PatchStrategy.REPLACE,
     >>>     name="test",
     >>>     description="test",
     >>>     tags=["test"],
-    >>>     profile="test",
+    >>>     presets=["test"],
     >>>     queue="test",
     >>>     cache=V1Cache(...),
     >>>     termination=V1Termination(...),
@@ -208,6 +224,46 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>>   kind: component
     ```
 
+    ### patchStrategy
+
+    Defines how the compiler should handle keys that are defined on the component,
+    or how to merge multiple presets when using the override behavior `-f`.
+
+    There are four strategies:
+     * `replace`: replaces all keys with new values if provided.
+     * `isnull`: only applies new values if the keys have empty/None values.
+     * `post_merge`: applies deep merge where newer values are applied last.
+     * `pre_merge`: applies deep merge where newer values are applied first.
+
+    ### isPreset
+
+    This is a flag to tell if this operation must be validated or
+    is only a preset that will be used with the override behavior to inject extra information
+    to the main operation specification.
+
+    For instance a user might want to define a scheduling
+    behavior that applies to several operations.
+    One way to do that is to set the environment section on every operation.
+    But sometime the same scheduling behavior makes sense for several operations and components.
+    In that case, the user can define an operation preset to extract that logic:
+
+    ```yaml
+    >>> isPreset: true
+    >>> runPatch:
+    >>>   environment:
+    >>>     nodeSelector:
+    >>>       node_label: node_value
+    ```
+
+    and use the override behavior to inject that section dynamically:
+
+    ```bash
+    polyaxon run -f component -f scheduling-preset.yaml
+    ```
+
+    > **Note**: Please check this
+        [in-depth section about presets](/docs/core/scheduling-strategies/presets/).
+
     ### name
 
     The name to use for this operation run,
@@ -241,15 +297,15 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
     >>>   tags: [test]
     ```
 
-    ### profile
+    ### presets
 
-    The [run profile](/docs/management/ui/run-profiles/) to use for this operation run,
-    if provided, it will override the component's profile otherwise
-    the profile of the component will be used if it exists.
+    The [presets](/docs/management/ui/presets/) to use for this operation run,
+    if provided, it will override the component's presets otherwise
+    the presets of the component will be used if it exists.
 
     ```yaml
     >>> operation:
-    >>>   profile: test
+    >>>   presets: [test]
     ```
 
     ### queue
@@ -468,14 +524,31 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
 
     SCHEMA = OperationSchema
     IDENTIFIER = "operation"
-    REDUCED_ATTRIBUTES = BaseOp.REDUCED_ATTRIBUTES + [
-        "params",
-        "hubRef",
-        "dagRef",
-        "urlRef",
-        "pathRef",
+    REDUCED_ATTRIBUTES = (
+        BaseOp.REDUCED_ATTRIBUTES
+        + TemplateMixinConfig.REDUCED_ATTRIBUTES
+        + [
+            "params",
+            "hubRef",
+            "dagRef",
+            "urlRef",
+            "pathRef",
+            "component",
+            "runPatch",
+            "isPreset",
+            "patchStrategy",
+        ]
+    )
+    FIELDS_MANUAL_PATCH = [
+        "version",
+        "is_preset",
+        "hub_ref",
+        "dag_ref",
+        "url_ref",
+        "path_ref",
         "component",
-        "runPatch",
+        "run_patch",
+        "patch_strategy",
     ]
 
     @property
@@ -518,7 +591,7 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
             return V1UrlRef(url=self.url_ref)
 
     @property
-    def template(self):
+    def definition(self):
         if self.has_component_reference:
             return self.component
         if self.has_dag_reference:
@@ -530,5 +603,41 @@ class V1Operation(BaseOp, polyaxon_sdk.V1Operation):
         if self.has_url_reference:
             return V1UrlRef(url=self.url_ref)
 
-    def set_template(self, value):
+    def set_definition(self, value):
         self.component = value
+
+    @classmethod
+    def patch_obj(cls, config, values, strategy: V1PatchStrategy = None):
+        strategy = strategy or V1PatchStrategy.POST_MERGE
+
+        result = super().patch_obj(config, values, strategy)
+        value = getattr(values, "run_patch", None)
+        if value is None:
+            return result
+
+        current_value = getattr(config, "run_patch", None)
+        if current_value is None:
+            setattr(result, "run_patch", value)
+            return result
+
+        if (
+            not config.component
+            or not config.component.run
+            or not config.component.run.kind
+        ):
+            # We don't have a kind, we don't do anything
+            if strategy == V1PatchStrategy.ISNULL:
+                return result
+            if strategy == V1PatchStrategy.REPLACE:
+                setattr(result, "run_patch", value)
+                return result
+            return result
+
+        kind = config.component.run.kind
+        value = validate_run_patch(value, kind)
+        current_value = validate_run_patch(current_value, kind)
+        run_patch = current_value.patch(value, strategy)
+        run_patch = run_patch.to_dict()
+        run_patch.pop("kind")
+        result.run_patch = run_patch
+        return result

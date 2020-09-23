@@ -16,7 +16,7 @@
 
 from polyaxon.proxies.schemas.base import get_config
 
-OPTIONS = """
+OPTIONS = r"""
 server {{
     include polyaxon/polyaxon.base.conf;
 }}

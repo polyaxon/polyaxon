@@ -1,0 +1,18 @@
+version: 1.1
+kind: component
+name: mnist
+tags: [examples]
+
+inputs:
+- {name: fit, type: int, value: 3, isOptional: true}
+
+run:
+  kind: job
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-examples
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/fastai"
+    command: ["python", "-u", "mnist.py"]
+    imagePullPolicy: "Always"
+    args: ["--fit={{ fit }}"]

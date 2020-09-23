@@ -44,11 +44,11 @@ def set_proxies_config():
 
 
 def set_agent_config():
-    from polyaxon.managers.agent import AgentManager
+    from polyaxon.managers.agent import AgentConfigManager
 
     global AGENT_CONFIG
 
-    AGENT_CONFIG = AgentManager.get_config_from_env()
+    AGENT_CONFIG = AgentConfigManager.get_config_from_env()
 
 
 def set_cli_config():

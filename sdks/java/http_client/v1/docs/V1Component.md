@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
-**profile** | **String** |  |  [optional]
+**presets** | **List&lt;String&gt;** |  |  [optional]
 **queue** | **String** |  |  [optional]
 **cache** | [**V1Cache**](V1Cache.md) |  |  [optional]
 **termination** | [**V1Termination**](V1Termination.md) |  |  [optional]
@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **inputs** | [**List&lt;V1IO&gt;**](V1IO.md) |  |  [optional]
 **outputs** | [**List&lt;V1IO&gt;**](V1IO.md) |  |  [optional]
 **run** | [**Object**](.md) |  |  [optional]
+**template** | [**V1Template**](V1Template.md) |  |  [optional]
 
 
 

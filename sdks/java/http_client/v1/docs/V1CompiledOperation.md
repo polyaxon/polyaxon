@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
-**profile** | **String** |  |  [optional]
+**presets** | **List&lt;String&gt;** |  |  [optional]
 **queue** | **String** |  |  [optional]
 **cache** | [**V1Cache**](V1Cache.md) |  |  [optional]
 **termination** | [**V1Termination**](V1Termination.md) |  |  [optional]

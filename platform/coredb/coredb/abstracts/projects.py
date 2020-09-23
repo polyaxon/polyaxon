@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from coredb.abstracts.deleted import DeletedModel
 from coredb.abstracts.describable import DescribableModel
 from coredb.abstracts.diff import DiffModel
+from coredb.abstracts.live_state import LiveStateModel
 from coredb.abstracts.nameable import RequiredNameableModel
 from coredb.abstracts.readme import ReadmeModel
 from coredb.abstracts.tag import TagModel
@@ -30,7 +30,7 @@ class BaseProject(
     DescribableModel,
     TagModel,
     ReadmeModel,
-    DeletedModel,
+    LiveStateModel,
 ):
     class Meta:
         abstract = True

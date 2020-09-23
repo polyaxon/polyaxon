@@ -22,7 +22,6 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
-import "v1/api/access_resource.proto";
 import "v1/api/agent.proto";
 import "v1/api/bookmarks.proto";
 import "v1/api/connection.proto";
@@ -33,7 +32,7 @@ import "v1/api/organization.proto";
 import "v1/api/project.proto";
 import "v1/api/version.proto";
 import "v1/api/auth.proto";
-import "v1/api/run_profile.proto";
+import "v1/api/preset.proto";
 import "v1/api/user.proto";
 import "v1/api/search.proto";
 import "v1/api/status.proto";
@@ -47,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.1.8";
+        version: "1.1.9";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -333,7 +332,7 @@ service RunsV1 {
     };
   }
 
-  // Create bulk run run artifacts lineage
+  // Create bulk run artifacts lineage
   rpc CreateRunArtifactsLineage(RunArtifactsRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage"
@@ -573,61 +572,6 @@ service ProjectsV1 {
     option (google.api.http) = {
       patch: "/api/v1/{owner}/{project}/teams"
       body: "teams"
-    };
-  }
-}
-
-// Service to manage access resources
-service AccessResourcesV1 {
-  // List access resource names
-  rpc ListAccessResourceNames(OwnerResourceListRequest) returns (ListAccessResourcesResponse) {
-    option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/access_resources/names"
-    };
-  }
-
-  // List access resources
-  rpc ListAccessResources(OwnerResourceListRequest) returns (ListAccessResourcesResponse) {
-    option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/access_resources"
-    };
-  }
-
-  // Create access resource
-  rpc CreateAccessResource(AccessResourceBodyRequest) returns (AccessResource) {
-    option (google.api.http) = {
-      post: "/api/v1/orgs/{owner}/access_resources"
-      body: "access_resource"
-    };
-  }
-
-  // Get access resource
-  rpc GetAccessResource(OwnerEntityResourceRequest) returns (AccessResource) {
-    option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/access_resources/{uuid}"
-    };
-  }
-
-  // Update access resource
-  rpc UpdateAccessResource(AccessResourceBodyRequest) returns (AccessResource) {
-    option (google.api.http) = {
-      put: "/api/v1/orgs/{owner}/access_resources/{access_resource.uuid}"
-      body: "access_resource"
-    };
-  }
-
-  // Patch access resource
-  rpc PatchAccessResource(AccessResourceBodyRequest) returns (AccessResource) {
-    option (google.api.http) = {
-      patch: "/api/v1/orgs/{owner}/access_resources/{access_resource.uuid}"
-      body: "access_resource"
-    };
-  }
-
-  // Delete access resource
-  rpc DeleteAccessResource(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/api/v1/orgs/{owner}/access_resources/{uuid}"
     };
   }
 }
@@ -1031,57 +975,57 @@ service ComponentHubV1 {
   }
 }
 
-// Service to manage run profiles
-service RunProfilesV1 {
-  // List run profiles names
-  rpc ListRunProfileNames(OwnerResourceListRequest) returns (ListRunProfilesResponse) {
+// Service to manage scheduling presets
+service PresetsV1 {
+  // List scheduling presets names
+  rpc ListPresetNames(OwnerResourceListRequest) returns (ListPresetsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/run_profiles/names"
+      get: "/api/v1/orgs/{owner}/presets/names"
     };
   }
 
-  // List run profiles
-  rpc ListRunProfiles(OwnerResourceListRequest) returns (ListRunProfilesResponse) {
+  // List scheduling presets
+  rpc ListPresets(OwnerResourceListRequest) returns (ListPresetsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/run_profiles"
+      get: "/api/v1/orgs/{owner}/presets"
     };
   }
 
-  // Create run profile
-  rpc CreateRunProfile(RunProfileBodyRequest) returns (RunProfile) {
+  // Create scheduling presets
+  rpc CreatePreset(PresetBodyRequest) returns (Preset) {
     option (google.api.http) = {
-      post: "/api/v1/orgs/{owner}/run_profiles"
-      body: "run_profile"
+      post: "/api/v1/orgs/{owner}/presets"
+      body: "preset"
     };
   }
 
-  // Get run profile
-  rpc GetRunProfile(OwnerEntityResourceRequest) returns (RunProfile) {
+  // Get scheduling preset
+  rpc GetPreset(OwnerEntityResourceRequest) returns (Preset) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/run_profiles/{uuid}"
+      get: "/api/v1/orgs/{owner}/presets/{uuid}"
     };
   }
 
-  // Update run profile
-  rpc UpdateRunProfile(RunProfileBodyRequest) returns (RunProfile) {
+  // Update scheduling preset
+  rpc UpdatePreset(PresetBodyRequest) returns (Preset) {
     option (google.api.http) = {
-      put: "/api/v1/orgs/{owner}/run_profiles/{run_profile.uuid}"
-      body: "run_profile"
+      put: "/api/v1/orgs/{owner}/presets/{preset.uuid}"
+      body: "preset"
     };
   }
 
-  // Patch run profile
-  rpc PatchRunProfile(RunProfileBodyRequest) returns (RunProfile) {
+  // Patch scheduling preset
+  rpc PatchPreset(PresetBodyRequest) returns (Preset) {
     option (google.api.http) = {
-      patch: "/api/v1/orgs/{owner}/run_profiles/{run_profile.uuid}"
-      body: "run_profile"
+      patch: "/api/v1/orgs/{owner}/presets/{preset.uuid}"
+      body: "preset"
     };
   }
 
-  // Delete run profile
-  rpc DeleteRunProfile(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+  // Delete scheduling preset
+  rpc DeletePreset(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/orgs/{owner}/run_profiles/{uuid}"
+      delete: "/api/v1/orgs/{owner}/presets/{uuid}"
     };
   }
 }
@@ -1379,7 +1323,7 @@ service UsersV1 {
 // Service to get versions
 service VersionsV1 {
   // Get installation versions
-  rpc GetInstallation(google.protobuf.Empty) returns (Installation) {
+  rpc GetInstallation(InstallationResourceRequest) returns (Installation) {
     option (google.api.http) = {
       get: "/api/v1/installation"
     };
@@ -1548,6 +1492,14 @@ service OrganizationsV1 {
   rpc PatchOrganizationSettings(OrganizationBodyRequest) returns (Organization) {
     option (google.api.http) = {
       patch: "/api/v1/orgs/{owner}/settings"
+      body: "organization"
+    };
+  }
+
+  // Organization plan
+  rpc OrganizationPlan(OrganizationBodyRequest) returns (Organization) {
+    option (google.api.http) = {
+      post: "/api/v1/orgs/{owner}/plan"
       body: "organization"
     };
   }

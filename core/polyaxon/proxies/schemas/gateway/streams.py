@@ -18,7 +18,7 @@ from polyaxon import settings
 from polyaxon.proxies.schemas.base import get_config
 from polyaxon.proxies.schemas.urls import get_service_url
 
-OPTIONS = """
+OPTIONS = r"""
 location /streams/ {{
     {auth}
     {resolver}

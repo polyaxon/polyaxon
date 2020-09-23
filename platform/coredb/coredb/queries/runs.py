@@ -35,7 +35,7 @@ SINGLE_RUN = [
     "inputs",
     "outputs",
     "tags",
-    "deleted",
+    "live_state",
 ]
 STATUS_UPDATE_COLUMNS_DEFER = [
     "original",
@@ -46,7 +46,7 @@ STATUS_UPDATE_COLUMNS_DEFER = [
     "outputs",
     "tags",
     "description",
-    "deleted",
+    "live_state",
     "readme",
     "content",
 ]
@@ -68,7 +68,7 @@ API_COLUMNS_DEFER = [
     "outputs",
     "tags",
     "description",
-    "deleted",
+    "live_state",
     "readme",
     "content",
 ]

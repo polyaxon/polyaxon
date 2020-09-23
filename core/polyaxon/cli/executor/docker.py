@@ -170,6 +170,6 @@ def run(
         handle_cli_error(e, message="Could start local run.")
         sys.exit(1)
     except Exception as e:
-        Printer.print_error("Could start local run.")
+        Printer.print_error("Could not start local run.")
         Printer.print_error("Unexpected Error: `{}`.".format(e))
         sys.exit(1)

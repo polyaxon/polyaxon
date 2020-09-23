@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
 **disabled** | **bool** |  | [optional] 
-**deleted** | **bool** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

@@ -33,10 +33,10 @@ import (
 // swagger:model v1Operation
 type V1Operation struct {
 
-	// Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+	// Optional actions section
 	Actions []*V1Action `json:"actions"`
 
-	// Optional flag to disable cache validation and force run this component
+	// Optional flag to disable cache validation and force run this operation
 	Cache *V1Cache `json:"cache,omitempty"`
 
 	// component
@@ -51,7 +51,7 @@ type V1Operation struct {
 	// Optional graph dependencies of this op
 	Dependencies []string `json:"dependencies"`
 
-	// Optional component description
+	// Optional component description override
 	Description string `json:"description,omitempty"`
 
 	// Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
@@ -63,17 +63,23 @@ type V1Operation struct {
 	// hub ref
 	HubRef string `json:"hub_ref,omitempty"`
 
-	// Optional component kind, should be equal to "component"
+	// Optional flag to mark this specification as preset
+	IsPreset bool `json:"is_preset,omitempty"`
+
+	// Optional component kind, should be equal to "operation"
 	Kind string `json:"kind,omitempty"`
 
 	// Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
 	Matrix interface{} `json:"matrix,omitempty"`
 
-	// Optional component name, should a valid slug
+	// Optional component name override, should a valid slug
 	Name string `json:"name,omitempty"`
 
 	// Optional dict of params
 	Params map[string]V1Param `json:"params,omitempty"`
+
+	// Optional patch startegy, default post_merge
+	PatchStrategy V1PatchStrategy `json:"patch_strategy,omitempty"`
 
 	// path ref
 	PathRef string `json:"path_ref,omitempty"`
@@ -81,10 +87,10 @@ type V1Operation struct {
 	// Optional plugins to enable
 	Plugins *V1Plugins `json:"plugins,omitempty"`
 
-	// Optional profile to use for running this component
-	Profile string `json:"profile,omitempty"`
+	// Optional preset to use for running this operation
+	Presets []string `json:"presets"`
 
-	// Optional queue to use for running this component
+	// Optional queue to use for running this operation
 	Queue string `json:"queue,omitempty"`
 
 	// Optional a run section to override  the content of the run in the template
@@ -97,8 +103,11 @@ type V1Operation struct {
 	// Optional flag to skip this run if upstream was skipped
 	SkipOnUpstreamSkip bool `json:"skip_on_upstream_skip,omitempty"`
 
-	// Optional component tags
+	// Optional component tags override
 	Tags []string `json:"tags"`
+
+	// Optional to mark this specification as template with instructions
+	Template *V1Template `json:"template,omitempty"`
 
 	// optional termination section
 	Termination *V1Termination `json:"termination,omitempty"`
@@ -137,7 +146,15 @@ func (m *V1Operation) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validatePatchStrategy(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validatePlugins(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTemplate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -263,6 +280,22 @@ func (m *V1Operation) validateParams(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Operation) validatePatchStrategy(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PatchStrategy) { // not required
+		return nil
+	}
+
+	if err := m.PatchStrategy.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("patch_strategy")
+		}
+		return err
+	}
+
+	return nil
+}
+
 func (m *V1Operation) validatePlugins(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Plugins) { // not required
@@ -273,6 +306,24 @@ func (m *V1Operation) validatePlugins(formats strfmt.Registry) error {
 		if err := m.Plugins.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("plugins")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Operation) validateTemplate(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Template) { // not required
+		return nil
+	}
+
+	if m.Template != nil {
+		if err := m.Template.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("template")
 			}
 			return err
 		}

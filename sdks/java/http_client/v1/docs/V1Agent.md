@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **disabled** | **Boolean** |  |  [optional]
-**deleted** | **Boolean** |  |  [optional]
 **namespace** | **String** |  |  [optional]
 **versionApi** | [**Object**](.md) |  |  [optional]
 **content** | **String** |  |  [optional]

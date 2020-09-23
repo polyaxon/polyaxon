@@ -32,7 +32,7 @@ import (
 // swagger:model v1Component
 type V1Component struct {
 
-	// Optional actions section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
+	// Optional actions section
 	Actions []*V1Action `json:"actions"`
 
 	// Optional flag to disable cache validation and force run this component
@@ -59,8 +59,8 @@ type V1Component struct {
 	// Optional plugins to enable
 	Plugins *V1Plugins `json:"plugins,omitempty"`
 
-	// Optional profile to use for running this component
-	Profile string `json:"profile,omitempty"`
+	// Optional presets to use for running this component
+	Presets []string `json:"presets"`
 
 	// Optional queue to use for running this component
 	Queue string `json:"queue,omitempty"`
@@ -70,6 +70,9 @@ type V1Component struct {
 
 	// Optional component tags
 	Tags []string `json:"tags"`
+
+	// Optional flag to mark this specification as template
+	Template *V1Template `json:"template,omitempty"`
 
 	// optional termination section
 	Termination *V1Termination `json:"termination,omitempty"`
@@ -103,6 +106,10 @@ func (m *V1Component) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validatePlugins(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTemplate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -244,6 +251,24 @@ func (m *V1Component) validatePlugins(formats strfmt.Registry) error {
 		if err := m.Plugins.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("plugins")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Component) validateTemplate(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Template) { // not required
+		return nil
+	}
+
+	if m.Template != nil {
+		if err := m.Template.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("template")
 			}
 			return err
 		}

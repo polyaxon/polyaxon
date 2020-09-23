@@ -39,6 +39,7 @@ class ConnectionTypeSchema(BaseCamelSchema):
         required=True, validate=validate.OneOf(V1ConnectionKind.allowable_values)
     )
     description = fields.Str(allow_none=True)
+    tags = fields.List(fields.Str(), allow_none=True)
     schema = fields.Nested(ConnectionSchema, allow_none=True)
     secret = fields.Nested(K8sResourceSchema, allow_none=True)
     config_map = fields.Nested(K8sResourceSchema, allow_none=True)
@@ -100,13 +101,14 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
     Args:
          name: str
          description: str, optional
+         tags: List[str], optional
          kind: str, Union[`host_path`, `volume_claim`, `gcs`, `s3`, `wasb`, `registry`, `git`,
                           `aws`, `gcp`, `azure`, `mysql`, `postgres`, `oracle`, `vertica`,
                           `sqlite`, `mssql`, `redis`, `presto`, `mongo`, `cassandra`, `ftp`,
                           `grpc`, `hdfs`, `http`, `pig_cli`, `hive_cli`, `hive_metastore`,
                           `hive_server2`, `jdbc`, `jenkins`, `samba`, `snowflake`, `ssh`,
                           `cloudant`, `databricks`, `segment`, `slack`, `discord`, `mattermost`,
-                          `pager_duty`, `hipchat`, `webhook`, `custom`]
+                          `pagerduty`, `hipchat`, `webhook`, `custom`]
         schema: dict, optional
         secret: str, optional
         config_map: str, optional
@@ -124,6 +126,8 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
     >>>     name: "az-secret"
     >>> connections:
     >>>   - name: repo-test
+    >>>     description: "some description"
+    >>>     tags: ["tag1", "tag2"]
     >>>     kind: git
     >>>     schema:
     >>>       url: https://gitlab.com/org/test
@@ -156,10 +160,13 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
 
     ### description
 
-    A short description of the purpose of the connection for other users to learn
-    about purpose of this connection.
+    A short description about the purpose of the connection for other users.
 
     For example, "s3 bucket with radio images"
+
+    ### tags
+
+    Tags to categorize the connection in the connections catalog table.
 
     ### kind
 
@@ -178,7 +185,7 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
      `grpc`, `hdfs`, `http`, `pig_cli`, `hive_cli`, `hive_metastore`,
      `hive_server2`, `jdbc`, `jenkins`, `samba`, `snowflake`, `ssh`,
      `cloudant`, `databricks`, `segment`, `slack`, `discord`, `mattermost`,
-     `pager_duty`, `hipchat`, `webhook`, `custom`]
+     `pagerduty`, `hipchat`, `webhook`, `custom`]
 
     Polyaxon can also automatically handle these connection kinds:
     [`host_path`, `volume_claim`, `gcs`, `s3`, `wasb`, `registry`, `git`]
@@ -262,6 +269,7 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
         "name",
         "kind",
         "description",
+        "tags",
         "schema",
         "secret",
         "configMap",

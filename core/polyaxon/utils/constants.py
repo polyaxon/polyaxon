@@ -16,7 +16,9 @@
 
 NEWLINES = ("\n", "\r", "\r\n")
 
-INIT_COMMAND = "`polyaxon init PROJECT_NAME [--polyaxonfile]`"
+INIT_COMMAND = (
+    "`polyaxon init -p PROJECT_NAME [--polyaxonfile] [--git-connection] [--git-url]`"
+)
 
 DEFAULT_IGNORE_LIST = """
 .git
@@ -34,24 +36,16 @@ var
 """
 
 INIT_FILE_PATH = "polyaxonfile.yaml"
-DEBUG_FILE_PATH = "polyaxonfile.debug.yaml"
 
 INIT_FILE_TEMPLATE = """---
-version: 1
-
-kind: job
-
-container:
-  # image: # image to use
-  # command: # Command to use
-"""
-
-DEBUG_FILE_TEMPLATE = """---
-container:
-  # command: sleep 120 
+version: 1.1
+kind: component
+run:
+  kind: job
+  container:
+    # image: # image to use
+    # command: # Command to use
 """
 
 INIT_FILE = "init"
 DEBUG_FILE = "debug"
-
-PLX_FILE_TEMPLATES = {INIT_FILE: INIT_FILE_TEMPLATE, DEBUG_FILE: DEBUG_FILE_TEMPLATE}

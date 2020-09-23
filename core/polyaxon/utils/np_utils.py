@@ -39,6 +39,8 @@ def sanitize_np_types(value):
 
 
 def to_np(value):
+    if hasattr(value, "numpy"):  # Torch handling
+        value = value.numpy()
     if isinstance(value, np.ndarray):
         return value
     if np.isscalar(value):

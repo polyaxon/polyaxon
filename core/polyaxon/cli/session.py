@@ -82,7 +82,7 @@ def get_compatibility(key: str, service: str, version: str, is_cli=True):
             uuid=key, service=service, version=version, _request_timeout=15,
         )
     except ApiException as e:
-        if e.status == 403:
+        if e.status == 403 and is_cli:
             session_expired()
         CliConfigManager.reset(last_check=now())
         if is_cli:

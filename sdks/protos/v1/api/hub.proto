@@ -40,14 +40,11 @@ message ModelRegistry {
     // Optional a flag to disable the model
     bool disabled = 6;
 
-    // Optional if the entity has been deleted
-    bool deleted = 7;
-
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 7;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 8;
 
 }
 
@@ -96,14 +93,11 @@ message ComponentHub {
     // Optional a flag to disable the model
     bool disabled = 6;
 
-    // Optional if the entity has been deleted
-    bool deleted = 7;
-
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 7;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 8;
 
 }
 

@@ -19,7 +19,10 @@ import os
 from typing import List, Optional
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
+from polyaxon.containers.contexts import (
+    CONTEXT_MOUNT_ARTIFACTS,
+    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
+)
 from polyaxon.containers.names import (
     INIT_ARTIFACTS_CONTAINER_PREFIX,
     generate_container_name,
@@ -219,10 +222,12 @@ def get_store_container(
         if mount_path
         else constants.CONTEXT_VOLUME_ARTIFACTS
     )
-    mount_path = mount_path or CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
     volume_mounts = [
-        get_connections_context_mount(name=volume_name, mount_path=mount_path)
+        get_connections_context_mount(
+            name=volume_name, mount_path=mount_path or CONTEXT_MOUNT_ARTIFACTS
+        )
     ]
+    mount_path = mount_path or CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
 
     return get_base_store_container(
         container=container,

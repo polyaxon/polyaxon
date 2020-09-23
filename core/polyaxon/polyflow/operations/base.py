@@ -50,8 +50,10 @@ class BaseOp(BaseComponent, MatrixMixin, ScheduleMixin):
         "skipOnUpstreamSkip",
     ]
 
+    FIELDS_SAME_KIND_PATCH = ["schedule", "matrix"]
+
     def get_matrix_kind(self):
         return self.matrix.kind if self.matrix else None
 
     def get_schedule_kind(self):
-        return self.matrix.kind if self.matrix else None
+        return self.schedule.kind if self.schedule else None

@@ -17,12 +17,12 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
-from coredb.abstracts.deleted import DeletedModel
 from coredb.abstracts.describable import DescribableModel
 from coredb.abstracts.diff import DiffModel
 from coredb.abstracts.duration import DurationModel
 from coredb.abstracts.getter import get_db_model_name
 from coredb.abstracts.is_managed import IsManagedModel
+from coredb.abstracts.live_state import LiveStateModel
 from coredb.abstracts.nameable import NameableModel
 from coredb.abstracts.readme import ReadmeModel
 from coredb.abstracts.spec import SpecModel
@@ -44,7 +44,7 @@ class BaseRun(
     ReadmeModel,
     StatusModel,
     TagModel,
-    DeletedModel,
+    LiveStateModel,
 ):
     kind = models.CharField(max_length=12, db_index=True, choices=V1RunKind.CHOICES)
     user = models.ForeignKey(

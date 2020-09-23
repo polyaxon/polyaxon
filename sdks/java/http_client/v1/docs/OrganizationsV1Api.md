@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 [**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
 [**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations
+[**organizationPlan**](OrganizationsV1Api.md#organizationPlan) | **POST** /api/v1/orgs/{owner}/plan | Organization plan
 [**patchOrganization**](OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | Patch organization
 [**patchOrganizationInvitation**](OrganizationsV1Api.md#patchOrganizationInvitation) | **PATCH** /api/v1/orgs/{owner}/invitations | Patch organization invitation
 [**patchOrganizationMember**](OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
@@ -175,7 +176,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteOrganization"></a>
 # **deleteOrganization**
-> deleteOrganization(owner)
+> deleteOrganization(owner, usage)
 
 Delete organization
 
@@ -202,8 +203,9 @@ public class Example {
 
     OrganizationsV1Api apiInstance = new OrganizationsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
+    String usage = "usage_example"; // String | Owner usage query param.
     try {
-      apiInstance.deleteOrganization(owner);
+      apiInstance.deleteOrganization(owner, usage);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganization");
       System.err.println("Status code: " + e.getCode());
@@ -220,6 +222,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
+ **usage** | **String**| Owner usage query param. | [optional]
 
 ### Return type
 
@@ -399,7 +402,7 @@ null (empty response body)
 
 <a name="getOrganization"></a>
 # **getOrganization**
-> V1Organization getOrganization(owner)
+> V1Organization getOrganization(owner, usage)
 
 Get organization
 
@@ -426,8 +429,9 @@ public class Example {
 
     OrganizationsV1Api apiInstance = new OrganizationsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
+    String usage = "usage_example"; // String | Owner usage query param.
     try {
-      V1Organization result = apiInstance.getOrganization(owner);
+      V1Organization result = apiInstance.getOrganization(owner, usage);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#getOrganization");
@@ -445,6 +449,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
+ **usage** | **String**| Owner usage query param. | [optional]
 
 ### Return type
 
@@ -626,7 +631,7 @@ Name | Type | Description  | Notes
 
 <a name="getOrganizationSettings"></a>
 # **getOrganizationSettings**
-> V1Organization getOrganizationSettings(owner, organizationUser, organizationUserEmail, organizationName, organizationIsPublic, organizationCreatedAt, organizationUpdatedAt, organizationRole)
+> V1Organization getOrganizationSettings(owner, organizationUser, organizationUserEmail, organizationName, organizationIsPublic, organizationCreatedAt, organizationUpdatedAt, organizationRole, organizationQueue, organizationPreset)
 
 Get organization settings
 
@@ -660,8 +665,10 @@ public class Example {
     OffsetDateTime organizationCreatedAt = new OffsetDateTime(); // OffsetDateTime | Optional time when the entity was created.
     OffsetDateTime organizationUpdatedAt = new OffsetDateTime(); // OffsetDateTime | Optional last time the entity was updated.
     String organizationRole = "organizationRole_example"; // String | Current user's role in this org.
+    String organizationQueue = "organizationQueue_example"; // String | Default queue.
+    String organizationPreset = "organizationPreset_example"; // String | Default preset.
     try {
-      V1Organization result = apiInstance.getOrganizationSettings(owner, organizationUser, organizationUserEmail, organizationName, organizationIsPublic, organizationCreatedAt, organizationUpdatedAt, organizationRole);
+      V1Organization result = apiInstance.getOrganizationSettings(owner, organizationUser, organizationUserEmail, organizationName, organizationIsPublic, organizationCreatedAt, organizationUpdatedAt, organizationRole, organizationQueue, organizationPreset);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#getOrganizationSettings");
@@ -686,6 +693,8 @@ Name | Type | Description  | Notes
  **organizationCreatedAt** | **OffsetDateTime**| Optional time when the entity was created. | [optional]
  **organizationUpdatedAt** | **OffsetDateTime**| Optional last time the entity was updated. | [optional]
  **organizationRole** | **String**| Current user&#39;s role in this org. | [optional]
+ **organizationQueue** | **String**| Default queue. | [optional]
+ **organizationPreset** | **String**| Default preset. | [optional]
 
 ### Return type
 
@@ -911,6 +920,79 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
+<a name="organizationPlan"></a>
+# **organizationPlan**
+> V1Organization organizationPlan(owner, body)
+
+Organization plan
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.OrganizationsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    OrganizationsV1Api apiInstance = new OrganizationsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    V1Organization body = new V1Organization(); // V1Organization | Organization body
+    try {
+      V1Organization result = apiInstance.organizationPlan(owner, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling OrganizationsV1Api#organizationPlan");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **body** | [**V1Organization**](V1Organization.md)| Organization body |
+
+### Return type
+
+[**V1Organization**](V1Organization.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

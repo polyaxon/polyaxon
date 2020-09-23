@@ -69,9 +69,6 @@ type V1Schemas struct {
 	// hp params
 	HpParams *V1HpParams `json:"hp_params,omitempty"`
 
-	// image
-	Image *V1ImageType `json:"image,omitempty"`
-
 	// k8s resource
 	K8sResource *V1K8sResourceType `json:"k8s_resource,omitempty"`
 
@@ -165,10 +162,6 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateHpParams(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateImage(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -456,24 +449,6 @@ func (m *V1Schemas) validateHpParams(formats strfmt.Registry) error {
 		if err := m.HpParams.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("hp_params")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Schemas) validateImage(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Image) { // not required
-		return nil
-	}
-
-	if m.Image != nil {
-		if err := m.Image.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("image")
 			}
 			return err
 		}

@@ -28,7 +28,7 @@ from polyaxon.proxies.schemas.urls import (
     get_ssl_server_name,
 )
 
-OPTIONS = """
+OPTIONS = r"""
 location {path} {{
     {auth}
     {resolver}

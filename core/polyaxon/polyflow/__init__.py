@@ -171,4 +171,5 @@ from polyaxon.polyflow.schedule import (
     V1RepeatableSchedule,
 )
 from polyaxon.polyflow.termination import TerminationSchema, V1Termination
+from polyaxon.polyflow.templates import TemplateSchema, V1Template
 from polyaxon.polyflow.trigger_policies import V1TriggerPolicy

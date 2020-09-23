@@ -211,94 +211,399 @@ class TestV1IOs(BaseTestCase):
         # None string values should exit fast
         param = V1Param(value=1)
         assert param.get_spec(
-            name="foo", iotype=types.INT, is_flag=False, is_list=False
+            name="foo",
+            iotype=types.INT,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.INT, param=param, is_flag=False, is_list=False
+            name="foo",
+            iotype=types.INT,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         # Str values none regex
         param = V1Param(value="1")
         assert param.get_spec(
-            name="foo", iotype=types.INT, is_flag=False, is_list=False
+            name="foo",
+            iotype=types.INT,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.INT, param=param, is_flag=False, is_list=False
+            name="foo",
+            iotype=types.INT,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         param = V1Param(value="SDfd")
         assert param.get_spec(
-            name="foo", iotype=types.STR, is_flag=False, is_list=False
+            name="foo",
+            iotype=types.STR,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.STR, param=param, is_flag=False, is_list=False
+            name="foo",
+            iotype=types.STR,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         # Validation dag
         param = V1Param(value="inputs.foo", ref="dag")
         assert param.get_spec(
-            name="foo", iotype=types.BOOL, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.BOOL, param=param, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         param = V1Param(value="{{ inputs }}", ref="dag")
         assert param.get_spec(
-            name="foo", iotype=types.BOOL, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.BOOL, param=param, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         with self.assertRaises(ValidationError):
             param = V1Param(value="{{ outputs }}", ref="dag")
-            param.get_spec(name="foo", iotype=types.BOOL, is_flag=True, is_list=False)
+            param.get_spec(
+                name="foo",
+                iotype=types.BOOL,
+                is_flag=True,
+                is_list=False,
+                is_context=False,
+                arg_format=None,
+            )
 
         with self.assertRaises(ValidationError):
             param = V1Param(value="inputs.foo", ref="dag.1")
-            param.get_spec(name="foo", iotype=types.BOOL, is_flag=True, is_list=False)
+            param.get_spec(
+                name="foo",
+                iotype=types.BOOL,
+                is_flag=True,
+                is_list=False,
+                is_context=False,
+                arg_format=None,
+            )
 
         # Validation ops
         param = V1Param(value="{{ outputs.foo }}", ref="ops.foo-bar")
         assert param.get_spec(
-            name="foo", iotype=types.BOOL, is_flag=True, is_list=False,
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.BOOL, param=param, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         param = V1Param(value="inputs.foo", ref="ops.foo-bar")
         assert param.get_spec(
-            name="foo", iotype=types.BOOL, is_flag=True, is_list=False,
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.BOOL, param=param, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         param = V1Param(value="inputs", ref="ops.foo-bar")
         assert param.get_spec(
-            name="foo", iotype=types.BOOL, is_flag=True, is_list=False,
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.BOOL, param=param, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         # Regex validation ops: invalid params
         with self.assertRaises(ValidationError):
             param = V1Param(value="status.foo", ref="ops.foo-bar")
-            param.get_spec(name="foo", iotype=types.BOOL, is_flag=True, is_list=False)
+            param.get_spec(
+                name="foo",
+                iotype=types.BOOL,
+                is_flag=True,
+                is_list=False,
+                is_context=False,
+                arg_format=None,
+            )
 
         # Validation runs
         uid = uuid.uuid4().hex
         param = V1Param(value="outputs.foo", ref="runs.{}".format(uid))
         assert param.get_spec(
-            name="foo", iotype=types.BOOL, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.BOOL, param=param, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
 
         uid = uuid.uuid4().hex
         param = V1Param(value="inputs.foo", ref="runs.{}".format(uid))
         assert param.get_spec(
-            name="foo", iotype=types.BOOL, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         ) == ParamSpec(
-            name="foo", iotype=types.BOOL, param=param, is_flag=True, is_list=False
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
         )
+
+        # Custom arg_format
+        param = V1Param(value="SDfd")
+        assert param.get_spec(
+            name="foo",
+            iotype=types.STR,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="--sdf={foo}",
+        ) == ParamSpec(
+            name="foo",
+            iotype=types.STR,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="--sdf={foo}",
+        )
+        assert (
+            ParamSpec(
+                name="foo",
+                iotype=types.STR,
+                param=param,
+                is_flag=False,
+                is_list=False,
+                is_context=False,
+                arg_format="--sdf={foo}",
+            ).as_arg()
+            == "--sdf=SDfd"
+        )
+
+        # Custom arg_format with empty value
+        param = V1Param(value=None)
+        assert param.get_spec(
+            name="foo",
+            iotype=types.STR,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="--sdf={foo}",
+        ) == ParamSpec(
+            name="foo",
+            iotype=types.STR,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="--sdf={foo}",
+        )
+        assert (
+            ParamSpec(
+                name="foo",
+                iotype=types.STR,
+                param=param,
+                is_flag=False,
+                is_list=False,
+                is_context=False,
+                arg_format="--sdf={foo}",
+            ).as_arg()
+            == ""
+        )
+
+        # isFlag
+        param = V1Param(value=True)
+        assert param.get_spec(
+            name="foo",
+            iotype=types.STR,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format="{foo}",
+        ) == ParamSpec(
+            name="foo",
+            iotype=types.STR,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format="{foo}",
+        )
+        assert (
+            str(
+                ParamSpec(
+                    name="foo",
+                    iotype=types.STR,
+                    param=param,
+                    is_flag=True,
+                    is_list=False,
+                    is_context=False,
+                    arg_format="{foo}",
+                )
+            )
+            == "--foo"
+        )
+
+        # isFlag empty
+        param = V1Param(value=None)
+        assert param.get_spec(
+            name="foo",
+            iotype=types.STR,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format="{foo}",
+        ) == ParamSpec(
+            name="foo",
+            iotype=types.STR,
+            param=param,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format="{foo}",
+        )
+        assert (
+            str(
+                ParamSpec(
+                    name="foo",
+                    iotype=types.STR,
+                    param=param,
+                    is_flag=True,
+                    is_list=False,
+                    is_context=False,
+                    arg_format="{foo}",
+                )
+            )
+            == ""
+        )
+
+        # isContext
+        param = V1Param(value={"key": "value"})
+        assert param.get_spec(
+            name="foo",
+            iotype=types.STR,
+            is_flag=False,
+            is_list=False,
+            is_context=True,
+            arg_format="{foo}",
+        ) == ParamSpec(
+            name="foo",
+            iotype=types.STR,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=True,
+            arg_format="{foo}",
+        )
+        assert ParamSpec(
+            name="foo",
+            iotype=types.STR,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=True,
+            arg_format=None,
+        ).param.value == {"key": "value"}
+        assert str(
+            ParamSpec(
+                name="foo",
+                iotype=types.STR,
+                param=param,
+                is_flag=False,
+                is_list=False,
+                is_context=True,
+                arg_format=None,
+            )
+        ) == str({"key": "value"})
 
         # Regex validation runs: invalid params
         with self.assertRaises(ValidationError):
             param = V1Param(value="outputs.foo", ref="run.foo-bar")
-            param.get_spec(name="foo", iotype=types.BOOL, is_flag=True, is_list=False)
+            param.get_spec(
+                name="foo",
+                iotype=types.BOOL,
+                is_flag=True,
+                is_list=False,
+                is_context=False,
+                arg_format=None,
+            )

@@ -1,40 +1,4 @@
 - groups:
-  - group: Quick Start
-    items:
-    - title: Get Started
-      link: /docs/core/quick-start/
-    - title: Components
-      link: /docs/core/quick-start/components/
-    - title: Operations
-      link: /docs/core/quick-start/operations/
-    - title: Iterate
-      link: /docs/core/quick-start/iterate/
-    - title: Distributed Training
-      link: /docs/core/quick-start/distributed-training/
-    - title: Hyperparameter Tuning
-      link: /docs/core/quick-start/hyperparameter-tuning/
-    - title: Automation
-      link: /docs/core/quick-start/automation/
-    - title: Builds
-      link: /docs/core/quick-start/builds/
-  - group: Introduction
-    items:
-    - title: Welcome to Polyaxon
-      link: /docs/core/introduction/
-    - title: Features
-      link: /docs/core/introduction/features/
-    - title: Architecture
-      link: /docs/core/introduction/architecture/
-  - group: Concepts
-    items:
-    - title: Organization Concepts
-      link: /docs/core/concepts/organization-concepts/
-    - title: Runtime Concepts
-      link: /docs/core/concepts/runtime-concepts/
-    - title: Scheduling Concepts
-      link: /docs/core/concepts/scheduling-concepts/
-    - title: Reproducibility Concepts
-      link: /docs/core/concepts/reproducibility-concepts/
   - group: Specification
     items:
     - title: Overview
@@ -55,16 +19,14 @@
       link: /docs/core/specification/params/
     - title: Plugins
       link: /docs/core/specification/plugins/
-    - title: Actions
-      link: /docs/core/specification/actions/
-    - title: Hooks
-      link: /docs/core/specification/hooks/
     - title: Notifications
       link: /docs/core/specification/notifications/
     - title: Init
       link: /docs/core/specification/init/
     - title: Sidecars
       link: /docs/core/specification/sidecars/
+    - title: Template
+      link: /docs/core/specification/template/
     - title: Types
       link: /docs/core/specification/types/
     - title: Lifecycle
@@ -79,14 +41,14 @@
       link: /docs/core/python-library/run-client/
     - title: Project Client
       link: /docs/core/python-library/project-client/
-  - group: Query Syntax
+  - group: Query Language
     items:
     - title: Overview
-      link: /docs/core/query-syntax/
+      link: /docs/core/query-language/
     - title: Runs
-      link: /docs/core/query-syntax/runs/
+      link: /docs/core/query-language/runs/
     - title: Projects
-      link: /docs/core/query-syntax/projects/
+      link: /docs/core/query-language/projects/
   - group: CLI
     items:
     - title: Overview
@@ -109,8 +71,6 @@
       link: /docs/core/cli/dashboard/
     - title: Init
       link: /docs/core/cli/init/
-    - title: Upload
-      link: /docs/core/cli/upload/
     - title: Completion
       link: /docs/core/cli/completion/
     - title: Version
@@ -125,5 +85,7 @@
       link: /docs/core/scheduling-strategies/resources-scheduling/
     - title: Routing with Queues
       link: /docs/core/scheduling-strategies/queue-routing/
-    - title: Run profiles
-      link: /docs/core/scheduling-strategies/run-profiles/
+    - title: Scheduling Presets
+      link: /docs/core/scheduling-strategies/presets/
+    - title: Resume & restart
+      link: /docs/core/scheduling-strategies/resume-restart/

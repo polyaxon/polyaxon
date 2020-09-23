@@ -14,7 +14,7 @@ tags:
 sidebar: "automation"
 ---
 
-> **Note**: Grid Search in Polyaxon CE is only supported in eager mode with no concurrency management.
+> **Note**: Grid Search in Polyaxon CE is supported in eager mode only with no concurrency management.
 
 ![grid](../../../../content/images/references/optimization-engine/grid-search.png)
 
