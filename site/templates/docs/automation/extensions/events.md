@@ -17,4 +17,4 @@ tags:
 sidebar: "automation"
 ---
 
-> Coming soon!
+> **Note**: Coming soon
