@@ -56,8 +56,8 @@ artifactsStore:
   name: my-artifacts-store
   kind: host_path
   schema:
-    mountPath: "/outputs/1"
-    hostPath: "/path/to/outputs"
+    mountPath: "/artifacts"
+    hostPath: "/path/to/artifacts"
 ```
 
 ### Example usage in connections
@@ -68,8 +68,8 @@ connections:
   - name: my-artifacts-store
     kind: host_path
     schema:
-      mountPath: "/outputs/1"
-      hostPath: "/path/to/outputs"
+      mountPath: "/artifacts"
+      hostPath: "/path/to/artifacts"
 ```
 
 ## Persistent Volumes
@@ -101,8 +101,8 @@ connections:
   - name: my-volume
     kind: volume_claim
     schema:
-      mountPath: "/outputs/1"
-      volumeClaim: "outputs-2-pvc"
+      mountPath: "/datasets/path"
+      volumeClaim: "dataset-2-pvc"
 ```
 
 If you are using a persistent volume with one node access you need to be aware that you can only use it with experiment/jobs running on that same node at the same time.

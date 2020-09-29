@@ -31,7 +31,7 @@ Under the same namespace where you are deploying Polyaxon, e.g. `polyaxon`, crea
 kubectl create -f data-pvc.yml -n polyaxon
 ```
 
-> **Tip**: Please visit the Kubernetes documentation to learn about [persistent volumes](docs/concepts/storage/persistent-volumes/).
+> **Tip**: Please visit the Kubernetes documentation to learn about [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
 
 ## Now you can use this PVC to mount data to your experiments and jobs in Polyaxon
 
