@@ -4,7 +4,7 @@ celery==4.4.7
 cryptography==3.0
 Django==3.0.9
 django-picklefield==3.0.1
-djangorestframework==3.11.0
+djangorestframework==3.12.1
 numpy==1.19.1
 psycopg2-binary==2.8.5
 redis==3.5.3
