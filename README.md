@@ -113,7 +113,7 @@ Please check [polyaxon installation guide](https://polyaxon.com/docs/setup/)
     $ polyaxon run --hub tensorboard --run-uuid=UUID
     ```
 
-Please check our [quick start guide](https://polyaxon.com/docs/core/quick-start/) to start training your first experiment.
+Please check our [quick start guide](https://polyaxon.com/docs/intro/quick-start/) to start training your first experiment.
 
 # Distributed job
 
