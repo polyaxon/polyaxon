@@ -2,7 +2,7 @@
 title: "Scheduling with Presets"
 sub_link: "scheduling-strategies/resume-restart"
 meta_title: "Presets allows to define configurations that should be injected into operation at compilation time - scheduling strategies"
-meta_description: "A feature to feature for injecting certain information into operations at compilation time to extract repetitive configuration for node scheduling, resources requirements and definition, connections, 
+meta_description: "A feature for injecting certain information into operations at compilation time to extract repetitive configuration for node scheduling, resources requirements and definition, connections, 
 but also for queue routing and access level control."
 tags:
     - namespace
