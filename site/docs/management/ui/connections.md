@@ -20,7 +20,7 @@ Polyaxon provides a connection abstraction to:
 
 Connections are defined and managed on your clusters on-premise or you cloud clusters, and are managed by the team that manages your Kubernetes cluster and Polyaxon Agent deployments.
 
-Polyaxon UI provide a nice viewer to summarise all the connections defined in your organization that you can sort by: kind, agent, dates, and other meta data. 
+Polyaxon UI provides a nice viewer to summarise all the connections defined in your organization that you can sort by: kind, agent, dates, and other meta data. 
 And provides instructions to your end-users on how they can request access and use these connection in their workload.   
 
 ## Connections viewer
