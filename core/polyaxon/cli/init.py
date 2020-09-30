@@ -71,7 +71,7 @@ def create_polyaxonfile():
 @click.option(
     "--git-connection",
     type=str,
-    help="The git connection to use for the interactive mode and to "
+    help="Optional git connection to use for the interactive mode and to "
     "automatically injecting code references in your operation manifests.",
 )
 @click.option(
