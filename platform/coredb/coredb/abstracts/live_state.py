@@ -24,7 +24,10 @@ from polycommon import live_state
 
 class LiveStateModel(models.Model):
     live_state = models.IntegerField(
-        null=True, blank=True, default=live_state.STATE_LIVE
+        null=True,
+        blank=True,
+        default=live_state.STATE_LIVE,
+        choices=live_state.CHOICES,
     )
 
     objects = LiveManager()

@@ -1,3 +1,8 @@
 STATE_LIVE = 1
 STATE_ARCHIVED = 0
 STATE_DELETION_PROGRESSING = -1
+CHOICES = (
+    (STATE_LIVE, "live"),
+    (STATE_ARCHIVED, "archived"),
+    (STATE_DELETION_PROGRESSING, "deletion_progressing"),
+)

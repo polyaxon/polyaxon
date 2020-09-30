@@ -210,6 +210,7 @@ def get_store_container(
     container: Optional[k8s_schemas.V1Container] = None,
     env: List[k8s_schemas.V1EnvVar] = None,
     mount_path: str = None,
+    is_default_artifacts_store: bool = False,
 ) -> Optional[k8s_schemas.V1Container]:
     container_name = generate_container_name(
         INIT_ARTIFACTS_CONTAINER_PREFIX, connection.name
@@ -222,10 +223,13 @@ def get_store_container(
         if mount_path
         else constants.CONTEXT_VOLUME_ARTIFACTS
     )
+    volume_mount_path = mount_path or (
+        CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
+        if is_default_artifacts_store
+        else CONTEXT_MOUNT_ARTIFACTS
+    )
     volume_mounts = [
-        get_connections_context_mount(
-            name=volume_name, mount_path=mount_path or CONTEXT_MOUNT_ARTIFACTS
-        )
+        get_connections_context_mount(name=volume_name, mount_path=volume_mount_path)
     ]
     mount_path = mount_path or CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
 

@@ -29,11 +29,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="project",
             name="live_state",
-            field=models.IntegerField(blank=True, default=1, null=True),
+            field=models.IntegerField(
+                blank=True,
+                choices=[(1, "live"), (0, "archived"), (-1, "deletion_progressing")],
+                default=1,
+                null=True,
+            ),
         ),
         migrations.AddField(
             model_name="run",
             name="live_state",
-            field=models.IntegerField(blank=True, default=1, null=True),
+            field=models.IntegerField(
+                blank=True,
+                choices=[(1, "live"), (0, "archived"), (-1, "deletion_progressing")],
+                default=1,
+                null=True,
+            ),
         ),
     ]

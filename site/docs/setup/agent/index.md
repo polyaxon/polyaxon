@@ -88,7 +88,7 @@ polyaxon admin deploy -f config.yml --check
 To perform a dry run:
 
 ```bash
-polyaxon admin deploy -f config.yaml --dry_run
+polyaxon admin deploy -f config.yaml --dry-run
 ```
 
 ### Deploy

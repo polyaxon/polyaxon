@@ -182,6 +182,7 @@ class TestJobConverter(BaseTestCase):
                 connection=store,
                 artifacts=None,
                 env=self.converter.get_init_service_env_vars(),
+                is_default_artifacts_store=True,
             ),
         ]
 
@@ -228,6 +229,7 @@ class TestJobConverter(BaseTestCase):
                 connection=store,
                 artifacts=V1ArtifactsType(files=["/foo", "/bar"]),
                 env=self.converter.get_init_service_env_vars(),
+                is_default_artifacts_store=True,
             ),
             get_store_container(
                 polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),

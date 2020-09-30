@@ -610,6 +610,7 @@ class ExternalServicesSchema(BaseCamelSchema):
     postgresql = fields.Nested(ExternalServiceSchema, allow_none=True)
     gateway = fields.Nested(ExternalServiceSchema, allow_none=True)
     api = fields.Nested(ExternalServiceSchema, allow_none=True)
+    transactions = fields.Nested(ExternalBackendSchema, allow_none=True)
     analytics = fields.Nested(ExternalBackendSchema, allow_none=True)
     metrics = fields.Nested(ExternalBackendSchema, allow_none=True)
     errors = fields.Nested(ExternalBackendSchema, allow_none=True)
@@ -628,6 +629,7 @@ class ExternalServicesConfig(BaseConfig):
         "postgresql",
         "gateway",
         "api",
+        "transactions",
         "analytics",
         "metrics",
         "errors",
@@ -641,6 +643,7 @@ class ExternalServicesConfig(BaseConfig):
         postgresql=None,
         gateway=None,
         api=None,
+        transactions=None,
         analytics=None,
         metrics=None,
         errors=None,
@@ -651,6 +654,7 @@ class ExternalServicesConfig(BaseConfig):
         self.postgresql = postgresql
         self.gateway = gateway
         self.api = api
+        self.transactions = transactions
         self.analytics = analytics
         self.metrics = metrics
         self.errors = errors

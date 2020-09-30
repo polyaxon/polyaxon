@@ -288,6 +288,8 @@ class BaseConverter(ConverterAbstract):
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(),
                             mount_path=init_connection.path,
+                            is_default_artifacts_store=artifacts_store
+                            and init_connection.connection == artifacts_store.name,
                         )
                     )
             else:
@@ -301,6 +303,7 @@ class BaseConverter(ConverterAbstract):
                             container=init_connection.container,
                             env=self.get_init_service_env_vars(),
                             mount_path=init_connection.path,
+                            is_default_artifacts_store=True,
                         )
                     )
                 # git init without connection
