@@ -96,7 +96,7 @@ class TestPodVolumes(BaseTestCase):
         self.az_store = V1ConnectionType(
             name="test_az",
             kind=V1ConnectionKind.WASB,
-            schema=self.mount_resource1.schema,
+            secret=self.mount_resource1.schema,
         )
         self.claim_store = V1ConnectionType(
             name="test_claim",
@@ -281,7 +281,7 @@ class TestPodVolumes(BaseTestCase):
                 artifacts_store=store,
                 init_connections=[],
                 connections=[],
-                connection_by_names={},
+                connection_by_names={store.name: store},
                 secrets=[],
                 config_maps=[],
                 volumes=[],
@@ -291,26 +291,38 @@ class TestPodVolumes(BaseTestCase):
 
     def test_artifacts_store(self):
         self.assert_artifacts_store(
-            store=self.s3_store, results=[get_artifacts_context_volume()]
+            store=self.s3_store,
+            results=[
+                get_volume_from_secret(secret=self.mount_resource1),
+                get_artifacts_context_volume(),
+            ],
         )
         self.assert_artifacts_store(
-            store=self.gcs_store, results=[get_artifacts_context_volume()]
+            store=self.gcs_store,
+            results=[
+                get_volume_from_secret(secret=self.mount_resource1),
+                get_artifacts_context_volume(),
+            ],
         )
         self.assert_artifacts_store(
-            store=self.az_store, results=[get_artifacts_context_volume()]
+            store=self.az_store,
+            results=[
+                get_volume_from_secret(secret=self.mount_resource1),
+                get_artifacts_context_volume(),
+            ],
         )
         self.assert_artifacts_store(
             store=self.claim_store,
             results=[
-                get_artifacts_context_volume(),
                 get_volume_from_connection(connection=self.claim_store),
+                get_artifacts_context_volume(),
             ],
         )
         self.assert_artifacts_store(
             store=self.host_path_store,
             results=[
-                get_artifacts_context_volume(),
                 get_volume_from_connection(connection=self.host_path_store),
+                get_artifacts_context_volume(),
             ],
         )
 
@@ -363,15 +375,24 @@ class TestPodVolumes(BaseTestCase):
         ctx_volume_name = constants.CONTEXT_VOLUME_ARTIFACTS
         self.assert_single_init_artifacts_store(
             store=self.s3_store,
-            results=[get_connections_context_volume(name=ctx_volume_name)],
+            results=[
+                get_connections_context_volume(name=ctx_volume_name),
+                get_volume_from_secret(secret=self.mount_resource1),
+            ],
         )
         self.assert_single_init_artifacts_store(
             store=self.gcs_store,
-            results=[get_connections_context_volume(name=ctx_volume_name)],
+            results=[
+                get_connections_context_volume(name=ctx_volume_name),
+                get_volume_from_secret(secret=self.mount_resource1),
+            ],
         )
         self.assert_single_init_artifacts_store(
             store=self.az_store,
-            results=[get_connections_context_volume(name=ctx_volume_name)],
+            results=[
+                get_connections_context_volume(name=ctx_volume_name),
+                get_volume_from_secret(secret=self.mount_resource1),
+            ],
         )
         self.assert_single_init_artifacts_store(
             store=self.claim_store,
@@ -419,7 +440,7 @@ class TestPodVolumes(BaseTestCase):
             == 2
         )
 
-        # test all inits are mounted to the same context
+        # test all inits are mounted to the same context and a single secret requested for all
         assert (
             len(
                 get_pod_volumes(
@@ -439,7 +460,7 @@ class TestPodVolumes(BaseTestCase):
                     volumes=[],
                 )
             )
-            == 3
+            == 4
         )
 
         assert (
@@ -455,7 +476,7 @@ class TestPodVolumes(BaseTestCase):
                     volumes=[],
                 )
             )
-            == 7
+            == 8
         )
 
         assert (
@@ -471,7 +492,7 @@ class TestPodVolumes(BaseTestCase):
                     volumes=[],
                 )
             )
-            == 7
+            == 8
         )
 
         assert (
@@ -495,7 +516,7 @@ class TestPodVolumes(BaseTestCase):
                     volumes=[],
                 )
             )
-            == 11
+            == 12
         )
 
         assert (
@@ -726,7 +747,8 @@ class TestPodVolumes(BaseTestCase):
         # 3: 3 context requested constant contexts
         # 3: 3 volumes
         # 7: 2 mount volumes
-        assert len(pod_volumes) == 1 + 3 + 3 + 2
+        # 1: 1 mount secret
+        assert len(pod_volumes) == 1 + 3 + 3 + 2 + 1
 
         # Test all init are in the same context
         pod_volumes = get_pod_volumes(
@@ -863,8 +885,9 @@ class TestPodVolumes(BaseTestCase):
         # 1: logs/output contexts (same volume)
         # 3: 3 context requested constant contexts
         # 3: 3 volumes
-        # 7: 5 managed contexts + 2 mount volumes
-        assert len(pod_volumes) == 1 + 3 + 3 + 7
+        # 5: 5 managed contexts + 2 mount volumes
+        # 1: 1 secret
+        assert len(pod_volumes) == 1 + 3 + 3 + 7 + 1
 
         pod_volumes = get_pod_volumes(
             contexts=PluginsContextsSpec.from_config(
@@ -1020,8 +1043,9 @@ class TestPodVolumes(BaseTestCase):
         )
         # 3: 3 context requested constant contexts
         # 3: 3 volumes
-        # 7: 5 managed contexts + 2 mount volumes
-        assert len(pod_volumes) == 3 + 3 + 7
+        # 5: 5 managed contexts + 2 mount volumes
+        # 1: 1 secret
+        assert len(pod_volumes) == 3 + 3 + 7 + 1
 
         pod_volumes = get_pod_volumes(
             contexts=PluginsContextsSpec.from_config(

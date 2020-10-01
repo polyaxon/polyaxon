@@ -41,7 +41,7 @@ Or you can create a secret to be mounted as a volume:
 
 ## Use the secret name and secret key in your data persistence definition
 
-You can use the default mount path `/plx-context/.gc/gc-secret.json`.
+You can use the default mount path `/plx-context/.gc`, Polyaxon will set the `GC_KEY_PATH` to `/plx-context/.gc/gc-secret.json` so the secret must contain --from-file=`gc-secret.json=`
 
 ```yaml
 artifactsStore:
@@ -51,7 +51,7 @@ artifactsStore:
     bucket: "gs://gcs-artifacts"
   secret:
     name: "gcs-secret"
-    mountPath: /plx-context/.gc/gc-secret.json
+    mountPath: /plx-context/.gc
 ```
 
 You can also use a different mount path, e.g. `/etc/gcs/gc-secret.json`, in which case you need to provide an env var to tell the SDK where to look for the secret:

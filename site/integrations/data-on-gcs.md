@@ -39,7 +39,7 @@ Or you can create a secret to be mounted as a volume:
 
 ## Use the secret name and secret key in your data persistence definition
 
-You can use the default mount path `/plx-context/.gc/gc-secret.json`.
+You can use the default mount path `/plx-context/.gc`, Polyaxon will set the `GC_KEY_PATH` to `/plx-context/.gc/gc-secret.json` so the secret must contain --from-file=`gc-secret.json=`
 
 ```yaml
 connections:
@@ -49,10 +49,10 @@ connections:
     bucket: "gs://gcs-datasets"
   secret:
     name: "gcs-secret"
-    mountPath: /plx-context/.gc/gc-secret.json
+    mountPath: /plx-context/.gc
 ```
 
-You can also use a different mount path `/etc/gcs/gc-secret.json`, in which case you need to provide an env var to tell the SDK where to look:
+You can also use a different mount path `/etc/gcs`, in which case you need to provide an env var to tell the SDK where to look:
 
 ```bash
 kubectl create configmap gcs-key-path --from-literal GC_KEY_PATH="/etc/gcs/gc-secret.json" -n polyaxon

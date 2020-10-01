@@ -56,7 +56,19 @@ def get_pod_volumes(
     config_maps = to_list(config_maps, check_none=True)
     volumes = to_list(volumes, check_none=True)[:]
     connection_by_names = connection_by_names or {}
-    requested_connections = [connection_by_names[c] for c in connections]
+
+    requested_connection_names = connections[:]
+    for init_connection in init_connections:
+        if (
+            init_connection.connection
+            and init_connection.connection not in requested_connection_names
+        ):
+            requested_connection_names.append(init_connection.connection)
+    if artifacts_store and artifacts_store.name not in requested_connection_names:
+        requested_connection_names.append(artifacts_store.name)
+
+    requested_connections = [connection_by_names[c] for c in requested_connection_names]
+
     requested_config_maps = get_requested_config_maps(
         config_maps=config_maps, connections=requested_connections
     )
