@@ -74,10 +74,10 @@ helm repo update
 
 ### Validate
 
-You can validate that your deployment `config.yml` file is compatible with the version you are trying to deploy:
+You can validate that your deployment `config.yaml` file is compatible with the version you are trying to deploy:
 
 ```bash
-polyaxon admin deploy -f config.yml --check
+polyaxon admin deploy -f config.yaml --check
 ```
 
 ### Dry run
@@ -90,14 +90,14 @@ polyaxon admin deploy -f config.yaml --dry-run
 
 ### Deploy
 
-Now you can install Polyaxon with your `config.yml` file.
+Now you can install Polyaxon with your `config.yaml` file.
 
 > **Note**: it's important to know that there's an initial delay before you can access Polyaxon API, and before some pods will turn green, which is set to 2 minutes.
 
 You can use Polyaxon CLI to manage the deployment
 
 ```bash
-polyaxon admin deploy -f config.yml
+polyaxon admin deploy -f config.yaml
 ```
 
 Or you can use Helm to do the same:
@@ -108,7 +108,7 @@ in Helm 2
 helm install polyaxon/polyaxon \
     --name=<RELEASE_NAME> \
     --namespace=<NAMESPACE> \
-    -f config.yml
+    -f config.yaml
 ```
 
 in Helm 3
@@ -116,7 +116,7 @@ in Helm 3
 ```bash
 helm install <RELEASE_NAME> polyaxon/polyaxon \
     --namespace=<NAMESPACE> \
-    -f config.yml
+    -f config.yaml
 ```
 
 `--name` or `name` is an identifier used by helm to refer to this deployment.
@@ -133,7 +133,7 @@ we again recommend using `polyaxon` to make it always easy to remember.
 helm install polyaxon/polyaxon \
 --name=polyaxon \
 --namespace=polyaxon \
--f config.yml
+-f config.yaml
 ```
 
 >**Note**: "Release name already exists error"
@@ -168,25 +168,25 @@ and dashboard on your localhost and auto-configure the cli.
 To upgrade Polyaxon to a newer version, you can simply run the following command using Polyaxon CLI:
 
 ```bash
-polyaxon admin upgrade -f config.yml
+polyaxon admin upgrade -f config.yaml
 ```
 
 Or using Helm
 
 ```bash
-helm upgrade polyaxon polyaxon/polyaxon -f config.yml
+helm upgrade polyaxon polyaxon/polyaxon -f config.yaml
 ```
 
 ## Applying configuration changes
 
 The general method to modify your Kubernetes deployment is to:
 
- 1. Make a change to the config.yml
- 2. [Optional] run `polyaxon admin deploy -f config.yml --check`
- 2. Run a `polyaxon admin upgrade -f config.yml` or `helm upgrade`:
+ 1. Make a change to the config.yaml
+ 2. [Optional] run `polyaxon admin deploy -f config.yaml --check`
+ 2. Run a `polyaxon admin upgrade -f config.yaml` or `helm upgrade`:
 
     ```bash
-    $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yml
+    $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yaml
     ```
 
     Where `<RELEASE_NAME>` is the parameter you passed to `--name` when installing Polyaxon with `helm install`.

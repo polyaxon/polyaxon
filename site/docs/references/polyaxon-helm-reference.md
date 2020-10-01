@@ -748,5 +748,5 @@ kubectl port-forward  svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon
 To upgrade Polyaxon to a newer version, you can simply run:
 ```bash
 helm repo update
-helm upgrade polyaxon polyaxon/polyaxon -f config.yml
+helm upgrade polyaxon polyaxon/polyaxon -f config.yaml
 ```
