@@ -11,7 +11,7 @@ jobs:
       uses: actions/setup-go@v2.1.3
       with:
         go-version: 1.13
-    - uses: actions/checkout@v2.3.2
+    - uses: actions/checkout@v2.3.3
     - uses: helm/kind-action@v1.0.0
     - name: test
       env:
