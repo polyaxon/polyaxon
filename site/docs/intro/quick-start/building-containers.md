@@ -1,8 +1,8 @@
 ---
-title: "Quick Start: Builds"
-sub_link: "quick-start/builds"
-meta_title: "Builds - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Builds - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+title: "Quick Start: Building Containers"
+sub_link: "quick-start/building-containers"
+meta_title: "Building Containers - Polyaxon quick start tutorial - Core Concepts"
+meta_description: "Building Containers - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
 visibility: public
 status: published
 tags:
@@ -15,7 +15,7 @@ sidebar: "intro"
 During this quick-start tutorial, we have been using a docker image `polyaxon/polyaxon-quick-start`,
 which was built using a Polyaxonfile as well.
 
-N.B. you can build docker images outside of Polyaxon, or use your own system.
+> N.B. you can build docker images outside of Polyaxon, or use your own system.
 
 ## Docker images
 
@@ -60,6 +60,17 @@ it defines the name of the image and the connection to use for pushing the image
 The [docker-connection](/docs/setup/connections/registry/) is a [connection](/docs/setup/connections/)
 that we configured to authenticate Kaniko to push images.
 
+
+## Deploying with a registry connection
+
+In order to build container in-cluster with Polyaxon, you need to update your deployment with a [registry connection](/docs/setup/connections/registry/).
+For instance to deploy an in-cluster registry to be used with Polyaxon, you can visit this [integration page](/integrations/in-cluster-registry/). 
+
+After configuring a valid registry connection, you can upgrade your deployment:
+
+```bash
+polyaxon admin upgrade -f config.yaml
+```
 
 ## Run the operation
 

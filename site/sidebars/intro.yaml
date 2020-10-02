@@ -19,8 +19,10 @@
       link: /docs/intro/quick-start/automation/
     - title: Deploying ML apps
       link: /docs/intro/quick-start/deploying-ml-apps/
-    - title: Builds
-      link: /docs/intro/quick-start/builds/
+    - title: Building Containers
+      link: /docs/intro/quick-start/building-containers/
+    - title: Handling Termination
+      link: /docs/intro/quick-start/handling-termination/
   - group: Features & Architecture
     items:
     - title: Features
