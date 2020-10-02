@@ -32,8 +32,15 @@ Each user can manage multiple API tokens to authenticate Cli, Clients, and other
 
 Each token can be managed, deleted, refreshed, or regenerated:
 
-![tokens-default](../../../../content/images/dashboard/users/tokens-management.png)
+![tokens-management](../../../../content/images/dashboard/users/tokens-management.png)
 
 Each token can be restricted to specific services and specific scopes:
 
-![tokens-default](../../../../content/images/dashboard/users/tokens-scope.png)
+![tokens-scope](../../../../content/images/dashboard/users/tokens-scope.png)
+
+
+## Bookmarks
+
+Users can bookmark runs and projects for easy access in the future, all bookmarks are located on the user's profile
+
+![user-bookmarks](../../../../content/images/dashboard/users/bookmarks.png)

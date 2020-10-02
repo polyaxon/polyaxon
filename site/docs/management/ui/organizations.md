@@ -45,6 +45,15 @@ The general settings page lets you change the organization's details
 
 ![organization-settings](../../../../content/images/dashboard/orgs/settings.png)
 
+## Organization auth management
+
+By default, users can join your organization by invitation only using username, email, and password.
+
+In order to enable other authentication backends or open your organization for users without an invitation, you can use the auth tab in the settings
+
+![organization-auth-settings](../../../../content/images/dashboard/orgs/auth-settings.png)
+
+> **Note**: In Polyaxon Cloud, users can only join using a valid invitation.
 
 ## Organization members
 
