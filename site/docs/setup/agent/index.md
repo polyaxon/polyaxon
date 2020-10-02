@@ -108,7 +108,7 @@ Or you can use Helm to do the same:
 in Helm 2
 
 ```bash
-helm install polyaxon/polyaxon \
+helm install polyaxon/agent \
     --name=<RELEASE_NAME> \
     --namespace=<NAMESPACE> \
     -f config.yaml
@@ -117,7 +117,7 @@ helm install polyaxon/polyaxon \
 in Helm 3
 
 ```bash
-helm install <RELEASE_NAME> polyaxon/polyaxon \
+helm install <RELEASE_NAME> polyaxon/agent \
     --namespace=<NAMESPACE> \
     -f config.yaml
 ```
@@ -133,7 +133,7 @@ we again recommend using `polyaxon` to make it always easy to remember.
 > The same command with `polyaxon` as a value:
 
 ```bash
-helm install polyaxon/polyaxon \
+helm install polyaxon/agent \
 --name=polyaxon \
 --namespace=polyaxon \
 -f config.yaml
@@ -171,7 +171,7 @@ polyaxon admin upgrade -f config.yaml
 Or using Helm
 
 ```bash
-helm upgrade polyaxon polyaxon/polyaxon -f config.yaml
+helm upgrade polyaxon polyaxon/agent -f config.yaml
 ```
 
 ## Turn off a Polyaxon Agent

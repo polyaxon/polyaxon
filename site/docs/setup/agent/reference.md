@@ -59,8 +59,16 @@ The gateway is the service fronting the traffic to/from Polyaxon. By default it'
 You can use port forwarding to access the service on localhost:
 
 ```bash
-kubectl port-forward -n polyaxon svc/polyaxon-polyaxon-gateway 8000:80
+kubectl port-forward -n polyaxon svc/agent-polyaxon-gateway 8000:80
 ```
+
+Or using Polyaxon CLI
+
+```bash
+polyaxon port-forward -r agent
+```
+
+> **Note**: `[-r/--release-name]` could be different if you deployed with a different the release name 
 
 ## Ingress and Gateway service
 
@@ -137,15 +145,6 @@ annotations:
   domainName: polyaxon.my.domain.com
 ```
 
-## SSL
-
-| Parameter | Description                                                             | Default
-| ----------| ------------------------------------------------------------------------| ----------------------------------------------------------
-| `ssl`     | To set ssl and serve https with Polyaxon deployed with NodePort service | `{}`
-
-
-NGINX acts as a reverse proxy for the Polyaxon's front-end server, meaning NGINX proxies external HTTP (and HTTPS) requests to the Polyaxon API.
-
 ### NGINX ingress
 
 To use Https in Polyaxon on Kubernetes you can set an ingress-nginx for cluster running on Kubernetes.
@@ -175,29 +174,6 @@ Polyaxon's helm chart comes with an ingress resource that you can use with an in
     ```
 
     For more information visit the [Nginx Ingress Integration](/integrations/nginx/)
-
-### NGINX for NodePort service
-
-To enable ssl for Polyaxon API running with NodePort service on Kubernetes, you need to provide an SSL certificate and SSL certificate key.
-
-you can provide a self-signed certificate or a browser trusted certificate.
-
- 1. Create a secret for your certificate:
-
-    ```bash
-    kubectl create -n polyaxon secret generic polyaxon-cert --from-file=/path/to/certs/polyaxon.com.crt --from-file=/path/to/certs/polyaxon.com.key
-    ```
-
- 2. Make sure to update your deployment config with reference to the certificate
-
-    ```yaml
-    ssl:
-      enabled: true
-      secretName: 'polyaxon-cert'
-    ```
- 3. Set the service type to `NodePort` and update the API's service port to 443.
-
- N.B. By default Polyaxon mounts the ssl certificate and key to `/etc/ssl`, this value can be updated using the `.Values.ssl.path`.
 
 ## dns
 
