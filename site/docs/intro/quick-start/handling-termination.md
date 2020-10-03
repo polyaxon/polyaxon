@@ -1,5 +1,5 @@
 ---
-title: "Handling Termination: Building Containers"
+title: "Quick Start: Handling Termination"
 sub_link: "quick-start/handling-termination"
 meta_title: "Handling Termination - Polyaxon quick start tutorial - Core Concepts"
 meta_description: "Handling Termination - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
