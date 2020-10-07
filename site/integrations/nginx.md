@@ -26,7 +26,7 @@ In order to use NGINX Ingress controller with Polyaxon, you need to install the 
 
 ```yaml
 helm repo add stable https://kubernetes-charts.storage.googleapis.com
-helm install nginx stable/nginx -n polyaxon
+helm install nginx stable/nginx-ingress -n polyaxon
 ```
 
 ## Enable ingress in your Polyaxon's config deployment
