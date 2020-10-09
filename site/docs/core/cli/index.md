@@ -42,13 +42,13 @@ $ polyaxon command sub-command --help
 
 ## Deprecated behavior
 
-Polyaxon use to pass a context between commands and subcommands, e.g.
+Polyaxon used to pass a context between commands and subcommands, e.g.
 
 ```bash
-polyaxon ops get -p PROJECT -uid UID --more-args
+polyaxon ops -p PROJECT -uid UID get --more-args
 ```
 
-This behavior was confusing and running the help command does not show the complete information about running a specific command.
+This behavior was confusing and the help command did not show the complete information about running a specific command.
 We deprecated this behavior in favor of putting all arguments in front of the last sub-command, e.g.
 
 ```bash
