@@ -7,7 +7,7 @@ params:
       name: polyaxon/polyaxon-spacy-examples
       connection: docker-connection
   context:
-    value: "/plx_context/artifacts/polyaxon-examples/spacy/displacy"
+    value: "/plx_context/artifacts/polyaxon-examples/spacy/train"
 runPatch:
   init:
   - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
