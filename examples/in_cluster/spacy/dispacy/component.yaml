@@ -1,0 +1,14 @@
+version: 1.1
+kind: component
+tags: [examples, spacy]
+
+run:
+  kind: service
+  ports: [5000]
+  rewritePath: true
+  init:
+  - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+    image: polyaxon/polyaxon-spacy-examples
+    workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/spacy/displacy"
+    command: ["python", "-u", "app.py"]
