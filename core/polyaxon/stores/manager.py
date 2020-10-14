@@ -133,13 +133,11 @@ def delete_file_or_dir(
 
     validate_store(connection_type)
 
-    store_path = get_path(connection_type.store_path, subpath)
-
     store_manager = get_connection_from_type(connection_type=connection_type)
     if is_file:
-        store_manager.delete_file(store_path)
+        store_manager.delete_file(subpath)
     else:
-        store_manager.delete(store_path, workers=workers)
+        store_manager.delete(subpath, workers=workers)
 
 
 def tar_dir(download_path: str) -> str:

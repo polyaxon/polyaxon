@@ -83,13 +83,23 @@ func NewDeleteRunArtifactOK() *DeleteRunArtifactOK {
 A successful response.
 */
 type DeleteRunArtifactOK struct {
+	Payload interface{}
 }
 
 func (o *DeleteRunArtifactOK) Error() string {
-	return fmt.Sprintf("[DELETE /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact][%d] deleteRunArtifactOK ", 200)
+	return fmt.Sprintf("[DELETE /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact][%d] deleteRunArtifactOK  %+v", 200, o.Payload)
+}
+
+func (o *DeleteRunArtifactOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *DeleteRunArtifactOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

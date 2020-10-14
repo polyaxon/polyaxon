@@ -128,7 +128,7 @@ Name | Type | Description  | Notes
 
 ## deleteTeam
 
-> deleteTeam(owner, team)
+> Object deleteTeam(owner, team)
 
 Delete team
 
@@ -150,7 +150,7 @@ apiInstance.deleteTeam(owner, team, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -179,7 +179,7 @@ null (empty response body)
 
 ## deleteTeamMember
 
-> deleteTeamMember(owner, team, user)
+> Object deleteTeamMember(owner, team, user)
 
 Delete team member details
 
@@ -202,7 +202,7 @@ apiInstance.deleteTeamMember(owner, team, user, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -218,7 +218,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

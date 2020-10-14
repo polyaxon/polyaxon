@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.1.9
+- API version: 1.2.0-rc3
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.1.9</version>
+  <version>1.2.0-rc3</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.1.9"
+compile "org.openapitools:openapi-java-client:1.2.0-rc3"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.1.9.jar`
+* `target/openapi-java-client-1.2.0-rc3.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -172,6 +172,7 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**getOrganizationInvitation**](docs/OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 *OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
 *OrganizationsV1Api* | [**getOrganizationSettings**](docs/OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
+*OrganizationsV1Api* | [**listOrganizationMemberNames**](docs/OrganizationsV1Api.md#listOrganizationMemberNames) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 *OrganizationsV1Api* | [**listOrganizationMembers**](docs/OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 *OrganizationsV1Api* | [**listOrganizationNames**](docs/OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
 *OrganizationsV1Api* | [**listOrganizations**](docs/OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations

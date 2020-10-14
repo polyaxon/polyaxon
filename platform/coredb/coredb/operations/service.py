@@ -39,6 +39,9 @@ class OperationsService(Service):
         V1RunKind.TFJOB,
         V1RunKind.PYTORCHJOB,
         V1RunKind.NOTIFIER,
+        V1RunKind.WATCHDOG,
+        V1RunKind.TUNER,
+        V1RunKind.CLEANER,
     }
     EAGER_KINDS = {
         V1RunKind.MATRIX,

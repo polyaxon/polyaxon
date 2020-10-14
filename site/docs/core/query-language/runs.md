@@ -48,6 +48,12 @@ field                           | condition
 `inputs.*`                      | [value condition](/docs/core/query-language/#query-with-value-condition)
 `outputs.*`                     | [value condition](/docs/core/query-language/#query-with-value-condition)
 `metrics.*`                     | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`duration`                      | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`commit`                        | [value condition](/docs/core/query-language/#query-with-value-condition)
+`agent`                         | [value condition](/docs/core/query-language/#query-with-value-condition)
+`queue`                         | [value condition](/docs/core/query-language/#query-with-value-condition)
+`meta_flags`                    | [bool condition](/docs/core/query-language/#query-with-bool-condition)
+`live_state`                    | [value condition](/docs/core/query-language/#query-with-value-condition)
 
 
 ## Sort

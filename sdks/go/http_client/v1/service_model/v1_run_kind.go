@@ -30,7 +30,7 @@ import (
 // V1RunKind Run kind enum
 // Kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob
 // Meta kinds: job, service, dag, matrix, schedule
-// helper kinds: tuner, watchdog, notifier
+// helper kinds: tuner, watchdog, notifier, cleaner
 //
 // swagger:model v1RunKind
 type V1RunKind string
@@ -81,6 +81,9 @@ const (
 
 	// V1RunKindNotifier captures enum value "notifier"
 	V1RunKindNotifier V1RunKind = "notifier"
+
+	// V1RunKindCleaner captures enum value "cleaner"
+	V1RunKindCleaner V1RunKind = "cleaner"
 )
 
 // for schema
@@ -88,7 +91,7 @@ var v1RunKindEnum []interface{}
 
 func init() {
 	var res []V1RunKind
-	if err := json.Unmarshal([]byte(`["job","service","dag","spark","dask","flink","ray","mpijob","tfjob","pytorchjob","matrix","scheduler","tuner","watchdog","notifier"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["job","service","dag","spark","dask","flink","ray","mpijob","tfjob","pytorchjob","matrix","scheduler","tuner","watchdog","notifier","cleaner"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

@@ -40,6 +40,11 @@ def configure_logger(verbose):
         if not settings.CLIENT_CONFIG.disable_errors_reporting:
             set_raven_client()
         log_level = logging.INFO
+        if settings.CLIENT_CONFIG.log_level:
+            try:
+                log_level = logging.getLevelName(settings.CLIENT_CONFIG.log_level)
+            except:  # noqa
+                log_level = logging.INFO
     logging.basicConfig(format="%(message)s", level=log_level, stream=sys.stdout)
 
 

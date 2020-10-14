@@ -17,7 +17,6 @@
 from django.contrib.postgres.fields.jsonb import KeyTransform
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import F
-from django.db.models.sql.constants import ORDER_PATTERN
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.filters import OrderingFilter as BaseOrderingFilter
@@ -88,9 +87,6 @@ class OrderingFilter(BaseOrderingFilter):
         ]
 
         for field in fields:
-            if not ORDER_PATTERN.match(field):
-                continue
-
             negation = "-" if field[0] == "-" else ""
             field = field.lstrip("-")
             if field in valid_fields:

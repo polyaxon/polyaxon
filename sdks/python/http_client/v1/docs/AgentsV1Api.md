@@ -186,7 +186,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_agent**
-> delete_agent(owner, uuid)
+> object delete_agent(owner, uuid)
 
 Delete agent
 
@@ -229,7 +229,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete agent
-        api_instance.delete_agent(owner, uuid)
+        api_response = api_instance.delete_agent(owner, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->delete_agent: %s\n" % e)
 ```
@@ -243,7 +244,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -932,7 +933,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **sync_agent**
-> sync_agent(owner, agent_uuid, body)
+> object sync_agent(owner, agent_uuid, body)
 
 Sync agent
 
@@ -976,7 +977,8 @@ body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
     try:
         # Sync agent
-        api_instance.sync_agent(owner, agent_uuid, body)
+        api_response = api_instance.sync_agent(owner, agent_uuid, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->sync_agent: %s\n" % e)
 ```
@@ -991,7 +993,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 

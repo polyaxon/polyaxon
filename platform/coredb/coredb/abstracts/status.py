@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.contrib.postgres.fields import JSONField
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 
@@ -30,7 +29,7 @@ class StatusModel(models.Model):
         default=V1Statuses.CREATED,
         choices=LifeCycle.CHOICES,
     )
-    status_conditions = JSONField(
+    status_conditions = models.JSONField(
         encoder=DjangoJSONEncoder, blank=True, null=True, default=dict
     )
 

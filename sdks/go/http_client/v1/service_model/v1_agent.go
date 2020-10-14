@@ -31,9 +31,6 @@ import (
 // swagger:model v1Agent
 type V1Agent struct {
 
-	// The agent max concurrency
-	Concurrency int32 `json:"concurrency,omitempty"`
-
 	// Content of the agent config
 	Content string `json:"content,omitempty"`
 
@@ -68,6 +65,9 @@ type V1Agent struct {
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
+
+	// Agent version
+	Version string `json:"version,omitempty"`
 
 	// Optional version api
 	VersionAPI interface{} `json:"version_api,omitempty"`

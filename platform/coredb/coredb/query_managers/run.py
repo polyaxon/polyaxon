@@ -13,10 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from coredb.query_managers import callback_conditions
 from coredb.query_managers.manager import BaseQueryManager
 from polyaxon.pql.builder import (
     ArrayCondition,
+    BoolCondition,
+    CallbackCondition,
     ComparisonCondition,
     DateTimeCondition,
     SearchCondition,
@@ -32,15 +34,18 @@ from polyaxon.pql.parser import (
 
 class RunQueryManager(BaseQueryManager):
     NAME = "run"
-    FIELDS_USE_UUID = {"project", "original", "pipeline"}
+    FIELDS_USE_UUID = {"project", "original", "pipeline", "agent", "queue"}
     FIELDS_PROXY = {
         "params": "inputs",
         "in": "inputs",
         "out": "outputs",
         "metrics": "outputs",
+        "meta_flags": "meta_info",
         "id": "uuid",
         "uid": "uuid",
         "user": "user__username",
+        "agent": "settings__agent__name",
+        "queue": "settings__queue__name",
     }
     FIELDS_ORDERING = (
         "created_at",
@@ -60,6 +65,9 @@ class RunQueryManager(BaseQueryManager):
         "in": {"field": "inputs", "annotate": True},
         "outputs": {"field": "outputs", "annotate": True},
         "out": {"field": "outputs", "annotate": True},
+        "meta_flags": {"field": "meta_info", "annotate": True},
+        "meta": {"field": "meta_info", "annotate": True},
+        "agent": "settings__agent",
     }
     FIELDS_DEFAULT_ORDERING = ("-updated_at",)
     CHECK_ALIVE = True
@@ -89,8 +97,9 @@ class RunQueryManager(BaseQueryManager):
         "pipeline": parse_value_operation,
         # Cloning kind
         "cloning_kind": parse_value_operation,
-        # Builds
-        "build": parse_value_operation,
+        # Artifact
+        "in_artifact_kind": parse_value_operation,
+        "out_artifact_kind": parse_value_operation,
         # Backend
         "backend": parse_value_operation,
         # Framework
@@ -108,12 +117,18 @@ class RunQueryManager(BaseQueryManager):
         "out": parse_value_operation,
         # Metrics
         "metrics": parse_scalar_operation,
+        # Meta
+        "meta_flags": parse_value_operation,
+        "meta_info": parse_value_operation,
         # Tags
         "tags": parse_value_operation,
         # Live state
         "live_state": parse_value_operation,
         # Duration
         "duration": parse_scalar_operation,
+        # Agent
+        "agent": parse_value_operation,
+        "queue": parse_value_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
@@ -141,14 +156,19 @@ class RunQueryManager(BaseQueryManager):
         "pipeline": ValueCondition,
         # Cloning kind
         "cloning_kind": ValueCondition,
-        # Builds
-        "build": ValueCondition,
+        # Artifact
+        "in_artifact_kind": CallbackCondition(
+            callback_conditions.in_artifact_kind_condition
+        ),
+        "out_artifact_kind": CallbackCondition(
+            callback_conditions.in_artifact_kind_condition
+        ),
         # Backend
         "backend": ValueCondition,
         # Framework
         "framework": ValueCondition,
         # Commit
-        "commit": ValueCondition,
+        "commit": CallbackCondition(callback_conditions.commit_condition),
         # Kind
         "kind": ValueCondition,
         # Params
@@ -160,10 +180,16 @@ class RunQueryManager(BaseQueryManager):
         "out": ValueCondition,
         # Metrics
         "metrics": ComparisonCondition,
+        # Meta
+        "meta_flags": BoolCondition,
+        "meta_info": ValueCondition,
         # Tags
         "tags": ArrayCondition,
         # Live state
         "live_state": ValueCondition,
-        # run time
+        # Duration
         "duration": ComparisonCondition,
+        # Agent
+        "agent": ValueCondition,
+        "queue": ValueCondition,
     }

@@ -57,6 +57,8 @@ type ClientService interface {
 
 	GetOrganizationSettings(params *GetOrganizationSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationSettingsOK, *GetOrganizationSettingsNoContent, error)
 
+	ListOrganizationMemberNames(params *ListOrganizationMemberNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMemberNamesOK, *ListOrganizationMemberNamesNoContent, error)
+
 	ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error)
 
 	ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error)
@@ -405,6 +407,42 @@ func (a *Client) GetOrganizationSettings(params *GetOrganizationSettingsParams, 
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetOrganizationSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ListOrganizationMemberNames gets organization member names
+*/
+func (a *Client) ListOrganizationMemberNames(params *ListOrganizationMemberNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMemberNamesOK, *ListOrganizationMemberNamesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListOrganizationMemberNamesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListOrganizationMemberNames",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/members/names",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListOrganizationMemberNamesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListOrganizationMemberNamesOK:
+		return value, nil, nil
+	case *ListOrganizationMemberNamesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListOrganizationMemberNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

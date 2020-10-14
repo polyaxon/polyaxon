@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 ## deleteProjectSearch
 
-> deleteProjectSearch(owner, project, uuid)
+> Object deleteProjectSearch(owner, project, uuid)
 
 Delete project search
 
@@ -95,7 +95,7 @@ apiInstance.deleteProjectSearch(owner, project, uuid, (error, data, response) =>
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -111,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -355,7 +355,7 @@ Name | Type | Description  | Notes
 
 ## promoteProjectSearch
 
-> promoteProjectSearch(owner, project, uuid)
+> Object promoteProjectSearch(owner, project, uuid)
 
 Promote project search
 
@@ -378,7 +378,7 @@ apiInstance.promoteProjectSearch(owner, project, uuid, (error, data, response) =
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -394,7 +394,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

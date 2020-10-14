@@ -78,6 +78,10 @@ class BaseConfig:
     FIELDS_MANUAL_PATCH = []
     FIELDS_SAME_KIND_PATCH = []
 
+    @staticmethod
+    def _dump(obj_dict):
+        return ujson.dumps(obj_dict)
+
     def to_light_dict(
         self,
         humanize_values=False,
@@ -102,7 +106,7 @@ class BaseConfig:
             obj_dict.pop(attr, None)
 
         if dump:
-            return ujson.dumps(obj_dict)
+            return self._dump(obj_dict)
         return obj_dict
 
     def to_dict(
@@ -122,7 +126,7 @@ class BaseConfig:
             include_version=include_version,
         )
         if dump:
-            return ujson.dumps(obj)
+            return self._dump(obj)
         return obj
 
     def to_schema(self):
@@ -329,7 +333,7 @@ class BaseConfig:
 
         value = JSONSchema().dump(cls.SCHEMA())  # pylint:disable=not-callable
         if dump:
-            return ujson.dumps(value)
+            return cls._dump(value)
         return value
 
     @classmethod

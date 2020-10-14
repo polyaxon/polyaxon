@@ -122,6 +122,7 @@ from polyaxon.polyflow.references import (
     V1UrlRef,
 )
 from polyaxon.polyflow.run import (
+    CleanerSchema,
     DagSchema,
     DaskSchema,
     FlinkSchema,
@@ -146,6 +147,7 @@ from polyaxon.polyflow.run import (
     V1Job,
     V1KFReplica,
     V1MPIJob,
+    V1Cleaner,
     V1Notifier,
     V1PipelineKind,
     V1PytorchJob,
@@ -157,6 +159,8 @@ from polyaxon.polyflow.run import (
     V1SparkType,
     V1TFJob,
     V1Tuner,
+    V1WatchDog,
+    WatchDogSchema,
 )
 from polyaxon.polyflow.schedule import (
     CronScheduleSchema,

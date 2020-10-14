@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteConnection"></a>
 # **deleteConnection**
-> deleteConnection(owner, uuid)
+> Object deleteConnection(owner, uuid)
 
 Delete connection
 
@@ -118,7 +118,8 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      apiInstance.deleteConnection(owner, uuid);
+      Object result = apiInstance.deleteConnection(owner, uuid);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectionsV1Api#deleteConnection");
       System.err.println("Status code: " + e.getCode());
@@ -139,7 +140,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

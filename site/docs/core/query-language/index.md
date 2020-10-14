@@ -72,6 +72,18 @@ operator               | example
 `x not in {a, b, c}`   | `status: ~started|building|running` will match all entities that have the status not in one of the values started, building, or running
 
 
+## Query with bool condition
+
+This is useful to compare boolean values, e.g. flags.
+you can search for values that are equal, not equal to a value that can be converted to a boolean, e.g. 1/true/t/True and 0/false/f/False.
+
+
+operator               | example
+-----------------------|------------------
+`x = 1`                | `flag: true` will match all entities that have the status running
+`x != 0`               | `flag: ~false` will match all entities that have the status not running
+
+
 ## Query with datetime condition
 
 This is useful to compare date and datetime values, e.g. created_at, updated_at, started_at, finished_at, ...

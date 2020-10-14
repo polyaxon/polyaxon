@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from polyaxon.auxiliaries.cleaner import get_default_cleaner_container
 from polyaxon.auxiliaries.init import (
     get_default_init_container,
     get_init_resources,

@@ -19,7 +19,7 @@ from rest_framework.exceptions import ValidationError
 
 
 class IsManagedMixin(serializers.Serializer):
-    is_managed = serializers.NullBooleanField(initial=True, default=True)
+    is_managed = serializers.BooleanField(initial=True, default=True, allow_null=True)
 
     def _get_is_managed(self, value):
         return value if isinstance(value, bool) else True

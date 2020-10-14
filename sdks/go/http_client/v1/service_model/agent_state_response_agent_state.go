@@ -32,11 +32,14 @@ type AgentStateResponseAgentState struct {
 	// List of apply runs
 	Apply interface{} `json:"apply,omitempty"`
 
+	// List of deleting runs
+	Deleting interface{} `json:"deleting,omitempty"`
+
 	// A flag to tell the agent that the queues are still full
 	Full bool `json:"full,omitempty"`
 
-	// List of notifier runs
-	Notifier interface{} `json:"notifier,omitempty"`
+	// List of hooks runs
+	Hooks interface{} `json:"hooks,omitempty"`
 
 	// List of queued runs
 	Queued interface{} `json:"queued,omitempty"`

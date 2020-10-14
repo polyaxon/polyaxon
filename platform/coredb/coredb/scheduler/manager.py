@@ -27,6 +27,7 @@ from coredb.abstracts.runs import BaseRun
 from coredb.managers.artifacts import set_artifacts
 from coredb.managers.statuses import new_run_status, new_run_stop_status
 from coredb.scheduler import resolver
+from polyaxon import operations, settings
 from polyaxon.agents import manager
 from polyaxon.exceptions import (
     PolyaxonCompilerError,
@@ -65,12 +66,44 @@ def get_run(
         )
 
 
+def runs_artifacts_clean(run: hex):
+    if run.is_managed:
+        in_cluster = conf.get(K8S_IN_CLUSTER)
+        if in_cluster and (run.is_service or run.is_job):
+            op = operations.get_cleaner_operation(
+                connection=settings.AGENT_CONFIG.artifacts_store, run_uuid=run.uuid.hex
+            )
+            try:
+                in_cluster = conf.get(K8S_IN_CLUSTER)
+                if in_cluster and (run.is_service or run.is_job):
+                    manager.make_and_create(
+                        content=op,
+                        owner_name=run.project.owner.name,
+                        project_name=run.project.name,
+                        run_name=run.name,
+                        run_uuid=run.uuid.hex,
+                        run_kind=run.kind,
+                        namespace=conf.get(K8S_NAMESPACE),
+                        in_cluster=in_cluster,
+                    )
+                return
+            except Exception as e:
+                _logger.warning(
+                    "Failed to run cleaning job for %s.%s.%s.\n %s",
+                    run.project.owner.name,
+                    run.project.name,
+                    run.uuid.hex,
+                    e,
+                )
+
+
 def runs_delete(run_id: int, run: Optional[BaseRun]):
     run = get_run(run_id=run_id, run=run)
     if not run:
         return
 
-    runs_stop(run_id=run_id, run=run, update_status=False)
+    runs_stop(run_id=run_id, run=run, update_status=False, clean=True)
+    runs_artifacts_clean(run)
     run.delete()
 
 
@@ -184,7 +217,7 @@ def runs_set_artifacts(run_id: int, run: Optional[BaseRun], artifacts: List[Dict
 
 
 def runs_stop(
-    run_id: int, run: Optional[BaseRun], update_status=False, message=None
+    run_id: int, run: Optional[BaseRun], update_status=False, message=None, clean=False,
 ) -> bool:
     run = get_run(run_id=run_id, run=run)
     if not run:
@@ -194,9 +227,28 @@ def runs_stop(
     should_stop = (
         LifeCycle.is_k8s_stoppable(run.status) or run.status == V1Statuses.STOPPING
     )
+
+    def _clean():
+        try:
+            manager.clean(
+                run_uuid=run.uuid.hex,
+                run_kind=run.kind,
+                namespace=conf.get(K8S_NAMESPACE),
+                in_cluster=in_cluster,
+            )
+        except (PolyaxonK8SError, ApiException) as e:
+            _logger.warning(
+                "Something went wrong, the run `%s` could not be stopped, error %s",
+                run.uuid,
+                e,
+            )
+            return False
+
     if run.is_managed and should_stop:
         in_cluster = conf.get(K8S_IN_CLUSTER)
         if in_cluster and (run.is_service or run.is_job):
+            if clean:
+                _clean()
             try:
                 stopped = manager.stop(
                     run_uuid=run.uuid.hex,

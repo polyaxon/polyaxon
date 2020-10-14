@@ -13,8 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
-import sys
 import traceback
 
 from concurrent.futures import ThreadPoolExecutor
@@ -45,7 +43,13 @@ class BaseAgent:
         self.client = PolyaxonClient()
         self._graceful_shutdown = False
 
+    def get_info(self) -> polyaxon_sdk.V1Agent:
+        raise NotImplementedError
+
     def get_state(self) -> polyaxon_sdk.V1AgentStateResponse:
+        raise NotImplementedError
+
+    def sync_compatible_updates(self, compatible_updates: Dict):
         raise NotImplementedError
 
     @classmethod
@@ -100,6 +104,8 @@ class BaseAgent:
     def process(self, pool: "ThreadPoolExecutor") -> polyaxon_sdk.V1AgentStateResponse:
         try:
             agent_state = self.get_state()
+            if agent_state.compatible_updates:
+                self.sync_compatible_updates(agent_state.compatible_updates)
 
             if agent_state:
                 logger.info("Starting runs submission process.")
@@ -108,12 +114,22 @@ class BaseAgent:
                 return polyaxon_sdk.V1AgentStateResponse()
 
             state = agent_state.state
+            for run_data in state.schedules or []:
+                pool.submit(self.create_run_and_sync, run_data)
             for run_data in state.queued or []:
-                pool.submit(self.create_run, run_data)
+                pool.submit(self.create_run_and_sync, run_data)
             for run_data in state.stopping or []:
                 pool.submit(self.stop_run, run_data)
             for run_data in state.apply or []:
                 pool.submit(self.apply_run, run_data)
+            for run_data in state.deleting or []:
+                pool.submit(self.delete_run, run_data)
+            for run_data in state.hooks or []:
+                pool.submit(self.make_and_create_run, run_data)
+            for run_data in state.watchdogs or []:
+                pool.submit(self.make_and_create_run, run_data)
+            for run_data in state.tuners or []:
+                pool.submit(self.create_run_and_sync, run_data)
             return agent_state
         except Exception as exc:
             logger.error(exc)
@@ -199,13 +215,43 @@ class BaseAgent:
 
     def clean_run(self, run_uuid: str, run_kind: str):
         try:
+            self.spawner.clean(run_uuid=run_uuid, run_kind=run_kind)
             self.spawner.stop(run_uuid=run_uuid, run_kind=run_kind)
         except ApiException as e:
             if e.status == 404:
-                logger.debug("Run does not exist.")
+                logger.info("Run does not exist.")
         except Exception as e:
-            logger.debug(
+            logger.info(
                 "Run could not be cleaned: {}\n{}".format(
+                    repr(e), traceback.format_exc()
+                )
+            )
+
+    def make_run_resource(
+        self,
+        owner_name: str,
+        project_name: str,
+        run_name: str,
+        run_uuid: str,
+        content: str,
+    ) -> Dict:
+        try:
+            return converter.make_and_convert(
+                owner_name=owner_name,
+                project_name=project_name,
+                run_name=run_name,
+                run_uuid=run_uuid,
+                content=content,
+            )
+        except PolypodException as e:
+            logger.info(
+                "Run could not be cleaned. Agent failed converting run manifest: {}\n{}".format(
+                    repr(e), traceback.format_exc()
+                )
+            )
+        except Exception as e:
+            logger.info(
+                "Agent failed during compilation with unknown exception: {}\n{}".format(
                     repr(e), traceback.format_exc()
                 )
             )
@@ -244,7 +290,46 @@ class BaseAgent:
                 message="Agent failed during compilation with unknown exception.\n",
             )
 
-    def create_run(self, run_data: Tuple[str, str, str, str]):
+    def _submit_run(self, run_data: Tuple[str, str, str, str], sync_api=True):
+        run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])
+        resource = self.prepare_run_resource(
+            owner_name=run_owner,
+            project_name=run_project,
+            run_name=run_data[2],
+            run_uuid=run_uuid,
+            content=run_data[3],
+        )
+
+        try:
+            self.spawner.create(
+                run_uuid=run_uuid, run_kind=run_data[1], resource=resource
+            )
+            if sync_api:
+                self.log_run_scheduled(
+                    run_owner=run_owner, run_project=run_project, run_uuid=run_uuid
+                )
+        except ApiException as e:
+            if e.status == 409:
+                logger.info("Run already running, triggering an apply mechanism.")
+                self.apply_run(run_data=run_data)
+            else:
+                logger.info("Run submission error.")
+                self.log_run_failed(
+                    run_owner=run_owner,
+                    run_project=run_project,
+                    run_uuid=run_uuid,
+                    exc=e,
+                )
+        except Exception as e:
+            if sync_api:
+                self.log_run_failed(
+                    run_owner=run_owner,
+                    run_project=run_project,
+                    run_uuid=run_uuid,
+                    exc=e,
+                )
+
+    def create_run_and_sync(self, run_data: Tuple[str, str, str, str]):
         run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])
         resource = self.prepare_run_resource(
             owner_name=run_owner,
@@ -275,7 +360,33 @@ class BaseAgent:
                 )
         except Exception as e:
             self.log_run_failed(
-                run_owner=run_owner, run_project=run_project, run_uuid=run_uuid, exc=e
+                run_owner=run_owner, run_project=run_project, run_uuid=run_uuid, exc=e,
+            )
+
+    def make_and_create_run(self, run_data: Tuple[str, str, str, str]):
+        run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])
+        resource = self.make_run_resource(
+            owner_name=run_owner,
+            project_name=run_project,
+            run_name=run_data[2],
+            run_uuid=run_uuid,
+            content=run_data[3],
+        )
+
+        try:
+            self.spawner.create(
+                run_uuid=run_uuid, run_kind=run_data[1], resource=resource
+            )
+        except ApiException as e:
+            if e.status == 409:
+                logger.info("Run already running, triggering an apply mechanism.")
+            else:
+                logger.info("Run submission error.")
+        except Exception as e:
+            logger.info(
+                "Run could not be cleaned. Agent failed converting run manifest: {}\n{}".format(
+                    repr(e), traceback.format_exc()
+                )
             )
 
     def apply_run(self, run_data: Tuple[str, str, str, str]):
@@ -319,3 +430,8 @@ class BaseAgent:
                 exc=e,
                 message="Agent failed stopping run.\n",
             )
+
+    def delete_run(self, run_data: Tuple[str, str, str, str]):
+        run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])
+        self.clean_run(run_uuid=run_uuid, run_kind=run_data[1])
+        self.make_and_create_run(run_data)

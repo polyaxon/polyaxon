@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 ## changePassword
 
-> changePassword(body)
+> Object changePassword(body)
 
 Change password
 
@@ -37,7 +37,7 @@ apiInstance.changePassword(body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -51,7 +51,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -114,7 +114,7 @@ Name | Type | Description  | Notes
 
 ## resetPassword
 
-> resetPassword(body)
+> Object resetPassword(body)
 
 Reset password
 
@@ -135,7 +135,7 @@ apiInstance.resetPassword(body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -149,7 +149,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

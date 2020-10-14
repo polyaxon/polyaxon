@@ -29,7 +29,7 @@ import "v1/api/status.proto";
 // Run kind enum
 // Kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob
 // Meta kinds: job, service, dag, matrix, schedule
-// helper kinds: tuner, watchdog, notifier
+// helper kinds: tuner, watchdog, notifier, cleaner
 enum RunKind {
     job = 0;
     service = 1;
@@ -46,6 +46,7 @@ enum RunKind {
     tuner = 12;
     watchdog = 13;
     notifier = 14;
+    cleaner = 15;
 }
 
 message Cloning {

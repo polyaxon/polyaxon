@@ -309,7 +309,8 @@ class RunClient:
         params: Dict = None,
         presets: List[str] = None,
         queue: str = None,
-        nocache: bool = True,
+        nocache: bool = None,
+        cache: bool = None,
     ) -> V1Run:
         """Creates a new run based on a polyaxonfile.
 
@@ -335,10 +336,14 @@ class RunClient:
                 [presets](/docs/core/introduction/concepts/#preset).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
-            nocache: bool, optional, to disable
+            nocache: bool, optional, simple flag to disable
                 [cache check](/docs/automation/helpers/cache/).
                 If passed and the Polyaxonfile has cache section,
                 it will be patched with `disabled: true`.
+            cache: bool, optional, simple flag to enable
+                [cache check](/docs/automation/helpers/cache/).
+                If passed and the Polyaxonfile has cache section,
+                it will be patched with `disabled: false`.
 
         Returns:
             V1Run, run instance from the response.
@@ -349,6 +354,7 @@ class RunClient:
             presets=presets,
             queue=queue,
             nocache=nocache,
+            cache=cache,
             verbose=False,
         )
         return self.create(
@@ -366,7 +372,8 @@ class RunClient:
         params: Dict = None,
         presets: List[str] = None,
         queue: str = None,
-        nocache: bool = True,
+        nocache: bool = None,
+        cache: bool = None,
     ) -> V1Run:
         """Creates a new run from a url containing a Polyaxonfile specification.
 
@@ -391,10 +398,14 @@ class RunClient:
                 [presets](/docs/core/introduction/concepts/#preset).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
-            nocache: bool, optional, to disable
+            nocache: bool, optional, simple flag to disable
                 [cache check](/docs/automation/helpers/cache/).
                 If passed and the Polyaxonfile has cache section,
                 it will be patched with `disabled: true`.
+            cache: bool, optional, simple flag to enable
+                [cache check](/docs/automation/helpers/cache/).
+                If passed and the Polyaxonfile has cache section,
+                it will be patched with `disabled: false`.
 
         Returns:
             V1Run, run instance from the response.
@@ -405,6 +416,7 @@ class RunClient:
             presets=presets,
             queue=queue,
             nocache=nocache,
+            cache=cache,
             verbose=False,
         )
         return self.create(
@@ -422,7 +434,8 @@ class RunClient:
         params: Dict = None,
         presets: str = None,
         queue: str = None,
-        nocache: bool = True,
+        nocache: bool = None,
+        cache: bool = None,
     ) -> V1Run:
         """Creates a new run from the hub based on the component name.
 
@@ -446,10 +459,14 @@ class RunClient:
                 [presets](/docs/core/introduction/concepts/#preset).
             queue: str, optional, the name of the
                 [queue](/docs/core/scheduling-strategies/queue-routing/) to assign the run to.
-            nocache: bool, optional, to disable
+            nocache: bool, optional, simple flag to disable
                 [cache check](/docs/automation/helpers/cache/).
                 If passed and the Polyaxonfile has cache section,
                 it will be patched with `disabled: true`.
+            cache: bool, optional, simple flag to enable
+                [cache check](/docs/automation/helpers/cache/).
+                If passed and the Polyaxonfile has cache section,
+                it will be patched with `disabled: false`.
 
         Returns:
             V1Run, run instance from the response.
@@ -460,6 +477,7 @@ class RunClient:
             presets=presets,
             queue=queue,
             nocache=nocache,
+            cache=cache,
             verbose=False,
         )
         return self.create(

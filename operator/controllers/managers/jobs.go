@@ -26,7 +26,7 @@ import (
 
 const (
 	// DefaultBackoffLimit for Jobs
-	DefaultBackoffLimit = 1
+	DefaultBackoffLimit = 0
 	// DefaultRestartPolicy for Jobs
 	DefaultRestartPolicy = "Never"
 )

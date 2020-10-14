@@ -15,8 +15,8 @@
 # limitations under the License.
 from typing import Dict
 
-from polyaxon.polyaxonfile import CompiledOperationSpecification
-from polyaxon.polypod.compiler import converter
+from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpecification
+from polyaxon.polypod.compiler import converter, make
 from polyaxon.polypod.compiler.config import PolypodConfig
 from polyaxon.polypod.compiler.converters import PLATFORM_CONVERTERS
 
@@ -50,4 +50,21 @@ def convert(
         default_sa=polypod_config.default_sa,
         converters=PLATFORM_CONVERTERS,
         default_auth=default_auth,
+    )
+
+
+def make_and_convert(
+    owner_name: str, project_name: str, run_uuid: str, run_name: str, content: str,
+):
+    operation = OperationSpecification.read(content)
+    compiled_operation = OperationSpecification.compile_operation(operation)
+    return make(
+        owner_name=owner_name,
+        project_name=project_name,
+        project_uuid=project_name,
+        run_uuid=run_uuid,
+        run_name=run_name,
+        run_path=run_uuid,
+        compiled_operation=compiled_operation,
+        params=None,
     )

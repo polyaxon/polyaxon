@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 ## deleteConnection
 
-> deleteConnection(owner, uuid)
+> Object deleteConnection(owner, uuid)
 
 Delete connection
 
@@ -91,7 +91,7 @@ apiInstance.deleteConnection(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

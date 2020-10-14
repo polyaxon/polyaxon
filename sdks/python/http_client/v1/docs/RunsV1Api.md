@@ -56,7 +56,7 @@ Method | HTTP request | Description
 
 
 # **archive_run**
-> archive_run(owner, project, uuid)
+> object archive_run(owner, project, uuid)
 
 Archive run
 
@@ -100,7 +100,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Archive run
-        api_instance.archive_run(owner, project, uuid)
+        api_response = api_instance.archive_run(owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->archive_run: %s\n" % e)
 ```
@@ -115,7 +116,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -138,7 +139,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **bookmark_run**
-> bookmark_run(owner, project, uuid)
+> object bookmark_run(owner, project, uuid)
 
 Bookmark run
 
@@ -182,7 +183,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Bookmark run
-        api_instance.bookmark_run(owner, project, uuid)
+        api_response = api_instance.bookmark_run(owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->bookmark_run: %s\n" % e)
 ```
@@ -197,7 +199,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -220,7 +222,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **bookmark_runs**
-> bookmark_runs(owner, project, body)
+> object bookmark_runs(owner, project, body)
 
 Bookmark runs
 
@@ -264,7 +266,8 @@ body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
     try:
         # Bookmark runs
-        api_instance.bookmark_runs(owner, project, body)
+        api_response = api_instance.bookmark_runs(owner, project, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->bookmark_runs: %s\n" % e)
 ```
@@ -279,7 +282,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -302,7 +305,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **collect_run_logs**
-> collect_run_logs(namespace, owner, project, uuid)
+> object collect_run_logs(namespace, owner, project, uuid)
 
 Collect run logs
 
@@ -347,7 +350,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Collect run logs
-        api_instance.collect_run_logs(namespace, owner, project, uuid)
+        api_response = api_instance.collect_run_logs(namespace, owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->collect_run_logs: %s\n" % e)
 ```
@@ -363,7 +367,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -554,7 +558,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_run_artifacts_lineage**
-> create_run_artifacts_lineage(owner, project, uuid, body)
+> object create_run_artifacts_lineage(owner, project, uuid, body)
 
 Create bulk run artifacts lineage
 
@@ -599,7 +603,8 @@ body = polyaxon_sdk.V1RunArtifacts() # V1RunArtifacts | Run Artifacts
 
     try:
         # Create bulk run artifacts lineage
-        api_instance.create_run_artifacts_lineage(owner, project, uuid, body)
+        api_response = api_instance.create_run_artifacts_lineage(owner, project, uuid, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->create_run_artifacts_lineage: %s\n" % e)
 ```
@@ -615,7 +620,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -723,7 +728,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_run**
-> delete_run(owner, project, uuid)
+> object delete_run(owner, project, uuid)
 
 Delete run
 
@@ -767,7 +772,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete run
-        api_instance.delete_run(owner, project, uuid)
+        api_response = api_instance.delete_run(owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->delete_run: %s\n" % e)
 ```
@@ -782,7 +788,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -805,7 +811,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_run_artifact**
-> delete_run_artifact(namespace, owner, project, uuid, path=path)
+> object delete_run_artifact(namespace, owner, project, uuid, path=path)
 
 Delete run artifact
 
@@ -851,7 +857,8 @@ path = 'path_example' # str | Path query param. (optional)
 
     try:
         # Delete run artifact
-        api_instance.delete_run_artifact(namespace, owner, project, uuid, path=path)
+        api_response = api_instance.delete_run_artifact(namespace, owner, project, uuid, path=path)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->delete_run_artifact: %s\n" % e)
 ```
@@ -868,7 +875,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -891,7 +898,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_run_artifact_lineage**
-> delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
+> object delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
 
 Delete run artifact lineage
 
@@ -937,7 +944,8 @@ namespace = 'namespace_example' # str | namespace. (optional)
 
     try:
         # Delete run artifact lineage
-        api_instance.delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
+        api_response = api_instance.delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->delete_run_artifact_lineage: %s\n" % e)
 ```
@@ -954,7 +962,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -977,7 +985,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_run_artifacts**
-> delete_run_artifacts(namespace, owner, project, uuid, path=path)
+> object delete_run_artifacts(namespace, owner, project, uuid, path=path)
 
 Delete run artifacts
 
@@ -1023,7 +1031,8 @@ path = 'path_example' # str | Path query param. (optional)
 
     try:
         # Delete run artifacts
-        api_instance.delete_run_artifacts(namespace, owner, project, uuid, path=path)
+        api_response = api_instance.delete_run_artifacts(namespace, owner, project, uuid, path=path)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->delete_run_artifacts: %s\n" % e)
 ```
@@ -1040,7 +1049,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -1063,7 +1072,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_runs**
-> delete_runs(owner, project, body)
+> object delete_runs(owner, project, body)
 
 Delete runs
 
@@ -1107,7 +1116,8 @@ body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
     try:
         # Delete runs
-        api_instance.delete_runs(owner, project, body)
+        api_response = api_instance.delete_runs(owner, project, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->delete_runs: %s\n" % e)
 ```
@@ -1122,7 +1132,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2551,7 +2561,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **invalidate_run**
-> invalidate_run(owner, project, uuid)
+> object invalidate_run(owner, project, uuid)
 
 Invalidate run
 
@@ -2595,7 +2605,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Invalidate run
-        api_instance.invalidate_run(owner, project, uuid)
+        api_response = api_instance.invalidate_run(owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->invalidate_run: %s\n" % e)
 ```
@@ -2610,7 +2621,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2633,7 +2644,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **invalidate_runs**
-> invalidate_runs(owner, project, body)
+> object invalidate_runs(owner, project, body)
 
 Invalidate runs
 
@@ -2677,7 +2688,8 @@ body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
     try:
         # Invalidate runs
-        api_instance.invalidate_runs(owner, project, body)
+        api_response = api_instance.invalidate_runs(owner, project, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->invalidate_runs: %s\n" % e)
 ```
@@ -2692,7 +2704,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -2978,7 +2990,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **notify_run_status**
-> notify_run_status(namespace, owner, project, uuid, body)
+> object notify_run_status(namespace, owner, project, uuid, body)
 
 Notify run status
 
@@ -3024,7 +3036,8 @@ body = polyaxon_sdk.V1EntityNotificationBody() # V1EntityNotificationBody |
 
     try:
         # Notify run status
-        api_instance.notify_run_status(namespace, owner, project, uuid, body)
+        api_response = api_instance.notify_run_status(namespace, owner, project, uuid, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->notify_run_status: %s\n" % e)
 ```
@@ -3041,7 +3054,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -3234,7 +3247,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **restore_run**
-> restore_run(owner, project, uuid)
+> object restore_run(owner, project, uuid)
 
 Restore run
 
@@ -3278,7 +3291,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Restore run
-        api_instance.restore_run(owner, project, uuid)
+        api_response = api_instance.restore_run(owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->restore_run: %s\n" % e)
 ```
@@ -3293,7 +3307,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -3401,7 +3415,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **start_run_tensorboard**
-> start_run_tensorboard(owner, project, uuid, body)
+> object start_run_tensorboard(owner, project, uuid, body)
 
 Start run tensorboard
 
@@ -3446,7 +3460,8 @@ body = polyaxon_sdk.V1ProjectEntityResourceRequest() # V1ProjectEntityResourceRe
 
     try:
         # Start run tensorboard
-        api_instance.start_run_tensorboard(owner, project, uuid, body)
+        api_response = api_instance.start_run_tensorboard(owner, project, uuid, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->start_run_tensorboard: %s\n" % e)
 ```
@@ -3462,7 +3477,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -3485,7 +3500,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_run**
-> stop_run(owner, project, uuid)
+> object stop_run(owner, project, uuid)
 
 Stop run
 
@@ -3529,7 +3544,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Stop run
-        api_instance.stop_run(owner, project, uuid)
+        api_response = api_instance.stop_run(owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->stop_run: %s\n" % e)
 ```
@@ -3544,7 +3560,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -3567,7 +3583,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_run_tensorboard**
-> stop_run_tensorboard(owner, project, uuid)
+> object stop_run_tensorboard(owner, project, uuid)
 
 Stop run tensorboard
 
@@ -3611,7 +3627,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Stop run tensorboard
-        api_instance.stop_run_tensorboard(owner, project, uuid)
+        api_response = api_instance.stop_run_tensorboard(owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->stop_run_tensorboard: %s\n" % e)
 ```
@@ -3626,7 +3643,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -3649,7 +3666,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_runs**
-> stop_runs(owner, project, body)
+> object stop_runs(owner, project, body)
 
 Stop runs
 
@@ -3693,7 +3710,8 @@ body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
     try:
         # Stop runs
-        api_instance.stop_runs(owner, project, body)
+        api_response = api_instance.stop_runs(owner, project, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->stop_runs: %s\n" % e)
 ```
@@ -3708,7 +3726,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -3731,7 +3749,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **tag_runs**
-> tag_runs(owner, project, body)
+> object tag_runs(owner, project, body)
 
 Tag runs
 
@@ -3775,7 +3793,8 @@ body = polyaxon_sdk.V1EntitiesTags() # V1EntitiesTags | Data
 
     try:
         # Tag runs
-        api_instance.tag_runs(owner, project, body)
+        api_response = api_instance.tag_runs(owner, project, body)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->tag_runs: %s\n" % e)
 ```
@@ -3790,7 +3809,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -3813,7 +3832,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **unbookmark_run**
-> unbookmark_run(owner, project, uuid)
+> object unbookmark_run(owner, project, uuid)
 
 Unbookmark run
 
@@ -3857,7 +3876,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Unbookmark run
-        api_instance.unbookmark_run(owner, project, uuid)
+        api_response = api_instance.unbookmark_run(owner, project, uuid)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling RunsV1Api->unbookmark_run: %s\n" % e)
 ```
@@ -3872,7 +3892,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 

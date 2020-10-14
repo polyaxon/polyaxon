@@ -37,16 +37,18 @@ class LiveStateModel(models.Model):
     class Meta:
         abstract = True
 
-    def delete_in_progress(self) -> bool:
+    def delete_in_progress(self, update_name=False, commit=True) -> bool:
         if self.live_state == live_state.STATE_DELETION_PROGRESSING:
             return False
 
-        self.name = "_{}_d_{}".format(self.name, random.randint(-90, 100))
+        if update_name:
+            self.name = "del_{}_{}".format(self.name, random.randint(-90, 100))
         self.live_state = live_state.STATE_DELETION_PROGRESSING
-        self.save(update_fields=["name", "live_state"])
+        if commit:
+            self.save(update_fields=["name", "live_state"])
         return True
 
-    def archive(self) -> bool:
+    def archive(self, commit=True) -> bool:
         if (
             self.live_state == live_state.STATE_ARCHIVED
             or self.live_state == live_state.STATE_DELETION_PROGRESSING
@@ -54,7 +56,8 @@ class LiveStateModel(models.Model):
             return False
 
         self.live_state = live_state.STATE_ARCHIVED
-        self.save(update_fields=["live_state"])
+        if commit:
+            self.save(update_fields=["live_state"])
         return True
 
     def restore(self) -> bool:

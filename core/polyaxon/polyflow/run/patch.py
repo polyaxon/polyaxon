@@ -19,6 +19,7 @@ from typing import Dict
 
 from marshmallow import ValidationError
 
+from polyaxon.polyflow.run.cleaner import V1Cleaner
 from polyaxon.polyflow.run.dag import V1Dag
 from polyaxon.polyflow.run.dask import V1Dask
 from polyaxon.polyflow.run.job import V1Job
@@ -32,6 +33,7 @@ from polyaxon.polyflow.run.service import V1Service
 from polyaxon.polyflow.run.spark.replica import V1SparkReplica
 from polyaxon.polyflow.run.spark.spark import V1Spark
 from polyaxon.polyflow.run.tuner import V1Tuner
+from polyaxon.polyflow.run.watchdog import V1WatchDog
 
 
 def validate_run_patch(run_patch: Dict, kind: V1RunKind.allowable_values):
@@ -67,6 +69,10 @@ def validate_run_patch(run_patch: Dict, kind: V1RunKind.allowable_values):
         patch = V1Notifier.from_dict(run_patch)
     elif kind == V1RunKind.TUNER:
         patch = V1Tuner.from_dict(run_patch)
+    elif kind == V1RunKind.CLEANER:
+        patch = V1Cleaner.from_dict(run_patch)
+    elif kind == V1RunKind.WATCHDOG:
+        patch = V1WatchDog.from_dict(run_patch)
     else:
         raise ValidationError("runPatch cannot be validate without a supported kind.")
 

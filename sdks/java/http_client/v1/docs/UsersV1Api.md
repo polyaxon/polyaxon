@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteToken"></a>
 # **deleteToken**
-> deleteToken(uuid)
+> Object deleteToken(uuid)
 
 Delete token
 
@@ -117,7 +117,8 @@ public class Example {
     UsersV1Api apiInstance = new UsersV1Api(defaultClient);
     String uuid = "uuid_example"; // String | UUid of the namespace
     try {
-      apiInstance.deleteToken(uuid);
+      Object result = apiInstance.deleteToken(uuid);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling UsersV1Api#deleteToken");
       System.err.println("Status code: " + e.getCode());
@@ -137,7 +138,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

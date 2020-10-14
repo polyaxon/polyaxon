@@ -43,6 +43,24 @@ class NotifierMixin(BaseMixin):
     MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
+class WatchDogMixin(BaseMixin):
+    K8S_LABELS_NAME = V1RunKind.WATCHDOG
+    K8S_LABELS_COMPONENT = "polyaxon-watchdogs"
+    MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
+
+
+class CleanerMixin(BaseMixin):
+    K8S_LABELS_NAME = V1RunKind.CLEANER
+    K8S_LABELS_COMPONENT = "polyaxon-cleaners"
+    MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
+
+
+class TunerMixin(BaseMixin):
+    K8S_LABELS_NAME = V1RunKind.TUNER
+    K8S_LABELS_COMPONENT = "polyaxon-tuners"
+    MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
+
+
 class ServiceMixin(BaseMixin):
     K8S_LABELS_NAME = V1RunKind.SERVICE
     K8S_LABELS_COMPONENT = "polyaxon-services"

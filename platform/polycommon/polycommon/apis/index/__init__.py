@@ -44,11 +44,14 @@ handler500 = _handler500
 
 def get_ui_urlpatterns(ui_urlpatterns):
     ui_patterns = [
-        re_path(pattern, ensure_csrf_cookie(IndexView.as_view()), name="index",)
+        re_path(pattern, ensure_csrf_cookie(IndexView.as_view()), name="index")
         for pattern in ui_urlpatterns
     ]
     return [
-        re_path(r"^$", ensure_csrf_cookie(IndexView.as_view()), name="index",),
+        re_path(r"^$", ensure_csrf_cookie(IndexView.as_view()), name="index"),
+        re_path(
+            r"^{}$".format(UI_V1), ensure_csrf_cookie(IndexView.as_view()), name="ui"
+        ),
         re_path(
             r"^{}/".format(UI_V1), include((ui_patterns, "ui_v1"), namespace="ui_v1")
         ),

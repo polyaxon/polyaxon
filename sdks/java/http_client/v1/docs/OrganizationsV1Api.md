@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**getOrganizationInvitation**](OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 [**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
 [**getOrganizationSettings**](OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
+[**listOrganizationMemberNames**](OrganizationsV1Api.md#listOrganizationMemberNames) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 [**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
 [**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations
@@ -176,7 +177,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteOrganization"></a>
 # **deleteOrganization**
-> deleteOrganization(owner, usage)
+> Object deleteOrganization(owner, usage)
 
 Delete organization
 
@@ -205,7 +206,8 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String usage = "usage_example"; // String | Owner usage query param.
     try {
-      apiInstance.deleteOrganization(owner, usage);
+      Object result = apiInstance.deleteOrganization(owner, usage);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganization");
       System.err.println("Status code: " + e.getCode());
@@ -226,7 +228,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -248,7 +250,7 @@ null (empty response body)
 
 <a name="deleteOrganizationInvitation"></a>
 # **deleteOrganizationInvitation**
-> deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email)
+> Object deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email)
 
 Delete organization invitation details
 
@@ -282,7 +284,8 @@ public class Example {
     OffsetDateTime memberUpdatedAt = new OffsetDateTime(); // OffsetDateTime | Optional last time the entity was updated.
     String email = "email_example"; // String | Optional email.
     try {
-      apiInstance.deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email);
+      Object result = apiInstance.deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganizationInvitation");
       System.err.println("Status code: " + e.getCode());
@@ -308,7 +311,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -330,7 +333,7 @@ null (empty response body)
 
 <a name="deleteOrganizationMember"></a>
 # **deleteOrganizationMember**
-> deleteOrganizationMember(owner, user)
+> Object deleteOrganizationMember(owner, user)
 
 Delete organization member details
 
@@ -359,7 +362,8 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String user = "user_example"; // String | Memeber under namesapce
     try {
-      apiInstance.deleteOrganizationMember(owner, user);
+      Object result = apiInstance.deleteOrganizationMember(owner, user);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganizationMember");
       System.err.println("Status code: " + e.getCode());
@@ -380,7 +384,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -699,6 +703,85 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Organization**](V1Organization.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response |  -  |
+
+<a name="listOrganizationMemberNames"></a>
+# **listOrganizationMemberNames**
+> V1ListOrganizationMembersResponse listOrganizationMemberNames(owner, offset, limit, sort, query)
+
+Get organization member names
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.OrganizationsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    OrganizationsV1Api apiInstance = new OrganizationsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search search.
+    try {
+      V1ListOrganizationMembersResponse result = apiInstance.listOrganizationMemberNames(owner, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling OrganizationsV1Api#listOrganizationMemberNames");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
+
+### Return type
+
+[**V1ListOrganizationMembersResponse**](V1ListOrganizationMembersResponse.md)
 
 ### Authorization
 

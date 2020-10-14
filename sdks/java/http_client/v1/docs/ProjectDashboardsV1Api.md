@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteProjectDashboard"></a>
 # **deleteProjectDashboard**
-> deleteProjectDashboard(owner, project, uuid)
+> Object deleteProjectDashboard(owner, project, uuid)
 
 Delete project dashboard
 
@@ -122,7 +122,8 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      apiInstance.deleteProjectDashboard(owner, project, uuid);
+      Object result = apiInstance.deleteProjectDashboard(owner, project, uuid);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#deleteProjectDashboard");
       System.err.println("Status code: " + e.getCode());
@@ -144,7 +145,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -480,7 +481,7 @@ Name | Type | Description  | Notes
 
 <a name="promoteProjectDashboard"></a>
 # **promoteProjectDashboard**
-> promoteProjectDashboard(owner, project, uuid)
+> Object promoteProjectDashboard(owner, project, uuid)
 
 Promote project dashboard
 
@@ -510,7 +511,8 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      apiInstance.promoteProjectDashboard(owner, project, uuid);
+      Object result = apiInstance.promoteProjectDashboard(owner, project, uuid);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#promoteProjectDashboard");
       System.err.println("Status code: " + e.getCode());
@@ -532,7 +534,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

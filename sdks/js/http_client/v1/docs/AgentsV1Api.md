@@ -129,7 +129,7 @@ Name | Type | Description  | Notes
 
 ## deleteAgent
 
-> deleteAgent(owner, uuid)
+> Object deleteAgent(owner, uuid)
 
 Delete agent
 
@@ -151,7 +151,7 @@ apiInstance.deleteAgent(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -612,7 +612,7 @@ Name | Type | Description  | Notes
 
 ## syncAgent
 
-> syncAgent(owner, agent_uuid, body)
+> Object syncAgent(owner, agent_uuid, body)
 
 Sync agent
 
@@ -635,7 +635,7 @@ apiInstance.syncAgent(owner, agent_uuid, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -651,7 +651,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

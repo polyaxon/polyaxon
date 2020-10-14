@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.1.9";
+        version: "1.2.0-rc3";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -1402,6 +1402,13 @@ service OrganizationsV1 {
   rpc ListOrganizationMembers(OwnerResourceListRequest) returns (ListOrganizationMembersResponse) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/members"
+    };
+  }
+
+  // Get organization member names
+  rpc ListOrganizationMemberNames(OwnerResourceListRequest) returns (ListOrganizationMembersResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/orgs/{owner}/members/names"
     };
   }
 

@@ -30,6 +30,7 @@ class TestOptions(TestCase):
         assert core.UiAdminEnabled.is_global() is True
         assert core.UiAdminEnabled.is_optional is True
         assert core.UiAdminEnabled.get_key_subject() == "UI_ADMIN_ENABLED"
+        assert core.UiAssetsVersion.get_key_subject() == "UI_ASSETS_VERSION"
         assert core.UiAdminEnabled.get_namespace() is None
 
     def test_options_scheduler(self):

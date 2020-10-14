@@ -33,4 +33,6 @@
 
 * `notifier` (value: `"notifier"`)
 
+* `cleaner` (value: `"cleaner"`)
+
 

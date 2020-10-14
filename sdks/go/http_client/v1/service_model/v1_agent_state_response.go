@@ -30,6 +30,9 @@ import (
 // swagger:model v1AgentStateResponse
 type V1AgentStateResponse struct {
 
+	// compatible updates
+	CompatibleUpdates interface{} `json:"compatible_updates,omitempty"`
+
 	// state
 	State *AgentStateResponseAgentState `json:"state,omitempty"`
 

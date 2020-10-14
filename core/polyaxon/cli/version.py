@@ -19,11 +19,12 @@ import sys
 import click
 
 from polyaxon import pkg
-from polyaxon.cli.session import clean_version_for_check, set_versions_config
+from polyaxon.cli.session import set_versions_config
 from polyaxon.deploy.operators.pip import PipOperator
 from polyaxon.logger import logger
 from polyaxon.utils import indentation
 from polyaxon.utils.formatting import Printer, dict_tabulate
+from polyaxon.utils.versions import clean_version_for_check
 
 PROJECT_CLI_NAME = "polyaxon-cli"
 
@@ -49,8 +50,6 @@ def get_current_version():
 def check_cli_version(config):
     """Check if the current cli version satisfies the server requirements"""
     from distutils.version import LooseVersion  # pylint:disable=import-error
-
-    click.echo("Checking CLI compatibility version.")
 
     min_version = clean_version_for_check(config.min_version)
     latest_version = clean_version_for_check(config.latest_version)

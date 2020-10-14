@@ -83,13 +83,23 @@ func NewResetPasswordOK() *ResetPasswordOK {
 A successful response.
 */
 type ResetPasswordOK struct {
+	Payload interface{}
 }
 
 func (o *ResetPasswordOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/auth/reset-password][%d] resetPasswordOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/auth/reset-password][%d] resetPasswordOK  %+v", 200, o.Payload)
+}
+
+func (o *ResetPasswordOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *ResetPasswordOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

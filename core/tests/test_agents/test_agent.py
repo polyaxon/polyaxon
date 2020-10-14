@@ -38,12 +38,16 @@ class TestAgents(BaseTestCase):
     @patch("polyaxon_sdk.AgentsV1Api.sync_agent")
     @patch("polyaxon_sdk.AgentsV1Api.create_agent_status")
     @patch("polyaxon_sdk.AgentsV1Api.get_agent_state")
-    def test_init_agent(self, get_agent_state, create_agent_status, sync_agent):
+    @patch("polyaxon_sdk.AgentsV1Api.get_agent")
+    @patch("polyaxon.agents.base.Spawner")
+    def test_init_agent(self, _, get_agent, get_agent_state, create_agent_status, sync_agent):
         get_agent_state.return_value = MagicMock(status=None)
         agent = Agent(owner="foo", agent_uuid="uuid")
         assert agent.sleep_interval is None
-        assert isinstance(agent.spawner, Spawner)
+        assert agent.spawner is not None
         assert isinstance(agent.client, PolyaxonClient)
-        assert get_agent_state.call_count == 1
+        assert get_agent.call_count == 1
+        assert get_agent_state.call_count == 0
         assert create_agent_status.call_count == 1
         assert sync_agent.call_count == 1
+        assert agent.spawner.k8s_manager.get_version.call_count == 1

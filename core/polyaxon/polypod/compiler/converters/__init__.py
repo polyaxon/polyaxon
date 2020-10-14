@@ -29,7 +29,11 @@ from polyaxon.polypod.compiler.converters.kubeflow.pytroch_job import (
     PlatformPytorchJobConverter,
 )
 from polyaxon.polypod.compiler.converters.kubeflow.tf_job import PlatformTfJobConverter
-from polyaxon.polypod.compiler.converters.notifier import NotifierConverter
+from polyaxon.polypod.compiler.converters.helpers import (
+    NotifierConverter,
+    CleanerConverter,
+    WatchDogConverter,
+)
 from polyaxon.polypod.compiler.converters.service import (
     PlatformServiceConverter,
     ServiceConverter,
@@ -37,6 +41,8 @@ from polyaxon.polypod.compiler.converters.service import (
 
 CORE_CONVERTERS = {
     V1RunKind.NOTIFIER: NotifierConverter,
+    V1RunKind.CLEANER: CleanerConverter,
+    V1RunKind.WATCHDOG: WatchDogConverter,
     V1RunKind.JOB: JobConverter,
     V1RunKind.SERVICE: ServiceConverter,
     V1RunKind.MPIJOB: MPIJobConverter,

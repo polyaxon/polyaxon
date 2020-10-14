@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**getOrganizationInvitation**](OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 [**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
 [**getOrganizationSettings**](OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
+[**listOrganizationMemberNames**](OrganizationsV1Api.md#listOrganizationMemberNames) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 [**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
 [**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations
@@ -136,7 +137,7 @@ Name | Type | Description  | Notes
 
 ## deleteOrganization
 
-> deleteOrganization(owner, opts)
+> Object deleteOrganization(owner, opts)
 
 Delete organization
 
@@ -160,7 +161,7 @@ apiInstance.deleteOrganization(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -175,7 +176,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -189,7 +190,7 @@ null (empty response body)
 
 ## deleteOrganizationInvitation
 
-> deleteOrganizationInvitation(owner, opts)
+> Object deleteOrganizationInvitation(owner, opts)
 
 Delete organization invitation details
 
@@ -218,7 +219,7 @@ apiInstance.deleteOrganizationInvitation(owner, opts, (error, data, response) =>
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -238,7 +239,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -252,7 +253,7 @@ null (empty response body)
 
 ## deleteOrganizationMember
 
-> deleteOrganizationMember(owner, user)
+> Object deleteOrganizationMember(owner, user)
 
 Delete organization member details
 
@@ -274,7 +275,7 @@ apiInstance.deleteOrganizationMember(owner, user, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -289,7 +290,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -526,6 +527,65 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Organization**](V1Organization.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## listOrganizationMemberNames
+
+> V1ListOrganizationMembersResponse listOrganizationMemberNames(owner, opts)
+
+Get organization member names
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let opts = {
+  'offset': 56, // Number | Pagination offset.
+  'limit': 56, // Number | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
+apiInstance.listOrganizationMemberNames(owner, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **offset** | **Number**| Pagination offset. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
+
+### Return type
+
+[**V1ListOrganizationMembersResponse**](V1ListOrganizationMembersResponse.md)
 
 ### Authorization
 

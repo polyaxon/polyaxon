@@ -100,9 +100,9 @@ def artifact_path(
     return V1EventArtifact(kind=kind, path=asset_rel_path or asset_path)
 
 
-def image_path(from_path: str, asset_path: str) -> V1EventImage:
+def image_path(from_path: str, asset_path: str, asset_rel_path: str = None) -> V1EventImage:
     copy_file_path(from_path, asset_path)
-    return V1EventImage(path=asset_path)
+    return V1EventImage(path=asset_rel_path or asset_path)
 
 
 def video_path(

@@ -382,6 +382,7 @@ class Migration(migrations.Migration):
                             ("pytorchjob", "pytorchjob"),
                             ("scheduler", "scheduler"),
                             ("tuner", "tuner"),
+                            ("cleaner", "cleaner"),
                             ("watchdog", "watchdog"),
                             ("notifier", "notifier"),
                         ],

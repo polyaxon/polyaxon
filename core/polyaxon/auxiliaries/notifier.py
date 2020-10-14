@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from polyaxon import pkg
 from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.containers.pull_policy import PullPolicy
 from polyaxon.k8s import k8s_schemas
@@ -23,7 +23,7 @@ from polyaxon.k8s.k8s_schemas import V1Container
 def get_default_notification_container():
     return V1Container(
         name=MAIN_JOB_CONTAINER,
-        image="polyaxon/polyaxon-events-handlers:{}".format("dev"),
+        image="polyaxon/polyaxon-events-handlers:{}".format(pkg.VERSION),
         image_pull_policy=PullPolicy.ALWAYS.value,
         command=["polyaxon", "notify"],
         args=[

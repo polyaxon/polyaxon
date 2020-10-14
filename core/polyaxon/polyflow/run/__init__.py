@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from polyaxon.polyflow.run.cleaner import CleanerSchema, V1Cleaner
 from polyaxon.polyflow.run.dag import DagSchema, V1Dag
 from polyaxon.polyflow.run.dask import DaskSchema, V1Dask
 from polyaxon.polyflow.run.flink import FlinkSchema, V1Flink
@@ -36,6 +36,7 @@ from polyaxon.polyflow.run.spark.spark import (
     V1SparkDeploy,
     V1SparkType,
 )
+from polyaxon.polyflow.run.watchdog import V1WatchDog, WatchDogSchema
 from polyaxon.schemas.base import BaseOneOfSchema
 
 
@@ -54,7 +55,9 @@ class RunSchema(BaseOneOfSchema):
         V1RunKind.DASK: DaskSchema,
         V1RunKind.RAY: RaySchema,
         V1RunKind.NOTIFIER: NotifierSchema,
+        V1RunKind.CLEANER: CleanerSchema,
         V1RunKind.TUNER: TunerSchema,
+        V1RunKind.WATCHDOG: WatchDogSchema,
     }
 
 
@@ -103,8 +106,16 @@ class RunMixin:
         return self.get_run_kind() == V1RunKind.NOTIFIER
 
     @property
+    def is_cleaner(self):
+        return self.get_run_kind() == V1RunKind.CLEANER
+
+    @property
     def is_tuner(self):
         return self.get_run_kind() == V1RunKind.TUNER
+
+    @property
+    def is_watchdog(self):
+        return self.get_run_kind() == V1RunKind.WATCHDOG
 
     @property
     def is_distributed_run(self):

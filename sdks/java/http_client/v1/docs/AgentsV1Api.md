@@ -171,7 +171,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteAgent"></a>
 # **deleteAgent**
-> deleteAgent(owner, uuid)
+> Object deleteAgent(owner, uuid)
 
 Delete agent
 
@@ -200,7 +200,8 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      apiInstance.deleteAgent(owner, uuid);
+      Object result = apiInstance.deleteAgent(owner, uuid);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AgentsV1Api#deleteAgent");
       System.err.println("Status code: " + e.getCode());
@@ -221,7 +222,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -845,7 +846,7 @@ Name | Type | Description  | Notes
 
 <a name="syncAgent"></a>
 # **syncAgent**
-> syncAgent(owner, agentUuid, body)
+> Object syncAgent(owner, agentUuid, body)
 
 Sync agent
 
@@ -875,7 +876,8 @@ public class Example {
     String agentUuid = "agentUuid_example"; // String | UUID
     V1Agent body = new V1Agent(); // V1Agent | Agent body
     try {
-      apiInstance.syncAgent(owner, agentUuid, body);
+      Object result = apiInstance.syncAgent(owner, agentUuid, body);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AgentsV1Api#syncAgent");
       System.err.println("Status code: " + e.getCode());
@@ -897,7 +899,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

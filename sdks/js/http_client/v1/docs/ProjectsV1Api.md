@@ -33,7 +33,7 @@ Method | HTTP request | Description
 
 ## archiveProject
 
-> archiveProject(owner, project)
+> Object archiveProject(owner, project)
 
 Archive project
 
@@ -55,7 +55,7 @@ apiInstance.archiveProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -84,7 +84,7 @@ null (empty response body)
 
 ## bookmarkProject
 
-> bookmarkProject(owner, project)
+> Object bookmarkProject(owner, project)
 
 Bookmark project
 
@@ -106,7 +106,7 @@ apiInstance.bookmarkProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -121,7 +121,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -186,7 +186,7 @@ Name | Type | Description  | Notes
 
 ## deleteProject
 
-> deleteProject(owner, project)
+> Object deleteProject(owner, project)
 
 Delete project
 
@@ -208,7 +208,7 @@ apiInstance.deleteProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -237,7 +237,7 @@ null (empty response body)
 
 ## disableProjectCI
 
-> disableProjectCI(owner, project)
+> Object disableProjectCI(owner, project)
 
 Disbale project CI
 
@@ -259,7 +259,7 @@ apiInstance.disableProjectCI(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -274,7 +274,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -288,7 +288,7 @@ null (empty response body)
 
 ## enableProjectCI
 
-> enableProjectCI(owner, project)
+> Object enableProjectCI(owner, project)
 
 Enable project CI
 
@@ -310,7 +310,7 @@ apiInstance.enableProjectCI(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -887,7 +887,7 @@ Name | Type | Description  | Notes
 
 ## restoreProject
 
-> restoreProject(owner, project)
+> Object restoreProject(owner, project)
 
 Restore project
 
@@ -909,7 +909,7 @@ apiInstance.restoreProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -924,7 +924,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -938,7 +938,7 @@ null (empty response body)
 
 ## unbookmarkProject
 
-> unbookmarkProject(owner, project)
+> Object unbookmarkProject(owner, project)
 
 Unbookmark project
 
@@ -960,7 +960,7 @@ apiInstance.unbookmarkProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -975,7 +975,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

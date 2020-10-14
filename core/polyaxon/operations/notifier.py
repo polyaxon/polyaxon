@@ -47,7 +47,7 @@ def get_notifier_operation(
         },
         termination=V1Termination(max_retries=3),
         component=V1Component(
-            name="slack-notification",
+            name="notifier",
             plugins=V1Plugins(
                 auth=False,
                 collect_logs=False,

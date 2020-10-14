@@ -83,13 +83,23 @@ func NewDeleteAgentOK() *DeleteAgentOK {
 A successful response.
 */
 type DeleteAgentOK struct {
+	Payload interface{}
 }
 
 func (o *DeleteAgentOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentOK  %+v", 200, o.Payload)
+}
+
+func (o *DeleteAgentOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *DeleteAgentOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

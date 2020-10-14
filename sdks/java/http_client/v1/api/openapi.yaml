@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.1.9
+  version: 1.2.0-rc3
 servers:
 - url: /
 security:
@@ -157,7 +157,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -200,7 +203,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -783,7 +789,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -1299,7 +1308,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -1691,7 +1703,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -1969,7 +1984,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -2533,7 +2551,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -2937,7 +2958,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -3341,7 +3365,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -3465,7 +3492,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -3812,6 +3842,73 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
+  /api/v1/orgs/{owner}/members/names:
+    get:
+      operationId: ListOrganizationMemberNames
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListOrganizationMembersResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response
+      summary: Get organization member names
+      tags:
+      - OrganizationsV1
+      x-accepts: application/json
   /api/v1/orgs/{owner}/members/{member.user}:
     patch:
       operationId: PatchOrganizationMember
@@ -3959,7 +4056,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -4363,7 +4463,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -4821,7 +4924,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -5359,7 +5465,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -5962,7 +6071,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -6329,7 +6441,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -6769,7 +6884,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -7366,7 +7484,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -7464,7 +7585,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -7512,7 +7636,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -7560,7 +7687,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -7607,7 +7737,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -7997,7 +8130,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8107,7 +8243,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8155,7 +8294,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8415,7 +8557,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8472,7 +8617,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8529,7 +8677,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8586,7 +8737,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8643,7 +8797,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8830,7 +8987,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -8940,7 +9100,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9079,7 +9242,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9225,7 +9391,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9346,7 +9515,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9457,7 +9629,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9568,7 +9743,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9800,7 +9978,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9860,7 +10041,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9916,7 +10100,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -9970,7 +10157,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -10360,7 +10550,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -10470,7 +10663,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -10856,7 +11052,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -10953,7 +11152,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -11128,7 +11330,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -11264,7 +11469,10 @@ paths:
           type: string
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -11654,7 +11862,10 @@ paths:
         required: true
       responses:
         "200":
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
           description: A successful response.
         "204":
           content:
@@ -12048,12 +12259,13 @@ components:
   schemas:
     AgentStateResponseAgentState:
       example:
+        deleting: '{}'
         apply: '{}'
         stopping: '{}'
         schedules: '{}'
         queued: '{}'
-        notifier: '{}'
         watchdogs: '{}'
+        hooks: '{}'
         tuners: '{}'
         full: true
       properties:
@@ -12061,9 +12273,9 @@ components:
           properties: {}
           title: List of schdules runs
           type: object
-        notifier:
+        hooks:
           properties: {}
-          title: List of notifier runs
+          title: List of hooks runs
           type: object
         watchdogs:
           properties: {}
@@ -12080,6 +12292,10 @@ components:
         stopping:
           properties: {}
           title: List of stopping runs
+          type: object
+        deleting:
+          properties: {}
+          title: List of deleting runs
           type: object
         apply:
           properties: {}
@@ -12307,11 +12523,11 @@ components:
         description: description
         created_at: 2000-01-23T04:56:07.000+00:00
         uuid: uuid
+        version: version
         content: content
         tags:
         - tags
         - tags
-        concurrency: 6
         updated_at: 2000-01-23T04:56:07.000+00:00
         name: name
         namespace: namespace
@@ -12342,13 +12558,12 @@ components:
           properties: {}
           title: Optional version api
           type: object
+        version:
+          title: Agent version
+          type: string
         content:
           title: Content of the agent config
           type: string
-        concurrency:
-          format: int32
-          title: The agent max concurrency
-          type: integer
         created_at:
           format: date-time
           title: Optional time when the entity was created
@@ -12367,13 +12582,15 @@ components:
       type: object
     v1AgentStateResponse:
       example:
+        compatible_updates: '{}'
         state:
+          deleting: '{}'
           apply: '{}'
           stopping: '{}'
           schedules: '{}'
           queued: '{}'
-          notifier: '{}'
           watchdogs: '{}'
+          hooks: '{}'
           tuners: '{}'
           full: true
       properties:
@@ -12381,6 +12598,9 @@ components:
           $ref: '#/components/schemas/v1Statuses'
         state:
           $ref: '#/components/schemas/AgentStateResponseAgentState'
+        compatible_updates:
+          properties: {}
+          type: object
       title: Contains the agents (queues/runs) state
       type: object
     v1AgentStatusBodyRequest:
@@ -16541,11 +16761,11 @@ components:
           description: description
           created_at: 2000-01-23T04:56:07.000+00:00
           uuid: uuid
+          version: version
           content: content
           tags:
           - tags
           - tags
-          concurrency: 6
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
           namespace: namespace
@@ -16555,11 +16775,11 @@ components:
           description: description
           created_at: 2000-01-23T04:56:07.000+00:00
           uuid: uuid
+          version: version
           content: content
           tags:
           - tags
           - tags
-          concurrency: 6
           updated_at: 2000-01-23T04:56:07.000+00:00
           name: name
           namespace: namespace
@@ -19610,11 +19830,12 @@ components:
       - tuner
       - watchdog
       - notifier
+      - cleaner
       title: |-
         Run kind enum
         Kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob
         Meta kinds: job, service, dag, matrix, schedule
-        helper kinds: tuner, watchdog, notifier
+        helper kinds: tuner, watchdog, notifier, cleaner
       type: string
     v1RunSchema:
       example:

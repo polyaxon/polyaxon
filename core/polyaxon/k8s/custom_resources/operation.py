@@ -50,9 +50,25 @@ def get_notifier_instance(owner: str, project: str, run_uuid: str) -> str:
     return "{}.{}.notifiers.{}".format(owner, project, run_uuid)
 
 
+def get_watchdog_instance(owner: str, project: str, run_uuid: str) -> str:
+    return "{}.{}.watchdog.{}".format(owner, project, run_uuid)
+
+
+def get_cleaner_instance(owner: str, project: str, run_uuid: str) -> str:
+    return "{}.{}.cleaners.{}".format(owner, project, run_uuid)
+
+
 def get_resource_name(run_uuid: str) -> str:
     return "plx-operation-{}".format(run_uuid)
 
 
 def get_notifier_resource_name(run_uuid: str) -> str:
     return "plx-notifier-{}".format(run_uuid)
+
+
+def get_watchdog_resource_name(run_uuid: str) -> str:
+    return "plx-watchdog-{}".format(run_uuid)
+
+
+def get_cleaner_resource_name(run_uuid: str) -> str:
+    return "plx-cleaner-{}".format(run_uuid)

@@ -83,13 +83,23 @@ func NewEnableProjectCIOK() *EnableProjectCIOK {
 A successful response.
 */
 type EnableProjectCIOK struct {
+	Payload interface{}
 }
 
 func (o *EnableProjectCIOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCIOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCIOK  %+v", 200, o.Payload)
+}
+
+func (o *EnableProjectCIOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *EnableProjectCIOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

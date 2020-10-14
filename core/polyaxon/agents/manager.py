@@ -70,3 +70,32 @@ def stop(run_kind: str, run_uuid: str, namespace: str, in_cluster: bool = None):
     Spawner(namespace=namespace, in_cluster=in_cluster).stop(
         run_uuid=run_uuid, run_kind=run_kind
     )
+
+
+def clean(run_kind: str, run_uuid: str, namespace: str, in_cluster: bool = None):
+    Spawner(namespace=namespace, in_cluster=in_cluster).clean(
+        run_uuid=run_uuid, run_kind=run_kind
+    )
+
+
+def make_and_create(
+    content: str,
+    owner_name: str,
+    project_name: str,
+    run_name: str,
+    run_kind: str,
+    run_uuid: str,
+    namespace: str,
+    in_cluster: bool = None,
+):
+    resource = converter.make_and_convert(
+        owner_name=owner_name,
+        project_name=project_name,
+        run_name=run_name,
+        run_uuid=run_uuid,
+        content=content,
+    )
+
+    Spawner(namespace=namespace, in_cluster=in_cluster).create(
+        run_uuid=run_uuid, run_kind=run_kind, resource=resource
+    )

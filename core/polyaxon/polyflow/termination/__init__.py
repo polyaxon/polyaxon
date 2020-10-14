@@ -111,6 +111,10 @@ class V1Termination(BaseConfig, polyaxon_sdk.V1Termination):
     [activeDeadlineSeconds](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#job-termination-and-cleanup)  # noqa
     but you can use this field for all runtimes, for instance you might want to stop a
     tensorboard after 12 hours, this way you don't have to actively look for running tensorboards.
+    Timeout is also how you can enforce SLAs (Service Level Agreements),
+    if one operation have not succeeded by that timedelta, Polyaxon will stop the operation.
+    Timeout can be combined with hooks/notifications to
+    notify a user or a system about the details of the failure or stopping the operation.
 
     ```yaml
     >>> termination:

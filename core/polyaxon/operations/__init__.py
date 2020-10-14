@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from polyaxon.operations.cleaner import get_cleaner_operation
 from polyaxon.operations.notifier import get_notifier_operation
 from polyaxon.operations.tuner import (
     get_bo_tuner,

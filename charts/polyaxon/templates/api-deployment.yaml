@@ -42,6 +42,7 @@ spec:
         env:
 {{ include "config.envs" . | indent 8 }}
 {{ include "config.debugMode" . | indent 8 }}
+{{ include "config.hostIps" . | indent 8 }}
         livenessProbe:
           httpGet:
             path: /healthz/

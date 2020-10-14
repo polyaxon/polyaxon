@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from coredb.abstracts.diff import DiffModel
@@ -29,7 +28,7 @@ class BaseArtifact(DiffModel, StateModel):
         max_length=12, db_index=True, choices=V1ArtifactKind.CHOICES,
     )
     path = models.CharField(max_length=256, blank=True, null=True)
-    summary = JSONField()
+    summary = models.JSONField()
 
     class Meta:
         abstract = True
@@ -46,7 +45,7 @@ class BaseArtifactLineage(DiffModel):
         on_delete=models.CASCADE,
         related_name="runs_lineage",
     )
-    is_input = models.NullBooleanField(null=True, blank=True, default=False)
+    is_input = models.BooleanField(null=True, blank=True, default=False)
 
     class Meta:
         abstract = True

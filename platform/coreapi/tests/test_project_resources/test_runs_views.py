@@ -563,6 +563,132 @@ class TestProjectRunListViewV1(BaseTest):
         assert len(data) == self.queryset.count()
         assert data[0]["inputs"]["optimizer"] < data[-1]["inputs"]["optimizer"]
 
+        # Artifacts
+        resp = self.stuff_client.get(
+            self.url + "?query=in_artifact_kind:{}".format(V1ArtifactKind.METRIC)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 0
+
+        resp = self.stuff_client.get(
+            self.url + "?query=in_artifact_kind:~{}".format(V1ArtifactKind.METRIC)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == len(self.objects)
+
+        # Add meta
+        self.objects[0].meta_info = {"has_events": True, "kind": V1RunKind.JOB}
+        self.objects[0].save()
+        self.objects[1].meta_info = {"has_tensorboard": True, "kind": V1RunKind.SERVICE}
+        self.objects[1].save()
+
+        resp = self.client.get(self.url + "?query=meta_flags.has_events:1")
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(self.url + "?query=meta_flags.has_tensorboard:1")
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url + "?query=meta_info.kind:{}".format(V1RunKind.JOB)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url + "?query=meta_info.kind:~{}".format(V1RunKind.SERVICE)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        # Add artifacts
+        obj = ArtifactFactory(owner=self.owner, name="m1", state=self.project.uuid)
+        ArtifactLineage.objects.create(run=self.objects[0], artifact=obj, is_input=True)
+        obj = ArtifactFactory(
+            owner=self.owner,
+            name="in1",
+            state=self.project.uuid,
+            kind=V1ArtifactKind.DOCKERFILE,
+        )
+        ArtifactLineage.objects.create(
+            run=self.objects[0], artifact=obj, is_input=False
+        )
+        obj = ArtifactFactory(owner=self.owner, name="m2", state=self.project.uuid)
+        ArtifactLineage.objects.create(run=self.objects[1], artifact=obj)
+
+        resp = self.client.get(
+            self.url + "?query=in_artifact_kind:{}".format(V1ArtifactKind.METRIC)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url + "?query=in_artifact_kind:~{}".format(V1ArtifactKind.METRIC)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == len(self.objects) - 1
+
+        resp = self.client.get(
+            self.url + "?query=out_artifact_kind:{}".format(V1ArtifactKind.METRIC)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(
+            self.url + "?query=in_artifact_kind:{}".format(V1ArtifactKind.DOCKERFILE)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 0
+
+        resp = self.client.get(
+            self.url + "?query=out_artifact_kind:{}".format(V1ArtifactKind.DOCKERFILE)
+        )
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 0
+
+        # Add commit
+        resp = self.client.get(self.url + "?query=commit:commit1")
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 0
+
+        resp = self.client.get(self.url + "?query=commit:~commit1")
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == len(self.objects)
+
+        obj = ArtifactFactory(
+            owner=self.owner,
+            name="commit1",
+            state=self.project.uuid,
+            kind=V1ArtifactKind.CODEREF,
+        )
+        ArtifactLineage.objects.create(
+            run=self.objects[0], artifact=obj, is_input=False
+        )
+
+        resp = self.client.get(self.url + "?query=commit:commit1")
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == 1
+
+        resp = self.client.get(self.url + "?query=commit:~commit1")
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data["next"] is None
+        assert resp.data["count"] == len(self.objects) - 1
+
     def test_get_runs_for_original(self):
         self.factory_class(
             project=self.project,

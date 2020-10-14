@@ -237,6 +237,7 @@ class DeploymentSchema(BaseCamelSchema):
     image_pull_secrets = fields.List(fields.Str(), allow_none=True)
     host_name = fields.Str(allow_none=True)
     allowed_hosts = fields.List(fields.Str(), allow_none=True)
+    include_host_ips = fields.Bool(allow_none=True)
     intervals = fields.Nested(IntervalsSchema, allow_none=True)
     artifacts_store = fields.Nested(ConnectionTypeSchema, allow_none=True)
     connections = fields.List(fields.Nested(ConnectionTypeSchema), allow_none=True)
@@ -360,6 +361,7 @@ class DeploymentConfig(BaseConfig):
         image_pull_secrets=None,
         host_name=None,
         allowed_hosts=None,
+        include_host_ips=None,
         intervals=None,
         artifacts_store=None,
         connections=None,
@@ -437,6 +439,7 @@ class DeploymentConfig(BaseConfig):
         self.image_pull_secrets = image_pull_secrets
         self.host_name = host_name
         self.allowed_hosts = allowed_hosts
+        self.include_host_ips = include_host_ips
         self.intervals = intervals
         self.artifacts_store = artifacts_store
         self.connections = connections

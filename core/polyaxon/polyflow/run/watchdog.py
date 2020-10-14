@@ -14,19 +14,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.k8s.custom_resources.operation import (
-    get_notifier_instance,
-    get_notifier_resource_name,
-)
-from polyaxon.polypod.compiler.converters import JobConverter
-from polyaxon.polypod.mixins import NotifierMixin
+from marshmallow import fields, validate
+
+from polyaxon.polyflow.run.job import JobSchema, V1Job
+from polyaxon.polyflow.run.kinds import V1RunKind
 
 
-class NotifierConverter(NotifierMixin, JobConverter):
-    def get_instance(self):
-        return get_notifier_instance(
-            owner=self.owner_name, project=self.project_name, run_uuid=self.run_uuid
-        )
+class WatchDogSchema(JobSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal(V1RunKind.WATCHDOG))
 
-    def get_resource_name(self):
-        return get_notifier_resource_name(self.run_uuid)
+    @staticmethod
+    def schema_config():
+        return V1WatchDog
+
+
+class V1WatchDog(V1Job):
+    SCHEMA = WatchDogSchema
+    IDENTIFIER = V1RunKind.WATCHDOG
+    REDUCED_ATTRIBUTES = [
+        "kind",
+        "container",
+        "environment",
+        "init",
+        "sidecars",
+        "connections",
+        "volumes",
+    ]

@@ -111,6 +111,7 @@ class CallbackCondition(BaseCondition):
         self, name: str, params: Any, query_backend: Any, timezone: str
     ) -> Any:
         return self.callback(
+            query_backend,
             params=params,
             negation=self.negation,
             query_backend=query_backend,

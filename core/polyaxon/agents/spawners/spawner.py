@@ -64,6 +64,13 @@ class Spawner(BaseSpawner):
             plural=mixin.PLURAL,
         )
 
+    def clean(self, run_uuid: str, run_kind: str):
+        return self.apply(
+            run_uuid=run_uuid,
+            run_kind=run_kind,
+            resource={"metadata": {"finalizers": None}},
+        )
+
     def get(self, run_uuid: str, run_kind: str):
         mixin = self._get_mixin_for_kind(kind=run_kind)
         resource_name = get_resource_name(run_uuid)

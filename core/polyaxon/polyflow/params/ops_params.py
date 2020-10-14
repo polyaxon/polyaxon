@@ -54,10 +54,14 @@ def validate_params(
 
             raise ValidationError(message)
     elif not accepts_params(inputs, outputs) and params:
-        message = "Received unexpected params `{}`".format(params)
-        if extra_info:
-            message += " Please check: {}".format(extra_info)
-        raise ValidationError(message)
+        extra_params = set(params.keys()) - {
+            p for p in params if params[p].context_only
+        }
+        if extra_params:
+            message = "Received unexpected params `{}`".format(extra_params)
+            if extra_info:
+                message += " Please check: {}".format(extra_info)
+            raise ValidationError(message)
 
     def parse_param(v) -> V1Param:
         if isinstance(v, V1Param):
@@ -167,6 +171,8 @@ def validate_params(
                 )
             )
     extra_params = set(params.keys()) - set(processed_params)
+    context_params = {p for p in params if params[p].context_only}
+    extra_params = extra_params - context_params
     if extra_params:
         message = "Received unexpected params `{}`".format(extra_params)
         if extra_info:

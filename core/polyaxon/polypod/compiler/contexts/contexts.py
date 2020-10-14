@@ -32,7 +32,10 @@ from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.path_utils import get_path
 
 CONTEXTS_MANAGERS = {
+    V1RunKind.CLEANER: JobContextsManager,
     V1RunKind.NOTIFIER: JobContextsManager,
+    V1RunKind.TUNER: JobContextsManager,
+    V1RunKind.WATCHDOG: JobContextsManager,
     V1RunKind.JOB: JobContextsManager,
     V1RunKind.SERVICE: ServiceContextsManager,
     V1RunKind.MPIJOB: MPIJobContextsManager,

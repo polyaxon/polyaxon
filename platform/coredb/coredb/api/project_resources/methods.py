@@ -44,13 +44,14 @@ def create_runs_tags(view, request, *args, **kwargs):
 
 
 def stop_runs(view, request, actor, *args, **kwargs):
-    runs = (
+    queryset = (
         get_run_model()
         .objects.filter(project=view.project, uuid__in=request.data.get("uuids", []))
-        .exclude(status__in=LifeCycle.DONE_VALUES)
+        .exclude(status__in=LifeCycle.DONE_OR_IN_PROGRESS_VALUES)
         .only("id")
     )
-    runs.update(status=V1Statuses.STOPPING)
+    runs = [r for r in queryset]
+    queryset.update(status=V1Statuses.STOPPING)
     for run in runs:
         auditor.record(
             event_type=RUN_STOPPED_ACTOR,

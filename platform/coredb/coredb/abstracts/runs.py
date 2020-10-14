@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from django.conf import settings
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from coredb.abstracts.describable import DescribableModel
@@ -57,10 +56,10 @@ class BaseRun(
     project = models.ForeignKey(
         get_db_model_name("Project"), on_delete=models.CASCADE, related_name="runs"
     )
-    meta_info = JSONField(null=True, blank=True, default=dict,)
-    params = JSONField(null=True, blank=True)
-    inputs = JSONField(null=True, blank=True)
-    outputs = JSONField(null=True, blank=True)
+    meta_info = models.JSONField(null=True, blank=True, default=dict)
+    params = models.JSONField(null=True, blank=True)
+    inputs = models.JSONField(null=True, blank=True)
+    outputs = models.JSONField(null=True, blank=True)
     original = models.ForeignKey(
         "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="clones",
     )

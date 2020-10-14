@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 ## deleteProjectDashboard
 
-> deleteProjectDashboard(owner, project, uuid)
+> Object deleteProjectDashboard(owner, project, uuid)
 
 Delete project dashboard
 
@@ -95,7 +95,7 @@ apiInstance.deleteProjectDashboard(owner, project, uuid, (error, data, response)
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -111,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -355,7 +355,7 @@ Name | Type | Description  | Notes
 
 ## promoteProjectDashboard
 
-> promoteProjectDashboard(owner, project, uuid)
+> Object promoteProjectDashboard(owner, project, uuid)
 
 Promote project dashboard
 
@@ -378,7 +378,7 @@ apiInstance.promoteProjectDashboard(owner, project, uuid, (error, data, response
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -394,7 +394,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

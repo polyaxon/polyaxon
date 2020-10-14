@@ -38,11 +38,14 @@ def get_op_specification(
     presets: List[str] = None,
     queue: str = None,
     nocache: bool = None,
+    cache: bool = None,
     path_context: str = None,
     validate_params: bool = True,
     preset_files: List[str] = None,
     git_init: V1Init = None,
 ) -> V1Operation:
+    if cache and nocache:
+        raise PolyaxonfileError("Received both cache and nocache")
     job_data = {
         "version": config.version if config else pkg.SCHEMA_VERSION,
         "kind": kinds.OPERATION,
@@ -59,6 +62,8 @@ def get_op_specification(
         # Check only
         get_queue_info(queue)
         job_data["queue"] = queue
+    if cache is not None:
+        job_data["cache"] = {"disable": False}
     if nocache is not None:
         job_data["cache"] = {"disable": nocache}
 
@@ -78,12 +83,12 @@ def get_op_specification(
     for preset_plx_file in preset_files:
         preset_plx_file = OperationSpecification.read(preset_plx_file, is_preset=True)
         config = config.patch(preset_plx_file, strategy=preset_plx_file.patch_strategy)
-    # Turn git_init to a post_merge preset
+    # Turn git_init to a pre_merge preset
     if git_init:
         git_preset = V1Operation(
             run_patch={"init": [git_init.to_dict()]}, is_preset=True
         )
-        config = config.patch(git_preset, strategy=V1PatchStrategy.POST_MERGE)
+        config = config.patch(git_preset, strategy=V1PatchStrategy.PRE_MERGE)
 
     # Sanity check if params were passed and we are not dealing with a hub component
     public_hub = config.has_public_hub_reference

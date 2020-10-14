@@ -98,7 +98,11 @@ def create_polyaxonfile():
     help="Init a polyaxonignore file in this project.",
 )
 def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
-    """Initialize a new local project and cache directory."""
+    """Initialize a new local project and cache directory.
+
+    Note: We recommend that you add the local cache `.polyaxon`
+    to your `.gitignore` and `.dockerignore` files.
+    """
     if not any([project, git_connection, git_url, polyaxonfile, polyaxonignore]):
         Printer.print_warning(
             "`polyaxon init` did not receive any valid option.",

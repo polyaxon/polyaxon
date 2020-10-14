@@ -110,6 +110,12 @@ from polyaxon.utils.validation import validate_tags
     help="Disable cache check before starting this operation.",
 )
 @click.option(
+    "--cache",
+    is_flag=True,
+    default=False,
+    help="Enable cache check before starting this operation.",
+)
+@click.option(
     "--eager",
     is_flag=True,
     default=False,
@@ -156,6 +162,7 @@ def run(
     presets,
     queue,
     nocache,
+    cache,
     eager,
     git_preset,
     git_revision,
@@ -199,6 +206,11 @@ def run(
     \b
     polyaxon run -pm path/to/my-component.py:componentA
     """
+    if cache and nocache:
+        Printer.print_error(
+            "You can't use `--cache` and `--nocache` at the same.", sys_exit=True
+        )
+
     git_init = None
     if git_preset:
         # Check that the current path was initialized
@@ -207,9 +219,9 @@ def run(
                 "You can't use --git-init, "
                 "the current path is not initialized with a valid git connection or a git url, "
                 "please run `polyaxon init [--git-connection] [--git-url]` "
-                "to set a valid git configuration."
+                "to set a valid git configuration.",
+                sys_exit=True,
             )
-            sys.exit(1)
         git_init = GitConfigManager.get_config()
         if git_revision:
             git_init.git.revision = git_revision
@@ -236,6 +248,7 @@ def run(
         params=params,
         presets=presets,
         queue=queue,
+        cache=cache,
         nocache=nocache,
         verbose=False,
         eager=eager,

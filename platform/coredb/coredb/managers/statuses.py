@@ -140,3 +140,18 @@ def new_run_stop_status(run, message):
         message=message,
     )
     new_run_status(run=run, condition=condition)
+
+
+def new_run_stopping_status(run, message) -> bool:
+    if LifeCycle.is_done(run.status, progressing=True):
+        return False
+
+    message = f"Run is stopping; {message}" if message else "Run is stopping"
+    condition = V1StatusCondition.get_condition(
+        type=V1Statuses.STOPPING,
+        status="True",
+        reason="PolyaxonRunStopping",
+        message=message,
+    )
+    new_run_status(run=run, condition=condition)
+    return True

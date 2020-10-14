@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 ## deleteModelRegistry
 
-> deleteModelRegistry(owner, uuid)
+> Object deleteModelRegistry(owner, uuid)
 
 Delete hub model
 
@@ -91,7 +91,7 @@ apiInstance.deleteModelRegistry(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 

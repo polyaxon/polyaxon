@@ -83,13 +83,23 @@ func NewTagRunsOK() *TagRunsOK {
 A successful response.
 */
 type TagRunsOK struct {
+	Payload interface{}
 }
 
 func (o *TagRunsOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/tag][%d] tagRunsOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/tag][%d] tagRunsOK  %+v", 200, o.Payload)
+}
+
+func (o *TagRunsOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *TagRunsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

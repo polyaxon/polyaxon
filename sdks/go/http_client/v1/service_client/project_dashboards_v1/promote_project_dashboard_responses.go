@@ -83,13 +83,23 @@ func NewPromoteProjectDashboardOK() *PromoteProjectDashboardOK {
 A successful response.
 */
 type PromoteProjectDashboardOK struct {
+	Payload interface{}
 }
 
 func (o *PromoteProjectDashboardOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/dashboards/{uuid}/promote][%d] promoteProjectDashboardOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/dashboards/{uuid}/promote][%d] promoteProjectDashboardOK  %+v", 200, o.Payload)
+}
+
+func (o *PromoteProjectDashboardOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *PromoteProjectDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

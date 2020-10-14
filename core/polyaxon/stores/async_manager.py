@@ -95,7 +95,7 @@ async def delete_file(subpath: str) -> bool:
     try:
         manager.delete_file_or_dir(
             connection_type=settings.AGENT_CONFIG.artifacts_store,
-            subpath=subpath,
+            subpath=get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath),
             is_file=True,
         )
         return True
@@ -108,7 +108,7 @@ async def delete_dir(subpath: str) -> bool:
     try:
         manager.delete_file_or_dir(
             connection_type=settings.AGENT_CONFIG.artifacts_store,
-            subpath=subpath,
+            subpath=get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath),
             is_file=False,
             workers=5,
         )

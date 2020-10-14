@@ -17,6 +17,7 @@ from typing import List
 
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_UI_ADMIN_ENABLED,
+    POLYAXON_KEYS_UI_ASSETS_VERSION,
     POLYAXON_KEYS_UI_ENABLED,
     POLYAXON_KEYS_UI_OFFLINE,
 )
@@ -31,10 +32,18 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
     def get_allowed_hosts():
         allowed_hosts = config.get_string(
             "POLYAXON_ALLOWED_HOSTS", is_optional=True, is_list=True, default=["*"]
-        )
-        allowed_hosts.append(".polyaxon.com")
+        )  # type: list
         if platform_host:
             allowed_hosts.append(platform_host)
+        if ".polyaxon.com" not in allowed_hosts:
+            allowed_hosts.append(".polyaxon.com")
+        pod_ip = config.get_string("POLYAXON_POD_IP", is_optional=True)
+        if pod_ip:
+            allowed_hosts.append(pod_ip)
+        host_ip = config.get_string("POLYAXON_HOST_IP", is_optional=True)
+        if host_ip:
+            host_cidr = ".".join(host_ip.split(".")[:-1])
+            allowed_hosts += ["{}.{}".format(host_cidr, i) for i in range(255)]
 
         return allowed_hosts
 
@@ -44,11 +53,13 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
     processors = [
         "django.contrib.auth.context_processors.auth",
         "django.template.context_processors.debug",
+        "django.template.context_processors.request",
         "django.template.context_processors.media",
         "django.template.context_processors.static",
         "django.template.context_processors.tz",
         "django.contrib.messages.context_processors.messages",
-        "polycommon.settings.context_processors.versions",
+        "polycommon.settings.context_processors.version",
+        "polycommon.settings.context_processors.assets_version",
         "polycommon.settings.context_processors.ui_offline",
         "polycommon.settings.context_processors.ui_enabled",
     ] + processors
@@ -61,6 +72,9 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
     )
     context["UI_ADMIN_ENABLED"] = config.get_boolean(
         POLYAXON_KEYS_UI_ADMIN_ENABLED, is_optional=True, default=False
+    )
+    context["UI_ASSETS_VERSION"] = config.get_string(
+        POLYAXON_KEYS_UI_ASSETS_VERSION, is_optional=True, default=""
     )
     context["UI_OFFLINE"] = config.get_boolean(
         POLYAXON_KEYS_UI_OFFLINE, is_optional=True, default=False

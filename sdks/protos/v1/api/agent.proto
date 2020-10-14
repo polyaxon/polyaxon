@@ -46,11 +46,11 @@ message Agent {
     // Optional version api
     google.protobuf.Struct version_api = 7;
 
-    // Content of the agent config
-    string content = 8;
+    // Agent version
+    string version = 8;
 
-    // The agent max concurrency
-    int32 concurrency = 9;
+    // Content of the agent config
+    string content = 9;
 
     // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 10;
@@ -156,8 +156,8 @@ message AgentStateResponse {
         // List of schdules runs
         google.protobuf.Struct schedules = 1;
 
-        // List of notifier runs
-        google.protobuf.Struct notifier = 2;
+        // List of hooks runs
+        google.protobuf.Struct hooks = 2;
 
         // List of watchdogs runs
         google.protobuf.Struct watchdogs = 3;
@@ -171,13 +171,17 @@ message AgentStateResponse {
         // List of stopping runs
         google.protobuf.Struct stopping = 6;
 
+        // List of deleting runs
+        google.protobuf.Struct deleting = 7;
+
         // List of apply runs
-        google.protobuf.Struct apply = 7;
+        google.protobuf.Struct apply = 8;
 
         // A flag to tell the agent that the queues are still full
-        bool full = 8;
+        bool full = 9;
     }
 
     Statuses status = 1;
     AgentState state = 2;
+    google.protobuf.Struct compatible_updates = 3;
 }

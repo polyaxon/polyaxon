@@ -23,6 +23,7 @@ class UISchema(BaseCamelSchema):
     enabled = fields.Bool(allow_none=True)
     offline = fields.Bool(allow_none=True)
     static_url = fields.Str(allow_none=True)
+    assets_version = fields.Str(allow_none=True)
     admin_enabled = fields.Bool(allow_none=True)
 
     @staticmethod
@@ -32,10 +33,24 @@ class UISchema(BaseCamelSchema):
 
 class UIConfig(BaseConfig):
     SCHEMA = UISchema
-    REDUCED_ATTRIBUTES = ["enabled", "jsOffline", "staticUrl", "adminEnabled"]
+    REDUCED_ATTRIBUTES = [
+        "enabled",
+        "jsOffline",
+        "staticUrl",
+        "assetsVersion",
+        "adminEnabled",
+    ]
 
-    def __init__(self, enabled=None, offline=None, static_url=None, admin_enabled=None):
+    def __init__(
+        self,
+        enabled=None,
+        offline=None,
+        static_url=None,
+        assets_version=None,
+        admin_enabled=None,
+    ):
         self.enabled = enabled
         self.offline = offline
+        self.assets_version = assets_version
         self.static_url = static_url
         self.admin_enabled = admin_enabled

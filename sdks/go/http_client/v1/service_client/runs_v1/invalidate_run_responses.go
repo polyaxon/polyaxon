@@ -83,13 +83,23 @@ func NewInvalidateRunOK() *InvalidateRunOK {
 A successful response.
 */
 type InvalidateRunOK struct {
+	Payload interface{}
 }
 
 func (o *InvalidateRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunOK  %+v", 200, o.Payload)
+}
+
+func (o *InvalidateRunOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *InvalidateRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

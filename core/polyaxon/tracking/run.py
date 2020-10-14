@@ -531,7 +531,7 @@ class Run(RunClient):
         asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
         if is_file:
             event_value = events_processors.image_path(
-                from_path=data, asset_path=asset_path
+                from_path=data, asset_path=asset_path, asset_rel_path=asset_rel_path,
             )
         elif hasattr(data, "encoded_image_string"):
             event_value = events_processors.encoded_image(

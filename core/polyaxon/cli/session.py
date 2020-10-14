@@ -32,16 +32,7 @@ from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon.services.headers import PolyaxonServices
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.tz_utils import now
-
-
-def clean_version_for_compatibility(version: str):
-    return version.lstrip("v").replace(".", "-")[:5]
-
-
-def clean_version_for_check(version: str):
-    if not version:
-        return version
-    return version.lstrip("v").replace("-", ".")[:5]
+from polyaxon.utils.versions import clean_version_for_compatibility
 
 
 def session_expired():
@@ -69,7 +60,7 @@ def get_compatibility(key: str, service: str, version: str, is_cli=True):
     if not key:
         key = uuid.uuid4().hex
     try:
-        version = version.lstrip("v").replace(".", "-")[:5]
+        version = clean_version_for_compatibility(version)
     except Exception as e:
         CliConfigManager.reset(last_check=now())
         if is_cli:

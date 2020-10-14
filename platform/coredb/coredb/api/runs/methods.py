@@ -19,8 +19,8 @@ from rest_framework.response import Response
 
 import ujson
 
-from coredb.managers.statuses import new_run_status
-from polyaxon.lifecycle import LifeCycle, V1StatusCondition, V1Statuses
+from coredb.managers.statuses import new_run_status, new_run_stopping_status
+from polyaxon.lifecycle import V1StatusCondition
 
 
 def clone_run(view, request, *args, **kwargs):
@@ -57,14 +57,6 @@ def create_status(view, serializer):
 
 
 def stop_run(view, request, *args, **kwargs):
-    if LifeCycle.is_done(view.run.status):
-        return Response(status=status.HTTP_200_OK, data={})
-    condition = V1StatusCondition.get_condition(
-        type=V1Statuses.STOPPING,
-        status="True",
-        reason="PolyaxonRunStopping",
-        message="User requested to stop the run.",
-    )
-    new_run_status(run=view.run, condition=condition)
-    view.audit(request, *args, **kwargs)
+    if new_run_stopping_status(run=view.run, message="User requested to stop the run."):
+        view.audit(request, *args, **kwargs)
     return Response(status=status.HTTP_200_OK, data={})

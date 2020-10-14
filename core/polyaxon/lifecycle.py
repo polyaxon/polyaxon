@@ -126,6 +126,9 @@ class LifeCycle:
         V1Statuses.SKIPPED,
         V1Statuses.SUCCEEDED,
     }
+    DONE_OR_IN_PROGRESS_VALUES = DONE_VALUES | {
+        V1Statuses.STOPPING,
+    }
 
     @classmethod
     def can_check_heartbeat(cls, status: str) -> bool:
@@ -193,8 +196,11 @@ class LifeCycle:
         return status == V1Statuses.STOPPING
 
     @classmethod
-    def is_done(cls, status: str) -> bool:
+    def is_done(cls, status: str, progressing: bool = False) -> bool:
         """Checks if a run with this status is done."""
+        if progressing:
+            return status in cls.DONE_OR_IN_PROGRESS_VALUES
+
         return status in cls.DONE_VALUES
 
     @classmethod

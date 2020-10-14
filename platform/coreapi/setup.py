@@ -40,7 +40,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon-api",
-    version="1.1.9",
+    version="1.2.0-rc3",
     description="Polyaxon core api.",
     maintainer="Polyaxon, Inc.",
     maintainer_email="contact@polyaxon.com",
@@ -64,9 +64,9 @@ setup(
     ],
     install_requires=[
         "celery==4.4.7",
-        "Django==3.0.9",
+        "Django==3.1.2",
         "django-cors-headers==3.2.1",
-        "djangorestframework==3.11.0",
+        "djangorestframework==3.12.1",
         "psycopg2-binary==2.8.5",
         "redis==3.5.3",
     ],
