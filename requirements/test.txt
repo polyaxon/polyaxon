@@ -1,5 +1,5 @@
 black==19.10b0
-coverage==5.2.1
+coverage==5.3
 faker==4.5.0
 flake8==3.8.3
 flaky==3.7.0
