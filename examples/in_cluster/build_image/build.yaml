@@ -23,5 +23,7 @@ runPatch:
       - pip3 install tensorboard
       - pip3 install matplotlib
       - pip3 install fastai
+      - pip3 install vega-datasets
+      - pip3 install joblib
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko

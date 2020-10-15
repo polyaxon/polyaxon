@@ -2,8 +2,9 @@ from __future__ import print_function
 
 from time import time
 
+import joblib
+
 from sklearn.datasets import fetch_20newsgroups
-from sklearn.externals import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
