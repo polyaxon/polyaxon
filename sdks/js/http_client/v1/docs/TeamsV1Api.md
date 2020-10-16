@@ -16,7 +16,7 @@ Method | HTTP request | Description
 [**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
 [**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List teams
 [**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
-[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch tram member
+[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch team member
 [**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update team
 [**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update team member
 
@@ -56,8 +56,8 @@ apiInstance.createTeam(owner, body, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **body** | [**V1Team**](V1Team.md)| Team body | 
+ **owner** | **String**| Owner of the namespace |
+ **body** | [**V1Team**](V1Team.md)| Team body |
 
 ### Return type
 
@@ -108,9 +108,9 @@ apiInstance.createTeamMember(owner, team, body, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team | 
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
+ **owner** | **String**| Owner of the namespace |
+ **team** | **String**| Team |
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
 
 ### Return type
 
@@ -128,7 +128,7 @@ Name | Type | Description  | Notes
 
 ## deleteTeam
 
-> Object deleteTeam(owner, team)
+> deleteTeam(owner, team)
 
 Delete team
 
@@ -150,7 +150,7 @@ apiInstance.deleteTeam(owner, team, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -160,12 +160,12 @@ apiInstance.deleteTeam(owner, team, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team under namesapce | 
+ **owner** | **String**| Owner of the namespace |
+ **team** | **String**| Team under namesapce |
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 
 ## deleteTeamMember
 
-> Object deleteTeamMember(owner, team, user)
+> deleteTeamMember(owner, team, user)
 
 Delete team member details
 
@@ -202,7 +202,7 @@ apiInstance.deleteTeamMember(owner, team, user, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -212,13 +212,13 @@ apiInstance.deleteTeamMember(owner, team, user, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team under namesapce | 
- **user** | **String**| Member under team | 
+ **owner** | **String**| Owner of the namespace |
+ **team** | **String**| Team under namesapce |
+ **user** | **String**| Member under team |
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -264,8 +264,8 @@ apiInstance.getTeam(owner, team, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team under namesapce | 
+ **owner** | **String**| Owner of the namespace |
+ **team** | **String**| Team under namesapce |
 
 ### Return type
 
@@ -316,9 +316,9 @@ apiInstance.getTeamMember(owner, team, user, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team under namesapce | 
- **user** | **String**| Member under team | 
+ **owner** | **String**| Owner of the namespace |
+ **team** | **String**| Team under namesapce |
+ **user** | **String**| Member under team |
 
 ### Return type
 
@@ -374,12 +374,12 @@ apiInstance.listTeamMembers(owner, team, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team under namesapce | 
- **offset** | **Number**| Pagination offset. | [optional] 
- **limit** | **Number**| Limit size. | [optional] 
- **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **owner** | **String**| Owner of the namespace |
+ **team** | **String**| Team under namesapce |
+ **offset** | **Number**| Pagination offset. | [optional]
+ **limit** | **Number**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -434,11 +434,11 @@ apiInstance.listTeamNames(owner, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **offset** | **Number**| Pagination offset. | [optional] 
- **limit** | **Number**| Limit size. | [optional] 
- **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **owner** | **String**| Owner of the namespace |
+ **offset** | **Number**| Pagination offset. | [optional]
+ **limit** | **Number**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -493,11 +493,11 @@ apiInstance.listTeams(owner, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **offset** | **Number**| Pagination offset. | [optional] 
- **limit** | **Number**| Limit size. | [optional] 
- **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **owner** | **String**| Owner of the namespace |
+ **offset** | **Number**| Pagination offset. | [optional]
+ **limit** | **Number**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -548,9 +548,9 @@ apiInstance.patchTeam(owner, team_name, body, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team_name** | **String**| Name | 
- **body** | [**V1Team**](V1Team.md)| Team body | 
+ **owner** | **String**| Owner of the namespace |
+ **team_name** | **String**| Name |
+ **body** | [**V1Team**](V1Team.md)| Team body |
 
 ### Return type
 
@@ -570,7 +570,7 @@ Name | Type | Description  | Notes
 
 > V1TeamMember patchTeamMember(owner, team, member_user, body)
 
-Patch tram member
+Patch team member
 
 ### Example
 
@@ -602,10 +602,10 @@ apiInstance.patchTeamMember(owner, team, member_user, body, (error, data, respon
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team | 
- **member_user** | **String**| User | 
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
+ **owner** | **String**| Owner of the namespace |
+ **team** | **String**| Team |
+ **member_user** | **String**| User |
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
 
 ### Return type
 
@@ -656,9 +656,9 @@ apiInstance.updateTeam(owner, team_name, body, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team_name** | **String**| Name | 
- **body** | [**V1Team**](V1Team.md)| Team body | 
+ **owner** | **String**| Owner of the namespace |
+ **team_name** | **String**| Name |
+ **body** | [**V1Team**](V1Team.md)| Team body |
 
 ### Return type
 
@@ -710,10 +710,10 @@ apiInstance.updateTeamMember(owner, team, member_user, body, (error, data, respo
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team | 
- **member_user** | **String**| User | 
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
+ **owner** | **String**| Owner of the namespace |
+ **team** | **String**| Team |
+ **member_user** | **String**| User |
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
 
 ### Return type
 

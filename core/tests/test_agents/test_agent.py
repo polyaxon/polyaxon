@@ -40,7 +40,9 @@ class TestAgents(BaseTestCase):
     @patch("polyaxon_sdk.AgentsV1Api.get_agent_state")
     @patch("polyaxon_sdk.AgentsV1Api.get_agent")
     @patch("polyaxon.agents.base.Spawner")
-    def test_init_agent(self, _, get_agent, get_agent_state, create_agent_status, sync_agent):
+    def test_init_agent(
+        self, _, get_agent, get_agent_state, create_agent_status, sync_agent
+    ):
         get_agent_state.return_value = MagicMock(status=None)
         agent = Agent(owner="foo", agent_uuid="uuid")
         assert agent.sleep_interval is None

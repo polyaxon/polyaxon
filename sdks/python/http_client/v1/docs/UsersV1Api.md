@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_token**
-> object delete_token(uuid)
+> delete_token(uuid)
 
 Delete token
 
@@ -138,8 +138,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 
     try:
         # Delete token
-        api_response = api_instance.delete_token(uuid)
-        pprint(api_response)
+        api_instance.delete_token(uuid)
     except ApiException as e:
         print("Exception when calling UsersV1Api->delete_token: %s\n" % e)
 ```
@@ -152,7 +151,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

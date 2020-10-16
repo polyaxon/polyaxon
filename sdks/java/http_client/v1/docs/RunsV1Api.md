@@ -57,7 +57,7 @@ Method | HTTP request | Description
 
 <a name="archiveRun"></a>
 # **archiveRun**
-> Object archiveRun(owner, project, uuid)
+> archiveRun(owner, project, uuid)
 
 Archive run
 
@@ -87,8 +87,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.archiveRun(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.archiveRun(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#archiveRun");
       System.err.println("Status code: " + e.getCode());
@@ -110,7 +109,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -132,7 +131,7 @@ Name | Type | Description  | Notes
 
 <a name="bookmarkRun"></a>
 # **bookmarkRun**
-> Object bookmarkRun(owner, project, uuid)
+> bookmarkRun(owner, project, uuid)
 
 Bookmark run
 
@@ -162,8 +161,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.bookmarkRun(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.bookmarkRun(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#bookmarkRun");
       System.err.println("Status code: " + e.getCode());
@@ -185,7 +183,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -207,7 +205,7 @@ Name | Type | Description  | Notes
 
 <a name="bookmarkRuns"></a>
 # **bookmarkRuns**
-> Object bookmarkRuns(owner, project, body)
+> bookmarkRuns(owner, project, body)
 
 Bookmark runs
 
@@ -237,8 +235,7 @@ public class Example {
     String project = "project_example"; // String | Project under namesapce
     V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
     try {
-      Object result = apiInstance.bookmarkRuns(owner, project, body);
-      System.out.println(result);
+      apiInstance.bookmarkRuns(owner, project, body);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#bookmarkRuns");
       System.err.println("Status code: " + e.getCode());
@@ -260,7 +257,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -282,7 +279,7 @@ Name | Type | Description  | Notes
 
 <a name="collectRunLogs"></a>
 # **collectRunLogs**
-> Object collectRunLogs(namespace, owner, project, uuid)
+> collectRunLogs(namespace, owner, project, uuid)
 
 Collect run logs
 
@@ -313,8 +310,7 @@ public class Example {
     String project = "project_example"; // String | Project where the run will be assigned
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.collectRunLogs(namespace, owner, project, uuid);
-      System.out.println(result);
+      apiInstance.collectRunLogs(namespace, owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#collectRunLogs");
       System.err.println("Status code: " + e.getCode());
@@ -337,7 +333,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -511,7 +507,7 @@ Name | Type | Description  | Notes
 
 <a name="createRunArtifactsLineage"></a>
 # **createRunArtifactsLineage**
-> Object createRunArtifactsLineage(owner, project, uuid, body)
+> createRunArtifactsLineage(owner, project, uuid, body)
 
 Create bulk run artifacts lineage
 
@@ -542,8 +538,7 @@ public class Example {
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     V1RunArtifacts body = new V1RunArtifacts(); // V1RunArtifacts | Run Artifacts
     try {
-      Object result = apiInstance.createRunArtifactsLineage(owner, project, uuid, body);
-      System.out.println(result);
+      apiInstance.createRunArtifactsLineage(owner, project, uuid, body);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#createRunArtifactsLineage");
       System.err.println("Status code: " + e.getCode());
@@ -566,7 +561,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -665,7 +660,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteRun"></a>
 # **deleteRun**
-> Object deleteRun(owner, project, uuid)
+> deleteRun(owner, project, uuid)
 
 Delete run
 
@@ -695,8 +690,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.deleteRun(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.deleteRun(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#deleteRun");
       System.err.println("Status code: " + e.getCode());
@@ -718,7 +712,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -740,7 +734,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteRunArtifact"></a>
 # **deleteRunArtifact**
-> Object deleteRunArtifact(namespace, owner, project, uuid, path)
+> deleteRunArtifact(namespace, owner, project, uuid, path)
 
 Delete run artifact
 
@@ -772,8 +766,7 @@ public class Example {
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     String path = "path_example"; // String | Path query param.
     try {
-      Object result = apiInstance.deleteRunArtifact(namespace, owner, project, uuid, path);
-      System.out.println(result);
+      apiInstance.deleteRunArtifact(namespace, owner, project, uuid, path);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#deleteRunArtifact");
       System.err.println("Status code: " + e.getCode());
@@ -797,7 +790,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -819,7 +812,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteRunArtifactLineage"></a>
 # **deleteRunArtifactLineage**
-> Object deleteRunArtifactLineage(owner, project, uuid, name, namespace)
+> deleteRunArtifactLineage(owner, project, uuid, name, namespace)
 
 Delete run artifact lineage
 
@@ -851,8 +844,7 @@ public class Example {
     String name = "name_example"; // String | Artifact name
     String namespace = "namespace_example"; // String | namespace.
     try {
-      Object result = apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, namespace);
-      System.out.println(result);
+      apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, namespace);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#deleteRunArtifactLineage");
       System.err.println("Status code: " + e.getCode());
@@ -876,7 +868,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -898,7 +890,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteRunArtifacts"></a>
 # **deleteRunArtifacts**
-> Object deleteRunArtifacts(namespace, owner, project, uuid, path)
+> deleteRunArtifacts(namespace, owner, project, uuid, path)
 
 Delete run artifacts
 
@@ -930,8 +922,7 @@ public class Example {
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     String path = "path_example"; // String | Path query param.
     try {
-      Object result = apiInstance.deleteRunArtifacts(namespace, owner, project, uuid, path);
-      System.out.println(result);
+      apiInstance.deleteRunArtifacts(namespace, owner, project, uuid, path);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#deleteRunArtifacts");
       System.err.println("Status code: " + e.getCode());
@@ -955,7 +946,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -977,7 +968,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteRuns"></a>
 # **deleteRuns**
-> Object deleteRuns(owner, project, body)
+> deleteRuns(owner, project, body)
 
 Delete runs
 
@@ -1007,8 +998,7 @@ public class Example {
     String project = "project_example"; // String | Project under namesapce
     V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
     try {
-      Object result = apiInstance.deleteRuns(owner, project, body);
-      System.out.println(result);
+      apiInstance.deleteRuns(owner, project, body);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#deleteRuns");
       System.err.println("Status code: " + e.getCode());
@@ -1030,7 +1020,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2330,7 +2320,7 @@ Name | Type | Description  | Notes
 
 <a name="invalidateRun"></a>
 # **invalidateRun**
-> Object invalidateRun(owner, project, uuid)
+> invalidateRun(owner, project, uuid)
 
 Invalidate run
 
@@ -2360,8 +2350,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.invalidateRun(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.invalidateRun(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#invalidateRun");
       System.err.println("Status code: " + e.getCode());
@@ -2383,7 +2372,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2405,7 +2394,7 @@ Name | Type | Description  | Notes
 
 <a name="invalidateRuns"></a>
 # **invalidateRuns**
-> Object invalidateRuns(owner, project, body)
+> invalidateRuns(owner, project, body)
 
 Invalidate runs
 
@@ -2435,8 +2424,7 @@ public class Example {
     String project = "project_example"; // String | Project under namesapce
     V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
     try {
-      Object result = apiInstance.invalidateRuns(owner, project, body);
-      System.out.println(result);
+      apiInstance.invalidateRuns(owner, project, body);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#invalidateRuns");
       System.err.println("Status code: " + e.getCode());
@@ -2458,7 +2446,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2719,7 +2707,7 @@ Name | Type | Description  | Notes
 
 <a name="notifyRunStatus"></a>
 # **notifyRunStatus**
-> Object notifyRunStatus(namespace, owner, project, uuid, body)
+> notifyRunStatus(namespace, owner, project, uuid, body)
 
 Notify run status
 
@@ -2751,8 +2739,7 @@ public class Example {
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     V1EntityNotificationBody body = new V1EntityNotificationBody(); // V1EntityNotificationBody | 
     try {
-      Object result = apiInstance.notifyRunStatus(namespace, owner, project, uuid, body);
-      System.out.println(result);
+      apiInstance.notifyRunStatus(namespace, owner, project, uuid, body);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#notifyRunStatus");
       System.err.println("Status code: " + e.getCode());
@@ -2776,7 +2763,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2952,7 +2939,7 @@ Name | Type | Description  | Notes
 
 <a name="restoreRun"></a>
 # **restoreRun**
-> Object restoreRun(owner, project, uuid)
+> restoreRun(owner, project, uuid)
 
 Restore run
 
@@ -2982,8 +2969,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.restoreRun(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.restoreRun(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#restoreRun");
       System.err.println("Status code: " + e.getCode());
@@ -3005,7 +2991,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -3104,7 +3090,7 @@ Name | Type | Description  | Notes
 
 <a name="startRunTensorboard"></a>
 # **startRunTensorboard**
-> Object startRunTensorboard(owner, project, uuid, body)
+> startRunTensorboard(owner, project, uuid, body)
 
 Start run tensorboard
 
@@ -3135,8 +3121,7 @@ public class Example {
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
     try {
-      Object result = apiInstance.startRunTensorboard(owner, project, uuid, body);
-      System.out.println(result);
+      apiInstance.startRunTensorboard(owner, project, uuid, body);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#startRunTensorboard");
       System.err.println("Status code: " + e.getCode());
@@ -3159,7 +3144,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -3181,7 +3166,7 @@ Name | Type | Description  | Notes
 
 <a name="stopRun"></a>
 # **stopRun**
-> Object stopRun(owner, project, uuid)
+> stopRun(owner, project, uuid)
 
 Stop run
 
@@ -3211,8 +3196,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.stopRun(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.stopRun(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#stopRun");
       System.err.println("Status code: " + e.getCode());
@@ -3234,7 +3218,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -3256,7 +3240,7 @@ Name | Type | Description  | Notes
 
 <a name="stopRunTensorboard"></a>
 # **stopRunTensorboard**
-> Object stopRunTensorboard(owner, project, uuid)
+> stopRunTensorboard(owner, project, uuid)
 
 Stop run tensorboard
 
@@ -3286,8 +3270,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.stopRunTensorboard(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.stopRunTensorboard(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#stopRunTensorboard");
       System.err.println("Status code: " + e.getCode());
@@ -3309,7 +3292,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -3331,7 +3314,7 @@ Name | Type | Description  | Notes
 
 <a name="stopRuns"></a>
 # **stopRuns**
-> Object stopRuns(owner, project, body)
+> stopRuns(owner, project, body)
 
 Stop runs
 
@@ -3361,8 +3344,7 @@ public class Example {
     String project = "project_example"; // String | Project under namesapce
     V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
     try {
-      Object result = apiInstance.stopRuns(owner, project, body);
-      System.out.println(result);
+      apiInstance.stopRuns(owner, project, body);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#stopRuns");
       System.err.println("Status code: " + e.getCode());
@@ -3384,7 +3366,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -3406,7 +3388,7 @@ Name | Type | Description  | Notes
 
 <a name="tagRuns"></a>
 # **tagRuns**
-> Object tagRuns(owner, project, body)
+> tagRuns(owner, project, body)
 
 Tag runs
 
@@ -3436,8 +3418,7 @@ public class Example {
     String project = "project_example"; // String | Project under namesapce
     V1EntitiesTags body = new V1EntitiesTags(); // V1EntitiesTags | Data
     try {
-      Object result = apiInstance.tagRuns(owner, project, body);
-      System.out.println(result);
+      apiInstance.tagRuns(owner, project, body);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#tagRuns");
       System.err.println("Status code: " + e.getCode());
@@ -3459,7 +3440,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -3481,7 +3462,7 @@ Name | Type | Description  | Notes
 
 <a name="unbookmarkRun"></a>
 # **unbookmarkRun**
-> Object unbookmarkRun(owner, project, uuid)
+> unbookmarkRun(owner, project, uuid)
 
 Unbookmark run
 
@@ -3511,8 +3492,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.unbookmarkRun(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.unbookmarkRun(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#unbookmarkRun");
       System.err.println("Status code: " + e.getCode());
@@ -3534,7 +3514,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

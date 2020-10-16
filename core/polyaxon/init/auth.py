@@ -37,6 +37,6 @@ def create_auth_context():
         except PolyaxonClientException:
             retry += 1
             print("Could not establish connection, retrying ...")
-            time.sleep(1 * retry)
+            time.sleep(retry)
 
     raise PolyaxonContainerException("Init job did not succeed authenticating job.")

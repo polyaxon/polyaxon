@@ -429,7 +429,7 @@ func (a *Client) PatchTeam(params *PatchTeamParams, authInfo runtime.ClientAuthI
 }
 
 /*
-  PatchTeamMember patches tram member
+  PatchTeamMember patches team member
 */
 func (a *Client) PatchTeamMember(params *PatchTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamMemberOK, *PatchTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending

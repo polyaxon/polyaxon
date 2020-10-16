@@ -1054,7 +1054,7 @@ class V1HpQLogNormal(BaseHParamConfig, polyaxon_sdk.V1HpQLogNormal):
         return False
 
 
-class MatrixSchema(BaseOneOfSchema):
+class HpParamSchema(BaseOneOfSchema):
     TYPE_FIELD = "kind"
     TYPE_FIELD_REMOVE = False
     SCHEMAS = {

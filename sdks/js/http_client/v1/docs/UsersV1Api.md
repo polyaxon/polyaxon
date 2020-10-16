@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 ## deleteToken
 
-> Object deleteToken(uuid)
+> deleteToken(uuid)
 
 Delete token
 
@@ -90,7 +90,7 @@ apiInstance.deleteToken(uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

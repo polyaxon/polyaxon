@@ -76,7 +76,7 @@ class PQLManager:
                 or field not in cls.CONDITIONS_BY_FIELD
             ):
                 raise PQLException(
-                    "key `{}` is not supported by query manager `{}`.".format(
+                    "key `{}` is not supported by the query manager `{}`.".format(
                         key, cls.NAME
                     )
                 )

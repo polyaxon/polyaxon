@@ -22,7 +22,7 @@ from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
-from polyaxon.polyflow.matrix.params import MatrixSchema
+from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.fields.swagger import SwaggerField
@@ -35,7 +35,7 @@ class IterativeSchema(BaseCamelSchema):
     )
     concurrency = fields.Int(allow_none=True)
     params = fields.Dict(
-        keys=fields.Str(), values=fields.Nested(MatrixSchema), allow_none=True
+        keys=fields.Str(), values=fields.Nested(HpParamSchema), allow_none=True
     )
     seed = RefOrObject(fields.Int(allow_none=True))
     container = SwaggerField(

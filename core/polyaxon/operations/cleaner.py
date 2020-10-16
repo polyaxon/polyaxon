@@ -25,7 +25,9 @@ from polyaxon.polyflow import (
 from polyaxon.schemas.types import V1ConnectionType
 
 
-def get_cleaner_operation(connection: V1ConnectionType, run_uuid: str,) -> V1Operation:
+def get_cleaner_operation(
+    connection: V1ConnectionType, run_uuid: str, run_kind: str
+) -> V1Operation:
     return V1Operation(
         termination=V1Termination(max_retries=3),
         component=V1Component(
@@ -40,7 +42,7 @@ def get_cleaner_operation(connection: V1ConnectionType, run_uuid: str,) -> V1Ope
             ),
             run=V1Cleaner(
                 connections=[connection.name],
-                container=get_default_cleaner_container(connection, run_uuid),
+                container=get_default_cleaner_container(connection, run_uuid, run_kind),
             ),
         ),
     )

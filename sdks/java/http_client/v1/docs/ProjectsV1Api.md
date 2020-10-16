@@ -31,7 +31,7 @@ Method | HTTP request | Description
 
 <a name="archiveProject"></a>
 # **archiveProject**
-> Object archiveProject(owner, project)
+> archiveProject(owner, project)
 
 Archive project
 
@@ -60,8 +60,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project under namesapce
     try {
-      Object result = apiInstance.archiveProject(owner, project);
-      System.out.println(result);
+      apiInstance.archiveProject(owner, project);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#archiveProject");
       System.err.println("Status code: " + e.getCode());
@@ -82,7 +81,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -104,7 +103,7 @@ Name | Type | Description  | Notes
 
 <a name="bookmarkProject"></a>
 # **bookmarkProject**
-> Object bookmarkProject(owner, project)
+> bookmarkProject(owner, project)
 
 Bookmark project
 
@@ -133,8 +132,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project under namesapce
     try {
-      Object result = apiInstance.bookmarkProject(owner, project);
-      System.out.println(result);
+      apiInstance.bookmarkProject(owner, project);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#bookmarkProject");
       System.err.println("Status code: " + e.getCode());
@@ -155,7 +153,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -250,7 +248,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteProject"></a>
 # **deleteProject**
-> Object deleteProject(owner, project)
+> deleteProject(owner, project)
 
 Delete project
 
@@ -279,8 +277,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project under namesapce
     try {
-      Object result = apiInstance.deleteProject(owner, project);
-      System.out.println(result);
+      apiInstance.deleteProject(owner, project);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#deleteProject");
       System.err.println("Status code: " + e.getCode());
@@ -301,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -323,7 +320,7 @@ Name | Type | Description  | Notes
 
 <a name="disableProjectCI"></a>
 # **disableProjectCI**
-> Object disableProjectCI(owner, project)
+> disableProjectCI(owner, project)
 
 Disbale project CI
 
@@ -352,8 +349,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project under namesapce
     try {
-      Object result = apiInstance.disableProjectCI(owner, project);
-      System.out.println(result);
+      apiInstance.disableProjectCI(owner, project);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#disableProjectCI");
       System.err.println("Status code: " + e.getCode());
@@ -374,7 +370,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -396,7 +392,7 @@ Name | Type | Description  | Notes
 
 <a name="enableProjectCI"></a>
 # **enableProjectCI**
-> Object enableProjectCI(owner, project)
+> enableProjectCI(owner, project)
 
 Enable project CI
 
@@ -425,8 +421,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project under namesapce
     try {
-      Object result = apiInstance.enableProjectCI(owner, project);
-      System.out.println(result);
+      apiInstance.enableProjectCI(owner, project);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#enableProjectCI");
       System.err.println("Status code: " + e.getCode());
@@ -447,7 +442,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1229,7 +1224,7 @@ Name | Type | Description  | Notes
 
 <a name="restoreProject"></a>
 # **restoreProject**
-> Object restoreProject(owner, project)
+> restoreProject(owner, project)
 
 Restore project
 
@@ -1258,8 +1253,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project under namesapce
     try {
-      Object result = apiInstance.restoreProject(owner, project);
-      System.out.println(result);
+      apiInstance.restoreProject(owner, project);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#restoreProject");
       System.err.println("Status code: " + e.getCode());
@@ -1280,7 +1274,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1302,7 +1296,7 @@ Name | Type | Description  | Notes
 
 <a name="unbookmarkProject"></a>
 # **unbookmarkProject**
-> Object unbookmarkProject(owner, project)
+> unbookmarkProject(owner, project)
 
 Unbookmark project
 
@@ -1331,8 +1325,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project under namesapce
     try {
-      Object result = apiInstance.unbookmarkProject(owner, project);
-      System.out.println(result);
+      apiInstance.unbookmarkProject(owner, project);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#unbookmarkProject");
       System.err.println("Status code: " + e.getCode());
@@ -1353,7 +1346,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

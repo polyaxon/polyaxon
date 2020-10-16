@@ -564,14 +564,14 @@ class TestProjectRunListViewV1(BaseTest):
         assert data[0]["inputs"]["optimizer"] < data[-1]["inputs"]["optimizer"]
 
         # Artifacts
-        resp = self.stuff_client.get(
+        resp = self.client.get(
             self.url + "?query=in_artifact_kind:{}".format(V1ArtifactKind.METRIC)
         )
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["next"] is None
         assert resp.data["count"] == 0
 
-        resp = self.stuff_client.get(
+        resp = self.client.get(
             self.url + "?query=in_artifact_kind:~{}".format(V1ArtifactKind.METRIC)
         )
         assert resp.status_code == status.HTTP_200_OK
@@ -609,10 +609,9 @@ class TestProjectRunListViewV1(BaseTest):
         assert resp.data["count"] == 1
 
         # Add artifacts
-        obj = ArtifactFactory(owner=self.owner, name="m1", state=self.project.uuid)
+        obj = ArtifactFactory(name="m1", state=self.project.uuid)
         ArtifactLineage.objects.create(run=self.objects[0], artifact=obj, is_input=True)
         obj = ArtifactFactory(
-            owner=self.owner,
             name="in1",
             state=self.project.uuid,
             kind=V1ArtifactKind.DOCKERFILE,
@@ -620,7 +619,7 @@ class TestProjectRunListViewV1(BaseTest):
         ArtifactLineage.objects.create(
             run=self.objects[0], artifact=obj, is_input=False
         )
-        obj = ArtifactFactory(owner=self.owner, name="m2", state=self.project.uuid)
+        obj = ArtifactFactory(name="m2", state=self.project.uuid)
         ArtifactLineage.objects.create(run=self.objects[1], artifact=obj)
 
         resp = self.client.get(
@@ -670,7 +669,6 @@ class TestProjectRunListViewV1(BaseTest):
         assert resp.data["count"] == len(self.objects)
 
         obj = ArtifactFactory(
-            owner=self.owner,
             name="commit1",
             state=self.project.uuid,
             kind=V1ArtifactKind.CODEREF,

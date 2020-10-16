@@ -18,7 +18,7 @@ import polyaxon_sdk
 
 from marshmallow import ValidationError, fields, validates_schema
 
-from polyaxon.containers.names import generate_container_name, POLYAXON_INIT_PREFIX
+from polyaxon.containers.names import POLYAXON_INIT_PREFIX, generate_container_name
 from polyaxon.k8s import k8s_schemas
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.swagger import SwaggerField

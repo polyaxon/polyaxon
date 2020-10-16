@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_preset**
-> object delete_preset(owner, uuid)
+> delete_preset(owner, uuid)
 
 Delete scheduling preset
 
@@ -139,8 +139,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete scheduling preset
-        api_response = api_instance.delete_preset(owner, uuid)
-        pprint(api_response)
+        api_instance.delete_preset(owner, uuid)
     except ApiException as e:
         print("Exception when calling PresetsV1Api->delete_preset: %s\n" % e)
 ```
@@ -154,7 +153,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.2.0-rc3
+- API version: 1.2.0
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.2.0-rc3</version>
+  <version>1.2.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.2.0-rc3"
+compile "org.openapitools:openapi-java-client:1.2.0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.2.0-rc3.jar`
+* `target/openapi-java-client-1.2.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -84,7 +84,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKey
     ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
     ApiKey.setApiKey("YOUR API KEY");
@@ -305,7 +305,7 @@ Class | Method | HTTP request | Description
 *TeamsV1Api* | [**listTeamNames**](docs/TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
 *TeamsV1Api* | [**listTeams**](docs/TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List teams
 *TeamsV1Api* | [**patchTeam**](docs/TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
-*TeamsV1Api* | [**patchTeamMember**](docs/TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch tram member
+*TeamsV1Api* | [**patchTeamMember**](docs/TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch team member
 *TeamsV1Api* | [**updateTeam**](docs/TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update team
 *TeamsV1Api* | [**updateTeamMember**](docs/TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update team member
 *UsersV1Api* | [**createToken**](docs/UsersV1Api.md#createToken) | **POST** /api/v1/users/tokens | Create token

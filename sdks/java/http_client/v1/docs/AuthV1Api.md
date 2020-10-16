@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 <a name="changePassword"></a>
 # **changePassword**
-> Object changePassword(body)
+> changePassword(body)
 
 Change password
 
@@ -42,8 +42,7 @@ public class Example {
     AuthV1Api apiInstance = new AuthV1Api(defaultClient);
     V1PasswordChange body = new V1PasswordChange(); // V1PasswordChange | 
     try {
-      Object result = apiInstance.changePassword(body);
-      System.out.println(result);
+      apiInstance.changePassword(body);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthV1Api#changePassword");
       System.err.println("Status code: " + e.getCode());
@@ -63,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -156,7 +155,7 @@ Name | Type | Description  | Notes
 
 <a name="resetPassword"></a>
 # **resetPassword**
-> Object resetPassword(body)
+> resetPassword(body)
 
 Reset password
 
@@ -184,8 +183,7 @@ public class Example {
     AuthV1Api apiInstance = new AuthV1Api(defaultClient);
     V1UserEmail body = new V1UserEmail(); // V1UserEmail | 
     try {
-      Object result = apiInstance.resetPassword(body);
-      System.out.println(result);
+      apiInstance.resetPassword(body);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthV1Api#resetPassword");
       System.err.println("Status code: " + e.getCode());
@@ -205,7 +203,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

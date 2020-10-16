@@ -434,4 +434,5 @@ class BaseAgent:
     def delete_run(self, run_data: Tuple[str, str, str, str]):
         run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])
         self.clean_run(run_uuid=run_uuid, run_kind=run_data[1])
-        self.make_and_create_run(run_data)
+        if run_data[3]:
+            self.make_and_create_run(run_data)

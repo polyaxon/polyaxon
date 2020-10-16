@@ -20,7 +20,7 @@ from marshmallow import fields, validate
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
-from polyaxon.polyflow.matrix.params import MatrixSchema
+from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
@@ -31,7 +31,7 @@ class HyperoptSchema(BaseCamelSchema):
         allow_none=True, validate=validate.OneOf(["tpe", "rand", "anneal"])
     )
     params = fields.Dict(
-        keys=fields.Str(), values=fields.Nested(MatrixSchema), required=True
+        keys=fields.Str(), values=fields.Nested(HpParamSchema), required=True
     )
     num_runs = RefOrObject(
         fields.Int(required=True, validate=validate.Range(min=1)), required=True

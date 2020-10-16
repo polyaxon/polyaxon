@@ -20,7 +20,6 @@ import time
 
 from typing import Dict
 
-from polyaxon.schemas.types import V1ConnectionType
 from polyaxon_sdk import V1Agent
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -29,6 +28,7 @@ from polyaxon import pkg, settings
 from polyaxon.agents.base import BaseAgent
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, V1PolyaxonSidecarContainer
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
+from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.versions import clean_version_for_check
 
 
@@ -67,9 +67,7 @@ class Agent(BaseAgent):
         time.sleep(1)
 
     def get_info(self):
-        return self.client.agents_v1.get_agent(
-            owner=self.owner, uuid=self.agent_uuid
-        )
+        return self.client.agents_v1.get_agent(owner=self.owner, uuid=self.agent_uuid)
 
     def get_state(self):
         return self.client.agents_v1.get_agent_state(

@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_queue**
-> object delete_queue(owner, agent, uuid)
+> delete_queue(owner, agent, uuid)
 
 Delete queue
 
@@ -144,8 +144,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete queue
-        api_response = api_instance.delete_queue(owner, agent, uuid)
-        pprint(api_response)
+        api_instance.delete_queue(owner, agent, uuid)
     except ApiException as e:
         print("Exception when calling QueuesV1Api->delete_queue: %s\n" % e)
 ```
@@ -160,7 +159,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

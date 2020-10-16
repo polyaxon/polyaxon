@@ -20,7 +20,7 @@ from marshmallow import fields, validate
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
-from polyaxon.polyflow.matrix.params import MatrixSchema
+from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.polyflow.optimization import (
     OptimizationMetricSchema,
     OptimizationResourceSchema,
@@ -32,7 +32,7 @@ from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 class HyperbandSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1MatrixKind.HYPERBAND))
     params = fields.Dict(
-        keys=fields.Str(), values=fields.Nested(MatrixSchema), allow_none=True
+        keys=fields.Str(), values=fields.Nested(HpParamSchema), allow_none=True
     )
     max_iterations = RefOrObject(fields.Int(validate=validate.Range(min=1)))
     eta = RefOrObject(fields.Float(validate=validate.Range(min=0)))

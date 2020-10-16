@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.2.0-rc3";
+        version: "1.2.0";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -1596,7 +1596,7 @@ service TeamsV1 {
     };
   }
 
-  // Patch tram member
+  // Patch team member
   rpc PatchTeamMember(TeamMemberBodyRequest) returns (TeamMember) {
     option (google.api.http) = {
       patch: "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}"

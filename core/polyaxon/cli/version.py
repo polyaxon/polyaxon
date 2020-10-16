@@ -47,7 +47,7 @@ def get_current_version():
     return pkg.VERSION
 
 
-def check_cli_version(config):
+def check_cli_version(config, is_cli: bool = True):
     """Check if the current cli version satisfies the server requirements"""
     from distutils.version import LooseVersion  # pylint:disable=import-error
 
@@ -55,10 +55,13 @@ def check_cli_version(config):
     latest_version = clean_version_for_check(config.latest_version)
     current_version = clean_version_for_check(config.current_version)
     if not min_version or not latest_version or not current_version:
-        Printer.print_error(
-            "Could not get the min/latest versions from compatibility API.",
-            sys_exit=True,
-        )
+        if is_cli:
+            Printer.print_error(
+                "Could not get the min/latest versions from compatibility API.",
+                sys_exit=True,
+            )
+        else:
+            return
     if LooseVersion(current_version) < LooseVersion(min_version):
         click.echo(
             """Your version of CLI ({}) is no longer compatible with server.""".format(

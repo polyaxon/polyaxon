@@ -15,7 +15,7 @@ Method | HTTP request | Description
 [**list_team_names**](TeamsV1Api.md#list_team_names) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
 [**list_teams**](TeamsV1Api.md#list_teams) | **GET** /api/v1/orgs/{owner}/teams | List teams
 [**patch_team**](TeamsV1Api.md#patch_team) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
-[**patch_team_member**](TeamsV1Api.md#patch_team_member) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch tram member
+[**patch_team_member**](TeamsV1Api.md#patch_team_member) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch team member
 [**update_team**](TeamsV1Api.md#update_team) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update team
 [**update_team_member**](TeamsV1Api.md#update_team_member) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update team member
 
@@ -74,8 +74,8 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **body** | [**V1Team**](V1Team.md)| Team body | 
+ **owner** | **str**| Owner of the namespace |
+ **body** | [**V1Team**](V1Team.md)| Team body |
 
 ### Return type
 
@@ -156,9 +156,9 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team | 
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
+ **owner** | **str**| Owner of the namespace |
+ **team** | **str**| Team |
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
 
 ### Return type
 
@@ -185,7 +185,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_team**
-> object delete_team(owner, team)
+> delete_team(owner, team)
 
 Delete team
 
@@ -228,8 +228,7 @@ team = 'team_example' # str | Team under namesapce
 
     try:
         # Delete team
-        api_response = api_instance.delete_team(owner, team)
-        pprint(api_response)
+        api_instance.delete_team(owner, team)
     except ApiException as e:
         print("Exception when calling TeamsV1Api->delete_team: %s\n" % e)
 ```
@@ -238,12 +237,12 @@ team = 'team_example' # str | Team under namesapce
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team under namesapce | 
+ **owner** | **str**| Owner of the namespace |
+ **team** | **str**| Team under namesapce |
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -266,7 +265,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_team_member**
-> object delete_team_member(owner, team, user)
+> delete_team_member(owner, team, user)
 
 Delete team member details
 
@@ -310,8 +309,7 @@ user = 'user_example' # str | Member under team
 
     try:
         # Delete team member details
-        api_response = api_instance.delete_team_member(owner, team, user)
-        pprint(api_response)
+        api_instance.delete_team_member(owner, team, user)
     except ApiException as e:
         print("Exception when calling TeamsV1Api->delete_team_member: %s\n" % e)
 ```
@@ -320,13 +318,13 @@ user = 'user_example' # str | Member under team
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team under namesapce | 
- **user** | **str**| Member under team | 
+ **owner** | **str**| Owner of the namespace |
+ **team** | **str**| Team under namesapce |
+ **user** | **str**| Member under team |
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -402,8 +400,8 @@ team = 'team_example' # str | Team under namesapce
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team under namesapce | 
+ **owner** | **str**| Owner of the namespace |
+ **team** | **str**| Team under namesapce |
 
 ### Return type
 
@@ -484,9 +482,9 @@ user = 'user_example' # str | Member under team
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team under namesapce | 
- **user** | **str**| Member under team | 
+ **owner** | **str**| Owner of the namespace |
+ **team** | **str**| Team under namesapce |
+ **user** | **str**| Member under team |
 
 ### Return type
 
@@ -570,12 +568,12 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team under namesapce | 
- **offset** | **int**| Pagination offset. | [optional] 
- **limit** | **int**| Limit size. | [optional] 
- **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **owner** | **str**| Owner of the namespace |
+ **team** | **str**| Team under namesapce |
+ **offset** | **int**| Pagination offset. | [optional]
+ **limit** | **int**| Limit size. | [optional]
+ **sort** | **str**| Sort to order the search. | [optional]
+ **query** | **str**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -658,11 +656,11 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **offset** | **int**| Pagination offset. | [optional] 
- **limit** | **int**| Limit size. | [optional] 
- **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **owner** | **str**| Owner of the namespace |
+ **offset** | **int**| Pagination offset. | [optional]
+ **limit** | **int**| Limit size. | [optional]
+ **sort** | **str**| Sort to order the search. | [optional]
+ **query** | **str**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -745,11 +743,11 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **offset** | **int**| Pagination offset. | [optional] 
- **limit** | **int**| Limit size. | [optional] 
- **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **owner** | **str**| Owner of the namespace |
+ **offset** | **int**| Pagination offset. | [optional]
+ **limit** | **int**| Limit size. | [optional]
+ **sort** | **str**| Sort to order the search. | [optional]
+ **query** | **str**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -830,9 +828,9 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team_name** | **str**| Name | 
- **body** | [**V1Team**](V1Team.md)| Team body | 
+ **owner** | **str**| Owner of the namespace |
+ **team_name** | **str**| Name |
+ **body** | [**V1Team**](V1Team.md)| Team body |
 
 ### Return type
 
@@ -861,7 +859,7 @@ Name | Type | Description  | Notes
 # **patch_team_member**
 > V1TeamMember patch_team_member(owner, team, member_user, body)
 
-Patch tram member
+Patch team member
 
 ### Example
 
@@ -903,7 +901,7 @@ member_user = 'member_user_example' # str | User
 body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
     try:
-        # Patch tram member
+        # Patch team member
         api_response = api_instance.patch_team_member(owner, team, member_user, body)
         pprint(api_response)
     except ApiException as e:
@@ -914,10 +912,10 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team | 
- **member_user** | **str**| User | 
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
+ **owner** | **str**| Owner of the namespace |
+ **team** | **str**| Team |
+ **member_user** | **str**| User |
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
 
 ### Return type
 
@@ -998,9 +996,9 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team_name** | **str**| Name | 
- **body** | [**V1Team**](V1Team.md)| Team body | 
+ **owner** | **str**| Owner of the namespace |
+ **team_name** | **str**| Name |
+ **body** | [**V1Team**](V1Team.md)| Team body |
 
 ### Return type
 
@@ -1082,10 +1080,10 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team | 
- **member_user** | **str**| User | 
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
+ **owner** | **str**| Owner of the namespace |
+ **team** | **str**| Team |
+ **member_user** | **str**| User |
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
 
 ### Return type
 

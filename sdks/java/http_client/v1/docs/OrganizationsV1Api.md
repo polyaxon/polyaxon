@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteOrganization"></a>
 # **deleteOrganization**
-> Object deleteOrganization(owner, usage)
+> deleteOrganization(owner, usage)
 
 Delete organization
 
@@ -206,8 +206,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String usage = "usage_example"; // String | Owner usage query param.
     try {
-      Object result = apiInstance.deleteOrganization(owner, usage);
-      System.out.println(result);
+      apiInstance.deleteOrganization(owner, usage);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganization");
       System.err.println("Status code: " + e.getCode());
@@ -228,7 +227,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -250,7 +249,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteOrganizationInvitation"></a>
 # **deleteOrganizationInvitation**
-> Object deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email)
+> deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email)
 
 Delete organization invitation details
 
@@ -284,8 +283,7 @@ public class Example {
     OffsetDateTime memberUpdatedAt = new OffsetDateTime(); // OffsetDateTime | Optional last time the entity was updated.
     String email = "email_example"; // String | Optional email.
     try {
-      Object result = apiInstance.deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email);
-      System.out.println(result);
+      apiInstance.deleteOrganizationInvitation(owner, memberUser, memberUserEmail, memberRole, memberCreatedAt, memberUpdatedAt, email);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganizationInvitation");
       System.err.println("Status code: " + e.getCode());
@@ -311,7 +309,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -333,7 +331,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteOrganizationMember"></a>
 # **deleteOrganizationMember**
-> Object deleteOrganizationMember(owner, user)
+> deleteOrganizationMember(owner, user)
 
 Delete organization member details
 
@@ -362,8 +360,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String user = "user_example"; // String | Memeber under namesapce
     try {
-      Object result = apiInstance.deleteOrganizationMember(owner, user);
-      System.out.println(result);
+      apiInstance.deleteOrganizationMember(owner, user);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganizationMember");
       System.err.println("Status code: " + e.getCode());
@@ -384,7 +381,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

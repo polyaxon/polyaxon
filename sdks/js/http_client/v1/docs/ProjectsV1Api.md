@@ -33,7 +33,7 @@ Method | HTTP request | Description
 
 ## archiveProject
 
-> Object archiveProject(owner, project)
+> archiveProject(owner, project)
 
 Archive project
 
@@ -55,7 +55,7 @@ apiInstance.archiveProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -84,7 +84,7 @@ Name | Type | Description  | Notes
 
 ## bookmarkProject
 
-> Object bookmarkProject(owner, project)
+> bookmarkProject(owner, project)
 
 Bookmark project
 
@@ -106,7 +106,7 @@ apiInstance.bookmarkProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -121,7 +121,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -186,7 +186,7 @@ Name | Type | Description  | Notes
 
 ## deleteProject
 
-> Object deleteProject(owner, project)
+> deleteProject(owner, project)
 
 Delete project
 
@@ -208,7 +208,7 @@ apiInstance.deleteProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -237,7 +237,7 @@ Name | Type | Description  | Notes
 
 ## disableProjectCI
 
-> Object disableProjectCI(owner, project)
+> disableProjectCI(owner, project)
 
 Disbale project CI
 
@@ -259,7 +259,7 @@ apiInstance.disableProjectCI(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -274,7 +274,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -288,7 +288,7 @@ Name | Type | Description  | Notes
 
 ## enableProjectCI
 
-> Object enableProjectCI(owner, project)
+> enableProjectCI(owner, project)
 
 Enable project CI
 
@@ -310,7 +310,7 @@ apiInstance.enableProjectCI(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -887,7 +887,7 @@ Name | Type | Description  | Notes
 
 ## restoreProject
 
-> Object restoreProject(owner, project)
+> restoreProject(owner, project)
 
 Restore project
 
@@ -909,7 +909,7 @@ apiInstance.restoreProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -924,7 +924,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -938,7 +938,7 @@ Name | Type | Description  | Notes
 
 ## unbookmarkProject
 
-> Object unbookmarkProject(owner, project)
+> unbookmarkProject(owner, project)
 
 Unbookmark project
 
@@ -960,7 +960,7 @@ apiInstance.unbookmarkProject(owner, project, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -975,7 +975,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

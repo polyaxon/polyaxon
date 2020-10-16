@@ -140,9 +140,9 @@ def cli(context, verbose, offline):
     ) and settings.CLI_CONFIG.should_check(
         settings.CLIENT_CONFIG.compatibility_check_interval
     ):
-        cli_config = set_versions_config()
+        cli_config = set_versions_config(is_cli=False)
         settings.CLI_CONFIG = cli_config
-        check_cli_version(cli_config)
+        check_cli_version(cli_config, is_cli=False)
 
 
 cli.add_command(login)
@@ -172,6 +172,7 @@ if settings.CLIENT_CONFIG.is_ops:
     from polyaxon.cli.components.proxies import proxy
     from polyaxon.cli.components.sidecar import sidecar
     from polyaxon.cli.components.tuner import tuner
+    from polyaxon.cli.components.wait import wait
 
     cli.add_command(agent)
     cli.add_command(clean_artifacts)
@@ -182,3 +183,4 @@ if settings.CLIENT_CONFIG.is_ops:
     cli.add_command(proxy)
     cli.add_command(sidecar)
     cli.add_command(tuner)
+    cli.add_command(wait)

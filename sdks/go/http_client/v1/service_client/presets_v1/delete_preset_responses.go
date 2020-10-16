@@ -83,23 +83,13 @@ func NewDeletePresetOK() *DeletePresetOK {
 A successful response.
 */
 type DeletePresetOK struct {
-	Payload interface{}
 }
 
 func (o *DeletePresetOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/presets/{uuid}][%d] deletePresetOK  %+v", 200, o.Payload)
-}
-
-func (o *DeletePresetOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/presets/{uuid}][%d] deletePresetOK ", 200)
 }
 
 func (o *DeletePresetOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

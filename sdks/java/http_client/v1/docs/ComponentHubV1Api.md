@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteComponentHub"></a>
 # **deleteComponentHub**
-> Object deleteComponentHub(owner, uuid)
+> deleteComponentHub(owner, uuid)
 
 Delete hub component
 
@@ -118,8 +118,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.deleteComponentHub(owner, uuid);
-      System.out.println(result);
+      apiInstance.deleteComponentHub(owner, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling ComponentHubV1Api#deleteComponentHub");
       System.err.println("Status code: " + e.getCode());
@@ -140,7 +139,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

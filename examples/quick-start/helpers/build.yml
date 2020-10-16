@@ -11,7 +11,7 @@ runPatch:
       image: "tensorflow/tensorflow:2.2.0"
       run:
       - pip install keras
-      - pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]==1.1.9
+      - pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]==1.2.0
       langEnv: 'en_US.UTF-8'
 hubRef: kaniko
 template:

@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_component_hub**
-> object delete_component_hub(owner, uuid)
+> delete_component_hub(owner, uuid)
 
 Delete hub component
 
@@ -139,8 +139,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete hub component
-        api_response = api_instance.delete_component_hub(owner, uuid)
-        pprint(api_response)
+        api_instance.delete_component_hub(owner, uuid)
     except ApiException as e:
         print("Exception when calling ComponentHubV1Api->delete_component_hub: %s\n" % e)
 ```
@@ -154,7 +153,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
