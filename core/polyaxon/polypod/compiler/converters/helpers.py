@@ -22,7 +22,7 @@ from polyaxon.k8s.custom_resources.operation import (
     get_watchdog_instance,
     get_watchdog_resource_name,
 )
-from polyaxon.polypod.compiler.converters import JobConverter
+from polyaxon.polypod.compiler.converters.job import JobConverter
 from polyaxon.polypod.mixins import CleanerMixin, NotifierMixin
 
 

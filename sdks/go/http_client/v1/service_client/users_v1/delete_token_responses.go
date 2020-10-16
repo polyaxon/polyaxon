@@ -83,23 +83,13 @@ func NewDeleteTokenOK() *DeleteTokenOK {
 A successful response.
 */
 type DeleteTokenOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteTokenOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/users/tokens/{uuid}][%d] deleteTokenOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteTokenOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/users/tokens/{uuid}][%d] deleteTokenOK ", 200)
 }
 
 func (o *DeleteTokenOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 ## deletePreset
 
-> Object deletePreset(owner, uuid)
+> deletePreset(owner, uuid)
 
 Delete scheduling preset
 
@@ -91,7 +91,7 @@ apiInstance.deletePreset(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

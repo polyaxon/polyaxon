@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteDashboard"></a>
 # **deleteDashboard**
-> Object deleteDashboard(owner, uuid)
+> deleteDashboard(owner, uuid)
 
 Delete dashboard
 
@@ -118,8 +118,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.deleteDashboard(owner, uuid);
-      System.out.println(result);
+      apiInstance.deleteDashboard(owner, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling DashboardsV1Api#deleteDashboard");
       System.err.println("Status code: " + e.getCode());
@@ -140,7 +139,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

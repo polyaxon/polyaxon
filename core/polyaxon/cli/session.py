@@ -56,7 +56,7 @@ def get_server_installation(polyaxon_client=None):
         )
 
 
-def get_compatibility(key: str, service: str, version: str, is_cli=True):
+def get_compatibility(key: str, service: str, version: str, is_cli: bool = True):
     if not key:
         key = uuid.uuid4().hex
     try:
@@ -118,6 +118,7 @@ def set_versions_config(
     service=PolyaxonServices.CLI,
     version=pkg.VERSION,
     key: str = None,
+    is_cli: bool = True,
 ):
     polyaxon_client = polyaxon_client or PolyaxonClient()
     server_installation = None
@@ -127,7 +128,9 @@ def set_versions_config(
             key = server_installation.key
     compatibility = None
     if set_compatibility:
-        compatibility = get_compatibility(key=key, service=service, version=version)
+        compatibility = get_compatibility(
+            key=key, service=service, version=version, is_cli=is_cli
+        )
     log_handler = None
     if set_handler:
         log_handler = get_log_handler(polyaxon_client=polyaxon_client)

@@ -15,9 +15,9 @@
 # limitations under the License.
 
 from polyaxon.polyflow.params.params import (
-    ParamSchema,
-    V1Param,
-    ParamSpec,
     DAG_ENTITY_REF,
+    ParamSchema,
+    ParamSpec,
+    V1Param,
     V1ParamSearch,
 )

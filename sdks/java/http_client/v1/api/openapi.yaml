@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.2.0-rc3
+  version: 1.2.0
 servers:
 - url: /
 security:
@@ -157,10 +157,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -203,10 +200,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -789,10 +783,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -1308,10 +1299,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -1703,10 +1691,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -1984,10 +1969,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -2551,10 +2533,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -2958,10 +2937,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -3365,10 +3341,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -3492,10 +3465,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -4056,10 +4026,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -4463,10 +4430,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -4924,10 +4888,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -5465,10 +5426,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -6071,10 +6029,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -6441,10 +6396,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -6884,10 +6836,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -7484,10 +7433,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -7585,10 +7531,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -7636,10 +7579,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -7687,10 +7627,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -7737,10 +7674,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8130,10 +8064,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8243,10 +8174,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8294,10 +8222,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8557,10 +8482,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8617,10 +8539,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8677,10 +8596,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8737,10 +8653,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8797,10 +8710,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -8987,10 +8897,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -9100,10 +9007,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -9242,10 +9146,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -9391,10 +9292,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -9515,10 +9413,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -9629,10 +9524,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -9743,10 +9635,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -9978,10 +9867,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -10041,10 +9927,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -10100,10 +9983,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -10157,10 +10037,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -10550,10 +10427,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -10663,10 +10537,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -11052,10 +10923,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -11152,10 +11020,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -11330,10 +11195,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -11469,10 +11331,7 @@ paths:
           type: string
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:
@@ -11862,10 +11721,7 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
+          content: {}
           description: A successful response.
         "204":
           content:

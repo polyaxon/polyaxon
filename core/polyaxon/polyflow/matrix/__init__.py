@@ -15,7 +15,6 @@
 # limitations under the License.
 from typing import Union
 
-from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.bayes import (
     AcquisitionFunctions,
     BayesSchema,
@@ -24,43 +23,44 @@ from polyaxon.polyflow.matrix.bayes import (
     UtilityFunctionConfig,
     V1Bayes,
 )
-from polyaxon.polyflow.matrix.params import (
-    V1HpChoice,
-    HpChoiceSchema,
-    V1HpPChoice,
-    HpPChoiceSchema,
-    V1HpRange,
-    HpRangeSchema,
-    V1HpLinSpace,
-    HpLinSpaceSchema,
-    V1HpLogSpace,
-    HpLogSpaceSchema,
-    V1HpGeomSpace,
-    HpGeomSpaceSchema,
-    V1HpUniform,
-    HpUniformSchema,
-    V1HpQUniform,
-    HpQUniformSchema,
-    V1HpLogUniform,
-    HpLogUniformSchema,
-    V1HpQLogUniform,
-    HpQLogUniformSchema,
-    V1HpNormal,
-    HpNormalSchema,
-    V1HpQNormal,
-    HpQNormalSchema,
-    V1HpLogNormal,
-    HpLogNormalSchema,
-    V1HpQLogNormal,
-    HpQLogNormalSchema,
-    MatrixSchema,
-    V1HpParam,
-)
 from polyaxon.polyflow.matrix.grid_search import GridSearchSchema, V1GridSearch
 from polyaxon.polyflow.matrix.hyperband import HyperbandSchema, V1Hyperband
 from polyaxon.polyflow.matrix.hyperopt import HyperoptSchema, V1Hyperopt
 from polyaxon.polyflow.matrix.iterative import IterativeSchema, V1Iterative
+from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.mapping import MappingSchema, V1Mapping
+from polyaxon.polyflow.matrix.params import (
+    HpChoiceSchema,
+    HpGeomSpaceSchema,
+    HpLinSpaceSchema,
+    HpLogNormalSchema,
+    HpLogSpaceSchema,
+    HpLogUniformSchema,
+    HpNormalSchema,
+    HpPChoiceSchema,
+    HpQLogNormalSchema,
+    HpQLogUniformSchema,
+    HpQNormalSchema,
+    HpQUniformSchema,
+    HpParamSchema,
+    HpRangeSchema,
+    HpUniformSchema,
+    V1HpChoice,
+    V1HpGeomSpace,
+    V1HpLinSpace,
+    V1HpLogNormal,
+    V1HpLogSpace,
+    V1HpLogUniform,
+    V1HpNormal,
+    V1HpParam,
+    V1HpPChoice,
+    V1HpQLogNormal,
+    V1HpQLogUniform,
+    V1HpQNormal,
+    V1HpQUniform,
+    V1HpRange,
+    V1HpUniform,
+)
 from polyaxon.polyflow.matrix.random_search import RandomSearchSchema, V1RandomSearch
 from polyaxon.schemas.base import BaseOneOfSchema
 

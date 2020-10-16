@@ -185,7 +185,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_team**
-> object delete_team(owner, team)
+> delete_team(owner, team)
 
 Delete team
 
@@ -228,8 +228,7 @@ team = 'team_example' # str | Team under namesapce
 
     try:
         # Delete team
-        api_response = api_instance.delete_team(owner, team)
-        pprint(api_response)
+        api_instance.delete_team(owner, team)
     except ApiException as e:
         print("Exception when calling TeamsV1Api->delete_team: %s\n" % e)
 ```
@@ -243,7 +242,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -266,7 +265,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_team_member**
-> object delete_team_member(owner, team, user)
+> delete_team_member(owner, team, user)
 
 Delete team member details
 
@@ -310,8 +309,7 @@ user = 'user_example' # str | Member under team
 
     try:
         # Delete team member details
-        api_response = api_instance.delete_team_member(owner, team, user)
-        pprint(api_response)
+        api_instance.delete_team_member(owner, team, user)
     except ApiException as e:
         print("Exception when calling TeamsV1Api->delete_team_member: %s\n" % e)
 ```
@@ -326,7 +324,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

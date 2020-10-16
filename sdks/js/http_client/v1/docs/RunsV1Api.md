@@ -59,7 +59,7 @@ Method | HTTP request | Description
 
 ## archiveRun
 
-> Object archiveRun(owner, project, uuid)
+> archiveRun(owner, project, uuid)
 
 Archive run
 
@@ -82,7 +82,7 @@ apiInstance.archiveRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -98,7 +98,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -112,7 +112,7 @@ Name | Type | Description  | Notes
 
 ## bookmarkRun
 
-> Object bookmarkRun(owner, project, uuid)
+> bookmarkRun(owner, project, uuid)
 
 Bookmark run
 
@@ -135,7 +135,7 @@ apiInstance.bookmarkRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -151,7 +151,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 
 ## bookmarkRuns
 
-> Object bookmarkRuns(owner, project, body)
+> bookmarkRuns(owner, project, body)
 
 Bookmark runs
 
@@ -188,7 +188,7 @@ apiInstance.bookmarkRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -204,7 +204,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -218,7 +218,7 @@ Name | Type | Description  | Notes
 
 ## collectRunLogs
 
-> Object collectRunLogs(namespace, owner, project, uuid)
+> collectRunLogs(namespace, owner, project, uuid)
 
 Collect run logs
 
@@ -242,7 +242,7 @@ apiInstance.collectRunLogs(namespace, owner, project, uuid, (error, data, respon
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -259,7 +259,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -381,7 +381,7 @@ Name | Type | Description  | Notes
 
 ## createRunArtifactsLineage
 
-> Object createRunArtifactsLineage(owner, project, uuid, body)
+> createRunArtifactsLineage(owner, project, uuid, body)
 
 Create bulk run artifacts lineage
 
@@ -405,7 +405,7 @@ apiInstance.createRunArtifactsLineage(owner, project, uuid, body, (error, data, 
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -422,7 +422,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -491,7 +491,7 @@ Name | Type | Description  | Notes
 
 ## deleteRun
 
-> Object deleteRun(owner, project, uuid)
+> deleteRun(owner, project, uuid)
 
 Delete run
 
@@ -514,7 +514,7 @@ apiInstance.deleteRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -530,7 +530,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -544,7 +544,7 @@ Name | Type | Description  | Notes
 
 ## deleteRunArtifact
 
-> Object deleteRunArtifact(namespace, owner, project, uuid, opts)
+> deleteRunArtifact(namespace, owner, project, uuid, opts)
 
 Delete run artifact
 
@@ -571,7 +571,7 @@ apiInstance.deleteRunArtifact(namespace, owner, project, uuid, opts, (error, dat
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -589,7 +589,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -603,7 +603,7 @@ Name | Type | Description  | Notes
 
 ## deleteRunArtifactLineage
 
-> Object deleteRunArtifactLineage(owner, project, uuid, name, opts)
+> deleteRunArtifactLineage(owner, project, uuid, name, opts)
 
 Delete run artifact lineage
 
@@ -630,7 +630,7 @@ apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, opts, (error, d
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -648,7 +648,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -662,7 +662,7 @@ Name | Type | Description  | Notes
 
 ## deleteRunArtifacts
 
-> Object deleteRunArtifacts(namespace, owner, project, uuid, opts)
+> deleteRunArtifacts(namespace, owner, project, uuid, opts)
 
 Delete run artifacts
 
@@ -689,7 +689,7 @@ apiInstance.deleteRunArtifacts(namespace, owner, project, uuid, opts, (error, da
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -707,7 +707,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -721,7 +721,7 @@ Name | Type | Description  | Notes
 
 ## deleteRuns
 
-> Object deleteRuns(owner, project, body)
+> deleteRuns(owner, project, body)
 
 Delete runs
 
@@ -744,7 +744,7 @@ apiInstance.deleteRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -760,7 +760,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1724,7 +1724,7 @@ Name | Type | Description  | Notes
 
 ## invalidateRun
 
-> Object invalidateRun(owner, project, uuid)
+> invalidateRun(owner, project, uuid)
 
 Invalidate run
 
@@ -1747,7 +1747,7 @@ apiInstance.invalidateRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -1763,7 +1763,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1777,7 +1777,7 @@ Name | Type | Description  | Notes
 
 ## invalidateRuns
 
-> Object invalidateRuns(owner, project, body)
+> invalidateRuns(owner, project, body)
 
 Invalidate runs
 
@@ -1800,7 +1800,7 @@ apiInstance.invalidateRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -1816,7 +1816,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2009,7 +2009,7 @@ Name | Type | Description  | Notes
 
 ## notifyRunStatus
 
-> Object notifyRunStatus(namespace, owner, project, uuid, body)
+> notifyRunStatus(namespace, owner, project, uuid, body)
 
 Notify run status
 
@@ -2034,7 +2034,7 @@ apiInstance.notifyRunStatus(namespace, owner, project, uuid, body, (error, data,
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -2052,7 +2052,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2176,7 +2176,7 @@ Name | Type | Description  | Notes
 
 ## restoreRun
 
-> Object restoreRun(owner, project, uuid)
+> restoreRun(owner, project, uuid)
 
 Restore run
 
@@ -2199,7 +2199,7 @@ apiInstance.restoreRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -2215,7 +2215,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2284,7 +2284,7 @@ Name | Type | Description  | Notes
 
 ## startRunTensorboard
 
-> Object startRunTensorboard(owner, project, uuid, body)
+> startRunTensorboard(owner, project, uuid, body)
 
 Start run tensorboard
 
@@ -2308,7 +2308,7 @@ apiInstance.startRunTensorboard(owner, project, uuid, body, (error, data, respon
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -2325,7 +2325,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2339,7 +2339,7 @@ Name | Type | Description  | Notes
 
 ## stopRun
 
-> Object stopRun(owner, project, uuid)
+> stopRun(owner, project, uuid)
 
 Stop run
 
@@ -2362,7 +2362,7 @@ apiInstance.stopRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -2378,7 +2378,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2392,7 +2392,7 @@ Name | Type | Description  | Notes
 
 ## stopRunTensorboard
 
-> Object stopRunTensorboard(owner, project, uuid)
+> stopRunTensorboard(owner, project, uuid)
 
 Stop run tensorboard
 
@@ -2415,7 +2415,7 @@ apiInstance.stopRunTensorboard(owner, project, uuid, (error, data, response) => 
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -2431,7 +2431,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2445,7 +2445,7 @@ Name | Type | Description  | Notes
 
 ## stopRuns
 
-> Object stopRuns(owner, project, body)
+> stopRuns(owner, project, body)
 
 Stop runs
 
@@ -2468,7 +2468,7 @@ apiInstance.stopRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -2484,7 +2484,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2498,7 +2498,7 @@ Name | Type | Description  | Notes
 
 ## tagRuns
 
-> Object tagRuns(owner, project, body)
+> tagRuns(owner, project, body)
 
 Tag runs
 
@@ -2521,7 +2521,7 @@ apiInstance.tagRuns(owner, project, body, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -2537,7 +2537,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -2551,7 +2551,7 @@ Name | Type | Description  | Notes
 
 ## unbookmarkRun
 
-> Object unbookmarkRun(owner, project, uuid)
+> unbookmarkRun(owner, project, uuid)
 
 Unbookmark run
 
@@ -2574,7 +2574,7 @@ apiInstance.unbookmarkRun(owner, project, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -2590,7 +2590,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

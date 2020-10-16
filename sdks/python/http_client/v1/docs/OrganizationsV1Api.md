@@ -192,7 +192,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization**
-> object delete_organization(owner, usage=usage)
+> delete_organization(owner, usage=usage)
 
 Delete organization
 
@@ -235,8 +235,7 @@ usage = 'usage_example' # str | Owner usage query param. (optional)
 
     try:
         # Delete organization
-        api_response = api_instance.delete_organization(owner, usage=usage)
-        pprint(api_response)
+        api_instance.delete_organization(owner, usage=usage)
     except ApiException as e:
         print("Exception when calling OrganizationsV1Api->delete_organization: %s\n" % e)
 ```
@@ -250,7 +249,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -273,7 +272,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization_invitation**
-> object delete_organization_invitation(owner, member_user=member_user, member_user_email=member_user_email, member_role=member_role, member_created_at=member_created_at, member_updated_at=member_updated_at, email=email)
+> delete_organization_invitation(owner, member_user=member_user, member_user_email=member_user_email, member_role=member_role, member_created_at=member_created_at, member_updated_at=member_updated_at, email=email)
 
 Delete organization invitation details
 
@@ -321,8 +320,7 @@ email = 'email_example' # str | Optional email. (optional)
 
     try:
         # Delete organization invitation details
-        api_response = api_instance.delete_organization_invitation(owner, member_user=member_user, member_user_email=member_user_email, member_role=member_role, member_created_at=member_created_at, member_updated_at=member_updated_at, email=email)
-        pprint(api_response)
+        api_instance.delete_organization_invitation(owner, member_user=member_user, member_user_email=member_user_email, member_role=member_role, member_created_at=member_created_at, member_updated_at=member_updated_at, email=email)
     except ApiException as e:
         print("Exception when calling OrganizationsV1Api->delete_organization_invitation: %s\n" % e)
 ```
@@ -341,7 +339,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -364,7 +362,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization_member**
-> object delete_organization_member(owner, user)
+> delete_organization_member(owner, user)
 
 Delete organization member details
 
@@ -407,8 +405,7 @@ user = 'user_example' # str | Memeber under namesapce
 
     try:
         # Delete organization member details
-        api_response = api_instance.delete_organization_member(owner, user)
-        pprint(api_response)
+        api_instance.delete_organization_member(owner, user)
     except ApiException as e:
         print("Exception when calling OrganizationsV1Api->delete_organization_member: %s\n" % e)
 ```
@@ -422,7 +419,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

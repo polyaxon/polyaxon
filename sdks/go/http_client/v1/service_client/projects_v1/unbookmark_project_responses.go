@@ -83,23 +83,13 @@ func NewUnbookmarkProjectOK() *UnbookmarkProjectOK {
 A successful response.
 */
 type UnbookmarkProjectOK struct {
-	Payload interface{}
 }
 
 func (o *UnbookmarkProjectOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectOK  %+v", 200, o.Payload)
-}
-
-func (o *UnbookmarkProjectOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectOK ", 200)
 }
 
 func (o *UnbookmarkProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

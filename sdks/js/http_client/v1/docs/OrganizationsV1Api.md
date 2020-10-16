@@ -137,7 +137,7 @@ Name | Type | Description  | Notes
 
 ## deleteOrganization
 
-> Object deleteOrganization(owner, opts)
+> deleteOrganization(owner, opts)
 
 Delete organization
 
@@ -161,7 +161,7 @@ apiInstance.deleteOrganization(owner, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -176,7 +176,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -190,7 +190,7 @@ Name | Type | Description  | Notes
 
 ## deleteOrganizationInvitation
 
-> Object deleteOrganizationInvitation(owner, opts)
+> deleteOrganizationInvitation(owner, opts)
 
 Delete organization invitation details
 
@@ -219,7 +219,7 @@ apiInstance.deleteOrganizationInvitation(owner, opts, (error, data, response) =>
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -253,7 +253,7 @@ Name | Type | Description  | Notes
 
 ## deleteOrganizationMember
 
-> Object deleteOrganizationMember(owner, user)
+> deleteOrganizationMember(owner, user)
 
 Delete organization member details
 
@@ -275,7 +275,7 @@ apiInstance.deleteOrganizationMember(owner, user, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -290,7 +290,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

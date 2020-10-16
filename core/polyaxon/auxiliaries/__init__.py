@@ -16,16 +16,16 @@
 
 from polyaxon.auxiliaries.cleaner import get_default_cleaner_container
 from polyaxon.auxiliaries.init import (
-    get_default_init_container,
-    get_init_resources,
     PolyaxonInitContainerSchema,
     V1PolyaxonInitContainer,
+    get_default_init_container,
+    get_init_resources,
 )
 from polyaxon.auxiliaries.notifier import get_default_notification_container
 from polyaxon.auxiliaries.sidecar import (
-    get_default_sidecar_container,
-    get_sidecar_resources,
     PolyaxonSidecarContainerSchema,
     V1PolyaxonSidecarContainer,
+    get_default_sidecar_container,
+    get_sidecar_resources,
 )
 from polyaxon.auxiliaries.tuner import get_default_tuner_container

@@ -83,23 +83,13 @@ func NewArchiveRunOK() *ArchiveRunOK {
 A successful response.
 */
 type ArchiveRunOK struct {
-	Payload interface{}
 }
 
 func (o *ArchiveRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunOK  %+v", 200, o.Payload)
-}
-
-func (o *ArchiveRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunOK ", 200)
 }
 
 func (o *ArchiveRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

@@ -26,7 +26,7 @@ from polyaxon.k8s.async_manager import AsyncK8SManager
 from polyaxon.logger import logger
 from polyaxon.settings import CLIENT_CONFIG
 from polyaxon.sidecar.intervals import get_sync_interval
-from polyaxon.sidecar.monitors import sync_artifacts, sync_summaries, sync_logs
+from polyaxon.sidecar.monitors import sync_artifacts, sync_logs, sync_summaries
 
 
 async def start_sidecar(
@@ -92,7 +92,7 @@ async def start_sidecar(
             retry += 1
             logger.info("Exception %s" % repr(e))
             logger.info("Sleeping ...")
-            await asyncio.sleep(1 * retry)
+            await asyncio.sleep(retry)
             continue
 
         logger.debug("Syncing ...")

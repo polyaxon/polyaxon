@@ -83,23 +83,13 @@ func NewDeleteRunArtifactsOK() *DeleteRunArtifactsOK {
 A successful response.
 */
 type DeleteRunArtifactsOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteRunArtifactsOK) Error() string {
-	return fmt.Sprintf("[DELETE /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts][%d] deleteRunArtifactsOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteRunArtifactsOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts][%d] deleteRunArtifactsOK ", 200)
 }
 
 func (o *DeleteRunArtifactsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

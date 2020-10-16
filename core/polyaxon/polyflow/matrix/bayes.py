@@ -20,7 +20,7 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
-from polyaxon.polyflow.matrix.params import MatrixSchema
+from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.polyflow.optimization import OptimizationMetricSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -187,7 +187,7 @@ class BayesSchema(BaseCamelSchema):
     num_iterations = RefOrObject(fields.Int(), required=True)
     metric = fields.Nested(OptimizationMetricSchema, required=True)
     params = fields.Dict(
-        keys=fields.Str(), values=fields.Nested(MatrixSchema), required=True
+        keys=fields.Str(), values=fields.Nested(HpParamSchema), required=True
     )
     seed = RefOrObject(fields.Int(allow_none=True))
     concurrency = fields.Int(allow_none=True)

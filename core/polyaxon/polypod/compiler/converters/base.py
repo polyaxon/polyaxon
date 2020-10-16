@@ -32,7 +32,11 @@ from polyaxon.polypod.common.containers import (
     ensure_container_name,
     sanitize_container_command_args,
 )
-from polyaxon.polypod.common.env_vars import get_env_var, get_service_env_vars
+from polyaxon.polypod.common.env_vars import (
+    get_base_env_vars,
+    get_env_var,
+    get_service_env_vars,
+)
 from polyaxon.polypod.common.mounts import get_mounts
 from polyaxon.polypod.init.artifacts import get_artifacts_path_container
 from polyaxon.polypod.init.auth import get_auth_context_container
@@ -171,7 +175,7 @@ class BaseConverter(ConverterAbstract):
         return {c.name: c for c in values}
 
     def get_main_env_vars(self, **kwargs) -> Optional[List[k8s_schemas.V1EnvVar]]:
-        return None
+        return get_base_env_vars()
 
     def get_polyaxon_sidecar_service_env_vars(
         self,
@@ -419,7 +423,9 @@ class BaseConverter(ConverterAbstract):
         connections = connections or []
         environment = environment or V1Environment()
         environment.service_account_name = (
-            environment.service_account_name or default_sa
+            environment.service_account_name
+            or default_sa
+            or settings.AGENT_CONFIG.runs_sa
         )
 
         init_connections = self.filter_connections_from_init(init=init)

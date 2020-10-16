@@ -71,7 +71,9 @@ def runs_artifacts_clean(run: hex):
         in_cluster = conf.get(K8S_IN_CLUSTER)
         if in_cluster and (run.is_service or run.is_job):
             op = operations.get_cleaner_operation(
-                connection=settings.AGENT_CONFIG.artifacts_store, run_uuid=run.uuid.hex
+                connection=settings.AGENT_CONFIG.artifacts_store,
+                run_uuid=run.uuid.hex,
+                run_kind=run.kind,
             )
             try:
                 in_cluster = conf.get(K8S_IN_CLUSTER)

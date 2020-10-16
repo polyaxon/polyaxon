@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteProjectSearch"></a>
 # **deleteProjectSearch**
-> Object deleteProjectSearch(owner, project, uuid)
+> deleteProjectSearch(owner, project, uuid)
 
 Delete project search
 
@@ -122,8 +122,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.deleteProjectSearch(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.deleteProjectSearch(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectSearchesV1Api#deleteProjectSearch");
       System.err.println("Status code: " + e.getCode());
@@ -145,7 +144,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -481,7 +480,7 @@ Name | Type | Description  | Notes
 
 <a name="promoteProjectSearch"></a>
 # **promoteProjectSearch**
-> Object promoteProjectSearch(owner, project, uuid)
+> promoteProjectSearch(owner, project, uuid)
 
 Promote project search
 
@@ -511,8 +510,7 @@ public class Example {
     String project = "project_example"; // String | Project
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.promoteProjectSearch(owner, project, uuid);
-      System.out.println(result);
+      apiInstance.promoteProjectSearch(owner, project, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectSearchesV1Api#promoteProjectSearch");
       System.err.println("Status code: " + e.getCode());
@@ -534,7 +532,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

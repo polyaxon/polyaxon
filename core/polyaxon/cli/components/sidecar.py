@@ -66,4 +66,4 @@ async def sidecar(
         except Exception as e:
             logger.warning("Polyaxon sidecar retrying, error %s", e)
             retry += 1
-            await asyncio.sleep(1 * retry)
+            await asyncio.sleep(retry)

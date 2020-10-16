@@ -17,8 +17,7 @@
 from typing import Dict, Iterable, Optional
 
 from polyaxon.polyflow import V1CompiledOperation, V1Job, V1Plugins  # noqa
-from polyaxon.polypod.compiler.converters import BaseConverter
-from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
+from polyaxon.polypod.compiler.converters.base import BaseConverter, PlatformConverterMixin
 from polyaxon.polypod.custom_resources import get_job_custom_resource
 from polyaxon.polypod.mixins import JobMixin
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec

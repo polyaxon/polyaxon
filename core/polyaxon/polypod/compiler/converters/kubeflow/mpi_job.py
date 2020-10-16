@@ -23,8 +23,7 @@ from polyaxon.polyflow import (  # noqa
     V1MPIJob,
     V1Plugins,
 )
-from polyaxon.polypod.compiler.converters import BaseConverter
-from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
+from polyaxon.polypod.compiler.converters.base import BaseConverter, PlatformConverterMixin
 from polyaxon.polypod.custom_resources import get_mpi_job_custom_resource
 from polyaxon.polypod.mixins import MPIJobMixin
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec

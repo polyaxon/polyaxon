@@ -83,23 +83,13 @@ func NewBookmarkRunOK() *BookmarkRunOK {
 A successful response.
 */
 type BookmarkRunOK struct {
-	Payload interface{}
 }
 
 func (o *BookmarkRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunOK  %+v", 200, o.Payload)
-}
-
-func (o *BookmarkRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunOK ", 200)
 }
 
 func (o *BookmarkRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }

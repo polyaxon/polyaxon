@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteQueue"></a>
 # **deleteQueue**
-> Object deleteQueue(owner, agent, uuid)
+> deleteQueue(owner, agent, uuid)
 
 Delete queue
 
@@ -123,8 +123,7 @@ public class Example {
     String agent = "agent_example"; // String | Agent managing the resource
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      Object result = apiInstance.deleteQueue(owner, agent, uuid);
-      System.out.println(result);
+      apiInstance.deleteQueue(owner, agent, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#deleteQueue");
       System.err.println("Status code: " + e.getCode());
@@ -146,7 +145,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

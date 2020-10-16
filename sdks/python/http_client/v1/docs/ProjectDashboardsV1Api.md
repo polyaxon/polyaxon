@@ -99,7 +99,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_project_dashboard**
-> object delete_project_dashboard(owner, project, uuid)
+> delete_project_dashboard(owner, project, uuid)
 
 Delete project dashboard
 
@@ -143,8 +143,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete project dashboard
-        api_response = api_instance.delete_project_dashboard(owner, project, uuid)
-        pprint(api_response)
+        api_instance.delete_project_dashboard(owner, project, uuid)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->delete_project_dashboard: %s\n" % e)
 ```
@@ -159,7 +158,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -528,7 +527,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **promote_project_dashboard**
-> object promote_project_dashboard(owner, project, uuid)
+> promote_project_dashboard(owner, project, uuid)
 
 Promote project dashboard
 
@@ -572,8 +571,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Promote project dashboard
-        api_response = api_instance.promote_project_dashboard(owner, project, uuid)
-        pprint(api_response)
+        api_instance.promote_project_dashboard(owner, project, uuid)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->promote_project_dashboard: %s\n" % e)
 ```
@@ -588,7 +586,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

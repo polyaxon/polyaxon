@@ -14,5 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polypod.compiler.contexts.contexts import resolve_globals_contexts
-from polyaxon.polypod.compiler.contexts.contexts import resolve_contexts
+from polyaxon.polypod.compiler.contexts.contexts import (
+    resolve_contexts,
+    resolve_globals_contexts,
+)

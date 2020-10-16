@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **change_password**
-> object change_password(body)
+> change_password(body)
 
 Change password
 
@@ -55,8 +55,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 
     try:
         # Change password
-        api_response = api_instance.change_password(body)
-        pprint(api_response)
+        api_instance.change_password(body)
     except ApiException as e:
         print("Exception when calling AuthV1Api->change_password: %s\n" % e)
 ```
@@ -69,7 +68,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -171,7 +170,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reset_password**
-> object reset_password(body)
+> reset_password(body)
 
 Reset password
 
@@ -213,8 +212,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 
     try:
         # Reset password
-        api_response = api_instance.reset_password(body)
-        pprint(api_response)
+        api_instance.reset_password(body)
     except ApiException as e:
         print("Exception when calling AuthV1Api->reset_password: %s\n" % e)
 ```
@@ -227,7 +225,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

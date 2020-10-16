@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteTeam"></a>
 # **deleteTeam**
-> Object deleteTeam(owner, team)
+> deleteTeam(owner, team)
 
 Delete team
 
@@ -199,8 +199,7 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String team = "team_example"; // String | Team under namesapce
     try {
-      Object result = apiInstance.deleteTeam(owner, team);
-      System.out.println(result);
+      apiInstance.deleteTeam(owner, team);
     } catch (ApiException e) {
       System.err.println("Exception when calling TeamsV1Api#deleteTeam");
       System.err.println("Status code: " + e.getCode());
@@ -221,7 +220,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -243,7 +242,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteTeamMember"></a>
 # **deleteTeamMember**
-> Object deleteTeamMember(owner, team, user)
+> deleteTeamMember(owner, team, user)
 
 Delete team member details
 
@@ -273,8 +272,7 @@ public class Example {
     String team = "team_example"; // String | Team under namesapce
     String user = "user_example"; // String | Member under team
     try {
-      Object result = apiInstance.deleteTeamMember(owner, team, user);
-      System.out.println(result);
+      apiInstance.deleteTeamMember(owner, team, user);
     } catch (ApiException e) {
       System.err.println("Exception when calling TeamsV1Api#deleteTeamMember");
       System.err.println("Status code: " + e.getCode());
@@ -296,7 +294,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

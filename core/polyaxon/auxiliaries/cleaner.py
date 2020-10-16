@@ -23,15 +23,21 @@ from polyaxon.k8s.k8s_schemas import V1Container
 from polyaxon.schemas.types import V1ConnectionType
 
 
-def get_default_cleaner_container(store: V1ConnectionType, run_path: str):
-    subpath = os.path.join(store.store_path, run_path)
+def get_default_cleaner_container(
+    store: V1ConnectionType, run_uuid: str, run_kind: str
+):
+    subpath = os.path.join(store.store_path, run_uuid)
 
+    clean_args = "polyaxon clean-artifacts {} --subpath={}".format(
+        store.kind.replace("_", "-"), subpath
+    )
+    wait_args = "polyaxon wait --uuid={} --kind={}".format(run_uuid, run_kind)
     return V1Container(
         name=MAIN_JOB_CONTAINER,
         image="polyaxon/polyaxon-init:{}".format(pkg.VERSION),
         image_pull_policy=PullPolicy.ALWAYS.value,
-        command=["polyaxon", "clean-artifacts", store.kind.replace('_', '-')],
-        args=["--subpath={}".format(subpath)],
+        command=["/bin/bash", "-c"],
+        args=["{} && {}".format(wait_args, clean_args)],
         resources=k8s_schemas.V1ResourceRequirements(
             limits={"cpu": "0.5", "memory": "100Mi"},
             requests={"cpu": "0.1", "memory": "20Mi"},
