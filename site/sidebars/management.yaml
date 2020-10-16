@@ -49,7 +49,7 @@
     items:
     - title: Overview
       link: /docs/management/component-hub/
-  - group: Models regitry
+  - group: Models registry
     items:
     - title: Overview
       link: /docs/management/model-registry/
