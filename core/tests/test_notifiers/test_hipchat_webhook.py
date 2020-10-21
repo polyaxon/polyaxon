@@ -14,11 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # pylint:disable=protected-access
-from tests.test_notifiers.test_webhook_notification import TestWebHookNotification
-
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.exceptions import PolyaxonNotificationException
 from polyaxon.notifiers.hipchat_webhook import HipChatWebHookNotifier
+from tests.test_notifiers.test_webhook_notification import TestWebHookNotification
 
 
 class TestHipChatWebHookNotifier(TestWebHookNotification):

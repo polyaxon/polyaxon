@@ -14,12 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.test_notifiers.test_webhook_notification import TestWebHookNotification
-
 # pylint:disable=protected-access
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.exceptions import PolyaxonNotificationException
 from polyaxon.notifiers.pagerduty_webhook import PagerDutyWebHookNotifier
+from tests.test_notifiers.test_webhook_notification import TestWebHookNotification
 
 
 class TestPagerDutyWebHook(TestWebHookNotification):

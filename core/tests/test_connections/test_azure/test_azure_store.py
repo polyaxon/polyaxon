@@ -13,18 +13,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import mock
 import os
 import tempfile
 import time
 
-import mock
-
 from azure.storage.blob import BlobPrefix, BlobProperties
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.azure.azure_blobstore import AzureBlobStoreService
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.utils.date_utils import to_datetime
+from tests.utils import BaseTestCase
 
 AZURE_MODULE = "polyaxon.connections.azure.azure_blobstore.{}"
 

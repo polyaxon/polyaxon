@@ -38,7 +38,8 @@ class ChecksConfig(BaseConfig):
     INTERVAL = 30 * 60
 
     def __init__(
-        self, last_check=None,
+        self,
+        last_check=None,
     ):
         self.last_check = self.get_last_check(last_check)
 

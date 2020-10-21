@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1ClaimConnection
 from polyaxon.polyaxonfile.specs import kinds
@@ -25,6 +23,7 @@ from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.contexts import resolve_contexts
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.tz_utils import now
+from tests.utils import BaseTestCase
 
 
 class V1CloningKin(object):

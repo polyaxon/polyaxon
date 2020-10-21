@@ -15,17 +15,15 @@
 # limitations under the License.
 
 import os
-import tempfile
-
 import pytest
-
-from tests.utils import BaseTestCase
+import tempfile
 
 from polyaxon.proxies.generators import (
     generate_api_conf,
     generate_gateway_conf,
     generate_streams_conf,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

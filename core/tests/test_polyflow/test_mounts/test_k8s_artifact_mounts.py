@@ -17,9 +17,9 @@
 import pytest
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow.mounts import V1ArtifactsMount
+from tests.utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.mounts_mark

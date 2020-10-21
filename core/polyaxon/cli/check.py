@@ -30,7 +30,10 @@ from polyaxon.utils.formatting import Printer
     help="The polyaxon file to check.",
 )
 @click.option(
-    "-pm", "--python-module", type=str, help="The python module to run.",
+    "-pm",
+    "--python-module",
+    type=str,
+    help="The python module to run.",
 )
 @click.option(
     "--version",

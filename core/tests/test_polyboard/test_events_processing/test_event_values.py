@@ -16,14 +16,12 @@
 import io
 import numpy as np
 import os
-import tempfile
-
 import pytest
+import tempfile
 
 from bokeh.plotting import figure
 from PIL import Image
 from plotly import figure_factory
-from tests.utils import BaseTestCase, tensor_np
 
 from polyaxon.polyboard.processors.events_processors import (
     audio,
@@ -36,6 +34,7 @@ from polyaxon.polyboard.processors.events_processors import (
     prepare_video,
     video,
 )
+from tests.utils import BaseTestCase, tensor_np
 
 
 @pytest.mark.tracking_mark

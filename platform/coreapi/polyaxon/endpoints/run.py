@@ -57,7 +57,9 @@ class RunArtifactListEndpoint(RunEndpoint):
             return self._object
 
         self._object = get_object_or_404(
-            Run, uuid=self.run_uuid, project__name=self.project_name,
+            Run,
+            uuid=self.run_uuid,
+            project__name=self.project_name,
         )
 
         # May raise a permission denied
@@ -78,7 +80,8 @@ class RunArtifactEndpoint(RunEndpoint):
 
     def enrich_queryset(self, queryset):
         return queryset.filter(
-            run__uuid=self.run_uuid, run__project__name=self.project_name,
+            run__uuid=self.run_uuid,
+            run__project__name=self.project_name,
         )
 
     def set_owner(self):

@@ -14,17 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
 import tempfile
 
 import polyaxon_sdk
-import pytest
-
-from tests.utils import BaseTestCase
 
 from polyaxon import settings
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.transport import Transport
 from polyaxon.schemas.cli.client_config import ClientConfig
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.client_mark

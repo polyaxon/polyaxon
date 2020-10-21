@@ -16,10 +16,9 @@
 
 import datetime
 
-from tests.utils import BaseTestCase
-
 from polyaxon.utils.humanize import humanize_timedelta, humanize_timesince
 from polyaxon.utils.tz_utils import local_datetime, now
+from tests.utils import BaseTestCase
 
 
 class HumanizeTimesinceTest(BaseTestCase):

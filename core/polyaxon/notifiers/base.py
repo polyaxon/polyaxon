@@ -138,7 +138,9 @@ class BaseNotifier:
 
     @classmethod
     def execute(
-        cls, notification: NotificationSpec, config: Optional[ConfigType] = None,
+        cls,
+        notification: NotificationSpec,
+        config: Optional[ConfigType] = None,
     ) -> Any:
         if not notification:
             raise PolyaxonNotificationException(

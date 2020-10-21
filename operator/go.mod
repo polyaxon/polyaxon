@@ -9,7 +9,7 @@ require (
 	github.com/go-openapi/strfmt v0.19.5
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
-	github.com/polyaxon/polyaxon/sdks v0.0.0-20200714051337-216fa4fe6a5d
+	github.com/polyaxon/polyaxon/sdks v0.0.0-20201021180540-d96876583e7b
 	github.com/prometheus/client_golang v0.9.3
 	golang.org/x/net v0.0.0-20200602114024-627f9648deb9
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect

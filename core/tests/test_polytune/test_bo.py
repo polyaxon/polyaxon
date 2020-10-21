@@ -15,11 +15,9 @@
 # limitations under the License.
 
 import numpy as np
-
 import pytest
 
 from mock import patch
-from tests.utils import BaseTestCase
 
 from polyaxon.polytune.search_managers.bayesian_optimization.manager import (
     BayesSearchManager,
@@ -30,6 +28,7 @@ from polyaxon.polytune.search_managers.bayesian_optimization.optimizer import (
 )
 from polyaxon.polytune.search_managers.bayesian_optimization.space import SearchSpace
 from polyaxon.polytune.search_managers.random_search.manager import RandomSearchManager
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polytune_mark

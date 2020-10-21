@@ -16,9 +16,8 @@
 
 import pytest
 
-from tests.utils import BaseTestCase, assert_equal_dict
-
 from polyaxon.polyflow.termination import V1Termination
+from tests.utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.termination_mark

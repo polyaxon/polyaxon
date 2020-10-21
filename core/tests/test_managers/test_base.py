@@ -15,13 +15,12 @@
 # limitations under the License.
 
 import os
-
 import pytest
 
 from mock import patch
-from tests.utils import BaseTestCase
 
 from polyaxon.managers.base import BaseConfigManager
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

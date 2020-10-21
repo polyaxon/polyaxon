@@ -14,9 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from rest_framework.exceptions import ValidationError
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from rest_framework.exceptions import ValidationError
 
 from coredb.abstracts.getter import get_run_model
 from polyaxon.utils.signal_decorators import ignore_raw, ignore_updates

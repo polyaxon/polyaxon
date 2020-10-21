@@ -96,7 +96,11 @@ async def query_k8s_operation_logs(
     pods = await k8s_manager.list_pods(label_selector=get_label_selector(instance))
 
     for pod in pods:
-        logs += await handle_pod_logs(k8s_manager=k8s_manager, pod=pod, **params,)
+        logs += await handle_pod_logs(
+            k8s_manager=k8s_manager,
+            pod=pod,
+            **params,
+        )
 
     if logs:
         last_time = logs[-1].timestamp

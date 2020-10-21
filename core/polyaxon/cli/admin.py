@@ -62,7 +62,9 @@ def admin():
     help="The polyaxon deployment config file(s) to check.",
 )
 @click.option(
-    "-t", "--deployment-type", help="Deployment type.",
+    "-t",
+    "--deployment-type",
+    help="Deployment type.",
 )
 @click.option(
     "--manager-path",
@@ -124,7 +126,9 @@ def deploy(config_file, deployment_type, manager_path, check, dry_run):
     help="The polyaxon deployment config file(s) to check.",
 )
 @click.option(
-    "-t", "--deployment-type", help="Deployment type.",
+    "-t",
+    "--deployment-type",
+    help="Deployment type.",
 )
 @click.option(
     "--manager-path",

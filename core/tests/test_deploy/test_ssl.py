@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.utils import BaseTestCase
-
 from polyaxon.deploy.schemas.ssl import SSLConfig
+from tests.utils import BaseTestCase
 
 
 class TestSSLConfig(BaseTestCase):

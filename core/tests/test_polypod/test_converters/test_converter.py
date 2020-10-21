@@ -16,10 +16,9 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.exceptions import PolypodException
 from polyaxon.polypod.compiler.converters import BaseConverter
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark
@@ -30,7 +29,7 @@ class TestConverter(BaseTestCase):
             API_VERSION = "v1alpha1"
             PLURAL = "dummies"
             GROUP = "dummy"
-            K8S_LABELS_NAME = "dummies_name"
+            K8S_ANNOTATIONS_KIND = "dummies_name"
             K8S_LABELS_COMPONENT = "dummies_component"
             K8S_LABELS_PART_OF = "dummies_part_of"
 

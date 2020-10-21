@@ -13,15 +13,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from tests.test_polypod.test_custom_resources.base_kubeflow import (
-    BaseKubeflowCRDTestCase,
-)
-
 from polyaxon.k8s.custom_resources.crd import get_custom_object
 from polyaxon.polyflow import V1Notification, V1NotificationTrigger
 from polyaxon.polyflow.environment import V1Environment
 from polyaxon.polyflow.termination import V1Termination
 from polyaxon.polypod.custom_resources import get_tf_job_custom_resource
+from tests.test_polypod.test_custom_resources.base_kubeflow import (
+    BaseKubeflowCRDTestCase,
+)
 
 
 class TestTFJobCRD(BaseKubeflowCRDTestCase):

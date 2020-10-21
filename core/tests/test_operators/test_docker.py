@@ -17,10 +17,9 @@
 import mock
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.exceptions import PolyaxonOperatorException
+from tests.utils import BaseTestCase
 
 DUMMY_RETURN_VALUE = object()
 

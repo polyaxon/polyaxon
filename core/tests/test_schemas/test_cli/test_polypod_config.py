@@ -15,10 +15,10 @@
 # limitations under the License.
 
 import pytest
+
 import ujson
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1BucketConnection, V1K8sResourceSchema
@@ -29,6 +29,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_K8S_NAMESPACE,
 )
 from polyaxon.schemas.cli.agent_config import AgentConfig
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.schemas_mark

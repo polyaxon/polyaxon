@@ -25,4 +25,7 @@ location /healthz/ {{
 
 
 def get_healthz_location_config():
-    return get_config(options=HEALTHZ_LOCATION_OPTIONS, indent=0,)
+    return get_config(
+        options=HEALTHZ_LOCATION_OPTIONS,
+        indent=0,
+    )

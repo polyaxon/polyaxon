@@ -17,11 +17,11 @@
 import pytest
 
 from marshmallow.exceptions import ValidationError
-from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.polyflow import V1RunKind
 from polyaxon.polyflow.matrix.iterative import V1Iterative
 from polyaxon.polyflow.operations import V1CompiledOperation
+from tests.utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.workflow_mark

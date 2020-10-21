@@ -15,9 +15,9 @@
 # limitations under the License.
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.deploy.schemas.email import EmailConfig
+from tests.utils import BaseTestCase
 
 
 class TestEmailConfig(BaseTestCase):

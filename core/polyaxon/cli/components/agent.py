@@ -34,7 +34,10 @@ def agent():
     help="Sleep interval between fetches (Applied only to base agent).",
 )
 @click.option(
-    "--max-retries", type=int, default=3, help="Number of times to retry the process.",
+    "--max-retries",
+    type=int,
+    default=3,
+    help="Number of times to retry the process.",
 )
 def start(max_retries, sleep_interval):
     from polyaxon import settings
@@ -71,7 +74,9 @@ def start(max_retries, sleep_interval):
 
 @agent.command()
 @click.option(
-    "--health-interval", type=int, help="Health interval between checks.",
+    "--health-interval",
+    type=int,
+    help="Health interval between checks.",
 )
 def healthz(health_interval):
     from polyaxon.agents.base import BaseAgent

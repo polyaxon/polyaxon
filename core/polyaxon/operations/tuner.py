@@ -43,9 +43,9 @@ def get_tuner(
 ) -> V1Operation:
     return V1Operation(
         params={
+            "matrix": V1Param(value=matrix.to_dict()),
             "configs": V1Param(value=configs),
             "metrics": V1Param(value=metrics),
-            "matrix": V1Param(value=matrix),
             "iteration": V1Param(value=iteration),
         },
         termination=V1Termination(max_retries=3),
@@ -53,17 +53,20 @@ def get_tuner(
             name=name,
             plugins=V1Plugins(
                 auth=True,
-                collect_logs=False,
+                collect_logs=True,
                 collect_artifacts=False,
                 collect_resources=False,
-                sync_statuses=True,
+                sync_statuses=False,
             ),
             inputs=[
                 V1IO(
-                    name="configs", iotype=types.DICT, is_list=True, is_optional=False
+                    name="matrix", iotype=types.DICT, is_list=True, is_optional=True
                 ),
                 V1IO(
-                    name="metrics", iotype=types.FLOAT, is_list=True, is_optional=False
+                    name="configs", iotype=types.DICT, is_list=True, is_optional=True
+                ),
+                V1IO(
+                    name="metrics", iotype=types.FLOAT, is_list=True, is_optional=True
                 ),
                 V1IO(
                     name="iteration", iotype=types.INT, is_list=True, is_optional=True
@@ -77,7 +80,9 @@ def get_tuner(
                     is_optional=False,
                 ),
             ],
-            run=V1Tuner(container=container,),
+            run=V1Tuner(
+                container=container,
+            ),
         ),
     )
 
@@ -89,7 +94,7 @@ def get_bo_tuner(
     iteration: int,
     container: V1Container = None,
 ) -> V1Operation:
-    container = container or get_default_tuner_container(["polyaxon", "tuner", "bo"])
+    container = container or get_default_tuner_container(["polyaxon", "tuner", "bayes"])
     return get_tuner(
         name="bayesian-tuner",
         container=container,

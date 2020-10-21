@@ -97,6 +97,8 @@ class LifeCycle:
         (V1Statuses.SCHEDULED, V1Statuses.SCHEDULED),
         (V1Statuses.STARTING, V1Statuses.STARTING),
         (V1Statuses.RUNNING, V1Statuses.RUNNING),
+        (V1Statuses.INITIALIZING, V1Statuses.INITIALIZING),
+        (V1Statuses.PROCESSING, V1Statuses.PROCESSING),
         (V1Statuses.SUCCEEDED, V1Statuses.SUCCEEDED),
         (V1Statuses.FAILED, V1Statuses.FAILED),
         (V1Statuses.UPSTREAM_FAILED, V1Statuses.UPSTREAM_FAILED),
@@ -117,7 +119,12 @@ class LifeCycle:
         V1Statuses.RESUMING,
         V1Statuses.RETRYING,
     }
-    RUNNING_VALUES = {V1Statuses.STARTING, V1Statuses.RUNNING}
+    RUNNING_VALUES = {
+        V1Statuses.STARTING,
+        V1Statuses.INITIALIZING,
+        V1Statuses.PROCESSING,
+        V1Statuses.RUNNING,
+    }
     ON_K8S_VALUES = RUNNING_VALUES | WARNING_VALUES | {V1Statuses.UNKNOWN}
     DONE_VALUES = {
         V1Statuses.FAILED,
@@ -139,6 +146,11 @@ class LifeCycle:
     def is_unschedulable(cls, status: str) -> bool:
         """Checks if a run with this status is unschedulable."""
         return status == V1Statuses.UNSCHEDULABLE
+
+    @classmethod
+    def is_processing(cls, status: str) -> bool:
+        """Checks if a run with this status is processing."""
+        return status == V1Statuses.PROCESSING
 
     @classmethod
     def is_warning(cls, status: str) -> bool:

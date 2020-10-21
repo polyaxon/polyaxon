@@ -17,6 +17,7 @@
 import pytest
 
 from flaky import flaky
+
 from rest_framework import status
 
 from coredb.api.projects.serializers import (

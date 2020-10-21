@@ -43,7 +43,7 @@ class CorePlatformResolver(resolver.BaseResolver):
         if self.artifacts:
             set_artifacts(self.run, self.artifacts)
 
-    def resolve_state(self):
+    def persist_state(self):
         self.run.content = self.compiled_operation.to_dict(dump=True)
         if (
             self.compiled_operation.is_service_run

@@ -565,7 +565,10 @@ class ExternalBackend(BaseConfig):
     ]
 
     def __init__(
-        self, enabled=None, backend=None, options=None,
+        self,
+        enabled=None,
+        backend=None,
+        options=None,
     ):
         self.enabled = enabled
         self.backend = backend
@@ -595,7 +598,12 @@ class AuthServicesConfig(BaseConfig):
     ]
 
     def __init__(
-        self, github=None, gitlab=None, bitbucket=None, google=None, saml=None,
+        self,
+        github=None,
+        gitlab=None,
+        bitbucket=None,
+        google=None,
+        saml=None,
     ):
         self.github = github
         self.gitlab = gitlab

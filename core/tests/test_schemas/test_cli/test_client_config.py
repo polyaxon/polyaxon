@@ -16,14 +16,13 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_DEBUG,
     POLYAXON_KEYS_HOST,
     POLYAXON_KEYS_VERIFY_SSL,
 )
 from polyaxon.schemas.cli.client_config import ClientConfig
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.schemas_mark

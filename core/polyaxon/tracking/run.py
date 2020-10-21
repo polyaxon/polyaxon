@@ -105,7 +105,10 @@ class Run(RunClient):
         artifacts_path: str = None,
     ):
         super().__init__(
-            owner=owner, project=project, run_uuid=run_uuid, client=client,
+            owner=owner,
+            project=project,
+            run_uuid=run_uuid,
+            client=client,
         )
         self.track_code = track_code
         self.track_env = track_env
@@ -362,7 +365,11 @@ class Run(RunClient):
         """
         self._log_has_events()
 
-        event_value = events_processors.roc_auc_curve(fpr=fpr, tpr=tpr, auc=auc,)
+        event_value = events_processors.roc_auc_curve(
+            fpr=fpr,
+            tpr=tpr,
+            auc=auc,
+        )
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,
@@ -392,7 +399,8 @@ class Run(RunClient):
         self._log_has_events()
 
         event_value = events_processors.sklearn_roc_auc_curve(
-            y_preds=y_preds, y_targets=y_targets,
+            y_preds=y_preds,
+            y_targets=y_targets,
         )
         logged_event = LoggedEventSpec(
             name=name,
@@ -423,7 +431,9 @@ class Run(RunClient):
         self._log_has_events()
 
         event_value = events_processors.pr_curve(
-            precision=precision, recall=recall, average_precision=average_precision,
+            precision=precision,
+            recall=recall,
+            average_precision=average_precision,
         )
         logged_event = LoggedEventSpec(
             name=name,
@@ -452,7 +462,8 @@ class Run(RunClient):
         self._log_has_events()
 
         event_value = events_processors.sklearn_pr_curve(
-            y_preds=y_preds, y_targets=y_targets,
+            y_preds=y_preds,
+            y_targets=y_targets,
         )
         logged_event = LoggedEventSpec(
             name=name,
@@ -481,7 +492,11 @@ class Run(RunClient):
         """
         self._log_has_events()
 
-        event_value = events_processors.curve(x=x, y=y, annotation=annotation,)
+        event_value = events_processors.curve(
+            x=x,
+            y=y,
+            annotation=annotation,
+        )
         logged_event = LoggedEventSpec(
             name=name,
             kind=V1ArtifactKind.CURVE,
@@ -531,11 +546,15 @@ class Run(RunClient):
         asset_rel_path = os.path.relpath(asset_path, self._artifacts_path)
         if is_file:
             event_value = events_processors.image_path(
-                from_path=data, asset_path=asset_path, asset_rel_path=asset_rel_path,
+                from_path=data,
+                asset_path=asset_path,
+                asset_rel_path=asset_rel_path,
             )
         elif hasattr(data, "encoded_image_string"):
             event_value = events_processors.encoded_image(
-                asset_path=asset_path, data=data, asset_rel_path=asset_rel_path,
+                asset_path=asset_path,
+                data=data,
+                asset_rel_path=asset_rel_path,
             )
         else:
             event_value = events_processors.image(

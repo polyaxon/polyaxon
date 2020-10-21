@@ -16,12 +16,11 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.deploy.operators.helm import HelmOperator
 from polyaxon.deploy.operators.kubectl import KubectlOperator
 from polyaxon.deploy.schemas.deployment import DeploymentConfig, DeploymentTypes
 from polyaxon.managers.deploy import DeployConfigManager
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

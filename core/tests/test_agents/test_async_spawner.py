@@ -16,11 +16,10 @@
 
 import pytest
 
-from tests.utils import AsyncMock
-
 from polyaxon.agents.spawners.async_spawner import AsyncSpawner
 from polyaxon.exceptions import PolyaxonAgentError
 from polyaxon.polyflow import V1RunKind
+from tests.utils import AsyncMock
 
 
 @pytest.mark.asyncio

@@ -17,11 +17,11 @@
 import pytest
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon import types
 from polyaxon.polyflow import V1Component, V1RunKind, ops_params
 from polyaxon.utils.tz_utils import local_datetime, now
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.components_mark

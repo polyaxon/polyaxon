@@ -26,8 +26,6 @@ from typing import List
 from polyaxon.exceptions import PolyaxonPathException
 from polyaxon.logger import logger
 from polyaxon.utils import constants
-
-# noqa
 from polyaxon.utils.list_utils import to_list
 
 

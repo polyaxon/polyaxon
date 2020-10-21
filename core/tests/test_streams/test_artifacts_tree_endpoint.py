@@ -15,11 +15,10 @@
 # limitations under the License.
 import os
 
-from tests.test_streams.base import create_tmp_files, get_streams_client, set_store
-from tests.utils import BaseTestCase
-
 from polyaxon.streams.app.main import STREAMS_URL
 from polyaxon.utils.path_utils import create_path
+from tests.test_streams.base import create_tmp_files, get_streams_client, set_store
+from tests.utils import BaseTestCase
 
 
 class TestArtifactsTreeEndpoints(BaseTestCase):

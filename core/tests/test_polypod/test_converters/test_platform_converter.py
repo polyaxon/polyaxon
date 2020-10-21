@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.utils import BaseTestCase
-
 from polyaxon import settings
 from polyaxon.api import VERSION_V1
 from polyaxon.exceptions import PolypodException
@@ -24,6 +22,7 @@ from polyaxon.polypod.compiler.converters import BaseConverter
 from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
 from polyaxon.services.auth import AuthenticationTypes
 from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
+from tests.utils import BaseTestCase
 
 
 class DummyConverter(PlatformConverterMixin, BaseConverter):
@@ -31,7 +30,7 @@ class DummyConverter(PlatformConverterMixin, BaseConverter):
     API_VERSION = "v1alpha1"
     PLURAL = "dummies"
     GROUP = "dummy"
-    K8S_LABELS_NAME = "dummies_name"
+    K8S_ANNOTATIONS_KIND = "dummies_name"
     K8S_LABELS_COMPONENT = "dummies_component"
     K8S_LABELS_PART_OF = "dummies_part_of"
 

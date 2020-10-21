@@ -74,8 +74,8 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **body** | [**V1Team**](V1Team.md)| Team body |
+ **owner** | **str**| Owner of the namespace | 
+ **body** | [**V1Team**](V1Team.md)| Team body | 
 
 ### Return type
 
@@ -156,9 +156,9 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team** | **str**| Team |
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
+ **owner** | **str**| Owner of the namespace | 
+ **team** | **str**| Team | 
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
 
 ### Return type
 
@@ -237,8 +237,8 @@ team = 'team_example' # str | Team under namesapce
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team** | **str**| Team under namesapce |
+ **owner** | **str**| Owner of the namespace | 
+ **team** | **str**| Team under namesapce | 
 
 ### Return type
 
@@ -318,9 +318,9 @@ user = 'user_example' # str | Member under team
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team** | **str**| Team under namesapce |
- **user** | **str**| Member under team |
+ **owner** | **str**| Owner of the namespace | 
+ **team** | **str**| Team under namesapce | 
+ **user** | **str**| Member under team | 
 
 ### Return type
 
@@ -400,8 +400,8 @@ team = 'team_example' # str | Team under namesapce
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team** | **str**| Team under namesapce |
+ **owner** | **str**| Owner of the namespace | 
+ **team** | **str**| Team under namesapce | 
 
 ### Return type
 
@@ -482,9 +482,9 @@ user = 'user_example' # str | Member under team
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team** | **str**| Team under namesapce |
- **user** | **str**| Member under team |
+ **owner** | **str**| Owner of the namespace | 
+ **team** | **str**| Team under namesapce | 
+ **user** | **str**| Member under team | 
 
 ### Return type
 
@@ -568,12 +568,12 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team** | **str**| Team under namesapce |
- **offset** | **int**| Pagination offset. | [optional]
- **limit** | **int**| Limit size. | [optional]
- **sort** | **str**| Sort to order the search. | [optional]
- **query** | **str**| Query filter the search search. | [optional]
+ **owner** | **str**| Owner of the namespace | 
+ **team** | **str**| Team under namesapce | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -656,11 +656,11 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **offset** | **int**| Pagination offset. | [optional]
- **limit** | **int**| Limit size. | [optional]
- **sort** | **str**| Sort to order the search. | [optional]
- **query** | **str**| Query filter the search search. | [optional]
+ **owner** | **str**| Owner of the namespace | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -743,11 +743,11 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **offset** | **int**| Pagination offset. | [optional]
- **limit** | **int**| Limit size. | [optional]
- **sort** | **str**| Sort to order the search. | [optional]
- **query** | **str**| Query filter the search search. | [optional]
+ **owner** | **str**| Owner of the namespace | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -828,9 +828,9 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team_name** | **str**| Name |
- **body** | [**V1Team**](V1Team.md)| Team body |
+ **owner** | **str**| Owner of the namespace | 
+ **team_name** | **str**| Name | 
+ **body** | [**V1Team**](V1Team.md)| Team body | 
 
 ### Return type
 
@@ -912,10 +912,10 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team** | **str**| Team |
- **member_user** | **str**| User |
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
+ **owner** | **str**| Owner of the namespace | 
+ **team** | **str**| Team | 
+ **member_user** | **str**| User | 
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
 
 ### Return type
 
@@ -996,9 +996,9 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team_name** | **str**| Name |
- **body** | [**V1Team**](V1Team.md)| Team body |
+ **owner** | **str**| Owner of the namespace | 
+ **team_name** | **str**| Name | 
+ **body** | [**V1Team**](V1Team.md)| Team body | 
 
 ### Return type
 
@@ -1080,10 +1080,10 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace |
- **team** | **str**| Team |
- **member_user** | **str**| User |
- **body** | [**V1TeamMember**](V1TeamMember.md)| Team body |
+ **owner** | **str**| Owner of the namespace | 
+ **team** | **str**| Team | 
+ **member_user** | **str**| User | 
+ **body** | [**V1TeamMember**](V1TeamMember.md)| Team body | 
 
 ### Return type
 

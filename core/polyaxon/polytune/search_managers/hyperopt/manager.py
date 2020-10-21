@@ -57,7 +57,9 @@ class HyperoptManager(BaseManager):
                 # Get the categorical/discrete values mapping
                 self._param_to_value[k] = to_numpy(v)
 
-    def _get_previous_observations(self, hyperopt_domain, configs=None, metrics=None):
+    def _get_previous_observations(
+        self, hyperopt_domain, configs: List[Dict] = None, metrics: List[float] = None
+    ):
         # Previous observations
         trials = hyperopt.Trials()
 
@@ -128,7 +130,9 @@ class HyperoptManager(BaseManager):
         if self.config.algorithm == "anneal":
             return hyperopt.anneal.suggest
 
-    def get_suggestions(self, configs: Dict = None, metrics: Dict = None) -> List[Dict]:
+    def get_suggestions(
+        self, configs: List[Dict] = None, metrics: List[float] = None
+    ) -> List[Dict]:
         if not self.config.num_runs:
             raise ValueError("This search strategy requires `num_runs`.")
         suggestions = []

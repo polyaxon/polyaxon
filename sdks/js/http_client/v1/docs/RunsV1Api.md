@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**archiveRun**](RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 [**bookmarkRuns**](RunsV1Api.md#bookmarkRuns) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
-[**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs | Collect run logs
+[**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
 [**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 [**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run artifacts lineage
@@ -218,7 +218,7 @@ null (empty response body)
 
 ## collectRunLogs
 
-> collectRunLogs(namespace, owner, project, uuid)
+> collectRunLogs(namespace, owner, project, uuid, kind)
 
 Collect run logs
 
@@ -238,7 +238,8 @@ let namespace = "namespace_example"; // String |
 let owner = "owner_example"; // String | Owner of the namespace
 let project = "project_example"; // String | Project where the run will be assigned
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.collectRunLogs(namespace, owner, project, uuid, (error, data, response) => {
+let kind = "kind_example"; // String | Kind of the entity
+apiInstance.collectRunLogs(namespace, owner, project, uuid, kind, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -256,6 +257,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the run will be assigned | 
  **uuid** | **String**| Uuid identifier of the entity | 
+ **kind** | **String**| Kind of the entity | 
 
 ### Return type
 

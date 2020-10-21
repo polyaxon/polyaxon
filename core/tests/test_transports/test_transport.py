@@ -14,11 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.test_transports.utils import BaseTestCaseTransport
-
 from polyaxon.client.transport import Transport
 from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon.services.auth import AuthenticationTypes
+from tests.test_transports.utils import BaseTestCaseTransport
 
 
 class TestTransport(BaseTestCaseTransport):

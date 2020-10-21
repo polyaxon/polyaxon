@@ -27,7 +27,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="artifact", name="summary", field=models.JSONField(),
+            model_name="artifact",
+            name="summary",
+            field=models.JSONField(),
         ),
         migrations.AlterField(
             model_name="artifactlineage",

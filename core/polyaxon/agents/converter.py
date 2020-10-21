@@ -54,7 +54,12 @@ def convert(
 
 
 def make_and_convert(
-    owner_name: str, project_name: str, run_uuid: str, run_name: str, content: str,
+    owner_name: str,
+    project_name: str,
+    run_uuid: str,
+    run_name: str,
+    content: str,
+    default_auth: bool = False,
 ):
     operation = OperationSpecification.read(content)
     compiled_operation = OperationSpecification.compile_operation(operation)
@@ -67,4 +72,6 @@ def make_and_convert(
         run_path=run_uuid,
         compiled_operation=compiled_operation,
         params=None,
+        converters=PLATFORM_CONVERTERS,
+        default_auth=default_auth,
     )

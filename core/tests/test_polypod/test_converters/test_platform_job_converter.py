@@ -13,8 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from tests.utils import BaseTestCase
-
 from polyaxon import settings
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, V1PolyaxonSidecarContainer
 from polyaxon.connections.kinds import V1ConnectionKind
@@ -43,11 +41,12 @@ from polyaxon.schemas.types import (
     V1K8sResourceType,
 )
 from polyaxon.services.headers import PolyaxonServices
+from tests.utils import BaseTestCase
 
 
 class DummyConverter(PlatformJobConverter):
     SPEC_KIND = "dumy"
-    K8S_LABELS_NAME = "dummy-name"
+    K8S_ANNOTATIONS_KIND = "dummy-name"
     MAIN_CONTAINER_ID = "dummy"
 
 

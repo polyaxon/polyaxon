@@ -123,13 +123,18 @@ class PQLManager:
         for key, cond_specs in built_query.items():
             key = cls.proxy_field(key)
             for cond_spec in cond_specs:
-                operators.append(
-                    cond_spec.cond.apply_operator(
+                try:
+                    operator = cond_spec.cond.apply_operator(
                         name=key,
                         params=cond_spec.params,
                         query_backend=cls.QUERY_BACKEND,
                         timezone=cls.TIMEZONE,
                     )
-                )
+                except Exception as e:
+                    raise PQLException(
+                        "Error applying operator for key `%s` by the query manager `%s`. "
+                        "%s" % (key, cls.NAME, e)
+                    )
+                operators.append(operator)
 
         return queryset.filter(*operators)

@@ -44,7 +44,10 @@ async def sync_logs(
         return
 
     logs, _ = await query_k8s_pod_logs(
-        k8s_manager=k8s_manager, pod=pod, last_time=last_time, stream=stream,
+        k8s_manager=k8s_manager,
+        pod=pod,
+        last_time=last_time,
+        stream=stream,
     )
     if not logs:
         return

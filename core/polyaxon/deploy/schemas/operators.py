@@ -40,7 +40,11 @@ class OperatorsConfig(BaseConfig):
     ]
 
     def __init__(
-        self, tfjob=None, pytorchjob=None, mpijob=None, sparkjob=None,
+        self,
+        tfjob=None,
+        pytorchjob=None,
+        mpijob=None,
+        sparkjob=None,
     ):
         self.tfjob = tfjob
         self.pytorchjob = pytorchjob

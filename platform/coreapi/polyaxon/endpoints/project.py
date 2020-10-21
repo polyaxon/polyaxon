@@ -53,7 +53,10 @@ class ProjectResourceListEndpoint(ProjectEndpoint):
     def get_object(self):
         if self._object:
             return self._object
-        self._object = get_object_or_404(Project, name=self.project_name,)
+        self._object = get_object_or_404(
+            Project,
+            name=self.project_name,
+        )
         return self._object
 
     def enrich_queryset(self, queryset):

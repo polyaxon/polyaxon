@@ -17,12 +17,12 @@
 import pytest
 
 from mock import MagicMock, patch
-from tests.utils import BaseTestCase
 
 from polyaxon.agents.agent import Agent
 from polyaxon.agents.base import BaseAgent
 from polyaxon.agents.spawners.spawner import Spawner
 from polyaxon.client import PolyaxonClient
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.agent_mark

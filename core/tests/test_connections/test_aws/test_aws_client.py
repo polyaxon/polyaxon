@@ -21,13 +21,13 @@ import boto3
 from boto3.resources.base import ServiceResource
 from botocore.client import BaseClient
 from moto import mock_s3
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.aws.base import (
     get_aws_client,
     get_aws_resource,
     get_aws_session,
 )
+from tests.utils import BaseTestCase
 
 
 class TestAwsClient(BaseTestCase):

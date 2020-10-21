@@ -25,7 +25,7 @@ from polyaxon.polyboard.artifacts.kinds import V1ArtifactKind
 from polyaxon.polyboard.artifacts.schemas import V1RunArtifact
 
 
-class TestAnnotations(TestCase):
+class TestArtifacts(TestCase):
     def setUp(self):
         super().setUp()
         self.user = UserFactory()

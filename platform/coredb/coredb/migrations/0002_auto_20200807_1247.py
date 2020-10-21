@@ -25,6 +25,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="run", old_name="run_time", new_name="duration",
+            model_name="run",
+            old_name="run_time",
+            new_name="duration",
         ),
     ]

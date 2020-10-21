@@ -14,10 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.utils import BaseTestCase
-
 from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.exceptions import PolyaxonSchemaError
+from tests.utils import BaseTestCase
 
 
 class TestReader(BaseTestCase):

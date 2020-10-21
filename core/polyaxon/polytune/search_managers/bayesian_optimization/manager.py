@@ -33,7 +33,9 @@ class BayesSearchManager(BaseManager):
         self.num_initial_runs = self.config.num_initial_runs
         self.num_iterations = self.config.num_iterations
 
-    def get_suggestions(self, configs: Dict = None, metrics: Dict = None) -> List[Dict]:
+    def get_suggestions(
+        self, configs: List[Dict] = None, metrics: List[float] = None
+    ) -> List[Dict]:
         if not configs or not metrics:
             config = V1RandomSearch(
                 params=self.config.params,

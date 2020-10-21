@@ -43,7 +43,8 @@ def set_celery(context, config: ConfigManager, routes: Dict):
     )
 
     result_bucked = config.get_string(
-        "POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL", is_optional=True,
+        "POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL",
+        is_optional=True,
     )
     if result_bucked:
         context["CELERY_RESULT_BACKEND"] = config.get_redis_url(

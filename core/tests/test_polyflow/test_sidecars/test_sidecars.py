@@ -16,10 +16,9 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.polyflow import V1RunKind
 from polyaxon.polyflow.operations import V1CompiledOperation
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.sidecars_mark

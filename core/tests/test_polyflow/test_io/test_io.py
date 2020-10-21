@@ -14,18 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
 import uuid
 
 from collections import OrderedDict
 
-import pytest
-
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon import types
 from polyaxon.polyflow.io import V1IO
 from polyaxon.polyflow.params import ParamSpec, V1Param
+from tests.utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.polyflow_mark
@@ -575,16 +574,7 @@ class TestV1IOs(BaseTestCase):
             is_context=True,
             arg_format="{foo}",
         )
-        assert ParamSpec(
-            name="foo",
-            iotype=types.STR,
-            param=param,
-            is_flag=False,
-            is_list=False,
-            is_context=True,
-            arg_format=None,
-        ).param.value == {"key": "value"}
-        assert str(
+        assert (
             ParamSpec(
                 name="foo",
                 iotype=types.STR,
@@ -593,8 +583,23 @@ class TestV1IOs(BaseTestCase):
                 is_list=False,
                 is_context=True,
                 arg_format=None,
+            ).param.value
+            == {"key": "value"}
+        )
+        assert (
+            str(
+                ParamSpec(
+                    name="foo",
+                    iotype=types.STR,
+                    param=param,
+                    is_flag=False,
+                    is_list=False,
+                    is_context=True,
+                    arg_format=None,
+                )
             )
-        ) == str({"key": "value"})
+            == str({"key": "value"})
+        )
 
         # Regex validation runs: invalid params
         with self.assertRaises(ValidationError):

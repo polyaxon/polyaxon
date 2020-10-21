@@ -232,26 +232,49 @@ class EventSchema(BaseSchema):
     @pre_load
     def pre_validate(self, data, **kwargs):
         if data.get("image") is not None:
-            data["image"] = parser.get_dict(key="image", value=data["image"],)
+            data["image"] = parser.get_dict(
+                key="image",
+                value=data["image"],
+            )
         if data.get("histogram") is not None:
             data["histogram"] = parser.get_dict(
-                key="histogram", value=data["histogram"],
+                key="histogram",
+                value=data["histogram"],
             )
         if data.get("audio") is not None:
-            data["audio"] = parser.get_dict(key="audio", value=data["audio"],)
+            data["audio"] = parser.get_dict(
+                key="audio",
+                value=data["audio"],
+            )
         if data.get("video") is not None:
-            data["video"] = parser.get_dict(key="video", value=data["video"],)
+            data["video"] = parser.get_dict(
+                key="video",
+                value=data["video"],
+            )
         if data.get("chart") is not None:
-            data["chart"] = parser.get_dict(key="chart", value=data["chart"],)
+            data["chart"] = parser.get_dict(
+                key="chart",
+                value=data["chart"],
+            )
         if data.get("curve") is not None:
-            data["curve"] = parser.get_dict(key="curve", value=data["curve"],)
+            data["curve"] = parser.get_dict(
+                key="curve",
+                value=data["curve"],
+            )
         if data.get("artifact") is not None:
-            data["artifact"] = parser.get_dict(key="artifact", value=data["artifact"],)
+            data["artifact"] = parser.get_dict(
+                key="artifact",
+                value=data["artifact"],
+            )
         if data.get("model") is not None:
-            data["model"] = parser.get_dict(key="model", value=data["model"],)
+            data["model"] = parser.get_dict(
+                key="model",
+                value=data["model"],
+            )
         if data.get("dataframe") is not None:
             data["dataframe"] = parser.get_dict(
-                key="dataframe", value=data["dataframe"],
+                key="dataframe",
+                value=data["dataframe"],
             )
 
         return data
@@ -424,9 +447,16 @@ class V1Events:
         if isinstance(data, str):
             csv = cls.validate_csv(data)
             if parse_dates:
-                df = pd.read_csv(csv, sep=V1Event.SEPARATOR, parse_dates=["timestamp"],)
+                df = pd.read_csv(
+                    csv,
+                    sep=V1Event.SEPARATOR,
+                    parse_dates=["timestamp"],
+                )
             else:
-                df = pd.read_csv(csv, sep=V1Event.SEPARATOR,)
+                df = pd.read_csv(
+                    csv,
+                    sep=V1Event.SEPARATOR,
+                )
         elif isinstance(data, dict):
             df = pd.DataFrame.from_dict(data)
         else:

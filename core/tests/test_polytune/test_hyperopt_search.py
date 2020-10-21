@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import hyperopt
 import pytest
 
-from tests.utils import BaseTestCase
+import hyperopt
 
 from polyaxon.polyflow.matrix.hyperopt import V1Hyperopt
 from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polytune_mark

@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import datetime
-
 import pytest
 
 from django.conf import settings

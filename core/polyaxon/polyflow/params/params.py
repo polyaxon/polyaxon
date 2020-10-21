@@ -100,7 +100,7 @@ class V1ParamSearch(BaseConfig, polyaxon_sdk.V1ParamSearch):
 
 
 class ParamSchema(BaseCamelSchema):
-    value = fields.Raw(required=True)
+    value = fields.Raw(required=True, allow_none=True)
     search = fields.Nested(ParamSearchSchema, allow_none=True)
     ref = fields.Str(allow_none=True)
     context_only = fields.Bool(allow_none=True)
@@ -289,7 +289,9 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
     def validate(self):
         validate_param_value(
-            value=self.value, search=self.search, ref=self.ref,
+            value=self.value,
+            search=self.search,
+            ref=self.ref,
         )
 
     @property

@@ -62,10 +62,10 @@ def get_op_specification(
         # Check only
         get_queue_info(queue)
         job_data["queue"] = queue
-    if cache is not None:
+    if cache:
         job_data["cache"] = {"disable": False}
-    if nocache is not None:
-        job_data["cache"] = {"disable": nocache}
+    if nocache:
+        job_data["cache"] = {"disable": True}
 
     if config and config.kind == kinds.COMPONENT:
         job_data["component"] = config.to_dict()

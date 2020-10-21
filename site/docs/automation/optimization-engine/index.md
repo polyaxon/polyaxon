@@ -39,6 +39,8 @@ Some of these approaches are also iterative and improve based on previous experi
  * Scalability: Tuning hyperparameters or neural architectures requires leveraging a large amount of computation resources, using Polyaxon you can run hundreds of trials in parallel and intuitively track their progress.
  * Flexibility: Besides the rich built-in algorithms, Polyaxon allows users to customize various hyperparameter tuning algorithms, neural architecture search algorithms, early stopping algorithms, etc.
  * Efficiency: We are intensively working on more efficient model tuning from both system level and algorithm level. For example, leveraging early feedback to speedup tuning procedure.
+ * Agnostic: The interface that we provide is agnostic to the framework, and even the language, used to define the model or function to optimize, hence you can use any machine learning framework, including PyTorch, XGBoost, MXNet, Tensorflow, and Keras.
+ * Visualization and Dashboards: Polyaxon's Optimization Engine reuses the same logic and core features for jobs, tracking, checkpoints management, and integration with TensorBoard.
 
 ## Workflow
 

@@ -18,5 +18,9 @@ from coredb.api.project_resources import queries
 from coredb.models.runs import Run
 from coredb.queries.runs import API_COLUMNS_DEFER
 
-single_run = queries.runs.prefetch_related("project",)
-deferred_runs = Run.objects.defer(*API_COLUMNS_DEFER).prefetch_related("project",)
+single_run = queries.runs.prefetch_related(
+    "project",
+)
+deferred_runs = Run.objects.defer(*API_COLUMNS_DEFER).prefetch_related(
+    "project",
+)

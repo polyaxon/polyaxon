@@ -15,12 +15,11 @@
 # limitations under the License.
 
 import os
-
 import pytest
 
-from marshmallow import ValidationError
 from mock import patch
-from tests.utils import BaseTestCase
+
+from marshmallow import ValidationError
 
 from polyaxon import pkg
 from polyaxon.exceptions import PolyaxonfileError
@@ -40,6 +39,7 @@ from polyaxon.polyflow.matrix import (
 )
 from polyaxon.polyflow.matrix.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.termination import V1Termination
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

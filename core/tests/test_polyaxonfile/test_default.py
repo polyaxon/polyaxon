@@ -14,17 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import tempfile
-
 import pytest
-
-from tests.utils import BaseTestCase
+import tempfile
 
 from polyaxon.polyaxonfile import (
     DEFAULT_POLYAXON_FILE_EXTENSION,
     DEFAULT_POLYAXON_FILE_NAME,
     check_default_path,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

@@ -78,11 +78,11 @@ def project(ctx, _project):  # pylint:disable=redefined-outer-name
 @click.option("--description", type=str, help="Description of the project.")
 @click.option("--tags", type=str, help="Tags of the project, comma separated values.")
 @click.option(
-    "--private", is_flag=True, help="Set the visibility of the project to private."
+    "--public", is_flag=True, help="Set the visibility of the project to public."
 )
 @click.option("--init", is_flag=True, help="Initialize the project after creation.")
 @click.pass_context
-def create(ctx, name, description, tags, private, init):
+def create(ctx, name, description, tags, public, init):
     """Create a new project.
 
     Uses /docs/core/cli/#caching
@@ -119,7 +119,7 @@ def create(ctx, name, description, tags, private, init):
 
     try:
         project_config = V1Project(
-            name=project_name, description=description, tags=tags, is_public=not private
+            name=project_name, description=description, tags=tags, is_public=public
         )
         polyaxon_client = ProjectClient(owner=owner)
         _project = polyaxon_client.create(project_config)

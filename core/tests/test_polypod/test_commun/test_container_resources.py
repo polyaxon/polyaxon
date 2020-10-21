@@ -16,9 +16,8 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.polypod.common.container_resources import sanitize_resources
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

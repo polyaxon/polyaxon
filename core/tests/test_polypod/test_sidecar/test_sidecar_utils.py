@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.auxiliaries import get_sidecar_resources
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_ARTIFACTS_STORE_NAME,
@@ -27,6 +25,7 @@ from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.env_vars import get_env_var
 from polyaxon.polypod.sidecar.container import get_sidecar_args
 from polyaxon.polypod.sidecar.env_vars import get_sidecar_env_vars
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

@@ -129,7 +129,7 @@ class BaseAgent:
             for run_data in state.watchdogs or []:
                 pool.submit(self.make_and_create_run, run_data)
             for run_data in state.tuners or []:
-                pool.submit(self.create_run_and_sync, run_data)
+                pool.submit(self.make_and_create_run, run_data, True)
             return agent_state
         except Exception as exc:
             logger.error(exc)
@@ -234,6 +234,7 @@ class BaseAgent:
         run_name: str,
         run_uuid: str,
         content: str,
+        default_auth=False,
     ) -> Dict:
         try:
             return converter.make_and_convert(
@@ -242,6 +243,7 @@ class BaseAgent:
                 run_name=run_name,
                 run_uuid=run_uuid,
                 content=content,
+                default_auth=default_auth,
             )
         except PolypodException as e:
             logger.info(
@@ -360,10 +362,13 @@ class BaseAgent:
                 )
         except Exception as e:
             self.log_run_failed(
-                run_owner=run_owner, run_project=run_project, run_uuid=run_uuid, exc=e,
+                run_owner=run_owner,
+                run_project=run_project,
+                run_uuid=run_uuid,
+                exc=e,
             )
 
-    def make_and_create_run(self, run_data: Tuple[str, str, str, str]):
+    def make_and_create_run(self, run_data: Tuple[str, str, str, str], default_auth: bool = False):
         run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])
         resource = self.make_run_resource(
             owner_name=run_owner,
@@ -371,6 +376,7 @@ class BaseAgent:
             run_name=run_data[2],
             run_uuid=run_uuid,
             content=run_data[3],
+            default_auth=default_auth,
         )
 
         try:

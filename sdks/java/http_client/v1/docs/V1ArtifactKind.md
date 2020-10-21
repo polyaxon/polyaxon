@@ -55,5 +55,9 @@
 
 * `CURVE` (value: `"curve"`)
 
+* `ANALYSIS` (value: `"analysis"`)
+
+* `ITERATION` (value: `"iteration"`)
+
 
 

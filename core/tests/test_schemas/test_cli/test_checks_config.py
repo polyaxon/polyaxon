@@ -14,17 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import pytest
 import tempfile
 
 from datetime import timedelta
 
-import pytest
-
-from tests.utils import BaseTestCase
-
 from polyaxon.env_vars.keys import POLYAXON_KEYS_INTERVALS_COMPATIBILITY_CHECK
 from polyaxon.schemas.cli.checks_config import ChecksConfig
 from polyaxon.utils.tz_utils import now
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.schemas_mark

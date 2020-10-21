@@ -14,8 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from click.testing import CliRunner
 from mock import patch
+
+from click.testing import CliRunner
+
 from tests.utils import BaseTestCase
 
 

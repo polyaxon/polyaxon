@@ -62,7 +62,8 @@ def get_blob_service_connection(
     )
     if connection_string:
         return BlobServiceClient.from_connection_string(
-            conn_str=connection_string, credential=account_key,
+            conn_str=connection_string,
+            credential=account_key,
         )
     if account_name:
         return BlobServiceClient(

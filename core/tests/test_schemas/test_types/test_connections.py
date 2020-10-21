@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
     V1BucketConnection,
@@ -25,6 +23,7 @@ from polyaxon.connections.schemas import (
     V1HostPathConnection,
 )
 from polyaxon.schemas.types import V1ConnectionType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.parser_mark

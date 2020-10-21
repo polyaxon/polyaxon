@@ -15,11 +15,11 @@
 # limitations under the License.
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.deploy import reader
 from polyaxon.deploy.schemas.deployment import DeploymentConfig
+from tests.utils import BaseTestCase
 
 
 class TestDeploymentConfig(BaseTestCase):

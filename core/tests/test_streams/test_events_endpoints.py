@@ -17,15 +17,14 @@ import os
 import pandas as pd
 import shutil
 
-from tests.test_streams.base import get_streams_client, set_store
-from tests.utils import BaseTestCase
-
 from polyaxon import settings
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Event, V1Events
 from polyaxon.polyboard.events.schemas import LoggedEventListSpec
 from polyaxon.streams.app.main import STREAMS_URL
 from polyaxon.utils.path_utils import create_path
+from tests.test_streams.base import get_streams_client, set_store
+from tests.utils import BaseTestCase
 
 
 class TestEventsEndpoints(BaseTestCase):

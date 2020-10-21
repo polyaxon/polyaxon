@@ -16,8 +16,9 @@
 
 import pytest
 
-from django.db.models import Q
 from flaky import flaky
+
+from django.db.models import Q
 
 from coredb.models.runs import Run
 from coredb.query_managers.run import RunQueryManager

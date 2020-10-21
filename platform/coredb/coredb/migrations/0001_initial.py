@@ -131,7 +131,9 @@ class Migration(migrations.Migration):
                 "abstract": False,
                 "swappable": "AUTH_USER_MODEL",
             },
-            managers=[("objects", django.contrib.auth.models.UserManager()),],
+            managers=[
+                ("objects", django.contrib.auth.models.UserManager()),
+            ],
         ),
         migrations.CreateModel(
             name="Artifact",
@@ -186,7 +188,9 @@ class Migration(migrations.Migration):
                 ("path", models.CharField(blank=True, max_length=256, null=True)),
                 ("summary", django.contrib.postgres.fields.jsonb.JSONField()),
             ],
-            options={"db_table": "db_artifact",},
+            options={
+                "db_table": "db_artifact",
+            },
         ),
         migrations.CreateModel(
             name="ArtifactLineage",
@@ -204,7 +208,9 @@ class Migration(migrations.Migration):
                 ("updated_at", models.DateTimeField(auto_now=True)),
                 ("is_input", models.NullBooleanField(default=False)),
             ],
-            options={"db_table": "db_artifactlineage",},
+            options={
+                "db_table": "db_artifactlineage",
+            },
         ),
         migrations.CreateModel(
             name="Project",
@@ -252,7 +258,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"db_table": "db_project",},
+            options={
+                "db_table": "db_project",
+            },
         ),
         migrations.CreateModel(
             name="Run",
@@ -341,6 +349,8 @@ class Migration(migrations.Migration):
                             ("scheduled", "scheduled"),
                             ("starting", "starting"),
                             ("running", "running"),
+                            ("initializing", "initializing"),
+                            ("processing", "processing"),
                             ("succeeded", "succeeded"),
                             ("failed", "failed"),
                             ("upstream_failed", "upstream_failed"),
@@ -382,7 +392,6 @@ class Migration(migrations.Migration):
                             ("pytorchjob", "pytorchjob"),
                             ("scheduler", "scheduler"),
                             ("tuner", "tuner"),
-                            ("cleaner", "cleaner"),
                             ("watchdog", "watchdog"),
                             ("notifier", "notifier"),
                         ],
@@ -466,7 +475,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"db_table": "db_run",},
+            options={
+                "db_table": "db_run",
+            },
         ),
         migrations.AddIndex(
             model_name="project",
@@ -491,7 +502,8 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AlterUniqueTogether(
-            name="artifact", unique_together={("name", "state")},
+            name="artifact",
+            unique_together={("name", "state")},
         ),
         migrations.AddField(
             model_name="user",
@@ -522,6 +534,7 @@ class Migration(migrations.Migration):
             index=models.Index(fields=["name"], name="db_run_name_47fc7c_idx"),
         ),
         migrations.AlterUniqueTogether(
-            name="artifactlineage", unique_together={("run", "artifact", "is_input")},
+            name="artifactlineage",
+            unique_together={("run", "artifact", "is_input")},
         ),
     ]

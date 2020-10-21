@@ -21,7 +21,6 @@ import uuid
 from unittest.mock import patch
 
 from polyaxon_sdk import V1StatusCondition
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.exceptions import PolyaxonNotificationException
@@ -29,6 +28,7 @@ from polyaxon.lifecycle import V1Statuses
 from polyaxon.notifiers.spec import NotificationSpec
 from polyaxon.notifiers.webhook import WebHookNotifier
 from polyaxon.utils.tz_utils import now
+from tests.utils import BaseTestCase
 
 
 class TestWebHookNotification(BaseTestCase):

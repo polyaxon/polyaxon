@@ -16,10 +16,9 @@
 
 from datetime import datetime
 
-from tests.utils import BaseTestCase
-
 from polyaxon.exceptions import PolyaxonDateTimeFormatterException
 from polyaxon.utils.date_utils import DateTimeFormatter
+from tests.utils import BaseTestCase
 
 
 class TestDateTimeFormatter(BaseTestCase):

@@ -16,11 +16,10 @@
 
 import os
 
-from tests.utils import BaseTestCase
-
 from polyaxon.config_reader.manager import ConfigManager
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.types import V1AuthType, V1UriType
+from tests.utils import BaseTestCase
 
 
 class TestConfigManager(BaseTestCase):

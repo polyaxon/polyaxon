@@ -60,7 +60,10 @@ class ProjectClient:
 
     @check_no_op
     def __init__(
-        self, owner: str = None, project: str = None, client: PolyaxonClient = None,
+        self,
+        owner: str = None,
+        project: str = None,
+        client: PolyaxonClient = None,
     ):
         if not owner and project:
             owner, project = get_project_info(

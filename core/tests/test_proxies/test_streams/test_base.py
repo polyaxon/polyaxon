@@ -15,9 +15,8 @@
 # limitations under the License.
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.proxies.schemas.streams.base import get_base_config
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

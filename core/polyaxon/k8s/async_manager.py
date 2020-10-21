@@ -83,7 +83,9 @@ class AsyncK8SManager:
 
     async def list_pods(self, reraise=False, **kwargs):
         return await self._list_namespace_resource(
-            resource_api=self.k8s_api.list_namespaced_pod, reraise=reraise, **kwargs,
+            resource_api=self.k8s_api.list_namespaced_pod,
+            reraise=reraise,
+            **kwargs,
         )
 
     async def list_jobs(self, reraise=False, **kwargs):

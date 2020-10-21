@@ -112,7 +112,9 @@ class BaseResolver:
 
     def apply_params(self):
         self.compiled_operation = CompiledOperationSpecification.apply_params(
-            config=self.compiled_operation, params=self.params, context=self.globals,
+            config=self.compiled_operation,
+            params=self.params,
+            context=self.globals,
         )
         self._param_spec = CompiledOperationSpecification.calculate_context_spec(
             config=self.compiled_operation,
@@ -121,12 +123,14 @@ class BaseResolver:
         )
 
     def resolve_connections_params(self):
-        self.compiled_operation = CompiledOperationSpecification.apply_run_connections_params(
-            config=self.compiled_operation,
-            artifact_store=self.agent_config.artifacts_store.name
-            if self.agent_config
-            else None,
-            contexts=self.globals,
+        self.compiled_operation = (
+            CompiledOperationSpecification.apply_run_connections_params(
+                config=self.compiled_operation,
+                artifact_store=self.agent_config.artifacts_store.name
+                if self.agent_config
+                else None,
+                contexts=self.globals,
+            )
         )
 
     def resolve_presets(self):
@@ -137,10 +141,12 @@ class BaseResolver:
 
     def apply_operation_contexts(self):
         try:
-            self.compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
-                self.compiled_operation,
-                param_spec=self._param_spec,
-                contexts=self.globals,
+            self.compiled_operation = (
+                CompiledOperationSpecification.apply_operation_contexts(
+                    self.compiled_operation,
+                    param_spec=self._param_spec,
+                    contexts=self.globals,
+                )
             )
         except Exception as e:
             raise PolyaxonCompilerError(
@@ -208,13 +214,21 @@ class BaseResolver:
     def _apply_pipeline_contexts(self):
         return self.compiled_operation
 
+    def _is_cache_hit(self):
+        return False
+
     def apply_runtime_contexts(self):
+        if self._is_cache_hit():
+            return
         if self.compiled_operation.has_pipeline:
             self.compiled_operation = self._apply_pipeline_contexts()
         else:
             self.compiled_operation = self._apply_runtime_contexts()
 
     def resolve_state(self):
+        pass
+
+    def persist_state(self):
         pass
 
     def resolve(self) -> V1CompiledOperation:
@@ -231,6 +245,7 @@ class BaseResolver:
         self.resolve_connections()
         self.resolve_actions()
         self.resolve_artifacts_lineage()
-        self.apply_runtime_contexts()
         self.resolve_state()
+        self.apply_runtime_contexts()
+        self.persist_state()
         return self.compiled_operation

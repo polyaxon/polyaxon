@@ -155,10 +155,12 @@ class HyperbandManager(BaseManager):
         """Create an iteration for hyperband."""
 
         should_reschedule = self.should_reschedule(
-            iteration=iteration, bracket_iteration=bracket_iteration,
+            iteration=iteration,
+            bracket_iteration=bracket_iteration,
         )
         should_reduce_configs = self.should_reduce_configs(
-            iteration=iteration, bracket_iteration=bracket_iteration,
+            iteration=iteration,
+            bracket_iteration=bracket_iteration,
         )
         if should_reschedule:
             iteration = iteration + 1
@@ -212,7 +214,8 @@ class HyperbandManager(BaseManager):
         """Reduce the experiments to restart."""
         # Get the number of experiments to keep
         n_configs_to_keep = self.get_num_runs_to_keep(
-            num_runs=len(configs), bracket_iteration=bracket_iteration,
+            num_runs=len(configs),
+            bracket_iteration=bracket_iteration,
         )
 
         # Order the experiments

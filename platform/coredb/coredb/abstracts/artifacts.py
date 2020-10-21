@@ -25,7 +25,9 @@ from polyaxon.polyboard.artifacts import V1ArtifactKind
 class BaseArtifact(DiffModel, StateModel):
     name = models.CharField(max_length=64, db_index=True)
     kind = models.CharField(
-        max_length=12, db_index=True, choices=V1ArtifactKind.CHOICES,
+        max_length=12,
+        db_index=True,
+        choices=V1ArtifactKind.CHOICES,
     )
     path = models.CharField(max_length=256, blank=True, null=True)
     summary = models.JSONField()

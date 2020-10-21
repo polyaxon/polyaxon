@@ -15,7 +15,6 @@
 # limitations under the License.
 
 from marshmallow.exceptions import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
@@ -26,6 +25,7 @@ from polyaxon.connections.schemas import (
     V1HostPathConnection,
     validate_connection,
 )
+from tests.utils import BaseTestCase
 
 
 class TestV1BucketConnection(BaseTestCase):

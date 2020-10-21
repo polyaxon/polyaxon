@@ -14,13 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from unittest.mock import mock_open, patch
-
 import pytest
 
-from tests.utils import BaseTestCase
+from unittest.mock import mock_open, patch
 
 from polyaxon.managers.ignore import IgnoreConfigManager
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

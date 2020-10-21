@@ -48,7 +48,7 @@ class EventService(Service):
         instance: Any = None,
         **kwargs
     ) -> Optional[Event]:
-        """ Validate and record an event.
+        """Validate and record an event.
 
         >>> record('event.action', object_instance)
         """
@@ -64,7 +64,7 @@ class EventService(Service):
         return event
 
     def record_event(self, event: Event) -> None:
-        """ Record an event.
+        """Record an event.
 
         >>> record_event(Event())
         """

@@ -13,11 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import ujson
+
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
-
-import ujson
 
 from coredb.managers.statuses import new_run_status, new_run_stopping_status
 from polyaxon.lifecycle import V1StatusCondition

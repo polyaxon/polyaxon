@@ -86,7 +86,7 @@ type CollectRunLogsOK struct {
 }
 
 func (o *CollectRunLogsOK) Error() string {
-	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs][%d] collectRunLogsOK ", 200)
+	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] collectRunLogsOK ", 200)
 }
 
 func (o *CollectRunLogsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type CollectRunLogsNoContent struct {
 }
 
 func (o *CollectRunLogsNoContent) Error() string {
-	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs][%d] collectRunLogsNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] collectRunLogsNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CollectRunLogsNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type CollectRunLogsForbidden struct {
 }
 
 func (o *CollectRunLogsForbidden) Error() string {
-	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs][%d] collectRunLogsForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] collectRunLogsForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CollectRunLogsForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type CollectRunLogsNotFound struct {
 }
 
 func (o *CollectRunLogsNotFound) Error() string {
-	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs][%d] collectRunLogsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] collectRunLogsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CollectRunLogsNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *CollectRunLogsDefault) Code() int {
 }
 
 func (o *CollectRunLogsDefault) Error() string {
-	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs][%d] CollectRunLogs default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] CollectRunLogs default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *CollectRunLogsDefault) GetPayload() *service_model.RuntimeError {

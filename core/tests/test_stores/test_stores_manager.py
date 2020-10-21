@@ -15,10 +15,7 @@
 # limitations under the License.
 
 import os
-
 import pytest
-
-from tests.test_streams.base import create_tmp_files, set_store
 
 from polyaxon import settings
 from polyaxon.stores.async_manager import (
@@ -28,6 +25,7 @@ from polyaxon.stores.async_manager import (
     download_file,
 )
 from polyaxon.utils.path_utils import check_or_create_path
+from tests.test_streams.base import create_tmp_files, set_store
 
 
 @pytest.mark.asyncio

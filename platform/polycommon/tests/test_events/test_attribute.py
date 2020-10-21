@@ -20,7 +20,6 @@ from datetime import datetime
 from unittest import TestCase
 
 from dateutil.tz import UTC
-
 from polycommon.events.event import Attribute
 
 

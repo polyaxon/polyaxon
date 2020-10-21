@@ -139,7 +139,7 @@ func LogPolyaxonRunStatus(owner, project, uuid string, statusCond operationv1.Op
 }
 
 // CollectPolyaxonRunLogs archives logs before removing the operation
-func CollectPolyaxonRunLogs(namespace, owner, project, uuid string, log logr.Logger) error {
+func CollectPolyaxonRunLogs(namespace, owner, project, uuid string, kind string, log logr.Logger) error {
 	token := config.GetStrEnv(PolyaxonAuthToken, "72d2f09b59b646f6863c464465bf6c80c83fbd992b5e4d8bb3eb194c565023cb")
 	host := polyaxonHost(config.GetStrEnv(PolyaxonStreamsHost, "localhost"), config.GetIntEnv(PolyaxonStreamsPort, 8000))
 
@@ -154,6 +154,7 @@ func CollectPolyaxonRunLogs(namespace, owner, project, uuid string, log logr.Log
 		Owner:     owner,
 		Project:   project,
 		UUID:      uuid,
+		Kind:      kind,
 		Context:   ctx,
 	}
 	_, _, err := plxClient.RunsV1.CollectRunLogs(params, plxToken)

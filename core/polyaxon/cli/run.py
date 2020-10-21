@@ -53,7 +53,9 @@ from polyaxon.utils.validation import validate_tags
     help="The python module containing the polyaxonfile to run.",
 )
 @click.option(
-    "--url", type=str, help="The url containing the polyaxonfile to run.",
+    "--url",
+    type=str,
+    help="The url containing the polyaxonfile to run.",
 )
 @click.option(
     "--hub",
@@ -268,8 +270,10 @@ def run(
     if local:
         try:
             compiled_operation = OperationSpecification.compile_operation(op_spec)
-            compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
-                compiled_operation
+            compiled_operation = (
+                CompiledOperationSpecification.apply_operation_contexts(
+                    compiled_operation
+                )
             )
         except (PolyaxonSchemaError, ValidationError):
             Printer.print_error(

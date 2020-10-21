@@ -16,9 +16,8 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.polyflow import V1Cache
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.components_mark

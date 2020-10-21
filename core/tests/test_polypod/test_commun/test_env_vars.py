@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.connections.schemas import V1K8sResourceSchema
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_API_VERSION,
@@ -55,6 +53,7 @@ from polyaxon.polypod.common.env_vars import (
     get_str_var,
 )
 from polyaxon.schemas.types import V1K8sResourceType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

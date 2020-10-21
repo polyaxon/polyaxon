@@ -17,14 +17,13 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common.accelerators import (
     has_tpu_annotation,
     requests_gpu,
     requests_tpu,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

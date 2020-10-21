@@ -21,13 +21,7 @@ from polyaxon import types
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
 from polyaxon.polyaxonfile.specs import BaseSpecification, kinds
 from polyaxon.polyaxonfile.specs.libs.parser import Parser
-from polyaxon.polyflow import (  # noqa
-    ParamSpec,
-    V1CompiledOperation,
-    V1Dag,
-    V1Init,
-    V1Param,
-)
+from polyaxon.polyflow import ParamSpec, V1CompiledOperation, V1Dag, V1Init, V1Param
 
 
 class CompiledOperationSpecification(BaseSpecification):
@@ -195,13 +189,18 @@ class CompiledOperationSpecification(BaseSpecification):
             return config
         if config.is_distributed_run:
             return cls._apply_distributed_run_connections_params(
-                config=config, artifact_store=artifact_store, param_spec=param_spec,
+                config=config,
+                artifact_store=artifact_store,
+                param_spec=param_spec,
             )
         return config
 
     @classmethod
     def apply_params(
-        cls, config: V1CompiledOperation, params: Dict = None, context: Dict = None,
+        cls,
+        config: V1CompiledOperation,
+        params: Dict = None,
+        context: Dict = None,
     ) -> V1CompiledOperation:
         config.apply_params(params, context)
         return config
@@ -267,9 +266,13 @@ class CompiledOperationSpecification(BaseSpecification):
             )
         if config.is_distributed_run:
             return cls._apply_distributed_runtime_contexts(
-                config=config, contexts=contexts, param_spec=param_spec,
+                config=config,
+                contexts=contexts,
+                param_spec=param_spec,
             )
         else:
             return cls._apply_runtime_contexts(
-                config=config, contexts=contexts, param_spec=param_spec,
+                config=config,
+                contexts=contexts,
+                param_spec=param_spec,
             )

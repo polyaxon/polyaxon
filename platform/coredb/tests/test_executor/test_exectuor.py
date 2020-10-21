@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.test import TestCase
 from mock import MagicMock, patch
+
+from django.test import TestCase
 
 from coredb import executor
 from coredb.executor.handlers.run import (

@@ -15,16 +15,15 @@
 # limitations under the License.
 
 import os
+import pytest
 import uuid
 
-import pytest
-
 from mock import patch
-from tests.utils import BaseTestCase
 
 from polyaxon.env_vars.keys import POLYAXON_KEYS_RUN_INSTANCE
 from polyaxon.exceptions import PolyaxonContainerException
 from polyaxon.init.auth import create_auth_context
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.init_mark

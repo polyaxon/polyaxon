@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
-
 import pytest
+import random
 
 from coredb.api.artifacts.serializers import (
     RunArtifactLightSerializer,
@@ -41,7 +40,10 @@ class TestArtifactSerializer(PolyaxonBaseTestSerializer):
         super().setUp()
         self.project = ProjectFactory()
         self.run = RunFactory(
-            project=self.project, content="test", raw_content="test", is_managed=True,
+            project=self.project,
+            content="test",
+            raw_content="test",
+            is_managed=True,
         )
         self.state = self.project.owner.uuid
 
@@ -77,7 +79,10 @@ class TestArtifactLightSerializer(PolyaxonBaseTestSerializer):
         super().setUp()
         self.project = ProjectFactory()
         self.run = RunFactory(
-            project=self.project, content="test", raw_content="test", is_managed=True,
+            project=self.project,
+            content="test",
+            raw_content="test",
+            is_managed=True,
         )
         self.state = self.project.owner.uuid
 

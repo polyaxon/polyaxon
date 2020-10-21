@@ -15,9 +15,8 @@
 # limitations under the License.
 
 
-from tests.utils import BaseTestCase
-
 from polyaxon.sidecar.intervals import get_sync_interval
+from tests.utils import BaseTestCase
 
 
 class TestSidecar(BaseTestCase):

@@ -18,12 +18,14 @@ from typing import Dict, List, Union
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyaxonfile.specs.libs.parser import Parser
-from polyaxon.polyflow import V1CompiledOperation, V1Operation, V1Param
+from polyaxon.polyflow import V1CompiledOperation, V1MatrixKind, V1Operation, V1Param
 from polyaxon.utils.formatting import Printer
 
 
 def get_ops_from_suggestions(
-    content: str, compiled_operation: V1CompiledOperation, suggestions: List[Dict]
+    content: str,
+    compiled_operation: V1CompiledOperation,
+    suggestions: List[Dict],
 ) -> List[V1Operation]:
     ops = []
     for suggestion in suggestions:
@@ -42,7 +44,9 @@ def get_ops_from_suggestions(
 
 
 def get_eager_matrix_operations(
-    content: str, compiled_operation: V1CompiledOperation, is_cli: bool = False,
+    content: str,
+    compiled_operation: V1CompiledOperation,
+    is_cli: bool = False,
 ) -> List[V1Operation]:
     is_supported_in_eager_mode(compiled_operation)
 
@@ -91,11 +95,7 @@ def is_supported_in_eager_mode(spec: Union[V1Operation, V1CompiledOperation]):
                 "Received a bad configuration, eager mode not supported"
             )
 
-    if (
-        not spec.has_random_search_matrix
-        and not spec.has_grid_search_matrix
-        and not spec.has_mapping_matrix
-    ):
+    if spec.get_matrix_kind() not in V1MatrixKind.eager_values:
         raise PolyaxonSchemaError(
             "This operation is defining a matrix kind `{}` "
             "which is not supported in eager mode".format(spec.get_matrix_kind())

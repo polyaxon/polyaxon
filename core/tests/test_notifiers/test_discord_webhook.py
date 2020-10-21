@@ -17,11 +17,10 @@
 # pylint:disable=protected-access
 from unittest.mock import patch
 
-from tests.test_notifiers.test_webhook_notification import TestWebHookNotification
-
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.exceptions import PolyaxonNotificationException
 from polyaxon.notifiers.discord_webhook import DiscordWebHookNotifier
+from tests.test_notifiers.test_webhook_notification import TestWebHookNotification
 
 
 class TestDiscordWebHookNotifier(TestWebHookNotification):

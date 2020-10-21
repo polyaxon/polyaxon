@@ -26,7 +26,11 @@ from polyaxon.polyboard.events import V1Events
 class RunPlot(RunClient):
     @check_no_op
     def __init__(
-        self, owner=None, project=None, run_uuid=None, client=None,
+        self,
+        owner=None,
+        project=None,
+        run_uuid=None,
+        client=None,
     ):
         super().__init__(owner=owner, project=project, run_uuid=run_uuid, client=client)
         self.metrics = {}
@@ -109,7 +113,10 @@ class RunPlot(RunClient):
 class MultiRunPlot(RunClient):
     @check_no_op
     def __init__(
-        self, owner=None, project=None, client=None,
+        self,
+        owner=None,
+        project=None,
+        client=None,
     ):
         super().__init__(owner=owner, project=project, client=client)
         self.runs = {}
@@ -144,7 +151,12 @@ class MultiRunPlot(RunClient):
     def get_runs(
         self, query: str = None, sort: str = None, limit: int = None, offset: int = None
     ) -> Dict:
-        runs = self.list(query=query, sort=sort, limit=limit, offset=offset,).results
+        runs = self.list(
+            query=query,
+            sort=sort,
+            limit=limit,
+            offset=offset,
+        ).results
         for r in runs:
             self.run_uuids.add(r.uuid)
             self.runs[r.uuid] = r

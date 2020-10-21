@@ -15,16 +15,15 @@
 # limitations under the License.
 
 import os
+import pytest
 import tempfile
 import uuid
 
-import pytest
-
 from mock import patch
-from tests.utils import BaseTestCase
 
 from polyaxon.client.impersonate import create_context_auth, impersonate
 from polyaxon.schemas.api.authentication import AccessTokenConfig
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.client_mark

@@ -17,10 +17,10 @@
 import pytest
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase, assert_equal_dict
 
 from polyaxon.connections.schemas import V1K8sResourceSchema
 from polyaxon.schemas.types import V1K8sResourceType
+from tests.utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.parser_mark

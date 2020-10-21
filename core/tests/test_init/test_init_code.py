@@ -15,11 +15,9 @@
 # limitations under the License.
 
 import os
-
 import pytest
 
 from mock import patch
-from tests.utils import BaseTestCase
 
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_GIT_CREDENTIALS,
@@ -32,6 +30,7 @@ from polyaxon.init.git import (
     has_cred_access,
     has_ssh_access,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.init_mark

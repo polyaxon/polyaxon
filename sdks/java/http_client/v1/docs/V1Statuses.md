@@ -9,10 +9,6 @@
 
 * `RESUMING` (value: `"resuming"`)
 
-* `WARNING` (value: `"warning"`)
-
-* `UNSCHEDULABLE` (value: `"unschedulable"`)
-
 * `COMPILED` (value: `"compiled"`)
 
 * `QUEUED` (value: `"queued"`)
@@ -21,19 +17,27 @@
 
 * `STARTING` (value: `"starting"`)
 
+* `INITIALIZING` (value: `"initializing"`)
+
 * `RUNNING` (value: `"running"`)
 
-* `SUCCEEDED` (value: `"succeeded"`)
-
-* `FAILED` (value: `"failed"`)
-
-* `UPSTREAM_FAILED` (value: `"upstream_failed"`)
+* `PROCESSING` (value: `"processing"`)
 
 * `STOPPING` (value: `"stopping"`)
 
+* `FAILED` (value: `"failed"`)
+
 * `STOPPED` (value: `"stopped"`)
 
+* `SUCCEEDED` (value: `"succeeded"`)
+
 * `SKIPPED` (value: `"skipped"`)
+
+* `WARNING` (value: `"warning"`)
+
+* `UNSCHEDULABLE` (value: `"unschedulable"`)
+
+* `UPSTREAM_FAILED` (value: `"upstream_failed"`)
 
 * `RETRYING` (value: `"retrying"`)
 

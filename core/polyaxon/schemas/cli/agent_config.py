@@ -85,12 +85,17 @@ class AgentSchema(BaseSchema):
         data_key=POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
     )
     app_secret_name = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_K8S_APP_SECRET_NAME,
+        allow_none=True,
+        data_key=POLYAXON_KEYS_K8S_APP_SECRET_NAME,
     )
     agent_secret_name = fields.Str(
-        allow_none=True, data_key=POLYAXON_KEYS_AGENT_SECRET_NAME,
+        allow_none=True,
+        data_key=POLYAXON_KEYS_AGENT_SECRET_NAME,
     )
-    runs_sa = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_AGENT_RUNS_SA,)
+    runs_sa = fields.Str(
+        allow_none=True,
+        data_key=POLYAXON_KEYS_AGENT_RUNS_SA,
+    )
 
     @staticmethod
     def schema_config():

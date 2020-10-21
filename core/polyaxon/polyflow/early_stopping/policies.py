@@ -183,7 +183,7 @@ class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
 
     ```yaml
     >>> earlyStopping:
-    >>>   - value: 0.5
+    >>>   - optimization: maximize
     ```
 
     ### policy
@@ -194,7 +194,7 @@ class V1MetricEarlyStopping(BaseConfig, polyaxon_sdk.V1MetricEarlyStopping):
          this policy computes running medians across all runs and stops
          those whose best performance is worse than the median of the running runs.
      * DiffStopping: Early stopping with diff factor stopping,
-        this policy computes checks runs against the best run and
+        this policy computes checked runs against the best run and
         stops those whose performance is worse than the best by the factor defined by the user.
      * TruncationStopping: Early stopping with truncation stopping,
         this policy stops a percentage of all running runs at every evaluation.

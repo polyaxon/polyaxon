@@ -17,10 +17,10 @@
 import pytest
 
 from mock import patch
-from tests.test_cli.utils import BaseCommandTestCase
 
 from polyaxon.cli.components.docker import docker
 from polyaxon.schemas.types.dockerfile import V1DockerfileType
+from tests.test_cli.utils import BaseCommandTestCase
 
 
 @pytest.mark.cli_mark

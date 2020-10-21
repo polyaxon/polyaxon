@@ -16,10 +16,10 @@
 import pytest
 
 from dateutil import parser as dt_parser
-from tests.utils import BaseTestCase
 
 from polyaxon.polyboard.logging.schemas import V1Log, V1Logs
 from polyaxon.utils.tz_utils import now
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyboard_mark

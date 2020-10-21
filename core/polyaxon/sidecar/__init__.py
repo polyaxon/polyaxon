@@ -78,10 +78,13 @@ async def start_sidecar(
         if monitor_outputs:
             last_check = state["last_artifacts_check"]
             state["last_artifacts_check"] = sync_artifacts(
-                last_check=last_check, run_uuid=run_uuid,
+                last_check=last_check,
+                run_uuid=run_uuid,
             )
             sync_summaries(
-                last_check=last_check, run_uuid=run_uuid, client=client,
+                last_check=last_check,
+                run_uuid=run_uuid,
+                client=client,
             )
 
     while is_running and retry <= 3:

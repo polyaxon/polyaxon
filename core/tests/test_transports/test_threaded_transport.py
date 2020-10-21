@@ -17,11 +17,10 @@
 import requests
 import time
 
-from tests.test_transports.utils import BaseTestCaseTransport
-
 from polyaxon import settings
 from polyaxon.client.transport.threaded_transport import ThreadedTransportMixin
 from polyaxon.client.workers.queue_worker import QueueWorker
+from tests.test_transports.utils import BaseTestCaseTransport
 
 
 class DummyTransport(ThreadedTransportMixin):

@@ -159,7 +159,9 @@ def validate_platform_deployment(
 
 
 def validate_deployment_chart(
-    deployment_chart, agent, environment,
+    deployment_chart,
+    agent,
+    environment,
 ):
     if deployment_chart == DeploymentCharts.AGENT and not agent:
         raise ValidationError(
@@ -242,7 +244,8 @@ class DeploymentSchema(BaseCamelSchema):
     artifacts_store = fields.Nested(ConnectionTypeSchema, allow_none=True)
     connections = fields.List(fields.Nested(ConnectionTypeSchema), allow_none=True)
     notification_connections = fields.List(
-        fields.Nested(ConnectionTypeSchema), allow_none=True,
+        fields.Nested(ConnectionTypeSchema),
+        allow_none=True,
     )
     log_level = fields.Str(allow_none=True)
     security_context = fields.Nested(SecurityContextSchema, allow_none=True)
@@ -379,7 +382,9 @@ class DeploymentConfig(BaseConfig):
         include_chart_revision=None,
     ):
         validate_deployment_chart(
-            deployment_chart=deployment_chart, agent=agent, environment=environment,
+            deployment_chart=deployment_chart,
+            agent=agent,
+            environment=environment,
         )
         validate_platform_deployment(
             postgresql=postgresql,

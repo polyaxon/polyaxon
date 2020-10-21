@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.utils import BaseTestCase
-
 from polyaxon.utils.list_utils import to_list
+from tests.utils import BaseTestCase
 
 
 class ToListTest(BaseTestCase):

@@ -53,4 +53,6 @@ class V1ArtifactKind(polyaxon_sdk.V1ArtifactKind):
         (polyaxon_sdk.V1ArtifactKind.CODEREF, polyaxon_sdk.V1ArtifactKind.CODEREF),
         (polyaxon_sdk.V1ArtifactKind.TABLE, polyaxon_sdk.V1ArtifactKind.TABLE),
         (polyaxon_sdk.V1ArtifactKind.CURVE, polyaxon_sdk.V1ArtifactKind.CURVE),
+        (polyaxon_sdk.V1ArtifactKind.ANALYSIS, polyaxon_sdk.V1ArtifactKind.ANALYSIS),
+        (polyaxon_sdk.V1ArtifactKind.ITERATION, polyaxon_sdk.V1ArtifactKind.ITERATION),
     )

@@ -15,10 +15,7 @@
 # limitations under the License.
 
 import os
-
 import pytest
-
-from tests.utils import BaseTestCase
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.connections.kinds import V1ConnectionKind
@@ -61,6 +58,7 @@ from polyaxon.polypod.init.store import (
     get_volume_args,
 )
 from polyaxon.schemas.types import V1ArtifactsType, V1ConnectionType, V1K8sResourceType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

@@ -18,9 +18,11 @@ import yaml
 from typing import TextIO, Union
 
 try:
-    from yaml import CSafeLoader as _SafeLoader, CSafeDumper as _SafeDumper
+    from yaml import CSafeDumper as _SafeDumper
+    from yaml import CSafeLoader as _SafeLoader
 except ImportError:
-    from yaml import SafeLoader as _SafeLoader, SafeDumper as _SafeDumper
+    from yaml import SafeDumper as _SafeDumper
+    from yaml import SafeLoader as _SafeLoader
 
 
 def dump(data, stream=None):

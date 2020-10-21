@@ -65,12 +65,16 @@ def get_compatibility(key: str, service: str, version: str, is_cli: bool = True)
         CliConfigManager.reset(last_check=now())
         if is_cli:
             handle_cli_error(
-                e, message="Could parse the version {}.".format(version),
+                e,
+                message="Could parse the version {}.".format(version),
             )
     polyaxon_client = PolyaxonClient(config=ClientConfig(), token=NO_AUTH)
     try:
         return polyaxon_client.versions_v1.get_compatibility(
-            uuid=key, service=service, version=version, _request_timeout=15,
+            uuid=key,
+            service=service,
+            version=version,
+            _request_timeout=15,
         )
     except ApiException as e:
         if e.status == 403 and is_cli:
@@ -78,7 +82,8 @@ def get_compatibility(key: str, service: str, version: str, is_cli: bool = True)
         CliConfigManager.reset(last_check=now())
         if is_cli:
             handle_cli_error(
-                e, message="Could not reach the compatibility API.",
+                e,
+                message="Could not reach the compatibility API.",
             )
     except HTTPError:
         CliConfigManager.reset(last_check=now())

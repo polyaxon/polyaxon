@@ -21,8 +21,6 @@ package v1;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-import "v1/api/search.proto";
-
 // Dashboard specification
 message Dashboard {
     // UUID

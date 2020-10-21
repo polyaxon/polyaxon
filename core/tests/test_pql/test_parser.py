@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.utils import BaseTestCase
-
 from polyaxon.exceptions import PQLException
 from polyaxon.pql.parser import (
     QueryOpSpec,
@@ -28,6 +26,7 @@ from polyaxon.pql.parser import (
     split_query,
     tokenize_query,
 )
+from tests.utils import BaseTestCase
 
 
 class TestParser(BaseTestCase):

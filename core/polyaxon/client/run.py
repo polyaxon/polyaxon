@@ -228,7 +228,10 @@ class RunClient:
         self, data: Union[Dict, polyaxon_sdk.V1OperationBody], async_req: bool = False
     ) -> V1Run:
         response = self.client.runs_v1.create_run(
-            owner=self.owner, project=self.project, body=data, async_req=async_req,
+            owner=self.owner,
+            project=self.project,
+            body=data,
+            async_req=async_req,
         )
         if not async_req:
             self._run_data = response
@@ -812,7 +815,9 @@ class RunClient:
     def stop(self):
         """Stops the current run."""
         self.client.runs_v1.stop_run(
-            self.owner, self.project, self.run_uuid,
+            self.owner,
+            self.project,
+            self.run_uuid,
         )
 
     @check_no_op
@@ -820,7 +825,9 @@ class RunClient:
     def invalidate(self):
         """Invalidates the current run."""
         self.client.runs_v1.invalidate_run(
-            self.owner, self.project, self.run_uuid,
+            self.owner,
+            self.project,
+            self.run_uuid,
         )
 
     @check_no_op
@@ -1156,7 +1163,11 @@ class RunClient:
     @check_no_op
     @check_offline
     def log_dir_ref(
-        self, path: str, name: str = None, is_input: bool = False, rel_path: str = None,
+        self,
+        path: str,
+        name: str = None,
+        is_input: bool = False,
+        rel_path: str = None,
     ):
         """Logs dir reference.
 
@@ -1217,7 +1228,10 @@ class RunClient:
             body: dict or List[dict] or V1RunArtifact or List[V1RunArtifact], body of the lineage.
         """
         self.client.runs_v1.create_run_artifacts_lineage(
-            self.owner, self.project, self.run_uuid, body=body,
+            self.owner,
+            self.project,
+            self.run_uuid,
+            body=body,
         )
 
     @check_no_op
@@ -1225,7 +1239,9 @@ class RunClient:
     def get_namespace(self):
         """Fetches the run namespace."""
         return self.client.runs_v1.get_run_namespace(
-            self.owner, self.project, self.run_uuid,
+            self.owner,
+            self.project,
+            self.run_uuid,
         ).namespace
 
     @check_no_op

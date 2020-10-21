@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon import pkg, types
 from polyaxon.config_reader.utils import deep_update
 from polyaxon.containers.names import MAIN_JOB_CONTAINER
@@ -25,6 +23,7 @@ from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1Component, V1Operation, V1RunKind
 from polyaxon.schemas.patch_strategy import V1PatchStrategy
 from polyaxon.utils.tz_utils import now
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark
@@ -53,7 +52,10 @@ class TestPatchSpecifications(BaseTestCase):
                 ],
                 "presets": [self.DEFAULT_STR_VALUE],
                 "queue": "{}/{}".format(self.DEFAULT_STR_VALUE, self.DEFAULT_STR_VALUE),
-                "cache": {"disable": False, "ttl": self.DEFAULT_INT_VALUE,},
+                "cache": {
+                    "disable": False,
+                    "ttl": self.DEFAULT_INT_VALUE,
+                },
                 "termination": {
                     "maxRetries": self.DEFAULT_INT_VALUE,
                     "ttl": self.DEFAULT_INT_VALUE,
@@ -159,7 +161,10 @@ class TestPatchSpecifications(BaseTestCase):
                 ],
                 "presets": [self.PATCH_STR_VALUE],
                 "queue": "{}/{}".format(self.PATCH_STR_VALUE, self.PATCH_STR_VALUE),
-                "cache": {"disable": True, "ttl": self.PATCH_INT_VALUE,},
+                "cache": {
+                    "disable": True,
+                    "ttl": self.PATCH_INT_VALUE,
+                },
                 "termination": {
                     "maxRetries": self.PATCH_INT_VALUE,
                     "ttl": self.PATCH_INT_VALUE,
@@ -706,7 +711,8 @@ class TestApplyPresetEnvironment(BaseTestApplyPreset):
         assert self.compiled_operation.run.environment is None
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -719,7 +725,8 @@ class TestApplyPresetEnvironment(BaseTestApplyPreset):
         self.preset["runPatch"]["environment"] = environment2
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -739,7 +746,8 @@ class TestApplyPresetEnvironment(BaseTestApplyPreset):
         assert env == environment2
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -757,7 +765,8 @@ class TestApplyPresetEnvironment(BaseTestApplyPreset):
         self.preset["runPatch"]["environment"] = environment3
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -803,7 +812,8 @@ class TestApplyPresetPlugins(BaseTestApplyPreset):
         assert self.compiled_operation.plugins is None
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -817,7 +827,8 @@ class TestApplyPresetPlugins(BaseTestApplyPreset):
         assert plugins == plugins1
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -853,7 +864,8 @@ class TestApplyPresetTermination(BaseTestApplyPreset):
         assert self.compiled_operation.termination is None
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -865,7 +877,8 @@ class TestApplyPresetTermination(BaseTestApplyPreset):
         assert self.compiled_operation.termination.to_dict() == termination1
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -893,7 +906,8 @@ class TestApplyPreset(BaseTestApplyPreset):
     def test_patch_does_not_alter_with_no_preset(self):
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=None,
+                config=self.compiled_operation,
+                preset=None,
             )
             == self.compiled_operation
         )
@@ -903,7 +917,8 @@ class TestApplyPreset(BaseTestApplyPreset):
     ):
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -933,7 +948,8 @@ class TestApplyPreset(BaseTestApplyPreset):
         assert self.compiled_operation.termination is None
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -971,7 +987,8 @@ class TestApplyPreset(BaseTestApplyPreset):
 
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )
@@ -1001,7 +1018,8 @@ class TestApplyPreset(BaseTestApplyPreset):
         self.preset["patchStrategy"] = V1PatchStrategy.REPLACE
         assert (
             OperationSpecification.apply_preset(
-                config=self.compiled_operation, preset=self.preset,
+                config=self.compiled_operation,
+                preset=self.preset,
             )
             == self.compiled_operation
         )

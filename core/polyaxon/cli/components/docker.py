@@ -46,10 +46,14 @@ def docker():
     help="The polyaxonfiles to generate the dockerfile from.",
 )
 @click.option(
-    "-pm", "--python-module", type=str, help="The python module to run.",
+    "-pm",
+    "--python-module",
+    type=str,
+    help="The python module to run.",
 )
 @click.option(
-    "--build-context", help="The build context config to generate the dockerfile from.",
+    "--build-context",
+    help="The build context config to generate the dockerfile from.",
 )
 @click.option(
     "-dest", "--destination", help="The destination where to generate the build."
@@ -101,8 +105,10 @@ def generate(
         try:
             compiled_operation = OperationSpecification.compile_operation(specification)
             compiled_operation.apply_params(params=specification.config.params)
-            compiled_operation = CompiledOperationSpecification.apply_operation_contexts(
-                compiled_operation
+            compiled_operation = (
+                CompiledOperationSpecification.apply_operation_contexts(
+                    compiled_operation
+                )
             )
         except PolyaxonSchemaError:
             Printer.print_error(

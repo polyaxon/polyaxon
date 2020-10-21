@@ -25,8 +25,8 @@ import click
 @click.option("--delete", is_flag=True, default=False)
 def clean_ops(namespace, in_cluster, delete):
     """clean-ops command."""
-    from polyaxon.k8s.manager import K8SManager
     from polyaxon.k8s.custom_resources import operation
+    from polyaxon.k8s.manager import K8SManager
 
     if not namespace:
         raise ValueError("namespace is required!")
@@ -69,7 +69,9 @@ def clean_ops(namespace, in_cluster, delete):
                 retry += 1
 
     ops = manager.list_custom_objects(
-        group=operation.GROUP, version=operation.API_VERSION, plural=operation.PLURAL,
+        group=operation.GROUP,
+        version=operation.API_VERSION,
+        plural=operation.PLURAL,
     )
 
     for op in ops:

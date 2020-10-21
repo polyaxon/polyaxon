@@ -46,6 +46,7 @@ class BaseRun(
     LiveStateModel,
 ):
     kind = models.CharField(max_length=12, db_index=True, choices=V1RunKind.CHOICES)
+    meta_kind = models.CharField(max_length=12, db_index=True, null=True, blank=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -61,7 +62,11 @@ class BaseRun(
     inputs = models.JSONField(null=True, blank=True)
     outputs = models.JSONField(null=True, blank=True)
     original = models.ForeignKey(
-        "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="clones",
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="clones",
     )
     pipeline = models.ForeignKey(
         "self",
@@ -71,7 +76,10 @@ class BaseRun(
         related_name="pipeline_runs",
     )
     cloning_kind = models.CharField(
-        max_length=12, blank=True, null=True, choices=V1CloningKind.CHOICES,
+        max_length=12,
+        blank=True,
+        null=True,
+        choices=V1CloningKind.CHOICES,
     )
     artifacts = models.ManyToManyField(
         get_db_model_name("Artifact"),

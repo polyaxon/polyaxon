@@ -16,10 +16,9 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

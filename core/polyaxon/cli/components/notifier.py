@@ -19,22 +19,27 @@ import click
 
 @click.command()
 @click.option(
-    "--kind", help="The notification kind.",
+    "--kind",
+    help="The notification kind.",
 )
 @click.option(
-    "--owner", help="The project owner.",
+    "--owner",
+    help="The project owner.",
 )
 @click.option(
-    "--project", help="The project containing the operation.",
+    "--project",
+    help="The project containing the operation.",
 )
 @click.option("--run-uuid", help="The run uuid.")
 @click.option("--run-name", help="The run name.")
 @click.option(
-    "--condition", help="The run condition to notify.",
+    "--condition",
+    help="The run condition to notify.",
 )
 def notify(kind, owner, project, run_uuid, run_name, condition):
     """Notifier command."""
     import ujson
+
     from polyaxon.lifecycle import V1StatusCondition
     from polyaxon.notifiers import NOTIFIERS, NotificationSpec
 

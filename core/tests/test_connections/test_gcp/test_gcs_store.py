@@ -14,17 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import mock
 import os
 import tempfile
 import time
 
-import mock
-
-from tests.utils import BaseTestCase
-
 from polyaxon.connections.gcp.gcs import GCSService
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.utils.date_utils import to_datetime
+from tests.utils import BaseTestCase
 
 GCS_MODULE = "polyaxon.connections.gcp.base.{}"
 

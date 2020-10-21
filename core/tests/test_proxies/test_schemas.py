@@ -15,12 +15,11 @@
 # limitations under the License.
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon import settings
 from polyaxon.proxies.schemas.listen import get_listen_config
 from polyaxon.proxies.schemas.logging import get_logging_config
 from polyaxon.proxies.schemas.timeout import get_timeout_config
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

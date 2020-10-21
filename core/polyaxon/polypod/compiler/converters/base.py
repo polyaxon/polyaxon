@@ -76,7 +76,7 @@ class BaseConverter(ConverterAbstract):
     GROUP = None
     API_VERSION = None
     PLURAL = None
-    K8S_LABELS_NAME = None
+    K8S_ANNOTATIONS_KIND = None
     K8S_LABELS_COMPONENT = None
     K8S_LABELS_PART_OF = None
     MAIN_CONTAINER_ID = None
@@ -131,9 +131,9 @@ class BaseConverter(ConverterAbstract):
             raise PolypodException(
                 "Please make sure that a spawner subclass has a valid PLURAL"
             )
-        if not self.K8S_LABELS_NAME:
+        if not self.K8S_ANNOTATIONS_KIND:
             raise PolypodException(
-                "Please make sure that a spawner subclass has a valid K8S_LABELS_NAME"
+                "Please make sure that a spawner subclass has a valid K8S_ANNOTATIONS_KIND"
             )
         if not self.K8S_LABELS_COMPONENT:
             raise PolypodException(
@@ -162,6 +162,7 @@ class BaseConverter(ConverterAbstract):
             "operation.polyaxon.com/name": self.run_name,
             "operation.polyaxon.com/owner": self.owner_name,
             "operation.polyaxon.com/project": self.project_name,
+            "operation.polyaxon.com/kind": self.K8S_ANNOTATIONS_KIND,
         }
 
     def get_labels(self, version: str, labels: Dict):

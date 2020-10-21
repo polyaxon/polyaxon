@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1BucketConnection, V1ClaimConnection
@@ -36,6 +34,7 @@ from polyaxon.polypod.init.artifacts import (
 )
 from polyaxon.polypod.init.store import get_base_store_container, get_volume_args
 from polyaxon.schemas.types import V1ArtifactsType, V1ConnectionType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

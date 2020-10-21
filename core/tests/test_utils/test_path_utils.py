@@ -18,8 +18,6 @@ import os
 import tarfile
 import tempfile
 
-from tests.utils import BaseTestCase
-
 from polyaxon.utils.path_utils import (
     append_basename,
     create_project_tarfile,
@@ -27,6 +25,7 @@ from polyaxon.utils.path_utils import (
     get_files_in_path_context,
     get_path,
 )
+from tests.utils import BaseTestCase
 
 
 class TestFiles(BaseTestCase):

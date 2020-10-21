@@ -91,7 +91,10 @@ def commit_condition(
 
 
 def _artifact_kind_condition(
-    is_input: bool, query_backend: Any, params: Union[str, Iterable], negation: bool,
+    is_input: bool,
+    query_backend: Any,
+    params: Union[str, Iterable],
+    negation: bool,
 ) -> Any:
     params = to_list(params)
     if len(params) == 1:

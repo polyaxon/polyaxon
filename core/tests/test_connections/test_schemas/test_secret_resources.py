@@ -15,9 +15,9 @@
 # limitations under the License.
 
 from marshmallow.exceptions import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.schemas import V1K8sResourceSchema, validate_k8s_resource
+from tests.utils import BaseTestCase
 
 
 class TestSecretResourceValidation(BaseTestCase):

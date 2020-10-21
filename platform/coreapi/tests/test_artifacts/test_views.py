@@ -15,11 +15,10 @@
 # limitations under the License.
 
 
+import pytest
 import uuid
 
 from unittest.mock import patch
-
-import pytest
 
 from rest_framework import status
 
@@ -64,7 +63,10 @@ class TestRunArtifactNameListViewV1(BaseTest):
         )
         self.objects = []
         for i in range(self.num_objects):
-            obj = self.factory_class(name=f"foo{i}", state=uuid.uuid4(),)
+            obj = self.factory_class(
+                name=f"foo{i}",
+                state=uuid.uuid4(),
+            )
             self.objects.append(obj)
             ArtifactLineage.objects.create(run=self.run, artifact=obj)
 
@@ -79,7 +81,9 @@ class TestRunArtifactNameListViewV1(BaseTest):
             raw_content="test",
             is_managed=True,
         )
-        other_obj = self.factory_class(state=uuid.uuid4(),)
+        other_obj = self.factory_class(
+            state=uuid.uuid4(),
+        )
         ArtifactLineage.objects.create(run=other_run, artifact=other_obj)
 
     def test_get(self):
@@ -117,7 +121,10 @@ class TestRunArtifactListViewV1(BaseTest):
         )
         self.objects = []
         for i in range(self.num_objects):
-            obj = self.factory_class(name=f"foo{i}", state=uuid.uuid4(),)
+            obj = self.factory_class(
+                name=f"foo{i}",
+                state=uuid.uuid4(),
+            )
             self.objects.append(obj)
             ArtifactLineage.objects.create(run=self.run, artifact=obj)
 

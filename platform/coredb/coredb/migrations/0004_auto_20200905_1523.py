@@ -24,14 +24,20 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="project", name="deleted",),
-        migrations.RemoveField(model_name="run", name="deleted",),
+        migrations.RemoveField(
+            model_name="project",
+            name="deleted",
+        ),
+        migrations.RemoveField(
+            model_name="run",
+            name="deleted",
+        ),
         migrations.AddField(
             model_name="project",
             name="live_state",
             field=models.IntegerField(
                 blank=True,
-                choices=[(1, "live"), (0, "archived"), (-1, "deletion_cleaning")],
+                choices=[(1, "live"), (0, "archived"), (-1, "deletion_progressing")],
                 default=1,
                 null=True,
             ),
@@ -41,7 +47,7 @@ class Migration(migrations.Migration):
             name="live_state",
             field=models.IntegerField(
                 blank=True,
-                choices=[(1, "live"), (0, "archived"), (-1, "deletion_cleaning")],
+                choices=[(1, "live"), (0, "archived"), (-1, "deletion_progressing")],
                 default=1,
                 null=True,
             ),

@@ -119,7 +119,10 @@ async def get_operation_logs(
 ):
     previous_last = last_time
     operation_logs, last_time = await query_k8s_operation_logs(
-        instance=instance, last_time=None, k8s_manager=k8s_manager, stream=True,
+        instance=instance,
+        last_time=None,
+        k8s_manager=k8s_manager,
+        stream=True,
     )
     if k8s_operation["status"].get("completionTime"):
         last_time = None

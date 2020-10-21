@@ -17,6 +17,7 @@
 import numpy as np
 import os
 import pandas as pd
+import pytest
 import tempfile
 import uuid
 
@@ -24,11 +25,9 @@ from unittest.mock import patch
 
 import altair as alt
 import matplotlib.pyplot as plt
-import pytest
 
 from bokeh.plotting import figure
 from plotly import figure_factory
-from tests.utils import TestEnvVarsCase, tensor_np
 
 from polyaxon import settings
 from polyaxon.constants import DEFAULT, PLATFORM_DIST_CE
@@ -50,6 +49,7 @@ from polyaxon.polyboard.events import V1Events, get_asset_path, get_event_path
 from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
 from polyaxon.tracking.run import TEMP_RUN_ARTIFACTS, Run
 from polyaxon.utils.path_utils import create_path
+from tests.utils import TestEnvVarsCase, tensor_np
 
 
 @pytest.mark.tracking_mark

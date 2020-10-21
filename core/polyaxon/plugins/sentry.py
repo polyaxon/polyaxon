@@ -21,9 +21,8 @@ logger = logging.getLogger("polyaxon.cli")
 
 
 def set_raven_client() -> bool:
-    from polyaxon import pkg
+    from polyaxon import pkg, settings
     from polyaxon.env_vars.keys import POLYAXON_KEYS_SERVICE
-    from polyaxon import settings
 
     cli_config = settings.CLI_CONFIG
     if cli_config and cli_config.log_handler and cli_config.log_handler.dsn:

@@ -14,11 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import datetime
-
 import pytest
 
 from dateutil.tz import tzutc
-from tests.utils import BaseTestCase
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.parser import parser
@@ -33,6 +31,7 @@ from polyaxon.schemas.types import (
     V1UriType,
     V1WasbType,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.parser_mark
@@ -1182,7 +1181,10 @@ class TestParser(BaseTestCase):
         value = parser.get_git_init(key="dict_key_1", value={"revision": "foo"})
         self.assertEqual(value, V1GitType(revision="foo"))
 
-        value = parser.get_git_init(key="dict_key_1", value={"revision": "foo"},)
+        value = parser.get_git_init(
+            key="dict_key_1",
+            value={"revision": "foo"},
+        )
         self.assertEqual(value, V1GitType(revision="foo"))
 
         value = parser.get_git_init(
@@ -1327,7 +1329,12 @@ class TestParser(BaseTestCase):
             is_list=True,
         )
         self.assertEqual(
-            value, ["https://registry.com/foo:bar", "test", "foo:bar",],
+            value,
+            [
+                "https://registry.com/foo:bar",
+                "test",
+                "foo:bar",
+            ],
         )
 
         with self.assertRaises(PolyaxonSchemaError):

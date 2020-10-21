@@ -33,23 +33,28 @@ func (r *OperationReconciler) instanceSyncStatus(instance *operationv1.Operation
 	return r.syncStatus(instance, lastCond)
 }
 
-func (r *OperationReconciler) getInstanceInfo(instance *operationv1.Operation) (string, string, string, bool) {
+func (r *OperationReconciler) getInstanceInfo(instance *operationv1.Operation) (string, string, string, string, bool) {
 	instanceID, ok := instance.ObjectMeta.Labels["app.kubernetes.io/instance"]
 	if !ok || instanceID == "" {
-		return "", "", "", false
+		return "", "", "", "", false
 	}
 
 	instanceOwner, ok := instance.ObjectMeta.Annotations["operation.polyaxon.com/owner"]
 	if !ok || instanceOwner == "" {
-		return "", "", "", false
+		return "", "", "", "", false
 	}
 
 	instanceProject, ok := instance.ObjectMeta.Annotations["operation.polyaxon.com/project"]
 	if !ok || instanceProject == "" {
-		return "", "", "", false
+		return "", "", "", "", false
 	}
 
-	return instanceOwner, instanceProject, instanceID, true
+	instanceKind, ok := instance.ObjectMeta.Annotations["operation.polyaxon.com/kind"]
+	if !ok || instanceKind == "" {
+		return "", "", "", "", false
+	}
+
+	return instanceOwner, instanceProject, instanceID, instanceKind, true
 }
 
 func (r *OperationReconciler) syncStatus(instance *operationv1.Operation, statusCond operationv1.OperationCondition) error {
@@ -60,7 +65,7 @@ func (r *OperationReconciler) syncStatus(instance *operationv1.Operation, status
 	log := r.Log
 
 	log.Info("Operation sync status", "Syncing", instance.GetName(), "Status", statusCond.Type)
-	owner, project, instanceID, ok := r.getInstanceInfo(instance)
+	owner, project, instanceID, _, ok := r.getInstanceInfo(instance)
 	if !ok {
 		log.Info("Operation cannot be synced", "Instance", instance.Name, "Uuid Does not exist", instance.GetName())
 		return nil
@@ -78,7 +83,7 @@ func (r *OperationReconciler) notify(instance *operationv1.Operation) error {
 
 	log.Info("Operation notify status", "Notifying", instance.GetName())
 
-	owner, project, instanceID, ok := r.getInstanceInfo(instance)
+	owner, project, instanceID, _, ok := r.getInstanceInfo(instance)
 	if !ok {
 		log.Info("Operation cannot be synced", "Instance", instance.Name, "Uuid Does not exist", instance.GetName())
 		return nil
@@ -119,12 +124,12 @@ func (r *OperationReconciler) collectLogs(instance *operationv1.Operation) error
 
 	log := r.Log
 
-	owner, project, instanceID, ok := r.getInstanceInfo(instance)
+	owner, project, instanceID, runKind, ok := r.getInstanceInfo(instance)
 	if !ok {
 		log.Info("Operation cannot be synced", "Instance", instance.Name, "Uuid Does not exist", instance.GetName())
 		return nil
 	}
 
 	log.Info("Operation collect logs", "Instance", instance.GetName())
-	return plugins.CollectPolyaxonRunLogs(instance.Namespace, owner, project, instanceID, r.Log)
+	return plugins.CollectPolyaxonRunLogs(instance.Namespace, owner, project, instanceID, runKind, r.Log)
 }

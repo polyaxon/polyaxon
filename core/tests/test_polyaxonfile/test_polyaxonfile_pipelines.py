@@ -15,11 +15,9 @@
 # limitations under the License.
 
 import os
-
 import pytest
 
 from mock import patch
-from tests.utils import BaseTestCase
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.k8s.k8s_schemas import V1Container
@@ -36,6 +34,7 @@ from polyaxon.polyflow.early_stopping import (
 from polyaxon.polyflow.matrix import V1GridSearch, V1Hyperband, V1RandomSearch
 from polyaxon.polyflow.matrix.params import V1HpChoice, V1HpLinSpace
 from polyaxon.polyflow.run import V1Dag
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

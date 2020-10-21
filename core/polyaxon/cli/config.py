@@ -79,7 +79,9 @@ def get(keys):
 @click.option("--debug", type=bool, help="To set the verbosity of the client.")
 @click.option("--host", type=str, help="To set the server endpoint.")
 @click.option(
-    "--no-api", type=str, help="To disable using polyaxon.com or on-prem api.",
+    "--no-api",
+    type=str,
+    help="To disable using polyaxon.com or on-prem api.",
 )
 @click.option(
     "--verify-ssl",
@@ -125,7 +127,9 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 
 @config.command()
 @click.option(
-    "--cache-only", is_flag=True, help="To purge cache only.",
+    "--cache-only",
+    is_flag=True,
+    help="To purge cache only.",
 )
 def purge(cache_only):
     """Purge the global config values."""

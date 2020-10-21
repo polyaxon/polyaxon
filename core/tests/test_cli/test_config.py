@@ -17,9 +17,9 @@
 import pytest
 
 from mock import patch
-from tests.test_cli.utils import BaseCommandTestCase
 
 from polyaxon.cli.config import config
+from tests.test_cli.utils import BaseCommandTestCase
 
 
 @pytest.mark.cli_mark

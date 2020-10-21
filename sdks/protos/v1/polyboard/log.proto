@@ -88,4 +88,7 @@ message CollectRunLogsRequest {
 
     // Uuid identifier of the entity
     string uuid = 4;
+
+    // Kind of the entity
+    string kind = 5;
 }

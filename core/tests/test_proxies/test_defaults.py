@@ -15,10 +15,9 @@
 # limitations under the License.
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon import settings
 from polyaxon.containers.contexts import CONTEXT_ARCHIVE_ROOT
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

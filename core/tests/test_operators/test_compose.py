@@ -17,11 +17,10 @@
 import mock
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.deploy import reader
 from polyaxon.deploy.operators.compose import ComposeOperator
 from polyaxon.exceptions import PolyaxonOperatorException
+from tests.utils import BaseTestCase
 
 DUMMY_RETURN_VALUE = object()
 

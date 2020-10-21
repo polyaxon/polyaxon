@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# isort: skip_file
+
 # Default configs
 from polycommon.celery.routes import get_routes
 from polycommon.settings.api import set_api

@@ -25,8 +25,7 @@ except ImportError:
 
 
 class GzipDecorator:
-    """Gzip the response and set the respective header.
-    """
+    """Gzip the response and set the respective header."""
 
     def __call__(self, func):
         @wraps(func)

@@ -1,6 +1,6 @@
-from faker import Factory as FakerFactory
-
 import factory
+
+from faker import Factory as FakerFactory
 
 from django.conf import settings
 

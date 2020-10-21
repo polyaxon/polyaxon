@@ -414,8 +414,8 @@ def audio(asset_path: str, tensor, sample_rate=44100, asset_rel_path: str = None
 
     tensor_list = [int(32767.0 * x) for x in tensor]
 
-    import wave
     import struct
+    import wave
 
     check_or_create_path(asset_path, is_dir=False)
 
@@ -440,13 +440,16 @@ def audio(asset_path: str, tensor, sample_rate=44100, asset_rel_path: str = None
 
 def roc_auc_curve(fpr, tpr, auc=None):
     return V1EventCurve(
-        kind=V1EventCurveKind.ROC, x=fpr, y=tpr, annotation=str(auc) if auc else None,
+        kind=V1EventCurveKind.ROC,
+        x=fpr,
+        y=tpr,
+        annotation=str(auc) if auc else None,
     )
 
 
 def sklearn_roc_auc_curve(y_preds, y_targets):
     try:
-        from sklearn.metrics import roc_curve, auc
+        from sklearn.metrics import auc, roc_curve
     except ImportError:
         logger.warning(SKLEARN_ERROR_MESSAGE)
 
@@ -461,7 +464,10 @@ def sklearn_roc_auc_curve(y_preds, y_targets):
     fpr, tpr, _ = roc_curve(y_true, y_pred)
     auc_score = auc(fpr, tpr)
     return V1EventCurve(
-        kind=V1EventCurveKind.ROC, x=fpr, y=tpr, annotation=str(auc_score),
+        kind=V1EventCurveKind.ROC,
+        x=fpr,
+        y=tpr,
+        annotation=str(auc_score),
     )
 
 
@@ -476,8 +482,7 @@ def pr_curve(precision, recall, average_precision=None):
 
 def sklearn_pr_curve(y_preds, y_targets):
     try:
-        from sklearn.metrics import precision_recall_curve
-        from sklearn.metrics import average_precision_score
+        from sklearn.metrics import average_precision_score, precision_recall_curve
     except ImportError:
         logger.warning(SKLEARN_ERROR_MESSAGE)
 
@@ -493,7 +498,10 @@ def sklearn_pr_curve(y_preds, y_targets):
     precision, recall, _ = precision_recall_curve(y_true, y_pred)
     ap = average_precision_score(y_true, y_pred)
     return V1EventCurve(
-        kind=V1EventCurveKind.PR, x=precision, y=recall, annotation=str(ap),
+        kind=V1EventCurveKind.PR,
+        x=precision,
+        y=recall,
+        annotation=str(ap),
     )
 
 
@@ -516,8 +524,8 @@ def figure_to_image(figure, close=True):
         logger.warning(NUMPY_ERROR_MESSAGE)
 
     try:
-        import matplotlib.pyplot as plt
         import matplotlib.backends.backend_agg as plt_backend_agg
+        import matplotlib.pyplot as plt
     except ImportError:
         logger.warning(MATPLOTLIB_ERROR_MESSAGE)
 
@@ -554,6 +562,7 @@ def ensure_matplotlib_figure(figure):
     raises ValueError if the object can't be converted.
     """
     import matplotlib
+
     from matplotlib.figure import Figure
 
     if figure == matplotlib.pyplot:
@@ -712,6 +721,7 @@ def mpl_plotly_chart(figure) -> V1EventChart:
 
     try:
         import matplotlib
+
         from matplotlib.figure import Figure
     except ImportError:
         logger.warning(MATPLOTLIB_ERROR_MESSAGE)
@@ -765,7 +775,9 @@ def metrics_dict_to_list(metrics: Dict) -> List:
     for k, v in metrics.items():
         results.append(
             LoggedEventSpec(
-                name=k, kind=V1ArtifactKind.METRIC, event=V1Event.make(metric=v),
+                name=k,
+                kind=V1ArtifactKind.METRIC,
+                event=V1Event.make(metric=v),
             )
         )
     return results

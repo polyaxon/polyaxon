@@ -74,6 +74,11 @@ for the collect run logs operation typically these are written to a http.Request
 */
 type CollectRunLogsParams struct {
 
+	/*Kind
+	  Kind of the entity
+
+	*/
+	Kind string
 	/*Namespace*/
 	Namespace string
 	/*Owner
@@ -130,6 +135,17 @@ func (o *CollectRunLogsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithKind adds the kind to the collect run logs params
+func (o *CollectRunLogsParams) WithKind(kind string) *CollectRunLogsParams {
+	o.SetKind(kind)
+	return o
+}
+
+// SetKind adds the kind to the collect run logs params
+func (o *CollectRunLogsParams) SetKind(kind string) {
+	o.Kind = kind
+}
+
 // WithNamespace adds the namespace to the collect run logs params
 func (o *CollectRunLogsParams) WithNamespace(namespace string) *CollectRunLogsParams {
 	o.SetNamespace(namespace)
@@ -181,6 +197,11 @@ func (o *CollectRunLogsParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 		return err
 	}
 	var res []error
+
+	// path param kind
+	if err := r.SetPathParam("kind", o.Kind); err != nil {
+		return err
+	}
 
 	// path param namespace
 	if err := r.SetPathParam("namespace", o.Namespace); err != nil {

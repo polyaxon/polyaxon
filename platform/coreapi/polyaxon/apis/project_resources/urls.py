@@ -22,14 +22,26 @@ from apis.project_resources import views
 from polycommon.apis.urls import projects
 
 projects_urlpatterns = [
-    re_path(projects.URLS_PROJECTS_RUNS_TAG, views.ProjectRunsTagView.as_view(),),
+    re_path(
+        projects.URLS_PROJECTS_RUNS_TAG,
+        views.ProjectRunsTagView.as_view(),
+    ),
     re_path(
         projects.URLS_PROJECTS_RUNS_ARTIFACTS_LINEAGE,
         views.ProjectRunsArtifactsView.as_view(),
     ),
-    re_path(projects.URLS_PROJECTS_RUNS_STOP, views.ProjectRunsStopView.as_view(),),
-    re_path(projects.URLS_PROJECTS_RUNS_DELETE, views.ProjectRunsDeleteView.as_view(),),
-    re_path(projects.URLS_PROJECTS_RUNS_LIST, views.ProjectRunsListView.as_view(),),
+    re_path(
+        projects.URLS_PROJECTS_RUNS_STOP,
+        views.ProjectRunsStopView.as_view(),
+    ),
+    re_path(
+        projects.URLS_PROJECTS_RUNS_DELETE,
+        views.ProjectRunsDeleteView.as_view(),
+    ),
+    re_path(
+        projects.URLS_PROJECTS_RUNS_LIST,
+        views.ProjectRunsListView.as_view(),
+    ),
 ]
 
 # Order is important, because the patterns could swallow other urls

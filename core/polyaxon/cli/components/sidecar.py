@@ -23,10 +23,14 @@ from polyaxon.utils.coroutine import coroutine
 
 @click.command()
 @click.option(
-    "--container-id", help="The tagged image destination $PROJECT/$IMAGE:$TAG.",
+    "--container-id",
+    help="The tagged image destination $PROJECT/$IMAGE:$TAG.",
 )
 @click.option(
-    "--max-retries", type=int, default=3, help="Number of times to retry the process.",
+    "--max-retries",
+    type=int,
+    default=3,
+    help="Number of times to retry the process.",
 )
 @click.option(
     "--sleep-interval",
@@ -41,7 +45,10 @@ from polyaxon.utils.coroutine import coroutine
     help="Interval between artifacts syncs in seconds.",
 )
 @click.option(
-    "--monitor-logs", is_flag=True, default=False, help="Enable logs monitoring.",
+    "--monitor-logs",
+    is_flag=True,
+    default=False,
+    help="Enable logs monitoring.",
 )
 @coroutine
 async def sidecar(

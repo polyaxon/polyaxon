@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from starlette.exceptions import HTTPException
+
 from tests.test_streams.base import get_streams_client, set_store
 from tests.utils import BaseTestCase
 

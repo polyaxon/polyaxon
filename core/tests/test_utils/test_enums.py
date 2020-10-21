@@ -16,9 +16,8 @@
 
 from enum import Enum
 
-from tests.utils import BaseTestCase
-
 from polyaxon.utils.enums_utils import enum_to_choices, enum_to_set, values_to_choices
+from tests.utils import BaseTestCase
 
 
 class Dummy1Enum(Enum):

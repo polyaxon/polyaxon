@@ -212,7 +212,9 @@ def ls(ctx, project, io, to_csv, query, sort, limit, offset, columns):
             columns = {prefixed_columns.get(col, col) for col in columns}
         if to_csv:
             objects = list_dicts_to_csv(
-                objects, include_attrs=columns, exclude_attrs=DEFAULT_EXCLUDE,
+                objects,
+                include_attrs=columns,
+                exclude_attrs=DEFAULT_EXCLUDE,
             )
         else:
             objects = list_dicts_to_tabulate(
@@ -273,7 +275,9 @@ def get(ctx, project, uid):
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
 
     try:
@@ -318,7 +322,9 @@ def delete(ctx, project, uid):
     $ polyaxon ops delete --project=cats-vs-dogs -uid 8aac02e3a62a4f0aaa257c59da5eab80
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     if not click.confirm("Are sure you want to delete run `{}`".format(run_uuid)):
         click.echo("Existing without deleting the run.")
@@ -363,7 +369,9 @@ def update(ctx, project, uid, name, description, tags):
     --tags="foo, bar" --name="unique-name"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     update_dict = {}
 
@@ -420,7 +428,9 @@ def stop(ctx, project, uid, yes):
     $ polyaxon ops stop --uid=8aac02e3a62a4f0aaa257c59da5eab80
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     if not yes and not click.confirm(
         "Are sure you want to stop " "run `{}`".format(run_uuid)
@@ -476,7 +486,9 @@ def restart(ctx, project, uid, copy, polyaxonfile):
         )
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -522,7 +534,9 @@ def resume(ctx, project, uid, polyaxonfile):
         )
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -551,7 +565,9 @@ def invalidate(ctx, project, uid):
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     try:
         polyaxon_client = RunClient(
@@ -603,7 +619,9 @@ def statuses(ctx, project, uid, watch):
             dict_tabulate(objects, is_list_dict=True)
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
 
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
@@ -711,7 +729,9 @@ def logs(ctx, project, uid, follow, hide_time, all_containers, all_info):
     """
 
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
 
@@ -725,7 +745,8 @@ def logs(ctx, project, uid, follow, hide_time, all_containers, all_info):
         )
     except (ApiException, HTTPError, PolyaxonClientException) as e:
         handle_cli_error(
-            e, message="Could not get logs for run `{}`.".format(client.run_uuid),
+            e,
+            message="Could not get logs for run `{}`.".format(client.run_uuid),
         )
         sys.exit(1)
 
@@ -767,7 +788,9 @@ def artifacts(ctx, project, uid, path, path_to, no_untar):
     $ polyaxon ops artifacts -uid=8aac02e3a62a4f0aaa257c59da5eab80 path_to="this/path"
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     try:
         client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
@@ -803,7 +826,9 @@ def artifacts(ctx, project, uid, path, path_to, no_untar):
 def dashboard(ctx, project, uid, yes, url):
     """Open this operation's dashboard details in browser."""
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     subpath = "{}/{}/runs/{}".format(owner, project_name, run_uuid)
     get_dashboard(
@@ -823,7 +848,10 @@ def dashboard(ctx, project, uid, yes, url):
     'Assume "yes" as answer to all prompts and run non-interactively.',
 )
 @click.option(
-    "--external", is_flag=True, default=False, help="Open the external service URL.",
+    "--external",
+    is_flag=True,
+    default=False,
+    help="Open the external service URL.",
 )
 @click.option(
     "--url",
@@ -841,7 +869,9 @@ def service(ctx, project, uid, yes, external, url):
     please use the `--external` flag.
     """
     owner, project_name, run_uuid = get_project_run_or_local(
-        project or ctx.obj.get("project"), uid or ctx.obj.get("run_uuid"), is_cli=True,
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
     )
     client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
     client.refresh_data()

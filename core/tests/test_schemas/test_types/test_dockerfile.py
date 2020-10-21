@@ -17,7 +17,6 @@
 import pytest
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.schemas.types.dockerfile import (
     POLYAXON_DOCKER_SHELL,
@@ -25,6 +24,7 @@ from polyaxon.schemas.types.dockerfile import (
     POLYAXON_DOCKERFILE_NAME,
     V1DockerfileType,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.init_mark

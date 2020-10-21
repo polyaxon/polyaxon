@@ -15,11 +15,8 @@
 # limitations under the License.
 
 import os
-import tempfile
-
 import pytest
-
-from tests.utils import BaseTestCase
+import tempfile
 
 from polyaxon.builds.generator.generator import DockerFileGenerator
 from polyaxon.schemas.types.dockerfile import (
@@ -27,6 +24,7 @@ from polyaxon.schemas.types.dockerfile import (
     POLYAXON_DOCKERFILE_NAME,
     V1DockerfileType,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.api_builds

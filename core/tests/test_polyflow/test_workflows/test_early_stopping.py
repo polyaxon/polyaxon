@@ -16,13 +16,12 @@
 
 import pytest
 
-from tests.utils import BaseTestCase, assert_equal_dict
-
 from polyaxon.polyflow.early_stopping import (
     V1FailureEarlyStopping,
     V1MetricEarlyStopping,
 )
 from polyaxon.polyflow.optimization import V1Optimization
+from tests.utils import BaseTestCase, assert_equal_dict
 
 
 @pytest.mark.workflow_mark

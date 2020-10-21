@@ -14,14 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from unittest.mock import patch
-
 import pytest
 
-from tests.utils import BaseTestCase
+from unittest.mock import patch
 
 from polyaxon.polyflow.matrix import V1GridSearch
 from polyaxon.polytune.search_managers.grid_search.manager import GridSearchManager
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polytune_mark

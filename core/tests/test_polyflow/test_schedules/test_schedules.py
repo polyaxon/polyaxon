@@ -17,7 +17,6 @@
 import pytest
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.polyflow.schedule import (
     ScheduleSchema,
@@ -27,6 +26,7 @@ from polyaxon.polyflow.schedule import (
     V1RepeatableSchedule,
 )
 from polyaxon.utils.tz_utils import now
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyflow_mark

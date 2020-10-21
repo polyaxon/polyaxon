@@ -18,10 +18,9 @@ import os
 import tempfile
 import time
 
-from tests.utils import BaseTestCase
-
 from polyaxon.stores.local_store import LocalStore
 from polyaxon.utils.date_utils import to_datetime
+from tests.utils import BaseTestCase
 
 
 class TestLocalStore(BaseTestCase):

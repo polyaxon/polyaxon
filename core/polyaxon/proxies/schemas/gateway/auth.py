@@ -52,7 +52,8 @@ location = {auth_api} {{
 
 def get_auth_location_config(resolver: str):
     service = settings.PROXIES_CONFIG.auth_external or get_service_url(
-        host=settings.PROXIES_CONFIG.api_host, port=settings.PROXIES_CONFIG.api_port,
+        host=settings.PROXIES_CONFIG.api_host,
+        port=settings.PROXIES_CONFIG.api_port,
     )
     if not settings.PROXIES_CONFIG.auth_use_resolver:
         resolver = ""

@@ -20,13 +20,13 @@ import traceback
 from typing import Dict, List, Optional
 
 from django.utils.timezone import now
-from kubernetes.client.rest import ApiException
 
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
 from coredb.managers.artifacts import set_artifacts
 from coredb.managers.statuses import new_run_status, new_run_stop_status
 from coredb.scheduler import resolver
+from kubernetes.client.rest import ApiException
 from polyaxon import operations, settings
 from polyaxon.agents import manager
 from polyaxon.exceptions import (
@@ -219,7 +219,11 @@ def runs_set_artifacts(run_id: int, run: Optional[BaseRun], artifacts: List[Dict
 
 
 def runs_stop(
-    run_id: int, run: Optional[BaseRun], update_status=False, message=None, clean=False,
+    run_id: int,
+    run: Optional[BaseRun],
+    update_status=False,
+    message=None,
+    clean=False,
 ) -> bool:
     run = get_run(run_id=run_id, run=run)
     if not run:

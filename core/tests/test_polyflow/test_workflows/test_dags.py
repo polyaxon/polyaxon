@@ -17,7 +17,6 @@
 import pytest
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon import types
 from polyaxon.exceptions import PolyaxonSchemaError
@@ -26,6 +25,7 @@ from polyaxon.polyflow.io import V1IO
 from polyaxon.polyflow.operations import V1Operation
 from polyaxon.polyflow.params import V1Param, ops_params
 from polyaxon.polyflow.run import V1Dag
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.workflow_mark

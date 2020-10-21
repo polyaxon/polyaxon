@@ -28,7 +28,7 @@ class GridSearchManager(BaseManager):
 
     CONFIG = V1GridSearch
 
-    def get_suggestions(self, params: Dict = None) -> List[Dict]:
+    def get_suggestions(self, params: List[Dict] = None) -> List[Dict]:
         suggestions = []
         keys = list(self.config.params.keys())
         values = [to_numpy(v) for v in self.config.params.values()]

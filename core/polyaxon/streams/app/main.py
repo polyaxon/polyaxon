@@ -32,7 +32,7 @@ URLS_RUNS_INTERNAL_LOGS = (
     STREAMS_URL
     + "/{namespace:str}"
     + "/_internal"
-    + "/{owner:str}/{project:str}/runs/{run_uuid:str}/logs"
+    + "/{owner:str}/{project:str}/runs/{run_uuid:str}/{run_kind:str}/logs"
 )
 URLS_RUNS_LOGS = (
     STREAMS_URL + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/logs"

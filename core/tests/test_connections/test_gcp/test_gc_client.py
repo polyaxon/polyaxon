@@ -16,10 +16,9 @@
 
 import mock
 
-from tests.utils import BaseTestCase
-
 from polyaxon.connections.gcp.base import get_gc_client, get_gc_credentials
 from polyaxon.exceptions import PolyaxonStoresException
+from tests.utils import BaseTestCase
 
 GCS_MODULE = "polyaxon.connections.gcp.base.{}"
 

@@ -37,7 +37,6 @@ class RunSerializer(
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
     settings = fields.SerializerMethodField()
-    meta_kind = fields.SerializerMethodField()
 
     class Meta:
         model = get_run_model()
@@ -66,10 +65,6 @@ class RunSerializer(
             "is_managed": {"read_only": True},
             "cloning_kind": {"read_only": True},
         }
-
-    def get_meta_kind(self, obj):
-        meta_info = obj.meta_info or {}
-        return meta_info.get("meta_kind")
 
 
 class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):

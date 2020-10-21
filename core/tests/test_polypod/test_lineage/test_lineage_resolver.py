@@ -14,11 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import tempfile
-
 import pytest
-
-from tests.utils import BaseTestCase
+import tempfile
 
 from polyaxon import settings, types
 from polyaxon.auxiliaries import (
@@ -39,6 +36,7 @@ from polyaxon.polypod.compiler.lineage.io_collector import collect_io_artifacts
 from polyaxon.polypod.compiler.resolver import BaseResolver
 from polyaxon.schemas.cli.agent_config import AgentConfig
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark
@@ -149,7 +147,8 @@ class TestLineageResolver(BaseTestCase):
             secret=secret2.schema,
         )
         connection2 = V1ConnectionType(
-            name="connection2", kind=V1ConnectionKind.REGISTRY,
+            name="connection2",
+            kind=V1ConnectionKind.REGISTRY,
         )
         settings.AGENT_CONFIG = AgentConfig(
             namespace="foo",

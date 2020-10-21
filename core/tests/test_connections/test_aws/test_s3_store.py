@@ -21,11 +21,11 @@ import time
 from boto3.resources.base import ServiceResource
 from botocore.client import BaseClient
 from moto import mock_s3
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.aws.s3 import S3Service
 from polyaxon.exceptions import PolyaxonStoresException
 from polyaxon.utils.date_utils import to_datetime
+from tests.utils import BaseTestCase
 
 
 class TestAwsStore(BaseTestCase):

@@ -14,15 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-
 import pytest
-
-from tests.utils import BaseTestCase
 
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.polyboard.artifacts import V1RunArtifact
 from polyaxon.polyboard.events import V1Events
 from polyaxon.sidecar.monitors.summaries import sync_events_summaries
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.sidecar_mark
@@ -166,7 +164,9 @@ class TestEventsSummaries(BaseTestCase):
 
     def test_htmls_summaries(self):
         summaries, last_values = sync_events_summaries(
-            events_path="tests/fixtures/polyboard", events_kind="html", last_check=None,
+            events_path="tests/fixtures/polyboard",
+            events_kind="html",
+            last_check=None,
         )
         events = V1Events.read(
             name="html_events",

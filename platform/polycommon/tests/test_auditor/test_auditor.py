@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from unittest import TestCase
-
 from mock import MagicMock
+from unittest import TestCase
 
 from polycommon.auditor.service import AuditorService
 from polycommon.events.registry.run import RUN_SUCCEEDED, RunSucceededEvent

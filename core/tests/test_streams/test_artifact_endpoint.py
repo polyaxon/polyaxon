@@ -16,12 +16,11 @@
 import os
 import shutil
 
-from tests.test_streams.base import create_tmp_files, get_streams_client, set_store
-from tests.utils import BaseTestCase
-
 from polyaxon import settings
 from polyaxon.streams.app.main import STREAMS_URL
 from polyaxon.utils.path_utils import create_path
+from tests.test_streams.base import create_tmp_files, get_streams_client, set_store
+from tests.utils import BaseTestCase
 
 
 class TestArtifactEndpoints(BaseTestCase):

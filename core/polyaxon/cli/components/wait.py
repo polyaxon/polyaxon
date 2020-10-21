@@ -23,15 +23,19 @@ import click
 @click.command()
 @click.option("--uuid", help="The operation's run uuid.")
 @click.option(
-    "--kind", help="The operation kind.",
+    "--kind",
+    help="The operation kind.",
 )
 @click.option(
-    "--max-retries", type=int, default=10, help="Number of times to retry the process.",
+    "--max-retries",
+    type=int,
+    default=10,
+    help="Number of times to retry the process.",
 )
 def wait(uuid: str, kind: str, max_retries: int):
     """Delete an s3 subpath."""
-    from polyaxon.agents.spawners.spawner import Spawner
     from polyaxon import settings
+    from polyaxon.agents.spawners.spawner import Spawner
 
     spawner = Spawner(namespace=settings.CLIENT_CONFIG.namespace, in_cluster=True)
     retry = 1

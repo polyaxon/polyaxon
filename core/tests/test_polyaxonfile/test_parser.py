@@ -16,9 +16,8 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.polyaxonfile.specs.libs.parser import Parser
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

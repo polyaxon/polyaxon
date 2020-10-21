@@ -19,7 +19,12 @@ from polyaxon.polypod.compiler.converters.base import BaseConverter, ConverterAb
 from polyaxon.polypod.compiler.converters.helpers import (
     CleanerConverter,
     NotifierConverter,
+    TunerConverter,
     WatchDogConverter,
+    PlatformNotifierConverter,
+    PlatformCleanerConverter,
+    PlatformTunerConverter,
+    PlatformWatchDogConverter,
 )
 from polyaxon.polypod.compiler.converters.job import JobConverter, PlatformJobConverter
 from polyaxon.polypod.compiler.converters.kubeflow import (
@@ -42,6 +47,7 @@ from polyaxon.polypod.compiler.converters.service import (
 CORE_CONVERTERS = {
     V1RunKind.NOTIFIER: NotifierConverter,
     V1RunKind.CLEANER: CleanerConverter,
+    V1RunKind.TUNER: TunerConverter,
     V1RunKind.WATCHDOG: WatchDogConverter,
     V1RunKind.JOB: JobConverter,
     V1RunKind.SERVICE: ServiceConverter,
@@ -51,6 +57,10 @@ CORE_CONVERTERS = {
 }
 
 PLATFORM_CONVERTERS = {
+    V1RunKind.NOTIFIER: PlatformNotifierConverter,
+    V1RunKind.CLEANER: PlatformCleanerConverter,
+    V1RunKind.TUNER: PlatformTunerConverter,
+    V1RunKind.WATCHDOG: PlatformWatchDogConverter,
     V1RunKind.JOB: PlatformJobConverter,
     V1RunKind.SERVICE: PlatformServiceConverter,
     V1RunKind.MPIJOB: PlatformMPIJobConverter,

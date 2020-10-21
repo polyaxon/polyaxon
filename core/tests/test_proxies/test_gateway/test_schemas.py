@@ -15,8 +15,6 @@
 # limitations under the License.
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon import settings
 from polyaxon.proxies.schemas.gateway.api import get_api_location_config
 from polyaxon.proxies.schemas.gateway.auth import (
@@ -31,6 +29,7 @@ from polyaxon.proxies.schemas.gateway.services import (
 )
 from polyaxon.proxies.schemas.gateway.ssl import get_ssl_config
 from polyaxon.proxies.schemas.gateway.streams import get_streams_location_config
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.proxies_mark

@@ -14,14 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import requests
-
 import mock
-
-from tests.test_transports.utils import BaseTestCaseTransport
+import requests
 
 from polyaxon.client.transport import Transport
 from polyaxon.client.transport.utils import Bar
+from tests.test_transports.utils import BaseTestCaseTransport
 
 
 class TestHttpTransport(BaseTestCaseTransport):

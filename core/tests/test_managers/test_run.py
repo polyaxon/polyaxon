@@ -17,9 +17,9 @@
 import pytest
 
 from polyaxon_sdk import V1Run
-from tests.utils import BaseTestCase
 
 from polyaxon.managers.run import RunConfigManager
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

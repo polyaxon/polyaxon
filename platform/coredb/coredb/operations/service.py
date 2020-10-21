@@ -24,6 +24,7 @@ from polyaxon.polyflow import (
     V1CloningKind,
     V1CompiledOperation,
     V1Init,
+    V1MatrixKind,
     V1Operation,
     V1RunKind,
 )
@@ -42,9 +43,6 @@ class OperationsService(Service):
         V1RunKind.WATCHDOG,
         V1RunKind.TUNER,
         V1RunKind.CLEANER,
-    }
-    EAGER_KINDS = {
-        V1RunKind.MATRIX,
     }
     __all__ = ("init_run",)
 
@@ -80,17 +78,17 @@ class OperationsService(Service):
             "your account does not support operations of kind: {}"
         )
         if kind not in supported_kinds:
-            if is_managed or kind not in cls.EAGER_KINDS:
+            if is_managed or kind not in V1RunKind.eager_values:
                 raise ValueError(error_message.format(kind))
         if meta_kind and meta_kind not in supported_kinds:
-            if is_managed or meta_kind not in cls.EAGER_KINDS:
+            if is_managed or meta_kind not in V1MatrixKind.eager_values:
                 raise ValueError(error_message.format(meta_kind))
         return True
 
     @staticmethod
     def get_meta_info(
-        compiled_operation: V1CompiledOperation, kind: str, meta_kind: str
-    ) -> Tuple[str, Dict]:
+        compiled_operation: V1CompiledOperation, kind: str, meta_kind: str, **kwargs
+    ) -> Tuple[str, str, Dict]:
         meta_info = {}
         if compiled_operation.matrix:
             if kind == V1RunKind.JOB:
@@ -102,8 +100,7 @@ class OperationsService(Service):
             kind = V1RunKind.MATRIX
             meta_kind = compiled_operation.matrix.kind
 
-        meta_info["meta_kind"] = meta_kind
-        return kind, meta_info
+        return kind, meta_kind, meta_info
 
     @staticmethod
     def sanitize_kwargs(**kwargs):
@@ -150,7 +147,9 @@ class OperationsService(Service):
             description = description or compiled_operation.description
             tags = tags or compiled_operation.tags
             kind, meta_kind = self.get_kind(compiled_operation)
-            kind, meta_info = self.get_meta_info(compiled_operation, kind, meta_kind)
+            kind, meta_kind, meta_info = self.get_meta_info(
+                compiled_operation, kind, meta_kind, **kwargs
+            )
             self.supports_kind(kind, meta_kind, supported_kinds, is_managed)
             if cloning_kind == V1CloningKind.COPY:
                 if meta_kind not in {V1RunKind.JOB, V1RunKind.SERVICE}:
@@ -173,6 +172,7 @@ class OperationsService(Service):
             params=params,
             inputs=inputs,
             kind=kind,
+            meta_kind=meta_kind,
             meta_info=meta_info,
             original_id=original_id,
             cloning_kind=cloning_kind,

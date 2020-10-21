@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Dict, Optional
+from typing import Dict, Optional, Any
 
 from polyaxon.polyflow import V1CompiledOperation
 from polyaxon.polypod.compiler import converter, resolver
@@ -31,6 +31,7 @@ def make(
     default_sa: str = None,
     internal_auth: bool = False,
     default_auth: bool = False,
+    converters: Dict[str, Any] = converter.CORE_CONVERTERS,
 ):
     resolver_obj, compiled_operation = resolver.resolve(
         compiled_operation=compiled_operation,
@@ -58,5 +59,6 @@ def make(
         polyaxon_sidecar=resolver_obj.polyaxon_sidecar,
         polyaxon_init=resolver_obj.polyaxon_init,
         default_sa=default_sa,
+        converters=converters,
         default_auth=default_auth,
     )

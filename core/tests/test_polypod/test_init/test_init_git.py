@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.auxiliaries import V1PolyaxonInitContainer, get_init_resources
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1GitConnection
@@ -35,6 +33,7 @@ from polyaxon.polypod.common.volumes import get_volume_name
 from polyaxon.polypod.init.git import get_git_init_container, get_repo_context_args
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

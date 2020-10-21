@@ -15,18 +15,16 @@
 # limitations under the License.
 
 import os
+import pytest
 import uuid
 
 from datetime import timedelta
-
-import pytest
-
 from mock import patch
-from tests.utils import BaseTestCase
 
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.schemas.cli.cli_config import CliConfig
 from polyaxon.utils.tz_utils import now
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.managers_mark

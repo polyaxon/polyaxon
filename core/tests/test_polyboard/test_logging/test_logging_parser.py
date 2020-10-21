@@ -16,13 +16,13 @@
 import pytest
 
 from dateutil import parser as dt_parser
-from tests.utils import BaseTestCase
 
 from polyaxon.polyboard.logging.parser import (
     DATETIME_REGEX,
     ISO_DATETIME_REGEX,
     timestamp_search_regex,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyboard_mark

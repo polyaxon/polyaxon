@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.2.0
+  version: 1.2.1-rc1
 servers:
 - url: /
 security:
@@ -10991,7 +10991,7 @@ paths:
       tags:
       - SchemasV1
       x-accepts: application/json
-  /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs:
+  /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs:
     post:
       operationId: CollectRunLogs
       parameters:
@@ -11015,6 +11015,12 @@ paths:
       - description: Uuid identifier of the entity
         in: path
         name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Kind of the entity
+        in: path
+        name: kind
         required: true
         schema:
           type: string
@@ -11103,6 +11109,8 @@ paths:
           - table
           - tensorboard
           - curve
+          - analysis
+          - iteration
           type: string
       - description: Names query param.
         in: query
@@ -11554,6 +11562,8 @@ paths:
           - table
           - tensorboard
           - curve
+          - analysis
+          - iteration
           type: string
       - description: Names query param.
         in: query
@@ -12474,31 +12484,33 @@ components:
     v1ArtifactKind:
       default: model
       description: |-
-        - model: model
-         - audio: audio
-         - video: vidio
-         - histogram: histogram
-         - image: image
-         - tensor: tensor
-         - dataframe: dataframe
+        - model: Model asset/event
+         - audio: Audio asset/event
+         - video: Vidio asset/event
+         - histogram: Histogram asset/event
+         - image: Image asset/event
+         - tensor: Tensor asset/event
+         - dataframe: Dataframe asset/event
          - chart: plotly/bokeh/vega chart
-         - csv: Comma
-         - tsv: Tab
-         - psv: Pipe
-         - ssv: Space
-         - metric: Metric
-         - env: Env
-         - html: HTML
-         - text: Text
-         - file: File
-         - dir: Dir
-         - dockerfile: Dockerfile
-         - docker_image: docker image
-         - data: data
-         - coderef: coderef
-         - table: table
-         - tensorboard: tensorboard
-         - curve: curve
+         - csv: Comma separated values
+         - tsv: Tab separated values
+         - psv: Pipe separated values
+         - ssv: Space separated values
+         - metric: Metric asset/event
+         - env: Env file
+         - html: HTML asset/event
+         - text: Text asset/event
+         - file: File asset/lineage
+         - dir: Dir asset/lineage
+         - dockerfile: Dockerfile asset
+         - docker_image: Docker image
+         - data: Data asset/event
+         - coderef: Coderef lineage
+         - table: Table asset/event
+         - tensorboard: Tensorboard lineage
+         - curve: Curve event
+         - analysis: Analysis lineage
+         - iteration: Iteration lineage
       enum:
       - model
       - audio
@@ -12525,6 +12537,8 @@ components:
       - table
       - tensorboard
       - curve
+      - analysis
+      - iteration
       title: Artifact kind
       type: string
     v1ArtifactTree:
@@ -26141,19 +26155,21 @@ components:
       enum:
       - created
       - resuming
-      - warning
-      - unschedulable
       - compiled
       - queued
       - scheduled
       - starting
+      - initializing
       - running
-      - succeeded
-      - failed
-      - upstream_failed
+      - processing
       - stopping
+      - failed
       - stopped
+      - succeeded
       - skipped
+      - warning
+      - unschedulable
+      - upstream_failed
       - retrying
       - unknown
       type: string

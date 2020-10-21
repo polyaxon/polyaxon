@@ -15,11 +15,11 @@
 # limitations under the License.
 
 from mock import patch
-from tests.utils import BaseTestCase
 
 from polyaxon import settings
 from polyaxon.client import RunClient
 from polyaxon.stores.polyaxon_store import PolyaxonStore
+from tests.utils import BaseTestCase
 
 
 class TestPolyaxonStore(BaseTestCase):

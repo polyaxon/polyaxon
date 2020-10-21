@@ -32,55 +32,55 @@ class BaseMixin:
 
 
 class JobMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.JOB
+    K8S_ANNOTATIONS_KIND = V1RunKind.JOB
     K8S_LABELS_COMPONENT = "polyaxon-jobs"
     MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class NotifierMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.NOTIFIER
+    K8S_ANNOTATIONS_KIND = V1RunKind.NOTIFIER
     K8S_LABELS_COMPONENT = "polyaxon-notifiers"
     MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class WatchDogMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.WATCHDOG
+    K8S_ANNOTATIONS_KIND = V1RunKind.WATCHDOG
     K8S_LABELS_COMPONENT = "polyaxon-watchdogs"
     MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class CleanerMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.CLEANER
+    K8S_ANNOTATIONS_KIND = V1RunKind.CLEANER
     K8S_LABELS_COMPONENT = "polyaxon-cleaners"
     MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class TunerMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.TUNER
+    K8S_ANNOTATIONS_KIND = V1RunKind.TUNER
     K8S_LABELS_COMPONENT = "polyaxon-tuners"
     MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class ServiceMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.SERVICE
+    K8S_ANNOTATIONS_KIND = V1RunKind.SERVICE
     K8S_LABELS_COMPONENT = "polyaxon-services"
     MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 
 
 class TFJobMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.TFJOB
+    K8S_ANNOTATIONS_KIND = V1RunKind.TFJOB
     K8S_LABELS_COMPONENT = "polyaxon-tfjobs"
     MAIN_CONTAINER_ID = TFJOBS_CONTAINER
 
 
 class PytorchJobMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.PYTORCHJOB
+    K8S_ANNOTATIONS_KIND = V1RunKind.PYTORCHJOB
     K8S_LABELS_COMPONENT = "polyaxon-pytorch-jobs"
     MAIN_CONTAINER_ID = PYTORCHJOBS_CONTAINER
 
 
 class MPIJobMixin(BaseMixin):
-    K8S_LABELS_NAME = V1RunKind.MPIJOB
+    K8S_ANNOTATIONS_KIND = V1RunKind.MPIJOB
     K8S_LABELS_COMPONENT = "polyaxon-mpi-jobs"
     MAIN_CONTAINER_ID = MAIN_JOB_CONTAINER
 

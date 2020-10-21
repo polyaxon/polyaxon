@@ -90,7 +90,9 @@ def list_dicts_to_tabulate(
 
 
 def list_dicts_to_csv(
-    list_dicts, exclude_attrs=None, include_attrs=None,
+    list_dicts,
+    exclude_attrs=None,
+    include_attrs=None,
 ):
     exclude_attrs = exclude_attrs or {}
     results = []

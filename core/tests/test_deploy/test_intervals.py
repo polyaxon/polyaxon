@@ -15,9 +15,9 @@
 # limitations under the License.
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.deploy.schemas.intervals import IntervalsConfig
+from tests.utils import BaseTestCase
 
 
 class TestIntervalsConfig(BaseTestCase):

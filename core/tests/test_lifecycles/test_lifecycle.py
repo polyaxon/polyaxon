@@ -13,14 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from tests.utils import BaseTestCase
-
 from polyaxon.lifecycle import LifeCycle, V1Statuses
+from tests.utils import BaseTestCase
 
 
 class TestStatusesTransition(BaseTestCase):
     def test_values(self):
-        assert len(V1Statuses.allowable_values) == 17
+        assert len(V1Statuses.allowable_values) == 19
 
     def test_warning_statuses(self):
         assert LifeCycle.WARNING_VALUES == {
@@ -37,6 +36,8 @@ class TestStatusesTransition(BaseTestCase):
 
     def test_running_statuses(self):
         assert LifeCycle.RUNNING_VALUES == {
+            V1Statuses.INITIALIZING,
+            V1Statuses.PROCESSING,
             V1Statuses.STARTING,
             V1Statuses.RUNNING,
         }

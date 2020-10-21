@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.auxiliaries import V1PolyaxonSidecarContainer, get_sidecar_resources
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
@@ -49,6 +47,7 @@ from polyaxon.polypod.sidecar.container import (
 from polyaxon.polypod.sidecar.env_vars import get_sidecar_env_vars
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark
@@ -160,7 +159,9 @@ class TestSidecarContainer(BaseTestCase):
 
         assert sidecar is None
 
-    def test_get_sidecar_container_auth_context(self,):
+    def test_get_sidecar_container_auth_context(
+        self,
+    ):
         env_vars = [
             get_env_var(name="key1", value="value1"),
             get_env_var(name="key2", value="value2"),
@@ -269,12 +270,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
@@ -311,12 +315,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=-212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
@@ -352,12 +359,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id="test",
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id="test",
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
@@ -413,12 +423,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
@@ -456,12 +469,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
@@ -498,12 +514,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
@@ -556,12 +575,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == [get_env_from_secret(secret=resource1)]
         assert sidecar.resources == get_sidecar_resources()
@@ -598,12 +620,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == [get_env_from_secret(secret=resource1)]
         assert sidecar.resources == get_sidecar_resources()
@@ -639,12 +664,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=bucket_managed_store.name,
-        ) + get_items_from_secret(secret=resource1) + get_connection_env_var(
-            connection=bucket_managed_store, secret=resource1
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=bucket_managed_store.name,
+            )
+            + get_items_from_secret(secret=resource1)
+            + get_connection_env_var(connection=bucket_managed_store, secret=resource1)
         )
         assert sidecar.env_from == [get_env_from_secret(secret=resource1)]
         assert sidecar.resources == get_sidecar_resources()
@@ -691,11 +719,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=mount_managed_store.name,
-        ) + get_connection_env_var(connection=mount_managed_store, secret=None)
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=mount_managed_store.name,
+            )
+            + get_connection_env_var(connection=mount_managed_store, secret=None)
+        )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
         assert sidecar.volume_mounts == [
@@ -732,11 +764,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=mount_managed_store.name,
-        ) + get_connection_env_var(connection=mount_managed_store, secret=None)
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=mount_managed_store.name,
+            )
+            + get_connection_env_var(connection=mount_managed_store, secret=None)
+        )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
         assert sidecar.volume_mounts == [
@@ -772,11 +808,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=mount_managed_store.name,
-        ) + get_connection_env_var(connection=mount_managed_store, secret=None)
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=mount_managed_store.name,
+            )
+            + get_connection_env_var(connection=mount_managed_store, secret=None)
+        )
         assert sidecar.env_from == []
         assert sidecar.resources == get_sidecar_resources()
         assert sidecar.volume_mounts == [
@@ -826,11 +866,15 @@ class TestSidecarContainer(BaseTestCase):
             sync_interval=212,
             monitor_logs=False,
         )
-        assert sidecar.env == get_sidecar_env_vars(
-            env_vars=env_vars,
-            container_id=MAIN_JOB_CONTAINER,
-            artifacts_store_name=blob_managed_store.name,
-        ) + get_connection_env_var(connection=blob_managed_store, secret=resource1)
+        assert (
+            sidecar.env
+            == get_sidecar_env_vars(
+                env_vars=env_vars,
+                container_id=MAIN_JOB_CONTAINER,
+                artifacts_store_name=blob_managed_store.name,
+            )
+            + get_connection_env_var(connection=blob_managed_store, secret=resource1)
+        )
         assert sidecar.env_from == [get_env_from_secret(secret=resource1)]
         assert sidecar.resources == get_sidecar_resources()
         assert sidecar.volume_mounts == [

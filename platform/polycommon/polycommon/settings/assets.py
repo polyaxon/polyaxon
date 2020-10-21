@@ -25,7 +25,9 @@ def set_assets(context, root_dir, config: ConfigManager):
 
     context["STATIC_ROOT"] = config.get_string("POLYAXON_STATIC_ROOT")
     context["STATIC_URL"] = config.get_string(
-        POLYAXON_KEYS_STATIC_URL, is_optional=True, default="/static/",
+        POLYAXON_KEYS_STATIC_URL,
+        is_optional=True,
+        default="/static/",
     )
 
     # Additional locations of static files

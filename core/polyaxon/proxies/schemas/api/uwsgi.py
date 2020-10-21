@@ -38,7 +38,11 @@ location {path} {{
 
 
 def get_api_config(path: str):
-    return get_config(options=UWSGI_OPTIONS, indent=0, path=path,)
+    return get_config(
+        options=UWSGI_OPTIONS,
+        indent=0,
+        path=path,
+    )
 
 
 def get_uwsgi_config():

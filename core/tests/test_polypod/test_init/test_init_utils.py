@@ -16,10 +16,9 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.auxiliaries import get_init_resources
 from polyaxon.k8s import k8s_schemas
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

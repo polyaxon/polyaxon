@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.contrib.postgres.fields.jsonb import KeyTransform
-from django.core.exceptions import ImproperlyConfigured
-from django.db.models import F
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.filters import OrderingFilter as BaseOrderingFilter
+
+from django.contrib.postgres.fields.jsonb import KeyTransform
+from django.core.exceptions import ImproperlyConfigured
+from django.db.models import F
 
 from polyaxon.exceptions import PQLException
 from polyaxon.utils.string_utils import strip_spaces

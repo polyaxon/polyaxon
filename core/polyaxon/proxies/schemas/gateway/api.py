@@ -66,7 +66,8 @@ def get_api_config(
 
 def get_api_location_config(resolver: str, auth=str):
     service = get_service_url(
-        host=settings.PROXIES_CONFIG.api_host, port=settings.PROXIES_CONFIG.api_port,
+        host=settings.PROXIES_CONFIG.api_host,
+        port=settings.PROXIES_CONFIG.api_port,
     )
     if not settings.PROXIES_CONFIG.api_use_resolver:
         resolver = ""

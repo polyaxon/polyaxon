@@ -20,17 +20,12 @@ from django.contrib import admin
 from django.urls import include, re_path
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-from polyaxon.api import UI_V1, ADMIN_V1
+from polyaxon.api import ADMIN_V1, UI_V1
 from polycommon import conf
-from polycommon.options.registry.core import UI_ADMIN_ENABLED
-
-from polycommon.apis.index.errors import (
-    Handler50xView,
-    Handler403View,
-    Handler404View,
-)  # noqa
+from polycommon.apis.index.errors import Handler50xView, Handler403View, Handler404View
 from polycommon.apis.index.health import HealthView
 from polycommon.apis.index.views import IndexView
+from polycommon.options.registry.core import UI_ADMIN_ENABLED
 
 
 def _handler500(request):

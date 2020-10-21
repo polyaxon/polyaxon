@@ -14,11 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from asyncio import Future
-
 from mock import patch
+
 from polyaxon_sdk import V1StatusCondition
-from tests.test_streams.base import get_streams_client, set_store
-from tests.utils import BaseTestCase
 
 from polyaxon import settings
 from polyaxon.connections.kinds import V1ConnectionKind
@@ -26,6 +24,8 @@ from polyaxon.connections.schemas import V1K8sResourceSchema
 from polyaxon.polyflow import V1NotificationTrigger
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.streams.app.main import STREAMS_URL
+from tests.test_streams.base import get_streams_client, set_store
+from tests.utils import BaseTestCase
 
 
 class TestNotifyEndpoints(BaseTestCase):

@@ -17,11 +17,10 @@
 import mock
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.agents.spawners.spawner import Spawner
 from polyaxon.exceptions import PolyaxonAgentError
 from polyaxon.polyflow import V1RunKind
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.agent_mark

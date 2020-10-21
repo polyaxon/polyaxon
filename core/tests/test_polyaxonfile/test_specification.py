@@ -15,11 +15,9 @@
 # limitations under the License.
 
 import os
-
 import pytest
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon import types
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
@@ -36,6 +34,7 @@ from polyaxon.polyflow import (
     V1RunKind,
 )
 from polyaxon.schemas.types import V1GitType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyaxonfile_mark

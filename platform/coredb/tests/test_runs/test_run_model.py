@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.test import TestCase
 from rest_framework.exceptions import ValidationError
+
+from django.test import TestCase
 
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory

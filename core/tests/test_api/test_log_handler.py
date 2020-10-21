@@ -16,9 +16,8 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.schemas.api.log_handler import LogHandlerConfig
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.api_mark

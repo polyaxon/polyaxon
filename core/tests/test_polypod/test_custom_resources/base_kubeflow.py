@@ -13,11 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from tests.utils import BaseTestCase
-
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.pod.spec import get_pod_spec, get_pod_template_spec
 from polyaxon.polypod.specs.replica import ReplicaSpec
+from tests.utils import BaseTestCase
 
 
 class BaseKubeflowCRDTestCase(BaseTestCase):

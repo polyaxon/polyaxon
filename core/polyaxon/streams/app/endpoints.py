@@ -24,7 +24,7 @@ from starlette.responses import FileResponse, Response, UJSONResponse
 
 from polyaxon import settings
 from polyaxon.k8s.async_manager import AsyncK8SManager
-from polyaxon.k8s.custom_resources.operation import get_resource_name, get_run_instance
+from polyaxon.k8s.custom_resources.operation import get_resource_name, get_resource_name_for_kind
 from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
 from polyaxon.lifecycle import V1StatusCondition
 from polyaxon.polyboard.artifacts import V1ArtifactKind
@@ -103,7 +103,8 @@ async def get_logs(request):
 
 async def collect_logs(request):
     run_uuid = request.path_params["run_uuid"]
-    resource_name = get_resource_name(run_uuid=run_uuid)
+    run_kind = request.path_params.get["run_kind"]
+    resource_name = get_resource_name_for_kind(run_uuid=run_uuid, run_kind=run_kind)
     k8s_manager = AsyncK8SManager(
         namespace=settings.CLIENT_CONFIG.namespace,
         in_cluster=settings.CLIENT_CONFIG.in_cluster,
@@ -308,7 +309,9 @@ async def delete_artifact(request):
             content="Artifact could not be deleted: filepath={}".format(subpath),
             status_code=status.HTTP_400_BAD_REQUEST,
         )
-    return Response(status_code=status.HTTP_204_NO_CONTENT,)
+    return Response(
+        status_code=status.HTTP_204_NO_CONTENT,
+    )
 
 
 async def handle_artifacts(request):
@@ -341,7 +344,9 @@ async def delete_artifacts(request):
             content="Artifacts could not be deleted: filepath={}".format(subpath),
             status_code=status.HTTP_400_BAD_REQUEST,
         )
-    return Response(status_code=status.HTTP_204_NO_CONTENT,)
+    return Response(
+        status_code=status.HTTP_204_NO_CONTENT,
+    )
 
 
 async def tree_artifacts(request):

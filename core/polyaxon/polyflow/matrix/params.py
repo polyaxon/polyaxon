@@ -352,7 +352,8 @@ class BaseHParamConfig(BaseConfig):
             raise ValidationError(
                 "Param `{}` has a an input type `{}` "
                 "and it does not correspond to hyper-param type `int or float`.".format(
-                    io.name, io.iotype,
+                    io.name,
+                    io.iotype,
                 )
             )
         return True

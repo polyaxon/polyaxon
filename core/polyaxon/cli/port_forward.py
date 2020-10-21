@@ -36,7 +36,9 @@ from polyaxon.utils.formatting import Printer
     help="The namespace used for deploying Polyaxon, default polyaxon.",
 )
 @click.option(
-    "-t", "--deployment-type", help="Deployment type.",
+    "-t",
+    "--deployment-type",
+    help="Deployment type.",
 )
 @click.option(
     "-r",

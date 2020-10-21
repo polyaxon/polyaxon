@@ -15,9 +15,9 @@
 # limitations under the License.
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.deploy.schemas.security_context import SecurityContextConfig
+from tests.utils import BaseTestCase
 
 
 class TestSecurityContentConfig(BaseTestCase):

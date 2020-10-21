@@ -21,8 +21,8 @@ import yaml
 
 from collections.abc import Mapping
 from requests import HTTPError
-from yaml.parser import ParserError  # noqa
-from yaml.scanner import ScannerError  # noqa
+from yaml.parser import ParserError
+from yaml.scanner import ScannerError
 
 from polyaxon.config_reader.utils import deep_update
 from polyaxon.env_vars.keys import POLYAXON_KEYS_PUBLIC_REGISTRY

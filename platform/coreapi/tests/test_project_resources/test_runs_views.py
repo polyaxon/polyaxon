@@ -15,10 +15,9 @@
 # limitations under the License.
 
 import json
+import pytest
 
 from unittest.mock import patch
-
-import pytest
 
 from rest_framework import status
 
@@ -53,11 +52,17 @@ class TestProjectRunsTagViewV1(BaseTest):
         self.project = ProjectFactory()
         self.objects = []
         self.objects.append(
-            self.factory_class(project=self.project, user=self.user, tags=["tag11"],)
+            self.factory_class(
+                project=self.project,
+                user=self.user,
+                tags=["tag11"],
+            )
         )
         self.objects.append(
             self.factory_class(
-                project=self.project, user=self.user, tags=["new", "tag21", "tag22"],
+                project=self.project,
+                user=self.user,
+                tags=["new", "tag21", "tag22"],
             )
         )
         self.objects.append(self.factory_class(project=self.project, user=self.user))
@@ -190,7 +195,8 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
             RunFactory(project=self.project, user=self.user) for _ in range(3)
         ]
         self.url = "/{}/polyaxon/{}/runs/artifacts_lineage/".format(
-            API_V1, self.project.name,
+            API_V1,
+            self.project.name,
         )
         obj = self.factory_class(name="in1", state=self.project.uuid)
         ArtifactLineage.objects.create(run=self.objects[0], artifact=obj)
@@ -199,7 +205,9 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
         ArtifactLineage.objects.create(run=self.objects[0], artifact=obj)
         obj = self.factory_class(name="out1", state=self.project.uuid)
         ArtifactLineage.objects.create(
-            run=self.objects[0], artifact=obj, is_input=False,
+            run=self.objects[0],
+            artifact=obj,
+            is_input=False,
         )
 
         self.query = self.queryset.filter(run__project=self.project)
@@ -284,7 +292,9 @@ class TestProjectRunListViewV1(BaseTest):
         # one object that does not belong to the filter
         self.other_project = ProjectFactory()
         self.other_url = "/{}/polyaxon/{}/runs/".format(API_V1, self.other_project.name)
-        self.other_object = self.factory_class(project=self.other_project,)
+        self.other_object = self.factory_class(
+            project=self.other_project,
+        )
 
     def test_get(self):
         resp = self.client.get(self.url)

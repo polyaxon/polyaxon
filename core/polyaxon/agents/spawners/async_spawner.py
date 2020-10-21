@@ -26,7 +26,8 @@ class AsyncSpawner(BaseSpawner):
     def k8s_manager(self):
         if not self._k8s_manager:
             self._k8s_manager = AsyncK8SManager(
-                namespace=self.namespace, in_cluster=self.in_cluster,
+                namespace=self.namespace,
+                in_cluster=self.in_cluster,
             )
         return self._k8s_manager
 

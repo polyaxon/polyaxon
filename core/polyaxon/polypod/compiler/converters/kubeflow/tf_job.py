@@ -17,12 +17,7 @@
 from typing import Dict, Iterable, Optional
 
 from polyaxon import pkg
-from polyaxon.polyflow import (  # noqa
-    V1CompiledOperation,
-    V1KFReplica,
-    V1Plugins,
-    V1TFJob,
-)
+from polyaxon.polyflow import V1CompiledOperation, V1KFReplica, V1Plugins, V1TFJob
 from polyaxon.polypod.compiler.converters import BaseConverter
 from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
 from polyaxon.polypod.custom_resources import get_tf_job_custom_resource

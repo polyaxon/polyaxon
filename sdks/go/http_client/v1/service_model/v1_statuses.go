@@ -40,12 +40,6 @@ const (
 	// V1StatusesResuming captures enum value "resuming"
 	V1StatusesResuming V1Statuses = "resuming"
 
-	// V1StatusesWarning captures enum value "warning"
-	V1StatusesWarning V1Statuses = "warning"
-
-	// V1StatusesUnschedulable captures enum value "unschedulable"
-	V1StatusesUnschedulable V1Statuses = "unschedulable"
-
 	// V1StatusesCompiled captures enum value "compiled"
 	V1StatusesCompiled V1Statuses = "compiled"
 
@@ -58,26 +52,38 @@ const (
 	// V1StatusesStarting captures enum value "starting"
 	V1StatusesStarting V1Statuses = "starting"
 
+	// V1StatusesInitializing captures enum value "initializing"
+	V1StatusesInitializing V1Statuses = "initializing"
+
 	// V1StatusesRunning captures enum value "running"
 	V1StatusesRunning V1Statuses = "running"
 
-	// V1StatusesSucceeded captures enum value "succeeded"
-	V1StatusesSucceeded V1Statuses = "succeeded"
-
-	// V1StatusesFailed captures enum value "failed"
-	V1StatusesFailed V1Statuses = "failed"
-
-	// V1StatusesUpstreamFailed captures enum value "upstream_failed"
-	V1StatusesUpstreamFailed V1Statuses = "upstream_failed"
+	// V1StatusesProcessing captures enum value "processing"
+	V1StatusesProcessing V1Statuses = "processing"
 
 	// V1StatusesStopping captures enum value "stopping"
 	V1StatusesStopping V1Statuses = "stopping"
 
+	// V1StatusesFailed captures enum value "failed"
+	V1StatusesFailed V1Statuses = "failed"
+
 	// V1StatusesStopped captures enum value "stopped"
 	V1StatusesStopped V1Statuses = "stopped"
 
+	// V1StatusesSucceeded captures enum value "succeeded"
+	V1StatusesSucceeded V1Statuses = "succeeded"
+
 	// V1StatusesSkipped captures enum value "skipped"
 	V1StatusesSkipped V1Statuses = "skipped"
+
+	// V1StatusesWarning captures enum value "warning"
+	V1StatusesWarning V1Statuses = "warning"
+
+	// V1StatusesUnschedulable captures enum value "unschedulable"
+	V1StatusesUnschedulable V1Statuses = "unschedulable"
+
+	// V1StatusesUpstreamFailed captures enum value "upstream_failed"
+	V1StatusesUpstreamFailed V1Statuses = "upstream_failed"
 
 	// V1StatusesRetrying captures enum value "retrying"
 	V1StatusesRetrying V1Statuses = "retrying"
@@ -91,7 +97,7 @@ var v1StatusesEnum []interface{}
 
 func init() {
 	var res []V1Statuses
-	if err := json.Unmarshal([]byte(`["created","resuming","warning","unschedulable","compiled","queued","scheduled","starting","running","succeeded","failed","upstream_failed","stopping","stopped","skipped","retrying","unknown"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["created","resuming","compiled","queued","scheduled","starting","initializing","running","processing","stopping","failed","stopped","succeeded","skipped","warning","unschedulable","upstream_failed","retrying","unknown"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

@@ -14,9 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.db import IntegrityError
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
+
+from django.db import IntegrityError
 
 from coredb.abstracts.getter import get_project_model
 from coredb.api.base.tags import TagsMixin

@@ -14,11 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-
 import pytest
 
 from dateutil import parser as dt_parser
-from tests.utils import BaseTestCase
 
 from polyaxon.polyboard.events import (
     V1Event,
@@ -37,6 +35,7 @@ from polyaxon.polyboard.events.schemas import (
     V1EventVideo,
 )
 from polyaxon.utils.tz_utils import now
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyboard_mark

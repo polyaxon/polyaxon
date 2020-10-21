@@ -15,11 +15,12 @@
 # limitations under the License.
 
 from faker import Faker
-
-from django.test import RequestFactory, TestCase
 from flaky import flaky
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from django.test import RequestFactory, TestCase
 
 from polycommon.apis.gzip import gzip
 

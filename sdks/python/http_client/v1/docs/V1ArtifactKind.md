@@ -1,6 +1,6 @@
 # V1ArtifactKind
 
-- model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh/vega chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table  - tensorboard: tensorboard  - curve: curve
+- model: Model asset/event  - audio: Audio asset/event  - video: Vidio asset/event  - histogram: Histogram asset/event  - image: Image asset/event  - tensor: Tensor asset/event  - dataframe: Dataframe asset/event  - chart: plotly/bokeh/vega chart  - csv: Comma separated values  - tsv: Tab separated values  - psv: Pipe separated values  - ssv: Space separated values  - metric: Metric asset/event  - env: Env file  - html: HTML asset/event  - text: Text asset/event  - file: File asset/lineage  - dir: Dir asset/lineage  - dockerfile: Dockerfile asset  - docker_image: Docker image  - data: Data asset/event  - coderef: Coderef lineage  - table: Table asset/event  - tensorboard: Tensorboard lineage  - curve: Curve event  - analysis: Analysis lineage  - iteration: Iteration lineage
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

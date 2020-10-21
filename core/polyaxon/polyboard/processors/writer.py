@@ -19,7 +19,7 @@ import queue
 import threading
 import time
 
-from typing import Dict, List, Union  # noqa
+from typing import Dict, List, Union
 
 from polyaxon.polyboard.events import LoggedEventSpec, get_asset_path, get_event_path
 from polyaxon.polyboard.events.paths import get_resource_path
@@ -323,7 +323,9 @@ class ResourceAsyncManager(BaseAsyncManager):
     ):
         super().__init__(event_writer=event_writer, max_queue_size=max_queue_size)
         self._worker = ResourceWriterThread(
-            self._event_queue, self._event_writer, flush_secs,
+            self._event_queue,
+            self._event_writer,
+            flush_secs,
         )
         self._worker.start()
 

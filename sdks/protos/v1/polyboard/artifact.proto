@@ -22,80 +22,86 @@ import "google/protobuf/struct.proto";
 
 // Artifact kind
 enum ArtifactKind {
-    // model
+    // Model asset/event
     model = 0;
 
-    // audio
+    // Audio asset/event
     audio = 1;
 
-    // vidio
+    // Vidio asset/event
     video = 2;
 
-    // histogram
+    // Histogram asset/event
     histogram = 3;
 
-    // image
+    // Image asset/event
     image = 4;
 
-    // tensor
+    // Tensor asset/event
     tensor = 5;
 
-    // dataframe
+    // Dataframe asset/event
     dataframe = 6;
 
     // plotly/bokeh/vega chart
     chart = 7;
 
-    // Comma
+    // Comma separated values
     csv = 8;
 
-    // Tab
+    // Tab separated values
     tsv = 9;
 
-    // Pipe
+    // Pipe separated values
     psv = 10;
 
-    // Space
+    // Space separated values
     ssv = 11;
 
-    // Metric
+    // Metric asset/event
     metric = 12;
 
-    // Env
+    // Env file
     env = 13;
 
-    // HTML
+    // HTML asset/event
     html = 14;
 
-    // Text
+    // Text asset/event
     text = 15;
 
-    // File
+    // File asset/lineage
     file = 16;
 
-    // Dir
+    // Dir asset/lineage
     dir = 17;
 
-    // Dockerfile
+    // Dockerfile asset
     dockerfile = 18;
 
-    // docker image
+    // Docker image
     docker_image = 19;
 
-    // data
+    // Data asset/event
     data = 20;
 
-    // coderef
+    // Coderef lineage
     coderef = 21;
 
-    // table
+    // Table asset/event
     table = 22;
 
-    // tensorboard
+    // Tensorboard lineage
     tensorboard = 23;
 
-    // curve
+    // Curve event
     curve = 24;
+
+    // Analysis lineage
+    analysis = 25;
+
+    // Iteration lineage
+    iteration = 26;
 }
 
 // Run Artifact spec definition

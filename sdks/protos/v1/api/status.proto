@@ -23,21 +23,23 @@ import "google/protobuf/timestamp.proto";
 enum Statuses {
     created = 0;
     resuming = 1;
-    warning = 2;
-    unschedulable = 3;
-    compiled = 4;
-    queued = 5;
-    scheduled = 6;
-    starting = 7;
-    running = 8;
-    succeeded = 9;
+    compiled = 2;
+    queued = 3;
+    scheduled = 4;
+    starting = 5;
+    initializing = 6;
+    running = 7;
+    processing = 8;
+    stopping = 9;
     failed = 10;
-    upstream_failed = 11;
-    stopping = 12;
-    stopped = 13;
-    skipped = 14;
-    retrying = 15;
-    unknown = 16;
+    stopped = 11;
+    succeeded = 12;
+    skipped = 13;
+    warning = 14;
+    unschedulable = 15;
+    upstream_failed = 16;
+    retrying = 17;
+    unknown = 18;
 }
 
 // Status condition specification

@@ -16,12 +16,11 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.environment import V1Environment
 from polyaxon.polypod.pod.spec import get_pod_spec
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

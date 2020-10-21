@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.2.0",
+    "version": "1.2.1-rc1",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -11266,7 +11266,7 @@
         ]
       }
     },
-    "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs": {
+    "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs": {
       "post": {
         "summary": "Collect run logs",
         "operationId": "CollectRunLogs",
@@ -11317,6 +11317,13 @@
           {
             "name": "uuid",
             "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "kind",
+            "description": "Kind of the entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -11410,7 +11417,9 @@
               "coderef",
               "table",
               "tensorboard",
-              "curve"
+              "curve",
+              "analysis",
+              "iteration"
             ]
           },
           {
@@ -11897,7 +11906,9 @@
               "coderef",
               "table",
               "tensorboard",
-              "curve"
+              "curve",
+              "analysis",
+              "iteration"
             ]
           },
           {
@@ -12735,10 +12746,12 @@
         "coderef",
         "table",
         "tensorboard",
-        "curve"
+        "curve",
+        "analysis",
+        "iteration"
       ],
       "default": "model",
-      "description": "- model: model\n - audio: audio\n - video: vidio\n - histogram: histogram\n - image: image\n - tensor: tensor\n - dataframe: dataframe\n - chart: plotly/bokeh/vega chart\n - csv: Comma\n - tsv: Tab\n - psv: Pipe\n - ssv: Space\n - metric: Metric\n - env: Env\n - html: HTML\n - text: Text\n - file: File\n - dir: Dir\n - dockerfile: Dockerfile\n - docker_image: docker image\n - data: data\n - coderef: coderef\n - table: table\n - tensorboard: tensorboard\n - curve: curve",
+      "description": "- model: Model asset/event\n - audio: Audio asset/event\n - video: Vidio asset/event\n - histogram: Histogram asset/event\n - image: Image asset/event\n - tensor: Tensor asset/event\n - dataframe: Dataframe asset/event\n - chart: plotly/bokeh/vega chart\n - csv: Comma separated values\n - tsv: Tab separated values\n - psv: Pipe separated values\n - ssv: Space separated values\n - metric: Metric asset/event\n - env: Env file\n - html: HTML asset/event\n - text: Text asset/event\n - file: File asset/lineage\n - dir: Dir asset/lineage\n - dockerfile: Dockerfile asset\n - docker_image: Docker image\n - data: Data asset/event\n - coderef: Coderef lineage\n - table: Table asset/event\n - tensorboard: Tensorboard lineage\n - curve: Curve event\n - analysis: Analysis lineage\n - iteration: Iteration lineage",
       "title": "Artifact kind"
     },
     "v1ArtifactTree": {
@@ -17564,19 +17577,21 @@
       "enum": [
         "created",
         "resuming",
-        "warning",
-        "unschedulable",
         "compiled",
         "queued",
         "scheduled",
         "starting",
+        "initializing",
         "running",
-        "succeeded",
-        "failed",
-        "upstream_failed",
+        "processing",
         "stopping",
+        "failed",
         "stopped",
+        "succeeded",
         "skipped",
+        "warning",
+        "unschedulable",
+        "upstream_failed",
         "retrying",
         "unknown"
       ],

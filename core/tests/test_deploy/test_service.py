@@ -15,7 +15,6 @@
 # limitations under the License.
 
 from marshmallow import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.deploy.schemas.service import (
     ExternalService,
@@ -26,6 +25,7 @@ from polyaxon.deploy.schemas.service import (
     Service,
     ThirdPartyService,
 )
+from tests.utils import BaseTestCase
 
 
 class TestService(BaseTestCase):

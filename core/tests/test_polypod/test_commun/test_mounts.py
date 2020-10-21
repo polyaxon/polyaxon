@@ -17,7 +17,6 @@
 import pytest
 
 from polyaxon_sdk import V1BucketConnection
-from tests.utils import BaseTestCase
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
@@ -43,6 +42,7 @@ from polyaxon.polypod.common.mounts import (
     get_shm_context_mount,
 )
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

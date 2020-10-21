@@ -14,11 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import tempfile
-
 import pytest
-
-from tests.utils import BaseTestCase
+import tempfile
 
 from polyaxon import settings
 from polyaxon.auxiliaries import (
@@ -34,6 +31,7 @@ from polyaxon.polyflow import V1CompiledOperation, V1RunKind
 from polyaxon.polypod.compiler.resolver import BaseResolver
 from polyaxon.schemas.cli.agent_config import AgentConfig
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

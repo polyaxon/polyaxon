@@ -22,7 +22,6 @@ import "google/protobuf/struct.proto";
 
 import "v1/polyflow/actions.proto";
 import "v1/polyflow/cache.proto";
-import "v1/polyflow/environment.proto";
 import "v1/polyflow/hooks.proto";
 import "v1/polyflow/io.proto";
 import "v1/polyflow/plugins.proto";

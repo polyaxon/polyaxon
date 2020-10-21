@@ -17,10 +17,10 @@
 import pytest
 
 from mock import MagicMock
-from tests.utils import BaseTestCase
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyflow import dags
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polyflow_mark

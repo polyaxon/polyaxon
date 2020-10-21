@@ -16,8 +16,6 @@
 
 import pytest
 
-from tests.utils import BaseTestCase
-
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
     V1BucketConnection,
@@ -27,6 +25,7 @@ from polyaxon.connections.schemas import (
 )
 from polyaxon.polypod.main.k8s_resources import get_requested_secrets
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.polypod_mark

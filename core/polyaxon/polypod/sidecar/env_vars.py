@@ -26,7 +26,9 @@ from polyaxon.utils.list_utils import to_list
 
 
 def get_sidecar_env_vars(
-    env_vars: List[k8s_schemas.V1EnvVar], container_id: str, artifacts_store_name: str,
+    env_vars: List[k8s_schemas.V1EnvVar],
+    container_id: str,
+    artifacts_store_name: str,
 ) -> List[k8s_schemas.V1EnvVar]:
 
     env_vars = to_list(env_vars, check_none=True)[:]

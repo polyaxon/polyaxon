@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.utils import BaseTestCase
-
 from polyaxon import settings
+from tests.utils import BaseTestCase
 
 
 class BaseTestCaseTransport(BaseTestCase):

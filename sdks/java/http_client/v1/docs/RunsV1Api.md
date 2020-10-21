@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**archiveRun**](RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 [**bookmarkRuns**](RunsV1Api.md#bookmarkRuns) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
-[**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs | Collect run logs
+[**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
 [**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 [**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run artifacts lineage
@@ -279,7 +279,7 @@ null (empty response body)
 
 <a name="collectRunLogs"></a>
 # **collectRunLogs**
-> collectRunLogs(namespace, owner, project, uuid)
+> collectRunLogs(namespace, owner, project, uuid, kind)
 
 Collect run logs
 
@@ -309,8 +309,9 @@ public class Example {
     String owner = "owner_example"; // String | Owner of the namespace
     String project = "project_example"; // String | Project where the run will be assigned
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String kind = "kind_example"; // String | Kind of the entity
     try {
-      apiInstance.collectRunLogs(namespace, owner, project, uuid);
+      apiInstance.collectRunLogs(namespace, owner, project, uuid, kind);
     } catch (ApiException e) {
       System.err.println("Exception when calling RunsV1Api#collectRunLogs");
       System.err.println("Status code: " + e.getCode());
@@ -330,6 +331,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
  **uuid** | **String**| Uuid identifier of the entity |
+ **kind** | **String**| Kind of the entity |
 
 ### Return type
 
@@ -1097,7 +1099,7 @@ Name | Type | Description  | Notes
  **namespace** | **String**| namespace |
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
- **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve]
+ **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve, analysis, iteration]
  **names** | **String**| Names query param. | [optional]
  **runs** | **String**| Runs query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
@@ -1744,7 +1746,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
  **uuid** | **String**| Uuid identifier of the entity |
- **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve]
+ **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table, tensorboard, curve, analysis, iteration]
  **names** | **String**| Names query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
  **force** | **Boolean**| Force query param. | [optional]

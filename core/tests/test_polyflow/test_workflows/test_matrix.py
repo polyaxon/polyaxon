@@ -15,11 +15,9 @@
 # limitations under the License.
 
 import numpy as np
-
 import pytest
 
 from marshmallow.exceptions import ValidationError
-from tests.utils import BaseTestCase
 
 from polyaxon.polyflow.matrix.params import (
     V1HpChoice,
@@ -44,6 +42,7 @@ from polyaxon.polytune.matrix.utils import (
     sample,
     to_numpy,
 )
+from tests.utils import BaseTestCase
 
 
 @pytest.mark.workflow_mark

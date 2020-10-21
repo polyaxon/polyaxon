@@ -18,9 +18,9 @@ from polyaxon import tracking
 from polyaxon.exceptions import PolyaxonClientException
 
 try:
-    from fastai.vision.all import *
     from fastai.basics import *
     from fastai.learner import Callback
+    from fastai.vision.all import *
 except:
     raise PolyaxonClientException("Fastai is required to use PolyaxonFastai")
 

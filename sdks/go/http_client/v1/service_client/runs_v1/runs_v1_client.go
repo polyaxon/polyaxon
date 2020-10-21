@@ -260,7 +260,7 @@ func (a *Client) CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.C
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CollectRunLogs",
 		Method:             "POST",
-		PathPattern:        "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs",
+		PathPattern:        "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

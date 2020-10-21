@@ -15,15 +15,13 @@
 # limitations under the License.
 
 import os
-import uuid
-
 import pytest
-
-from tests.utils import patch_settings
+import uuid
 
 from polyaxon.env_vars.keys import POLYAXON_KEYS_RUN_INSTANCE
 from polyaxon.exceptions import PolyaxonContainerException
 from polyaxon.sidecar import start_sidecar
+from tests.utils import patch_settings
 
 
 @pytest.mark.asyncio
