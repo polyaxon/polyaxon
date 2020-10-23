@@ -40,6 +40,7 @@ class RunQueryManager(BaseQueryManager):
         "in": "inputs",
         "out": "outputs",
         "metrics": "outputs",
+        "meta": "meta_info",
         "meta_flags": "meta_info",
         "id": "uuid",
         "uid": "uuid",
@@ -54,6 +55,7 @@ class RunQueryManager(BaseQueryManager):
         "finished_at",
         "name",
         "kind",
+        "meta_kind",
         "user",
         "uuid",
         "duration",
@@ -108,6 +110,8 @@ class RunQueryManager(BaseQueryManager):
         "commit": parse_value_operation,
         # Kind
         "kind": parse_value_operation,
+        # Meta Kind
+        "meta_kind": parse_value_operation,
         # Params
         "params": parse_value_operation,
         "inputs": parse_value_operation,
@@ -171,6 +175,8 @@ class RunQueryManager(BaseQueryManager):
         "commit": CallbackCondition(callback_conditions.commit_condition),
         # Kind
         "kind": ValueCondition,
+        # Meta Kind
+        "meta_kind": ValueCondition,
         # Params
         "params": ValueCondition,
         "inputs": ValueCondition,

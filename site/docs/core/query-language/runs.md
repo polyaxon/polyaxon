@@ -32,28 +32,31 @@ Several fields accept aliases:
 
 ## Query
 
-field                           | condition
---------------------------------|------------------
-`id`                            | [string condition](/docs/core/query-language/#query-with-value-condition)
-`name`                          | [string condition](/docs/core/query-language/#query-with-string-condition)
-`description`                   | [string condition](/docs/core/query-language/#query-with-string-condition)
-`created_at`                    | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
-`updated_at`                    | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
-`started_at`                    | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
-`finished_at`                   | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
-`user`                          | [value condition](/docs/core/query-language/#query-with-value-condition)
-`project.*` (e.g. project.name) | [value condition](/docs/core/query-language/#query-with-value-condition)
-`status`                        | [value condition](/docs/core/query-language/#query-with-value-condition)
-`tags`                          | [value condition](/docs/core/query-language/#query-with-value-condition)
-`inputs.*`                      | [value condition](/docs/core/query-language/#query-with-value-condition)
-`outputs.*`                     | [value condition](/docs/core/query-language/#query-with-value-condition)
-`metrics.*`                     | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
-`duration`                      | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
-`commit`                        | [value condition](/docs/core/query-language/#query-with-value-condition)
-`agent`                         | [value condition](/docs/core/query-language/#query-with-value-condition)
-`queue`                         | [value condition](/docs/core/query-language/#query-with-value-condition)
-`meta_flags`                    | [bool condition](/docs/core/query-language/#query-with-bool-condition)
-`live_state`                    | [value condition](/docs/core/query-language/#query-with-value-condition)
+field                                                                      | condition
+---------------------------------------------------------------------------|------------------
+`id`                                                                       | [string condition](/docs/core/query-language/#query-with-value-condition)
+`name`                                                                     | [string condition](/docs/core/query-language/#query-with-string-condition)
+`description`                                                              | [string condition](/docs/core/query-language/#query-with-string-condition)
+`created_at`                                                               | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
+`updated_at`                                                               | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
+`started_at`                                                               | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
+`finished_at`                                                              | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
+`user`                                                                     | [value condition](/docs/core/query-language/#query-with-value-condition)
+`project.*` (e.g. project.name)                                            | [value condition](/docs/core/query-language/#query-with-value-condition)
+`status`                                                                   | [value condition](/docs/core/query-language/#query-with-value-condition)
+`tags`                                                                     | [value condition](/docs/core/query-language/#query-with-value-condition)
+`meta.*` (e.g. meta.iteration)                                             | [value condition](/docs/core/query-language/#query-with-value-condition)
+`inputs.*`                                                                 | [value condition](/docs/core/query-language/#query-with-value-condition)
+`outputs.*`                                                                | [value condition](/docs/core/query-language/#query-with-value-condition)
+`metrics.*`                                                                | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`duration`                                                                 | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
+`commit`                                                                   | [value condition](/docs/core/query-language/#query-with-value-condition)
+`agent`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
+`queue`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
+`kind`                                                                     | [value condition](/docs/core/query-language/#query-with-value-condition)
+`meta_kind`                                                                | [value condition](/docs/core/query-language/#query-with-value-condition)
+`meta_flags.*` (e.g. meta_flags.has_events or meta_flags.has_tensorboard)  | [bool condition](/docs/core/query-language/#query-with-bool-condition)
+`live_state`                                                               | [value condition](/docs/core/query-language/#query-with-value-condition)
 
 
 ## Sort
@@ -64,6 +67,10 @@ field:
  * `updated_at`
  * `started_at`
  * `finished_at`
+ * `user`
+ * `duration`
+ * `kind`
+ * `meta_kind`
  * `inputs.*`
  * `outputs.*`
  * `metrics.*`
