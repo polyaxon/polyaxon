@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.2.1-rc1
+  version: 1.2.1-rc2
 servers:
 - url: /
 security:
@@ -11111,6 +11111,7 @@ paths:
           - curve
           - analysis
           - iteration
+          - markdown
           type: string
       - description: Names query param.
         in: query
@@ -11564,6 +11565,7 @@ paths:
           - curve
           - analysis
           - iteration
+          - markdown
           type: string
       - description: Names query param.
         in: query
@@ -12511,6 +12513,7 @@ components:
          - curve: Curve event
          - analysis: Analysis lineage
          - iteration: Iteration lineage
+         - markdown: Mardown event
       enum:
       - model
       - audio
@@ -12539,6 +12542,7 @@ components:
       - curve
       - analysis
       - iteration
+      - markdown
       title: Artifact kind
       type: string
     v1ArtifactTree:

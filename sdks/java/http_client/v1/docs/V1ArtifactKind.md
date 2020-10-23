@@ -59,5 +59,7 @@
 
 * `ITERATION` (value: `"iteration"`)
 
+* `MARKDOWN` (value: `"markdown"`)
+
 
 

@@ -56,6 +56,7 @@ import (
 //  - curve: Curve event
 //  - analysis: Analysis lineage
 //  - iteration: Iteration lineage
+//  - markdown: Mardown event
 //
 // swagger:model v1ArtifactKind
 type V1ArtifactKind string
@@ -142,6 +143,9 @@ const (
 
 	// V1ArtifactKindIteration captures enum value "iteration"
 	V1ArtifactKindIteration V1ArtifactKind = "iteration"
+
+	// V1ArtifactKindMarkdown captures enum value "markdown"
+	V1ArtifactKindMarkdown V1ArtifactKind = "markdown"
 )
 
 // for schema
@@ -149,7 +153,7 @@ var v1ArtifactKindEnum []interface{}
 
 func init() {
 	var res []V1ArtifactKind
-	if err := json.Unmarshal([]byte(`["model","audio","video","histogram","image","tensor","dataframe","chart","csv","tsv","psv","ssv","metric","env","html","text","file","dir","dockerfile","docker_image","data","coderef","table","tensorboard","curve","analysis","iteration"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["model","audio","video","histogram","image","tensor","dataframe","chart","csv","tsv","psv","ssv","metric","env","html","text","file","dir","dockerfile","docker_image","data","coderef","table","tensorboard","curve","analysis","iteration","markdown"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

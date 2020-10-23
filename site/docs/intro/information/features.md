@@ -28,8 +28,9 @@ Polyaxon provides a powerful and interactive workspace including:
 - SDKs and clients
 - An extensive tracking API
 - A dashboard with visualizations and advanced insights
+- Lineage and provenance tracking
 - Possibility to create custom dashboards and visualizations
-- Advanced Query & search interface
+- Advanced query & search interface
 - Uniform logs management and streaming for all operations
 - Jupyter Notebook & Jupyter Lab integration
 - Matplotlib, Plotly, Bokeh, Altair, and Vega integrations

@@ -102,6 +102,9 @@ enum ArtifactKind {
 
     // Iteration lineage
     iteration = 26;
+
+    // Mardown event
+    markdown = 27;
 }
 
 // Run Artifact spec definition
