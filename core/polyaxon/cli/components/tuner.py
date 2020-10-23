@@ -16,7 +16,7 @@
 
 import click
 
-from polyaxon.utils.formatting import Printer
+from polyaxon.logger import logger
 
 
 @click.group()
@@ -40,19 +40,27 @@ def tuner():
 def bayes(matrix, iteration, configs, metrics):
     """Create suggestions based on bayesian optimization."""
     from polyaxon.polyflow import V1Bayes
-    from polyaxon.polytune.iteration_lineage import create_iteration_lineage
+    from polyaxon.polytune.iteration_lineage import handle_iteration
     from polyaxon.polytune.search_managers.bayesian_optimization.manager import (
         BayesSearchManager,
     )
 
-    matrix = V1Bayes.read(matrix)
+    retry = 1
+    error = None
+    suggestions = None
+    while retry < 3:
+        try:
+            suggestions = BayesSearchManager(config=V1Bayes.read(matrix)).get_suggestions(
+                configs=configs, metrics=metrics
+            )
+            error = None
+            break
+        except Exception as e:
+            retry += 1
+            error = "Polyaxon tuner failed creating suggestions retrying, error %s" % e
+            logger.warning(error)
 
-    suggestions = BayesSearchManager(config=matrix).get_suggestions(
-        configs=configs, metrics=metrics
-    )
-    create_iteration_lineage(iteration, suggestions)
-
-    Printer.print_success("Suggestions generated with bayesian optimization")
+    handle_iteration(iteration=iteration, suggestions=suggestions, error=error)
 
 
 @tuner.command()
@@ -73,20 +81,28 @@ def bayes(matrix, iteration, configs, metrics):
 def hyperband(matrix, iteration, bracket_iteration, configs, metrics):
     """Create suggestions based on hyperband."""
     from polyaxon.polyflow import V1Hyperband
-    from polyaxon.polytune.iteration_lineage import create_iteration_lineage
+    from polyaxon.polytune.iteration_lineage import handle_iteration
     from polyaxon.polytune.search_managers.hyperband.manager import HyperbandManager
 
-    matrix = V1Hyperband.read(matrix)
+    retry = 1
+    error = None
+    suggestions = None
+    while retry < 3:
+        try:
+            suggestions = HyperbandManager(config=V1Hyperband.read(matrix)).get_suggestions(
+                configs=configs,
+                metrics=metrics,
+                bracket_iteration=bracket_iteration,
+                iteration=iteration,
+            )
+            error = None
+            break
+        except Exception as e:
+            retry += 1
+            error = "Polyaxon tuner failed creating suggestions retrying, error %s" % e
+            logger.warning(error)
 
-    suggestions = HyperbandManager(config=matrix).get_suggestions(
-        configs=configs,
-        metrics=metrics,
-        bracket_iteration=bracket_iteration,
-        iteration=iteration,
-    )
-    create_iteration_lineage(iteration, suggestions)
-
-    Printer.print_success("Suggestions generated with hyperband")
+    handle_iteration(iteration=iteration, suggestions=suggestions, error=error)
 
 
 @tuner.command()
@@ -104,14 +120,22 @@ def hyperband(matrix, iteration, bracket_iteration, configs, metrics):
 def hyperopt(matrix, iteration, configs, metrics):
     """Create suggestions based on hyperopt."""
     from polyaxon.polyflow import V1Hyperopt
-    from polyaxon.polytune.iteration_lineage import create_iteration_lineage
+    from polyaxon.polytune.iteration_lineage import handle_iteration
     from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
 
-    matrix = V1Hyperopt.read(matrix)
+    retry = 1
+    error = None
+    suggestions = None
+    while retry < 3:
+        try:
+            suggestions = HyperoptManager(config=V1Hyperopt.read(matrix)).get_suggestions(
+                configs=configs, metrics=metrics
+            )
+            error = None
+            break
+        except Exception as e:
+            retry += 1
+            error = "Polyaxon tuner failed creating suggestions retrying, error %s" % e
+            logger.warning(error)
 
-    suggestions = HyperoptManager(config=matrix).get_suggestions(
-        configs=configs, metrics=metrics
-    )
-    create_iteration_lineage(iteration, suggestions)
-
-    Printer.print_success("Suggestions generated with hyperopt")
+    handle_iteration(iteration=iteration, suggestions=suggestions, error=error)

@@ -51,7 +51,7 @@ func (r *OperationReconciler) getInstanceInfo(instance *operationv1.Operation) (
 
 	instanceKind, ok := instance.ObjectMeta.Annotations["operation.polyaxon.com/kind"]
 	if !ok || instanceKind == "" {
-		return "", "", "", "", false
+		instanceKind = ""
 	}
 
 	return instanceOwner, instanceProject, instanceID, instanceKind, true
@@ -130,6 +130,6 @@ func (r *OperationReconciler) collectLogs(instance *operationv1.Operation) error
 		return nil
 	}
 
-	log.Info("Operation collect logs", "Instance", instance.GetName())
+	log.Info("Operation collect logs", "Instance", instance.GetName(), "kind", runKind)
 	return plugins.CollectPolyaxonRunLogs(instance.Namespace, owner, project, instanceID, runKind, r.Log)
 }

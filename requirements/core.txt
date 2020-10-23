@@ -6,5 +6,5 @@ Django==3.1.2
 django-picklefield==3.0.1
 djangorestframework==3.12.1
 numpy==1.19.2
-psycopg2-binary==2.8.5
+psycopg2-binary==2.8.6
 redis==3.5.3

@@ -26,7 +26,7 @@ from polyaxon.k8s.custom_resources.operation import (
 )
 from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
 from polyaxon.polypod.compiler.converters.job import JobConverter
-from polyaxon.polypod.mixins import CleanerMixin, NotifierMixin
+from polyaxon.polypod.mixins import CleanerMixin, NotifierMixin, TunerMixin, WatchDogMixin
 
 
 class NotifierConverter(NotifierMixin, JobConverter):
@@ -49,7 +49,7 @@ class CleanerConverter(CleanerMixin, JobConverter):
         return get_cleaner_resource_name(self.run_uuid)
 
 
-class TunerConverter(CleanerMixin, JobConverter):
+class TunerConverter(TunerMixin, JobConverter):
     def get_instance(self):
         return get_tuner_instance(
             owner=self.owner_name, project=self.project_name, run_uuid=self.run_uuid
@@ -59,7 +59,7 @@ class TunerConverter(CleanerMixin, JobConverter):
         return get_tuner_resource_name(self.run_uuid)
 
 
-class WatchDogConverter(CleanerMixin, JobConverter):
+class WatchDogConverter(WatchDogMixin, JobConverter):
     def get_instance(self):
         return get_watchdog_instance(
             owner=self.owner_name, project=self.project_name, run_uuid=self.run_uuid

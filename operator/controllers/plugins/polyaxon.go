@@ -99,6 +99,9 @@ func NotifyPolyaxonRunStatus(namespace, name, owner, project, uuid string, statu
 		Context: ctx,
 	}
 	_, _, err := plxClient.RunsV1.NotifyRunStatus(params, plxToken)
+	if _, notFound := err.(*runs_v1.CollectRunLogsNotFound); notFound {
+		return nil
+	}
 	return err
 }
 
@@ -135,6 +138,9 @@ func LogPolyaxonRunStatus(owner, project, uuid string, statusCond operationv1.Op
 		Context: ctx,
 	}
 	_, _, err := plxClient.RunsV1.CreateRunStatus(params, plxToken)
+	if _, notFound := err.(*runs_v1.CollectRunLogsNotFound); notFound {
+		return nil
+	}
 	return err
 }
 
@@ -158,5 +164,8 @@ func CollectPolyaxonRunLogs(namespace, owner, project, uuid string, kind string,
 		Context:   ctx,
 	}
 	_, _, err := plxClient.RunsV1.CollectRunLogs(params, plxToken)
+	if _, notFound := err.(*runs_v1.CollectRunLogsNotFound); notFound {
+		return nil
+	}
 	return err
 }

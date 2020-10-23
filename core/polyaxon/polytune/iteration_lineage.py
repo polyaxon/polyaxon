@@ -21,26 +21,63 @@ from polyaxon.client import RunClient
 from polyaxon.env_vars.getters import get_run_info
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
+from polyaxon.utils.formatting import Printer
 from polyaxon.utils.np_utils import sanitize_np_types
+from polyaxon.logger import logger
 
 
-def _sanitize_suggestion(s: Dict):
-    return {k: sanitize_np_types(v) for k, v in s.items()}
-
-
-def create_iteration_lineage(iteration: int, suggestions: List[Dict]):
+def handle_iteration(
+    iteration: int = None, suggestions: List[Dict] = None, error: str = None
+):
     if not settings.CLIENT_CONFIG.no_api:
         try:
             owner, project, run_uuid = get_run_info()
         except PolyaxonClientException as e:
             raise PolyaxonContainerException(e)
 
+    def sanitize_suggestion(s: Dict):
+        return {k: sanitize_np_types(v) for k, v in s.items()}
+
+    def create_iteration_lineage():
         artifact_run = V1RunArtifact(
-            name=iteration,
+            name="iteration-{}".format(iteration),
             kind=V1ArtifactKind.ITERATION,
-            summary=[_sanitize_suggestion(s) for s in suggestions],
+            summary={
+                "iteration": iteration,
+                "suggestions": [sanitize_suggestion(s) for s in suggestions]
+            },
             is_input=False,
         )
         RunClient(owner=owner, project=project, run_uuid=run_uuid).log_artifact_lineage(
             artifact_run
         )
+
+    def notify_iteration_succeeded():
+        RunClient(
+            owner=owner, project=project, run_uuid=run_uuid
+        ).log_succeeded(message="Iterative operation has succeeded")
+
+    def notify_iteration_failed(traceback):
+        RunClient(
+            owner=owner, project=project, run_uuid=run_uuid
+        ).log_failed(message="Iterative operation has succeeded", traceback=traceback)
+
+    retry = 1
+    while retry < 3:
+        try:
+            if error:
+                notify_iteration_failed(error)
+                Printer.print_success("Iterative optimization failed")
+                return
+
+            if suggestions:
+                create_iteration_lineage()
+                Printer.print_success("Generated new suggestions generated.")
+            else:
+                notify_iteration_succeeded()
+                Printer.print_success("Iterative optimization succeeded")
+            return
+        except Exception as e:
+            retry += 1
+            error = "Polyaxon tuner failed syncing with API, retrying, error %s" % e
+            logger.warning(error)

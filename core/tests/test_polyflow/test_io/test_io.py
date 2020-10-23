@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import ujson
 
 import pytest
 import uuid
@@ -598,7 +599,7 @@ class TestV1IOs(BaseTestCase):
                     arg_format=None,
                 )
             )
-            == str({"key": "value"})
+            == ujson.dumps({"key": "value"})
         )
 
         # Regex validation runs: invalid params

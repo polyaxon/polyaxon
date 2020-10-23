@@ -103,7 +103,7 @@ async def get_logs(request):
 
 async def collect_logs(request):
     run_uuid = request.path_params["run_uuid"]
-    run_kind = request.path_params.get["run_kind"]
+    run_kind = request.path_params["run_kind"]
     resource_name = get_resource_name_for_kind(run_uuid=run_uuid, run_kind=run_kind)
     k8s_manager = AsyncK8SManager(
         namespace=settings.CLIENT_CONFIG.namespace,
@@ -116,7 +116,7 @@ async def collect_logs(request):
     if not k8s_operation:
         raise HTTPException(
             detail="Run's logs was not collected, resource was not found.",
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_404_NOT_FOUND,
         )
     operation_logs, _ = await query_k8s_operation_logs(
         instance=run_uuid, k8s_manager=k8s_manager, last_time=None
@@ -124,7 +124,7 @@ async def collect_logs(request):
     if k8s_manager:
         await k8s_manager.close()
     if not operation_logs:
-        return Response()
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     try:
         await upload_logs(run_uuid=run_uuid, logs=operation_logs)

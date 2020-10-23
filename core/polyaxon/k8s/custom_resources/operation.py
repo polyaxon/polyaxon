@@ -83,8 +83,6 @@ def get_cleaner_resource_name(run_uuid: str) -> str:
 
 
 def get_resource_name_for_kind(run_uuid: str, run_kind: str = None) -> str:
-    if not run_kind or run_kind == "operation":
-        return get_resource_name(run_uuid)
     if run_kind == "cleaner":
         return get_cleaner_resource_name(run_uuid)
     if run_kind == "tuner":
@@ -93,4 +91,6 @@ def get_resource_name_for_kind(run_uuid: str, run_kind: str = None) -> str:
         return get_watchdog_resource_name(run_uuid)
     if run_kind == "notifier":
         return get_notifier_resource_name(run_uuid)
+    # Operation
+    return get_resource_name(run_uuid)
 

@@ -28,7 +28,6 @@ from polyaxon.polyflow import (
     V1Operation,
     V1Param,
     V1Plugins,
-    V1Termination,
     V1Tuner,
 )
 
@@ -48,19 +47,18 @@ def get_tuner(
             "metrics": V1Param(value=metrics),
             "iteration": V1Param(value=iteration),
         },
-        termination=V1Termination(max_retries=3),
         component=V1Component(
             name=name,
             plugins=V1Plugins(
                 auth=True,
                 collect_logs=True,
-                collect_artifacts=False,
+                collect_artifacts=True,
                 collect_resources=False,
                 sync_statuses=False,
             ),
             inputs=[
                 V1IO(
-                    name="matrix", iotype=types.DICT, is_list=True, is_optional=True
+                    name="matrix", iotype=types.DICT, is_list=False, is_optional=True
                 ),
                 V1IO(
                     name="configs", iotype=types.DICT, is_list=True, is_optional=True
@@ -69,7 +67,7 @@ def get_tuner(
                     name="metrics", iotype=types.FLOAT, is_list=True, is_optional=True
                 ),
                 V1IO(
-                    name="iteration", iotype=types.INT, is_list=True, is_optional=True
+                    name="iteration", iotype=types.INT, is_list=False, is_optional=True
                 ),
             ],
             outputs=[

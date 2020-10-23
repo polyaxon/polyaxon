@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import ujson
 import uuid
 
 from collections import namedtuple
@@ -458,7 +458,9 @@ class ParamSpec(
         return self.param.value
 
     def __repr__(self):
-        return str(self.get_display_value())
+        if self.is_flag:
+            return self.get_display_value()
+        return ujson.dumps(self.param.value) if self.param.value else ""
 
     def as_str(self):
         return str(self)
@@ -472,7 +474,7 @@ class ParamSpec(
                 if self.param.value
                 else ""
             )
-        return "--{}={}".format(self.name, self.param.value)
+        return "--{}={}".format(self.name, self.as_str())
 
     def to_parsed_param(self):
         parsed_param = {

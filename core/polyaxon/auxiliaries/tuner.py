@@ -26,7 +26,12 @@ def get_default_tuner_container(command):
         image="polyaxon/polyaxon-hpsearch:{}".format(pkg.VERSION),
         image_pull_policy=PullPolicy.ALWAYS.value,
         command=command,
-        args=["--matrix={{matrix}}", "--configs={{configs}}", "--metrics={{metrics}}", "--iteration={{iteration}}"],
+        args=[
+            "{{params.matrix.as_arg}}",
+            "{{params.configs.as_arg}}",
+            "{{params.metrics.as_arg}}",
+            "{{params.iteration.as_arg}}",
+        ],
         resources=k8s_schemas.V1ResourceRequirements(
             requests={"cpu": "0.1", "memory": "180Mi"},
         ),

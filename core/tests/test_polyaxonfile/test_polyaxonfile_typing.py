@@ -186,7 +186,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         assert run_config.tags == ["foo", "bar"]
         assert run_config.run.container.image == "my_image"
         assert run_config.run.container.command == ["/bin/sh", "-c"]
-        assert run_config.run.container.args == "video_prediction_train --loss=bar "
+        assert run_config.run.container.args == 'video_prediction_train --loss="bar" '
 
         run_config = V1CompiledOperation.read(
             [
@@ -211,7 +211,7 @@ class TestPolyaxonfileWithTypes(BaseTestCase):
         assert run_config.run.container.image == "my_image"
         assert run_config.run.container.command == ["/bin/sh", "-c"]
         assert (
-            run_config.run.container.args == "video_prediction_train --loss=bar --flag"
+            run_config.run.container.args == 'video_prediction_train --loss="bar" --flag'
         )
 
         # Adding extra value raises

@@ -986,7 +986,7 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self.log_status(polyaxon_sdk.V1Statuses.RUNNING, "Job is running")
+        self.log_status(polyaxon_sdk.V1Statuses.RUNNING, "Operation is running")
         self._run_data.status = polyaxon_sdk.V1Statuses.RUNNING
 
     @check_no_op
@@ -1014,7 +1014,7 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def log_succeeded(self):
+    def log_succeeded(self, message="Operation has succeeded"):
         """Sets the current run to `succeeded` status.
 
         <blockquote class="info">
@@ -1022,11 +1022,11 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self.end("succeeded", "Job has succeeded")
+        self.end(polyaxon_sdk.V1Statuses.SUCCEEDED, message)
 
     @check_no_op
     @check_offline
-    def log_stopped(self):
+    def log_stopped(self, message="Operation is stopped"):
         """Sets the current run to `stopped` status.
 
         <blockquote class="info">
@@ -1034,7 +1034,7 @@ class RunClient:
         This method is only useful for manual runs outside of Polyaxon.
         </blockquote>
         """
-        self.end("stopped", "Job is stopped")
+        self.end(polyaxon_sdk.V1Statuses.STOPPED, message)
 
     @check_no_op
     @check_offline
@@ -1050,7 +1050,7 @@ class RunClient:
             message: str, optional, message to log with this status.
             traceback: str, optional, reason for this status change.
         """
-        self.end(status="failed", message=message, traceback=traceback)
+        self.end(status=polyaxon_sdk.V1Statuses.FAILED, message=message, traceback=traceback)
 
     @check_no_op
     @check_offline

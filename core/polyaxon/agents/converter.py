@@ -71,7 +71,7 @@ def make_and_convert(
         run_name=run_name,
         run_path=run_uuid,
         compiled_operation=compiled_operation,
-        params=None,
+        params=operation.params,
         converters=PLATFORM_CONVERTERS,
         default_auth=default_auth,
     )
