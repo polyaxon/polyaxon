@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **algorithm** | [**V1HyperoptAlgorithms**](V1HyperoptAlgorithms.md) |  | [optional] 
 **params** | **{String: Object}** |  | [optional] 
 **num_runs** | **Number** |  | [optional] 
+**max_iterations** | **Number** |  | [optional] 
 **seed** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
 **early_stopping** | **[Object]** |  | [optional] 

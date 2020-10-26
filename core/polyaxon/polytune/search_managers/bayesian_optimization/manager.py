@@ -31,7 +31,7 @@ class BayesSearchManager(BaseManager):
     def __init__(self, config):
         super().__init__(config=config)
         self.num_initial_runs = self.config.num_initial_runs
-        self.num_iterations = self.config.num_iterations
+        self.max_iterations = self.config.max_iterations
 
     def get_suggestions(
         self, configs: List[Dict] = None, metrics: List[float] = None
@@ -48,7 +48,3 @@ class BayesSearchManager(BaseManager):
         optimizer.add_observations(configs=configs, metrics=metrics)
         suggestion = optimizer.get_suggestion()
         return [suggestion] if suggestion else None
-
-    def should_reschedule(self, iteration):
-        """Return a boolean to indicate if we need to reschedule another iteration."""
-        return iteration < self.num_iterations

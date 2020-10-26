@@ -27,6 +27,7 @@ from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 class HyperoptSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1MatrixKind.HYPEROPT))
+    max_iterations = RefOrObject(fields.Int(allow_none=True))
     algorithm = fields.Str(
         allow_none=True, validate=validate.OneOf(["tpe", "rand", "anneal"])
     )
@@ -57,6 +58,7 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
         algorithm: str, one of tpe, rand, anneal
         params: List[Dict[str,
         [params](/docs/automation/optimization-engine/params/#discrete-values)]]
+        maxIterations: int, optional
         concurrency: int, optional
         num_runs: int, optional
         seed: int, optional
@@ -69,6 +71,7 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
     >>> matrix:
     >>>   kind: hyperopt
     >>>   algorithm:
+    >>>   maxIterations:
     >>>   concurrency:
     >>>   params:
     >>>   numRuns:
@@ -168,6 +171,16 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
     >>>   numRuns: 5
     ```
 
+    ### maxIterations
+
+    Maximum number of iterations to run the process of \\-> suggestions -> training ->\\
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: hyperopt
+    >>>   maxIterations: 5
+    ```
+
     ### seed
 
     Since this algorithm uses random generators,
@@ -196,3 +209,9 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
     SCHEMA = HyperoptSchema
     IDENTIFIER = V1MatrixKind.HYPEROPT
     REDUCED_ATTRIBUTES = ["numRuns", "seed", "concurrency", "earlyStopping"]
+
+    def should_reschedule(self, iteration):
+        """Return a boolean to indicate if we need to reschedule another iteration."""
+        if not self.max_iterations:
+            return True
+        return iteration < self.max_iterations

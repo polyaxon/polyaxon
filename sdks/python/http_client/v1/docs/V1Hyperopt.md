@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **algorithm** | [**V1HyperoptAlgorithms**](V1HyperoptAlgorithms.md) |  | [optional] 
 **params** | **dict(str, object)** |  | [optional] 
 **num_runs** | **int** |  | [optional] 
+**max_iterations** | **int** |  | [optional] 
 **seed** | **int** |  | [optional] 
 **concurrency** | **int** |  | [optional] 
 **early_stopping** | **list[object]** |  | [optional] 

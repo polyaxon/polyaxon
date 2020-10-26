@@ -68,7 +68,10 @@ message ParamSearch {
     string sort = 2;
 
     // The search limit
-    string limit = 3;
+    int32 limit = 3;
+
+    // The search offset
+    int32 offset = 4;
 }
 
 // Param specification

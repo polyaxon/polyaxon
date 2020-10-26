@@ -29,31 +29,31 @@ class TestWorkflowV1Iterative(BaseTestCase):
     def test_iterative_config(self):
         config_dict = {
             "kind": "iterative",
-            "numIterations": 10,
+            "maxIterations": 10,
             "container": {"image": "my-matrix"},
         }
         config = V1Iterative.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Raises for negative values
-        config_dict["numIterations"] = -5
+        config_dict["maxIterations"] = -5
         with self.assertRaises(ValidationError):
             V1Iterative.from_dict(config_dict)
 
-        config_dict["numIterations"] = -0.5
+        config_dict["maxIterations"] = -0.5
         with self.assertRaises(ValidationError):
             V1Iterative.from_dict(config_dict)
 
         # Add num_runs percent
-        config_dict["numIterations"] = 0.5
+        config_dict["maxIterations"] = 0.5
         with self.assertRaises(ValidationError):
             V1Iterative.from_dict(config_dict)
 
-        config_dict["numIterations"] = 5
+        config_dict["maxIterations"] = 5
         config = V1Iterative.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-    def test_iterative_without_num_iterations(self):
+    def test_iterative_without_max_iterations(self):
         config_dict = {
             "kind": "compiled_operation",
             "matrix": {
@@ -68,6 +68,6 @@ class TestWorkflowV1Iterative(BaseTestCase):
         with self.assertRaises(ValidationError):
             V1CompiledOperation.from_dict(config_dict)
 
-        config_dict["matrix"]["numIterations"] = 10
+        config_dict["matrix"]["maxIterations"] = 10
         config = V1CompiledOperation.from_dict(config_dict)
         assert config.to_dict() == config_dict

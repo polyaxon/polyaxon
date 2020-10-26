@@ -20,18 +20,20 @@ from polyaxon.k8s import k8s_schemas
 from polyaxon.k8s.k8s_schemas import V1Container
 
 
-def get_default_tuner_container(command):
+def get_default_tuner_container(command, bracket_iteration: int = None):
+    args = [
+        "{{params.matrix.as_arg}}",
+        "{{params.search.as_arg}}",
+        "{{params.iteration.as_arg}}",
+    ]
+    if bracket_iteration is not None:
+        args.append("{{params.bracket_iteration.as_arg}}")
     return V1Container(
         name=MAIN_JOB_CONTAINER,
         image="polyaxon/polyaxon-hpsearch:{}".format(pkg.VERSION),
         image_pull_policy=PullPolicy.ALWAYS.value,
         command=command,
-        args=[
-            "{{params.matrix.as_arg}}",
-            "{{params.configs.as_arg}}",
-            "{{params.metrics.as_arg}}",
-            "{{params.iteration.as_arg}}",
-        ],
+        args=args,
         resources=k8s_schemas.V1ResourceRequirements(
             requests={"cpu": "0.1", "memory": "180Mi"},
         ),

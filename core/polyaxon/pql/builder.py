@@ -119,15 +119,46 @@ class CallbackCondition(BaseCondition):
         )
 
 
-class EqualityCondition(BaseOperatorCondition):
-    VALUES = {"eq"}
-    REPRESENTATIONS = {"="}
-    REPRESENTATION_MAPPING = (("=", "eq"),)
+class NilCondition(BaseOperatorCondition):
+    VALUES = {"nil"}
+    REPRESENTATIONS = {"nil"}
+    REPRESENTATION_MAPPING = (("nil", "nil"),)
 
     @classmethod
     def _get_operator(cls, op: str, negation: bool = False) -> Optional[Callable]:
         if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
             return None
+
+        if negation:
+            return cls._not_nil_operator
+        return cls._nil_operator
+
+    @staticmethod
+    def _nil_operator(name: str, params: Any, query_backend: Any, timezone: str) -> Any:
+        name = "{}__isnull".format(name)
+        return query_backend(**{name: True})
+
+    @classmethod
+    def _not_nil_operator(
+        cls, name: str, params: Any, query_backend: Any, timezone: str
+    ) -> any:
+        name = "{}__isnull".format(name)
+        return query_backend(**{name: False})
+
+
+class EqualityCondition(NilCondition):
+    VALUES = NilCondition.VALUES | {"eq"}
+    REPRESENTATIONS = NilCondition.REPRESENTATIONS | {"="}
+    REPRESENTATION_MAPPING = NilCondition.REPRESENTATION_MAPPING + (("=", "eq"),)
+
+    @classmethod
+    def _get_operator(cls, op: str, negation: bool = False) -> Optional[Callable]:
+        if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
+            return None
+
+        _op = NilCondition._get_operator(op, negation)
+        if _op:
+            return _op
 
         if negation:
             return cls._neq_operator

@@ -30,7 +30,7 @@ from polyaxon.schemas.fields.swagger import SwaggerField
 
 class IterativeSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1MatrixKind.ITERATIVE))
-    num_iterations = RefOrObject(
+    max_iterations = RefOrObject(
         fields.Int(required=True, validate=validate.Range(min=1)), required=True
     )
     concurrency = fields.Int(allow_none=True)
@@ -59,7 +59,7 @@ class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
 
     Args:
         kind: str, should be equal `iterative`
-        num_iterations: int
+        max_iterations: int
         params: List[Dict[str,
         [params](/docs/automation/optimization-engine/params/)]]
         concurrency: int, optional
@@ -74,7 +74,7 @@ class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
     >>>   kind: iterative
     >>>   concurrency:
     >>>   params:
-    >>>   numIterations:
+    >>>   maxIterations:
     >>>   seed:
     >>>   container:
     >>>   earlyStopping:
@@ -88,7 +88,7 @@ class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
     >>>     V1Iterative, V1HpLogSpace, V1HpUniform, V1FailureEarlyStopping, V1MetricEarlyStopping
     >>> )
     >>> matrix = V1Iterative(
-    >>>   num_iterations=20,
+    >>>   max_iterations=20,
     >>>   concurrency=2,
     >>>   seed=23,
     >>>   params={"param1": V1HpLogSpace(...), "param2": V1HpUniform(...), ... },
@@ -152,14 +152,14 @@ class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
     >>>        value: ...
     ```
 
-    ### numIterations
+    ### maxIterations
 
     Maximum number of iterations to run the process of \\-> suggestions -> training ->\\
 
     ```yaml
     >>> matrix:
     >>>   kind: iterative
-    >>>   numIterations: 5
+    >>>   maxIterations: 5
     ```
 
     ### seed
@@ -212,7 +212,7 @@ class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
     >>> matrix:
     >>>   kind: iterative
     >>>   concurrency: 10
-    >>>   numIterations: 5
+    >>>   maxIterations: 5
     >>>   container:
     >>>     name: my-suggestion-logic
     >>>     commmand: ...
@@ -260,3 +260,7 @@ class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
     IDENTIFIER = V1MatrixKind.ITERATIVE
     SCHEMA = IterativeSchema
     REDUCED_ATTRIBUTES = ["params", "seed", "container", "earlyStopping", "concurrency"]
+
+    def should_reschedule(self, iteration):
+        """Return a boolean to indicate if we need to reschedule another iteration."""
+        return iteration < self.max_iterations

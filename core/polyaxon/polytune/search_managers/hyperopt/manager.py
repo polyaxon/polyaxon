@@ -42,6 +42,7 @@ class HyperoptManager(BaseManager):
         self._param_to_value = {}
         self._search_space = {}
         self._set_search_space()
+        self.max_iterations = self.config.max_iterations
 
     def _set_search_space(self):
         for k, v in self.config.params.items():

@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **meta_info** | [**object**](.md) |  | [optional] 
 **is_helper** | **bool** |  | [optional] 
 **kind** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
-**meta_kind** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
+**runtime** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
 **hub** | **str** |  | [optional] 
 **inputs** | [**object**](.md) |  | [optional] 
 **outputs** | [**object**](.md) |  | [optional] 

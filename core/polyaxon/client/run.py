@@ -1050,7 +1050,9 @@ class RunClient:
             message: str, optional, message to log with this status.
             traceback: str, optional, reason for this status change.
         """
-        self.end(status=polyaxon_sdk.V1Statuses.FAILED, message=message, traceback=traceback)
+        self.end(
+            status=polyaxon_sdk.V1Statuses.FAILED, message=message, traceback=traceback
+        )
 
     @check_no_op
     @check_offline

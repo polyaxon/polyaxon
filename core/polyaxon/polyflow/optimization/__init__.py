@@ -72,6 +72,11 @@ class V1OptimizationMetric(BaseConfig, polyaxon_sdk.V1OptimizationMetric):
     SCHEMA = OptimizationMetricSchema
     IDENTIFIER = "optimization_metric"
 
+    def get_for_sort(self):
+        if self.optimization == V1Optimization.MINIMIZE:
+            return self.name
+        return "-{}".format(self.name)
+
 
 class OptimizationResourceSchema(BaseCamelSchema):
     name = fields.Str()

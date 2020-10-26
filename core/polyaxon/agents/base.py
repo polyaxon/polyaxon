@@ -368,7 +368,9 @@ class BaseAgent:
                 exc=e,
             )
 
-    def make_and_create_run(self, run_data: Tuple[str, str, str, str], default_auth: bool = False):
+    def make_and_create_run(
+        self, run_data: Tuple[str, str, str, str], default_auth: bool = False
+    ):
         run_owner, run_project, run_uuid = get_run_info(run_instance=run_data[0])
         resource = self.make_run_resource(
             owner_name=run_owner,

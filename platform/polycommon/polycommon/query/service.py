@@ -16,6 +16,7 @@
 
 from typing import Any, Optional, Tuple
 
+from polyaxon.exceptions import PQLException
 from polyaxon.pql.manager import PQLManager
 from polyaxon.pql.parser import parse_field
 from polycommon.service_interface import Service
@@ -28,7 +29,10 @@ class QueryService(Service):
     def filter_queryset(
         cls, manager: PQLManager, query_spec: str, queryset: Any
     ) -> Any:
-        return manager.apply(query_spec=query_spec, queryset=queryset)
+        try:
+            return manager.apply(query_spec=query_spec, queryset=queryset)
+        except Exception as e:
+            raise PQLException("Error applying or resolving queryset, %s" % e)
 
     @classmethod
     def parse_field(cls, field: str) -> Tuple[str, Optional[str]]:

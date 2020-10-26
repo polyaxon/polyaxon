@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **kind** | **str** |  | [optional] [default to 'bayes']
 **params** | **dict(str, object)** |  | [optional] 
 **num_initial_runs** | **int** |  | [optional] 
-**num_iterations** | **int** |  | [optional] 
+**max_iterations** | **int** |  | [optional] 
 **utility_function** | [**object**](.md) |  | [optional] 
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 
 **seed** | **int** |  | [optional] 

@@ -55,7 +55,7 @@ class RunQueryManager(BaseQueryManager):
         "finished_at",
         "name",
         "kind",
-        "meta_kind",
+        "runtime",
         "user",
         "uuid",
         "duration",
@@ -69,6 +69,7 @@ class RunQueryManager(BaseQueryManager):
         "out": {"field": "outputs", "annotate": True},
         "meta_flags": {"field": "meta_info", "annotate": True},
         "meta": {"field": "meta_info", "annotate": True},
+        "meta_info": {"field": "meta_info", "annotate": True},
         "agent": "settings__agent",
     }
     FIELDS_DEFAULT_ORDERING = ("-updated_at",)
@@ -111,7 +112,7 @@ class RunQueryManager(BaseQueryManager):
         # Kind
         "kind": parse_value_operation,
         # Meta Kind
-        "meta_kind": parse_value_operation,
+        "runtime": parse_value_operation,
         # Params
         "params": parse_value_operation,
         "inputs": parse_value_operation,
@@ -176,7 +177,7 @@ class RunQueryManager(BaseQueryManager):
         # Kind
         "kind": ValueCondition,
         # Meta Kind
-        "meta_kind": ValueCondition,
+        "runtime": ValueCondition,
         # Params
         "params": ValueCondition,
         "inputs": ValueCondition,

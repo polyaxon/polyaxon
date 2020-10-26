@@ -121,8 +121,8 @@ message Bayes {
     // Number of intial random observations to create
     int32 num_initial_runs = 3;
 
-    // Number of iteration for producing new observations
-    int32 num_iterations = 4;
+    // Max iteration for producing new observations
+    int32 max_iterations = 4;
 
     // A utility function to use for the bayesian optimization
     google.protobuf.Struct utility_function = 5;
@@ -167,14 +167,17 @@ message Hyperopt {
     // Number of runs to generate and search
     int32 num_runs = 4;
 
+    // Max iteration for producing new observations
+    int32 max_iterations = 5;
+
     // Seed for the random generator
-    int32 seed = 5;
+    int32 seed = 6;
 
     // Number of concurrent runs
-    int32 concurrency = 6;
+    int32 concurrency = 7;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 7;
+    repeated google.protobuf.Struct early_stopping = 8;
 }
 
 
@@ -186,8 +189,8 @@ message Iterative {
     // Hyperparams/Space definition of params to traverse
     map<string, google.protobuf.Struct> params = 2;
 
-    // Number of iterations to run
-    int32 num_iterations = 3;
+    // Max iteration for producing new observations
+    int32 max_iterations = 3;
 
     // Container specification for crating new observations based on data from previous iterations
     Container container = 4;

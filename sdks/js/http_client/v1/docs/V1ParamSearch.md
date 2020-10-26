@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **query** | **String** |  | [optional] 
 **sort** | **String** |  | [optional] 
-**limit** | **String** |  | [optional] 
+**limit** | **Number** |  | [optional] 
+**offset** | **Number** |  | [optional] 
 
 

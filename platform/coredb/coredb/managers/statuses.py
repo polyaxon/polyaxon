@@ -61,7 +61,9 @@ def set_entity_status(entity, condition: V1StatusCondition):
     return entity
 
 
-def new_status(entity, condition: V1StatusCondition):
+def new_status(
+    entity, condition: V1StatusCondition, additional_fields: List[str] = None
+):
     previous_status = entity.status
     if condition.type == V1Statuses.CREATED:
         return previous_status
@@ -72,8 +74,10 @@ def new_status(entity, condition: V1StatusCondition):
 
     set_started_at(run=entity)
     set_finished_at(run=entity)
+    additional_fields = additional_fields or []
     entity.save(
-        update_fields=[
+        update_fields=additional_fields
+        + [
             "status_conditions",
             "status",
             "started_at",
@@ -86,14 +90,25 @@ def new_status(entity, condition: V1StatusCondition):
     return previous_status
 
 
-def bulk_new_run_status(runs: List[BaseRun], condition: V1StatusCondition):
+def bulk_new_run_status(
+    runs: List[BaseRun],
+    condition: V1StatusCondition,
+    additional_fields: List[str] = None,
+):
     for run in runs:
         set_entity_status(entity=run, condition=condition)
-    get_run_model().objects.bulk_update(runs, ["status_conditions", "status"])
+    additional_fields = additional_fields or []
+    get_run_model().objects.bulk_update(
+        runs, additional_fields + ["status_conditions", "status"]
+    )
 
 
-def new_run_status(run: BaseRun, condition: V1StatusCondition):
-    previous_status = new_status(entity=run, condition=condition)
+def new_run_status(
+    run: BaseRun, condition: V1StatusCondition, additional_fields: List[str] = None
+):
+    previous_status = new_status(
+        entity=run, condition=condition, additional_fields=additional_fields
+    )
     # Do not audit the new status since it's the same as the previous one
     if (
         condition.type in {V1Statuses.CREATED, V1Statuses.STOPPING}

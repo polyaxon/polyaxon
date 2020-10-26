@@ -16,6 +16,8 @@
 
 import math
 
+from typing import Dict
+
 try:
     import numpy as np
 except ImportError:
@@ -50,3 +52,7 @@ def to_np(value):
 def calculate_scale_factor(tensor):
     converted = tensor.numpy() if not isinstance(tensor, np.ndarray) else tensor
     return 1 if converted.dtype == np.uint8 else 255
+
+
+def sanitize_dict(s: Dict):
+    return {k: sanitize_np_types(v) for k, v in s.items()}

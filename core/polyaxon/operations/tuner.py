@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Dict, List
 
 from polyaxon import types
 from polyaxon.auxiliaries import get_default_tuner_container
@@ -27,6 +26,7 @@ from polyaxon.polyflow import (
     V1Matrix,
     V1Operation,
     V1Param,
+    V1ParamSearch,
     V1Plugins,
     V1Tuner,
 )
@@ -36,17 +36,32 @@ def get_tuner(
     name: str,
     container: V1Container,
     matrix: V1Matrix,
-    configs: List[Dict],
-    metrics: List[float],
+    search: V1ParamSearch,
     iteration: int,
+    bracket_iteration: int = None,
 ) -> V1Operation:
+    params = {
+        "matrix": V1Param(value=matrix.to_dict()),
+        "search": V1Param(value=search.to_dict()),
+        "iteration": V1Param(value=iteration),
+    }
+    inputs = [
+        V1IO(name="matrix", iotype=types.DICT, is_list=False, is_optional=True),
+        V1IO(name="search", iotype=types.DICT, is_list=False, is_optional=True),
+        V1IO(name="iteration", iotype=types.INT, is_list=False, is_optional=True),
+    ]
+    if bracket_iteration is not None:
+        params["bracket_iteration"] = V1Param(value=bracket_iteration)
+        inputs.append(
+            V1IO(
+                name="bracket_iteration",
+                iotype=types.INT,
+                is_list=False,
+                is_optional=True,
+            )
+        )
     return V1Operation(
-        params={
-            "matrix": V1Param(value=matrix.to_dict()),
-            "configs": V1Param(value=configs),
-            "metrics": V1Param(value=metrics),
-            "iteration": V1Param(value=iteration),
-        },
+        params=params,
         component=V1Component(
             name=name,
             plugins=V1Plugins(
@@ -56,20 +71,7 @@ def get_tuner(
                 collect_resources=False,
                 sync_statuses=False,
             ),
-            inputs=[
-                V1IO(
-                    name="matrix", iotype=types.DICT, is_list=False, is_optional=True
-                ),
-                V1IO(
-                    name="configs", iotype=types.DICT, is_list=True, is_optional=True
-                ),
-                V1IO(
-                    name="metrics", iotype=types.FLOAT, is_list=True, is_optional=True
-                ),
-                V1IO(
-                    name="iteration", iotype=types.INT, is_list=False, is_optional=True
-                ),
-            ],
+            inputs=inputs,
             outputs=[
                 V1IO(
                     name="suggestions",
@@ -87,8 +89,7 @@ def get_tuner(
 
 def get_bo_tuner(
     matrix: V1Bayes,
-    configs: List[Dict],
-    metrics: List[float],
+    search: V1ParamSearch,
     iteration: int,
     container: V1Container = None,
 ) -> V1Operation:
@@ -97,36 +98,35 @@ def get_bo_tuner(
         name="bayesian-tuner",
         container=container,
         matrix=matrix,
-        configs=configs,
-        metrics=metrics,
+        search=search,
         iteration=iteration,
     )
 
 
 def get_hyperband_tuner(
     matrix: V1Hyperband,
-    configs: List[Dict],
-    metrics: List[float],
+    search: V1ParamSearch,
     iteration: int,
+    bracket_iteration: int,
     container: V1Container = None,
 ) -> V1Operation:
     container = container or get_default_tuner_container(
-        ["polyaxon", "tuner", "hyperband"]
+        ["polyaxon", "tuner", "hyperband"],
+        bracket_iteration=bracket_iteration,
     )
     return get_tuner(
         name="hyperband-tuner",
         container=container,
         matrix=matrix,
-        configs=configs,
-        metrics=metrics,
+        search=search,
         iteration=iteration,
+        bracket_iteration=bracket_iteration,
     )
 
 
 def get_hyperopt_tuner(
     matrix: V1Hyperopt,
-    configs: List[Dict],
-    metrics: List[float],
+    search: V1ParamSearch,
     iteration: int,
     container: V1Container = None,
 ) -> V1Operation:
@@ -137,7 +137,6 @@ def get_hyperopt_tuner(
         name="hyperopt-tuner",
         container=container,
         matrix=matrix,
-        configs=configs,
-        metrics=metrics,
+        search=search,
         iteration=iteration,
     )

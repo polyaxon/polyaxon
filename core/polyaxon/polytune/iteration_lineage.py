@@ -14,70 +14,112 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import traceback
+
 from typing import Dict, List
 
-from polyaxon import settings
 from polyaxon.client import RunClient
-from polyaxon.env_vars.getters import get_run_info
-from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
-from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
-from polyaxon.utils.formatting import Printer
-from polyaxon.utils.np_utils import sanitize_np_types
 from polyaxon.logger import logger
+from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
+from polyaxon.polyflow import V1ParamSearch
+from polyaxon.utils.formatting import Printer
+from polyaxon.utils.np_utils import sanitize_dict, sanitize_np_types
+
+
+def should_reschedule(client: RunClient, matrix, iteration: int, **kwargs) -> bool:
+    # Sanity check
+    if iteration > 0 and not matrix.should_reschedule(iteration - 1, **kwargs):
+        client.log_succeeded(message="Iterative operation has succeeded")
+        logger.info(
+            "Iterative optimization is done and should not reschedule a new iteration"
+        )
+        return False
+
+    return True
+
+
+def get_iteration_definition(
+    client: RunClient, iteration: int, search: V1ParamSearch, optimization_metric: str
+):
+    def handler():
+        runs = (
+            client.list(
+                query=search.query,
+                sort=search.sort,
+                limit=search.limit,
+                offset=search.offset,
+            ).results
+            or []
+        )
+        configs = []
+        metrics = []
+        run_uuids = []
+        for run in runs:
+            if optimization_metric in run.outputs:
+                run_uuids.append(run.uuid)
+                configs.append(run.inputs)
+                metrics.append(run.outputs[optimization_metric])
+
+        if configs or metrics or run_uuids:
+            artifact_run = V1RunArtifact(
+                name="in-iteration-{}".format(iteration),
+                kind=V1ArtifactKind.ITERATION,
+                summary={
+                    "iteration": iteration,
+                    "configs": [sanitize_dict(s) for s in configs],
+                    "metrics": [sanitize_np_types(s) for s in metrics],
+                    "uuid": run_uuids,
+                },
+                is_input=True,
+            )
+            client.log_artifact_lineage(artifact_run)
+
+        return run_uuids, configs, metrics
+
+    try:
+        return handler()
+    except Exception as e:
+        exp = "Polyaxon tuner failed fetching iteration definition: {}\n{}".format(
+            repr(e), traceback.format_exc()
+        )
+        client.log_failed(message="PolyaxonTunerFailed", traceback=exp)
+        logger.warning(e)
+
+
+def handle_iteration_failure(client: RunClient, exp: Exception):
+    exp = "Polyaxon tuner failed creating suggestions : {}\n{}".format(
+        repr(exp), traceback.format_exc()
+    )
+    client.log_failed(message="PolyaxonTunerCreatingSuggestions", traceback=exp)
 
 
 def handle_iteration(
-    iteration: int = None, suggestions: List[Dict] = None, error: str = None
+    client: RunClient,
+    iteration: int = None,
+    suggestions: List[Dict] = None,
 ):
-    if not settings.CLIENT_CONFIG.no_api:
-        try:
-            owner, project, run_uuid = get_run_info()
-        except PolyaxonClientException as e:
-            raise PolyaxonContainerException(e)
+    def handler():
+        if suggestions:
+            artifact_run = V1RunArtifact(
+                name="out-iteration-{}".format(iteration),
+                kind=V1ArtifactKind.ITERATION,
+                summary={
+                    "iteration": iteration,
+                    "suggestions": [sanitize_dict(s) for s in suggestions],
+                },
+                is_input=False,
+            )
+            client.log_artifact_lineage(artifact_run)
+            Printer.print_success("Tuner generated new suggestions.")
+        else:
+            client.log_succeeded(message="Iterative operation has succeeded")
+            Printer.print_success("Iterative optimization succeeded")
 
-    def sanitize_suggestion(s: Dict):
-        return {k: sanitize_np_types(v) for k, v in s.items()}
-
-    def create_iteration_lineage():
-        artifact_run = V1RunArtifact(
-            name="iteration-{}".format(iteration),
-            kind=V1ArtifactKind.ITERATION,
-            summary={
-                "iteration": iteration,
-                "suggestions": [sanitize_suggestion(s) for s in suggestions]
-            },
-            is_input=False,
+    try:
+        handler()
+    except Exception as e:
+        exp = "Polyaxon tuner failed fetching iteration definition: {}\n{}".format(
+            repr(e), traceback.format_exc()
         )
-        RunClient(owner=owner, project=project, run_uuid=run_uuid).log_artifact_lineage(
-            artifact_run
-        )
-
-    def notify_iteration_succeeded():
-        RunClient(
-            owner=owner, project=project, run_uuid=run_uuid
-        ).log_succeeded(message="Iterative operation has succeeded")
-
-    def notify_iteration_failed(traceback):
-        RunClient(
-            owner=owner, project=project, run_uuid=run_uuid
-        ).log_failed(message="Iterative operation has succeeded", traceback=traceback)
-
-    retry = 1
-    while retry < 3:
-        try:
-            if error:
-                notify_iteration_failed(error)
-                Printer.print_success("Iterative optimization failed")
-                return
-
-            if suggestions:
-                create_iteration_lineage()
-                Printer.print_success("Generated new suggestions generated.")
-            else:
-                notify_iteration_succeeded()
-                Printer.print_success("Iterative optimization succeeded")
-            return
-        except Exception as e:
-            retry += 1
-            error = "Polyaxon tuner failed syncing with API, retrying, error %s" % e
-            logger.warning(error)
+        client.log_failed(message="PolyaxonTunerFailed", traceback=exp)
+        logger.warning(e)

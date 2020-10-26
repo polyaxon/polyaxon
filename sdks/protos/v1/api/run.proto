@@ -146,7 +146,7 @@ message Run {
     RunKind kind = 20;
 
     // Optional meta kind to tell the nature of this run
-    RunKind meta_kind = 21;
+    RunKind runtime = 21;
 
     // Optional hub reference versioned component
     string hub = 22;
@@ -155,7 +155,7 @@ message Run {
     google.protobuf.Struct inputs = 23;
 
     // Optional outputs of this entity
-    google.protobuf.Struct outputs = 34;
+    google.protobuf.Struct outputs = 24;
 
     // Optional original run meta information
     Cloning original = 25;

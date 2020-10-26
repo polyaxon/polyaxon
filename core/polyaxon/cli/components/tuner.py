@@ -27,115 +27,202 @@ def tuner():
 @tuner.command()
 @click.option(
     "--matrix",
-    help="A string representing the matrix configuration for bayesian optimzation.",
+    help="A string representing the matrix configuration for bayesian optimization.",
+)
+@click.option(
+    "--search", help="A string representing the search to fetch configs and metrics."
 )
 @click.option("--iteration", type=int, help="The current iteration.")
-@click.option(
-    "--configs",
-    help="A string representing the list of dict representing the configs to use for tuning.",
-)
-@click.option(
-    "--metrics", help="A string representing the list metrics to use for tuning."
-)
-def bayes(matrix, iteration, configs, metrics):
+def bayes(matrix, search, iteration):
     """Create suggestions based on bayesian optimization."""
-    from polyaxon.polyflow import V1Bayes
-    from polyaxon.polytune.iteration_lineage import handle_iteration
+    from polyaxon.client import RunClient
+    from polyaxon.polyflow import V1Bayes, V1ParamSearch
+    from polyaxon.polytune.iteration_lineage import (
+        get_iteration_definition,
+        handle_iteration,
+        handle_iteration_failure,
+        should_reschedule,
+    )
     from polyaxon.polytune.search_managers.bayesian_optimization.manager import (
         BayesSearchManager,
     )
 
+    matrix = V1Bayes.read(matrix)
+    search = V1ParamSearch.read(search)
+
+    client = RunClient()
+
+    if not should_reschedule(client=client, matrix=matrix, iteration=iteration):
+        return
+
+    values = get_iteration_definition(
+        client=client,
+        iteration=iteration,
+        search=search,
+        optimization_metric=matrix.metric.name,
+    )
+    if not values:
+        return
+    run_uuids, configs, metrics = values
+
     retry = 1
-    error = None
+    exp = None
     suggestions = None
     while retry < 3:
         try:
-            suggestions = BayesSearchManager(config=V1Bayes.read(matrix)).get_suggestions(
-                configs=configs, metrics=metrics
-            )
-            error = None
+            suggestions = BayesSearchManager(
+                config=matrix,
+            ).get_suggestions(configs=configs, metrics=metrics)
+            exp = None
             break
-        except Exception as e:
+        except Exception as exp:
             retry += 1
-            error = "Polyaxon tuner failed creating suggestions retrying, error %s" % e
-            logger.warning(error)
+            logger.warning(exp)
 
-    handle_iteration(iteration=iteration, suggestions=suggestions, error=error)
+    if exp:
+        handle_iteration_failure(client=client, exp=exp)
+        return
+
+    handle_iteration(
+        client=client,
+        iteration=iteration,
+        suggestions=suggestions,
+    )
 
 
 @tuner.command()
 @click.option(
     "--matrix", help="A string representing the matrix configuration for hyperband."
 )
+@click.option(
+    "--search", help="A string representing the search to fetch configs and metrics."
+)
 @click.option("--iteration", type=int, help="The current hyperband iteration.")
 @click.option(
     "--bracket-iteration", type=int, help="The current hyperband bracket iteration."
 )
-@click.option(
-    "--configs",
-    help="A string representing the list of dict representing the configs to use for tuning.",
-)
-@click.option(
-    "--metrics", help="A string representing the list metrics to use for tuning."
-)
-def hyperband(matrix, iteration, bracket_iteration, configs, metrics):
+def hyperband(matrix, search, iteration, bracket_iteration):
     """Create suggestions based on hyperband."""
-    from polyaxon.polyflow import V1Hyperband
-    from polyaxon.polytune.iteration_lineage import handle_iteration
+    from polyaxon.client import RunClient
+    from polyaxon.polyflow import V1Hyperband, V1ParamSearch
+    from polyaxon.polytune.iteration_lineage import (
+        get_iteration_definition,
+        handle_iteration,
+        handle_iteration_failure,
+        should_reschedule,
+    )
     from polyaxon.polytune.search_managers.hyperband.manager import HyperbandManager
 
+    matrix = V1Hyperband.read(matrix)
+    matrix.set_tuning_params()
+    search = V1ParamSearch.read(search)
+
+    client = RunClient()
+
+    if not should_reschedule(
+        client=client,
+        matrix=matrix,
+        iteration=iteration,
+        bracket_iteration=bracket_iteration - 1,
+    ):
+        return
+
+    values = get_iteration_definition(
+        client=client,
+        iteration=iteration,
+        search=search,
+        optimization_metric=matrix.metric.name,
+    )
+    if not values:
+        return
+    run_uuids, configs, metrics = values
+
     retry = 1
-    error = None
+    exp = None
     suggestions = None
     while retry < 3:
         try:
-            suggestions = HyperbandManager(config=V1Hyperband.read(matrix)).get_suggestions(
+            suggestions = HyperbandManager(config=matrix).get_suggestions(
                 configs=configs,
                 metrics=metrics,
                 bracket_iteration=bracket_iteration,
                 iteration=iteration,
             )
-            error = None
+            exp = None
             break
-        except Exception as e:
+        except Exception as exp:
             retry += 1
-            error = "Polyaxon tuner failed creating suggestions retrying, error %s" % e
-            logger.warning(error)
+            logger.warning(exp)
 
-    handle_iteration(iteration=iteration, suggestions=suggestions, error=error)
+    if exp:
+        handle_iteration_failure(client=client, exp=exp)
+        return
+
+    handle_iteration(
+        client=client,
+        iteration=iteration,
+        suggestions=suggestions,
+    )
 
 
 @tuner.command()
 @click.option(
     "--matrix", help="A string representing the matrix configuration for hyperopt."
 )
+@click.option(
+    "--search", help="A string representing the search to fetch configs and metrics."
+)
 @click.option("--iteration", type=int, help="The current iteration.")
-@click.option(
-    "--configs",
-    help="A string representing the list of dict representing the configs to use for tuning.",
-)
-@click.option(
-    "--metrics", help="A string representing the list metrics to use for tuning."
-)
-def hyperopt(matrix, iteration, configs, metrics):
+def hyperopt(matrix, search, iteration):
     """Create suggestions based on hyperopt."""
-    from polyaxon.polyflow import V1Hyperopt
-    from polyaxon.polytune.iteration_lineage import handle_iteration
+    from polyaxon.client import RunClient
+    from polyaxon.polyflow import V1Hyperopt, V1ParamSearch
+    from polyaxon.polytune.iteration_lineage import (
+        get_iteration_definition,
+        handle_iteration,
+        handle_iteration_failure,
+        should_reschedule,
+    )
     from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
 
+    matrix = V1Hyperopt.read(matrix)
+    search = V1ParamSearch.read(search)
+
+    client = RunClient()
+
+    if not should_reschedule(client=client, matrix=matrix, iteration=iteration):
+        return
+
+    values = get_iteration_definition(
+        client=client,
+        iteration=iteration,
+        search=search,
+        optimization_metric=matrix.metric.name,
+    )
+    if not values:
+        return
+    run_uuids, configs, metrics = values
+
     retry = 1
-    error = None
+    exp = None
     suggestions = None
     while retry < 3:
         try:
-            suggestions = HyperoptManager(config=V1Hyperopt.read(matrix)).get_suggestions(
+            suggestions = HyperoptManager(config=matrix).get_suggestions(
                 configs=configs, metrics=metrics
             )
-            error = None
+            exp = None
             break
-        except Exception as e:
+        except Exception as exp:
             retry += 1
-            error = "Polyaxon tuner failed creating suggestions retrying, error %s" % e
-            logger.warning(error)
+            logger.warning(exp)
 
-    handle_iteration(iteration=iteration, suggestions=suggestions, error=error)
+    if exp:
+        handle_iteration_failure(client=client, exp=exp)
+        return
+
+    handle_iteration(
+        client=client,
+        iteration=iteration,
+        suggestions=suggestions,
+    )

@@ -19,12 +19,12 @@ from polyaxon.polypod.compiler.converters.base import BaseConverter, ConverterAb
 from polyaxon.polypod.compiler.converters.helpers import (
     CleanerConverter,
     NotifierConverter,
-    TunerConverter,
-    WatchDogConverter,
-    PlatformNotifierConverter,
     PlatformCleanerConverter,
+    PlatformNotifierConverter,
     PlatformTunerConverter,
     PlatformWatchDogConverter,
+    TunerConverter,
+    WatchDogConverter,
 )
 from polyaxon.polypod.compiler.converters.job import JobConverter, PlatformJobConverter
 from polyaxon.polypod.compiler.converters.kubeflow import (

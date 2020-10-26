@@ -30,7 +30,10 @@ import (
 type V1ParamSearch struct {
 
 	// The search limit
-	Limit string `json:"limit,omitempty"`
+	Limit int32 `json:"limit,omitempty"`
+
+	// The search offset
+	Offset int32 `json:"offset,omitempty"`
 
 	// The search query
 	Query string `json:"query,omitempty"`

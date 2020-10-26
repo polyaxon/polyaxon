@@ -13,13 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import ujson
 import uuid
 
 from collections import namedtuple
 from typing import Dict, Optional
 
 import polyaxon_sdk
+import ujson
 
 from marshmallow import ValidationError, fields, validates_schema
 
@@ -84,6 +84,7 @@ class ParamSearchSchema(BaseCamelSchema):
     query = fields.Str(required=True)
     sort = fields.Str(allow_none=True)
     limit = fields.Int(allow_none=True)
+    offset = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -96,6 +97,7 @@ class V1ParamSearch(BaseConfig, polyaxon_sdk.V1ParamSearch):
     REDUCED_ATTRIBUTES = [
         "sort",
         "limit",
+        "offset",
     ]
 
 
@@ -139,7 +141,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
     Args:
          value: any
-         search: V1SearchParam, optional
+         search: V1ParamSearch, optional
          ref: str, optional
          context_only: bool, optional
          connection: str, optional
@@ -474,7 +476,7 @@ class ParamSpec(
                 if self.param.value
                 else ""
             )
-        return "--{}={}".format(self.name, self.as_str())
+        return "--{}={}".format(self.name.replace("_", "-"), self.as_str())
 
     def to_parsed_param(self):
         parsed_param = {

@@ -26,7 +26,12 @@ from polyaxon.k8s.custom_resources.operation import (
 )
 from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
 from polyaxon.polypod.compiler.converters.job import JobConverter
-from polyaxon.polypod.mixins import CleanerMixin, NotifierMixin, TunerMixin, WatchDogMixin
+from polyaxon.polypod.mixins import (
+    CleanerMixin,
+    NotifierMixin,
+    TunerMixin,
+    WatchDogMixin,
+)
 
 
 class NotifierConverter(NotifierMixin, JobConverter):

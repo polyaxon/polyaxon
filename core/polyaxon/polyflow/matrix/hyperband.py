@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import math
 
 import polyaxon_sdk
 
@@ -324,14 +325,38 @@ class V1Hyperband(BaseConfig, polyaxon_sdk.V1Hyperband):
 
     |              | bucket=4   |                | bucket=3   |                 | bucket=2    |                | bucket=1   |                 | bucket=0   |                | # noqa
     |--------------|------------|----------------|------------|-----------------|-------------|----------------|------------|-----------------|------------|----------------| # noqa
-    |iteration     |num configs | resource alloc |num configs | resource alloc  |num configs  |resource alloc  |num configs | resource alloc  |num configs | resource alloc | # noqa
-    |0             |81          |  1             |27          |               3 |9            | 9              |6           |  27             |5           |              81| # noqa
-    |1             |27          |  3             |9           |              9  |3            | 27             |2           |  81             |            |                | # noqa
-    |2             |9           | 9              |3           |              27 |1            | 81             |            |                 |            |                | # noqa
-    |3             |3           | 27             |1           |              81 |             |                |            |                 |            |                | # noqa
-    |4             |1           | 81             |            |                 |             |                |            |                 |            |                | # noqa
+    |iteration     |num configs |resource alloc  |num configs |resource alloc   |num configs  |resource alloc  |num configs |resource alloc   |num configs |resource alloc  | # noqa
+    |0             |81          |1               |27          |3                |9            |9               |6           |27               |5           |             81 | # noqa
+    |1             |27          |3               |9           |9                |3            |27              |2           |81               |            |                | # noqa
+    |2             |9           |9               |3           |27               |1            |81              |            |                 |            |                | # noqa
+    |3             |3           |27              |1           |81               |             |                |            |                 |            |                | # noqa
+    |4             |1           |81              |            |                 |             |                |            |                 |            |                | # noqa
     """
 
     SCHEMA = HyperbandSchema
     IDENTIFIER = V1MatrixKind.HYPERBAND
     REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping"]
+
+    def set_tuning_params(self):
+        # Maximum iterations per configuration: max_iterations
+        # Defines configuration downsampling/elimination rate (default = 3): eta
+        # number of times to run hyperband (brackets)
+        # i.e.  # of times to repeat the outer loops over the tradeoffs `s`
+        self.s_max = int(math.log(self.max_iterations) / math.log(self.eta))
+        self.B = (
+            self.s_max + 1
+        ) * self.max_iterations  # budget per bracket of successive halving
+
+    def get_bracket(self, iteration):
+        """This defines the bracket `s` in outerloop `for s in reversed(range(self.s_max))`."""
+        return self.s_max - iteration
+
+    def should_reschedule(self, iteration, bracket_iteration):
+        """Return a boolean to indicate if we need to reschedule another iteration."""
+        bracket = self.get_bracket(iteration=iteration)
+        if bracket_iteration < bracket:
+            # The bracket is still processing
+            return False
+
+        # We can only reschedule if we can create a new bracket
+        return self.get_bracket(iteration=iteration + 1) >= 0

@@ -28,7 +28,7 @@ Several fields accept aliases:
  * inputs: in, params
  * outputs: out, metrics
 
-> N.B. the difference between `outputs` and `metrics`: outputs use value condition, and metrics use comparison condition.
+> N.B. the difference between `outputs` and `metrics`: `outputs.*` use [value condition](/docs/core/query-language/#query-with-value-condition) and `metrics.*` use [comparison condition](/docs/core/query-language/#query-with-comparison-condition).
 
 ## Query
 
@@ -54,7 +54,7 @@ field                                                                      | con
 `agent`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
 `queue`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
 `kind`                                                                     | [value condition](/docs/core/query-language/#query-with-value-condition)
-`meta_kind`                                                                | [value condition](/docs/core/query-language/#query-with-value-condition)
+`runtime`                                                                  | [value condition](/docs/core/query-language/#query-with-value-condition)
 `meta_flags.*` (e.g. meta_flags.has_events or meta_flags.has_tensorboard)  | [bool condition](/docs/core/query-language/#query-with-bool-condition)
 `live_state`                                                               | [value condition](/docs/core/query-language/#query-with-value-condition)
 
@@ -70,7 +70,7 @@ field:
  * `user`
  * `duration`
  * `kind`
- * `meta_kind`
+ * `runtime`
  * `inputs.*`
  * `outputs.*`
  * `metrics.*`

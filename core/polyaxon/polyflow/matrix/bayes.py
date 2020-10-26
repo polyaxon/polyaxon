@@ -184,7 +184,7 @@ class BayesSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1MatrixKind.BAYES))
     utility_function = fields.Nested(UtilityFunctionSchema, allow_none=True)
     num_initial_runs = RefOrObject(fields.Int(), required=True)
-    num_iterations = RefOrObject(fields.Int(), required=True)
+    max_iterations = RefOrObject(fields.Int(validate=validate.Range(min=1)))
     metric = fields.Nested(OptimizationMetricSchema, required=True)
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(HpParamSchema), required=True
@@ -217,7 +217,7 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
         kind: string, should be equal to `bayes`
         utility_function: UtilityFunctionConfig
         num_initial_runs: int
-        num_iterations: int
+        max_iterations: int
         metric: V1OptimizationMetric
         params: List[Dict[str,
         [params](/docs/automation/optimization-engine/params/#discrete-values)]]
@@ -233,7 +233,7 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
     >>>   kind: bayes
     >>>   utilityFunction:
     >>>   numInitialRuns:
-    >>>   numIterations:
+    >>>   maxIterations:
     >>>   metric:
     >>>   params:
     >>>   seed:
@@ -252,8 +252,8 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
     >>> matrix = V1Bayes(
     >>>   concurrency=20,
     >>>   utility_function=UtilityFunctionConfig(...),
-    >>>   numInitialRuns=40,
-    >>>   numIterations=20,
+    >>>   num_initial_runs=40,
+    >>>   max_iterations=20,
     >>>   params={"param1": V1HpLogSpace(...), "param2": V1HpChoice(...), ... },
     >>>   metric=V1OptimizationMetric(name="loss", optimization=V1Optimization.MINIMIZE),
     >>>   early_stopping=[V1FailureEarlyStopping(...), V1MetricEarlyStopping(...)]
@@ -353,7 +353,7 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
     >>>   numInitialRuns: 40
     ```
 
-    ### numIterations
+    ### maxIterations
 
     After creating the first set of random observations,
     the algorithm will use these results to update
@@ -372,7 +372,7 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
     ```yaml
     >>> matrix:
     >>>   kind: bayes
-    >>>   numIterations: 15
+    >>>   maxIterations: 15
     ```
 
     This configuration will make 15 suggestions based on the historical values,
@@ -492,3 +492,7 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
     SCHEMA = BayesSchema
     IDENTIFIER = V1MatrixKind.BAYES
     REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping"]
+
+    def should_reschedule(self, iteration):
+        """Return a boolean to indicate if we need to reschedule another iteration."""
+        return iteration < self.max_iterations

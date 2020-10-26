@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **meta_info** | [**Object**](.md) |  | [optional] 
 **is_helper** | **Boolean** |  | [optional] 
 **kind** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
-**meta_kind** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
+**runtime** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
 **hub** | **String** |  | [optional] 
 **inputs** | [**Object**](.md) |  | [optional] 
 **outputs** | [**Object**](.md) |  | [optional] 

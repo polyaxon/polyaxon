@@ -46,7 +46,7 @@ class BaseRun(
     LiveStateModel,
 ):
     kind = models.CharField(max_length=12, db_index=True, choices=V1RunKind.CHOICES)
-    meta_kind = models.CharField(max_length=12, db_index=True, null=True, blank=True)
+    runtime = models.CharField(max_length=12, db_index=True, null=True, blank=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

@@ -45,7 +45,7 @@ class TestRunSerializer(BaseTestRunSerializer):
         "duration",
         "status",
         "kind",
-        "meta_kind",
+        "runtime",
         "meta_info",
         "pipeline",
         "original",

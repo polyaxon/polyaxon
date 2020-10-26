@@ -39,14 +39,14 @@ type V1Bayes struct {
 	// Kind of matrix, should be equal to "bayes"
 	Kind *string `json:"kind,omitempty"`
 
+	// Max iteration for producing new observations
+	MaxIterations int32 `json:"max_iterations,omitempty"`
+
 	// Metric to optimize during the iterations
 	Metric *V1OptimizationMetric `json:"metric,omitempty"`
 
 	// Number of intial random observations to create
 	NumInitialRuns int32 `json:"num_initial_runs,omitempty"`
-
-	// Number of iteration for producing new observations
-	NumIterations int32 `json:"num_iterations,omitempty"`
 
 	// Hyperparams/Space definition of params to traverse
 	Params map[string]interface{} `json:"params,omitempty"`

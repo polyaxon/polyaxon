@@ -138,7 +138,7 @@ class TestWorkflowConfigs(BaseTestCase):
                 name="loss", optimization=V1Optimization.MINIMIZE
             ).to_dict(),
             "numInitialRuns": 2,
-            "numIterations": 10,
+            "maxIterations": 10,
             "utilityFunction": {
                 "acquisitionFunction": AcquisitionFunctions.UCB,
                 "kappa": 1.2,

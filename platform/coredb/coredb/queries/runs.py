@@ -37,6 +37,16 @@ SINGLE_RUN = [
     "tags",
     "live_state",
 ]
+STATUS_UPDATE_COLUMNS_ONLY = [
+    "id",
+    "status",
+    "status_conditions",
+    "status",
+    "started_at",
+    "updated_at",
+    "finished_at",
+    "duration",
+]
 STATUS_UPDATE_COLUMNS_DEFER = [
     "original",
     "cloning_kind",

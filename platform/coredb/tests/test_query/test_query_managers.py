@@ -46,6 +46,7 @@ class TestQueryManager(BaseTestQuery):
         self.query4 = "tags:~tag1|tag2,tags:tag3"
         self.query5 = "name:%foo%,description:~bal%"
         self.query6 = "foobar:2012-12-12..2042-12-12"
+        self.query7 = "metrics.loss:nil, status:~nil"
 
     def test_managers(self):
         assert RunQueryManager.NAME == "run"
@@ -74,6 +75,12 @@ class TestQueryManager(BaseTestQuery):
 
         with self.assertRaises(PQLException):
             RunQueryManager.tokenize(self.query6)
+
+        tokenized_query = RunQueryManager.tokenize(self.query7)
+        assert dict(tokenized_query) == {
+            "metrics.loss": ["nil"],
+            "status": ["~nil"],
+        }
 
     def test_parse(self):
         tokenized_query = RunQueryManager.tokenize(self.query1)
@@ -190,6 +197,18 @@ class TestQueryManager(BaseTestQuery):
             ],
         }
 
+        tokenized_query = RunQueryManager.tokenize(self.query7)
+        parsed_query = RunQueryManager.parse(tokenized_query)
+        built_query = RunQueryManager.build(parsed_query)
+        assert built_query == {
+            "metrics.loss": [
+                QueryCondSpec(SearchCondition(op="nil", negation=False), params=None)
+            ],
+            "status": [
+                QueryCondSpec(SearchCondition(op="nil", negation=True), params=None)
+            ],
+        }
+
     def test_handle(self):
         tokenized_query = RunQueryManager.tokenize(self.query1)
         parsed_query = RunQueryManager.parse(tokenized_query)
@@ -237,6 +256,16 @@ class TestQueryManager(BaseTestQuery):
         expected_query = str(
             Run.objects.filter(
                 Q(name__icontains="foo"), ~Q(description__istartswith="bal")
+            ).query
+        )
+        assert str(result_queryset.query) == expected_query
+
+        result_queryset = RunQueryManager.apply(
+            query_spec=self.query7, queryset=Run.objects
+        )
+        expected_query = str(
+            Run.objects.filter(
+                Q(outputs__loss__isnull=True), Q(status__isnull=False)
             ).query
         )
         assert str(result_queryset.query) == expected_query

@@ -67,48 +67,37 @@ class HyperbandManager(BaseManager):
 
     def __init__(self, config):
         super().__init__(config)
-        # Maximum iterations per configuration
-        self.max_iterations = config.max_iterations
-        # Defines configuration downsampling/elimination rate (default = 3)
-        self.eta = config.eta
-        # number of times to run hyperband (brackets)
-        self.s_max = int(math.log(self.max_iterations) / math.log(self.eta))
-        # i.e.  # of times to repeat the outer loops over the tradeoffs `s`
-        self.B = (
-            self.s_max + 1
-        ) * self.max_iterations  # budget per bracket of successive halving
-
-    def get_bracket(self, iteration):
-        """This defines the bracket `s` in outerloop `for s in reversed(range(self.s_max))`."""
-        return self.s_max - iteration
+        self.config.set_tuning_params()
 
     def get_num_runs(self, bracket):
         # n: initial number of configs
         return int(
             math.ceil(
-                (self.B / self.max_iterations) * (self.eta ** bracket) / (bracket + 1)
+                (self.config.B / self.config.max_iterations)
+                * (self.config.eta ** bracket)
+                / (bracket + 1)
             )
         )
 
     def get_resources(self, bracket):
         # r: initial number of iterations/resources per config
-        return self.max_iterations * (self.eta ** (-bracket))
+        return self.config.max_iterations * (self.config.eta ** (-bracket))
 
     def get_resources_for_iteration(self, iteration):
-        bracket = self.get_bracket(iteration=iteration)
+        bracket = self.config.get_bracket(iteration=iteration)
         return self.get_resources(bracket=bracket)
 
     def get_num_runs_to_keep(self, num_runs, bracket_iteration):
         """Return the number of configs to keep and resume."""
-        num_runs = num_runs * (self.eta ** -bracket_iteration)
-        return int(num_runs / self.eta)
+        num_runs = num_runs * (self.config.eta ** -bracket_iteration)
+        return int(num_runs / self.config.eta)
 
     def get_num_runs_to_keep_for_iteration(self, iteration, bracket_iteration):
         """Return the number of configs to keep for an iteration and iteration bracket.
 
         This is just util function around `get_num_runs_to_keep`
         """
-        bracket = self.get_bracket(iteration=iteration)
+        bracket = self.config.get_bracket(iteration=iteration)
         if bracket_iteration == bracket + 1:
             # End of loop `for bracket_iteration in range(bracket + 1):`
             return 0
@@ -120,7 +109,7 @@ class HyperbandManager(BaseManager):
 
     def get_n_resources(self, n_resources, bracket_iteration):
         """Return the number of iterations to run for this barcket_i"""
-        return n_resources * self.eta ** bracket_iteration
+        return n_resources * self.config.eta ** bracket_iteration
 
     def get_n_resources_for_iteration(self, iteration, bracket_iteration):
         """Return the number of iterations to run for this barcket_i
@@ -134,13 +123,13 @@ class HyperbandManager(BaseManager):
 
     def should_reschedule(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""
-        bracket = self.get_bracket(iteration=iteration)
+        bracket = self.config.get_bracket(iteration=iteration)
         if bracket_iteration < bracket:
             # The bracket is still processing
             return False
 
         # We can only reschedule if we can create a new bracket
-        return self.get_bracket(iteration=iteration + 1) >= 0
+        return self.config.get_bracket(iteration=iteration + 1) >= 0
 
     def should_reduce_configs(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another bracket iteration."""
@@ -194,7 +183,7 @@ class HyperbandManager(BaseManager):
 
     def get_iteration_suggestions(self, iteration: int, bracket_iteration: int):
         """Return a list of suggestions for initial iteration."""
-        bracket = self.get_bracket(iteration=iteration)
+        bracket = self.config.get_bracket(iteration=iteration)
         num_runs = self.get_num_runs(bracket=bracket)
         n_resources = self.get_n_resources_for_iteration(
             iteration=iteration, bracket_iteration=bracket_iteration

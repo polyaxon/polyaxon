@@ -73,32 +73,34 @@ class TestHyperbandSearchManager(BaseTestCase):
 
     def test_hyperband_properties(self):
         # Manager1
-        assert self.manager1.max_iterations == 10
-        assert self.manager1.eta == 3
-        assert self.manager1.s_max == 2
+        assert self.manager1.config.max_iterations == 10
+        assert self.manager1.config.eta == 3
+        assert self.manager1.config.s_max == 2
         assert (
-            self.manager1.B == (self.manager1.s_max + 1) * self.manager1.max_iterations
+            self.manager1.config.B
+            == (self.manager1.config.s_max + 1) * self.manager1.config.max_iterations
         )
 
-        assert self.manager2.max_iterations == 81
-        assert self.manager2.eta == 3
-        assert self.manager2.s_max == 4
+        assert self.manager2.config.max_iterations == 81
+        assert self.manager2.config.eta == 3
+        assert self.manager2.config.s_max == 4
         assert (
-            self.manager2.B == (self.manager2.s_max + 1) * self.manager2.max_iterations
+            self.manager2.config.B
+            == (self.manager2.config.s_max + 1) * self.manager2.config.max_iterations
         )
 
     def test_get_bracket(self):
         # Manager1
-        assert self.manager1.get_bracket(iteration=0) == 2
-        assert self.manager1.get_bracket(iteration=1) == 1
-        assert self.manager1.get_bracket(iteration=2) == 0
+        assert self.manager1.config.get_bracket(iteration=0) == 2
+        assert self.manager1.config.get_bracket(iteration=1) == 1
+        assert self.manager1.config.get_bracket(iteration=2) == 0
 
         # Manager2
-        assert self.manager2.get_bracket(iteration=0) == 4
-        assert self.manager2.get_bracket(iteration=1) == 3
-        assert self.manager2.get_bracket(iteration=2) == 2
-        assert self.manager2.get_bracket(iteration=3) == 1
-        assert self.manager2.get_bracket(iteration=4) == 0
+        assert self.manager2.config.get_bracket(iteration=0) == 4
+        assert self.manager2.config.get_bracket(iteration=1) == 3
+        assert self.manager2.config.get_bracket(iteration=2) == 2
+        assert self.manager2.config.get_bracket(iteration=3) == 1
+        assert self.manager2.config.get_bracket(iteration=4) == 0
 
     def test_get_num_runs(self):
         # Manager1

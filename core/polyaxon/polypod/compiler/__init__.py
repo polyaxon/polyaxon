@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Dict, Optional, Any
+from typing import Any, Dict, Optional
 
 from polyaxon.polyflow import V1CompiledOperation
 from polyaxon.polypod.compiler import converter, resolver

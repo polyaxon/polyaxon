@@ -28,7 +28,7 @@ def get_fxt_bo_with_inputs_outputs():
         "matrix": {
             "kind": V1MatrixKind.BAYES,
             "numInitialRuns": 5,
-            "numIterations": 5,
+            "maxIterations": 5,
             "metric": {"name": "loss", "optimization": "minimize"},
             "params": {
                 "param1": {"kind": "choice", "value": ["test1", "test2"]},
@@ -85,7 +85,7 @@ def get_fxt_bo_with_run_patch():
         "matrix": {
             "kind": V1MatrixKind.BAYES,
             "numInitialRuns": 5,
-            "numIterations": 5,
+            "maxIterations": 5,
             "metric": {"name": "loss", "optimization": "minimize"},
             "params": {
                 "param1": {"kind": "choice", "value": ["test1", "test2"]},

@@ -71,9 +71,6 @@ type V1Run struct {
 	// Optional run meta info
 	MetaInfo interface{} `json:"meta_info,omitempty"`
 
-	// Optional meta kind to tell the nature of this run
-	MetaKind V1RunKind `json:"meta_kind,omitempty"`
-
 	// Optional name
 	Name string `json:"name,omitempty"`
 
@@ -97,6 +94,9 @@ type V1Run struct {
 
 	// Current user's role in this (org/teams)/project/runs
 	Role string `json:"role,omitempty"`
+
+	// Optional meta kind to tell the nature of this run
+	Runtime V1RunKind `json:"runtime,omitempty"`
 
 	// Optional settings
 	Settings *V1RunSettings `json:"settings,omitempty"`
@@ -141,15 +141,15 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateMetaKind(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateOriginal(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validatePipeline(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRuntime(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -221,22 +221,6 @@ func (m *V1Run) validateKind(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Run) validateMetaKind(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.MetaKind) { // not required
-		return nil
-	}
-
-	if err := m.MetaKind.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("meta_kind")
-		}
-		return err
-	}
-
-	return nil
-}
-
 func (m *V1Run) validateOriginal(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Original) { // not required
@@ -268,6 +252,22 @@ func (m *V1Run) validatePipeline(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateRuntime(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Runtime) { // not required
+		return nil
+	}
+
+	if err := m.Runtime.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("runtime")
+		}
+		return err
 	}
 
 	return nil

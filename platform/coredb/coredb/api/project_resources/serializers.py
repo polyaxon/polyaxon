@@ -50,7 +50,7 @@ class RunSerializer(
             "finished_at",
             "duration",
             "kind",
-            "meta_kind",
+            "runtime",
             "meta_info",
             "status",
             "pipeline",

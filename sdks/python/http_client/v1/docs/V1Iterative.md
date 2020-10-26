@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **str** |  | [optional] [default to 'iterative']
 **params** | **dict(str, object)** |  | [optional] 
-**num_iterations** | **int** |  | [optional] 
+**max_iterations** | **int** |  | [optional] 
 **container** | [**V1Container**](V1Container.md) |  | [optional] 
 **seed** | **int** |  | [optional] 
 **concurrency** | **int** |  | [optional] 

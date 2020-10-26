@@ -42,7 +42,7 @@ class TestBayesSearchManager(BaseTestCase):
         config = V1Bayes.from_dict(
             {
                 "concurrency": 2,
-                "numIterations": 5,
+                "maxIterations": 5,
                 "numInitialRuns": 5,
                 "metric": {"name": "loss", "optimization": "minimize"},
                 "utilityFunction": {
@@ -67,7 +67,7 @@ class TestBayesSearchManager(BaseTestCase):
         config = V1Bayes.from_dict(
             {
                 "concurrency": 2,
-                "numIterations": 4,
+                "maxIterations": 4,
                 "numInitialRuns": 4,
                 "metric": {"name": "accuracy", "optimization": "maximize"},
                 "utilityFunction": {
@@ -389,7 +389,7 @@ class TestBayesSearchManager(BaseTestCase):
         config = V1Bayes.from_dict(
             {
                 "concurrency": 2,
-                "numIterations": 5,
+                "maxIterations": 5,
                 "numInitialRuns": 10,
                 "metric": {"name": "loss", "optimization": "minimize"},
                 "utilityFunction": {

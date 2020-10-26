@@ -69,7 +69,7 @@ class OperationsService(Service):
 
     @classmethod
     def supports_kind(
-        cls, kind: str, meta_kind: str, supported_kinds: Set[str], is_managed: bool
+        cls, kind: str, runtime: str, supported_kinds: Set[str], is_managed: bool
     ) -> bool:
         supported_kinds = supported_kinds or set()
         supported_kinds |= cls.DEFAULT_KINDS
@@ -80,14 +80,14 @@ class OperationsService(Service):
         if kind not in supported_kinds:
             if is_managed or kind not in V1RunKind.eager_values:
                 raise ValueError(error_message.format(kind))
-        if meta_kind and meta_kind not in supported_kinds:
-            if is_managed or meta_kind not in V1MatrixKind.eager_values:
-                raise ValueError(error_message.format(meta_kind))
+        if runtime and runtime not in supported_kinds:
+            if is_managed or runtime not in V1MatrixKind.eager_values:
+                raise ValueError(error_message.format(runtime))
         return True
 
     @staticmethod
     def get_meta_info(
-        compiled_operation: V1CompiledOperation, kind: str, meta_kind: str, **kwargs
+        compiled_operation: V1CompiledOperation, kind: str, runtime: str, **kwargs
     ) -> Tuple[str, str, Dict]:
         meta_info = {}
         if compiled_operation.matrix:
@@ -98,9 +98,9 @@ class OperationsService(Service):
             elif kind == V1RunKind.DAG:
                 meta_info["has_dags"] = True
             kind = V1RunKind.MATRIX
-            meta_kind = compiled_operation.matrix.kind
+            runtime = compiled_operation.matrix.kind
 
-        return kind, meta_kind, meta_info
+        return kind, runtime, meta_info
 
     @staticmethod
     def sanitize_kwargs(**kwargs):
@@ -146,13 +146,13 @@ class OperationsService(Service):
             name = name or compiled_operation.name
             description = description or compiled_operation.description
             tags = tags or compiled_operation.tags
-            kind, meta_kind = self.get_kind(compiled_operation)
-            kind, meta_kind, meta_info = self.get_meta_info(
-                compiled_operation, kind, meta_kind, **kwargs
+            kind, runtime = self.get_kind(compiled_operation)
+            kind, runtime, meta_info = self.get_meta_info(
+                compiled_operation, kind, runtime, **kwargs
             )
-            self.supports_kind(kind, meta_kind, supported_kinds, is_managed)
+            self.supports_kind(kind, runtime, supported_kinds, is_managed)
             if cloning_kind == V1CloningKind.COPY:
-                if meta_kind not in {V1RunKind.JOB, V1RunKind.SERVICE}:
+                if runtime not in {V1RunKind.JOB, V1RunKind.SERVICE}:
                     raise ValueError(
                         "Operation with kind `{}` does not support restart with copy mode."
                     )
@@ -172,7 +172,7 @@ class OperationsService(Service):
             params=params,
             inputs=inputs,
             kind=kind,
-            meta_kind=meta_kind,
+            runtime=runtime,
             meta_info=meta_info,
             original_id=original_id,
             cloning_kind=cloning_kind,

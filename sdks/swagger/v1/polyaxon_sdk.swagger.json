@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.2.1-rc2",
+    "version": "1.2.1",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -12866,10 +12866,10 @@
           "format": "int32",
           "title": "Number of intial random observations to create"
         },
-        "num_iterations": {
+        "max_iterations": {
           "type": "integer",
           "format": "int32",
-          "title": "Number of iteration for producing new observations"
+          "title": "Max iteration for producing new observations"
         },
         "utility_function": {
           "type": "object",
@@ -14807,6 +14807,11 @@
           "format": "int32",
           "title": "Number of runs to generate and search"
         },
+        "max_iterations": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Max iteration for producing new observations"
+        },
         "seed": {
           "type": "integer",
           "format": "int32",
@@ -15020,10 +15025,10 @@
           },
           "title": "Hyperparams/Space definition of params to traverse"
         },
-        "num_iterations": {
+        "max_iterations": {
           "type": "integer",
           "format": "int32",
-          "title": "Number of iterations to run"
+          "title": "Max iteration for producing new observations"
         },
         "container": {
           "$ref": "#/definitions/v1Container",
@@ -16264,8 +16269,14 @@
           "title": "The search sort"
         },
         "limit": {
-          "type": "string",
+          "type": "integer",
+          "format": "int32",
           "title": "The search limit"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32",
+          "title": "The search offset"
         }
       },
       "title": "Param search specification"
@@ -16929,7 +16940,7 @@
           "$ref": "#/definitions/v1RunKind",
           "title": "Optional kind to tell the kind of this run"
         },
-        "meta_kind": {
+        "runtime": {
           "$ref": "#/definitions/v1RunKind",
           "title": "Optional meta kind to tell the nature of this run"
         },

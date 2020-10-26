@@ -38,6 +38,22 @@ def parse_negation_operation(operation: str) -> Tuple[bool, str]:
     return negation, _operation.strip()
 
 
+def parse_nil_operation(operation: str) -> Optional["QueryOpSpec"]:
+    """Parse the nil operator in an operation."""
+    _operation = operation.strip()
+    if not _operation:
+        raise PQLException("Operation is not valid: {}".format(operation))
+
+    # Check negation
+    negation, _operation = parse_negation_operation(_operation)
+
+    # Check nil
+    if _operation == "nil":
+        return QueryOpSpec("nil", negation, None)
+
+    return None
+
+
 def parse_comparison_operation(operation: str) -> Tuple[Optional[str], str]:
     """Parse the comparison operator in an operation."""
     _operation = operation.strip()
@@ -78,6 +94,11 @@ def parse_datetime_operation(operation: str) -> "QueryOpSpec":
             "`|` is not allowed for datetime operations. "
             "Operation: {}".format(operation)
         )
+
+    # Check nil operation
+    spec = parse_nil_operation(_operation)
+    if spec:
+        return spec
 
     # Check negation
     negation, _operation = parse_negation_operation(_operation)
@@ -134,13 +155,18 @@ def parse_scalar_operation(operation: str) -> "QueryOpSpec":
             "Operation: {}".format(operation)
         )
 
+    # Check nil operation
+    spec = parse_nil_operation(_operation)
+    if spec:
+        return spec
+
     # Check negation
     negation, _operation = parse_negation_operation(_operation)
 
     # Check comparison operators
     op, _operation = parse_comparison_operation(_operation)
     if not op:
-        # Now the operation must be an equality param param
+        # Now the operation must be an equality param
         op = "="
 
     # Check that params are scalar (int, float)
@@ -178,6 +204,11 @@ def parse_value_operation(operation: str) -> "QueryOpSpec":
             "`..` is not allowed for value operations. "
             "Operation: {}".format(operation)
         )
+
+    # Check nil operation
+    spec = parse_nil_operation(_operation)
+    if spec:
+        return spec
 
     # Check negation
     negation, _operation = parse_negation_operation(_operation)
@@ -235,6 +266,11 @@ def parse_search_operation(operation: str) -> "QueryOpSpec":
             "`..` is not allowed for value operations. "
             "Operation: {}".format(operation)
         )
+
+    # Check nil operation
+    spec = parse_nil_operation(_operation)
+    if spec:
+        return spec
 
     # Check negation
     negation, _operation = parse_negation_operation(_operation)

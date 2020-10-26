@@ -51,7 +51,7 @@ func (r *OperationReconciler) getInstanceInfo(instance *operationv1.Operation) (
 
 	instanceKind, ok := instance.ObjectMeta.Annotations["operation.polyaxon.com/kind"]
 	if !ok || instanceKind == "" {
-		instanceKind = ""
+		instanceKind = "operation" // backward compatibility
 	}
 
 	return instanceOwner, instanceProject, instanceID, instanceKind, true

@@ -42,6 +42,9 @@ type V1Hyperopt struct {
 	// Kind of matrix, should be equal to "hyperopt"
 	Kind *string `json:"kind,omitempty"`
 
+	// Max iteration for producing new observations
+	MaxIterations int32 `json:"max_iterations,omitempty"`
+
 	// Number of runs to generate and search
 	NumRuns int32 `json:"num_runs,omitempty"`
 

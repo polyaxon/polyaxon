@@ -93,4 +93,3 @@ def get_resource_name_for_kind(run_uuid: str, run_kind: str = None) -> str:
         return get_notifier_resource_name(run_uuid)
     # Operation
     return get_resource_name(run_uuid)
-

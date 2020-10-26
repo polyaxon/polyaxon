@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
 **params** | **Map&lt;String, Object&gt;** |  |  [optional]
-**numIterations** | **Integer** |  |  [optional]
+**maxIterations** | **Integer** |  |  [optional]
 **container** | [**Object**](.md) |  |  [optional]
 **seed** | **Integer** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]
