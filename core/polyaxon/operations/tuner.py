@@ -93,6 +93,7 @@ def get_bo_tuner(
     iteration: int,
     container: V1Container = None,
 ) -> V1Operation:
+    iteration = matrix.create_iteration(iteration)
     container = container or get_default_tuner_container(["polyaxon", "tuner", "bayes"])
     return get_tuner(
         name="bayesian-tuner",
@@ -110,6 +111,7 @@ def get_hyperband_tuner(
     bracket_iteration: int,
     container: V1Container = None,
 ) -> V1Operation:
+    iteration, bracket_iteration = matrix.create_iteration(iteration, bracket_iteration)
     container = container or get_default_tuner_container(
         ["polyaxon", "tuner", "hyperband"],
         bracket_iteration=bracket_iteration,
@@ -130,6 +132,7 @@ def get_hyperopt_tuner(
     iteration: int,
     container: V1Container = None,
 ) -> V1Operation:
+    iteration = matrix.create_iteration(iteration)
     container = container or get_default_tuner_container(
         ["polyaxon", "tuner", "hyperopt"]
     )

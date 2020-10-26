@@ -493,6 +493,11 @@ class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
     IDENTIFIER = V1MatrixKind.BAYES
     REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping"]
 
+    def create_iteration(self, iteration: int = None) -> int:
+        if iteration is None:
+            return 0
+        return iteration + 1
+
     def should_reschedule(self, iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""
         return iteration < self.max_iterations

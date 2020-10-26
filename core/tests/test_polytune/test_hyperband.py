@@ -104,66 +104,66 @@ class TestHyperbandSearchManager(BaseTestCase):
 
     def test_get_num_runs(self):
         # Manager1
-        assert self.manager1.get_num_runs(bracket=2) == 9
-        assert self.manager1.get_num_runs(bracket=1) == 5
-        assert self.manager1.get_num_runs(bracket=0) == 3
+        assert self.manager1.config.get_num_runs(bracket=2) == 9
+        assert self.manager1.config.get_num_runs(bracket=1) == 5
+        assert self.manager1.config.get_num_runs(bracket=0) == 3
 
         # Manager2
-        assert self.manager2.get_num_runs(bracket=4) == 81
-        assert self.manager2.get_num_runs(bracket=3) == 34
-        assert self.manager2.get_num_runs(bracket=2) == 15
-        assert self.manager2.get_num_runs(bracket=1) == 8
-        assert self.manager2.get_num_runs(bracket=0) == 5
+        assert self.manager2.config.get_num_runs(bracket=4) == 81
+        assert self.manager2.config.get_num_runs(bracket=3) == 34
+        assert self.manager2.config.get_num_runs(bracket=2) == 15
+        assert self.manager2.config.get_num_runs(bracket=1) == 8
+        assert self.manager2.config.get_num_runs(bracket=0) == 5
 
     def test_get_num_runs_to_keep(self):
         # Number of config to keep [/n_suggestions, /iteration]
 
         # Manager1
         # Iteration == 0
-        assert self.manager1.get_num_runs_to_keep(num_runs=9, bracket_iteration=0) == 3
-        assert self.manager1.get_num_runs_to_keep(num_runs=9, bracket_iteration=1) == 1
-        assert self.manager1.get_num_runs_to_keep(num_runs=9, bracket_iteration=2) == 0
+        assert self.manager1.config.get_num_runs_to_keep(num_runs=9, bracket_iteration=0) == 3
+        assert self.manager1.config.get_num_runs_to_keep(num_runs=9, bracket_iteration=1) == 1
+        assert self.manager1.config.get_num_runs_to_keep(num_runs=9, bracket_iteration=2) == 0
 
         assert (
-            self.manager1.get_num_runs_to_keep_for_iteration(
+            self.manager1.config.get_num_runs_to_keep_for_iteration(
                 iteration=0, bracket_iteration=0
             )
             == 3
         )
         assert (
-            self.manager1.get_num_runs_to_keep_for_iteration(
+            self.manager1.config.get_num_runs_to_keep_for_iteration(
                 iteration=0, bracket_iteration=1
             )
             == 1
         )
         assert (
-            self.manager1.get_num_runs_to_keep_for_iteration(
+            self.manager1.config.get_num_runs_to_keep_for_iteration(
                 iteration=0, bracket_iteration=2
             )
             == 0
         )
 
         # Iteration == 1
-        assert self.manager1.get_num_runs_to_keep(num_runs=5, bracket_iteration=0) == 1
-        assert self.manager1.get_num_runs_to_keep(num_runs=5, bracket_iteration=1) == 0
+        assert self.manager1.config.get_num_runs_to_keep(num_runs=5, bracket_iteration=0) == 1
+        assert self.manager1.config.get_num_runs_to_keep(num_runs=5, bracket_iteration=1) == 0
 
         assert (
-            self.manager1.get_num_runs_to_keep_for_iteration(
+            self.manager1.config.get_num_runs_to_keep_for_iteration(
                 iteration=1, bracket_iteration=0
             )
             == 1
         )
         assert (
-            self.manager1.get_num_runs_to_keep_for_iteration(
+            self.manager1.config.get_num_runs_to_keep_for_iteration(
                 iteration=1, bracket_iteration=1
             )
             == 0
         )
 
         # Iteration == 2
-        assert self.manager1.get_num_runs_to_keep(num_runs=3, bracket_iteration=0) == 1
+        assert self.manager1.config.get_num_runs_to_keep(num_runs=3, bracket_iteration=0) == 1
         assert (
-            self.manager1.get_num_runs_to_keep_for_iteration(
+            self.manager1.config.get_num_runs_to_keep_for_iteration(
                 iteration=2, bracket_iteration=0
             )
             == 1
@@ -172,39 +172,39 @@ class TestHyperbandSearchManager(BaseTestCase):
         # Manager2
         # Iteration == 0
         assert (
-            self.manager2.get_num_runs_to_keep(num_runs=81, bracket_iteration=0) == 27
+            self.manager2.config.get_num_runs_to_keep(num_runs=81, bracket_iteration=0) == 27
         )
-        assert self.manager2.get_num_runs_to_keep(num_runs=81, bracket_iteration=1) == 9
-        assert self.manager2.get_num_runs_to_keep(num_runs=81, bracket_iteration=2) == 3
-        assert self.manager2.get_num_runs_to_keep(num_runs=81, bracket_iteration=3) == 1
-        assert self.manager2.get_num_runs_to_keep(num_runs=81, bracket_iteration=4) == 0
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=81, bracket_iteration=1) == 9
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=81, bracket_iteration=2) == 3
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=81, bracket_iteration=3) == 1
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=81, bracket_iteration=4) == 0
 
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=0, bracket_iteration=0
             )
             == 27
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=0, bracket_iteration=1
             )
             == 9
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=0, bracket_iteration=2
             )
             == 3
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=0, bracket_iteration=3
             )
             == 1
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=0, bracket_iteration=4
             )
             == 0
@@ -212,83 +212,83 @@ class TestHyperbandSearchManager(BaseTestCase):
 
         # Iteration == 1
         assert (
-            self.manager2.get_num_runs_to_keep(num_runs=34, bracket_iteration=0) == 11
+            self.manager2.config.get_num_runs_to_keep(num_runs=34, bracket_iteration=0) == 11
         )
-        assert self.manager2.get_num_runs_to_keep(num_runs=34, bracket_iteration=1) == 3
-        assert self.manager2.get_num_runs_to_keep(num_runs=34, bracket_iteration=2) == 1
-        assert self.manager2.get_num_runs_to_keep(num_runs=34, bracket_iteration=3) == 0
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=34, bracket_iteration=1) == 3
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=34, bracket_iteration=2) == 1
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=34, bracket_iteration=3) == 0
 
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=1, bracket_iteration=0
             )
             == 11
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=1, bracket_iteration=1
             )
             == 3
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=1, bracket_iteration=2
             )
             == 1
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=1, bracket_iteration=3
             )
             == 0
         )
 
         # Iteration == 2
-        assert self.manager2.get_num_runs_to_keep(num_runs=15, bracket_iteration=0) == 5
-        assert self.manager2.get_num_runs_to_keep(num_runs=15, bracket_iteration=1) == 1
-        assert self.manager2.get_num_runs_to_keep(num_runs=15, bracket_iteration=2) == 0
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=15, bracket_iteration=0) == 5
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=15, bracket_iteration=1) == 1
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=15, bracket_iteration=2) == 0
 
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=2, bracket_iteration=0
             )
             == 5
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=2, bracket_iteration=1
             )
             == 1
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=2, bracket_iteration=2
             )
             == 0
         )
 
         # Iteration == 3
-        assert self.manager2.get_num_runs_to_keep(num_runs=8, bracket_iteration=0) == 2
-        assert self.manager2.get_num_runs_to_keep(num_runs=8, bracket_iteration=1) == 0
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=8, bracket_iteration=0) == 2
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=8, bracket_iteration=1) == 0
 
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=3, bracket_iteration=0
             )
             == 2
         )
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=3, bracket_iteration=1
             )
             == 0
         )
 
         # Iteration == 4
-        assert self.manager2.get_num_runs_to_keep(num_runs=5, bracket_iteration=0) == 1
+        assert self.manager2.config.get_num_runs_to_keep(num_runs=5, bracket_iteration=0) == 1
 
         assert (
-            self.manager2.get_num_runs_to_keep_for_iteration(
+            self.manager2.config.get_num_runs_to_keep_for_iteration(
                 iteration=4, bracket_iteration=0
             )
             == 1
@@ -539,67 +539,105 @@ class TestHyperbandSearchManager(BaseTestCase):
 
     def test_should_reschedule(self):
         assert (
-            self.manager1.should_reschedule(iteration=0, bracket_iteration=0) is False
+            self.manager1.config.should_create_iteration(
+                iteration=0, bracket_iteration=0
+            )
+            is False
         )
         assert (
-            self.manager1.should_reschedule(iteration=0, bracket_iteration=1) is False
-        )
-        assert self.manager1.should_reschedule(iteration=0, bracket_iteration=2) is True
-        assert self.manager1.should_reschedule(iteration=0, bracket_iteration=3) is True
-        assert (
-            self.manager1.should_reschedule(iteration=1, bracket_iteration=0) is False
-        )
-        assert self.manager1.should_reschedule(iteration=1, bracket_iteration=1) is True
-        assert self.manager1.should_reschedule(iteration=1, bracket_iteration=2) is True
-        assert (
-            self.manager1.should_reschedule(iteration=2, bracket_iteration=0) is False
+            self.manager1.config.should_create_iteration(
+                iteration=0, bracket_iteration=1
+            )
+            is False
         )
         assert (
-            self.manager1.should_reschedule(iteration=2, bracket_iteration=1) is False
+            self.manager1.config.should_create_iteration(
+                iteration=0, bracket_iteration=2
+            )
+            is True
         )
         assert (
-            self.manager1.should_reschedule(iteration=5, bracket_iteration=0) is False
+            self.manager1.config.should_create_iteration(
+                iteration=0, bracket_iteration=3
+            )
+            is True
+        )
+        assert (
+            self.manager1.config.should_create_iteration(
+                iteration=1, bracket_iteration=0
+            )
+            is False
+        )
+        assert (
+            self.manager1.config.should_create_iteration(
+                iteration=1, bracket_iteration=1
+            )
+            is True
+        )
+        assert (
+            self.manager1.config.should_create_iteration(
+                iteration=1, bracket_iteration=2
+            )
+            is True
+        )
+        assert (
+            self.manager1.config.should_create_iteration(
+                iteration=2, bracket_iteration=0
+            )
+            is False
+        )
+        assert (
+            self.manager1.config.should_create_iteration(
+                iteration=2, bracket_iteration=1
+            )
+            is False
+        )
+        assert (
+            self.manager1.config.should_create_iteration(
+                iteration=5, bracket_iteration=0
+            )
+            is False
         )
 
     def test_should_reduce_configs(self):
         assert (
-            self.manager1.should_reduce_configs(iteration=0, bracket_iteration=0)
+            self.manager1.config.should_reduce_configs(iteration=0, bracket_iteration=0)
             is True
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=0, bracket_iteration=1)
+            self.manager1.config.should_reduce_configs(iteration=0, bracket_iteration=1)
             is True
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=0, bracket_iteration=2)
+            self.manager1.config.should_reduce_configs(iteration=0, bracket_iteration=2)
             is False
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=0, bracket_iteration=3)
+            self.manager1.config.should_reduce_configs(iteration=0, bracket_iteration=3)
             is False
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=1, bracket_iteration=0)
+            self.manager1.config.should_reduce_configs(iteration=1, bracket_iteration=0)
             is True
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=1, bracket_iteration=1)
+            self.manager1.config.should_reduce_configs(iteration=1, bracket_iteration=1)
             is False
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=1, bracket_iteration=2)
+            self.manager1.config.should_reduce_configs(iteration=1, bracket_iteration=2)
             is False
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=2, bracket_iteration=0)
+            self.manager1.config.should_reduce_configs(iteration=2, bracket_iteration=0)
             is True
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=2, bracket_iteration=1)
+            self.manager1.config.should_reduce_configs(iteration=2, bracket_iteration=1)
             is False
         )
         assert (
-            self.manager1.should_reduce_configs(iteration=5, bracket_iteration=0)
+            self.manager1.config.should_reduce_configs(iteration=5, bracket_iteration=0)
             is False
         )
 

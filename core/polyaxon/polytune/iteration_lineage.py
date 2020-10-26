@@ -26,18 +26,6 @@ from polyaxon.utils.formatting import Printer
 from polyaxon.utils.np_utils import sanitize_dict, sanitize_np_types
 
 
-def should_reschedule(client: RunClient, matrix, iteration: int, **kwargs) -> bool:
-    # Sanity check
-    if iteration > 0 and not matrix.should_reschedule(iteration - 1, **kwargs):
-        client.log_succeeded(message="Iterative operation has succeeded")
-        logger.info(
-            "Iterative optimization is done and should not reschedule a new iteration"
-        )
-        return False
-
-    return True
-
-
 def get_iteration_definition(
     client: RunClient, iteration: int, search: V1ParamSearch, optimization_metric: str
 ):

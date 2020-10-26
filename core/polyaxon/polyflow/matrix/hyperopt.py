@@ -210,6 +210,11 @@ class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
     IDENTIFIER = V1MatrixKind.HYPEROPT
     REDUCED_ATTRIBUTES = ["numRuns", "seed", "concurrency", "earlyStopping"]
 
+    def create_iteration(self, iteration: int = None) -> int:
+        if iteration is None:
+            return 0
+        return iteration + 1
+
     def should_reschedule(self, iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""
         if not self.max_iterations:

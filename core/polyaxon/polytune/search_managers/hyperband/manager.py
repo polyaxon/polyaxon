@@ -69,16 +69,6 @@ class HyperbandManager(BaseManager):
         super().__init__(config)
         self.config.set_tuning_params()
 
-    def get_num_runs(self, bracket):
-        # n: initial number of configs
-        return int(
-            math.ceil(
-                (self.config.B / self.config.max_iterations)
-                * (self.config.eta ** bracket)
-                / (bracket + 1)
-            )
-        )
-
     def get_resources(self, bracket):
         # r: initial number of iterations/resources per config
         return self.config.max_iterations * (self.config.eta ** (-bracket))
@@ -86,26 +76,6 @@ class HyperbandManager(BaseManager):
     def get_resources_for_iteration(self, iteration):
         bracket = self.config.get_bracket(iteration=iteration)
         return self.get_resources(bracket=bracket)
-
-    def get_num_runs_to_keep(self, num_runs, bracket_iteration):
-        """Return the number of configs to keep and resume."""
-        num_runs = num_runs * (self.config.eta ** -bracket_iteration)
-        return int(num_runs / self.config.eta)
-
-    def get_num_runs_to_keep_for_iteration(self, iteration, bracket_iteration):
-        """Return the number of configs to keep for an iteration and iteration bracket.
-
-        This is just util function around `get_num_runs_to_keep`
-        """
-        bracket = self.config.get_bracket(iteration=iteration)
-        if bracket_iteration == bracket + 1:
-            # End of loop `for bracket_iteration in range(bracket + 1):`
-            return 0
-
-        num_runs = self.get_num_runs(bracket=bracket)
-        return self.get_num_runs_to_keep(
-            num_runs=num_runs, bracket_iteration=bracket_iteration
-        )
 
     def get_n_resources(self, n_resources, bracket_iteration):
         """Return the number of iterations to run for this barcket_i"""
@@ -120,49 +90,6 @@ class HyperbandManager(BaseManager):
         return self.get_n_resources(
             n_resources=n_resources, bracket_iteration=bracket_iteration
         )
-
-    def should_reschedule(self, iteration, bracket_iteration):
-        """Return a boolean to indicate if we need to reschedule another iteration."""
-        bracket = self.config.get_bracket(iteration=iteration)
-        if bracket_iteration < bracket:
-            # The bracket is still processing
-            return False
-
-        # We can only reschedule if we can create a new bracket
-        return self.config.get_bracket(iteration=iteration + 1) >= 0
-
-    def should_reduce_configs(self, iteration, bracket_iteration):
-        """Return a boolean to indicate if we need to reschedule another bracket iteration."""
-        num_runs_to_keep = self.get_num_runs_to_keep_for_iteration(
-            iteration=iteration, bracket_iteration=bracket_iteration
-        )
-        return num_runs_to_keep > 0
-
-    def create_iteration(
-        self, iteration: int = 0, bracket_iteration: int = 0
-    ) -> Tuple[int, int]:
-        """Create an iteration for hyperband."""
-
-        should_reschedule = self.should_reschedule(
-            iteration=iteration,
-            bracket_iteration=bracket_iteration,
-        )
-        should_reduce_configs = self.should_reduce_configs(
-            iteration=iteration,
-            bracket_iteration=bracket_iteration,
-        )
-        if should_reschedule:
-            iteration = iteration + 1
-            bracket_iteration = 0
-        elif should_reduce_configs:
-            bracket_iteration = bracket_iteration + 1
-        else:
-            raise ValueError(
-                "Hyperband create iteration failed, "
-                "could not reschedule ot reduce configs"
-            )
-
-        return iteration, bracket_iteration
 
     def get_suggestions(
         self,
@@ -184,7 +111,7 @@ class HyperbandManager(BaseManager):
     def get_iteration_suggestions(self, iteration: int, bracket_iteration: int):
         """Return a list of suggestions for initial iteration."""
         bracket = self.config.get_bracket(iteration=iteration)
-        num_runs = self.get_num_runs(bracket=bracket)
+        num_runs = self.config.get_num_runs(bracket=bracket)
         n_resources = self.get_n_resources_for_iteration(
             iteration=iteration, bracket_iteration=bracket_iteration
         )
@@ -202,7 +129,7 @@ class HyperbandManager(BaseManager):
     ):
         """Reduce the experiments to restart."""
         # Get the number of experiments to keep
-        n_configs_to_keep = self.get_num_runs_to_keep(
+        n_configs_to_keep = self.config.get_num_runs_to_keep(
             num_runs=len(configs),
             bracket_iteration=bracket_iteration,
         )

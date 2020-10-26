@@ -15,6 +15,8 @@
 # limitations under the License.
 import math
 
+from typing import Tuple
+
 import polyaxon_sdk
 
 from marshmallow import fields, validate
@@ -351,7 +353,7 @@ class V1Hyperband(BaseConfig, polyaxon_sdk.V1Hyperband):
         """This defines the bracket `s` in outerloop `for s in reversed(range(self.s_max))`."""
         return self.s_max - iteration
 
-    def should_reschedule(self, iteration, bracket_iteration):
+    def should_create_iteration(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""
         bracket = self.get_bracket(iteration=iteration)
         if bracket_iteration < bracket:
@@ -360,3 +362,75 @@ class V1Hyperband(BaseConfig, polyaxon_sdk.V1Hyperband):
 
         # We can only reschedule if we can create a new bracket
         return self.get_bracket(iteration=iteration + 1) >= 0
+
+    def get_num_runs_to_keep(self, num_runs, bracket_iteration):
+        """Return the number of configs to keep and resume."""
+        num_runs = num_runs * (self.eta ** -bracket_iteration)
+        return int(num_runs / self.eta)
+
+    def get_num_runs(self, bracket):
+        # n: initial number of configs
+        return int(
+            math.ceil(
+                (self.B / self.max_iterations) * (self.eta ** bracket) / (bracket + 1)
+            )
+        )
+
+    def get_num_runs_to_keep_for_iteration(self, iteration, bracket_iteration):
+        """Return the number of configs to keep for an iteration and iteration bracket.
+
+        This is just util function around `get_num_runs_to_keep`
+        """
+        bracket = self.get_bracket(iteration=iteration)
+        if bracket_iteration == bracket + 1:
+            # End of loop `for bracket_iteration in range(bracket + 1):`
+            return 0
+
+        num_runs = self.get_num_runs(bracket=bracket)
+        return self.get_num_runs_to_keep(
+            num_runs=num_runs, bracket_iteration=bracket_iteration
+        )
+
+    def should_reduce_configs(self, iteration, bracket_iteration):
+        """Return a boolean to indicate if we need to reschedule another bracket iteration."""
+        num_runs_to_keep = self.get_num_runs_to_keep_for_iteration(
+            iteration=iteration, bracket_iteration=bracket_iteration
+        )
+        return num_runs_to_keep > 0
+
+    def create_iteration(
+        self, iteration: int = None, bracket_iteration: int = 0
+    ) -> Tuple[int, int]:
+        """Create an iteration for hyperband."""
+        if iteration is None:
+            return 0, 0
+
+        should_create_iteration = self.should_create_iteration(
+            iteration=iteration,
+            bracket_iteration=bracket_iteration,
+        )
+        should_reduce_configs = self.should_reduce_configs(
+            iteration=iteration,
+            bracket_iteration=bracket_iteration,
+        )
+        if should_create_iteration:
+            iteration = iteration + 1
+            bracket_iteration = 0
+        elif should_reduce_configs:
+            bracket_iteration = bracket_iteration + 1
+        else:
+            raise ValueError(
+                "Hyperband create iteration failed, "
+                "could not reschedule or reduce configs"
+            )
+
+        return iteration, bracket_iteration
+
+    def should_reschedule(self, iteration, bracket_iteration):
+        """Return a boolean to indicate if we need to reschedule another iteration."""
+        return self.should_create_iteration(
+            iteration=iteration, bracket_iteration=bracket_iteration
+        ) or self.should_reduce_configs(
+            iteration=iteration,
+            bracket_iteration=bracket_iteration,
+        )

@@ -41,7 +41,6 @@ def bayes(matrix, search, iteration):
         get_iteration_definition,
         handle_iteration,
         handle_iteration_failure,
-        should_reschedule,
     )
     from polyaxon.polytune.search_managers.bayesian_optimization.manager import (
         BayesSearchManager,
@@ -49,12 +48,7 @@ def bayes(matrix, search, iteration):
 
     matrix = V1Bayes.read(matrix)
     search = V1ParamSearch.read(search)
-
     client = RunClient()
-
-    if not should_reschedule(client=client, matrix=matrix, iteration=iteration):
-        return
-
     values = get_iteration_definition(
         client=client,
         iteration=iteration,
@@ -109,24 +103,13 @@ def hyperband(matrix, search, iteration, bracket_iteration):
         get_iteration_definition,
         handle_iteration,
         handle_iteration_failure,
-        should_reschedule,
     )
     from polyaxon.polytune.search_managers.hyperband.manager import HyperbandManager
 
     matrix = V1Hyperband.read(matrix)
     matrix.set_tuning_params()
     search = V1ParamSearch.read(search)
-
     client = RunClient()
-
-    if not should_reschedule(
-        client=client,
-        matrix=matrix,
-        iteration=iteration,
-        bracket_iteration=bracket_iteration - 1,
-    ):
-        return
-
     values = get_iteration_definition(
         client=client,
         iteration=iteration,
@@ -181,18 +164,12 @@ def hyperopt(matrix, search, iteration):
         get_iteration_definition,
         handle_iteration,
         handle_iteration_failure,
-        should_reschedule,
     )
     from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
 
     matrix = V1Hyperopt.read(matrix)
     search = V1ParamSearch.read(search)
-
     client = RunClient()
-
-    if not should_reschedule(client=client, matrix=matrix, iteration=iteration):
-        return
-
     values = get_iteration_definition(
         client=client,
         iteration=iteration,
