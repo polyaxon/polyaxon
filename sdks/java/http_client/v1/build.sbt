@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).
   settings(
     organization := "org.openapitools",
     name := "openapi-java-client",
-    version := "1.2.1-rc4",
+    version := "1.2.1-rc5",
     scalaVersion := "2.11.4",
     scalacOptions ++= Seq("-feature"),
     javacOptions in compile ++= Seq("-Xlint:deprecation"),

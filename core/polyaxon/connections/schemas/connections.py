@@ -16,7 +16,7 @@
 
 import polyaxon_sdk
 
-from marshmallow import ValidationError, fields
+from marshmallow import INCLUDE, ValidationError, fields
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig, BaseOneOfSchema
@@ -120,6 +120,67 @@ class V1GitConnection(BaseConfig, polyaxon_sdk.V1GitConnection):
         self.revision = schema.revision or self.revision
 
 
+class CustomConnectionSchema(BaseCamelSchema):
+    class Meta(BaseCamelSchema.Meta):
+        unknown = INCLUDE
+
+    @staticmethod
+    def schema_config():
+        return V1CustomConnection
+
+
+class V1CustomConnection(BaseConfig):
+    UNKNOWN_BEHAVIOUR = INCLUDE
+    IDENTIFIER = "custom"
+    SCHEMA = CustomConnectionSchema
+
+    def __init__(self, **kwargs):
+        self._schema_keys = set([])
+        for k, v in kwargs.items():
+            self._schema_keys.add(k)
+            self.__setattr__(k, v)
+
+    @classmethod
+    def obj_to_dict(
+        cls,
+        obj,
+        humanize_values=False,
+        unknown=None,
+        include_kind=False,
+        include_version=False,
+    ):
+        value = super().obj_to_dict(
+            obj=obj,
+            humanize_values=humanize_values,
+            unknown=cls.UNKNOWN_BEHAVIOUR,
+            include_kind=include_kind,
+            include_version=include_version,
+        )
+        value.update({k: getattr(obj, k) for k in obj._schema_keys})
+        return value
+
+    @classmethod
+    def from_dict(cls, value, unknown=None):
+        return super().from_dict(value=value, unknown=cls.UNKNOWN_BEHAVIOUR)
+
+    def __eq__(self, other):
+        """Returns true if both objects are equal"""
+        if not isinstance(other, V1CustomConnection):
+            return False
+
+        return self.to_dict() == other.to_dict()
+
+    def patch_git(self, schema: "GitConnectionSchema"):
+        if schema.url:
+            if "url" not in self._schema_keys:
+                self._schema_keys.add("url")
+            setattr(self, "url", schema.url)
+        if schema.revision:
+            if "revision" not in self._schema_keys:
+                self._schema_keys.add("revision")
+            setattr(self, "revision", schema.url)
+
+
 def validate_connection(kind, definition):
     if kind not in V1ConnectionKind.allowable_values:
         raise ValidationError("Connection with kind {} is not supported.".format(kind))
@@ -143,10 +204,16 @@ def validate_connection(kind, definition):
 class ConnectionSchema(BaseOneOfSchema):
     TYPE_FIELD = "kind"
     TYPE_FIELD_REMOVE = True
+    UNKNOWN_BEHAVIOUR = INCLUDE
+
+    class Meta:
+        unknown = INCLUDE
+
     SCHEMAS = {
         V1BucketConnection.IDENTIFIER: BucketConnectionSchema,
         V1ClaimConnection.IDENTIFIER: ClaimConnectionSchema,
         V1HostPathConnection.IDENTIFIER: HostPathConnectionSchema,
         V1HostConnection.IDENTIFIER: HostConnectionSchema,
         V1GitConnection.IDENTIFIER: GitConnectionSchema,
+        V1CustomConnection.IDENTIFIER: CustomConnectionSchema,
     }

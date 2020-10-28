@@ -25,6 +25,7 @@ message K8sResourceSchema {
     string name = 1;
     string mount_path = 2;
     repeated string items = 3;
+    int32 default_mode = 4;
 }
 
 // K8S resource specification

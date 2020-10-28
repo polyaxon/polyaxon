@@ -22,6 +22,7 @@ from polyaxon.connections.schemas import (
     V1ClaimConnection,
     V1HostPathConnection,
 )
+from polyaxon.connections.schemas.connections import V1CustomConnection
 from polyaxon.schemas.types import V1ConnectionType
 from tests.utils import BaseTestCase
 
@@ -60,6 +61,17 @@ class TestConnectionType(BaseTestCase):
             ),
         )
 
+        self.custom_connection1 = V1ConnectionType(
+            name="db",
+            kind=V1ConnectionKind.POSTGRES,
+        )
+
+        self.custom_connection2 = V1ConnectionType(
+            name="ssh",
+            kind=V1ConnectionKind.SSH,
+            schema=V1CustomConnection(key1="val1", key2="val2"),
+        )
+
     def test_store_path(self):
         assert self.s3_store.store_path == self.s3_store.schema.bucket
         assert self.gcs_store.store_path == self.gcs_store.schema.bucket
@@ -88,7 +100,7 @@ class TestConnectionType(BaseTestCase):
         assert self.host_path_store.is_s3 is False
 
     @staticmethod
-    def assert_from_mode(spec: V1ConnectionType):
+    def assert_from_model(spec: V1ConnectionType):
         result = V1ConnectionType.from_model(model=spec)
 
         assert result.name == spec.name
@@ -97,8 +109,13 @@ class TestConnectionType(BaseTestCase):
         assert result.secret == spec.secret
 
     def test_get_from_model(self):
-        self.assert_from_mode(self.s3_store)
-        self.assert_from_mode(self.gcs_store)
-        self.assert_from_mode(self.az_store)
-        self.assert_from_mode(self.claim_store)
-        self.assert_from_mode(self.host_path_store)
+        self.assert_from_model(self.s3_store)
+        self.assert_from_model(self.gcs_store)
+        self.assert_from_model(self.az_store)
+        self.assert_from_model(self.claim_store)
+        self.assert_from_model(self.host_path_store)
+        assert self.custom_connection1.schema is None
+        self.assert_from_model(self.custom_connection1)
+        assert self.custom_connection2.schema.key1 == "val1"
+        assert self.custom_connection2.schema.key2 == "val2"
+        self.assert_from_model(self.custom_connection2)

@@ -40,7 +40,7 @@ class RunQueryManager(BaseQueryManager):
         "in": "inputs",
         "out": "outputs",
         "metrics": "outputs",
-        "meta": "meta_info",
+        "meta_values": "meta_info",
         "meta_flags": "meta_info",
         "id": "uuid",
         "uid": "uuid",
@@ -68,8 +68,8 @@ class RunQueryManager(BaseQueryManager):
         "outputs": {"field": "outputs", "annotate": True},
         "out": {"field": "outputs", "annotate": True},
         "meta_flags": {"field": "meta_info", "annotate": True},
-        "meta": {"field": "meta_info", "annotate": True},
         "meta_info": {"field": "meta_info", "annotate": True},
+        "meta_values": {"field": "meta_info", "annotate": True},
         "agent": "settings__agent",
     }
     FIELDS_DEFAULT_ORDERING = ("-updated_at",)
@@ -125,6 +125,7 @@ class RunQueryManager(BaseQueryManager):
         # Meta
         "meta_flags": parse_value_operation,
         "meta_info": parse_value_operation,
+        "meta_values": parse_scalar_operation,
         # Tags
         "tags": parse_value_operation,
         # Live state
@@ -190,6 +191,7 @@ class RunQueryManager(BaseQueryManager):
         # Meta
         "meta_flags": BoolCondition,
         "meta_info": ValueCondition,
+        "meta_values": ValueCondition,
         # Tags
         "tags": ArrayCondition,
         # Live state

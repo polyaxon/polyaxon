@@ -56,7 +56,9 @@ def get_volume_from_secret(secret: V1K8sResourceType) -> Optional[k8s_schemas.V1
         return None
     if secret.schema.mount_path:
         secret_volume = k8s_schemas.V1SecretVolumeSource(
-            secret_name=secret.name, items=secret.schema.items
+            secret_name=secret.name,
+            items=secret.schema.items,
+            default_mode=secret.schema.default_mode,
         )
         return k8s_schemas.V1Volume(name=secret.name, secret=secret_volume)
 
@@ -68,7 +70,9 @@ def get_volume_from_config_map(
         return None
     if config_map.schema.mount_path:
         config_map_volume = k8s_schemas.V1ConfigMapVolumeSource(
-            name=config_map.name, items=config_map.schema.items
+            name=config_map.name,
+            items=config_map.schema.items,
+            default_mode=config_map.schema.default_mode,
         )
         return k8s_schemas.V1Volume(name=config_map.name, config_map=config_map_volume)
 

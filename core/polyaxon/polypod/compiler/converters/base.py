@@ -40,6 +40,7 @@ from polyaxon.polypod.common.env_vars import (
 from polyaxon.polypod.common.mounts import get_mounts
 from polyaxon.polypod.init.artifacts import get_artifacts_path_container
 from polyaxon.polypod.init.auth import get_auth_context_container
+from polyaxon.polypod.init.custom import get_custom_init_container
 from polyaxon.polypod.init.dockerfile import get_dockerfile_init_container
 from polyaxon.polypod.init.git import get_git_init_container
 from polyaxon.polypod.init.store import get_store_container
@@ -270,9 +271,12 @@ class BaseConverter(ConverterAbstract):
         for init_connection in init_connections:
             if init_connection.connection:
                 connection_spec = connection_by_names.get(init_connection.connection)
-                if init_connection.git:  # Update the default schema
-                    connection_spec.schema.patch(init_connection.git)
-                if V1ConnectionKind.is_git(connection_spec.kind):
+                # Handling ssh with git
+                if (
+                    V1ConnectionKind.is_ssh(connection_spec.kind)
+                    and init_connection.git
+                ):
+                    connection_spec.schema.patch_git(init_connection.git)
                     containers.append(
                         get_git_init_container(
                             polyaxon_init=polyaxon_init,
@@ -284,7 +288,21 @@ class BaseConverter(ConverterAbstract):
                             track=True,
                         )
                     )
-                if V1ConnectionKind.is_artifact(connection_spec.kind):
+                elif V1ConnectionKind.is_git(connection_spec.kind):
+                    if init_connection.git:  # Update the default schema
+                        connection_spec.schema.patch(init_connection.git)
+                    containers.append(
+                        get_git_init_container(
+                            polyaxon_init=polyaxon_init,
+                            connection=connection_spec,
+                            container=init_connection.container,
+                            env=self.get_init_service_env_vars(),
+                            mount_path=init_connection.path,
+                            contexts=contexts,
+                            track=True,
+                        )
+                    )
+                elif V1ConnectionKind.is_artifact(connection_spec.kind):
                     containers.append(
                         get_store_container(
                             polyaxon_init=polyaxon_init,
@@ -295,6 +313,16 @@ class BaseConverter(ConverterAbstract):
                             mount_path=init_connection.path,
                             is_default_artifacts_store=artifacts_store
                             and init_connection.connection == artifacts_store.name,
+                        )
+                    )
+                else:
+                    containers.append(
+                        get_custom_init_container(
+                            connection=connection_spec,
+                            container=init_connection.container,
+                            env=self.get_init_service_env_vars(),
+                            mount_path=init_connection.path,
+                            contexts=contexts,
                         )
                     )
             else:

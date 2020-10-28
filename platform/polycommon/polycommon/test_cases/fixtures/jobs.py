@@ -80,3 +80,24 @@ def get_fxt_job_with_inputs_outputs():
             "run": {"kind": V1RunKind.JOB, "container": {"image": "{{ image }}"}},
         },
     }
+
+
+def get_fxt_job_with_inputs_and_conditions():
+    return {
+        "version": 1.1,
+        "kind": "operation",
+        "name": "foo",
+        "description": "a description",
+        "params": {"image": {"value": "foo/bar"}},
+        "conditions": "{{ image == 'foo/bar' }}",
+        "component": {
+            "name": "build-template",
+            "inputs": [{"name": "image", "type": "str"}],
+            "tags": ["tag1", "tag2"],
+            "run": {
+                "kind": V1RunKind.JOB,
+                "container": {"image": "{{ image }}"},
+                "init": [{"connection": "foo", "git": {"revision": "dev"}}],
+            },
+        },
+    }

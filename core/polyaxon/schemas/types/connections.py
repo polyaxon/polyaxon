@@ -53,6 +53,7 @@ class ConnectionTypeSchema(BaseCamelSchema):
         schema = data.get("schema")
         kind = data.get("kind")
         if schema and kind:
+            schema["kind"] = "custom"
             if kind in V1ConnectionKind.BLOB_VALUES:
                 schema["kind"] = V1BucketConnection.IDENTIFIER
 

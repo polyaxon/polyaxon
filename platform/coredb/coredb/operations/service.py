@@ -71,8 +71,7 @@ class OperationsService(Service):
     def supports_kind(
         cls, kind: str, runtime: str, supported_kinds: Set[str], is_managed: bool
     ) -> bool:
-        supported_kinds = supported_kinds or set()
-        supported_kinds |= cls.DEFAULT_KINDS
+        supported_kinds = supported_kinds or cls.DEFAULT_KINDS
         error_message = (
             "You cannot create this operation, "
             "your account does not support operations of kind: {}"

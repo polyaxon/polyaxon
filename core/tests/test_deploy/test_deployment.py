@@ -88,7 +88,7 @@ class TestDeploymentConfig(BaseTestCase):
         assert config.artifacts_store.name == "azure"
         assert config.artifacts_store.kind == "wasb"
         assert config.artifacts_store.secret.to_dict() == {"name": "az-secret"}
-        assert len(config.connections) == 2
+        assert len(config.connections) == 3
         assert len(config.notification_connections) == 2
         assert {s.kind for s in config.notification_connections} == {
             V1ConnectionKind.SLACK

@@ -115,6 +115,7 @@ def hyperband(matrix, search, iteration, bracket_iteration):
         iteration=iteration,
         search=search,
         optimization_metric=matrix.metric.name,
+        name="in-iteration-{}-{}".format(iteration, bracket_iteration),
     )
     if not values:
         return
@@ -145,6 +146,8 @@ def hyperband(matrix, search, iteration, bracket_iteration):
         client=client,
         iteration=iteration,
         suggestions=suggestions,
+        summary={"bracket_iteration": bracket_iteration},
+        name="out-iteration-{}-{}".format(iteration, bracket_iteration),
     )
 
 

@@ -11,7 +11,5 @@
 
 * `CACHE` (value: `"cache"`)
 
-* `SCHEDULE` (value: `"schedule"`)
-
 
 

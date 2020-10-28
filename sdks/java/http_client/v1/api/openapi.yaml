@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.2.1-rc4
+  version: 1.2.1-rc5
 servers:
 - url: /
 security:
@@ -12775,7 +12775,6 @@ components:
       - copy
       - restart
       - cache
-      - schedule
       type: string
     v1Compatibility:
       example:
@@ -13476,12 +13475,14 @@ components:
         secret:
           mount_path: mount_path
           name: name
+          default_mode: 7
           items:
           - items
           - items
         config_map:
           mount_path: mount_path
           name: name
+          default_mode: 7
           items:
           - items
           - items
@@ -15134,44 +15135,44 @@ components:
       example:
         image:
           path: path
-          colorspace: 8
-          width: 6
-          height: 4
+          colorspace: 4
+          width: 8
+          height: 6
         curve:
           annotation: annotation
           x:
-          - 8.8637295
-          - 8.8637295
+          - 9.254184
+          - 9.254184
           y:
-          - 9.254184
-          - 9.254184
+          - 1.8268702
+          - 1.8268702
         video:
           path: path
           content_type: content_type
-          colorspace: 4
-          width: 6
-          height: 8
+          colorspace: 8
+          width: 4
+          height: 6
         histogram:
           counts:
-          - 3.901545264248647
-          - 3.901545264248647
+          - 0.43431398824148815
+          - 0.43431398824148815
           values:
-          - 4.459605034958679
-          - 4.459605034958679
+          - 3.901545264248647
+          - 3.901545264248647
         artifact:
           path: path
-        metric: 5.507387
-        step: 7
+        metric: 4.863159
+        step: 5
         html: html
         model:
           path: path
           framework: framework
           spec: '{}'
         audio:
-          num_channels: 2
+          num_channels: 1
           path: path
-          length_frames: 1
-          sample_rate: 0.43431398
+          length_frames: 8
+          sample_rate: 2.9409642
           content_type: content_type
         text: text
         dataframe:
@@ -15229,10 +15230,10 @@ components:
       type: object
     v1EventAudio:
       example:
-        num_channels: 2
+        num_channels: 1
         path: path
-        length_frames: 1
-        sample_rate: 0.43431398
+        length_frames: 8
+        sample_rate: 2.9409642
         content_type: content_type
       properties:
         sample_rate:
@@ -15283,11 +15284,11 @@ components:
       example:
         annotation: annotation
         x:
-        - 8.8637295
-        - 8.8637295
+        - 9.254184
+        - 9.254184
         y:
-        - 9.254184
-        - 9.254184
+        - 1.8268702
+        - 1.8268702
       properties:
         kind:
           $ref: '#/components/schemas/v1EventCurveKind'
@@ -15336,11 +15337,11 @@ components:
     v1EventHistogram:
       example:
         counts:
-        - 3.901545264248647
-        - 3.901545264248647
+        - 0.43431398824148815
+        - 0.43431398824148815
         values:
-        - 4.459605034958679
-        - 4.459605034958679
+        - 3.901545264248647
+        - 3.901545264248647
       properties:
         values:
           items:
@@ -15357,9 +15358,9 @@ components:
     v1EventImage:
       example:
         path: path
-        colorspace: 8
-        width: 6
-        height: 4
+        colorspace: 4
+        width: 8
+        height: 6
       properties:
         height:
           description: Height of the image.
@@ -15418,9 +15419,9 @@ components:
       example:
         path: path
         content_type: content_type
-        colorspace: 4
-        width: 6
-        height: 8
+        colorspace: 8
+        width: 4
+        height: 6
       properties:
         height:
           description: Height of the video.
@@ -16491,6 +16492,7 @@ components:
       example:
         mount_path: mount_path
         name: name
+        default_mode: 7
         items:
         - items
         - items
@@ -16503,6 +16505,9 @@ components:
           items:
             type: string
           type: array
+        default_mode:
+          format: int32
+          type: integer
       title: K8S resource schema validation
       type: object
     v1K8sResourceType:
@@ -16510,6 +16515,7 @@ components:
         schema:
           mount_path: mount_path
           name: name
+          default_mode: 7
           items:
           - items
           - items
@@ -19758,15 +19764,15 @@ components:
       - tfjob
       - pytorchjob
       - matrix
-      - scheduler
+      - schedule
       - tuner
       - watchdog
       - notifier
       - cleaner
       title: |-
         Run kind enum
-        Kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob
-        Meta kinds: job, service, dag, matrix, schedule
+        Kinds: job, service, dag, matrix, schedule
+        Runtime kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob
         helper kinds: tuner, watchdog, notifier, cleaner
       type: string
     v1RunSchema:
@@ -24988,6 +24994,7 @@ components:
           schema:
             mount_path: mount_path
             name: name
+            default_mode: 7
             items:
             - items
             - items
@@ -25016,12 +25023,14 @@ components:
           secret:
             mount_path: mount_path
             name: name
+            default_mode: 7
             items:
             - items
             - items
           config_map:
             mount_path: mount_path
             name: name
+            default_mode: 7
             items:
             - items
             - items
@@ -25029,44 +25038,44 @@ components:
         event:
           image:
             path: path
-            colorspace: 8
-            width: 6
-            height: 4
+            colorspace: 4
+            width: 8
+            height: 6
           curve:
             annotation: annotation
             x:
-            - 8.8637295
-            - 8.8637295
+            - 9.254184
+            - 9.254184
             y:
-            - 9.254184
-            - 9.254184
+            - 1.8268702
+            - 1.8268702
           video:
             path: path
             content_type: content_type
-            colorspace: 4
-            width: 6
-            height: 8
+            colorspace: 8
+            width: 4
+            height: 6
           histogram:
             counts:
-            - 3.901545264248647
-            - 3.901545264248647
+            - 0.43431398824148815
+            - 0.43431398824148815
             values:
-            - 4.459605034958679
-            - 4.459605034958679
+            - 3.901545264248647
+            - 3.901545264248647
           artifact:
             path: path
-          metric: 5.507387
-          step: 7
+          metric: 4.863159
+          step: 5
           html: html
           model:
             path: path
             framework: framework
             spec: '{}'
           audio:
-            num_channels: 2
+            num_channels: 1
             path: path
-            length_frames: 1
-            sample_rate: 0.43431398
+            length_frames: 8
+            sample_rate: 2.9409642
             content_type: content_type
           text: text
           dataframe:

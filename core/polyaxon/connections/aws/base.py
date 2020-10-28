@@ -63,21 +63,21 @@ def get_endpoint_url(
 def get_aws_use_ssl(
     keys: Optional[Union[str, List[str]]] = None, context_path: Optional[str] = None
 ):
-    keys = keys or ["AWS_ENDPOINT_URL"]
+    keys = keys or ["AWS_USE_SSL"]
     return read_keys(context_path=context_path, keys=keys)
 
 
 def get_aws_verify_ssl(
     keys: Optional[Union[str, List[str]]] = None, context_path: Optional[str] = None
 ):
-    keys = keys or ["AWS_ENDPOINT_URL"]
+    keys = keys or ["AWS_VERIFY_SSL"]
     return read_keys(context_path=context_path, keys=keys)
 
 
 def get_aws_legacy_api(
     keys: Optional[Union[str, List[str]]] = None, context_path: Optional[str] = None
 ):
-    keys = keys or ["AWS_ENDPOINT_URL"]
+    keys = keys or ["AWS_LEGACY_API"]
     return read_keys(context_path=context_path, keys=keys)
 
 

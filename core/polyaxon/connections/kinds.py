@@ -149,6 +149,10 @@ class V1ConnectionKind(polyaxon_sdk.V1ConnectionKind):
         return kind == cls.GIT
 
     @classmethod
+    def is_ssh(cls, kind):
+        return kind == cls.SSH
+
+    @classmethod
     def is_registry(cls, kind):
         return kind == cls.REGISTRY
 

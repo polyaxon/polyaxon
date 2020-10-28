@@ -27,7 +27,11 @@ from polyaxon.utils.np_utils import sanitize_dict, sanitize_np_types
 
 
 def get_iteration_definition(
-    client: RunClient, iteration: int, search: V1ParamSearch, optimization_metric: str
+    client: RunClient,
+    iteration: int,
+    search: V1ParamSearch,
+    optimization_metric: str,
+    name: str = None,
 ):
     def handler():
         runs = (
@@ -50,7 +54,7 @@ def get_iteration_definition(
 
         if configs or metrics or run_uuids:
             artifact_run = V1RunArtifact(
-                name="in-iteration-{}".format(iteration),
+                name=name or "in-iteration-{}".format(iteration),
                 kind=V1ArtifactKind.ITERATION,
                 summary={
                     "iteration": iteration,
@@ -85,16 +89,23 @@ def handle_iteration(
     client: RunClient,
     iteration: int = None,
     suggestions: List[Dict] = None,
+    summary: Dict = None,
+    name: str = None,
 ):
+    summary = summary or {}
+    summary.update(
+        {
+            "iteration": iteration,
+            "suggestions": [sanitize_dict(s) for s in suggestions],
+        }
+    )
+
     def handler():
         if suggestions:
             artifact_run = V1RunArtifact(
-                name="out-iteration-{}".format(iteration),
+                name=name or "out-iteration-{}".format(iteration),
                 kind=V1ArtifactKind.ITERATION,
-                summary={
-                    "iteration": iteration,
-                    "suggestions": [sanitize_dict(s) for s in suggestions],
-                },
+                summary=summary,
                 is_input=False,
             )
             client.log_artifact_lineage(artifact_run)

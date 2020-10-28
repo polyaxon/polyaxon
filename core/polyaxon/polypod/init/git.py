@@ -17,8 +17,10 @@
 from typing import List, Optional
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
+from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.containers.names import INIT_GIT_CONTAINER_PREFIX, generate_container_name
+from polyaxon.env_vars.keys import POLYAXON_KEYS_SSH_PATH
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polypod.common import constants
@@ -27,6 +29,7 @@ from polyaxon.polypod.common.env_vars import (
     get_connection_env_var,
     get_env_from_config_map,
     get_env_from_secret,
+    get_env_var,
     get_items_from_config_map,
     get_items_from_secret,
 )
@@ -100,6 +103,9 @@ def get_git_init_container(
     env += to_list(
         get_connection_env_var(connection=connection, secret=secret), check_none=True
     )
+    # Add special handling to auto-inject ssh mount path
+    if connection.kind == V1ConnectionKind.SSH and secret.schema.mount_path:
+        env += [get_env_var(POLYAXON_KEYS_SSH_PATH, secret.schema.mount_path)]
     config_map = connection.get_config_map()
     if config_map:
         volume_mounts += to_list(
@@ -113,8 +119,9 @@ def get_git_init_container(
         )
     args = get_repo_context_args(
         name=connection.name,
-        url=connection.schema.url,
-        revision=connection.schema.revision,
+        # Handle the case of custom connection
+        url=getattr(connection.schema, "url", None),
+        revision=getattr(connection.schema, "revision", None),
         mount_path=mount_path,
         connection=connection.name if track else None,
     )

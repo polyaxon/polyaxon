@@ -28,6 +28,7 @@ from polyaxon.polyflow import (
     V1Param,
     V1ParamSearch,
     V1Plugins,
+    V1Termination,
     V1Tuner,
 )
 
@@ -111,6 +112,7 @@ def get_hyperband_tuner(
     bracket_iteration: int,
     container: V1Container = None,
 ) -> V1Operation:
+    matrix.set_tuning_params()
     iteration, bracket_iteration = matrix.create_iteration(iteration, bracket_iteration)
     container = container or get_default_tuner_container(
         ["polyaxon", "tuner", "hyperband"],

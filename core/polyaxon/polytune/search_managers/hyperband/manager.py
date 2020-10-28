@@ -139,7 +139,7 @@ class HyperbandManager(BaseManager):
         experiments = sorted(
             experiments,
             key=lambda x: x[1],
-            reverse=V1Optimization.maximize(self.config.optimization),
+            reverse=V1Optimization.maximize(self.config.metric.optimization),
         )
         # Keep n experiments config
         return [xp[0] for xp in experiments[:n_configs_to_keep]]

@@ -9,6 +9,4 @@
 
 * `cache` (value: `"cache"`)
 
-* `schedule` (value: `"schedule"`)
-
 
