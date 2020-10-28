@@ -491,6 +491,37 @@ class TestV1IOs(BaseTestCase):
             == ""
         )
 
+        # Custom arg_format with 0 value
+        param = V1Param(value=0)
+        assert param.get_spec(
+            name="foo",
+            iotype=types.INT,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="--sdf={foo}",
+        ) == ParamSpec(
+            name="foo",
+            iotype=types.INT,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="--sdf={foo}",
+        )
+        assert (
+            ParamSpec(
+                name="foo",
+                iotype=types.INT,
+                param=param,
+                is_flag=False,
+                is_list=False,
+                is_context=False,
+                arg_format="--sdf={foo}",
+            ).as_arg()
+            == "--sdf=0"
+        )
+
         # isFlag
         param = V1Param(value=True)
         assert param.get_spec(

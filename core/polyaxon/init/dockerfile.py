@@ -19,7 +19,6 @@ from typing import Dict
 
 from polyaxon import settings
 from polyaxon.client import RunClient
-from polyaxon.env_vars.getters import get_run_info
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 
@@ -29,19 +28,19 @@ def create_dockerfile_lineage(dockerfile_path: str, summary: Dict):
         return
     filename = os.path.basename(dockerfile_path)
 
-    if not settings.CLIENT_CONFIG.no_api:
-        try:
-            owner, project, run_uuid = get_run_info()
-        except PolyaxonClientException as e:
-            raise PolyaxonContainerException(e)
+    if settings.CLIENT_CONFIG.no_api:
+        return
 
-        artifact_run = V1RunArtifact(
-            name=filename,
-            kind=V1ArtifactKind.DOCKERFILE,
-            path=RunClient.get_rel_asset_path(dockerfile_path),
-            summary=summary,
-            is_input=True,
-        )
-        RunClient(owner=owner, project=project, run_uuid=run_uuid).log_artifact_lineage(
-            artifact_run
-        )
+    try:
+        run_client = RunClient()
+    except PolyaxonClientException as e:
+        raise PolyaxonContainerException(e)
+
+    artifact_run = V1RunArtifact(
+        name=filename,
+        kind=V1ArtifactKind.DOCKERFILE,
+        path=RunClient.get_rel_asset_path(dockerfile_path),
+        summary=summary,
+        is_input=True,
+    )
+    run_client.log_artifact_lineage(artifact_run)

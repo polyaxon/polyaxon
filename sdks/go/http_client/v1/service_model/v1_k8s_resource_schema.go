@@ -29,6 +29,9 @@ import (
 // swagger:model v1K8sResourceSchema
 type V1K8sResourceSchema struct {
 
+	// default mode
+	DefaultMode int32 `json:"default_mode,omitempty"`
+
 	// items
 	Items []string `json:"items"`
 

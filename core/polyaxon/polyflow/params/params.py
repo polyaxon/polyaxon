@@ -462,7 +462,7 @@ class ParamSpec(
     def __repr__(self):
         if self.is_flag:
             return self.get_display_value()
-        return ujson.dumps(self.param.value) if self.param.value else ""
+        return ujson.dumps(self.param.value) if self.param.value is not None else ""
 
     def as_str(self):
         return str(self)
@@ -473,10 +473,14 @@ class ParamSpec(
         if self.arg_format:
             return (
                 self.arg_format.format(**{self.name: self.param.value})
-                if self.param.value
+                if self.param.value is not None
                 else ""
             )
-        return "--{}={}".format(self.name.replace("_", "-"), self.as_str())
+        return (
+            "--{}={}".format(self.name.replace("_", "-"), self.as_str())
+            if self.param.value is not None
+            else ""
+        )
 
     def to_parsed_param(self):
         parsed_param = {

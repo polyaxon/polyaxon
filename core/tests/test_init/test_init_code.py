@@ -55,11 +55,17 @@ class TestInitCode(BaseTestCase):
         assert has_ssh_access() is False
 
     def test_get_clone_url(self):
-        url = "https://foo.com"
+        url = "https://foo.com/test"
         assert get_clone_url(url=url) == url
         os.environ[POLYAXON_KEYS_GIT_CREDENTIALS] = "foo:bar"
-        assert get_clone_url(url=url) == "https://foo:bar@foo.com"
+        assert get_clone_url(url=url) == "https://foo:bar@foo.com/test"
         del os.environ[POLYAXON_KEYS_GIT_CREDENTIALS]
+
         with patch("polyaxon.init.git.has_ssh_access") as ssh_access_mock:
             ssh_access_mock.return_value = True
-            assert get_clone_url(url=url) == "git@foo.com"
+            assert get_clone_url(url=url) == "git@foo.com:test.git"
+
+        url = "git@foo.com:test.git"
+        with patch("polyaxon.init.git.has_ssh_access") as ssh_access_mock:
+            ssh_access_mock.return_value = True
+            assert get_clone_url(url=url) == "git@foo.com:test.git"

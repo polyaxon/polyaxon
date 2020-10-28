@@ -52,6 +52,15 @@ connections:
   - name: host
     kind: host_path
     schema: {"hostPath": "/tmp", "mountPath": "/tmp"}
+  - name: ssh-key-secret
+    kind: ssh
+    description: "ssh for git repos"
+    tags: [repos]
+    schema:
+      url: https://github.com/polyaxon/polyaxon-ee
+    secret:
+      name: ssh-key-secret
+      mountPath: /etc/secret-volume
 
 notificationConnections:
   - name: slack1

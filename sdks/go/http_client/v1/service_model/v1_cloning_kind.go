@@ -42,9 +42,6 @@ const (
 
 	// V1CloningKindCache captures enum value "cache"
 	V1CloningKindCache V1CloningKind = "cache"
-
-	// V1CloningKindSchedule captures enum value "schedule"
-	V1CloningKindSchedule V1CloningKind = "schedule"
 )
 
 // for schema
@@ -52,7 +49,7 @@ var v1CloningKindEnum []interface{}
 
 func init() {
 	var res []V1CloningKind
-	if err := json.Unmarshal([]byte(`["copy","restart","cache","schedule"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["copy","restart","cache"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

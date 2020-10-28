@@ -214,11 +214,11 @@ class BaseResolver:
     def _apply_pipeline_contexts(self):
         return self.compiled_operation
 
-    def _is_cache_hit(self):
+    def _should_skip_runtime_resolution(self):
         return False
 
     def apply_runtime_contexts(self):
-        if self._is_cache_hit():
+        if self._should_skip_runtime_resolution():
             return
         if self.compiled_operation.has_pipeline:
             self.compiled_operation = self._apply_pipeline_contexts()

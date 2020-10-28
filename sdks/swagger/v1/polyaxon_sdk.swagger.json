@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.2.1",
+    "version": "1.2.1-rc5",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -12986,8 +12986,7 @@
       "enum": [
         "copy",
         "restart",
-        "cache",
-        "schedule"
+        "cache"
       ],
       "default": "copy"
     },
@@ -15115,6 +15114,10 @@
           "items": {
             "type": "string"
           }
+        },
+        "default_mode": {
+          "type": "integer",
+          "format": "int32"
         }
       },
       "title": "K8S resource schema validation"
@@ -17044,14 +17047,14 @@
         "tfjob",
         "pytorchjob",
         "matrix",
-        "scheduler",
+        "schedule",
         "tuner",
         "watchdog",
         "notifier",
         "cleaner"
       ],
       "default": "job",
-      "title": "Run kind enum\nKinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob\nMeta kinds: job, service, dag, matrix, schedule\nhelper kinds: tuner, watchdog, notifier, cleaner"
+      "title": "Run kind enum\nKinds: job, service, dag, matrix, schedule\nRuntime kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob\nhelper kinds: tuner, watchdog, notifier, cleaner"
     },
     "v1RunSchema": {
       "type": "object",

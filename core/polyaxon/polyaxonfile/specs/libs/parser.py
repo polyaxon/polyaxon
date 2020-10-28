@@ -15,13 +15,11 @@
 # limitations under the License.
 
 import ast
-import copy
 import jinja2
 
 from collections.abc import Mapping
 from typing import Dict
 
-from polyaxon.config_reader.utils import deep_update
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyaxonfile.specs.libs.engine import get_engine
 from polyaxon.polyaxonfile.specs.sections import Sections
@@ -109,6 +107,10 @@ class Parser:
                     config_section, parsed_params
                 )
 
+        if Sections.CONDITIONS in parsed_data and not isinstance(
+            parsed_data[Sections.CONDITIONS], str
+        ):
+            parsed_data[Sections.CONDITIONS] = str(parsed_data[Sections.CONDITIONS])
         config_section = cls._get_section(config, Sections.RUN)
         if config_section:
             parsed_data[Sections.RUN] = config_section

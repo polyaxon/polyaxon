@@ -27,7 +27,7 @@
 
 * `MATRIX` (value: `"matrix"`)
 
-* `SCHEDULER` (value: `"scheduler"`)
+* `SCHEDULE` (value: `"schedule"`)
 
 * `TUNER` (value: `"tuner"`)
 

@@ -15,28 +15,41 @@
 # limitations under the License.
 
 import time
+import traceback
 
+from polyaxon.client import RunClient
 from polyaxon.client.impersonate import impersonate
-from polyaxon.env_vars.getters import get_run_info
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 
 
 def create_auth_context():
     try:
-        owner, project, run_uuid = get_run_info()
+        run_client = RunClient()
     except PolyaxonClientException as e:
         raise PolyaxonContainerException(e)
 
     retry = 1
     done = False
+    e = None
     while not done and retry <= 3:
         try:
-            impersonate(owner=owner, project=project, run_uuid=run_uuid)
+            impersonate(
+                owner=run_client.owner,
+                project=run_client.project,
+                run_uuid=run_client.run_uuid,
+                client=run_client.client,
+            )
             print("Auth context initialized.")
             return
-        except PolyaxonClientException:
+        except PolyaxonClientException as e:
             retry += 1
             print("Could not establish connection, retrying ...")
             time.sleep(retry)
 
+    exp = (
+        "Polyaxon auth initialized failed authenticating the operation: {}\n{}".format(
+            repr(e), traceback.format_exc()
+        )
+    )
+    run_client.log_failed("Could not create an auth context.", traceback=exp)
     raise PolyaxonContainerException("Init job did not succeed authenticating job.")

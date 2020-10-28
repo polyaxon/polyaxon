@@ -25,6 +25,7 @@ class K8sResourceSchema(BaseCamelSchema):
     name = fields.Str(required=True)
     mount_path = fields.Str(allow_none=True)
     items = fields.List(fields.Str(), allow_none=True)
+    default_mode = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -34,7 +35,7 @@ class K8sResourceSchema(BaseCamelSchema):
 class V1K8sResourceSchema(BaseConfig, polyaxon_sdk.V1K8sResourceSchema):
     SCHEMA = K8sResourceSchema
     IDENTIFIER = "k8s_resource"
-    REDUCED_ATTRIBUTES = ["mountPath", "items"]
+    REDUCED_ATTRIBUTES = ["mountPath", "items", "defaultMode"]
 
 
 def validate_k8s_resource(definition):

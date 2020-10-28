@@ -20,6 +20,7 @@ import uuid
 
 from mock import patch
 
+from polyaxon import settings
 from polyaxon.env_vars.keys import POLYAXON_KEYS_RUN_INSTANCE
 from polyaxon.exceptions import PolyaxonContainerException
 from polyaxon.init.auth import create_auth_context
@@ -42,6 +43,7 @@ class TestInitAuth(BaseTestCase):
     @patch("polyaxon_sdk.UsersV1Api.get_user")
     @patch("polyaxon.client.impersonate.create_context_auth")
     def test_init_auth(self, create_context, get_user, impersonate_token):
+        settings.CLIENT_CONFIG.is_managed = True
         os.environ[POLYAXON_KEYS_RUN_INSTANCE] = "owner.project.runs.{}".format(
             uuid.uuid4().hex
         )
@@ -50,3 +52,4 @@ class TestInitAuth(BaseTestCase):
         assert create_context.call_count == 1
         assert get_user.call_count == 1
         del os.environ[POLYAXON_KEYS_RUN_INSTANCE]
+        settings.CLIENT_CONFIG.is_managed = None

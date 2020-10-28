@@ -45,7 +45,6 @@ field                                                                      | con
 `project.*` (e.g. project.name)                                            | [value condition](/docs/core/query-language/#query-with-value-condition)
 `status`                                                                   | [value condition](/docs/core/query-language/#query-with-value-condition)
 `tags`                                                                     | [value condition](/docs/core/query-language/#query-with-value-condition)
-`meta.*` (e.g. meta.iteration)                                             | [value condition](/docs/core/query-language/#query-with-value-condition)
 `inputs.*`                                                                 | [value condition](/docs/core/query-language/#query-with-value-condition)
 `outputs.*`                                                                | [value condition](/docs/core/query-language/#query-with-value-condition)
 `metrics.*`                                                                | [comparison condition](/docs/core/query-language/#query-with-comparison-condition)
@@ -55,6 +54,8 @@ field                                                                      | con
 `queue`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
 `kind`                                                                     | [value condition](/docs/core/query-language/#query-with-value-condition)
 `runtime`                                                                  | [value condition](/docs/core/query-language/#query-with-value-condition)
+`meta_info.*`                                                              | [value condition](/docs/core/query-language/#query-with-value-condition)
+`meta_values.*` (e.g. meta_values.iteration)                               | [value condition](/docs/core/query-language/#query-with-value-condition)
 `meta_flags.*` (e.g. meta_flags.has_events or meta_flags.has_tensorboard)  | [bool condition](/docs/core/query-language/#query-with-bool-condition)
 `live_state`                                                               | [value condition](/docs/core/query-language/#query-with-value-condition)
 
