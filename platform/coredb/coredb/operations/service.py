@@ -54,6 +54,8 @@ class OperationsService(Service):
     def get_kind(compiled_operation: V1CompiledOperation) -> Tuple[str, Optional[str]]:
         if compiled_operation.is_job_run:
             return V1RunKind.JOB, V1RunKind.JOB
+        if compiled_operation.is_service_run:
+            return V1RunKind.SERVICE, V1RunKind.SERVICE
         elif compiled_operation.is_tf_job_run:
             return V1RunKind.JOB, V1RunKind.TFJOB
         elif compiled_operation.is_pytorch_job_run:
