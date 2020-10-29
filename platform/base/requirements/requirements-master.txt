@@ -1,2 +1,2 @@
--e git+https://github.com/polyaxon/polyaxon.git@master#egg=polyaxon-sdk==1.2.1rc4&subdirectory=sdks/python/http_client/v1
--e git+https://github.com/polyaxon/polyaxon.git@master#egg=polyaxon==1.2.1rc4&subdirectory=core
+-e git+https://github.com/polyaxon/polyaxon.git@master#egg=polyaxon-sdk==1.2.1&subdirectory=sdks/python/http_client/v1
+-e git+https://github.com/polyaxon/polyaxon.git@master#egg=polyaxon==1.2.1&subdirectory=core

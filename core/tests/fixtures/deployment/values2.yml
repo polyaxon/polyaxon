@@ -57,7 +57,7 @@ connections:
     description: "ssh for git repos"
     tags: [repos]
     schema:
-      url: https://github.com/private/repo
+      url: https://github.com/polyaxon/polyaxon-ee
     secret:
       name: ssh-key-secret
       mountPath: /etc/secret-volume

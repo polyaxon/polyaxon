@@ -25,7 +25,7 @@ run:
   kind: job
   connections: ["{{ params.destination.connection }}"]
   container:
-    image: polyaxon/polyaxon-dockerizer:1.2.0
+    image: polyaxon/polyaxon-dockerizer:1.2.1
     imagePullPolicy: "Always"
     args: [
       "build-and-push",
