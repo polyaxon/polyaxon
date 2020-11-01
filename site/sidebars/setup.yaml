@@ -43,6 +43,8 @@
       link: /docs/setup/connections/registry/
     - title: Git Connections
       link: /docs/setup/connections/git/
+    - title: SSH Connections
+      link: /docs/setup/connections/ssh/
     - title: Notifications
       link: /docs/setup/connections/notifications/
   - group: Auxiliaries
