@@ -13,7 +13,7 @@ botocore==1.19.9
 google-cloud-storage==1.32.0
 
 httpretty==1.0.2
-moto==1.3.14
+moto==1.3.16
 google-compute-engine==2.8.13
 
 kubernetes_asyncio==11.3.0
