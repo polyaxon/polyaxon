@@ -208,7 +208,7 @@ func NewPatchComponentHubDefault(code int) *PatchComponentHubDefault {
 
 /*PatchComponentHubDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchComponentHubDefault struct {
 	_statusCode int

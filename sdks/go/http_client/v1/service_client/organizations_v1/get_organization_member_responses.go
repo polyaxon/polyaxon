@@ -208,7 +208,7 @@ func NewGetOrganizationMemberDefault(code int) *GetOrganizationMemberDefault {
 
 /*GetOrganizationMemberDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetOrganizationMemberDefault struct {
 	_statusCode int

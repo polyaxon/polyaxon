@@ -208,7 +208,7 @@ func NewUpdateTeamDefault(code int) *UpdateTeamDefault {
 
 /*UpdateTeamDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UpdateTeamDefault struct {
 	_statusCode int

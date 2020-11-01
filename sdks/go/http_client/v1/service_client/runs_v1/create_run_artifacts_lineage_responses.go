@@ -196,7 +196,7 @@ func NewCreateRunArtifactsLineageDefault(code int) *CreateRunArtifactsLineageDef
 
 /*CreateRunArtifactsLineageDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type CreateRunArtifactsLineageDefault struct {
 	_statusCode int

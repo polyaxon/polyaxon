@@ -196,7 +196,7 @@ func NewInvalidateRunsDefault(code int) *InvalidateRunsDefault {
 
 /*InvalidateRunsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type InvalidateRunsDefault struct {
 	_statusCode int

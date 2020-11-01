@@ -208,7 +208,7 @@ func NewListConnectionNamesDefault(code int) *ListConnectionNamesDefault {
 
 /*ListConnectionNamesDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListConnectionNamesDefault struct {
 	_statusCode int

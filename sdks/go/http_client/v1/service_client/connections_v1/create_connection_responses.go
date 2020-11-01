@@ -208,7 +208,7 @@ func NewCreateConnectionDefault(code int) *CreateConnectionDefault {
 
 /*CreateConnectionDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type CreateConnectionDefault struct {
 	_statusCode int

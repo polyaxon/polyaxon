@@ -208,7 +208,7 @@ func NewGetLogHandlerDefault(code int) *GetLogHandlerDefault {
 
 /*GetLogHandlerDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetLogHandlerDefault struct {
 	_statusCode int

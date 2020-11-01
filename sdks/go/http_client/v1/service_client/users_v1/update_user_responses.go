@@ -208,7 +208,7 @@ func NewUpdateUserDefault(code int) *UpdateUserDefault {
 
 /*UpdateUserDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UpdateUserDefault struct {
 	_statusCode int

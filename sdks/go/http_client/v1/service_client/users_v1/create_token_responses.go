@@ -208,7 +208,7 @@ func NewCreateTokenDefault(code int) *CreateTokenDefault {
 
 /*CreateTokenDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type CreateTokenDefault struct {
 	_statusCode int

@@ -208,7 +208,7 @@ func NewListSearchesDefault(code int) *ListSearchesDefault {
 
 /*ListSearchesDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListSearchesDefault struct {
 	_statusCode int

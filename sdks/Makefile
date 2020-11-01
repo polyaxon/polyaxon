@@ -28,7 +28,7 @@ PB_CLIENT := pb_client
 HTTP_CLIENT := http_client
 
 # Flags
-INCLUDE_FLAGS := -I/usr/local/include -I. -I/gopath/pkg/mod -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.14.7/third_party/googleapis/ -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.14.7
+INCLUDE_FLAGS := -I/usr/local/include -I. -I/gopath/pkg/mod -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.16.0/third_party/googleapis/ -I/gopath/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.16.0
 API_FLAGS := --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=simple_operation_ids=true,logtostderr=true,allow_delete_body=true:swagger
 PROTO_PATH := --proto_path=protos/
 

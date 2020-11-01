@@ -98,7 +98,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="createOrganizationMember"></a>
 # **createOrganizationMember**
@@ -173,7 +173,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="deleteOrganization"></a>
 # **deleteOrganization**
@@ -245,7 +245,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="deleteOrganizationInvitation"></a>
 # **deleteOrganizationInvitation**
@@ -327,7 +327,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="deleteOrganizationMember"></a>
 # **deleteOrganizationMember**
@@ -399,7 +399,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getOrganization"></a>
 # **getOrganization**
@@ -472,7 +472,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getOrganizationInvitation"></a>
 # **getOrganizationInvitation**
@@ -555,7 +555,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getOrganizationMember"></a>
 # **getOrganizationMember**
@@ -628,7 +628,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getOrganizationSettings"></a>
 # **getOrganizationSettings**
@@ -717,7 +717,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listOrganizationMemberNames"></a>
 # **listOrganizationMemberNames**
@@ -796,7 +796,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listOrganizationMembers"></a>
 # **listOrganizationMembers**
@@ -875,7 +875,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listOrganizationNames"></a>
 # **listOrganizationNames**
@@ -942,7 +942,7 @@ This endpoint does not need any parameter.
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listOrganizations"></a>
 # **listOrganizations**
@@ -1009,7 +1009,7 @@ This endpoint does not need any parameter.
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="organizationPlan"></a>
 # **organizationPlan**
@@ -1082,7 +1082,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchOrganization"></a>
 # **patchOrganization**
@@ -1155,7 +1155,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchOrganizationInvitation"></a>
 # **patchOrganizationInvitation**
@@ -1230,7 +1230,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchOrganizationMember"></a>
 # **patchOrganizationMember**
@@ -1307,7 +1307,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchOrganizationSettings"></a>
 # **patchOrganizationSettings**
@@ -1380,7 +1380,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateOrganization"></a>
 # **updateOrganization**
@@ -1453,7 +1453,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateOrganizationInvitation"></a>
 # **updateOrganizationInvitation**
@@ -1528,7 +1528,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateOrganizationMember"></a>
 # **updateOrganizationMember**
@@ -1605,7 +1605,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateOrganizationSettings"></a>
 # **updateOrganizationSettings**
@@ -1678,5 +1678,5 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 

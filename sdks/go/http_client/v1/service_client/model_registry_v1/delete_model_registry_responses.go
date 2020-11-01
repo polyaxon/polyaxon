@@ -196,7 +196,7 @@ func NewDeleteModelRegistryDefault(code int) *DeleteModelRegistryDefault {
 
 /*DeleteModelRegistryDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteModelRegistryDefault struct {
 	_statusCode int

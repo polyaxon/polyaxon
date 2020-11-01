@@ -208,7 +208,7 @@ func NewPatchUserDefault(code int) *PatchUserDefault {
 
 /*PatchUserDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchUserDefault struct {
 	_statusCode int

@@ -208,7 +208,7 @@ func NewGetProjectSearchDefault(code int) *GetProjectSearchDefault {
 
 /*GetProjectSearchDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetProjectSearchDefault struct {
 	_statusCode int

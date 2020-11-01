@@ -85,7 +85,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="deleteSearch"></a>
 # **deleteSearch**
@@ -157,7 +157,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getSearch"></a>
 # **getSearch**
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listSearchNames"></a>
 # **listSearchNames**
@@ -309,7 +309,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listSearches"></a>
 # **listSearches**
@@ -388,7 +388,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchSearch"></a>
 # **patchSearch**
@@ -463,7 +463,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateSearch"></a>
 # **updateSearch**
@@ -538,5 +538,5 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 

@@ -208,7 +208,7 @@ func NewGetRunResourcesDefault(code int) *GetRunResourcesDefault {
 
 /*GetRunResourcesDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetRunResourcesDefault struct {
 	_statusCode int

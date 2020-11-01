@@ -208,7 +208,7 @@ func NewListDashboardNamesDefault(code int) *ListDashboardNamesDefault {
 
 /*ListDashboardNamesDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListDashboardNamesDefault struct {
 	_statusCode int

@@ -85,7 +85,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="deleteComponentHub"></a>
 # **deleteComponentHub**
@@ -157,7 +157,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getComponentHub"></a>
 # **getComponentHub**
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listComponentHubNames"></a>
 # **listComponentHubNames**
@@ -309,7 +309,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listComponentHubs"></a>
 # **listComponentHubs**
@@ -388,7 +388,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchComponentHub"></a>
 # **patchComponentHub**
@@ -463,7 +463,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateComponentHub"></a>
 # **updateComponentHub**
@@ -538,5 +538,5 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 

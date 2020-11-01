@@ -196,7 +196,7 @@ func NewNotifyRunStatusDefault(code int) *NotifyRunStatusDefault {
 
 /*NotifyRunStatusDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type NotifyRunStatusDefault struct {
 	_statusCode int

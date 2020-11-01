@@ -99,7 +99,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="bookmarkProject"></a>
 # **bookmarkProject**
@@ -171,7 +171,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="createProject"></a>
 # **createProject**
@@ -244,7 +244,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="deleteProject"></a>
 # **deleteProject**
@@ -316,7 +316,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="disableProjectCI"></a>
 # **disableProjectCI**
@@ -388,7 +388,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="enableProjectCI"></a>
 # **enableProjectCI**
@@ -460,7 +460,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="fetchProjectTeams"></a>
 # **fetchProjectTeams**
@@ -533,7 +533,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getProject"></a>
 # **getProject**
@@ -606,7 +606,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getProjectSettings"></a>
 # **getProjectSettings**
@@ -679,7 +679,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listArchivedProjects"></a>
 # **listArchivedProjects**
@@ -758,7 +758,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listBookmarkedProjects"></a>
 # **listBookmarkedProjects**
@@ -837,7 +837,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listProjectNames"></a>
 # **listProjectNames**
@@ -916,7 +916,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listProjects"></a>
 # **listProjects**
@@ -995,7 +995,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchProject"></a>
 # **patchProject**
@@ -1070,7 +1070,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchProjectSettings"></a>
 # **patchProjectSettings**
@@ -1145,7 +1145,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchProjectTeams"></a>
 # **patchProjectTeams**
@@ -1220,7 +1220,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="restoreProject"></a>
 # **restoreProject**
@@ -1292,7 +1292,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="unbookmarkProject"></a>
 # **unbookmarkProject**
@@ -1364,7 +1364,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateProject"></a>
 # **updateProject**
@@ -1439,7 +1439,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateProjectSettings"></a>
 # **updateProjectSettings**
@@ -1514,7 +1514,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateProjectTeams"></a>
 # **updateProjectTeams**
@@ -1589,7 +1589,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="uploadProjectArtifact"></a>
 # **uploadProjectArtifact**

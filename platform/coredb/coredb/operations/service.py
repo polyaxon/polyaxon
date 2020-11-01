@@ -52,11 +52,7 @@ class OperationsService(Service):
 
     @staticmethod
     def get_kind(compiled_operation: V1CompiledOperation) -> Tuple[str, Optional[str]]:
-        if compiled_operation.is_job_run:
-            return V1RunKind.JOB, V1RunKind.JOB
-        if compiled_operation.is_service_run:
-            return V1RunKind.SERVICE, V1RunKind.SERVICE
-        elif compiled_operation.is_tf_job_run:
+        if compiled_operation.is_tf_job_run:
             return V1RunKind.JOB, V1RunKind.TFJOB
         elif compiled_operation.is_pytorch_job_run:
             return V1RunKind.JOB, V1RunKind.PYTORCHJOB
@@ -66,8 +62,9 @@ class OperationsService(Service):
             return V1RunKind.JOB, V1RunKind.DASK
         elif compiled_operation.is_spark_run:
             return V1RunKind.JOB, V1RunKind.SPARK
-        else:
-            return compiled_operation.run.kind, None
+        # Default case
+        kind = compiled_operation.run.kind
+        return kind, kind
 
     @classmethod
     def supports_kind(
@@ -101,6 +98,9 @@ class OperationsService(Service):
             kind = V1RunKind.MATRIX
             runtime = compiled_operation.matrix.kind
 
+        iteration = kwargs.pop("iteration", None)
+        if iteration is not None:
+            meta_info["iteration"] = iteration
         return kind, runtime, meta_info
 
     @staticmethod

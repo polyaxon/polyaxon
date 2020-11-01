@@ -208,7 +208,7 @@ func NewFetchProjectTeamsDefault(code int) *FetchProjectTeamsDefault {
 
 /*FetchProjectTeamsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type FetchProjectTeamsDefault struct {
 	_statusCode int

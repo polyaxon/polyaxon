@@ -208,7 +208,7 @@ func NewListModelRegistryDefault(code int) *ListModelRegistryDefault {
 
 /*ListModelRegistryDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListModelRegistryDefault struct {
 	_statusCode int

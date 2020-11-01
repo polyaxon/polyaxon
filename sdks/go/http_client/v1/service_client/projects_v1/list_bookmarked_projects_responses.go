@@ -208,7 +208,7 @@ func NewListBookmarkedProjectsDefault(code int) *ListBookmarkedProjectsDefault {
 
 /*ListBookmarkedProjectsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListBookmarkedProjectsDefault struct {
 	_statusCode int

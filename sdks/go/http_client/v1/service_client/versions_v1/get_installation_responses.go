@@ -208,7 +208,7 @@ func NewGetInstallationDefault(code int) *GetInstallationDefault {
 
 /*GetInstallationDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetInstallationDefault struct {
 	_statusCode int

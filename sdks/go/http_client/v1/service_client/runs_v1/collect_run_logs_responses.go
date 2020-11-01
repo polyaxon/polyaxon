@@ -196,7 +196,7 @@ func NewCollectRunLogsDefault(code int) *CollectRunLogsDefault {
 
 /*CollectRunLogsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type CollectRunLogsDefault struct {
 	_statusCode int

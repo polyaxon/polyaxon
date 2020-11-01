@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **skip_on_upstream_skip** | **bool** |  | [optional] 
 **inputs** | [**list[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**list[V1IO]**](V1IO.md) |  | [optional] 
+**contexts** | [**list[V1IO]**](V1IO.md) |  | [optional] 
 **run** | [**object**](.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

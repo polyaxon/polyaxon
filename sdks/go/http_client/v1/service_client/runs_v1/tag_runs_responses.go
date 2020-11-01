@@ -196,7 +196,7 @@ func NewTagRunsDefault(code int) *TagRunsDefault {
 
 /*TagRunsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type TagRunsDefault struct {
 	_statusCode int

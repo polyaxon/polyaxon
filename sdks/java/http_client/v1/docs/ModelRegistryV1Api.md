@@ -85,7 +85,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="deleteModelRegistry"></a>
 # **deleteModelRegistry**
@@ -157,7 +157,7 @@ null (empty response body)
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="getModelRegistry"></a>
 # **getModelRegistry**
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listModelRegistry"></a>
 # **listModelRegistry**
@@ -309,7 +309,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="listModelRegistryNames"></a>
 # **listModelRegistryNames**
@@ -388,7 +388,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="patchModelRegistry"></a>
 # **patchModelRegistry**
@@ -463,7 +463,7 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 
 <a name="updateModelRegistry"></a>
 # **updateModelRegistry**
@@ -538,5 +538,5 @@ Name | Type | Description  | Notes
 **204** | No content. |  -  |
 **403** | You don&#39;t have permission to access the resource. |  -  |
 **404** | Resource does not exist. |  -  |
-**0** | An unexpected error response |  -  |
+**0** | An unexpected error response. |  -  |
 

@@ -208,7 +208,7 @@ func NewGetMultiRunEventsDefault(code int) *GetMultiRunEventsDefault {
 
 /*GetMultiRunEventsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetMultiRunEventsDefault struct {
 	_statusCode int

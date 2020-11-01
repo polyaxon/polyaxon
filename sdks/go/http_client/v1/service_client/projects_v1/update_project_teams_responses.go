@@ -208,7 +208,7 @@ func NewUpdateProjectTeamsDefault(code int) *UpdateProjectTeamsDefault {
 
 /*UpdateProjectTeamsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UpdateProjectTeamsDefault struct {
 	_statusCode int

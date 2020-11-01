@@ -36,6 +36,7 @@ class Sections:
     TERMINATION = "termination"
     INPUTS = "inputs"
     OUTPUTS = "outputs"
+    CONTEXTS = "contexts"
     PARAMS = "params"
     CONNECTIONS = "connections"
     RUN = "run"
@@ -87,6 +88,7 @@ class Sections:
         COMPONENT,
         INPUTS,
         OUTPUTS,
+        CONTEXTS,
         RUN,
         RUN_PATCH,
     )

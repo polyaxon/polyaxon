@@ -208,7 +208,7 @@ func NewUpdateConnectionDefault(code int) *UpdateConnectionDefault {
 
 /*UpdateConnectionDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UpdateConnectionDefault struct {
 	_statusCode int

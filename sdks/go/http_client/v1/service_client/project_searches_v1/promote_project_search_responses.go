@@ -196,7 +196,7 @@ func NewPromoteProjectSearchDefault(code int) *PromoteProjectSearchDefault {
 
 /*PromoteProjectSearchDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PromoteProjectSearchDefault struct {
 	_statusCode int

@@ -208,7 +208,7 @@ func NewGetDashboardDefault(code int) *GetDashboardDefault {
 
 /*GetDashboardDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetDashboardDefault struct {
 	_statusCode int

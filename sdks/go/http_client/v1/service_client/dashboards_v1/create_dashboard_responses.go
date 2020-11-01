@@ -208,7 +208,7 @@ func NewCreateDashboardDefault(code int) *CreateDashboardDefault {
 
 /*CreateDashboardDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type CreateDashboardDefault struct {
 	_statusCode int

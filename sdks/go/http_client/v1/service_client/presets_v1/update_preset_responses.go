@@ -208,7 +208,7 @@ func NewUpdatePresetDefault(code int) *UpdatePresetDefault {
 
 /*UpdatePresetDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UpdatePresetDefault struct {
 	_statusCode int

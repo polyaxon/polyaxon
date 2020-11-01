@@ -208,7 +208,7 @@ func NewCreateAgentDefault(code int) *CreateAgentDefault {
 
 /*CreateAgentDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type CreateAgentDefault struct {
 	_statusCode int

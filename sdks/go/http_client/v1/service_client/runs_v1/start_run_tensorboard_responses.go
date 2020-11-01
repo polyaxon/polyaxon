@@ -196,7 +196,7 @@ func NewStartRunTensorboardDefault(code int) *StartRunTensorboardDefault {
 
 /*StartRunTensorboardDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type StartRunTensorboardDefault struct {
 	_statusCode int

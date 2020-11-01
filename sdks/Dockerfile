@@ -30,8 +30,8 @@ VOLUME /sdks
 COPY . /sdks
 WORKDIR /sdks
 RUN go get -u github.com/golang/protobuf/protoc-gen-go
-RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.14.7
-RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.14.7
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.16.0
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.16.0
 RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
 
 # HTML openapi

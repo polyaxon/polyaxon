@@ -196,7 +196,7 @@ func NewDeleteTeamMemberDefault(code int) *DeleteTeamMemberDefault {
 
 /*DeleteTeamMemberDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteTeamMemberDefault struct {
 	_statusCode int

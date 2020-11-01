@@ -208,7 +208,7 @@ func NewPatchOrganizationSettingsDefault(code int) *PatchOrganizationSettingsDef
 
 /*PatchOrganizationSettingsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchOrganizationSettingsDefault struct {
 	_statusCode int

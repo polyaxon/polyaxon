@@ -196,7 +196,7 @@ func NewBookmarkRunDefault(code int) *BookmarkRunDefault {
 
 /*BookmarkRunDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type BookmarkRunDefault struct {
 	_statusCode int

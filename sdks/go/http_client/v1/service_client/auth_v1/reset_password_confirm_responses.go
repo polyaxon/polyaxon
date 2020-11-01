@@ -208,7 +208,7 @@ func NewResetPasswordConfirmDefault(code int) *ResetPasswordConfirmDefault {
 
 /*ResetPasswordConfirmDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ResetPasswordConfirmDefault struct {
 	_statusCode int

@@ -88,8 +88,11 @@ def get_fxt_job_with_inputs_and_conditions():
         "kind": "operation",
         "name": "foo",
         "description": "a description",
-        "params": {"image": {"value": "foo/bar"}},
-        "conditions": "{{ image == 'foo/bar' }}",
+        "params": {
+            "image": {"value": "foo/bar"},
+            "context_param": {"value": "some-value", "contextOnly": True},
+        },
+        "conditions": "{{ image == 'foo/bar' and context_param == 'some-value' }}",
         "component": {
             "name": "build-template",
             "inputs": [{"name": "image", "type": "str"}],

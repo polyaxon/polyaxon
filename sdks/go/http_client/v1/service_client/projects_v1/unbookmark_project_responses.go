@@ -196,7 +196,7 @@ func NewUnbookmarkProjectDefault(code int) *UnbookmarkProjectDefault {
 
 /*UnbookmarkProjectDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UnbookmarkProjectDefault struct {
 	_statusCode int

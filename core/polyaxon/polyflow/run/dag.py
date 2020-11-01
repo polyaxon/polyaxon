@@ -565,6 +565,12 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
         from polyaxon.polyaxonfile.check import collect_references
 
         inputs = inputs or []
+        self._context["dag.name"] = V1IO(
+            name="name", iotype=types.STR, value="", is_optional=True
+        )
+        self._context["dag.uuid"] = V1IO(
+            name="uuid", iotype=types.STR, value="", is_optional=True
+        )
         for _input in inputs:
             self._context["dag.inputs.{}".format(_input.name)] = _input
 

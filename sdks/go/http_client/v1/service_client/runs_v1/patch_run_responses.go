@@ -208,7 +208,7 @@ func NewPatchRunDefault(code int) *PatchRunDefault {
 
 /*PatchRunDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchRunDefault struct {
 	_statusCode int

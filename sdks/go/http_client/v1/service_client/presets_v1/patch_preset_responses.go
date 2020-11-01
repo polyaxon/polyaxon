@@ -208,7 +208,7 @@ func NewPatchPresetDefault(code int) *PatchPresetDefault {
 
 /*PatchPresetDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchPresetDefault struct {
 	_statusCode int

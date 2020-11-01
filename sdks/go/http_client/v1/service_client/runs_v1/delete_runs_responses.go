@@ -196,7 +196,7 @@ func NewDeleteRunsDefault(code int) *DeleteRunsDefault {
 
 /*DeleteRunsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteRunsDefault struct {
 	_statusCode int

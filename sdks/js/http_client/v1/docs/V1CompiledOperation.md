@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **skip_on_upstream_skip** | **Boolean** |  | [optional] 
 **inputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
+**contexts** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **run** | [**Object**](.md) |  | [optional] 
 
 

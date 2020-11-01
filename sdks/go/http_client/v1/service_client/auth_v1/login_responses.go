@@ -208,7 +208,7 @@ func NewLoginDefault(code int) *LoginDefault {
 
 /*LoginDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type LoginDefault struct {
 	_statusCode int

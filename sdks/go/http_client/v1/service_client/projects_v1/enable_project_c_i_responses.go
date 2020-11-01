@@ -196,7 +196,7 @@ func NewEnableProjectCIDefault(code int) *EnableProjectCIDefault {
 
 /*EnableProjectCIDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type EnableProjectCIDefault struct {
 	_statusCode int

@@ -196,7 +196,7 @@ func NewSyncAgentDefault(code int) *SyncAgentDefault {
 
 /*SyncAgentDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type SyncAgentDefault struct {
 	_statusCode int

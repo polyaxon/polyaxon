@@ -208,7 +208,7 @@ func NewListOrganizationsDefault(code int) *ListOrganizationsDefault {
 
 /*ListOrganizationsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListOrganizationsDefault struct {
 	_statusCode int

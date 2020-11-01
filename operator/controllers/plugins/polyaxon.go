@@ -138,8 +138,16 @@ func LogPolyaxonRunStatus(owner, project, uuid string, statusCond operationv1.Op
 		Context: ctx,
 	}
 	_, _, err := plxClient.RunsV1.CreateRunStatus(params, plxToken)
-	if _, notFound := err.(*runs_v1.CollectRunLogsNotFound); notFound {
+	if _, notFound := err.(*runs_v1.CreateRunStatusNotFound); notFound {
+		log.Info("Operation create status; instance not found", "Project", project, "Instance", uuid)
 		return nil
+	}
+	if _, forbidden := err.(*runs_v1.CreateRunStatusForbidden); forbidden {
+		log.Info("Operation create status; forbidden", "Project", project, "Instance", uuid)
+		return nil
+	}
+	if _, errorContent := err.(*runs_v1.CreateRunStatusDefault); errorContent {
+		log.Info("Operation create status", "Error", errorContent, "Project", project, "Instance", uuid)
 	}
 	return err
 }
@@ -165,7 +173,15 @@ func CollectPolyaxonRunLogs(namespace, owner, project, uuid string, kind string,
 	}
 	_, _, err := plxClient.RunsV1.CollectRunLogs(params, plxToken)
 	if _, notFound := err.(*runs_v1.CollectRunLogsNotFound); notFound {
+		log.Info("Operation collect logs; instance not found", "Project", project, "Instance", uuid, "kind", kind)
 		return nil
+	}
+	if _, forbidden := err.(*runs_v1.CollectRunLogsForbidden); forbidden {
+		log.Info("Operation collect logs; forbidden", "Project", project, "Instance", uuid, "kind", kind)
+		return nil
+	}
+	if _, errorContent := err.(*runs_v1.CollectRunLogsDefault); errorContent {
+		log.Info("Operation collect logs", "Error", errorContent, "Project", project, "Instance", uuid, "kind", kind)
 	}
 	return err
 }

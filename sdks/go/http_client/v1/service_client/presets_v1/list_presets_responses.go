@@ -208,7 +208,7 @@ func NewListPresetsDefault(code int) *ListPresetsDefault {
 
 /*ListPresetsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListPresetsDefault struct {
 	_statusCode int

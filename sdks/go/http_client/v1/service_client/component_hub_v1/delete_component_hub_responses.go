@@ -196,7 +196,7 @@ func NewDeleteComponentHubDefault(code int) *DeleteComponentHubDefault {
 
 /*DeleteComponentHubDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteComponentHubDefault struct {
 	_statusCode int

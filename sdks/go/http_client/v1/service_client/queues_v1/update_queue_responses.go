@@ -208,7 +208,7 @@ func NewUpdateQueueDefault(code int) *UpdateQueueDefault {
 
 /*UpdateQueueDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UpdateQueueDefault struct {
 	_statusCode int

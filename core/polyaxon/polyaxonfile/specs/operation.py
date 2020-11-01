@@ -20,6 +20,7 @@ from typing import Dict, Union
 from polyaxon.polyaxonfile.specs import kinds
 from polyaxon.polyaxonfile.specs.base import BaseSpecification
 from polyaxon.polyflow import (
+    V1IO,
     V1CompiledOperation,
     V1Component,
     V1Operation,
@@ -49,9 +50,15 @@ class OperationSpecification(BaseSpecification):
                 validate_run_patch(config.run_patch, component.run.kind),
                 strategy=config.patch_strategy,
             )
+        # Gather contexts io
+        config_params = config.params or {}
+        contexts = [
+            V1IO(name=p) for p in config_params if config_params[p].context_only
+        ]
         patch_compiled = V1CompiledOperation(
             name=config.name,
             description=config.description,
+            contexts=contexts,
             tags=config.tags,
             presets=config.presets,
             queue=config.queue,

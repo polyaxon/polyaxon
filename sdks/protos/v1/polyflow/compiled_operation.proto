@@ -93,6 +93,9 @@ message CompiledOperation {
     // Optional outputs definition
     repeated IO outputs = 21;
 
+    // Optional outputs definition
+    repeated IO contexts = 22;
+
     // Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 22;
+    google.protobuf.Struct run = 23;
 }

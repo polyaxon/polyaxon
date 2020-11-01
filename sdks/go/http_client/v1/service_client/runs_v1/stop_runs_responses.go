@@ -196,7 +196,7 @@ func NewStopRunsDefault(code int) *StopRunsDefault {
 
 /*StopRunsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type StopRunsDefault struct {
 	_statusCode int

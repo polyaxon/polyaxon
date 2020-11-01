@@ -196,7 +196,7 @@ func NewDeleteRunArtifactsDefault(code int) *DeleteRunArtifactsDefault {
 
 /*DeleteRunArtifactsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteRunArtifactsDefault struct {
 	_statusCode int

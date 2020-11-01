@@ -196,7 +196,7 @@ func NewDeletePresetDefault(code int) *DeletePresetDefault {
 
 /*DeletePresetDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeletePresetDefault struct {
 	_statusCode int

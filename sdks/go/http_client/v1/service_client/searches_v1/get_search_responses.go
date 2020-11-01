@@ -208,7 +208,7 @@ func NewGetSearchDefault(code int) *GetSearchDefault {
 
 /*GetSearchDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetSearchDefault struct {
 	_statusCode int

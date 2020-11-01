@@ -208,7 +208,7 @@ func NewPatchProjectDefault(code int) *PatchProjectDefault {
 
 /*PatchProjectDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchProjectDefault struct {
 	_statusCode int

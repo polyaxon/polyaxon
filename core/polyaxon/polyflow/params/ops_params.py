@@ -27,6 +27,7 @@ def validate_params(
     params: Dict[str, Union[Dict, V1Param]],
     inputs: List[V1IO],
     outputs: List[V1IO],
+    contexts: List[V1IO] = None,
     matrix: V1Matrix = None,
     context: Dict = None,
     is_template: bool = True,
@@ -43,6 +44,28 @@ def validate_params(
      * ops reference: in that case a context must be provided to validate that the reference exists.
         and types are correct.
     """
+    contexts_by_keys = {k.name: k for k in contexts or []}
+
+    def parse_param(k, v) -> V1Param:
+        if not isinstance(v, V1Param):
+            v = V1Param.read(v, config_type=".yaml")
+        if v and k in contexts_by_keys:
+            v.context_only = True
+            v.to_init = contexts_by_keys[k].to_init
+            v.connection = contexts_by_keys[k].connection
+        return v
+
+    def validate_matrix(io: V1IO) -> bool:
+        if isinstance(matrix, V1Mapping):
+            return matrix.has_key(io.name)  # noqa
+        elif io.name in matrix.params:
+            matrix.params[io.name].validate_io(io)
+            return True
+        return False
+
+    params = params or {}
+    params = {k: parse_param(k, params[k]) for k in params}
+
     if requires_params(inputs, outputs):
         if not is_template and not params and not matrix:
             message = (
@@ -63,21 +86,6 @@ def validate_params(
                 message += " Please check: {}".format(extra_info)
             raise ValidationError(message)
 
-    def parse_param(v) -> V1Param:
-        if isinstance(v, V1Param):
-            return v
-        return V1Param.read(v, config_type=".yaml")
-
-    def validate_matrix(io: V1IO) -> bool:
-        if isinstance(matrix, V1Mapping):
-            return matrix.has_key(io.name)  # noqa
-        elif io.name in matrix.params:
-            matrix.params[io.name].validate_io(io)
-            return True
-        return False
-
-    params = params or {}
-    params = {k: parse_param(params[k]) for k in params}
     matrix = matrix or {}
     inputs = inputs or []
     outputs = outputs or []
@@ -109,7 +117,7 @@ def validate_params(
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(inp.name)
-        elif matrix and validate_matrix(inp):
+        elif matrix and validate_matrix(inp):  # TODO: Add resource
             pass
         elif not inp.is_optional and not is_template:
             message = "Input {} is required, no param was passed.".format(inp.name)
@@ -172,13 +180,43 @@ def validate_params(
             )
     extra_params = set(params.keys()) - set(processed_params)
     context_params = {p for p in params if params[p].context_only}
-    extra_params = extra_params - context_params
-    if extra_params:
-        message = "Received unexpected params `{}`".format(extra_params)
+    extra_invalid_params = extra_params - context_params
+    if extra_invalid_params:
+        message = "Received unexpected params `{}`".format(extra_invalid_params)
         if extra_info:
             message += " Please check: {}".format(extra_info)
         raise ValidationError(message)
 
+    # Add all (extra) context params that were not processed during the IO check
+    for p in contexts_by_keys:
+        if p in extra_params:
+            param_value = params[p]
+            param_spec = param_value.get_spec(
+                name=p,
+                iotype=None,
+                is_flag=None,
+                is_list=None,
+                is_context=True,
+                arg_format=None,
+            )
+            validated_params.append(param_spec)
+        else:
+            context_io = contexts_by_keys[p]
+            validated_params.append(
+                ParamSpec(
+                    name=p,
+                    param=V1Param(
+                        value=context_io.value,
+                        connection=context_io.connection,
+                        to_init=context_io.to_init,
+                    ),
+                    iotype=None,
+                    is_flag=None,
+                    is_list=None,
+                    is_context=True,
+                    arg_format=None,
+                )
+            )
     return validated_params
 
 

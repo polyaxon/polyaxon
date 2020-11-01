@@ -196,7 +196,7 @@ func NewChangePasswordDefault(code int) *ChangePasswordDefault {
 
 /*ChangePasswordDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ChangePasswordDefault struct {
 	_statusCode int

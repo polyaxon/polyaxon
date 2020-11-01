@@ -208,7 +208,7 @@ func NewCreateTeamDefault(code int) *CreateTeamDefault {
 
 /*CreateTeamDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type CreateTeamDefault struct {
 	_statusCode int

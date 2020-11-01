@@ -208,7 +208,7 @@ func NewGetRunArtifactsTreeDefault(code int) *GetRunArtifactsTreeDefault {
 
 /*GetRunArtifactsTreeDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetRunArtifactsTreeDefault struct {
 	_statusCode int

@@ -196,7 +196,7 @@ func NewRestoreProjectDefault(code int) *RestoreProjectDefault {
 
 /*RestoreProjectDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type RestoreProjectDefault struct {
 	_statusCode int

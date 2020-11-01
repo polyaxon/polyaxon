@@ -208,7 +208,7 @@ func NewSignupDefault(code int) *SignupDefault {
 
 /*SignupDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type SignupDefault struct {
 	_statusCode int

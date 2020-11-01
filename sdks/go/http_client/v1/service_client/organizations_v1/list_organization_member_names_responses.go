@@ -208,7 +208,7 @@ func NewListOrganizationMemberNamesDefault(code int) *ListOrganizationMemberName
 
 /*ListOrganizationMemberNamesDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListOrganizationMemberNamesDefault struct {
 	_statusCode int

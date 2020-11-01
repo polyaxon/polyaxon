@@ -208,7 +208,7 @@ func NewUpdateModelRegistryDefault(code int) *UpdateModelRegistryDefault {
 
 /*UpdateModelRegistryDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UpdateModelRegistryDefault struct {
 	_statusCode int

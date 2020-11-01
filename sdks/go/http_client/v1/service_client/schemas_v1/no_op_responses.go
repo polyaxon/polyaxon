@@ -208,7 +208,7 @@ func NewNoOpDefault(code int) *NoOpDefault {
 
 /*NoOpDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type NoOpDefault struct {
 	_statusCode int

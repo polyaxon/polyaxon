@@ -208,7 +208,7 @@ func NewGetRunSettingsDefault(code int) *GetRunSettingsDefault {
 
 /*GetRunSettingsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetRunSettingsDefault struct {
 	_statusCode int

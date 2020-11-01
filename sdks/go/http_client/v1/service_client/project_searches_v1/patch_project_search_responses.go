@@ -208,7 +208,7 @@ func NewPatchProjectSearchDefault(code int) *PatchProjectSearchDefault {
 
 /*PatchProjectSearchDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchProjectSearchDefault struct {
 	_statusCode int

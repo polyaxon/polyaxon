@@ -208,7 +208,7 @@ func NewUpdateOrganizationSettingsDefault(code int) *UpdateOrganizationSettingsD
 
 /*UpdateOrganizationSettingsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type UpdateOrganizationSettingsDefault struct {
 	_statusCode int

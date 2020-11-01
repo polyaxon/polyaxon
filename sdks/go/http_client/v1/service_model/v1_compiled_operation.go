@@ -41,6 +41,9 @@ type V1CompiledOperation struct {
 	// An optional list of condition to check before starting the run, entities should be a valid Condition
 	Conditions []interface{} `json:"conditions"`
 
+	// Optional outputs definition
+	Contexts []*V1IO `json:"contexts"`
+
 	// Optional graph dependencies of this op
 	Dependencies []string `json:"dependencies"`
 
@@ -108,6 +111,10 @@ func (m *V1CompiledOperation) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateCache(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateContexts(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -179,6 +186,31 @@ func (m *V1CompiledOperation) validateCache(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) validateContexts(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Contexts) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Contexts); i++ {
+		if swag.IsZero(m.Contexts[i]) { // not required
+			continue
+		}
+
+		if m.Contexts[i] != nil {
+			if err := m.Contexts[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("contexts" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

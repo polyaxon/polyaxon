@@ -208,7 +208,7 @@ func NewGetPresetDefault(code int) *GetPresetDefault {
 
 /*GetPresetDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetPresetDefault struct {
 	_statusCode int

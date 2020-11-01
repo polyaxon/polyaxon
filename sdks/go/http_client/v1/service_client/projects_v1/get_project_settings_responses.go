@@ -208,7 +208,7 @@ func NewGetProjectSettingsDefault(code int) *GetProjectSettingsDefault {
 
 /*GetProjectSettingsDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetProjectSettingsDefault struct {
 	_statusCode int

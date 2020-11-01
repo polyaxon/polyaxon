@@ -208,7 +208,7 @@ func NewListOrganizationQueuesDefault(code int) *ListOrganizationQueuesDefault {
 
 /*ListOrganizationQueuesDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListOrganizationQueuesDefault struct {
 	_statusCode int

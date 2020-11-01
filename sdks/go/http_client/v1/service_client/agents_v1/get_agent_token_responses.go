@@ -208,7 +208,7 @@ func NewGetAgentTokenDefault(code int) *GetAgentTokenDefault {
 
 /*GetAgentTokenDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetAgentTokenDefault struct {
 	_statusCode int

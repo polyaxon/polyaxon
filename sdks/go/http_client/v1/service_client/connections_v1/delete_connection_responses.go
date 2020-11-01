@@ -196,7 +196,7 @@ func NewDeleteConnectionDefault(code int) *DeleteConnectionDefault {
 
 /*DeleteConnectionDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteConnectionDefault struct {
 	_statusCode int

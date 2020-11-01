@@ -208,7 +208,7 @@ func NewListProjectNamesDefault(code int) *ListProjectNamesDefault {
 
 /*ListProjectNamesDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ListProjectNamesDefault struct {
 	_statusCode int

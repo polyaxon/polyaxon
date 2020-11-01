@@ -77,9 +77,16 @@ class Parser:
             parsed_data[Sections.DESCRIPTION] = config.description
         if config.tags:
             parsed_data[Sections.TAGS] = config.tags
+        contexts = getattr(config, Sections.CONTEXTS)
+        if contexts:
+            parsed_data[Sections.CONTEXTS] = [
+                cls.parse_expression(io.to_dict(), parsed_params) for io in contexts
+            ]
         inputs = getattr(config, Sections.INPUTS)
         if inputs:
-            parsed_data[Sections.INPUTS] = [io.to_dict() for io in inputs]
+            parsed_data[Sections.INPUTS] = [
+                cls.parse_expression(io.to_dict(), parsed_params) for io in inputs
+            ]
         outputs = getattr(config, Sections.OUTPUTS)
         if outputs:
             parsed_data[Sections.OUTPUTS] = [

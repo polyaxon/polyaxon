@@ -208,7 +208,7 @@ func NewPatchAgentDefault(code int) *PatchAgentDefault {
 
 /*PatchAgentDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchAgentDefault struct {
 	_statusCode int

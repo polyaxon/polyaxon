@@ -27,6 +27,15 @@ def get_fxt_templated_pipeline_with_upstream_run(run_uuid: UUID):
             "name": "test-build-run",
             "description": "testing a build and run pipeline",
             "tags": ["backend", "native"],
+            "inputs": [
+                {
+                    "name": "top",
+                    "type": "int",
+                    "value": 5,
+                    "isOptional": True,
+                    "description": "top jobs.",
+                }
+            ],
             "run": {
                 "kind": V1RunKind.DAG,
                 "operations": [
@@ -43,6 +52,13 @@ def get_fxt_templated_pipeline_with_upstream_run(run_uuid: UUID):
                         "dagRef": "experiment-template",
                         "name": "run",
                         "dependencies": ["build"],
+                        "runPatch": {
+                            "environment": {
+                                "nodeSelector": {
+                                    "{{ dag_uuid }}": "node-{{ context_param }}",
+                                }
+                            }
+                        },
                         "params": {
                             "image": {
                                 "ref": "ops.build",
@@ -52,6 +68,16 @@ def get_fxt_templated_pipeline_with_upstream_run(run_uuid: UUID):
                             "some-run": {
                                 "value": "outputs.some-int",
                                 "ref": "runs.{}".format(run_uuid.hex),
+                            },
+                            "context_param": {
+                                "value": "inputs.top",
+                                "ref": "dag",
+                                "contextOnly": True,
+                            },
+                            "dag_uuid": {
+                                "value": "uuid",
+                                "ref": "dag",
+                                "contextOnly": True,
                             },
                         },
                     },

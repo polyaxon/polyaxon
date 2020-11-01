@@ -196,7 +196,7 @@ func NewDeleteProjectSearchDefault(code int) *DeleteProjectSearchDefault {
 
 /*DeleteProjectSearchDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteProjectSearchDefault struct {
 	_statusCode int

@@ -208,7 +208,7 @@ func NewCreateComponentHubDefault(code int) *CreateComponentHubDefault {
 
 /*CreateComponentHubDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type CreateComponentHubDefault struct {
 	_statusCode int

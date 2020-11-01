@@ -196,7 +196,7 @@ func NewDeleteTokenDefault(code int) *DeleteTokenDefault {
 
 /*DeleteTokenDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteTokenDefault struct {
 	_statusCode int

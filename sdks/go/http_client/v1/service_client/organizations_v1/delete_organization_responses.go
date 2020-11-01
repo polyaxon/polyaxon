@@ -196,7 +196,7 @@ func NewDeleteOrganizationDefault(code int) *DeleteOrganizationDefault {
 
 /*DeleteOrganizationDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteOrganizationDefault struct {
 	_statusCode int

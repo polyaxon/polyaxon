@@ -208,7 +208,7 @@ func NewPatchModelRegistryDefault(code int) *PatchModelRegistryDefault {
 
 /*PatchModelRegistryDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type PatchModelRegistryDefault struct {
 	_statusCode int

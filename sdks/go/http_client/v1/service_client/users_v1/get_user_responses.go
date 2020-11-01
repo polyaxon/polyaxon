@@ -208,7 +208,7 @@ func NewGetUserDefault(code int) *GetUserDefault {
 
 /*GetUserDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetUserDefault struct {
 	_statusCode int

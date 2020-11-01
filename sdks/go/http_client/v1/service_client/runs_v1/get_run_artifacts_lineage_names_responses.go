@@ -208,7 +208,7 @@ func NewGetRunArtifactsLineageNamesDefault(code int) *GetRunArtifactsLineageName
 
 /*GetRunArtifactsLineageNamesDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetRunArtifactsLineageNamesDefault struct {
 	_statusCode int

@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.2.1
+  version: 1.2.2-rc0
 servers:
 - url: /
 security:
@@ -74,7 +74,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List archived projects for user
       tags:
       - ProjectsV1
@@ -141,7 +141,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List archived runs for user
       tags:
       - RunsV1
@@ -182,7 +182,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Change password
       tags:
       - AuthV1
@@ -225,7 +225,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Reset password
       tags:
       - AuthV1
@@ -271,7 +271,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Reset password confirm
       tags:
       - AuthV1
@@ -317,7 +317,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Signup
       tags:
       - AuthV1
@@ -363,7 +363,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Login
       tags:
       - AuthV1
@@ -432,7 +432,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List bookmarked projects for user
       tags:
       - ProjectsV1
@@ -499,7 +499,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List bookmarked runs for user
       tags:
       - RunsV1
@@ -556,7 +556,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get compatibility versions
       tags:
       - VersionsV1
@@ -569,7 +569,6 @@ paths:
         in: query
         name: auth
         schema:
-          format: boolean
           type: boolean
       responses:
         "200":
@@ -601,7 +600,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get installation versions
       tags:
       - VersionsV1
@@ -639,7 +638,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get log handler versions
       tags:
       - VersionsV1
@@ -683,7 +682,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create organization
       tags:
       - OrganizationsV1
@@ -723,7 +722,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List organizations
       tags:
       - OrganizationsV1
@@ -761,7 +760,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List organizations names
       tags:
       - OrganizationsV1
@@ -808,7 +807,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete organization
       tags:
       - OrganizationsV1
@@ -857,7 +856,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get organization
       tags:
       - OrganizationsV1
@@ -908,7 +907,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch organization
       tags:
       - OrganizationsV1
@@ -961,7 +960,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update organization
       tags:
       - OrganizationsV1
@@ -1030,7 +1029,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List agents
       tags:
       - AgentsV1
@@ -1081,7 +1080,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create agent
       tags:
       - AgentsV1
@@ -1150,7 +1149,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List agents names
       tags:
       - AgentsV1
@@ -1208,7 +1207,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch agent
       tags:
       - AgentsV1
@@ -1267,7 +1266,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update agent
       tags:
       - AgentsV1
@@ -1324,7 +1323,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Sync agent
       tags:
       - AgentsV1
@@ -1399,7 +1398,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List queues
       tags:
       - QueuesV1
@@ -1456,7 +1455,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create queue
       tags:
       - QueuesV1
@@ -1531,7 +1530,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List queues names
       tags:
       - QueuesV1
@@ -1595,7 +1594,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch queue
       tags:
       - QueuesV1
@@ -1660,7 +1659,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update queue
       tags:
       - QueuesV1
@@ -1716,7 +1715,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete queue
       tags:
       - QueuesV1
@@ -1772,7 +1771,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get queue
       tags:
       - QueuesV1
@@ -1828,7 +1827,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get agent token
       tags:
       - AgentsV1
@@ -1885,7 +1884,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch agent token
       tags:
       - AgentsV1
@@ -1944,7 +1943,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update agent token
       tags:
       - AgentsV1
@@ -1994,7 +1993,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete agent
       tags:
       - AgentsV1
@@ -2044,7 +2043,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get agent
       tags:
       - AgentsV1
@@ -2095,7 +2094,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get State (queues/runs)
       tags:
       - AgentsV1
@@ -2146,7 +2145,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get agent status
       tags:
       - AgentsV1
@@ -2202,7 +2201,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create new run status
       tags:
       - AgentsV1
@@ -2271,7 +2270,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List hub components
       tags:
       - ComponentHubV1
@@ -2322,7 +2321,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create hub component
       tags:
       - ComponentHubV1
@@ -2391,7 +2390,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List hub component names
       tags:
       - ComponentHubV1
@@ -2449,7 +2448,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch hub component
       tags:
       - ComponentHubV1
@@ -2508,7 +2507,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update hub component
       tags:
       - ComponentHubV1
@@ -2558,7 +2557,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete hub component
       tags:
       - ComponentHubV1
@@ -2608,7 +2607,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get hub component
       tags:
       - ComponentHubV1
@@ -2675,7 +2674,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List connections
       tags:
       - ConnectionsV1
@@ -2726,7 +2725,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create connection
       tags:
       - ConnectionsV1
@@ -2795,7 +2794,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List connections names
       tags:
       - ConnectionsV1
@@ -2853,7 +2852,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch connection
       tags:
       - ConnectionsV1
@@ -2912,7 +2911,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update connection
       tags:
       - ConnectionsV1
@@ -2962,7 +2961,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete connection
       tags:
       - ConnectionsV1
@@ -3012,7 +3011,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get connection
       tags:
       - ConnectionsV1
@@ -3079,7 +3078,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List dashboards
       tags:
       - DashboardsV1
@@ -3130,7 +3129,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create dashboard
       tags:
       - DashboardsV1
@@ -3199,7 +3198,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List dashboard names
       tags:
       - DashboardsV1
@@ -3257,7 +3256,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch dashboard
       tags:
       - DashboardsV1
@@ -3316,7 +3315,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update dashboard
       tags:
       - DashboardsV1
@@ -3366,7 +3365,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete dashboard
       tags:
       - DashboardsV1
@@ -3416,7 +3415,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get dashboard
       tags:
       - DashboardsV1
@@ -3490,7 +3489,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete organization invitation details
       tags:
       - OrganizationsV1
@@ -3566,7 +3565,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get organization invitation details
       tags:
       - OrganizationsV1
@@ -3622,7 +3621,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch organization invitation
       tags:
       - OrganizationsV1
@@ -3680,7 +3679,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update organization invitation
       tags:
       - OrganizationsV1
@@ -3749,7 +3748,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get organization members
       tags:
       - OrganizationsV1
@@ -3805,7 +3804,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create organization member
       tags:
       - OrganizationsV1
@@ -3874,7 +3873,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get organization member names
       tags:
       - OrganizationsV1
@@ -3937,7 +3936,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch organization member
       tags:
       - OrganizationsV1
@@ -4001,7 +4000,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update organization member
       tags:
       - OrganizationsV1
@@ -4051,7 +4050,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete organization member details
       tags:
       - OrganizationsV1
@@ -4101,7 +4100,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get organization member details
       tags:
       - OrganizationsV1
@@ -4168,7 +4167,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List hub models
       tags:
       - ModelRegistryV1
@@ -4219,7 +4218,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create hub model
       tags:
       - ModelRegistryV1
@@ -4288,7 +4287,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List hub model names
       tags:
       - ModelRegistryV1
@@ -4346,7 +4345,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch hub model
       tags:
       - ModelRegistryV1
@@ -4405,7 +4404,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update hub model
       tags:
       - ModelRegistryV1
@@ -4455,7 +4454,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete hub model
       tags:
       - ModelRegistryV1
@@ -4505,7 +4504,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get hub model
       tags:
       - ModelRegistryV1
@@ -4557,7 +4556,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Organization plan
       tags:
       - OrganizationsV1
@@ -4626,7 +4625,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List scheduling presets
       tags:
       - PresetsV1
@@ -4677,7 +4676,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create scheduling presets
       tags:
       - PresetsV1
@@ -4746,7 +4745,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List scheduling presets names
       tags:
       - PresetsV1
@@ -4804,7 +4803,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch scheduling preset
       tags:
       - PresetsV1
@@ -4863,7 +4862,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update scheduling preset
       tags:
       - PresetsV1
@@ -4913,7 +4912,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete scheduling preset
       tags:
       - PresetsV1
@@ -4963,7 +4962,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get scheduling preset
       tags:
       - PresetsV1
@@ -5030,7 +5029,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List organization level queues
       tags:
       - QueuesV1
@@ -5097,7 +5096,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List organization level queues names
       tags:
       - QueuesV1
@@ -5164,7 +5163,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List searches
       tags:
       - SearchesV1
@@ -5215,7 +5214,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create search
       tags:
       - SearchesV1
@@ -5284,7 +5283,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List search names
       tags:
       - SearchesV1
@@ -5342,7 +5341,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch search
       tags:
       - SearchesV1
@@ -5401,7 +5400,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update search
       tags:
       - SearchesV1
@@ -5451,7 +5450,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete search
       tags:
       - SearchesV1
@@ -5501,7 +5500,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get search
       tags:
       - SearchesV1
@@ -5535,7 +5534,6 @@ paths:
         in: query
         name: organization.is_public
         schema:
-          format: boolean
           type: boolean
       - description: Optional time when the entity was created.
         in: query
@@ -5594,7 +5592,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get organization settings
       tags:
       - OrganizationsV1
@@ -5645,7 +5643,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch oranization settings
       tags:
       - OrganizationsV1
@@ -5698,7 +5696,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update organization settings
       tags:
       - OrganizationsV1
@@ -5767,7 +5765,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List teams
       tags:
       - TeamsV1
@@ -5818,7 +5816,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create team
       tags:
       - TeamsV1
@@ -5887,7 +5885,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List teams names
       tags:
       - TeamsV1
@@ -5945,7 +5943,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch team
       tags:
       - TeamsV1
@@ -6004,7 +6002,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update team
       tags:
       - TeamsV1
@@ -6054,7 +6052,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete team
       tags:
       - TeamsV1
@@ -6104,7 +6102,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get team
       tags:
       - TeamsV1
@@ -6177,7 +6175,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get team members
       tags:
       - TeamsV1
@@ -6234,7 +6232,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create team member
       tags:
       - TeamsV1
@@ -6300,7 +6298,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch team member
       tags:
       - TeamsV1
@@ -6365,7 +6363,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update team member
       tags:
       - TeamsV1
@@ -6421,7 +6419,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete team member details
       tags:
       - TeamsV1
@@ -6477,7 +6475,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get team member details
       tags:
       - TeamsV1
@@ -6515,7 +6513,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get current user
       tags:
       - UsersV1
@@ -6558,7 +6556,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch current user
       tags:
       - UsersV1
@@ -6603,7 +6601,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update current user
       tags:
       - UsersV1
@@ -6666,7 +6664,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List tokens
       tags:
       - UsersV1
@@ -6710,7 +6708,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create token
       tags:
       - UsersV1
@@ -6764,7 +6762,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch token
       tags:
       - UsersV1
@@ -6817,7 +6815,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update token
       tags:
       - UsersV1
@@ -6861,7 +6859,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete token
       tags:
       - UsersV1
@@ -6905,7 +6903,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get token
       tags:
       - UsersV1
@@ -6969,7 +6967,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Restart run with copy
       tags:
       - RunsV1
@@ -7035,7 +7033,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Restart run
       tags:
       - RunsV1
@@ -7101,7 +7099,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Resume run
       tags:
       - RunsV1
@@ -7155,7 +7153,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create new project
       tags:
       - ProjectsV1
@@ -7224,7 +7222,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List projects
       tags:
       - ProjectsV1
@@ -7291,7 +7289,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List project names
       tags:
       - ProjectsV1
@@ -7349,7 +7347,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch project
       tags:
       - ProjectsV1
@@ -7408,7 +7406,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update project
       tags:
       - ProjectsV1
@@ -7458,7 +7456,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete project
       tags:
       - ProjectsV1
@@ -7508,7 +7506,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get project
       tags:
       - ProjectsV1
@@ -7556,7 +7554,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Archive project
       tags:
       - ProjectsV1
@@ -7604,7 +7602,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Bookmark project
       tags:
       - ProjectsV1
@@ -7652,7 +7650,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Disbale project CI
       tags:
       - ProjectsV1
@@ -7699,7 +7697,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Enable project CI
       tags:
       - ProjectsV1
@@ -7772,7 +7770,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List project dashboards
       tags:
       - ProjectDashboardsV1
@@ -7829,7 +7827,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create project dashboard
       tags:
       - ProjectDashboardsV1
@@ -7904,7 +7902,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List project dashboard
       tags:
       - ProjectDashboardsV1
@@ -7968,7 +7966,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch project dashboard
       tags:
       - ProjectDashboardsV1
@@ -8033,7 +8031,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update project dashboard
       tags:
       - ProjectDashboardsV1
@@ -8089,7 +8087,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete project dashboard
       tags:
       - ProjectDashboardsV1
@@ -8145,7 +8143,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get project dashboard
       tags:
       - ProjectDashboardsV1
@@ -8199,7 +8197,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Promote project dashboard
       tags:
       - ProjectDashboardsV1
@@ -8247,7 +8245,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Restore project
       tags:
       - ProjectsV1
@@ -8320,7 +8318,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List runs
       tags:
       - RunsV1
@@ -8377,7 +8375,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create new run
       tags:
       - RunsV1
@@ -8452,7 +8450,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get runs artifacts lineage
       tags:
       - RunsV1
@@ -8507,7 +8505,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Bookmark runs
       tags:
       - RunsV1
@@ -8564,7 +8562,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete runs
       tags:
       - RunsV1
@@ -8621,7 +8619,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Invalidate runs
       tags:
       - RunsV1
@@ -8678,7 +8676,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Stop runs
       tags:
       - RunsV1
@@ -8735,7 +8733,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Tag runs
       tags:
       - RunsV1
@@ -8801,7 +8799,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch run
       tags:
       - RunsV1
@@ -8866,7 +8864,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update run
       tags:
       - RunsV1
@@ -8922,7 +8920,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete run
       tags:
       - RunsV1
@@ -8978,7 +8976,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run
       tags:
       - RunsV1
@@ -9032,7 +9030,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Archive run
       tags:
       - RunsV1
@@ -9111,7 +9109,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run artifacts lineage
       tags:
       - RunsV1
@@ -9171,7 +9169,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create bulk run artifacts lineage
       tags:
       - RunsV1
@@ -9252,7 +9250,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run artifacts lineage names
       tags:
       - RunsV1
@@ -9317,7 +9315,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete run artifact lineage
       tags:
       - RunsV1
@@ -9384,7 +9382,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run artifacts lineage
       tags:
       - RunsV1
@@ -9438,7 +9436,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Bookmark run
       tags:
       - RunsV1
@@ -9495,7 +9493,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Impersonate run token
       tags:
       - RunsV1
@@ -9549,7 +9547,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Invalidate run
       tags:
       - RunsV1
@@ -9606,7 +9604,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get Run namespace
       tags:
       - RunsV1
@@ -9660,7 +9658,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Restore run
       tags:
       - RunsV1
@@ -9717,7 +9715,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get Run settings
       tags:
       - RunsV1
@@ -9774,7 +9772,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run statuses
       tags:
       - RunsV1
@@ -9836,7 +9834,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create new run status
       tags:
       - RunsV1
@@ -9892,7 +9890,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Stop run
       tags:
       - RunsV1
@@ -9952,7 +9950,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Start run tensorboard
       tags:
       - RunsV1
@@ -10008,7 +10006,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Stop run tensorboard
       tags:
       - RunsV1
@@ -10062,7 +10060,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Unbookmark run
       tags:
       - RunsV1
@@ -10135,7 +10133,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List project searches
       tags:
       - ProjectSearchesV1
@@ -10192,7 +10190,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Create project search
       tags:
       - ProjectSearchesV1
@@ -10267,7 +10265,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: List project search names
       tags:
       - ProjectSearchesV1
@@ -10331,7 +10329,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch project search
       tags:
       - ProjectSearchesV1
@@ -10396,7 +10394,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update project search
       tags:
       - ProjectSearchesV1
@@ -10452,7 +10450,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete project search
       tags:
       - ProjectSearchesV1
@@ -10508,7 +10506,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get project search
       tags:
       - ProjectSearchesV1
@@ -10562,7 +10560,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Promote project search
       tags:
       - ProjectSearchesV1
@@ -10613,7 +10611,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get Project settings
       tags:
       - ProjectsV1
@@ -10670,7 +10668,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch project settings
       tags:
       - ProjectsV1
@@ -10729,7 +10727,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update project settings
       tags:
       - ProjectsV1
@@ -10782,7 +10780,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get project teams
       tags:
       - ProjectsV1
@@ -10839,7 +10837,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Patch project teams
       tags:
       - ProjectsV1
@@ -10898,7 +10896,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Update project teams
       tags:
       - ProjectsV1
@@ -10948,7 +10946,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Unbookmark project
       tags:
       - ProjectsV1
@@ -10986,7 +10984,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get random
       tags:
       - SchemasV1
@@ -11051,7 +11049,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Collect run logs
       tags:
       - RunsV1
@@ -11132,7 +11130,6 @@ paths:
         in: query
         name: force
         schema:
-          format: boolean
           type: boolean
       responses:
         "200":
@@ -11164,7 +11161,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get multi runs events
       tags:
       - RunsV1
@@ -11229,7 +11226,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete run artifact
       tags:
       - RunsV1
@@ -11365,7 +11362,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Delete run artifacts
       tags:
       - RunsV1
@@ -11499,7 +11496,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run artifacts tree
       tags:
       - RunsV1
@@ -11581,7 +11578,6 @@ paths:
         in: query
         name: force
         schema:
-          format: boolean
           type: boolean
       responses:
         "200":
@@ -11613,7 +11609,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run events
       tags:
       - RunsV1
@@ -11660,7 +11656,6 @@ paths:
         in: query
         name: force
         schema:
-          format: boolean
           type: boolean
       responses:
         "200":
@@ -11692,7 +11687,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run logs
       tags:
       - RunsV1
@@ -11758,7 +11753,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Notify run status
       tags:
       - RunsV1
@@ -11802,13 +11797,11 @@ paths:
         in: query
         name: tail
         schema:
-          format: boolean
           type: boolean
       - description: Force query param.
         in: query
         name: force
         schema:
-          format: boolean
           type: boolean
       responses:
         "200":
@@ -11840,7 +11833,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response
+          description: An unexpected error response.
       summary: Get run resources events
       tags:
       - RunsV1
@@ -12170,7 +12163,6 @@ components:
           title: List of apply runs
           type: object
         full:
-          format: boolean
           title: A flag to tell the agent that the queues are still full
           type: boolean
       type: object
@@ -12417,7 +12409,6 @@ components:
           title: Optional tags of this entity
           type: array
         disabled:
-          format: boolean
           title: Optional a flag to disable the agent
           type: boolean
         namespace:
@@ -12565,7 +12556,6 @@ components:
             type: string
           type: array
         is_done:
-          format: boolean
           type: boolean
       title: Artifact tree response
       type: object
@@ -12709,7 +12699,6 @@ components:
         ttl: 0
       properties:
         disable:
-          format: boolean
           title: Optional flag to disable cache, Cache is enabled by default
           type: boolean
         ttl:
@@ -12740,7 +12729,6 @@ components:
           title: Mount path
           type: string
         read_only:
-          format: boolean
           title: Read Only
           type: boolean
         kind:
@@ -12891,6 +12879,35 @@ components:
         description: description
         skip_on_upstream_skip: true
         run: '{}'
+        contexts:
+        - arg_format: arg_format
+          is_flag: true
+          name: name
+          options:
+          - '{}'
+          - '{}'
+          description: description
+          is_list: true
+          connection: connection
+          delay_validation: true
+          to_init: true
+          value: '{}'
+          iotype: iotype
+          is_optional: true
+        - arg_format: arg_format
+          is_flag: true
+          name: name
+          options:
+          - '{}'
+          - '{}'
+          description: description
+          is_list: true
+          connection: connection
+          delay_validation: true
+          to_init: true
+          value: '{}'
+          iotype: iotype
+          is_optional: true
         matrix: '{}'
         version: 7.2605214
         tags:
@@ -13046,7 +13063,6 @@ components:
             should be a valid Condition
           type: array
         skip_on_upstream_skip:
-          format: boolean
           title: Optional flag to skip this run if upstream was skipped
           type: boolean
         inputs:
@@ -13055,6 +13071,11 @@ components:
           title: Optional inputs definition
           type: array
         outputs:
+          items:
+            $ref: '#/components/schemas/v1IO'
+          title: Optional outputs definition
+          type: array
+        contexts:
           items:
             $ref: '#/components/schemas/v1IO'
           title: Optional outputs definition
@@ -13328,7 +13349,6 @@ components:
           title: Optional tags of this entity
           type: array
         disabled:
-          format: boolean
           title: Optional a flag to disable the model
           type: boolean
         created_at:
@@ -13428,7 +13448,6 @@ components:
           title: Optional last time the entity was updated
           type: string
         disabled:
-          format: boolean
           title: Optional a flag to disable the store
           type: boolean
         kind:
@@ -13545,7 +13564,6 @@ components:
           title: Cron definition, e.g. 0 1 * * *
           type: string
         depends_on_past:
-          format: boolean
           title: A flag to set a dependency on past executions
           type: boolean
       title: Cron schedule specification
@@ -14620,7 +14638,6 @@ components:
           title: Optional tags of this entity
           type: array
         disabled:
-          format: boolean
           title: Optional a flag to disable the store
           type: boolean
         view:
@@ -15084,7 +15101,6 @@ components:
         host_network:
           description: Host networking requested for this workflow pod. Default to
             false.
-          format: boolean
           type: boolean
         hostPID:
           description: Use the host's pid namespace. Default to false.
@@ -15537,7 +15553,6 @@ components:
           title: Url
           type: string
         revision:
-          format: boolean
           title: revision
           type: boolean
       title: Git connection schema validation connection
@@ -15551,7 +15566,6 @@ components:
           title: Optional Url
           type: string
         revision:
-          format: boolean
           title: Optional revision
           type: boolean
       title: Git type specification, url or a connection is required
@@ -15660,7 +15674,6 @@ components:
           title: Url
           type: string
         insecure:
-          format: boolean
           title: insecure
           type: boolean
       title: Host connection schema validation connection
@@ -15679,7 +15692,6 @@ components:
           title: Mount path
           type: string
         read_only:
-          format: boolean
           title: Read Only
           type: boolean
         kind:
@@ -16026,7 +16038,6 @@ components:
         metric:
           $ref: '#/components/schemas/v1OptimizationMetric'
         resume:
-          format: boolean
           title: A flag to resume or restart the selected runs
           type: boolean
         seed:
@@ -16139,15 +16150,12 @@ components:
           title: The value of the input/output should be compatible with the type
           type: object
         is_optional:
-          format: boolean
           title: A flag to tell if this input/output is optional
           type: boolean
         is_list:
-          format: boolean
           title: A flag to tell if this input/output is list
           type: boolean
         is_flag:
-          format: boolean
           title: A flag to tell if this input/output is flag, only valid for bool
             type
           type: boolean
@@ -16156,7 +16164,6 @@ components:
             the value as is
           type: string
         delay_validation:
-          format: boolean
           title: A flag to tell if param validation for this input/output should be
             delayed
           type: boolean
@@ -16170,7 +16177,6 @@ components:
           title: A flag to signal to Polyaxon that this io is used with a connection
           type: string
         to_init:
-          format: boolean
           title: A flag to signal to Polyaxon that this io must be tranformed to an
             init container
           type: boolean
@@ -16279,7 +16285,6 @@ components:
           title: Frequency at which to execute the runs
           type: integer
         depends_on_past:
-          format: boolean
           title: A flag to set a dependency on past executions
           type: boolean
       title: Interval schedule specification
@@ -16528,7 +16533,6 @@ components:
         schema:
           $ref: '#/components/schemas/v1K8sResourceSchema'
         is_requested:
-          format: boolean
           title: Option if the config resource is requested
           type: boolean
       title: K8S resource specification
@@ -18092,7 +18096,6 @@ components:
           title: Optional tags of this entity
           type: array
         disabled:
-          format: boolean
           title: Optional a flag to disable the model
           type: boolean
         created_at:
@@ -18507,7 +18510,6 @@ components:
             should be a valid Condition
           type: array
         skip_on_upstream_skip:
-          format: boolean
           title: Optional flag to skip this run if upstream was skipped
           type: boolean
         params:
@@ -18524,7 +18526,6 @@ components:
         patch_strategy:
           $ref: '#/components/schemas/v1PatchStrategy'
         is_preset:
-          format: boolean
           title: Optional flag to mark this specification as preset
           type: boolean
         template:
@@ -18547,7 +18548,6 @@ components:
           title: The Operation body content as dump string
           type: string
         is_managed:
-          format: boolean
           title: Optional, if the run is managed, true by default, this flag should
             be false if starting a non-managed run
           type: boolean
@@ -18637,7 +18637,6 @@ components:
           title: Name
           type: string
         is_public:
-          format: boolean
           title: Optional flag to tell if this organization is public
           type: boolean
         created_at:
@@ -18725,12 +18724,10 @@ components:
           title: A flag to signal to Polyaxon that this param is used with a connection
           type: string
         to_init:
-          format: boolean
           title: A flag to signal to Polyaxon that this param must be tranformed to
             an init container
           type: boolean
         context_only:
-          format: boolean
           title: A flag to signal to Polyaxon that this param should not be validated
             against io
           type: boolean
@@ -18840,37 +18837,30 @@ components:
         docker: true
       properties:
         auth:
-          format: boolean
           title: Optional flag to tell Polyaxon if it should set an auth context for
             the run, default true
           type: boolean
         docker:
-          format: boolean
           title: Optional flag to tell Polyaxon if it should set a docker socket context
             for the run, default false
           type: boolean
         shm:
-          format: boolean
           title: Optional flag to tell Polyaxon if it should set a shm context for
             the run, default false
           type: boolean
         collect_artifacts:
-          format: boolean
           title: Optional flag to tell Polyaxon to collect articats and outputs
           type: boolean
         collect_logs:
-          format: boolean
           title: Optional flag to tell Polyaxon to collect logs
           type: boolean
         collect_resources:
           title: Optional flag to tell Polyaxon to collect container resouces (cpu/memory/gpu)
           type: string
         sync_statuses:
-          format: boolean
           title: Optional flag to tell Polyaxon to sync statuses
           type: boolean
         auto_resume:
-          format: boolean
           title: Auto resume a run's artifacts (applies to resume and retries), works
             if collects_artifacts is enabled
           type: boolean
@@ -18931,7 +18921,6 @@ components:
           format: int32
           type: integer
         monitor_logs:
-          format: boolean
           type: boolean
         resources:
           title: Placeholder Resource Requirements
@@ -18975,11 +18964,9 @@ components:
           title: Optional last time the entity was updated
           type: string
         frozen:
-          format: boolean
           title: Optional a flag to freeze the scheduling preset
           type: boolean
         disabled:
-          format: boolean
           title: Optional a flag to disable the scheduling preset
           type: boolean
         content:
@@ -19058,11 +19045,9 @@ components:
           title: Optional last time the entity was updated
           type: string
         is_public:
-          format: boolean
           title: Optional flag to tell if this project is public
           type: boolean
         bookmarked:
-          format: boolean
           title: Optional if this entity was bookmarked
           type: boolean
         readme:
@@ -19531,7 +19516,6 @@ components:
           title: Limit to stop executing this schedule
           type: integer
         depends_on_past:
-          format: boolean
           title: A flag to set a dependency on past executions
           type: boolean
       title: Repeatable schedule specification
@@ -19666,7 +19650,6 @@ components:
         status:
           $ref: '#/components/schemas/v1Statuses'
         bookmarked:
-          format: boolean
           title: Optional if this entity was bookmarked
           type: boolean
         meta_info:
@@ -19674,7 +19657,6 @@ components:
           title: Optional run meta info
           type: object
         is_helper:
-          format: boolean
           title: Optional is helper run
           type: boolean
         kind:
@@ -19736,7 +19718,6 @@ components:
           title: Artifact schema
           type: object
         is_input:
-          format: boolean
           title: Optional flag to check the use of the artifact in a context
           type: boolean
       title: Run Artifact spec definition
@@ -22396,6 +22377,35 @@ components:
           description: description
           skip_on_upstream_skip: true
           run: '{}'
+          contexts:
+          - arg_format: arg_format
+            is_flag: true
+            name: name
+            options:
+            - '{}'
+            - '{}'
+            description: description
+            is_list: true
+            connection: connection
+            delay_validation: true
+            to_init: true
+            value: '{}'
+            iotype: iotype
+            is_optional: true
+          - arg_format: arg_format
+            is_flag: true
+            name: name
+            options:
+            - '{}'
+            - '{}'
+            description: description
+            is_list: true
+            connection: connection
+            delay_validation: true
+            to_init: true
+            value: '{}'
+            iotype: iotype
+            is_optional: true
           matrix: '{}'
           version: 7.2605214
           tags:
@@ -25597,7 +25607,6 @@ components:
           title: Optional tags of this entity
           type: array
         disabled:
-          format: boolean
           title: Optional a flag to disable the store
           type: boolean
         spec:
@@ -25788,7 +25797,6 @@ components:
           description: |-
             Rewrite path to remove polyaxon base url(i.e. /v1/services/namespace/owner/project/).
             Default is false, the service shoud handle a base url.
-          format: boolean
           type: boolean
       title: Service specification
       type: object
@@ -26821,7 +26829,6 @@ components:
         enabled: true
       properties:
         enabled:
-          format: boolean
           type: boolean
         description:
           title: Template description
@@ -26956,7 +26963,6 @@ components:
           title: Min samples runs succeeded before starting the process
           type: integer
         include_succeeded:
-          format: boolean
           title: Flag to include or not the succeeded runs in the calculation
           type: boolean
       type: object
@@ -26973,7 +26979,6 @@ components:
           title: Optional password
           type: string
         host:
-          format: boolean
           title: Optional host
           type: boolean
       title: Uri type specification
@@ -27080,7 +27085,6 @@ components:
           title: Optional storage_account
           type: string
         path:
-          format: boolean
           title: Optional path
           type: boolean
       title: Wasb type specification

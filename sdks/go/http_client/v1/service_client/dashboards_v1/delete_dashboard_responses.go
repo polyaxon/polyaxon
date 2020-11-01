@@ -196,7 +196,7 @@ func NewDeleteDashboardDefault(code int) *DeleteDashboardDefault {
 
 /*DeleteDashboardDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type DeleteDashboardDefault struct {
 	_statusCode int

@@ -196,7 +196,7 @@ func NewArchiveProjectDefault(code int) *ArchiveProjectDefault {
 
 /*ArchiveProjectDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type ArchiveProjectDefault struct {
 	_statusCode int

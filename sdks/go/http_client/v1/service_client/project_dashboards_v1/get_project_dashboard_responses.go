@@ -208,7 +208,7 @@ func NewGetProjectDashboardDefault(code int) *GetProjectDashboardDefault {
 
 /*GetProjectDashboardDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetProjectDashboardDefault struct {
 	_statusCode int

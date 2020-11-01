@@ -208,7 +208,7 @@ func NewGetTeamMemberDefault(code int) *GetTeamMemberDefault {
 
 /*GetTeamMemberDefault handles this case with default header values.
 
-An unexpected error response
+An unexpected error response.
 */
 type GetTeamMemberDefault struct {
 	_statusCode int
