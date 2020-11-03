@@ -102,6 +102,9 @@ type V1Schemas struct {
 	// schedule
 	Schedule *V1Schedule `json:"schedule,omitempty"`
 
+	// schedule kind
+	ScheduleKind V1ScheduleKind `json:"schedule_kind,omitempty"`
+
 	// uri
 	URI *V1URIType `json:"uri,omitempty"`
 
@@ -206,6 +209,10 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateSchedule(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateScheduleKind(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -648,6 +655,22 @@ func (m *V1Schemas) validateSchedule(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateScheduleKind(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ScheduleKind) { // not required
+		return nil
+	}
+
+	if err := m.ScheduleKind.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("schedule_kind")
+		}
+		return err
 	}
 
 	return nil

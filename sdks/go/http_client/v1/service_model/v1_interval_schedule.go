@@ -38,11 +38,14 @@ type V1IntervalSchedule struct {
 	// Format: date-time
 	EndAt strfmt.DateTime `json:"end_at,omitempty"`
 
-	// Frequency at which to execute the runs
+	// Frequency (timedelta) at which to execute the runs
 	Frequency int32 `json:"frequency,omitempty"`
 
 	// Kind of schedule, should be equal to "interval"
 	Kind *string `json:"kind,omitempty"`
+
+	// Limit to stop executing this schedule
+	MaxRuns int32 `json:"max_runs,omitempty"`
 
 	// When to start this interval schedule
 	// Format: date-time

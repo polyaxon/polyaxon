@@ -90,6 +90,9 @@ const (
 
 	// V1StatusesUnknown captures enum value "unknown"
 	V1StatusesUnknown V1Statuses = "unknown"
+
+	// V1StatusesDone captures enum value "done"
+	V1StatusesDone V1Statuses = "done"
 )
 
 // for schema
@@ -97,7 +100,7 @@ var v1StatusesEnum []interface{}
 
 func init() {
 	var res []V1Statuses
-	if err := json.Unmarshal([]byte(`["created","resuming","compiled","queued","scheduled","starting","initializing","running","processing","stopping","failed","stopped","succeeded","skipped","warning","unschedulable","upstream_failed","retrying","unknown"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["created","resuming","compiled","queued","scheduled","starting","initializing","running","processing","stopping","failed","stopped","succeeded","skipped","warning","unschedulable","upstream_failed","retrying","unknown","done"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

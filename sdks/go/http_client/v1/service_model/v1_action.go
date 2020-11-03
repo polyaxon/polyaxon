@@ -26,7 +26,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// V1Action Action defintion
+// V1Action Action definition
 //
 // swagger:model v1Action
 type V1Action struct {

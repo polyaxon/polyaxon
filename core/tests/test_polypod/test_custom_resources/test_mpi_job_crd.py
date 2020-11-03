@@ -14,7 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from polyaxon.k8s.custom_resources.crd import get_custom_object
-from polyaxon.polyflow import V1Notification, V1NotificationTrigger
+from polyaxon.lifecycle import V1Statuses
+from polyaxon.polyflow import V1Notification
 from polyaxon.polyflow.environment import V1Environment
 from polyaxon.polyflow.termination import V1Termination
 from polyaxon.polypod.custom_resources import get_mpi_job_custom_resource
@@ -80,9 +81,7 @@ class TestPytorchJobCRD(BaseKubeflowCRDTestCase):
             node_name="foo",
             restart_policy="never",
         )
-        notifications = [
-            V1Notification(connections=["test"], trigger=V1NotificationTrigger.DONE)
-        ]
+        notifications = [V1Notification(connections=["test"], trigger=V1Statuses.DONE)]
         launcher, launcher_replica_template = self.get_replica(environment)
         worker, worker_replica_template = self.get_replica(environment)
         template_spec = {

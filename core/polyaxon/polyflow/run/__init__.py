@@ -102,6 +102,10 @@ class RunMixin:
         return self.get_run_kind() == V1RunKind.DAG
 
     @property
+    def is_schedule_run(self):
+        return self.get_run_kind() == V1RunKind.SCHEDULE
+
+    @property
     def is_notifier(self):
         return self.get_run_kind() == V1RunKind.NOTIFIER
 

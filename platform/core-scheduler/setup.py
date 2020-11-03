@@ -40,7 +40,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon-scheduler",
-    version="1.2.2-rc0",
+    version="1.2.2-rc2",
     description="Polyaxon's core scheduler.",
     long_description=read_readme(),
     maintainer="Polyaxon, Inc.",
@@ -61,13 +61,6 @@ setup(
         "artificial-intelligence",
         "ai",
         "reinforcement-learning",
-    ],
-    install_requires=[
-        "celery==4.4.7",
-        "Django==3.1.2",
-        "djangorestframework==3.12.1",
-        "psycopg2-binary==2.8.5",
-        "redis==3.5.3",
     ],
     classifiers=[
         "Programming Language :: Python",

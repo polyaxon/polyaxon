@@ -33,7 +33,7 @@ from polyaxon.polyflow.early_stopping import (
     V1TruncationStoppingPolicy,
 )
 from polyaxon.polyflow.environment import EnvironmentSchema, V1Environment
-from polyaxon.polyflow.hooks import HookSchema, V1Hook, V1HookTrigger
+from polyaxon.polyflow.hooks import HookSchema, V1Hook
 from polyaxon.polyflow.init import InitSchema, V1Init
 from polyaxon.polyflow.io import V1IO, IOSchema
 from polyaxon.polyflow.matrix import (
@@ -75,11 +75,7 @@ from polyaxon.polyflow.matrix import (
     V1RandomSearch,
 )
 from polyaxon.polyflow.mounts import ArtifactsMountSchema, V1ArtifactsMount
-from polyaxon.polyflow.notifications import (
-    NotificationSchema,
-    V1Notification,
-    V1NotificationTrigger,
-)
+from polyaxon.polyflow.notifications import NotificationSchema, V1Notification
 from polyaxon.polyflow.operations import (
     CompiledOperationSchema,
     OperationSchema,
@@ -155,17 +151,16 @@ from polyaxon.polyflow.run import (
     WatchDogSchema,
     validate_run_patch,
 )
-from polyaxon.polyflow.schedule import (
+from polyaxon.polyflow.schedules import (
     CronScheduleSchema,
-    ExactTimeScheduleSchema,
+    DateTimeScheduleSchema,
     IntervalScheduleSchema,
-    RepeatableScheduleSchema,
     ScheduleMixin,
     ScheduleSchema,
     V1CronSchedule,
-    V1ExactTimeSchedule,
+    V1DateTimeSchedule,
     V1IntervalSchedule,
-    V1RepeatableSchedule,
+    V1ScheduleKind,
 )
 from polyaxon.polyflow.templates import TemplateSchema, V1Template
 from polyaxon.polyflow.termination import TerminationSchema, V1Termination

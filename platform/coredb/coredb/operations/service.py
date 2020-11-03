@@ -83,24 +83,30 @@ class OperationsService(Service):
                 raise ValueError(error_message.format(runtime))
         return True
 
-    @staticmethod
+    @classmethod
+    def _finalize_meta_info(cls, meta_info: Dict, **kwargs):
+        return meta_info
+
+    @classmethod
     def get_meta_info(
-        compiled_operation: V1CompiledOperation, kind: str, runtime: str, **kwargs
+        cls, compiled_operation: V1CompiledOperation, kind: str, runtime: str, **kwargs
     ) -> Tuple[str, str, Dict]:
         meta_info = {}
-        if compiled_operation.matrix:
+        if compiled_operation.matrix or compiled_operation.schedule:
             if kind == V1RunKind.JOB:
                 meta_info["has_jobs"] = True
             elif kind == V1RunKind.SERVICE:
                 meta_info["has_services"] = True
             elif kind == V1RunKind.DAG:
                 meta_info["has_dags"] = True
+        if compiled_operation.schedule:
+            kind = V1RunKind.SCHEDULE
+            runtime = compiled_operation.schedule.kind
+        elif compiled_operation.matrix:
             kind = V1RunKind.MATRIX
             runtime = compiled_operation.matrix.kind
 
-        iteration = kwargs.pop("iteration", None)
-        if iteration is not None:
-            meta_info["iteration"] = iteration
+        meta_info = cls._finalize_meta_info(meta_info=meta_info, **kwargs)
         return kind, runtime, meta_info
 
     @staticmethod

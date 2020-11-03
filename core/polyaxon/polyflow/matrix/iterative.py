@@ -21,9 +21,10 @@ from marshmallow import fields, validate
 from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.fields.swagger import SwaggerField
 
@@ -50,7 +51,7 @@ class IterativeSchema(BaseCamelSchema):
         return V1Iterative
 
 
-class V1Iterative(BaseConfig, polyaxon_sdk.V1Iterative):
+class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
     """To build a custom optimization algorithm, this interface lets you create an iterative
     process for creating suggestions and training your model based on those suggestions
 

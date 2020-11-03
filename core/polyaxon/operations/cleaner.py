@@ -29,7 +29,7 @@ def get_cleaner_operation(
     connection: V1ConnectionType, run_uuid: str, run_kind: str
 ) -> V1Operation:
     return V1Operation(
-        termination=V1Termination(max_retries=3),
+        termination=V1Termination(max_retries=1),
         component=V1Component(
             name="cleaner",
             plugins=V1Plugins(

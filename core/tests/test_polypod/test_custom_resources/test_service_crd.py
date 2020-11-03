@@ -15,7 +15,8 @@
 # limitations under the License.
 from polyaxon.k8s import k8s_schemas
 from polyaxon.k8s.custom_resources.crd import get_custom_object
-from polyaxon.polyflow import V1Notification, V1NotificationTrigger
+from polyaxon.lifecycle import V1Statuses
+from polyaxon.polyflow import V1Notification
 from polyaxon.polyflow.environment import V1Environment
 from polyaxon.polyflow.termination import V1Termination
 from polyaxon.polypod.custom_resources import get_service_custom_resource
@@ -96,9 +97,7 @@ class TestServiceCRD(BaseTestCase):
             environment=None,
             labels=None,
         )
-        notifications = [
-            V1Notification(connections=["test"], trigger=V1NotificationTrigger.DONE)
-        ]
+        notifications = [V1Notification(connections=["test"], trigger=V1Statuses.DONE)]
         custom_object = {
             "template": get_pod_template_spec(metadata=metadata, pod_spec=pod_spec),
             "ports": [12, 121, 12],

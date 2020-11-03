@@ -21,7 +21,7 @@ from polyaxon_sdk import V1StatusCondition
 from polyaxon import settings
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import V1K8sResourceSchema
-from polyaxon.polyflow import V1NotificationTrigger
+from polyaxon.lifecycle import V1Statuses
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.streams.app.main import STREAMS_URL
 from tests.test_streams.base import get_streams_client, set_store
@@ -56,7 +56,7 @@ class TestNotifyEndpoints(BaseTestCase):
         data = {
             "name": "test",
             "condition": V1StatusCondition(
-                type=V1NotificationTrigger.FAILED, status=True
+                type=V1Statuses.FAILED, status=True
             ).to_dict(),
             "connections": None,
         }
@@ -66,7 +66,7 @@ class TestNotifyEndpoints(BaseTestCase):
         data = {
             "name": "test",
             "condition": V1StatusCondition(
-                type=V1NotificationTrigger.FAILED, status=True
+                type=V1Statuses.FAILED, status=True
             ).to_dict(),
             "connections": [],
         }
@@ -78,7 +78,7 @@ class TestNotifyEndpoints(BaseTestCase):
         data = {
             "name": "test",
             "condition": V1StatusCondition(
-                type=V1NotificationTrigger.FAILED, status=True
+                type=V1Statuses.FAILED, status=True
             ).to_dict(),
             "connections": ["test1", "test2"],
         }
@@ -89,7 +89,7 @@ class TestNotifyEndpoints(BaseTestCase):
         data = {
             "name": "test",
             "condition": V1StatusCondition(
-                type=V1NotificationTrigger.FAILED, status=True
+                type=V1Statuses.FAILED, status=True
             ).to_dict(),
             "connections": ["test1", "test2"],
         }

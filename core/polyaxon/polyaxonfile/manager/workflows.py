@@ -22,6 +22,25 @@ from polyaxon.polyflow import V1CompiledOperation, V1MatrixKind, V1Operation, V1
 from polyaxon.utils.formatting import Printer
 
 
+def get_op_from_schedule(
+    content: str,
+    compiled_operation: V1CompiledOperation,
+) -> V1Operation:
+    op_spec = V1Operation.read(content)
+    op_spec.conditions = None
+    op_spec.schedule = None
+    op_spec.events = None
+    op_spec.dependencies = None
+    op_spec.trigger = None
+    op_spec.skip_on_upstream_skip = None
+    op_spec.cache = compiled_operation.cache
+    op_spec.queue = compiled_operation.queue
+    op_spec.component.inputs = compiled_operation.inputs
+    op_spec.component.outputs = compiled_operation.outputs
+    op_spec.component.contexts = compiled_operation.contexts
+    return op_spec
+
+
 def get_ops_from_suggestions(
     content: str,
     compiled_operation: V1CompiledOperation,
@@ -34,7 +53,6 @@ def get_ops_from_suggestions(
             for (k, v) in suggestion.items()
         }
         op_spec = V1Operation.read(content)
-        # remove matrix and other op level fields
         op_spec.matrix = None
         op_spec.conditions = None
         op_spec.schedule = None
@@ -42,6 +60,8 @@ def get_ops_from_suggestions(
         op_spec.dependencies = None
         op_spec.trigger = None
         op_spec.skip_on_upstream_skip = None
+        op_spec.cache = compiled_operation.cache
+        op_spec.queue = compiled_operation.queue
         op_spec.params = params
         op_spec.component.inputs = compiled_operation.inputs
         op_spec.component.outputs = compiled_operation.outputs

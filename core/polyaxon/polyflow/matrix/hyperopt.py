@@ -19,9 +19,10 @@ import polyaxon_sdk
 from marshmallow import fields, validate
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
@@ -46,7 +47,7 @@ class HyperoptSchema(BaseCamelSchema):
         return V1Hyperopt
 
 
-class V1Hyperopt(BaseConfig, polyaxon_sdk.V1Hyperopt):
+class V1Hyperopt(BaseSearchConfig, polyaxon_sdk.V1Hyperopt):
     """Hyperopt is a search algorithm that is backed by the
     [Hyperopt](http://hyperopt.github.io/hyperopt/) library
     to perform sequential model-based hyperparameter optimization.

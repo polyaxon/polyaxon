@@ -22,7 +22,7 @@ import "google/protobuf/struct.proto";
 
 import "v1/polyflow/io.proto";
 
-// Action defintion
+// Action definition
 message Action {
     // Component name to use, if not provided Polyaxon will check the action name isntead
     string hub_ref = 1;

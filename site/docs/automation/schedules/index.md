@@ -29,5 +29,4 @@ Polyaxon provides several scheduling interfaces to automate the process of creat
 
  * [Cron schedules](/docs/automation/schedules/cron/)
  * [Interval schedules](/docs/automation/schedules/interval/)
- * [Repeatable schedules](/docs/automation/schedules/repeatable/)
- * [Exact time schedules](/docs/automation/schedules/exact-time/)
+ * [Exact time schedules](/docs/automation/schedules/datetime/)

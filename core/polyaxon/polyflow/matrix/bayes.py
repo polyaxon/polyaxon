@@ -19,6 +19,7 @@ import polyaxon_sdk
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.polyflow.optimization import OptimizationMetricSchema
@@ -203,7 +204,7 @@ class BayesSchema(BaseCamelSchema):
         validate_matrix(data.get("params"))
 
 
-class V1Bayes(BaseConfig, polyaxon_sdk.V1Bayes):
+class V1Bayes(BaseSearchConfig, polyaxon_sdk.V1Bayes):
     """Bayesian optimization is an extremely powerful technique.
     The main idea behind it is to compute a posterior distribution
     over the objective function based on the data, and then select good points

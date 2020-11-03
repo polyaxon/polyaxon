@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **hub_ref** | **str** |  | [optional] 
-**trigger** | [**V1HookTrigger**](V1HookTrigger.md) |  | [optional] 
+**trigger** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
 **connection** | **str** |  | [optional] 
 **params** | [**dict(str, V1Param)**](V1Param.md) |  | [optional] 
 **run_patch** | [**object**](.md) |  | [optional] 

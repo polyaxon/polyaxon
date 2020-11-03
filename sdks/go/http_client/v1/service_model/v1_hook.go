@@ -26,12 +26,12 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// V1Hook Hook defintion
+// V1Hook Hook definition
 //
 // swagger:model v1Hook
 type V1Hook struct {
 
-	// Connection to use for notification
+	// Connection to use for this hook
 	Connection string `json:"connection,omitempty"`
 
 	// Component name to use, if not provided Polyaxon will check the action name isntead
@@ -41,11 +41,10 @@ type V1Hook struct {
 	Params map[string]V1Param `json:"params,omitempty"`
 
 	// Optional a run section to override  the content of the run in the template
-	// should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
 	RunPatch interface{} `json:"run_patch,omitempty"`
 
 	// Optional trigger policy, default done
-	Trigger V1HookTrigger `json:"trigger,omitempty"`
+	Trigger V1Statuses `json:"trigger,omitempty"`
 }
 
 // Validate validates this v1 hook

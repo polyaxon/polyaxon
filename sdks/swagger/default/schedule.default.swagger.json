@@ -14,17 +14,10 @@
         }
       }
     },
-    "v1ExactTimeSchedule": {
+    "v1DateTimeSchedule": {
       "properties": {
         "kind": {
-          "default": "exact_time"
-        }
-      }
-    },
-    "v1RepeatableSchedule": {
-      "properties": {
-        "kind": {
-          "default": "repeatable"
+          "default": "datetime"
         }
       }
     }

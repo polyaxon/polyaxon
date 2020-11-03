@@ -22,29 +22,22 @@ import "google/protobuf/struct.proto";
 
 import "v1/polyflow/io.proto";
 
-// Hook defintion
+import "v1/polyflow/status.proto";
+
+// Hook definition
 message Hook {
     // Component name to use, if not provided Polyaxon will check the action name isntead
     string hub_ref = 1;
 
-    // NotificationTrigger enum
-    enum Trigger {
-        succeeded = 0;
-        failed = 1;
-        stopped = 2;
-        done = 3;
-    }
-
     // Optional trigger policy, default done
-    Trigger trigger = 2;
+    Statuses trigger = 2;
 
-    // Connection to use for notification
+    // Connection to use for this hook
     string connection = 3;
 
     // Optional dict of params
     map<string, Param> params = 4;
 
     // Optional a run section to override  the content of the run in the template
-    // should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
     google.protobuf.Struct run_patch = 5;
 }

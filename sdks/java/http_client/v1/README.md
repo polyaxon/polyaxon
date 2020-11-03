@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.2.2-rc0
+- API version: 1.2.2-rc2
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.2.2-rc0</version>
+  <version>1.2.2-rc2</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.2.2-rc0"
+compile "org.openapitools:openapi-java-client:1.2.2-rc2"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.2.2-rc0.jar`
+* `target/openapi-java-client-1.2.2-rc2.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -362,6 +362,7 @@ Class | Method | HTTP request | Description
  - [V1DagRef](docs/V1DagRef.md)
  - [V1Dashboard](docs/V1Dashboard.md)
  - [V1Dask](docs/V1Dask.md)
+ - [V1DateTimeSchedule](docs/V1DateTimeSchedule.md)
  - [V1DiffStoppingPolicy](docs/V1DiffStoppingPolicy.md)
  - [V1DockerfileType](docs/V1DockerfileType.md)
  - [V1EarlyStopping](docs/V1EarlyStopping.md)
@@ -383,7 +384,6 @@ Class | Method | HTTP request | Description
  - [V1EventType](docs/V1EventType.md)
  - [V1EventVideo](docs/V1EventVideo.md)
  - [V1EventsResponse](docs/V1EventsResponse.md)
- - [V1ExactTimeSchedule](docs/V1ExactTimeSchedule.md)
  - [V1FailureEarlyStopping](docs/V1FailureEarlyStopping.md)
  - [V1Flink](docs/V1Flink.md)
  - [V1GcsType](docs/V1GcsType.md)
@@ -391,7 +391,6 @@ Class | Method | HTTP request | Description
  - [V1GitType](docs/V1GitType.md)
  - [V1GridSearch](docs/V1GridSearch.md)
  - [V1Hook](docs/V1Hook.md)
- - [V1HookTrigger](docs/V1HookTrigger.md)
  - [V1HostConnection](docs/V1HostConnection.md)
  - [V1HostPathConnection](docs/V1HostPathConnection.md)
  - [V1HpChoice](docs/V1HpChoice.md)
@@ -451,7 +450,6 @@ Class | Method | HTTP request | Description
  - [V1MetricEarlyStopping](docs/V1MetricEarlyStopping.md)
  - [V1ModelRegistry](docs/V1ModelRegistry.md)
  - [V1Notification](docs/V1Notification.md)
- - [V1NotificationTrigger](docs/V1NotificationTrigger.md)
  - [V1Operation](docs/V1Operation.md)
  - [V1OperationBody](docs/V1OperationBody.md)
  - [V1OperationCond](docs/V1OperationCond.md)
@@ -480,7 +478,6 @@ Class | Method | HTTP request | Description
  - [V1RandomSearch](docs/V1RandomSearch.md)
  - [V1Ray](docs/V1Ray.md)
  - [V1Reference](docs/V1Reference.md)
- - [V1RepeatableSchedule](docs/V1RepeatableSchedule.md)
  - [V1ResourceType](docs/V1ResourceType.md)
  - [V1Run](docs/V1Run.md)
  - [V1RunArtifact](docs/V1RunArtifact.md)
@@ -491,6 +488,7 @@ Class | Method | HTTP request | Description
  - [V1RunSettingsCatalog](docs/V1RunSettingsCatalog.md)
  - [V1S3Type](docs/V1S3Type.md)
  - [V1Schedule](docs/V1Schedule.md)
+ - [V1ScheduleKind](docs/V1ScheduleKind.md)
  - [V1Schemas](docs/V1Schemas.md)
  - [V1Search](docs/V1Search.md)
  - [V1SearchSpec](docs/V1SearchSpec.md)

@@ -264,12 +264,12 @@ class Run(RunClient):
     def _log_has_events(self):
         if not self._has_events:
             self._has_events = True
-            self._log_meta(has_events=True)
+            self.log_meta(has_events=True)
 
     def _log_has_model(self):
         if not self._has_model:
             self._has_model = True
-            self._log_meta(has_model=True)
+            self.log_meta(has_model=True)
 
     @check_no_op
     @check_offline

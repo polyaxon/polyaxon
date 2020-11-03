@@ -41,4 +41,6 @@
 
 * `unknown` (value: `"unknown"`)
 
+* `done` (value: `"done"`)
+
 

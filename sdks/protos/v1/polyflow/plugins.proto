@@ -18,21 +18,15 @@ syntax = "proto3";
 
 package v1;
 
+import "v1/polyflow/status.proto";
+
 // Notification message
 message Notification {
   // Connections to use for notification
   repeated string connections = 1;
 
-  // NotificationTrigger enum
-  enum Trigger {
-      succeeded = 0;
-      failed = 1;
-      stopped = 2;
-      done = 3;
-  }
-
   // Optional trigger policy, default done
-  Trigger trigger = 2;
+  Statuses trigger = 2;
 }
 
 // Plugins specification

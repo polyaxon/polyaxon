@@ -18,12 +18,11 @@ import pytest
 
 from marshmallow import ValidationError
 
-from polyaxon.polyflow.schedule import (
+from polyaxon.polyflow.schedules import (
     ScheduleSchema,
     V1CronSchedule,
-    V1ExactTimeSchedule,
+    V1DateTimeSchedule,
     V1IntervalSchedule,
-    V1RepeatableSchedule,
 )
 from polyaxon.utils.tz_utils import now
 from tests.utils import BaseTestCase
@@ -64,6 +63,7 @@ class TestScheduleConfigs(BaseTestCase):
             "frequency": 2,
             "startAt": now().isoformat(),
             "endAt": now().isoformat(),
+            "maxRuns": 123,
             "dependsOnPast": False,
         }
         V1IntervalSchedule.from_dict(config_dict)
@@ -97,25 +97,18 @@ class TestScheduleConfigs(BaseTestCase):
             "cron": "0 0 * * *",
             "startAt": now().isoformat(),
             "endAt": now().isoformat(),
+            "maxRuns": 123,
             "dependsOnPast": False,
         }
         V1CronSchedule.from_dict(config_dict)
 
-    def test_exact_time_schedule(self):
+    def test_date_schedule(self):
         config_dict = {"startAt": "foo"}
         with self.assertRaises(ValidationError):
-            V1ExactTimeSchedule.from_dict(config_dict)
+            V1DateTimeSchedule.from_dict(config_dict)
 
-        config_dict = {"kind": "exact_time", "startAt": now().isoformat()}
-        V1ExactTimeSchedule.from_dict(config_dict).to_dict()
-
-    def test_repeatable_schedule(self):
-        config_dict = {"limit": "foo"}
-        with self.assertRaises(ValidationError):
-            V1RepeatableSchedule.from_dict(config_dict)
-
-        config_dict = {"kind": "repeatable", "limit": 123, "dependsOnPast": False}
-        assert V1RepeatableSchedule.from_dict(config_dict).to_dict() == config_dict
+        config_dict = {"kind": "datetime", "startAt": now().isoformat()}
+        V1DateTimeSchedule.from_dict(config_dict).to_dict()
 
     def test_schedule(self):
         configs = [
@@ -131,7 +124,11 @@ class TestScheduleConfigs(BaseTestCase):
                 "cron": "0 0 * * *",
                 "startAt": now().isoformat(),
                 "endAt": now().isoformat(),
-                "dependsOnPast": False,
+                "dependsOnPast": True,
+            },
+            {
+                "kind": "datetime",
+                "startAt": "2010-01-01T00:00+00:00",
             },
         ]
 

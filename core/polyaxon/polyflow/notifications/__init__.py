@@ -18,17 +18,14 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
+from polyaxon.lifecycle import V1Statuses
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
-
-
-class V1NotificationTrigger(polyaxon_sdk.V1NotificationTrigger):
-    pass
 
 
 class NotificationSchema(BaseCamelSchema):
     connections = fields.List(fields.Str(), required=True)
     trigger = fields.Str(
-        allow_none=True, validate=validate.OneOf(V1NotificationTrigger.allowable_values)
+        allow_none=True, validate=validate.OneOf(V1Statuses.allowable_values)
     )
 
     @staticmethod
@@ -67,10 +64,11 @@ class V1Notification(BaseConfig, polyaxon_sdk.V1Notification):
     ## Python usage
 
     ```python
-    >>> from polyaxon.polyflow import V1Notification, V1NotificationTrigger
+    >>> from polyaxon.lifecycle import V1Statuses
+    >>> from polyaxon.polyflow import V1Notification
     >>> notification = V1Notification(
     >>>     connections=["slack-connection", "discord-connection"],
-    >>>     trigger=V1NotificationTrigger.FAILED,
+    >>>     trigger=V1Statuses.FAILED,
     >>> )
     ```
 

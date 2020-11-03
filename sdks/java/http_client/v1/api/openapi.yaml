@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.2.2-rc0
+  version: 1.2.2-rc2
 servers:
 - url: /
 security:
@@ -12372,7 +12372,7 @@ components:
             Optional a run section to override  the content of the run in the template
             should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
           type: object
-      title: Action defintion
+      title: Action definition
       type: object
     v1Affinity:
       title: Placeholder for Affinity
@@ -13494,14 +13494,14 @@ components:
         secret:
           mount_path: mount_path
           name: name
-          default_mode: 7
+          default_mode: 5
           items:
           - items
           - items
         config_map:
           mount_path: mount_path
           name: name
-          default_mode: 7
+          default_mode: 5
           items:
           - items
           - items
@@ -13544,6 +13544,7 @@ components:
       example:
         cron: cron
         end_at: 2000-01-23T04:56:07.000+00:00
+        max_runs: 9
         depends_on_past: true
         kind: cron
         start_at: 2000-01-23T04:56:07.000+00:00
@@ -13560,6 +13561,10 @@ components:
           format: date-time
           title: Whan to end this cron schedule
           type: string
+        max_runs:
+          format: int32
+          title: Limit to stop executing this schedule
+          type: integer
         cron:
           title: Cron definition, e.g. 0 1 * * *
           type: string
@@ -14818,6 +14823,21 @@ components:
           type: object
       title: Dask specification
       type: object
+    v1DateTimeSchedule:
+      example:
+        kind: datetime
+        start_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        kind:
+          default: datetime
+          title: Kind of schedule, should be equal to "datetime"
+          type: string
+        start_at:
+          format: date-time
+          title: Whan to start this cron schedule
+          type: string
+      title: DateTime schedule specification
+      type: object
     v1DiffStoppingPolicy:
       description: |-
         Early stopping with diff factor stopping, this policy computes checks runs against the best run
@@ -15151,44 +15171,44 @@ components:
       example:
         image:
           path: path
-          colorspace: 4
-          width: 8
-          height: 6
+          colorspace: 3
+          width: 4
+          height: 8
         curve:
           annotation: annotation
           x:
-          - 9.254184
-          - 9.254184
+          - 1.8268702
+          - 1.8268702
           y:
-          - 1.8268702
-          - 1.8268702
+          - 3.5026577
+          - 3.5026577
         video:
           path: path
           content_type: content_type
-          colorspace: 8
-          width: 4
-          height: 6
+          colorspace: 9
+          width: 8
+          height: 4
         histogram:
           counts:
-          - 0.43431398824148815
-          - 0.43431398824148815
+          - 2.9409642974827896
+          - 2.9409642974827896
           values:
-          - 3.901545264248647
-          - 3.901545264248647
+          - 0.43431398824148815
+          - 0.43431398824148815
         artifact:
           path: path
-        metric: 4.863159
-        step: 5
+        metric: 6.0738983
+        step: 4
         html: html
         model:
           path: path
           framework: framework
           spec: '{}'
         audio:
-          num_channels: 1
+          num_channels: 8
           path: path
-          length_frames: 8
-          sample_rate: 2.9409642
+          length_frames: 6
+          sample_rate: 1.7325933
           content_type: content_type
         text: text
         dataframe:
@@ -15246,10 +15266,10 @@ components:
       type: object
     v1EventAudio:
       example:
-        num_channels: 1
+        num_channels: 8
         path: path
-        length_frames: 8
-        sample_rate: 2.9409642
+        length_frames: 6
+        sample_rate: 1.7325933
         content_type: content_type
       properties:
         sample_rate:
@@ -15300,11 +15320,11 @@ components:
       example:
         annotation: annotation
         x:
-        - 9.254184
-        - 9.254184
+        - 1.8268702
+        - 1.8268702
         y:
-        - 1.8268702
-        - 1.8268702
+        - 3.5026577
+        - 3.5026577
       properties:
         kind:
           $ref: '#/components/schemas/v1EventCurveKind'
@@ -15353,11 +15373,11 @@ components:
     v1EventHistogram:
       example:
         counts:
-        - 0.43431398824148815
-        - 0.43431398824148815
+        - 2.9409642974827896
+        - 2.9409642974827896
         values:
-        - 3.901545264248647
-        - 3.901545264248647
+        - 0.43431398824148815
+        - 0.43431398824148815
       properties:
         values:
           items:
@@ -15374,9 +15394,9 @@ components:
     v1EventImage:
       example:
         path: path
-        colorspace: 4
-        width: 8
-        height: 6
+        colorspace: 3
+        width: 4
+        height: 8
       properties:
         height:
           description: Height of the image.
@@ -15435,9 +15455,9 @@ components:
       example:
         path: path
         content_type: content_type
-        colorspace: 8
-        width: 4
-        height: 6
+        colorspace: 9
+        width: 8
+        height: 4
       properties:
         height:
           description: Height of the video.
@@ -15479,21 +15499,6 @@ components:
           title: Events data
           type: array
       title: Events response definition
-      type: object
-    v1ExactTimeSchedule:
-      example:
-        kind: exact_time
-        start_at: 2000-01-23T04:56:07.000+00:00
-      properties:
-        kind:
-          default: exact_time
-          title: Kind of schedule, should be equal to "exact_time"
-          type: string
-        start_at:
-          format: date-time
-          title: Whan to start this cron schedule
-          type: string
-      title: Exact time schedule specification
       type: object
     v1FailureEarlyStopping:
       description: |-
@@ -15636,9 +15641,9 @@ components:
             name isntead
           type: string
         trigger:
-          $ref: '#/components/schemas/v1HookTrigger'
+          $ref: '#/components/schemas/v1Statuses'
         connection:
-          title: Connection to use for notification
+          title: Connection to use for this hook
           type: string
         params:
           additionalProperties:
@@ -15647,21 +15652,11 @@ components:
           type: object
         run_patch:
           properties: {}
-          title: |-
-            Optional a run section to override  the content of the run in the template
-            should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
+          title: Optional a run section to override  the content of the run in the
+            template
           type: object
-      title: Hook defintion
+      title: Hook definition
       type: object
-    v1HookTrigger:
-      default: succeeded
-      enum:
-      - succeeded
-      - failed
-      - stopped
-      - done
-      title: NotificationTrigger enum
-      type: string
     v1HostAlias:
       title: Placeholder for HostAlias
       type: object
@@ -16263,6 +16258,7 @@ components:
     v1IntervalSchedule:
       example:
         end_at: 2000-01-23T04:56:07.000+00:00
+        max_runs: 0
         depends_on_past: true
         kind: interval
         start_at: 2000-01-23T04:56:07.000+00:00
@@ -16280,9 +16276,13 @@ components:
           format: date-time
           title: Whan to end this interval schedule
           type: string
+        max_runs:
+          format: int32
+          title: Limit to stop executing this schedule
+          type: integer
         frequency:
           format: int32
-          title: Frequency at which to execute the runs
+          title: Frequency (timedelta) at which to execute the runs
           type: integer
         depends_on_past:
           title: A flag to set a dependency on past executions
@@ -16497,7 +16497,7 @@ components:
       example:
         mount_path: mount_path
         name: name
-        default_mode: 7
+        default_mode: 5
         items:
         - items
         - items
@@ -16520,7 +16520,7 @@ components:
         schema:
           mount_path: mount_path
           name: name
-          default_mode: 7
+          default_mode: 5
           items:
           - items
           - items
@@ -18120,18 +18120,9 @@ components:
           title: Connections to use for notification
           type: array
         trigger:
-          $ref: '#/components/schemas/v1NotificationTrigger'
+          $ref: '#/components/schemas/v1Statuses'
       title: Notification message
       type: object
-    v1NotificationTrigger:
-      default: succeeded
-      enum:
-      - succeeded
-      - failed
-      - stopped
-      - done
-      title: NotificationTrigger enum
-      type: string
     v1Operation:
       example:
         template:
@@ -18901,10 +18892,10 @@ components:
     v1PolyaxonSidecarContainer:
       example:
         image: image
-        sleep_interval: 9
+        sleep_interval: 0
         image_pull_policy: image_pull_policy
         resources: '{}'
-        sync_interval: 0
+        sync_interval: 7
         image_tag: image_tag
         monitor_logs: true
       properties:
@@ -19500,25 +19491,6 @@ components:
         path_reference:
           $ref: '#/components/schemas/v1PathRef'
       title: Reference specification
-      type: object
-    v1RepeatableSchedule:
-      example:
-        depends_on_past: true
-        kind: repeatable
-        limit: 0
-      properties:
-        kind:
-          default: repeatable
-          title: Kind of schedule, should be equal to "repeatable"
-          type: string
-        limit:
-          format: int32
-          title: Limit to stop executing this schedule
-          type: integer
-        depends_on_past:
-          title: A flag to set a dependency on past executions
-          type: boolean
-      title: Repeatable schedule specification
       type: object
     v1ResourceRequirements:
       title: Placeholder Resource Requirements
@@ -22239,18 +22211,16 @@ components:
         cron:
           cron: cron
           end_at: 2000-01-23T04:56:07.000+00:00
+          max_runs: 9
           depends_on_past: true
           kind: cron
           start_at: 2000-01-23T04:56:07.000+00:00
-        exact_time:
-          kind: exact_time
+        datetime:
+          kind: datetime
           start_at: 2000-01-23T04:56:07.000+00:00
-        repeatable:
-          depends_on_past: true
-          kind: repeatable
-          limit: 0
         interval:
           end_at: 2000-01-23T04:56:07.000+00:00
+          max_runs: 0
           depends_on_past: true
           kind: interval
           start_at: 2000-01-23T04:56:07.000+00:00
@@ -22258,14 +22228,19 @@ components:
       properties:
         cron:
           $ref: '#/components/schemas/v1CronSchedule'
-        exact_time:
-          $ref: '#/components/schemas/v1ExactTimeSchedule'
+        datetime:
+          $ref: '#/components/schemas/v1DateTimeSchedule'
         interval:
           $ref: '#/components/schemas/v1IntervalSchedule'
-        repeatable:
-          $ref: '#/components/schemas/v1RepeatableSchedule'
       title: All Schemas message
       type: object
+    v1ScheduleKind:
+      default: cron
+      enum:
+      - cron
+      - interval
+      - datetime
+      type: string
     v1Schemas:
       example:
         connection_schema:
@@ -25004,7 +24979,7 @@ components:
           schema:
             mount_path: mount_path
             name: name
-            default_mode: 7
+            default_mode: 5
             items:
             - items
             - items
@@ -25033,14 +25008,14 @@ components:
           secret:
             mount_path: mount_path
             name: name
-            default_mode: 7
+            default_mode: 5
             items:
             - items
             - items
           config_map:
             mount_path: mount_path
             name: name
-            default_mode: 7
+            default_mode: 5
             items:
             - items
             - items
@@ -25048,44 +25023,44 @@ components:
         event:
           image:
             path: path
-            colorspace: 4
-            width: 8
-            height: 6
+            colorspace: 3
+            width: 4
+            height: 8
           curve:
             annotation: annotation
             x:
-            - 9.254184
-            - 9.254184
+            - 1.8268702
+            - 1.8268702
             y:
-            - 1.8268702
-            - 1.8268702
+            - 3.5026577
+            - 3.5026577
           video:
             path: path
             content_type: content_type
-            colorspace: 8
-            width: 4
-            height: 6
+            colorspace: 9
+            width: 8
+            height: 4
           histogram:
             counts:
-            - 0.43431398824148815
-            - 0.43431398824148815
+            - 2.9409642974827896
+            - 2.9409642974827896
             values:
-            - 3.901545264248647
-            - 3.901545264248647
+            - 0.43431398824148815
+            - 0.43431398824148815
           artifact:
             path: path
-          metric: 4.863159
-          step: 5
+          metric: 6.0738983
+          step: 4
           html: html
           model:
             path: path
             framework: framework
             spec: '{}'
           audio:
-            num_channels: 1
+            num_channels: 8
             path: path
-            length_frames: 8
-            sample_rate: 2.9409642
+            length_frames: 6
+            sample_rate: 1.7325933
             content_type: content_type
           text: text
           dataframe:
@@ -25137,28 +25112,26 @@ components:
           cron:
             cron: cron
             end_at: 2000-01-23T04:56:07.000+00:00
+            max_runs: 9
             depends_on_past: true
             kind: cron
             start_at: 2000-01-23T04:56:07.000+00:00
-          exact_time:
-            kind: exact_time
+          datetime:
+            kind: datetime
             start_at: 2000-01-23T04:56:07.000+00:00
-          repeatable:
-            depends_on_past: true
-            kind: repeatable
-            limit: 0
           interval:
             end_at: 2000-01-23T04:56:07.000+00:00
+            max_runs: 0
             depends_on_past: true
             kind: interval
             start_at: 2000-01-23T04:56:07.000+00:00
             frequency: 9
         polyaxon_sidecar_container:
           image: image
-          sleep_interval: 9
+          sleep_interval: 0
           image_pull_policy: image_pull_policy
           resources: '{}'
-          sync_interval: 0
+          sync_interval: 7
           image_tag: image_tag
           monitor_logs: true
         operation_cond:
@@ -25569,10 +25542,12 @@ components:
           $ref: '#/components/schemas/v1ConnectionType'
         event_type:
           $ref: '#/components/schemas/v1EventType'
-        event:
-          $ref: '#/components/schemas/v1Event'
         matrix_kind:
           $ref: '#/components/schemas/v1MatrixKind'
+        schedule_kind:
+          $ref: '#/components/schemas/v1ScheduleKind'
+        event:
+          $ref: '#/components/schemas/v1Event'
       type: object
     v1Search:
       example:
@@ -26317,6 +26292,7 @@ components:
       - upstream_failed
       - retrying
       - unknown
+      - done
       type: string
     v1TFJob:
       example:

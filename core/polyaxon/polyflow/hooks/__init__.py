@@ -18,18 +18,15 @@ import polyaxon_sdk
 
 from marshmallow import fields, validate
 
+from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow.params import ParamSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
-
-
-class V1HookTrigger(polyaxon_sdk.V1HookTrigger):
-    pass
 
 
 class HookSchema(BaseCamelSchema):
     connection = fields.Str(required=True)
     trigger = fields.Str(
-        allow_none=True, validate=validate.OneOf(V1HookTrigger.allowable_values)
+        allow_none=True, validate=validate.OneOf(V1Statuses.allowable_values)
     )
     hub_ref = fields.Str(allow_none=True)
     params = fields.Dict(
@@ -78,9 +75,10 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
     ## Python usage
 
     ```python
-    >>> from polyaxon.polyflow import V1Hook, V1HookTrigger
+    >>> from polyaxon.lifecycle import V1Statuses
+    >>> from polyaxon.polyflow import V1Hook
     >>> hook = V1Hook(
-    >>>     trigger=V1HookTrigger.FAILED,
+    >>>     trigger=V1Statuses.FAILED,
     >>>     hub_ref="slack",
     >>>     connection="slack-connection",
     >>> )

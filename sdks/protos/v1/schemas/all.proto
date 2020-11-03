@@ -65,6 +65,7 @@ message Schemas {
     K8sResourceType k8s_resource = 23;
     ConnectionType connection = 24;
     EventType event_type = 26;
-    Event event = 28;
     MatrixKind matrix_kind = 27;
+    ScheduleKind schedule_kind = 28;
+    Event event = 29;
 }

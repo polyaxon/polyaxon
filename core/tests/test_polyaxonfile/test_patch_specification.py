@@ -224,7 +224,7 @@ class TestPatchSpecifications(BaseTestCase):
                         ],
                     },
                 },
-                "schedule": {"kind": "exact_time", "startAt": self.PATCH_DT_VALUE},
+                "schedule": {"kind": "datetime", "startAt": self.PATCH_DT_VALUE},
                 "events": None,
                 "matrix": {
                     "concurrency": self.PATCH_INT_VALUE,

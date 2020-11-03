@@ -43,5 +43,7 @@
 
 * `UNKNOWN` (value: `"unknown"`)
 
+* `DONE` (value: `"done"`)
+
 
 

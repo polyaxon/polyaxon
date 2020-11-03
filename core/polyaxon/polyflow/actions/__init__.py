@@ -100,8 +100,8 @@ class V1Action(BaseConfig, polyaxon_sdk.V1Action):
     ## Python usage
 
     ```python
-    >>> from polyaxon.polyflow import V1Hook, V1HookTrigger
-    >>> notification = V1Hook(
+    >>> from polyaxon.polyflow import V1Action
+    >>> action = V1Action(
     >>>     hub_ref="tensorboard",
     >>>     label="Start Tensorboard",
     >>> )

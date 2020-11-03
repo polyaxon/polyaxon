@@ -132,5 +132,9 @@ class BaseRun(
         return self.kind == V1RunKind.MATRIX
 
     @property
+    def is_schedule(self):
+        return self.kind == V1RunKind.SCHEDULE
+
+    @property
     def has_pipeline(self):
-        return self.is_dag or self.is_matrix
+        return self.is_dag or self.is_matrix or self.is_schedule

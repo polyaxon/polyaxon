@@ -44,6 +44,9 @@ type V1CronSchedule struct {
 	// Kind of schedule, should be equal to "cron"
 	Kind *string `json:"kind,omitempty"`
 
+	// Limit to stop executing this schedule
+	MaxRuns int32 `json:"max_runs,omitempty"`
+
 	// Whan to start this cron schedule
 	// Format: date-time
 	StartAt strfmt.DateTime `json:"start_at,omitempty"`

@@ -22,13 +22,14 @@ import polyaxon_sdk
 from marshmallow import fields, validate
 
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
+from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
 from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.polyflow.optimization import (
     OptimizationMetricSchema,
     OptimizationResourceSchema,
 )
-from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
@@ -51,7 +52,7 @@ class HyperbandSchema(BaseCamelSchema):
         return V1Hyperband
 
 
-class V1Hyperband(BaseConfig, polyaxon_sdk.V1Hyperband):
+class V1Hyperband(BaseSearchConfig, polyaxon_sdk.V1Hyperband):
     """Hyperband is a relatively new method for tuning iterative algorithms.
     It performs random sampling and attempts to gain an edge
     by using time spent optimizing in the best way.

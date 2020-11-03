@@ -16,7 +16,6 @@
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.throttling import AnonRateThrottle
 from rest_framework.views import APIView
 
 from coredb.managers.dummy_key import get_dummy_key
@@ -28,13 +27,9 @@ from polycommon import conf, pkg
 from polycommon.options.registry.installation import ORGANIZATION_KEY
 
 
-class HealthRateThrottle(AnonRateThrottle):
-    scope = "health"
-
-
 class HealthView(APIView):
     authentication_classes = ()
-    throttle_classes = (HealthRateThrottle,)
+    throttle_scope = "checks"
     HEALTH_FILE = "/tmp/.compatibility"
 
     def get_config(self):

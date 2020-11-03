@@ -611,7 +611,7 @@ class TestComponentsConfigs(BaseTestCase):
                 "values": [{"a": 1}, {"a": 1}],
             },
             "schedule": {
-                "kind": "exact_time",
+                "kind": "datetime",
                 "startAt": local_datetime(now()).isoformat(),
             },
             "termination": {"timeout": 1000},

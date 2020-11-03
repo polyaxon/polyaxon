@@ -20,27 +20,7 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
-enum Statuses {
-    created = 0;
-    resuming = 1;
-    compiled = 2;
-    queued = 3;
-    scheduled = 4;
-    starting = 5;
-    initializing = 6;
-    running = 7;
-    processing = 8;
-    stopping = 9;
-    failed = 10;
-    stopped = 11;
-    succeeded = 12;
-    skipped = 13;
-    warning = 14;
-    unschedulable = 15;
-    upstream_failed = 16;
-    retrying = 17;
-    unknown = 18;
-}
+import "v1/polyflow/status.proto";
 
 // Status condition specification
 message StatusCondition {

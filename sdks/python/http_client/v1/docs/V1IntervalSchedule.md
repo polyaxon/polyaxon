@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **kind** | **str** |  | [optional] [default to 'interval']
 **start_at** | **datetime** |  | [optional] 
 **end_at** | **datetime** |  | [optional] 
+**max_runs** | **int** |  | [optional] 
 **frequency** | **int** |  | [optional] 
 **depends_on_past** | **bool** |  | [optional] 
 

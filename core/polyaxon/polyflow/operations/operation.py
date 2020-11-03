@@ -118,8 +118,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
         schedule: Union[[V1CronSchedule](/docs/automation/schedules/cron/)
                   [V1IntervalSchedule](/docs/automation/schedules/interval/),
-                  [V1RepeatableSchedule](/docs/automation/schedules/repeatable/),
-                  [V1ExactTimeSchedule](/docs/automation/schedules/exact-time/)], optional
+                  [V1DateTimeSchedule](/docs/automation/schedules/datetime/)], optional
         events: List[[str](/docs/automation/extensions/events/)], optional
         actions: List[[V1Action](/docs/automation/extensions/actions/)], optional
         hooks: List[[V1Hook](/docs/automation/extensions/hooks/)], optional

@@ -944,7 +944,29 @@ class RunClient:
             self._run_data.outputs = outputs
         self._update(patch_dict, async_req=async_req)
 
-    def _log_meta(self, reset: bool = False, async_req: bool = True, **meta):
+    def log_meta(self, reset: bool = False, async_req: bool = True, **meta):
+        """Logs meta_info for the current run.
+
+        > **Note**: Use carefully! The meta information is used by
+        Polyaxon internally to perform several information.
+
+        Polyaxon Client already uses this method to log information
+        about several events and artifacts, Polyaxon API/Scheduler uses
+        this information to set meta information about the run.
+
+        An example use case for this method is to update the concurrency
+        of a pipeline to increase/decrease the initial value:
+        ```python
+        >>> from polyaxon.client import RunClient
+        >>> client = RunClient()
+        >>> client.log_meta(concurrency=5)
+        ```
+
+        Args:
+            reset: bool, optional, if True, it will reset the whole meta info state.
+            async_req: bool, optional, default: False, execute request asynchronously.
+            meta: **kwargs, e.g. concurrency=10, has_flag=True, ...
+        """
         patch_dict = {"meta_info": meta}
         if reset is False:
             patch_dict["merge"] = True
@@ -1217,7 +1239,7 @@ class RunClient:
             is_input=is_input,
         )
         self.log_artifact_lineage(body=artifact_run)
-        self._log_meta(has_tensorboard=True)
+        self.log_meta(has_tensorboard=True)
 
     @check_no_op
     @check_offline

@@ -47,10 +47,8 @@
       link: /docs/automation/schedules/cron/
     - title: Interval Schedule
       link: /docs/automation/schedules/interval/
-    - title: Repeatable Schedule
-      link: /docs/automation/schedules/repeatable/
     - title: Exact time Schedule
-      link: /docs/automation/schedules/exact-time/
+      link: /docs/automation/schedules/datetime/
   - group: Extensions
     items:
     - title: Overview

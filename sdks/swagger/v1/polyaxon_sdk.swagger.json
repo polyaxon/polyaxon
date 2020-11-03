@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.2.2-rc0",
+    "version": "1.2.2-rc2",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -12610,7 +12610,7 @@
           "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
         }
       },
-      "title": "Action defintion"
+      "title": "Action definition"
     },
     "v1Affinity": {
       "type": "object",
@@ -13442,6 +13442,11 @@
           "format": "date-time",
           "title": "Whan to end this cron schedule"
         },
+        "max_runs": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Limit to stop executing this schedule"
+        },
         "cron": {
           "type": "string",
           "title": "Cron definition, e.g. 0 1 * * *"
@@ -13640,6 +13645,22 @@
         }
       },
       "title": "Dask specification"
+    },
+    "v1DateTimeSchedule": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of schedule, should be equal to \"datetime\"",
+          "default": "datetime"
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Whan to start this cron schedule"
+        }
+      },
+      "title": "DateTime schedule specification"
     },
     "v1DiffStoppingPolicy": {
       "type": "object",
@@ -14228,22 +14249,6 @@
       },
       "title": "Events response definition"
     },
-    "v1ExactTimeSchedule": {
-      "type": "object",
-      "properties": {
-        "kind": {
-          "type": "string",
-          "title": "Kind of schedule, should be equal to \"exact_time\"",
-          "default": "exact_time"
-        },
-        "start_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Whan to start this cron schedule"
-        }
-      },
-      "title": "Exact time schedule specification"
-    },
     "v1FailureEarlyStopping": {
       "type": "object",
       "properties": {
@@ -14365,12 +14370,12 @@
           "title": "Component name to use, if not provided Polyaxon will check the action name isntead"
         },
         "trigger": {
-          "$ref": "#/definitions/v1HookTrigger",
+          "$ref": "#/definitions/v1Statuses",
           "title": "Optional trigger policy, default done"
         },
         "connection": {
           "type": "string",
-          "title": "Connection to use for notification"
+          "title": "Connection to use for this hook"
         },
         "params": {
           "type": "object",
@@ -14381,21 +14386,10 @@
         },
         "run_patch": {
           "type": "object",
-          "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
+          "title": "Optional a run section to override  the content of the run in the template"
         }
       },
-      "title": "Hook defintion"
-    },
-    "v1HookTrigger": {
-      "type": "string",
-      "enum": [
-        "succeeded",
-        "failed",
-        "stopped",
-        "done"
-      ],
-      "default": "succeeded",
-      "title": "NotificationTrigger enum"
+      "title": "Hook definition"
     },
     "v1HostAlias": {
       "type": "object",
@@ -14957,10 +14951,15 @@
           "format": "date-time",
           "title": "Whan to end this interval schedule"
         },
+        "max_runs": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Limit to stop executing this schedule"
+        },
         "frequency": {
           "type": "integer",
           "format": "int32",
-          "title": "Frequency at which to execute the runs"
+          "title": "Frequency (timedelta) at which to execute the runs"
         },
         "depends_on_past": {
           "type": "boolean",
@@ -15879,22 +15878,11 @@
           "title": "Connections to use for notification"
         },
         "trigger": {
-          "$ref": "#/definitions/v1NotificationTrigger",
+          "$ref": "#/definitions/v1Statuses",
           "title": "Optional trigger policy, default done"
         }
       },
       "title": "Notification message"
-    },
-    "v1NotificationTrigger": {
-      "type": "string",
-      "enum": [
-        "succeeded",
-        "failed",
-        "stopped",
-        "done"
-      ],
-      "default": "succeeded",
-      "title": "NotificationTrigger enum"
     },
     "v1Operation": {
       "type": "object",
@@ -16773,26 +16761,6 @@
       },
       "title": "Reference specification"
     },
-    "v1RepeatableSchedule": {
-      "type": "object",
-      "properties": {
-        "kind": {
-          "type": "string",
-          "title": "Kind of schedule, should be equal to \"repeatable\"",
-          "default": "repeatable"
-        },
-        "limit": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Limit to stop executing this schedule"
-        },
-        "depends_on_past": {
-          "type": "boolean",
-          "title": "A flag to set a dependency on past executions"
-        }
-      },
-      "title": "Repeatable schedule specification"
-    },
     "v1ResourceRequirements": {
       "type": "object",
       "title": "Placeholder Resource Requirements"
@@ -17117,17 +17085,23 @@
         "cron": {
           "$ref": "#/definitions/v1CronSchedule"
         },
-        "exact_time": {
-          "$ref": "#/definitions/v1ExactTimeSchedule"
+        "datetime": {
+          "$ref": "#/definitions/v1DateTimeSchedule"
         },
         "interval": {
           "$ref": "#/definitions/v1IntervalSchedule"
-        },
-        "repeatable": {
-          "$ref": "#/definitions/v1RepeatableSchedule"
         }
       },
       "title": "All Schemas message"
+    },
+    "v1ScheduleKind": {
+      "type": "string",
+      "enum": [
+        "cron",
+        "interval",
+        "datetime"
+      ],
+      "default": "cron"
     },
     "v1Schemas": {
       "type": "object",
@@ -17204,11 +17178,14 @@
         "event_type": {
           "$ref": "#/definitions/v1EventType"
         },
-        "event": {
-          "$ref": "#/definitions/v1Event"
-        },
         "matrix_kind": {
           "$ref": "#/definitions/v1MatrixKind"
+        },
+        "schedule_kind": {
+          "$ref": "#/definitions/v1ScheduleKind"
+        },
+        "event": {
+          "$ref": "#/definitions/v1Event"
         }
       }
     },
@@ -17562,7 +17539,8 @@
         "unschedulable",
         "upstream_failed",
         "retrying",
-        "unknown"
+        "unknown",
+        "done"
       ],
       "default": "created"
     },

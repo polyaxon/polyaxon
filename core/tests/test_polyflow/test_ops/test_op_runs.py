@@ -593,7 +593,7 @@ class TestCompiledOperationsConfigs(BaseTestCase):
             V1CompiledOperation.from_dict(config_dict)
 
         config_dict = {
-            "schedule": {"kind": "exact_time", "startAt": now().isoformat()},
+            "schedule": {"kind": "datetime", "startAt": now().isoformat()},
             "termination": {"timeout": 2},
             "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
         }
@@ -634,7 +634,7 @@ class TestCompiledOperationsConfigs(BaseTestCase):
                 "kind": "mapping",
                 "values": [{"a": 1}, {"a": 1}],
             },
-            "schedule": {"kind": "exact_time", "startAt": now().isoformat()},
+            "schedule": {"kind": "datetime", "startAt": now().isoformat()},
             "termination": {"timeout": 1000},
             "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
         }

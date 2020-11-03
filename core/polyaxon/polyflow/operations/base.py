@@ -18,7 +18,7 @@ from marshmallow import fields, validate
 
 from polyaxon.polyflow.component.base import BaseComponent, BaseComponentSchema
 from polyaxon.polyflow.matrix import MatrixMixin, MatrixSchema
-from polyaxon.polyflow.schedule import ScheduleMixin, ScheduleSchema
+from polyaxon.polyflow.schedules import ScheduleMixin, ScheduleSchema
 from polyaxon.polyflow.trigger_policies import V1TriggerPolicy
 
 

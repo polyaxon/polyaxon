@@ -20,6 +20,12 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
+enum ScheduleKind {
+    cron = 0;
+    interval = 1;
+    datetime = 2;
+}
+
 // Cron schedule specification
 message CronSchedule {
     // Kind of schedule, should be equal to "cron"
@@ -31,17 +37,20 @@ message CronSchedule {
     // Whan to end this cron schedule
     google.protobuf.Timestamp end_at = 3;
 
+    // Limit to stop executing this schedule
+    int32 max_runs = 4;
+
     // Cron definition, e.g. 0 1 * * *
-    string cron = 4;
+    string cron = 5;
 
     // A flag to set a dependency on past executions
-    bool depends_on_past = 5;
+    bool depends_on_past = 6;
 }
 
 
-// Exact time schedule specification
-message ExactTimeSchedule {
-    // Kind of schedule, should be equal to "exact_time"
+// DateTime schedule specification
+message DateTimeSchedule {
+    // Kind of schedule, should be equal to "datetime"
     string kind = 1;
 
     // Whan to start this cron schedule
@@ -60,32 +69,22 @@ message IntervalSchedule {
     // Whan to end this interval schedule
     google.protobuf.Timestamp end_at = 3;
 
-    // Frequency at which to execute the runs
-    int32 frequency = 4;
-
-    // A flag to set a dependency on past executions
-    bool depends_on_past = 5;
-}
-
-
-// Repeatable schedule specification
-message RepeatableSchedule {
-    // Kind of schedule, should be equal to "repeatable"
-    string kind = 1;
-
     // Limit to stop executing this schedule
-    int32 limit = 2;
+    int32 max_runs = 4;
+
+    // Frequency (timedelta) at which to execute the runs
+    int32 frequency = 5;
 
     // A flag to set a dependency on past executions
-    bool depends_on_past = 3;
+    bool depends_on_past = 6;
 }
+
 
 // All Schemas message
 message Schedule {
     oneof schedule {
         CronSchedule cron = 1;
-        ExactTimeSchedule exact_time = 2;
+        DateTimeSchedule datetime = 2;
         IntervalSchedule interval = 3;
-        RepeatableSchedule repeatable = 4;
     }
 }

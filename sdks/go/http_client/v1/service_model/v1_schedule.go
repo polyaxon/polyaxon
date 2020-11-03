@@ -33,14 +33,11 @@ type V1Schedule struct {
 	// cron
 	Cron *V1CronSchedule `json:"cron,omitempty"`
 
-	// exact time
-	ExactTime *V1ExactTimeSchedule `json:"exact_time,omitempty"`
+	// datetime
+	Datetime *V1DateTimeSchedule `json:"datetime,omitempty"`
 
 	// interval
 	Interval *V1IntervalSchedule `json:"interval,omitempty"`
-
-	// repeatable
-	Repeatable *V1RepeatableSchedule `json:"repeatable,omitempty"`
 }
 
 // Validate validates this v1 schedule
@@ -51,15 +48,11 @@ func (m *V1Schedule) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateExactTime(formats); err != nil {
+	if err := m.validateDatetime(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateInterval(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRepeatable(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -87,16 +80,16 @@ func (m *V1Schedule) validateCron(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Schedule) validateExactTime(formats strfmt.Registry) error {
+func (m *V1Schedule) validateDatetime(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.ExactTime) { // not required
+	if swag.IsZero(m.Datetime) { // not required
 		return nil
 	}
 
-	if m.ExactTime != nil {
-		if err := m.ExactTime.Validate(formats); err != nil {
+	if m.Datetime != nil {
+		if err := m.Datetime.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("exact_time")
+				return ve.ValidateName("datetime")
 			}
 			return err
 		}
@@ -115,24 +108,6 @@ func (m *V1Schedule) validateInterval(formats strfmt.Registry) error {
 		if err := m.Interval.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("interval")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Schedule) validateRepeatable(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Repeatable) { // not required
-		return nil
-	}
-
-	if m.Repeatable != nil {
-		if err := m.Repeatable.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("repeatable")
 			}
 			return err
 		}
