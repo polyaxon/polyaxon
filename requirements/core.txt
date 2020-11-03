@@ -5,6 +5,6 @@ cryptography==3.2.1
 Django==3.1.2
 django-picklefield==3.0.1
 djangorestframework==3.12.1
-numpy==1.19.3
+numpy==1.19.4
 psycopg2-binary==2.8.6
 redis==3.5.3
