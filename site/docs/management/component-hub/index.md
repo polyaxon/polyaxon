@@ -15,6 +15,7 @@ sidebar: "management"
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 <blockquote class="info">This feature is still in Beta!</blockquote>
 
+> **Note**: We intend to make it easy for CE users to manage their private components using local storage, Github, or other backends.
 
 ## Overview
 

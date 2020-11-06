@@ -28,7 +28,7 @@ The following information is reported:
  * A unique installation ID
  * The version of Polyaxon deployed
 
-With that said, you can disable the beacon with the following setting:
+With that said, you can disable the compatibility check with the following setting:
 
 ```yaml
 intervals:
