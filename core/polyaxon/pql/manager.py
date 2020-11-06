@@ -42,6 +42,8 @@ class PQLManager:
             field = cls.FIELDS_PROXY[field]
         if cls.FIELDS_USE_UUID and not suffix and field in cls.FIELDS_USE_UUID:
             suffix = "uuid"
+        if cls.FIELDS_USE_UUID and field in cls.FIELDS_USE_UUID and suffix == "id":
+            suffix = "uuid"
         return "{}__{}".format(field, suffix) if suffix else field
 
     @classmethod

@@ -80,14 +80,21 @@ def run(
                 )
                 return response.uuid
         except (ApiException, HTTPError) as e:
-            handle_cli_error(e, message="Could not create a run.")
+            handle_cli_error(
+                e,
+                message="Could not create a run.",
+                http_messages_mapping={
+                    404: "Make sure you have a project initialized in your current workdir, "
+                         "otherwise you need to pass a project with `-p/--project`."
+                }
+            )
             sys.exit(1)
 
     def refresh():
         try:
             polyaxon_client.refresh_data()
         except (ApiException, HTTPError) as e:
-            handle_cli_error(e, message="Could not create a run.")
+            handle_cli_error(e, message="The current eager operation does not exist anymore.")
             sys.exit(1)
 
     click.echo("Creating a new run...")

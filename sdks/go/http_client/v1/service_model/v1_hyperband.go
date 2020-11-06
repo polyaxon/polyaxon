@@ -33,6 +33,9 @@ type V1Hyperband struct {
 	// Number of concurrent runs
 	Concurrency int32 `json:"concurrency,omitempty"`
 
+	// Container to override
+	Container V1Container `json:"container,omitempty"`
+
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
@@ -42,7 +45,7 @@ type V1Hyperband struct {
 	// Kind of matrix, should be equal to "hyperband"
 	Kind *string `json:"kind,omitempty"`
 
-	// Max iteration
+	// Maximim number of iteration to produce new observations
 	MaxIterations int32 `json:"max_iterations,omitempty"`
 
 	// Metric to optimize during the iterations

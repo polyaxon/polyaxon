@@ -129,4 +129,4 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
 
     @property
     def has_pipeline(self):
-        return self.is_dag_run or self.matrix
+        return self.is_dag_run or self.matrix or self.schedule

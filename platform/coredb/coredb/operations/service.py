@@ -33,17 +33,7 @@ from polycommon.service_interface import Service
 
 
 class OperationsService(Service):
-    DEFAULT_KINDS = {
-        V1RunKind.JOB,
-        V1RunKind.SERVICE,
-        V1RunKind.MPIJOB,
-        V1RunKind.TFJOB,
-        V1RunKind.PYTORCHJOB,
-        V1RunKind.NOTIFIER,
-        V1RunKind.WATCHDOG,
-        V1RunKind.TUNER,
-        V1RunKind.CLEANER,
-    }
+    DEFAULT_KINDS = V1RunKind.default_runtime_values
     __all__ = ("init_run",)
 
     @staticmethod
@@ -188,8 +178,8 @@ class OperationsService(Service):
                 V1StatusCondition.get_condition(
                     type=V1Statuses.CREATED,
                     status="True",
-                    reason="PolyaxonRunCreated",
-                    message="Run is created",
+                    reason=kwargs.pop("reason", "PolyaxonRunCreated"),
+                    message=kwargs.pop("message", "Run is created"),
                 ).to_dict()
             ],
             **self.sanitize_kwargs(**kwargs),

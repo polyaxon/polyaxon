@@ -33,10 +33,10 @@ type V1Init struct {
 	// Override Schema for artifacts/mounts connections
 	Artifacts *V1ArtifactsType `json:"artifacts,omitempty"`
 
-	// Optional, revision to pull
+	// Optional, connection to use with this initializer
 	Connection string `json:"connection,omitempty"`
 
-	// Container to use
+	// Container to override
 	Container V1Container `json:"container,omitempty"`
 
 	// Schema of the dockerfile to init

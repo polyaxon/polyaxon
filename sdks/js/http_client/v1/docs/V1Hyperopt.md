@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **max_iterations** | **Number** |  | [optional] 
 **seed** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
+**container** | [**Object**](.md) |  | [optional] 
 **early_stopping** | **[Object]** |  | [optional] 
 
 

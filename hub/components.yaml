@@ -66,6 +66,7 @@
   - latest
   - 1.1
   - 1.2
+  - 1.3
 - name: gcloud-cli
   title: GCloud CLI
   meta_title: GCloud CLI

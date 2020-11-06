@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 
 **seed** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
+**container** | [**Object**](.md) |  | [optional] 
 **early_stopping** | **[Object]** |  | [optional] 
 
 

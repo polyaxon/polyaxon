@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.2.2-rc2",
+    "version": "1.3.0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -12859,7 +12859,7 @@
         "max_iterations": {
           "type": "integer",
           "format": "int32",
-          "title": "Max iteration for producing new observations"
+          "title": "Maximim number of iteration to produce new observations"
         },
         "utility_function": {
           "type": "object",
@@ -12878,6 +12878,10 @@
           "type": "integer",
           "format": "int32",
           "title": "Number of concurrent runs"
+        },
+        "container": {
+          "$ref": "#/definitions/v1Container",
+          "title": "Container to override"
         },
         "early_stopping": {
           "type": "array",
@@ -14721,7 +14725,7 @@
         "max_iterations": {
           "type": "integer",
           "format": "int32",
-          "title": "Max iteration"
+          "title": "Maximim number of iteration to produce new observations"
         },
         "eta": {
           "type": "integer",
@@ -14749,6 +14753,10 @@
           "type": "integer",
           "format": "int32",
           "title": "Number of concurrent runs"
+        },
+        "container": {
+          "$ref": "#/definitions/v1Container",
+          "title": "Container to override"
         },
         "early_stopping": {
           "type": "array",
@@ -14787,7 +14795,7 @@
         "max_iterations": {
           "type": "integer",
           "format": "int32",
-          "title": "Max iteration for producing new observations"
+          "title": "Maximim number of iteration to produce new observations"
         },
         "seed": {
           "type": "integer",
@@ -14798,6 +14806,10 @@
           "type": "integer",
           "format": "int32",
           "title": "Number of concurrent runs"
+        },
+        "container": {
+          "$ref": "#/definitions/v1Container",
+          "title": "Container to override"
         },
         "early_stopping": {
           "type": "array",
@@ -14894,7 +14906,7 @@
         },
         "connection": {
           "type": "string",
-          "title": "Optional, revision to pull"
+          "title": "Optional, connection to use with this initializer"
         },
         "path": {
           "type": "string",
@@ -14902,7 +14914,7 @@
         },
         "container": {
           "$ref": "#/definitions/v1Container",
-          "title": "Container to use"
+          "title": "Container to override"
         }
       },
       "title": "Artifacts initializer specification"
@@ -15004,11 +15016,7 @@
         "max_iterations": {
           "type": "integer",
           "format": "int32",
-          "title": "Max iteration for producing new observations"
-        },
-        "container": {
-          "$ref": "#/definitions/v1Container",
-          "title": "Container specification for crating new observations based on data from previous iterations"
+          "title": "Maximim number of iteration to produce new observations"
         },
         "seed": {
           "type": "integer",
@@ -15019,6 +15027,10 @@
           "type": "integer",
           "format": "int32",
           "title": "Number of concurrent runs"
+        },
+        "container": {
+          "$ref": "#/definitions/v1Container",
+          "title": "Container specification for crating new observations based on data from previous iterations"
         },
         "early_stopping": {
           "type": "array",
@@ -16809,6 +16821,11 @@
           "type": "string",
           "title": "Required project name"
         },
+        "schedule_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was started"
+        },
         "created_at": {
           "type": "string",
           "format": "date-time",
@@ -16857,10 +16874,6 @@
         "meta_info": {
           "type": "object",
           "title": "Optional run meta info"
-        },
-        "is_helper": {
-          "type": "boolean",
-          "title": "Optional is helper run"
         },
         "kind": {
           "$ref": "#/definitions/v1RunKind",

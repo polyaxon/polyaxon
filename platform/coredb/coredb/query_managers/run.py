@@ -53,6 +53,7 @@ class RunQueryManager(BaseQueryManager):
         "updated_at",
         "started_at",
         "finished_at",
+        "schedule_at",
         "name",
         "kind",
         "runtime",
@@ -84,6 +85,7 @@ class RunQueryManager(BaseQueryManager):
         "updated_at": parse_datetime_operation,
         "started_at": parse_datetime_operation,
         "finished_at": parse_datetime_operation,
+        "schedule_at": parse_datetime_operation,
         # Name
         "name": parse_search_operation,
         # Description
@@ -146,6 +148,7 @@ class RunQueryManager(BaseQueryManager):
         "updated_at": DateTimeCondition,
         "started_at": DateTimeCondition,
         "finished_at": DateTimeCondition,
+        "schedule_at": DateTimeCondition,
         # Name
         "name": SearchCondition,
         # Description

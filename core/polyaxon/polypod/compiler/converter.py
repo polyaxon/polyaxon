@@ -47,7 +47,7 @@ def convert(
     if compiled_operation.has_pipeline:
         raise PolyaxonCompilerError(
             "Converter Error. "
-            "Specification with matrix/dag section is not supported in this function."
+            "Specification with matrix/dag/schedule section is not supported in this function."
         )
 
     run_kind = compiled_operation.get_run_kind()

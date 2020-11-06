@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.2.2-rc2
+  version: 1.3.0
 servers:
 - url: /
 security:
@@ -12627,6 +12627,7 @@ components:
     v1Bayes:
       example:
         max_iterations: 8
+        container: '{}'
         seed: 9
         metric:
           name: name
@@ -12656,7 +12657,7 @@ components:
           type: integer
         max_iterations:
           format: int32
-          title: Max iteration for producing new observations
+          title: Maximim number of iteration to produce new observations
           type: integer
         utility_function:
           properties: {}
@@ -12672,6 +12673,9 @@ components:
           format: int32
           title: Number of concurrent runs
           type: integer
+        container:
+          title: Placeholder for Container
+          type: object
         early_stopping:
           items:
             properties: {}
@@ -15996,6 +16000,7 @@ components:
       example:
         max_iterations: 4
         resume: true
+        container: '{}'
         eta: 5
         seed: 9
         resource:
@@ -16022,7 +16027,7 @@ components:
           type: object
         max_iterations:
           format: int32
-          title: Max iteration
+          title: Maximim number of iteration to produce new observations
           type: integer
         eta:
           format: int32
@@ -16043,6 +16048,9 @@ components:
           format: int32
           title: Number of concurrent runs
           type: integer
+        container:
+          title: Placeholder for Container
+          type: object
         early_stopping:
           items:
             properties: {}
@@ -16055,6 +16063,7 @@ components:
     v1Hyperopt:
       example:
         max_iterations: 6
+        container: '{}'
         seed: 1
         kind: hyperopt
         num_runs: 3
@@ -16083,7 +16092,7 @@ components:
           type: integer
         max_iterations:
           format: int32
-          title: Max iteration for producing new observations
+          title: Maximim number of iteration to produce new observations
           type: integer
         seed:
           format: int32
@@ -16093,6 +16102,9 @@ components:
           format: int32
           title: Number of concurrent runs
           type: integer
+        container:
+          title: Placeholder for Container
+          type: object
         early_stopping:
           items:
             properties: {}
@@ -16219,7 +16231,7 @@ components:
         dockerfile:
           $ref: '#/components/schemas/v1DockerfileType'
         connection:
-          title: Optional, revision to pull
+          title: Optional, connection to use with this initializer
           type: string
         path:
           title: Optional context path, the path to mount to main the container
@@ -16332,11 +16344,8 @@ components:
           type: object
         max_iterations:
           format: int32
-          title: Max iteration for producing new observations
+          title: Maximim number of iteration to produce new observations
           type: integer
-        container:
-          title: Placeholder for Container
-          type: object
         seed:
           format: int32
           title: Seed for the random generator
@@ -16345,6 +16354,9 @@ components:
           format: int32
           title: Number of concurrent runs
           type: integer
+        container:
+          title: Placeholder for Container
+          type: object
         early_stopping:
           items:
             properties: {}
@@ -17243,7 +17255,6 @@ components:
         count: 0
         results:
         - outputs: '{}'
-          is_helper: true
           role: role
           finished_at: 2000-01-23T04:56:07.000+00:00
           inputs: '{}'
@@ -17278,6 +17289,7 @@ components:
           original:
             name: name
             uuid: uuid
+          schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
           tags:
           - tags
@@ -17302,7 +17314,6 @@ components:
             status: status
           is_managed: is_managed
         - outputs: '{}'
-          is_helper: true
           role: role
           finished_at: 2000-01-23T04:56:07.000+00:00
           inputs: '{}'
@@ -17337,6 +17348,7 @@ components:
           original:
             name: name
             uuid: uuid
+          schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
           tags:
           - tags
@@ -17911,6 +17923,7 @@ components:
         hyperband:
           max_iterations: 4
           resume: true
+          container: '{}'
           eta: 5
           seed: 9
           resource:
@@ -17945,6 +17958,7 @@ components:
           concurrency: 1
         hyperopt:
           max_iterations: 6
+          container: '{}'
           seed: 1
           kind: hyperopt
           num_runs: 3
@@ -17967,6 +17981,7 @@ components:
           concurrency: 5
         bayes:
           max_iterations: 8
+          container: '{}'
           seed: 9
           metric:
             name: name
@@ -19508,7 +19523,6 @@ components:
     v1Run:
       example:
         outputs: '{}'
-        is_helper: true
         role: role
         finished_at: 2000-01-23T04:56:07.000+00:00
         inputs: '{}'
@@ -19543,6 +19557,7 @@ components:
         original:
           name: name
           uuid: uuid
+        schedule_at: 2000-01-23T04:56:07.000+00:00
         bookmarked: true
         tags:
         - tags
@@ -19590,6 +19605,10 @@ components:
         project:
           title: Required project name
           type: string
+        schedule_at:
+          format: date-time
+          title: Optional last time the entity was started
+          type: string
         created_at:
           format: date-time
           title: Optional time when the entity was created
@@ -19628,9 +19647,6 @@ components:
           properties: {}
           title: Optional run meta info
           type: object
-        is_helper:
-          title: Optional is helper run
-          type: boolean
         kind:
           $ref: '#/components/schemas/v1RunKind'
         runtime:
@@ -24894,6 +24910,7 @@ components:
           hyperband:
             max_iterations: 4
             resume: true
+            container: '{}'
             eta: 5
             seed: 9
             resource:
@@ -24928,6 +24945,7 @@ components:
             concurrency: 1
           hyperopt:
             max_iterations: 6
+            container: '{}'
             seed: 1
             kind: hyperopt
             num_runs: 3
@@ -24950,6 +24968,7 @@ components:
             concurrency: 5
           bayes:
             max_iterations: 8
+            container: '{}'
             seed: 9
             metric:
               name: name

@@ -84,7 +84,7 @@ message Hyperband {
     // Hyperparams/Space definition of params to traverse
     map<string, google.protobuf.Struct> params = 2;
 
-    // Max iteration
+    // Maximim number of iteration to produce new observations
     int32 max_iterations = 3;
 
     // Eta
@@ -105,8 +105,11 @@ message Hyperband {
     // Number of concurrent runs
     int32 concurrency = 9;
 
+    // Container to override
+    Container container = 10;
+
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 10;
+    repeated google.protobuf.Struct early_stopping = 11;
 }
 
 
@@ -121,7 +124,7 @@ message Bayes {
     // Number of intial random observations to create
     int32 num_initial_runs = 3;
 
-    // Max iteration for producing new observations
+    // Maximim number of iteration to produce new observations
     int32 max_iterations = 4;
 
     // A utility function to use for the bayesian optimization
@@ -136,8 +139,11 @@ message Bayes {
     // Number of concurrent runs
     int32 concurrency = 8;
 
+    // Container to override
+    Container container = 9;
+
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 9;
+    repeated google.protobuf.Struct early_stopping = 110;
 }
 
 
@@ -167,7 +173,7 @@ message Hyperopt {
     // Number of runs to generate and search
     int32 num_runs = 4;
 
-    // Max iteration for producing new observations
+    // Maximim number of iteration to produce new observations
     int32 max_iterations = 5;
 
     // Seed for the random generator
@@ -176,8 +182,11 @@ message Hyperopt {
     // Number of concurrent runs
     int32 concurrency = 7;
 
+    // Container to override
+    Container container = 8;
+
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 8;
+    repeated google.protobuf.Struct early_stopping = 9;
 }
 
 
@@ -189,17 +198,17 @@ message Iterative {
     // Hyperparams/Space definition of params to traverse
     map<string, google.protobuf.Struct> params = 2;
 
-    // Max iteration for producing new observations
+    // Maximim number of iteration to produce new observations
     int32 max_iterations = 3;
 
-    // Container specification for crating new observations based on data from previous iterations
-    Container container = 4;
-
     // Seed for the random generator
-    int32 seed = 5;
+    int32 seed = 4;
 
     // Number of concurrent runs
-    int32 concurrency = 6;
+    int32 concurrency = 5;
+
+    // Container specification for crating new observations based on data from previous iterations
+    Container container = 6;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct early_stopping = 7;

@@ -56,11 +56,11 @@ DEFAULT_EXCLUDE = [
     "readme",
     "settings",
     "meta_info",
+    "schedule_at",
     "original",
     "pipeline",
     "role",
     "status_conditions",
-    "is_helper",
 ]
 
 

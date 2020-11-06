@@ -18,6 +18,8 @@ import polyaxon_sdk
 
 from marshmallow import ValidationError, fields, validate, validates_schema
 
+from polyaxon.containers.names import MAIN_JOB_CONTAINER
+from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow.early_stopping import EarlyStoppingSchema
 from polyaxon.polyflow.matrix.base import BaseSearchConfig
 from polyaxon.polyflow.matrix.kinds import V1MatrixKind
@@ -25,6 +27,7 @@ from polyaxon.polyflow.matrix.params import HpParamSchema
 from polyaxon.polyflow.optimization import OptimizationMetricSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.fields.swagger import SwaggerField
 
 
 class AcquisitionFunctions:
@@ -192,6 +195,11 @@ class BayesSchema(BaseCamelSchema):
     )
     seed = RefOrObject(fields.Int(allow_none=True))
     concurrency = fields.Int(allow_none=True)
+    container = SwaggerField(
+        cls=k8s_schemas.V1Container,
+        defaults={"name": MAIN_JOB_CONTAINER},
+        allow_none=True,
+    )
     early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
 
     @staticmethod
@@ -437,6 +445,16 @@ class V1Bayes(BaseSearchConfig, polyaxon_sdk.V1Bayes):
     For more details please check the
     [early stopping section](/docs/automation/helpers/early-stopping/).
 
+    ### container
+
+    The container with the logic for creating new suggestions based on bayesian optimization,
+    users can override this section to provide different resources requirements for the tuner.
+
+    ```yaml
+    >>> matrix:
+    >>>   kind: bayes
+    >>>   container: ...
+    ```
 
     ## Example
 
@@ -492,7 +510,7 @@ class V1Bayes(BaseSearchConfig, polyaxon_sdk.V1Bayes):
 
     SCHEMA = BayesSchema
     IDENTIFIER = V1MatrixKind.BAYES
-    REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping"]
+    REDUCED_ATTRIBUTES = ["seed", "concurrency", "earlyStopping", "container"]
 
     def create_iteration(self, iteration: int = None) -> int:
         if iteration is None:

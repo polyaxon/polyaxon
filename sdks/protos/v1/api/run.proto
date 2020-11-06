@@ -106,41 +106,41 @@ message Run {
     // Required project name
     string project = 7;
 
+    // Optional last time the entity was started
+    google.protobuf.Timestamp schedule_at = 8;
+
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 9;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 10;
 
     // Optional last time the entity was started
-    google.protobuf.Timestamp started_at = 10;
+    google.protobuf.Timestamp started_at = 11;
 
     // Optional last time the entity was started
-    google.protobuf.Timestamp finished_at = 11;
+    google.protobuf.Timestamp finished_at = 12;
 
     // Optional run time of the entity
-    int32 duration = 12;
+    int32 duration = 13;
 
     // Optional flag to tell if this entity is managed by the platform
-    string is_managed = 13;
+    string is_managed = 14;
 
     // Optional content of the entity's spec
-    string content = 14;
+    string content = 15;
 
     // Optional content of the entity's spec
-    string raw_content = 15;
+    string raw_content = 16;
 
     // Optional latest status of this entity
-    Statuses status = 16;
+    Statuses status = 17;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 17;
+    bool bookmarked = 18;
 
     // Optional run meta info
-    google.protobuf.Struct meta_info = 18;
-
-    // Optional is helper run
-    bool is_helper = 19;
+    google.protobuf.Struct meta_info = 19;
 
     // Optional kind to tell the kind of this run
     RunKind kind = 20;

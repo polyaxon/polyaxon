@@ -35,12 +35,12 @@ message Init {
     // Schema of the dockerfile to init
     DockerfileType dockerfile = 3;
 
-    // Optional, revision to pull
+    // Optional, connection to use with this initializer
     string connection = 4;
 
     // Optional context path, the path to mount to main the container
     string path = 5;
 
-    // Container to use
+    // Container to override
     Container container = 6;
 }

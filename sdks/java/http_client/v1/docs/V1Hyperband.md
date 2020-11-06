@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **resume** | **Boolean** |  |  [optional]
 **seed** | **Integer** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]
+**container** | [**Object**](.md) |  |  [optional]
 **earlyStopping** | **List&lt;Object&gt;** |  |  [optional]
 
 

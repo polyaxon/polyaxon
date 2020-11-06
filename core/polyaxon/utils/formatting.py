@@ -47,6 +47,7 @@ def humanize_attrs(key, value, rounding=2):
         "updated_at",
         "started_at",
         "finished_at",
+        "schedule_at",
         "last_update_time",
         "last_transition_time",
     ]:

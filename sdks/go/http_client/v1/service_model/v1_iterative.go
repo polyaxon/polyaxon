@@ -41,7 +41,7 @@ type V1Iterative struct {
 	// Kind of matrix, should be equal to "iterative"
 	Kind *string `json:"kind,omitempty"`
 
-	// Max iteration for producing new observations
+	// Maximim number of iteration to produce new observations
 	MaxIterations int32 `json:"max_iterations,omitempty"`
 
 	// Hyperparams/Space definition of params to traverse

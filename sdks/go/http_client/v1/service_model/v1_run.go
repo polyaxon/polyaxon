@@ -59,9 +59,6 @@ type V1Run struct {
 	// Optional inputs of this entity
 	Inputs interface{} `json:"inputs,omitempty"`
 
-	// Optional is helper run
-	IsHelper bool `json:"is_helper,omitempty"`
-
 	// Optional flag to tell if this entity is managed by the platform
 	IsManaged string `json:"is_managed,omitempty"`
 
@@ -97,6 +94,10 @@ type V1Run struct {
 
 	// Optional meta kind to tell the nature of this run
 	Runtime V1RunKind `json:"runtime,omitempty"`
+
+	// Optional last time the entity was started
+	// Format: date-time
+	ScheduleAt strfmt.DateTime `json:"schedule_at,omitempty"`
 
 	// Optional settings
 	Settings *V1RunSettings `json:"settings,omitempty"`
@@ -150,6 +151,10 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRuntime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateScheduleAt(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -267,6 +272,19 @@ func (m *V1Run) validateRuntime(formats strfmt.Registry) error {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("runtime")
 		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateScheduleAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ScheduleAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("schedule_at", "body", "date-time", m.ScheduleAt.String(), formats); err != nil {
 		return err
 	}
 

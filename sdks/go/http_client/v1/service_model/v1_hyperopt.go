@@ -36,13 +36,16 @@ type V1Hyperopt struct {
 	// Number of concurrent runs
 	Concurrency int32 `json:"concurrency,omitempty"`
 
+	// Container to override
+	Container V1Container `json:"container,omitempty"`
+
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
 	// Kind of matrix, should be equal to "hyperopt"
 	Kind *string `json:"kind,omitempty"`
 
-	// Max iteration for producing new observations
+	// Maximim number of iteration to produce new observations
 	MaxIterations int32 `json:"max_iterations,omitempty"`
 
 	// Number of runs to generate and search

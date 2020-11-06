@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  |  [optional]
 **seed** | **Integer** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]
+**container** | [**Object**](.md) |  |  [optional]
 **earlyStopping** | **List&lt;Object&gt;** |  |  [optional]
 
 

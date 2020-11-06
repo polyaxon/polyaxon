@@ -192,8 +192,7 @@ class V1Iterative(BaseSearchConfig, polyaxon_sdk.V1Iterative):
 
     ### container
 
-    The container will container the logic for creating new suggestions
-    to run the main container in the compoent with different new params combinations.
+    The container with the logic for creating new suggestions.
 
     ```yaml
     >>> matrix:

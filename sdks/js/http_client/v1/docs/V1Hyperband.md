@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **resume** | **Boolean** |  | [optional] 
 **seed** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
+**container** | [**Object**](.md) |  | [optional] 
 **early_stopping** | **[Object]** |  | [optional] 
 
 
