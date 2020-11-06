@@ -526,6 +526,18 @@ def log_tags(
 log_tags.__doc__ = Run.log_tags.__doc__
 
 
+def log_meta(
+    reset: bool = False,
+    async_req: bool = True,
+    **meta
+):
+    global TRACKING_RUN
+    TRACKING_RUN.log_meta(reset=reset, async_req=async_req, **meta)
+
+
+log_meta.__doc__ = Run.log_meta.__doc__
+
+
 def log_succeeded():
     global TRACKING_RUN
     TRACKING_RUN.log_succeeded()
