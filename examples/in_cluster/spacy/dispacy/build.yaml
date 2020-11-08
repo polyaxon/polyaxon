@@ -4,8 +4,7 @@ name: build
 params:
   destination:
     connection: docker-connection
-    value:
-      name: polyaxon/polyaxon-spacy-examples
+    value: polyaxon/polyaxon-spacy-examples
   context:
     value: "/plx_context/artifacts/polyaxon-examples/spacy/displacy"
 runPatch:

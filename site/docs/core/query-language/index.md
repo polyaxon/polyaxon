@@ -39,14 +39,16 @@ This is useful to compare to scalar values, e.g. metrics, number values like con
 you can search for values that are equal, not equal, greater than,
 greater than or equal to, less than, and less than or equal to another value.
 
-operator     | example
--------------|------------------
-`x = n`      | `metrics.loss: 0.1` will match all entities that have a metric loss equal to 0.1
-`x != n`     | `metrics.loss: ~0.1` will match all entities that have a metric loss not equal to 0.1
-`x > n`      | `metrics.loss: >0.1` or with negation `metrics.loss: ~<=0.1` will match all entities that have a metric loss greater than 0.1
-`x >= n`     | `metrics.loss: >=0.1` or with negation `metrics.loss: ~<0.1` will match all entities that have a metric loss greater than or equal 0.1
-`x < n`      | `metrics.loss: <0.1` or with negation `metrics.loss: ~>=0.1` will match all entities that have a metric loss less than 0.1
-`x <= n`     | `metrics.loss: <=0.1` or with negation `metrics.loss: ~>0.1` will match all entities that have a metric loss less than or equal than 0.1
+operator         | example
+-----------------|------------------
+`x is None`      | `metrics.loss: nil` will match all entities that have a null/none metric loss
+`x is not None`  | `metrics.loss: ~nil` will match all entities that have a non null metric loss
+`x = n`          | `metrics.loss: 0.1` will match all entities that have a metric loss equal to 0.1
+`x != n`         | `metrics.loss: ~0.1` will match all entities that have a metric loss not equal to 0.1
+`x > n`          | `metrics.loss: >0.1` or with negation `metrics.loss: ~<=0.1` will match all entities that have a metric loss greater than 0.1
+`x >= n`         | `metrics.loss: >=0.1` or with negation `metrics.loss: ~<0.1` will match all entities that have a metric loss greater than or equal 0.1
+`x < n`          | `metrics.loss: <0.1` or with negation `metrics.loss: ~>=0.1` will match all entities that have a metric loss less than 0.1
+`x <= n`         | `metrics.loss: <=0.1` or with negation `metrics.loss: ~>0.1` will match all entities that have a metric loss less than or equal than 0.1
 
 To search for a range or outside a range you can combine two operators:
 
@@ -66,6 +68,8 @@ you can search for values that are equal, not equal, in a set of values, or not 
 
 operator               | example
 -----------------------|------------------
+`x is None`            | `name: nil` will match all entities that have a null/none name
+`x is not None`        | `name: ~nil` will match all entities that have a non null name
 `x = y`                | `status: running` will match all entities that have the status running
 `x != y`               | `status: ~running` will match all entities that have the status not running
 `x in {a, b, c}`       | `status: started|building|running` will match all entities that have the status in one of the values started, building, or running
@@ -126,6 +130,11 @@ operator                    | example
 ## Query with the negation modifier
 
 You can negate any condition by prefixing the query with `~`, e.g `x:~2` is the equivalent of saying is different than 2.
+
+## Query for null/none values
+
+You can check for null or non null values by using the special operator `nil`, e.g `x:nil` is the equivalent of saying x should be null/none,
+the nil operator can be used with negation as well, e.g. `x:~nil`.
 
 ## Query by combining multiple conditions
 

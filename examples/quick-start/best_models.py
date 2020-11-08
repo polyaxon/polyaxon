@@ -41,7 +41,7 @@ if __name__ == '__main__':
         query="metrics.accuracy:>0.9, project.name:{}".format(project),
         sort="-metrics.accuracy",
         limit=args.top
-    ):
-        print("Run", run.run_data.uuid, run.run_data.name)
-        print("Inputs", run.get_inputs())
-        print("Outputs", run.get_outputs())
+    ).results:
+        print("Run", run.uuid)
+        print("Inputs", run.inputs)
+        print("Outputs", run.outputs)

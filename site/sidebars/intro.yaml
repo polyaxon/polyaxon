@@ -17,6 +17,8 @@
       link: /docs/intro/quick-start/iterate-with-cli/
     - title: Automation
       link: /docs/intro/quick-start/automation/
+    - title: Running on schedule
+      link: /docs/intro/quick-start/running-on-schedule/
     - title: Deploying ML apps
       link: /docs/intro/quick-start/deploying-ml-apps/
     - title: Building Containers

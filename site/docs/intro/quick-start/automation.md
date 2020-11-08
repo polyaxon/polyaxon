@@ -42,6 +42,7 @@ run:
   kind: dag
   operations:
   - name: build
+    hubRef: dokerizer
     params:
       destination:
         connection: docker-connection
@@ -49,24 +50,30 @@ run:
     runPatch:
       init:
       - dockerfile:
-          image: "tensorflow/tensorflow:2.0.1-py3"
+          image: "tensorflow/tensorflow:2.2.0"
           run:
-          - 'pip3 install --no-cache-dir -U polyaxon["polyboard","polytune"]'
+          - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
           langEnv: 'en_US.UTF-8'
   - name: experiment
-      urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
-      dependencies: [build]
-      params:
-        learning_rate : 0.005
-        epochs: 10
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml"
+    dependencies: [build]
+    params:
+      learning_rate:
+        value: 0.005
+      epochs:
+        value: 10
   - name: tune
-    urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml"
     params:
       upstream_loss:
         ref: ops.experiment
         value: outputs.loss
         contextOnly: true
-    condition: "{{ upstream_loss > dag.inputs.max_loss }}"
+      max_loss:
+        ref: dag
+        value: inputs.max_loss
+        contextOnly: true
+    conditions: "{{ upstream_loss > max_loss }}"
     matrix:
       kind: random
       concurrency: 2
@@ -87,6 +94,11 @@ run:
   - name: best_model
     dependencies: [experiment, tune]
     trigger: all_done
+    params:
+      top:
+        ref: dag
+        value: inputs.top
+        contextOnly: true
     component:
       run:
         kind: job
@@ -94,8 +106,9 @@ run:
         - git: {url: "https://github.com/polyaxon/polyaxon-quick-start"}
         container:
           image: polyaxon/polyaxon-quick-start
-          command: [python3, "{{ globals.artifacts_path }} + /polyaxon-quick-start/best_models.py"]
-          args: ["--project={{ globals.project_name }}", "--top={{ dag.inputs.top }}"]
+          workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
+          command: [python3, best_models.py]
+          args: ["--project={{ globals.project_name }}", "--top={{ top }}"]
 ```
 
 This DAG will start an experiment, if the experiment has a `loss > max_loss`

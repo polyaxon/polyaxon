@@ -36,7 +36,11 @@ run:
         ref: ops.experiment
         value: outputs.loss
         contextOnly: true
-    condition: "{{ upstream_loss > dag.inputs.max_loss }}"
+      max_loss:
+        ref: dag
+        value: inputs.max_loss
+        contextOnly: true
+    conditions: "{{ upstream_loss > max_loss }}"
     matrix:
       kind: random
       concurrency: 2
@@ -57,6 +61,11 @@ run:
   - name: best_model
     dependencies: [experiment, tune]
     trigger: all_done
+    params:
+      top:
+        ref: dag
+        value: inputs.top
+        contextOnly: true
     component:
       run:
         kind: job
@@ -66,4 +75,4 @@ run:
           image: polyaxon/polyaxon-quick-start
           workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
           command: [python3, best_models.py]
-          args: ["--project={{ globals.project_name }}", "--top={{ dag.inputs.top }}"]
+          args: ["--project={{ globals.project_name }}", "--top={{ top }}"]
