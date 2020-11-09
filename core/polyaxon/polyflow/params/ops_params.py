@@ -51,8 +51,10 @@ def validate_params(
             v = V1Param.read(v, config_type=".yaml")
         if v and k in contexts_by_keys:
             v.context_only = True
-            v.to_init = contexts_by_keys[k].to_init
-            v.connection = contexts_by_keys[k].connection
+            if v.to_init is None:
+                v.to_init = contexts_by_keys[k].to_init
+            if v.connection is None:
+                v.connection = contexts_by_keys[k].connection
         return v
 
     def validate_matrix(io: V1IO) -> bool:

@@ -91,11 +91,19 @@ def get_fxt_job_with_inputs_and_conditions():
         "params": {
             "image": {"value": "foo/bar"},
             "context_param": {"value": "some-value", "contextOnly": True},
+            "init_param": {
+                "value": {"url": "https://git.url"},
+                "connection": "git2",
+                "toInit": True,
+            },
         },
         "conditions": "{{ image == 'foo/bar' and context_param == 'some-value' }}",
         "component": {
             "name": "build-template",
-            "inputs": [{"name": "image", "type": "str"}],
+            "inputs": [
+                {"name": "image", "type": "str"},
+                {"name": "init_param", "type": "git"},
+            ],
             "tags": ["tag1", "tag2"],
             "run": {
                 "kind": V1RunKind.JOB,

@@ -132,6 +132,11 @@ class CompiledOperationSpecification(BaseSpecification):
                     )
                 )
                 _init.append(resolved_i)
+
+        # Prepend any param that has to_init after validation
+        init_params = [v.to_init() for v in param_spec.values() if v.validate_to_init()]
+        init_params = [v for v in init_params if v]
+        _init = init_params + _init
         return _init, connections
 
     @classmethod

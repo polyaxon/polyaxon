@@ -28,9 +28,9 @@ from polyaxon.polyflow import (
     V1Param,
     V1ParamSearch,
     V1Plugins,
-    V1Termination,
     V1Tuner,
 )
+from polyaxon.polypod.common.containers import patch_container
 
 
 def get_tuner(
@@ -88,17 +88,37 @@ def get_tuner(
     )
 
 
+def get_container(
+    tuner_container: V1Container, container: V1Container = None
+) -> V1Container:
+    if container:
+        return patch_container(
+            container=container,
+            name=container.name,
+            image=tuner_container.image,
+            image_pull_policy=tuner_container.image_pull_policy,
+            command=tuner_container.command,
+            args=tuner_container.args,
+            env=tuner_container.env,
+            env_from=tuner_container.env_from,
+            volume_mounts=tuner_container.volume_mounts,
+            resources=tuner_container.resources,
+        )
+    return tuner_container
+
+
 def get_bo_tuner(
     matrix: V1Bayes,
     search: V1ParamSearch,
     iteration: int,
-    container: V1Container = None,
 ) -> V1Operation:
     iteration = matrix.create_iteration(iteration)
-    container = container or get_default_tuner_container(["polyaxon", "tuner", "bayes"])
     return get_tuner(
         name="bayesian-tuner",
-        container=container,
+        container=get_container(
+            tuner_container=get_default_tuner_container(["polyaxon", "tuner", "bayes"]),
+            container=matrix.container,
+        ),
         matrix=matrix,
         search=search,
         iteration=iteration,
@@ -110,17 +130,18 @@ def get_hyperband_tuner(
     search: V1ParamSearch,
     iteration: int,
     bracket_iteration: int,
-    container: V1Container = None,
 ) -> V1Operation:
     matrix.set_tuning_params()
     iteration, bracket_iteration = matrix.create_iteration(iteration, bracket_iteration)
-    container = container or get_default_tuner_container(
-        ["polyaxon", "tuner", "hyperband"],
-        bracket_iteration=bracket_iteration,
-    )
     return get_tuner(
         name="hyperband-tuner",
-        container=container,
+        container=get_container(
+            tuner_container=get_default_tuner_container(
+                ["polyaxon", "tuner", "hyperband"],
+                bracket_iteration=bracket_iteration,
+            ),
+            container=matrix.container,
+        ),
         matrix=matrix,
         search=search,
         iteration=iteration,
@@ -132,15 +153,16 @@ def get_hyperopt_tuner(
     matrix: V1Hyperopt,
     search: V1ParamSearch,
     iteration: int,
-    container: V1Container = None,
 ) -> V1Operation:
     iteration = matrix.create_iteration(iteration)
-    container = container or get_default_tuner_container(
-        ["polyaxon", "tuner", "hyperopt"]
-    )
     return get_tuner(
         name="hyperopt-tuner",
-        container=container,
+        container=get_container(
+            tuner_container=get_default_tuner_container(
+                ["polyaxon", "tuner", "hyperopt"]
+            ),
+            container=matrix.container,
+        ),
         matrix=matrix,
         search=search,
         iteration=iteration,

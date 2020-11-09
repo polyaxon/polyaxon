@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
+from typing import List, Set
 
 from coredb import operations
 from coredb.abstracts.getter import get_run_model
@@ -102,6 +102,7 @@ def clone_run(
     content: str = None,
     readme: str = None,
     tags: List[int] = None,
+    supported_kinds: Set[str] = None,
 ) -> BaseRun:
     op_spec = V1Operation.read(run.raw_content)
     compiled_operation, instance = operations.init_run(
@@ -116,6 +117,7 @@ def clone_run(
         cloning_kind=cloning_kind,
         tags=tags or run.tags,
         override=content,
+        supported_kinds=supported_kinds,
     )
     instance.save()
     return instance
@@ -129,6 +131,7 @@ def restart_run(
     content: str = None,
     readme: str = None,
     tags: List[int] = None,
+    supported_kinds: Set[str] = None,
 ) -> BaseRun:
     return clone_run(
         run=run,
@@ -139,6 +142,7 @@ def restart_run(
         content=content,
         readme=readme,
         tags=tags,
+        supported_kinds=supported_kinds,
     )
 
 
@@ -150,6 +154,7 @@ def copy_run(
     content: str = None,
     readme: str = None,
     tags: List[int] = None,
+    supported_kinds: Set[str] = None,
 ) -> BaseRun:
     return clone_run(
         run=run,
@@ -160,4 +165,5 @@ def copy_run(
         content=content,
         readme=readme,
         tags=tags,
+        supported_kinds=supported_kinds,
     )

@@ -526,11 +526,7 @@ def log_tags(
 log_tags.__doc__ = Run.log_tags.__doc__
 
 
-def log_meta(
-    reset: bool = False,
-    async_req: bool = True,
-    **meta
-):
+def log_meta(reset: bool = False, async_req: bool = True, **meta):
     global TRACKING_RUN
     TRACKING_RUN.log_meta(reset=reset, async_req=async_req, **meta)
 

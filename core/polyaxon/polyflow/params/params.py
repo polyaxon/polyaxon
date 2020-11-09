@@ -24,6 +24,7 @@ import ujson
 from marshmallow import ValidationError, fields, validates_schema
 
 from polyaxon import types
+from polyaxon.polyflow.init import V1Init
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 from polyaxon.schemas.fields.params import PARAM_REGEX
 
@@ -65,7 +66,7 @@ DAG_ENTITY_REF = "_"
 ENTITIES = {OPS, RUNS}
 
 
-def validate_param_value(value, search, ref):
+def validate_param_value(value, search, ref, to_init, context_only):
     if search and ref:
         raise ValidationError(
             "Only one field `ref` or `search` is possible, received both:\n"
@@ -77,6 +78,14 @@ def validate_param_value(value, search, ref):
             "Value `{}` must be of type string when a search or ref is provided.".format(
                 value
             )
+        )
+
+    if to_init and context_only:
+        raise ValidationError(
+            "Params cannot use `to_init` and `context_only` at the same time, "
+            "params require valid type be turned to an initializer automatically! "
+            "Please set an input with a type to use the `to_init` field, "
+            "or turn this param to an init manually."
         )
 
 
@@ -119,6 +128,8 @@ class ParamSchema(BaseCamelSchema):
             value=values.get("value"),
             search=values.get("search"),
             ref=values.get("ref"),
+            context_only=values.get("context_only"),
+            to_init=values.get("to_init"),
         )
 
 
@@ -294,6 +305,8 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
             value=self.value,
             search=self.search,
             ref=self.ref,
+            to_init=self.to_init,
+            context_only=self.context_only,
         )
 
     @property
@@ -491,6 +504,50 @@ class ParamSpec(
             "as_arg": self.as_arg(),
         }
         return parsed_param
+
+    def validate_to_init(self) -> bool:
+        if not self.param.to_init:
+            return False
+
+        if not self.iotype:
+            raise ValidationError(
+                "Param `{}` cannot be turned to an initializer without a valid type! "
+                "Please set an input with a type to use the `to_init` field.".format(
+                    self.name
+                )
+            )
+
+        if self.param.connection:
+            return True
+
+        if self.iotype in {types.GIT, types.ARTIFACTS, types.DOCKERFILE}:
+            return True
+
+        raise ValidationError(
+            "Param `{}` with type `{}`, "
+            "cannot be turned to an init container automatically.".format(
+                self.name, self.iotype, self.param.ref
+            )
+        )
+
+    def to_init(self) -> Optional[V1Init]:
+        if not self.param.to_init:
+            return None
+        if self.iotype == types.GIT:
+            return V1Init.from_dict(
+                dict(git=self.param.value, connection=self.param.connection)
+            )
+        elif self.iotype == types.DOCKERFILE:
+            return V1Init.from_dict(
+                dict(dockerfile=self.param.value, connection=self.param.connection)
+            )
+        elif self.iotype == types.ARTIFACTS:
+            return V1Init.from_dict(
+                dict(artifacts=self.param.value, connection=self.param.connection)
+            )
+        elif self.param.connection:
+            return V1Init(connection=self.param.connection)
+        return None
 
     def validate_ref(
         self,

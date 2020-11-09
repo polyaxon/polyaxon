@@ -644,3 +644,168 @@ class TestV1IOs(BaseTestCase):
                 is_context=False,
                 arg_format=None,
             )
+
+    def test_validate_to_init(self):
+        param = V1Param(value="test")
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        assert spec.validate_to_init() is False
+
+        # Add connection
+        spec.param.connection = "connection"
+        assert spec.validate_to_init() is False
+
+        # Add to_init
+        spec.param.to_init = True
+        assert spec.validate_to_init() is True
+
+        # Dockerfile but no to_init
+        param = V1Param(value="test")
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.DOCKERFILE,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        assert spec.validate_to_init() is False
+
+        # add to_init
+        spec.param.to_init = True
+        assert spec.validate_to_init() is True
+
+        # Add connection
+        spec.param.connection = "test"
+        assert spec.validate_to_init() is True
+
+    def test_to_init(self):
+        param = V1Param(value="test", connection="connection")
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        assert spec.to_init() is None
+
+        param = V1Param(value="test", to_init=True)
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        assert spec.to_init() is None
+
+        param = V1Param(value="test", connection="connection", to_init=True)
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        init = spec.to_init()
+        assert init.container is None
+        assert init.connection == "connection"
+        assert init.dockerfile is None
+        assert init.git is None
+        assert init.artifacts is None
+
+        # Dockerfile
+        param = V1Param(value={"image": "test"}, connection="connection")
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.DOCKERFILE,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        assert spec.to_init() is None
+
+        param = V1Param(value={"image": "test"}, to_init=True)
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.DOCKERFILE,
+            is_flag=True,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        init = spec.to_init()
+        assert init.container is None
+        assert init.connection is None
+        assert init.dockerfile.image == param.value["image"]
+        assert init.git is None
+        assert init.artifacts is None
+
+        # Git
+        param = V1Param(value={"url": "test"}, connection="connection")
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.GIT,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        assert spec.to_init() is None
+
+        param = V1Param(value={"url": "test"}, connection="connection", to_init=True)
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.GIT,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        init = spec.to_init()
+        assert init.container is None
+        assert init.connection == "connection"
+        assert init.dockerfile is None
+        assert init.git.to_dict() == param.value
+        assert init.artifacts is None
+
+        # Artifacts
+        param = V1Param(value={"files": ["test"]}, connection="connection")
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.ARTIFACTS,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        assert spec.to_init() is None
+
+        param = V1Param(
+            value={"files": ["test"]}, connection="connection", to_init=True
+        )
+        spec = param.get_spec(
+            name="foo",
+            iotype=types.ARTIFACTS,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format=None,
+        )
+        init = spec.to_init()
+        assert init.container is None
+        assert init.connection == "connection"
+        assert init.dockerfile is None
+        assert init.git is None
+        assert init.artifacts.to_dict() == param.value

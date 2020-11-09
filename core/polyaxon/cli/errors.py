@@ -20,10 +20,7 @@ from polyaxon.utils.formatting import Printer
 
 
 def handle_cli_error(
-    e,
-    message: str = None,
-    http_messages_mapping: Dict = None,
-    sys_exit: bool = False
+    e, message: str = None, http_messages_mapping: Dict = None, sys_exit: bool = False
 ):
     http_messages_mapping = http_messages_mapping or {}
     if message:
@@ -31,19 +28,25 @@ def handle_cli_error(
     if hasattr(e, "status"):
         if e.status not in [404, 401, 403]:
             Printer.print_error("Error message: {}.".format(e))
-        message = http_messages_mapping.get(e.status, HTTP_ERROR_MESSAGES_MAPPING.get(e.status))
-        Printer.print_error(
-            message, sys_exit=sys_exit
+        message = http_messages_mapping.get(
+            e.status, HTTP_ERROR_MESSAGES_MAPPING.get(e.status)
         )
+        Printer.print_error(message, sys_exit=sys_exit)
     elif hasattr(e, "message"):  # Handling of HTML errors
         if "404" in e.message:
-            message = http_messages_mapping.get(404, HTTP_ERROR_MESSAGES_MAPPING.get(404))
+            message = http_messages_mapping.get(
+                404, HTTP_ERROR_MESSAGES_MAPPING.get(404)
+            )
             Printer.print_error(message, sys_exit=sys_exit)
         elif "401" in e.message:
-            message = http_messages_mapping.get(401, HTTP_ERROR_MESSAGES_MAPPING.get(401))
+            message = http_messages_mapping.get(
+                401, HTTP_ERROR_MESSAGES_MAPPING.get(401)
+            )
             Printer.print_error(message, sys_exit=sys_exit)
         elif "403" in e.message:
-            message = http_messages_mapping.get(403, HTTP_ERROR_MESSAGES_MAPPING.get(403))
+            message = http_messages_mapping.get(
+                403, HTTP_ERROR_MESSAGES_MAPPING.get(403)
+            )
             Printer.print_error(message, sys_exit=sys_exit)
         else:
             Printer.print_error("Error message: {}.".format(e), sys_exit=sys_exit)
