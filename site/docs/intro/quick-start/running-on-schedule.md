@@ -14,12 +14,12 @@ sidebar: "intro"
 
 > **Note**: This section of the tutorial can only run on Polyaxon EE and Polyaxon Cloud.
 
-Now that our component works, we want to be able to run it continuously on a schedule.
+Now that our component works, we want to be able to run it continuously.
 Polyaxon provides an abstraction to put operations on a [schedule](/docs/automation/schedules/):
 
 ## Running our component on schedule
 
-Schedules operate at the operation level and similar to matrix they can create a pipeline to follow the scheduling of a component or an operation.
+Schedules operate at the operation level, and similar to the matrix section, they create a pipeline to follow the scheduling of a component or an operation.
 
 The file `schedule.yml` contains an operation definition with a schedule attached:
 
@@ -36,11 +36,12 @@ params:
 urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
 ```
 
-This schedule is of kind cron, and it will start an experiment on every monday. If you need to add a stopping condition to a schedule you can set the `endAt` or `maxRuns`
+This schedule is of kind `cron`, and it will start an experiment every monday. 
+If you need to start date this schedule at a specific date you can set the `startAt` field, and to provide a stopping condition you can provide `endAt` or `maxRuns`.
 
-It's also possible to put the complete [DAG](/docs/intro/quick-start/automation/) that we created in the previous guide on schedule, by adding a valid schedule section, 
-this way you can automate not only the journey of creating, training, and validating a model, but also you can do it continuously.
+It's also possible to put the complete [DAG](/docs/intro/quick-start/automation/) that we created in the previous guide on schedule, similarly to this operation, 
+you can add a valid schedule section, this way, not only you automate the journey of creating, training, and validating a model, but also you do it continuously.
 
 ## Learn More
 
-You can check the [schedules section](/docs/automation/schedules/) for more details about all the possible schedule and their specifications.
+You can check the [schedules section](/docs/automation/schedules/) for more details about all the possible schedules and their specifications.
