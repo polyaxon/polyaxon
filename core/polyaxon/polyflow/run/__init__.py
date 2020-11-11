@@ -106,15 +106,15 @@ class RunMixin:
         return self.get_run_kind() == V1RunKind.SCHEDULE
 
     @property
-    def is_notifier(self):
+    def is_notifier_run(self):
         return self.get_run_kind() == V1RunKind.NOTIFIER
 
     @property
-    def is_cleaner(self):
+    def is_cleaner_run(self):
         return self.get_run_kind() == V1RunKind.CLEANER
 
     @property
-    def is_tuner(self):
+    def is_tuner_run(self):
         return self.get_run_kind() == V1RunKind.TUNER
 
     @property

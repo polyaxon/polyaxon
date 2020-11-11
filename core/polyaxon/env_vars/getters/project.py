@@ -54,7 +54,16 @@ def get_project_or_local(project=None, is_cli: bool = False):
     if project:
         owner, project_name = get_project_info(project)
     else:
-        project = ProjectConfigManager.get_config()
+        try:
+            project = ProjectConfigManager.get_config()
+        except TypeError:
+            Printer.print_error(
+                "Found an invalid project config or project config cache, "
+                "if you are using Polyaxon CLI please run: "
+                "`polyaxon config purge --cache-only`",
+                sys_exit=True,
+            )
+
         owner, project_name = project.owner, project.name
 
     if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):

@@ -270,7 +270,15 @@ def delete(ctx, _project):
     try:
         polyaxon_client = ProjectClient(owner=owner, project=project_name)
         polyaxon_client.delete()
-        local_project = ProjectConfigManager.get_config()
+        try:
+            local_project = ProjectConfigManager.get_config()
+        except TypeError:
+            Printer.print_error(
+                "Found an invalid project config or project config cache, "
+                "if you are using Polyaxon CLI please run: "
+                "`polyaxon config purge --cache-only`",
+                sys_exit=True,
+            )
         if local_project and (owner, project_name) == (
             local_project.user,
             local_project.name,

@@ -29,6 +29,14 @@ from tests.utils import BaseTestCase
 
 
 class TestAwsStore(BaseTestCase):
+    def setUp(self):
+        super().setUp()
+        os.environ["AWS_ACCESS_KEY_ID "] = "testing"
+        os.environ["AWS_SECRET_ACCESS_KEY"] = "testing"
+        os.environ["AWS_SECURITY_TOKEN"] = "testing"
+        os.environ["AWS_SESSION_TOKEN"] = "testing"
+        os.environ["AWS_REGION"] = "us-east-1"
+
     @mock_s3
     def test_store_client(self):
         store = S3Service(connection="foo", resource="bar")

@@ -26,6 +26,7 @@ from polyaxon.env_vars.keys import (
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.utils.bool_utils import to_bool
+from polyaxon.utils.formatting import Printer
 
 
 def get_run_or_local(run_uuid=None, is_cli: bool = False):
@@ -34,7 +35,15 @@ def get_run_or_local(run_uuid=None, is_cli: bool = False):
     if is_cli:
         return RunConfigManager.get_config_or_raise().uuid
 
-    run = RunConfigManager.get_config()
+    try:
+        run = RunConfigManager.get_config()
+    except TypeError:
+        Printer.print_error(
+            "Found an invalid run config or run config cache, "
+            "if you are using Polyaxon CLI please run: "
+            "`polyaxon config purge --cache-only`",
+            sys_exit=True,
+        )
     if run:
         return run.uuid
     return None

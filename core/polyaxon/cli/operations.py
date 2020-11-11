@@ -31,6 +31,7 @@ from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_l
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.lifecycle import LifeCycle, V1Statuses
 from polyaxon.managers.run import RunConfigManager
+from polyaxon.metadata.keys import META_REWRITE_PATH
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import V1RunKind
 from polyaxon.utils import cache
@@ -901,7 +902,7 @@ def service(ctx, project, uid, yes, external, url):
 
     namespace = client.run_data.settings.namespace
     service_endpoint = SERVICES_V1
-    if client.run_data.meta_info.get("rewrite_path", False):
+    if client.run_data.meta_info.get(META_REWRITE_PATH, False):
         service_endpoint = REWRITE_SERVICES_V1
     external_run_url = get_dashboard_url(
         base=service_endpoint,

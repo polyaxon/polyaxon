@@ -19,6 +19,7 @@ from typing import Dict, Optional, Set, Tuple, Union
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
+from polyaxon.metadata.keys import META_HAS_DAGS, META_HAS_JOBS, META_HAS_SERVICES
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import (
     V1CloningKind,
@@ -84,11 +85,11 @@ class OperationsService(Service):
         meta_info = {}
         if compiled_operation.matrix or compiled_operation.schedule:
             if kind == V1RunKind.JOB:
-                meta_info["has_jobs"] = True
+                meta_info[META_HAS_JOBS] = True
             elif kind == V1RunKind.SERVICE:
-                meta_info["has_services"] = True
+                meta_info[META_HAS_SERVICES] = True
             elif kind == V1RunKind.DAG:
-                meta_info["has_dags"] = True
+                meta_info[META_HAS_DAGS] = True
         if compiled_operation.schedule:
             kind = V1RunKind.SCHEDULE
             runtime = compiled_operation.schedule.kind

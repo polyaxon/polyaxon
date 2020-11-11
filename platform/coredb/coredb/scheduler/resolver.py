@@ -20,6 +20,7 @@ from marshmallow import ValidationError
 from coredb.abstracts.runs import BaseRun
 from coredb.managers.artifacts import set_artifacts
 from polyaxon.exceptions import PolyaxonCompilerError, PolyaxonSchemaError
+from polyaxon.metadata.keys import META_REWRITE_PATH
 from polyaxon.polyflow import V1CompiledOperation
 from polyaxon.polypod.compiler import resolver
 from polycommon.exceptions import AccessNotAuthorized, AccessNotFound
@@ -49,7 +50,7 @@ class CorePlatformResolver(resolver.BaseResolver):
             self.compiled_operation.is_service_run
             and self.compiled_operation.run.rewrite_path
         ):
-            self.run.meta_info["rewrite_path"] = True
+            self.run.meta_info[META_REWRITE_PATH] = True
         self.run.save(update_fields=["content", "inputs", "outputs", "meta_info"])
         self._resolve_artifacts_lineage_state()
 

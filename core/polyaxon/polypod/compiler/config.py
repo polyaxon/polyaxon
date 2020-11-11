@@ -83,7 +83,7 @@ class PolypodConfig:
                 connections=compiled_operation.run.connections,
                 agent_config=agent_config,
             )
-        if compiled_operation.is_notifier:
+        if compiled_operation.is_notifier_run:
             self._resolve_notification_connections(
                 connections=compiled_operation.run.connections,
                 agent_config=agent_config,

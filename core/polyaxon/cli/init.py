@@ -126,7 +126,15 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
             sys.exit(1)
         init_project = False
         if ProjectConfigManager.is_initialized():
-            local_project = ProjectConfigManager.get_config()
+            try:
+                local_project = ProjectConfigManager.get_config()
+            except TypeError:
+                Printer.print_error(
+                    "Found an invalid project config or project config cache, "
+                    "if you are using Polyaxon CLI please run: "
+                    "`polyaxon config purge --cache-only`",
+                    sys_exit=True,
+                )
             click.echo(
                 "Warning! This project is already initialized with the following project:"
             )
