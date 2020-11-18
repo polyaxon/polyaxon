@@ -843,7 +843,7 @@ class RunClient:
         overwrite: bool = True,
         relative_to: str = None,
     ):
-        """Uploads a subpath containing multiple artifacts to the run's artifacts store path.
+        """Uploads a multiple artifacts to the run's artifacts store path.
 
         Args:
             files: List[str], list of files to upload.

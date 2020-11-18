@@ -13,6 +13,8 @@ tags:
 sidebar: "intro"
 ---
 
+> **Note**: requires Polyaxon 1.3.3 or higher.
+
 We previously learned how to run operations with Polyaxonfiles hosted on Github using the `--url` argument.
 But during a rapid development, users will want to iterate on their code and submit operations with those changes.
 
@@ -48,7 +50,7 @@ run:
 ```
 
 Another thing to notice about this polyaxonfile is that we have a different `workingDir: "{{ globals.run_artifacts_path }}/uploads"`.
-We are telling our container to look for the subpath code under the root path of any experiment we run with this polyaxonfile.
+We are telling our container to use the `uploads` under the run artifacts path.
 
 the value `/uploads` can be any subpath you decide to upload your local code to, the default one is `uploads`.
 
@@ -62,8 +64,8 @@ polyaxon init -p quick-start --polyaxonignore
 ```
 
 You will be prompted to override the current `polyaxonignore`, just say no because this example already has one, 
-but in other project in order to avoid uploading all files you should have a `.polyaxonignore`,
-for example, to make the upload optimized and fast you should not upload your `.git` history, the IDE config, ... 
+but in other project in order to avoid uploading all files you should have a `.polyaxonignore`. 
+For instance to make the upload optimized and fast you should not upload your `.git` history, the IDE config, ... 
 
 ## Uploading and scheduling experiments
 
@@ -79,7 +81,8 @@ This will tell Polyaxon to upload anything from the current path, while respecti
 
 ## Uploading and scheduling experiments using a different path
 
-If you want to upload the code, or any artifacts, to a different path other than the default one `uploads`, for instance `code` you should do the following:
+If you want to upload the code, or any artifacts, to a different path other than the default `uploads`, 
+for instance to use `code` you should do the following:
 
  * Change the `workingDir: "{{ globals.run_artifacts_path }}/code"` in the polyaxonfile
  * Run the upload command with a specific path: `polyaxon run -f local-integration/simple.yml -u-to code`
