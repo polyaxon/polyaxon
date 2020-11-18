@@ -24,7 +24,7 @@ from urllib3.exceptions import HTTPError
 
 from polyaxon import settings
 from polyaxon.cli.dashboard import get_dashboard_url
-from polyaxon.cli.errors import handle_cli_error, handle_command_no_in_ce
+from polyaxon.cli.errors import handle_cli_error, handle_command_not_in_ce
 from polyaxon.cli.session import session_expired, set_versions_config
 from polyaxon.client import PolyaxonClient
 from polyaxon.logger import logger
@@ -41,7 +41,7 @@ from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 def login(token, username, password):
     """Login to Polyaxon Cloud or Polyaxon EE."""
     if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce:
-        handle_command_no_in_ce()
+        handle_command_not_in_ce()
 
     polyaxon_client = PolyaxonClient()
     if username and not token:
@@ -127,7 +127,7 @@ def logout():
 def whoami():
     """Show current logged Polyaxon Cloud or Polyaxon EE user."""
     if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce:
-        handle_command_no_in_ce()
+        handle_command_not_in_ce()
 
     try:
         polyaxon_client = PolyaxonClient()

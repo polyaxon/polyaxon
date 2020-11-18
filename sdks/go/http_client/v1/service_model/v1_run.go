@@ -59,6 +59,9 @@ type V1Run struct {
 	// Optional inputs of this entity
 	Inputs interface{} `json:"inputs,omitempty"`
 
+	// Optional flag to tell if this entity requires approval before it should be scheduled
+	IsApproved string `json:"is_approved,omitempty"`
+
 	// Optional flag to tell if this entity is managed by the platform
 	IsManaged string `json:"is_managed,omitempty"`
 

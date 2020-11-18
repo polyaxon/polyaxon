@@ -80,9 +80,14 @@ class OperationsService(Service):
 
     @classmethod
     def get_meta_info(
-        cls, compiled_operation: V1CompiledOperation, kind: str, runtime: str, **kwargs
+        cls,
+        compiled_operation: V1CompiledOperation,
+        kind: str,
+        runtime: str,
+        meta_info: Dict = None,
+        **kwargs,
     ) -> Tuple[str, str, Dict]:
-        meta_info = {}
+        meta_info = meta_info or {}
         if compiled_operation.matrix or compiled_operation.schedule:
             if kind == V1RunKind.JOB:
                 meta_info[META_HAS_JOBS] = True
@@ -120,6 +125,8 @@ class OperationsService(Service):
         original_uuid: int = None,
         cloning_kind: str = None,
         is_managed: bool = True,
+        is_approved: bool = True,
+        meta_info: Dict = None,
         supported_kinds: Set[str] = None,
         **kwargs,
     ) -> Tuple[V1CompiledOperation, BaseRun]:
@@ -139,14 +146,16 @@ class OperationsService(Service):
         inputs = {p: pv.value for p, pv in params.items() if pv.is_literal}
         params = {p: pv.to_dict() for p, pv in params.items()}
         kind = None
-        meta_info = {}
+        meta_info = meta_info or {}
         if compiled_operation:
+            if is_approved and compiled_operation.is_approved is not None:
+                is_approved = compiled_operation.is_approved
             name = name or compiled_operation.name
             description = description or compiled_operation.description
             tags = tags or compiled_operation.tags
             kind, runtime = self.get_kind(compiled_operation)
             kind, runtime, meta_info = self.get_meta_info(
-                compiled_operation, kind, runtime, **kwargs
+                compiled_operation, kind, runtime, meta_info, **kwargs
             )
             self.supports_kind(kind, runtime, supported_kinds, is_managed)
             if cloning_kind == V1CloningKind.COPY:
@@ -175,6 +184,7 @@ class OperationsService(Service):
             original_id=original_id,
             cloning_kind=cloning_kind,
             is_managed=is_managed,
+            is_approved=is_approved,
             status_conditions=[
                 V1StatusCondition.get_condition(
                     type=V1Statuses.CREATED,

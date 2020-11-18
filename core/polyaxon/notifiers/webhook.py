@@ -22,7 +22,7 @@ from polyaxon.logger import logger
 from polyaxon.notifiers.base import BaseNotifier
 from polyaxon.notifiers.keys import INTEGRATIONS_WEBHOOKS_GENERIC
 from polyaxon.notifiers.spec import NotificationSpec
-from polyaxon.utils.http import safe_request
+from polyaxon.utils.requests_utils import safe_request
 
 
 class WebHookNotifier(BaseNotifier):

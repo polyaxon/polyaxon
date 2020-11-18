@@ -110,20 +110,15 @@ class TestProjectRunsStopViewV1(BaseTest):
         self.objects = [
             self.factory_class(project=self.project, user=self.user) for _ in range(4)
         ]
-        for obj in self.objects:
-            new_run_status(
-                run=obj,
-                condition=V1StatusCondition.get_condition(
-                    type=V1Statuses.RUNNING, status=True
-                ),
-            )
-
         self.url = "/{}/{}/{}/runs/stop/".format(
             API_V1, self.user.username, self.project.name
         )
 
     @patch("polycommon.workers.send")
-    def test_stop(self, workers_send):
+    def test_stop(self, _):
+        for obj in self.objects:
+            obj.status = V1Statuses.RUNNING
+            obj.save()
         data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
         assert set(Run.objects.only("status").values_list("status", flat=True)) == {
             V1Statuses.RUNNING
@@ -136,6 +131,61 @@ class TestProjectRunsStopViewV1(BaseTest):
             V1Statuses.RUNNING,
         }
 
+        assert auditor_record.call_count == 2
+
+    @patch("polycommon.workers.send")
+    def test_safe_stop(self, _):
+        self.objects[0].status = V1Statuses.QUEUED
+        self.objects[0].save()
+        self.objects[1].status = V1Statuses.COMPILED
+        self.objects[1].save()
+        data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
+        assert set(Run.objects.only("status").values_list("status", flat=True)) == {
+            V1Statuses.QUEUED,
+            V1Statuses.COMPILED,
+            V1Statuses.CREATED,
+        }
+        with patch("polycommon.auditor.record") as auditor_record:
+            resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert set(Run.objects.only("status").values_list("status", flat=True)) == {
+            V1Statuses.STOPPED,
+            V1Statuses.STOPPING,
+            V1Statuses.CREATED,
+        }
+
+        assert auditor_record.call_count == 1
+
+
+@pytest.mark.projects_resources_mark
+class TestProjectRunsApproveViewV1(BaseTest):
+    model_class = Run
+    factory_class = RunFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory()
+        self.objects = [
+            self.factory_class(project=self.project, user=self.user, is_approved=False)
+            for _ in range(4)
+        ]
+        self.url = "/{}/{}/{}/runs/approve/".format(
+            API_V1, self.user.username, self.project.name
+        )
+
+    @patch("polycommon.workers.send")
+    def test_approve(self, workers_send):
+        data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
+        assert set(
+            Run.objects.only("is_approved").values_list("is_approved", flat=True)
+        ) == {False}
+        with patch("polycommon.auditor.record") as auditor_record:
+            resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert set(
+            Run.objects.only("is_approved").values_list("is_approved", flat=True)
+        ) == {True}
         assert auditor_record.call_count == 2
 
 
@@ -770,18 +820,35 @@ class TestProjectRunCreateViewV1(BaseTest):
 
         self.url = "/{}/polyaxon/{}/runs/".format(API_V1, self.project.name)
 
-    def test_create_is_managed(self):
+    def test_create_is_managed_and_and_meta(self):
         data = {"is_managed": False}
         resp = self.client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Run.objects.last()
         assert xp.is_managed is False
+        assert xp.is_approved is True
 
-        data = {"is_managed": False}
+        data = {"is_managed": False, "is_approved": False}
         resp = self.client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Run.objects.last()
         assert xp.is_managed is False
+        assert xp.is_approved is True  # Since it's not managed
+
+        data = {"is_managed": False, "is_approved": True}
+        resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Run.objects.last()
+        assert xp.is_managed is False
+        assert xp.is_approved is True
+
+        data = {"is_managed": False, "meta_info": {"foo": "bar"}}
+        resp = self.client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        xp = Run.objects.last()
+        assert xp.is_managed is False
+        assert xp.is_approved is True
+        assert xp.meta_info == {"foo": "bar"}
 
     def test_create_with_invalid_config(self):
         data = {"content": "bar"}
@@ -828,3 +895,20 @@ class TestProjectRunCreateViewV1(BaseTest):
         assert resp.status_code == status.HTTP_201_CREATED
         assert auditor_record.call_count == 1
         assert Run.objects.count() == 1
+        last_run = Run.objects.last()
+        assert last_run.is_managed is True
+        assert last_run.is_approved is True
+
+        # Meta and is_approved
+        data["is_approved"] = False
+        data["meta_info"] = {"test": "works"}
+        with patch("polycommon.auditor.record") as auditor_record:
+            resp = self.client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert auditor_record.call_count == 2
+        assert Run.objects.count() == 2
+        last_run = Run.objects.last()
+        assert last_run.is_managed is True
+        assert last_run.is_approved is False
+        assert last_run.meta_info == {"test": "works"}

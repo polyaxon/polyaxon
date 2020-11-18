@@ -27,6 +27,7 @@ runs_urlpatterns = [
     re_path(runs.URLS_RUNS_RESUME, views.RunResumeView.as_view()),
     re_path(runs.URLS_RUNS_COPY, views.RunCopyView.as_view()),
     re_path(runs.URLS_RUNS_STOP, views.RunStopView.as_view()),
+    re_path(runs.URLS_RUNS_APPROVE, views.RunApproveView.as_view()),
     re_path(runs.URLS_RUNS_STATUSES, views.RunStatusListView.as_view()),
     re_path(runs.URLS_RUNS_NAMESPACE, views.RunNamespaceView.as_view()),
 ]

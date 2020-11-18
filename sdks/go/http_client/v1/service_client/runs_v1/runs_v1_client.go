@@ -41,6 +41,10 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ApproveRunOK, *ApproveRunNoContent, error)
+
+	ApproveRuns(params *ApproveRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ApproveRunsOK, *ApproveRunsNoContent, error)
+
 	ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveRunOK, *ArchiveRunNoContent, error)
 
 	BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunOK, *BookmarkRunNoContent, error)
@@ -138,6 +142,78 @@ type ClientService interface {
 	UploadRunLogs(params *UploadRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunLogsOK, *UploadRunLogsNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  ApproveRun approves run
+*/
+func (a *Client) ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ApproveRunOK, *ApproveRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewApproveRunParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ApproveRun",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/approve",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ApproveRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ApproveRunOK:
+		return value, nil, nil
+	case *ApproveRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ApproveRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ApproveRuns approves runs
+*/
+func (a *Client) ApproveRuns(params *ApproveRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ApproveRunsOK, *ApproveRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewApproveRunsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ApproveRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/approve",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ApproveRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ApproveRunsOK:
+		return value, nil, nil
+	case *ApproveRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ApproveRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*

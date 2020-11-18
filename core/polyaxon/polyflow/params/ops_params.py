@@ -63,6 +63,8 @@ def validate_params(
         elif io.name in matrix.params:
             matrix.params[io.name].validate_io(io)
             return True
+        elif hasattr(matrix, "resource") and io.name == matrix.resource.name:
+            return True
         return False
 
     params = params or {}
@@ -119,7 +121,7 @@ def validate_params(
             validated_params.append(param_spec)
             if not param_spec.param.context_only:
                 processed_params.append(inp.name)
-        elif matrix and validate_matrix(inp):  # TODO: Add resource
+        elif matrix and validate_matrix(inp):
             pass
         elif not inp.is_optional and not is_template:
             message = "Input {} is required, no param was passed.".format(inp.name)

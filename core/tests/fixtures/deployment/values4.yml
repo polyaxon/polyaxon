@@ -21,6 +21,7 @@ artifactsStore:
 connections:
   - name: gcs
     kind: gcs
+    tags: [foo, bar]
     schema: {"bucket": "gs://test-logs"}
     secret:
       name: gcs-secret

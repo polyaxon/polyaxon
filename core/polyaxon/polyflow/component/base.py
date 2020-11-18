@@ -38,6 +38,7 @@ class BaseComponentSchema(BaseCamelSchema):
     plugins = fields.Nested(PluginsSchema, allow_none=True)
     actions = fields.List(fields.Nested(ActionSchema), allow_none=True)
     hooks = fields.List(fields.Nested(HookSchema), allow_none=True)
+    is_approved = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -59,4 +60,5 @@ class BaseComponent(BaseConfig):
         "plugins",
         "actions",
         "hooks",
+        "isApproved",
     ]

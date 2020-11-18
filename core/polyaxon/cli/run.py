@@ -77,6 +77,25 @@ from polyaxon.utils.validation import validate_tags
     help="To start logging after scheduling the run.",
 )
 @click.option(
+    "--upload",
+    "-u",
+    is_flag=True,
+    default=False,
+    help="To upload an init context before scheduling the run.",
+)
+@click.option(
+    "--upload-from",
+    "-u-from",
+    type=str,
+    help="The path to upload from relative the current location.",
+)
+@click.option(
+    "--upload-to",
+    "-u-to",
+    type=str,
+    help="The path to upload to relative the run's root context.",
+)
+@click.option(
     "--watch",
     "-w",
     is_flag=True,
@@ -158,6 +177,9 @@ def run(
     tags,
     description,
     log,
+    upload,
+    upload_from,
+    upload_to,
     watch,
     local,
     params,
@@ -211,6 +233,12 @@ def run(
     if cache and nocache:
         Printer.print_error(
             "You can't use `--cache` and `--nocache` at the same.", sys_exit=True
+        )
+    if (upload_to or upload_from) and not upload:
+        upload = True
+    if upload and eager:
+        Printer.print_error(
+            "You can't use `--upload` and `--eager` at the same.", sys_exit=True
         )
 
     git_init = None
@@ -312,6 +340,9 @@ def run(
             tags=tags,
             op_spec=op_spec,
             log=log,
+            upload=upload,
+            upload_to=upload_to,
+            upload_from=upload_from,
             watch=watch,
             eager=eager,
         )

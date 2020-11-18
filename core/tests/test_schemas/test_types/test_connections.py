@@ -16,6 +16,8 @@
 
 import pytest
 
+from flaky import flaky
+
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.connections.schemas import (
     V1BucketConnection,
@@ -34,11 +36,13 @@ class TestConnectionType(BaseTestCase):
         self.s3_store = V1ConnectionType(
             name="test",
             kind=V1ConnectionKind.S3,
+            tags=["test", "foo"],
             schema=V1BucketConnection(bucket="s3//:foo"),
         )
         self.gcs_store = V1ConnectionType(
             name="test",
             kind=V1ConnectionKind.GCS,
+            tags=["test"],
             schema=V1BucketConnection(bucket="gs//:foo"),
         )
         self.az_store = V1ConnectionType(
@@ -74,10 +78,15 @@ class TestConnectionType(BaseTestCase):
 
     def test_store_path(self):
         assert self.s3_store.store_path == self.s3_store.schema.bucket
+        assert self.s3_store.tags == ["test", "foo"]
         assert self.gcs_store.store_path == self.gcs_store.schema.bucket
+        assert self.gcs_store.tags == ["test"]
         assert self.az_store.store_path == self.az_store.schema.bucket
+        assert self.az_store.tags is None
         assert self.claim_store.store_path == self.claim_store.schema.mount_path
+        assert self.claim_store.tags is None
         assert self.host_path_store.store_path == self.claim_store.schema.mount_path
+        assert self.host_path_store.tags is None
 
     def test_is_bucket(self):
         assert self.s3_store.is_bucket is True
@@ -108,6 +117,7 @@ class TestConnectionType(BaseTestCase):
         assert result.schema == spec.schema
         assert result.secret == spec.secret
 
+    @flaky(max_runs=3)
     def test_get_from_model(self):
         self.assert_from_model(self.s3_store)
         self.assert_from_model(self.gcs_store)

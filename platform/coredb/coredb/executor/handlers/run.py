@@ -22,7 +22,13 @@ from polycommon.options.registry.core import SCHEDULER_ENABLED
 
 def handle_run_created(workers_backend, event: "Event") -> None:  # noqa: F821
     """Handles creation, resume, and restart"""
-    eager = not event.data["is_managed"] and event.instance and event.instance.content
+    eager = False
+    if event.instance and (event.instance.meta_info or {}).get("eager"):
+        eager = True
+    if not eager:
+        eager = (
+            not event.data["is_managed"] and event.instance and event.instance.content
+        )
     # Run is not managed by Polyaxon
     if not event.data["is_managed"] and not eager:
         return
@@ -40,8 +46,26 @@ def handle_run_created(workers_backend, event: "Event") -> None:  # noqa: F821
     manager.runs_prepare(run_id=event.instance_id, run=event.instance, eager=True)
 
 
+def handle_run_approved_triggered(
+    workers_backend, event: "Event"
+) -> None:  # noqa: F821
+    run = manager.get_run(run_id=event.instance_id, run=event.instance)
+    if not run:
+        return
+
+    if run.is_managed and conf.get(SCHEDULER_ENABLED):
+        workers_backend.send(
+            CoreSchedulerCeleryTasks.RUNS_START, kwargs={"run_id": event.instance_id}
+        )
+        return
+
+    manager.runs_start(run_id=event.instance_id, run=event.instance)
+
+
 def handle_run_stopped_triggered(workers_backend, event: "Event") -> None:  # noqa: F821
     run = manager.get_run(run_id=event.instance_id, run=event.instance)
+    if not run:
+        return
 
     if run.is_managed and conf.get(SCHEDULER_ENABLED):
         workers_backend.send(

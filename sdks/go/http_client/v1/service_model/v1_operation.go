@@ -63,6 +63,9 @@ type V1Operation struct {
 	// hub ref
 	HubRef string `json:"hub_ref,omitempty"`
 
+	// Optional flag to mark this specification requires approval before running
+	IsApproved bool `json:"is_approved,omitempty"`
+
 	// Optional flag to mark this specification as preset
 	IsPreset bool `json:"is_preset,omitempty"`
 

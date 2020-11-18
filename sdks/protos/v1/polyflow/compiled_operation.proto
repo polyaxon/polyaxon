@@ -96,6 +96,9 @@ message CompiledOperation {
     // Optional outputs definition
     repeated IO contexts = 22;
 
+    // Optional flag to mark this specification requires approval before running
+    bool is_approved = 23;
+
     // Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 23;
+    google.protobuf.Struct run = 24;
 }

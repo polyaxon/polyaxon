@@ -29,11 +29,12 @@ Name | Type | Description | Notes
 **runPatch** | [**Object**](.md) |  |  [optional]
 **patchStrategy** | [**V1PatchStrategy**](V1PatchStrategy.md) |  |  [optional]
 **isPreset** | **Boolean** |  |  [optional]
+**isApproved** | **Boolean** |  |  [optional]
 **template** | [**V1Template**](V1Template.md) |  |  [optional]
-**dagRef** | **String** |  |  [optional]
 **urlRef** | **String** |  |  [optional]
 **pathRef** | **String** |  |  [optional]
 **hubRef** | **String** |  |  [optional]
+**dagRef** | **String** |  |  [optional]
 **component** | [**V1Component**](V1Component.md) |  |  [optional]
 
 

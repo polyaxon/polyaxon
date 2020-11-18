@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -8599,6 +8599,63 @@
         ]
       }
     },
+    "/api/v1/{owner}/{project}/runs/approve": {
+      "post": {
+        "summary": "Approve runs",
+        "operationId": "ApproveRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project}/runs/artifacts_lineage": {
       "get": {
         "summary": "Get runs artifacts lineage",
@@ -9157,6 +9214,61 @@
       "delete": {
         "summary": "Delete run",
         "operationId": "DeleteRun",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{uuid}/approve": {
+      "post": {
+        "summary": "Approve run",
+        "operationId": "ApproveRun",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -13121,6 +13233,10 @@
           },
           "title": "Optional outputs definition"
         },
+        "is_approved": {
+          "type": "boolean",
+          "title": "Optional flag to mark this specification requires approval before running"
+        },
         "run": {
           "type": "object",
           "title": "Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag"
@@ -13213,6 +13329,10 @@
         "template": {
           "$ref": "#/definitions/v1Template",
           "title": "Optional flag to mark this specification as template"
+        },
+        "is_approved": {
+          "type": "boolean",
+          "title": "Optional flag to mark this specification requires approval before running"
         }
       },
       "title": "Component specification"
@@ -16016,12 +16136,13 @@
           "type": "boolean",
           "title": "Optional flag to mark this specification as preset"
         },
+        "is_approved": {
+          "type": "boolean",
+          "title": "Optional flag to mark this specification requires approval before running"
+        },
         "template": {
           "$ref": "#/definitions/v1Template",
           "title": "Optional to mark this specification as template with instructions"
-        },
-        "dag_ref": {
-          "type": "string"
         },
         "url_ref": {
           "type": "string"
@@ -16030,6 +16151,9 @@
           "type": "string"
         },
         "hub_ref": {
+          "type": "string"
+        },
+        "dag_ref": {
           "type": "string"
         },
         "component": {
@@ -16049,6 +16173,10 @@
           "type": "boolean",
           "title": "Optional, if the run is managed, true by default, this flag should be false if starting a non-managed run"
         },
+        "is_approved": {
+          "type": "boolean",
+          "title": "Optional, if the run is approved, true by default, this flag should be false if a run requires human validation"
+        },
         "name": {
           "type": "string",
           "title": "Optional, only usefule if is_managed is false"
@@ -16063,6 +16191,10 @@
             "type": "string"
           },
           "title": "Optional, only useful if is_managed is false"
+        },
+        "meta_info": {
+          "type": "object",
+          "title": "Meta"
         }
       },
       "title": "Operation creation"
@@ -16854,6 +16986,10 @@
         "is_managed": {
           "type": "string",
           "title": "Optional flag to tell if this entity is managed by the platform"
+        },
+        "is_approved": {
+          "type": "string",
+          "title": "Optional flag to tell if this entity requires approval before it should be scheduled"
         },
         "content": {
           "type": "string",

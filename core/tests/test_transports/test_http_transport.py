@@ -14,11 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import mock
 import requests
 
 from polyaxon.client.transport import Transport
-from polyaxon.client.transport.utils import Bar
 from tests.test_transports.utils import BaseTestCaseTransport
 
 
@@ -27,19 +25,6 @@ class TestHttpTransport(BaseTestCaseTransport):
     def setUp(self):
         super().setUp()
         self.transport = Transport()
-
-    def test_create_progress_callback(self):
-        encoder = mock.MagicMock()
-        encoder.configure_mock(len=10)
-        _, progress_bar = self.transport.create_progress_callback(encoder)
-        assert isinstance(progress_bar, Bar)
-
-    def test_format_sizeof(self):
-        assert self.transport.format_sizeof(10) == "10.0B"
-        assert self.transport.format_sizeof(10000) == "9.8KiB"
-        assert self.transport.format_sizeof(100000) == "97.7KiB"
-        assert self.transport.format_sizeof(10000000) == "9.5MiB"
-        assert self.transport.format_sizeof(10000000000) == "9.3GiB"
 
     def test_session(self):
         assert hasattr(self.transport, "_session") is False

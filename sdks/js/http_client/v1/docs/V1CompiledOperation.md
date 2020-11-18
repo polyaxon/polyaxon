@@ -26,6 +26,7 @@ Name | Type | Description | Notes
 **inputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**[V1IO]**](V1IO.md) |  | [optional] 
 **contexts** | [**[V1IO]**](V1IO.md) |  | [optional] 
+**is_approved** | **Boolean** |  | [optional] 
 **run** | [**Object**](.md) |  | [optional] 
 
 

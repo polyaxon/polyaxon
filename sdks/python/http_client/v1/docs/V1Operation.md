@@ -26,11 +26,12 @@ Name | Type | Description | Notes
 **run_patch** | [**object**](.md) |  | [optional] 
 **patch_strategy** | [**V1PatchStrategy**](V1PatchStrategy.md) |  | [optional] 
 **is_preset** | **bool** |  | [optional] 
+**is_approved** | **bool** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
-**dag_ref** | **str** |  | [optional] 
 **url_ref** | **str** |  | [optional] 
 **path_ref** | **str** |  | [optional] 
 **hub_ref** | **str** |  | [optional] 
+**dag_ref** | **str** |  | [optional] 
 **component** | [**V1Component**](V1Component.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

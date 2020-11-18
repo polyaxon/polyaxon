@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.utils.units import to_percentage
+from polyaxon.utils.units import format_sizeof, to_percentage
 from tests.utils import BaseTestCase
 
 
@@ -41,3 +41,10 @@ class ToPercentageTest(BaseTestCase):
     def test_raises_value_error_for_invalid_types(self):
         with self.assertRaises(ValueError):
             to_percentage("foo")
+
+    def test_format_sizeof(self):
+        assert format_sizeof(10) == "10.0B"
+        assert format_sizeof(10000) == "9.8KiB"
+        assert format_sizeof(100000) == "97.7KiB"
+        assert format_sizeof(10000000) == "9.5MiB"
+        assert format_sizeof(10000000000) == "9.3GiB"

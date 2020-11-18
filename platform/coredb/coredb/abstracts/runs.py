@@ -20,7 +20,6 @@ from coredb.abstracts.describable import DescribableModel
 from coredb.abstracts.diff import DiffModel
 from coredb.abstracts.duration import DurationModel
 from coredb.abstracts.getter import get_db_model_name
-from coredb.abstracts.is_managed import IsManagedModel
 from coredb.abstracts.live_state import LiveStateModel
 from coredb.abstracts.nameable import NameableModel
 from coredb.abstracts.readme import ReadmeModel
@@ -37,7 +36,6 @@ class BaseRun(
     DiffModel,
     DurationModel,
     SpecModel,
-    IsManagedModel,
     NameableModel,
     DescribableModel,
     ReadmeModel,
@@ -56,6 +54,12 @@ class BaseRun(
     )
     project = models.ForeignKey(
         get_db_model_name("Project"), on_delete=models.CASCADE, related_name="runs"
+    )
+    is_managed = models.BooleanField(
+        default=True, help_text="If this entity is managed by the platform."
+    )
+    is_approved = models.BooleanField(
+        default=True, help_text="If this entity requires approval before it should run."
     )
     meta_info = models.JSONField(null=True, blank=True, default=dict)
     params = models.JSONField(null=True, blank=True)

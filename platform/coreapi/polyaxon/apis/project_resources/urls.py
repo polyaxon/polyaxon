@@ -35,6 +35,10 @@ projects_urlpatterns = [
         views.ProjectRunsStopView.as_view(),
     ),
     re_path(
+        projects.URLS_PROJECTS_RUNS_APPROVE,
+        views.ProjectRunsApproveView.as_view(),
+    ),
+    re_path(
         projects.URLS_PROJECTS_RUNS_DELETE,
         views.ProjectRunsDeleteView.as_view(),
     ),

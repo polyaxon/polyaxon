@@ -77,7 +77,7 @@ If you don't provide the `--eager` flag Polyaxon will:
 
 ## Random search
 
-The `hyperparams_random.yaml` polyaxonfile is similar to the grid search polyaxonfile, the only difference is that it defines a random search matrix section:
+The `hyperparams_random.yml` polyaxonfile is similar to the grid search polyaxonfile, the only difference is that it defines a random search matrix section:
 
 ```yaml
 version: 1.1
@@ -118,7 +118,7 @@ Mapping is how you can provide a predefined space.
 
 Mapping can be also used to parallelize a job for fetching data, or loading information from a source to a destination concurrently.
 
-The `mapping.yaml` polyaxonfile defines all the values that we want to use for running our component:
+The `mapping.yml` polyaxonfile defines all the values that we want to use for running our component:
 
 ```yaml
 version: 1.1

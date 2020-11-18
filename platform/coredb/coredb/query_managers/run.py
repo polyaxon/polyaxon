@@ -137,6 +137,9 @@ class RunQueryManager(BaseQueryManager):
         # Agent
         "agent": parse_value_operation,
         "queue": parse_value_operation,
+        # Flags
+        "is_managed": parse_value_operation,
+        "is_approved": parse_value_operation,
     }
     CONDITIONS_BY_FIELD = {
         # Uuid
@@ -204,4 +207,7 @@ class RunQueryManager(BaseQueryManager):
         # Agent
         "agent": ValueCondition,
         "queue": ValueCondition,
+        # Flags
+        "is_managed": BoolCondition,
+        "is_approved": BoolCondition,
     }

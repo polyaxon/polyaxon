@@ -19,7 +19,7 @@ import sys
 import time
 
 from collections.abc import Mapping
-from typing import Dict, List, Sequence, Tuple, Union
+from typing import Dict, List, Optional, Sequence, Tuple, Union
 
 import click
 import polyaxon_sdk
@@ -250,6 +250,8 @@ class RunClient:
         tags: Union[str, Sequence[str]] = None,
         content: Union[str, Dict, V1Operation] = None,
         is_managed: bool = True,
+        is_approved: Optional[bool] = None,
+        meta_info: Optional[Dict] = None,
     ) -> V1Run:
         """Creates a new run based on the data passed.
 
@@ -273,7 +275,9 @@ class RunClient:
             tags: str or List[str], optional, list of tags,
                 it will override the tags in the operation if provided.
             content: str or Dict or V1Operation, optional.
-            is_managed: bool flag to create a managed run.
+            is_managed: bool, flag to create a managed run.
+            is_approved: bool, flag to specify if the run requires human validation.
+            meta_info: dict, meta info to create the run with.
 
         Returns:
             V1Run, run instance from the response.
@@ -296,6 +300,8 @@ class RunClient:
             tags=tags,
             content=content,
             is_managed=is_managed,
+            is_approved=is_approved,
+            meta_info=meta_info,
         )
         self._create(data=data, async_req=False)
         self._post_create()
@@ -793,6 +799,81 @@ class RunClient:
 
     @check_no_op
     @check_offline
+    def upload_artifact(
+        self,
+        filepath: str,
+        path: str = None,
+        untar: bool = False,
+        overwrite: bool = True,
+    ):
+        """Uploads a single artifact to the run's artifacts store path.
+
+        Args:
+            filepath: str, the filepath to upload.
+            path: str, optional, path to upload to, otherwise it will be on the run's root path.
+            untar: bool, optional, if the file uploaded is tar.gz and it should be decompressed on the artifacts store.
+            overwrite: bool, optional, if the file uploaded should overwrite any previous content.
+
+        Returns:
+            str
+        """
+        url = PolyaxonStore.URL.format(
+            namespace=self.namespace,
+            owner=self.owner,
+            project=self.project,
+            uuid=self.run_uuid,
+            subpath="artifact",
+        )
+        url = "{host}/{url}".format(host=clean_host(self.client.config.host), url=url)
+
+        return PolyaxonStore(client=self).upload_file(
+            url=url,
+            filepath=filepath,
+            path=path,
+            untar=untar,
+            overwrite=overwrite,
+        )
+
+    @check_no_op
+    @check_offline
+    def upload_artifacts(
+        self,
+        files: List[str],
+        path: str = "",
+        overwrite: bool = True,
+        relative_to: str = None,
+    ):
+        """Uploads a subpath containing multiple artifacts to the run's artifacts store path.
+
+        Args:
+            files: List[str], list of files to upload.
+            path: str, the relative path of the artifact to return.
+            overwrite: bool, optional, if the file uploaded should overwrite any previous content.
+            relative_to: str, optional, if the path uploaded is not the current dir,
+                and you want to cancel the relative path.
+
+        Returns:
+            str.
+        """
+        url = PolyaxonStore.URL.format(
+            namespace=self.namespace,
+            owner=self.owner,
+            project=self.project,
+            uuid=self.run_uuid,
+            subpath="artifacts",
+        )
+        url = "{host}/{url}".format(host=clean_host(self.client.config.host), url=url)
+
+        return PolyaxonStore(client=self).upload_dir(
+            url=url,
+            path=path,
+            files=files,
+            overwrite=overwrite,
+            relative_to=relative_to,
+        )
+
+    @check_no_op
+    @check_offline
     def get_artifacts_tree(self, path: str = ""):
         """Return the artifacts tree based on the path.
 
@@ -815,6 +896,16 @@ class RunClient:
     def stop(self):
         """Stops the current run."""
         self.client.runs_v1.stop_run(
+            self.owner,
+            self.project,
+            self.run_uuid,
+        )
+
+    @check_no_op
+    @check_offline
+    def approve(self):
+        """Stops the current run."""
+        self.client.runs_v1.approve_run(
             self.owner,
             self.project,
             self.run_uuid,

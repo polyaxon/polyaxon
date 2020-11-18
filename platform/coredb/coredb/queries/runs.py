@@ -14,6 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+STATS_RUN = [
+    "id",
+    "uuid",
+    "name",
+    "kind",
+    "created_at",
+    "updated_at",
+    "started_at",
+    "finished_at",
+    "status",
+    "inputs",
+    "outputs",
+    "tags",
+]
 SINGLE_RUN = [
     "original__id",
     "original__uuid",

@@ -28,6 +28,7 @@ SUCCEEDED = "succeeded"
 FAILED = "failed"
 DONE = "done"
 STOPPED = "stopped"
+APPROVED = "approved"
 SKIPPED = "skipped"
 SETTINGS = "settings"
 NEW_STATUS = "new_status"
@@ -41,6 +42,7 @@ WRITE_ACTIONS = [
     COPIED,
     CLONED,
     STOPPED,
+    APPROVED,
     SETTINGS,
     PROMOTED,
 ]

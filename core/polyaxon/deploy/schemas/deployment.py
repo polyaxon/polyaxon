@@ -228,7 +228,9 @@ class DeploymentSchema(BaseCamelSchema):
     sidecar = fields.Nested(HelperServiceSchema, allow_none=True)
     tables_hook = fields.Nested(ServiceSchema, allow_none=True)
     clean_hooks = fields.Nested(ServiceSchema, allow_none=True)
+    api_hooks = fields.Nested(ServiceSchema, allow_none=True)
     hooks = fields.Nested(HooksSchema, allow_none=True)
+    flower = fields.Nested(ServiceSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
     redis = fields.Nested(RedisSchema, allow_none=True)
     rabbitmq = fields.Nested(RabbitmqSchema, data_key="rabbitmq-ha", allow_none=True)
@@ -299,7 +301,9 @@ class DeploymentSchema(BaseCamelSchema):
                 worker=data.get("worker"),
                 beat=data.get("beat"),
                 tables_hook=data.get("tables_hook"),
+                api_hooks=data.get("api_hooks"),
                 hooks=data.get("hooks"),
+                flower=data.get("flower"),
                 postgresql=data.get("postgresql"),
                 redis=data.get("redis"),
                 rabbitmq=data.get("rabbitmq"),
@@ -353,7 +357,9 @@ class DeploymentConfig(BaseConfig):
         sidecar=None,
         tables_hook=None,
         clean_hooks=None,
+        api_hooks=None,
         hooks=None,
+        flower=None,
         postgresql=None,
         redis=None,
         rabbitmq=None,
@@ -433,7 +439,9 @@ class DeploymentConfig(BaseConfig):
         self.sidecar = sidecar
         self.tables_hook = tables_hook
         self.clean_hooks = clean_hooks
+        self.api_hooks = api_hooks
         self.hooks = hooks
+        self.flower = flower
         self.postgresql = postgresql
         self.redis = redis
         self.rabbitmq = rabbitmq
@@ -474,7 +482,9 @@ class DeploymentConfig(BaseConfig):
                 worker=worker,
                 beat=beat,
                 tables_hook=tables_hook,
+                api_hooks=api_hooks,
                 hooks=hooks,
+                flower=flower,
                 postgresql=postgresql,
                 redis=redis,
                 rabbitmq=rabbitmq,

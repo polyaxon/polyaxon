@@ -41,6 +41,37 @@ async def upload_data(subpath: str, data):
     )
 
 
+async def upload_file(subpath: str):
+    path_from = get_path(settings.AGENT_CONFIG.artifacts_root, subpath)
+    path_to = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
+    try:
+        return manager.upload_file_or_dir(
+            connection_type=settings.AGENT_CONFIG.artifacts_store,
+            path_from=path_from,
+            path_to=path_to,
+            is_file=True,
+        )
+    except (OSError, PolyaxonException) as e:
+        logger.warning("Could not upload %s. Error %s" % (path_from, e))
+        return None
+
+
+async def upload_dir(subpath: str) -> Optional[str]:
+    path_from = get_path(settings.AGENT_CONFIG.artifacts_root, subpath)
+    path_to = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
+    try:
+        return manager.upload_file_or_dir(
+            connection_type=settings.AGENT_CONFIG.artifacts_store,
+            path_from=path_from,
+            path_to=path_to,
+            is_file=False,
+            workers=5,
+        )
+    except (OSError, PolyaxonException) as e:
+        logger.warning("Could not upload %s. Error %s" % (path_from, e))
+        return None
+
+
 async def download_file(subpath: str, check_cache=True) -> Optional[str]:
     path_from = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
     path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)

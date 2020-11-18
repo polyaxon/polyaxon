@@ -14,13 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.db import models
+from django.db import migrations, models
 
 
-class IsManagedModel(models.Model):
-    is_managed = models.BooleanField(
-        default=True, help_text="If this entity is managed by the platform."
-    )
+class Migration(migrations.Migration):
 
-    class Meta:
-        abstract = True
+    dependencies = [
+        ("coredb", "0006_auto_20201020_1705"),
+    ]
+
+    operations = [
+        migrations.AddField(
+            model_name="run",
+            name="is_approved",
+            field=models.BooleanField(
+                default=True,
+                help_text="If this entity requires approval before it should run.",
+            ),
+        ),
+    ]

@@ -127,50 +127,53 @@ message Run {
     // Optional flag to tell if this entity is managed by the platform
     string is_managed = 14;
 
-    // Optional content of the entity's spec
-    string content = 15;
+    // Optional flag to tell if this entity requires approval before it should be scheduled
+    string is_approved = 15;
 
     // Optional content of the entity's spec
-    string raw_content = 16;
+    string content = 16;
+
+    // Optional content of the entity's spec
+    string raw_content = 17;
 
     // Optional latest status of this entity
-    Statuses status = 17;
+    Statuses status = 18;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 18;
+    bool bookmarked = 19;
 
     // Optional run meta info
-    google.protobuf.Struct meta_info = 19;
+    google.protobuf.Struct meta_info = 20;
 
     // Optional kind to tell the kind of this run
-    RunKind kind = 20;
+    RunKind kind = 21;
 
     // Optional meta kind to tell the nature of this run
-    RunKind runtime = 21;
+    RunKind runtime = 22;
 
     // Optional hub reference versioned component
-    string hub = 22;
+    string hub = 23;
 
     // Optional inputs of this entity
-    google.protobuf.Struct inputs = 23;
+    google.protobuf.Struct inputs = 24;
 
     // Optional outputs of this entity
-    google.protobuf.Struct outputs = 24;
+    google.protobuf.Struct outputs = 25;
 
     // Optional original run meta information
-    Cloning original = 25;
+    Cloning original = 26;
 
     // Optional pipeline run meta information
-    Pipeline pipeline = 26;
+    Pipeline pipeline = 27;
 
     // The status conditions timeline
-    repeated StatusCondition status_conditions = 27;
+    repeated StatusCondition status_conditions = 28;
 
     // Optional settings
-    RunSettings settings = 28;
+    RunSettings settings = 29;
 
     // Current user's role in this (org/teams)/project/runs
-    string role = 29;
+    string role = 30;
 }
 
 // Operation creation
@@ -181,14 +184,20 @@ message OperationBody{
     // Optional, if the run is managed, true by default, this flag should be false if starting a non-managed run
     bool is_managed = 2;
 
+    // Optional, if the run is approved, true by default, this flag should be false if a run requires human validation
+    bool is_approved = 3;
+
     // Optional, only usefule if is_managed is false
-    string name = 3;
+    string name = 4;
 
     // Optional, only useful if is_managed is false
-    string description = 4;
+    string description = 5;
 
     // Optional, only useful if is_managed is false
-    repeated string tags = 5;
+    repeated string tags = 6;
+
+    // Meta
+    google.protobuf.Struct meta_info = 7;
 }
 
 // Request data to create run

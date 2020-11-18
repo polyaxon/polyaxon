@@ -3,4 +3,4 @@ isPreset: true
 runPatch:
   environment:
     nodeSelector:
-      polyaxon: experiments
+      polyaxon: compute

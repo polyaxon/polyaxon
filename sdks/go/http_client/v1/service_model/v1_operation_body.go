@@ -35,8 +35,14 @@ type V1OperationBody struct {
 	// Optional, only useful if is_managed is false
 	Description string `json:"description,omitempty"`
 
+	// Optional, if the run is approved, true by default, this flag should be false if a run requires human validation
+	IsApproved bool `json:"is_approved,omitempty"`
+
 	// Optional, if the run is managed, true by default, this flag should be false if starting a non-managed run
 	IsManaged bool `json:"is_managed,omitempty"`
+
+	// Meta
+	MetaInfo interface{} `json:"meta_info,omitempty"`
 
 	// Optional, only usefule if is_managed is false
 	Name string `json:"name,omitempty"`

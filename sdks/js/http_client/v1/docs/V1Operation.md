@@ -27,11 +27,12 @@ Name | Type | Description | Notes
 **run_patch** | [**Object**](.md) |  | [optional] 
 **patch_strategy** | [**V1PatchStrategy**](V1PatchStrategy.md) |  | [optional] 
 **is_preset** | **Boolean** |  | [optional] 
+**is_approved** | **Boolean** |  | [optional] 
 **template** | [**V1Template**](V1Template.md) |  | [optional] 
-**dag_ref** | **String** |  | [optional] 
 **url_ref** | **String** |  | [optional] 
 **path_ref** | **String** |  | [optional] 
 **hub_ref** | **String** |  | [optional] 
+**dag_ref** | **String** |  | [optional] 
 **component** | [**V1Component**](V1Component.md) |  | [optional] 
 
 

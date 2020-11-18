@@ -1,7 +1,7 @@
 {{- /*
 Ingress
 */}}
-{{- define "config.ingres.backend" -}}
+{{- define "config.ingress.backend" -}}
 backend:
 {{- if eq .Values.ingress.backend "api" }}
   serviceName: {{ template "polyaxon.fullname" . }}-api

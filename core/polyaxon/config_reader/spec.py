@@ -118,7 +118,7 @@ class ConfigSpec:
 
 
 def _read_from_url(url: str):
-    from polyaxon.utils.http import safe_request
+    from polyaxon.utils.requests_utils import safe_request
 
     resp = safe_request(url)
     resp.raise_for_status()

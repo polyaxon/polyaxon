@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.3.2
+  version: 1.3.3
 servers:
 - url: /
 security:
@@ -8382,6 +8382,63 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
+  /api/v1/{owner}/{project}/runs/approve:
+    post:
+      operationId: ApproveRuns
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Project under namesapce
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1Uuids'
+        description: Uuids of the entities
+        required: true
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Approve runs
+      tags:
+      - RunsV1
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
   /api/v1/{owner}/{project}/runs/artifacts_lineage:
     get:
       operationId: GetRunsArtifactsLineage
@@ -8978,6 +9035,60 @@ paths:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
       summary: Get run
+      tags:
+      - RunsV1
+      x-accepts: application/json
+  /api/v1/{owner}/{project}/runs/{uuid}/approve:
+    post:
+      operationId: ApproveRun
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Project
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+      - description: Uuid identifier of the entity
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Approve run
       tags:
       - RunsV1
       x-accepts: application/json
@@ -12925,6 +13036,7 @@ components:
         - presets
         - presets
         name: name
+        is_approved: true
         conditions:
         - '{}'
         - '{}'
@@ -13084,6 +13196,10 @@ components:
             $ref: '#/components/schemas/v1IO'
           title: Optional outputs definition
           type: array
+        is_approved:
+          title: Optional flag to mark this specification requires approval before
+            running
+          type: boolean
         run:
           properties: {}
           title: 'Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag'
@@ -13194,6 +13310,7 @@ components:
         - presets
         - presets
         name: name
+        is_approved: true
         actions:
         - run_patch: '{}'
           hub_ref: hub_ref
@@ -13319,6 +13436,10 @@ components:
           type: object
         template:
           $ref: '#/components/schemas/v1Template'
+        is_approved:
+          title: Optional flag to mark this specification requires approval before
+            running
+          type: boolean
       title: Component specification
       type: object
     v1ComponentHub:
@@ -13682,6 +13803,7 @@ components:
           - presets
           - presets
           name: name
+          is_approved: true
           actions:
           - run_patch: '{}'
             hub_ref: hub_ref
@@ -13849,6 +13971,7 @@ components:
           - presets
           - presets
           name: name
+          is_approved: true
           actions:
           - run_patch: '{}'
             hub_ref: hub_ref
@@ -14143,6 +14266,7 @@ components:
             - presets
             - presets
             name: name
+            is_approved: true
             actions:
             - run_patch: '{}'
               hub_ref: hub_ref
@@ -14212,6 +14336,7 @@ components:
           - presets
           - presets
           name: name
+          is_approved: true
           conditions:
           - conditions
           - conditions
@@ -14449,6 +14574,7 @@ components:
             - presets
             - presets
             name: name
+            is_approved: true
             actions:
             - run_patch: '{}'
               hub_ref: hub_ref
@@ -14518,6 +14644,7 @@ components:
           - presets
           - presets
           name: name
+          is_approved: true
           conditions:
           - conditions
           - conditions
@@ -17300,6 +17427,7 @@ components:
           hub: hub
           name: name
           started_at: 2000-01-23T04:56:07.000+00:00
+          is_approved: is_approved
           user: user
           status_conditions:
           - reason: reason
@@ -17359,6 +17487,7 @@ components:
           hub: hub
           name: name
           started_at: 2000-01-23T04:56:07.000+00:00
+          is_approved: is_approved
           user: user
           status_conditions:
           - reason: reason
@@ -18340,6 +18469,7 @@ components:
           - presets
           - presets
           name: name
+          is_approved: true
           actions:
           - run_patch: '{}'
             hub_ref: hub_ref
@@ -18409,6 +18539,7 @@ components:
         - presets
         - presets
         name: name
+        is_approved: true
         conditions:
         - conditions
         - conditions
@@ -18534,15 +18665,19 @@ components:
         is_preset:
           title: Optional flag to mark this specification as preset
           type: boolean
+        is_approved:
+          title: Optional flag to mark this specification requires approval before
+            running
+          type: boolean
         template:
           $ref: '#/components/schemas/v1Template'
-        dag_ref:
-          type: string
         url_ref:
           type: string
         path_ref:
           type: string
         hub_ref:
+          type: string
+        dag_ref:
           type: string
         component:
           $ref: '#/components/schemas/v1Component'
@@ -18557,6 +18692,10 @@ components:
           title: Optional, if the run is managed, true by default, this flag should
             be false if starting a non-managed run
           type: boolean
+        is_approved:
+          title: Optional, if the run is approved, true by default, this flag should
+            be false if a run requires human validation
+          type: boolean
         name:
           title: Optional, only usefule if is_managed is false
           type: string
@@ -18568,6 +18707,10 @@ components:
             type: string
           title: Optional, only useful if is_managed is false
           type: array
+        meta_info:
+          properties: {}
+          title: Meta
+          type: object
       title: Operation creation
       type: object
     v1OperationCond:
@@ -19568,6 +19711,7 @@ components:
         hub: hub
         name: name
         started_at: 2000-01-23T04:56:07.000+00:00
+        is_approved: is_approved
         user: user
         status_conditions:
         - reason: reason
@@ -19631,6 +19775,10 @@ components:
           type: integer
         is_managed:
           title: Optional flag to tell if this entity is managed by the platform
+          type: string
+        is_approved:
+          title: Optional flag to tell if this entity requires approval before it
+            should be scheduled
           type: string
         content:
           title: Optional content of the entity's spec
@@ -20396,6 +20544,7 @@ components:
             - presets
             - presets
             name: name
+            is_approved: true
             actions:
             - run_patch: '{}'
               hub_ref: hub_ref
@@ -20563,6 +20712,7 @@ components:
             - presets
             - presets
             name: name
+            is_approved: true
             actions:
             - run_patch: '{}'
               hub_ref: hub_ref
@@ -20857,6 +21007,7 @@ components:
               - presets
               - presets
               name: name
+              is_approved: true
               actions:
               - run_patch: '{}'
                 hub_ref: hub_ref
@@ -20926,6 +21077,7 @@ components:
             - presets
             - presets
             name: name
+            is_approved: true
             conditions:
             - conditions
             - conditions
@@ -21163,6 +21315,7 @@ components:
               - presets
               - presets
               name: name
+              is_approved: true
               actions:
               - run_patch: '{}'
                 hub_ref: hub_ref
@@ -21232,6 +21385,7 @@ components:
             - presets
             - presets
             name: name
+            is_approved: true
             conditions:
             - conditions
             - conditions
@@ -22410,6 +22564,7 @@ components:
           - presets
           - presets
           name: name
+          is_approved: true
           conditions:
           - '{}'
           - '{}'
@@ -23132,6 +23287,7 @@ components:
               - presets
               - presets
               name: name
+              is_approved: true
               actions:
               - run_patch: '{}'
                 hub_ref: hub_ref
@@ -23299,6 +23455,7 @@ components:
               - presets
               - presets
               name: name
+              is_approved: true
               actions:
               - run_patch: '{}'
                 hub_ref: hub_ref
@@ -23593,6 +23750,7 @@ components:
                 - presets
                 - presets
                 name: name
+                is_approved: true
                 actions:
                 - run_patch: '{}'
                   hub_ref: hub_ref
@@ -23662,6 +23820,7 @@ components:
               - presets
               - presets
               name: name
+              is_approved: true
               conditions:
               - conditions
               - conditions
@@ -23899,6 +24058,7 @@ components:
                 - presets
                 - presets
                 name: name
+                is_approved: true
                 actions:
                 - run_patch: '{}'
                   hub_ref: hub_ref
@@ -23968,6 +24128,7 @@ components:
               - presets
               - presets
               name: name
+              is_approved: true
               conditions:
               - conditions
               - conditions
@@ -25406,6 +25567,7 @@ components:
             - presets
             - presets
             name: name
+            is_approved: true
             actions:
             - run_patch: '{}'
               hub_ref: hub_ref
@@ -25475,6 +25637,7 @@ components:
           - presets
           - presets
           name: name
+          is_approved: true
           conditions:
           - conditions
           - conditions

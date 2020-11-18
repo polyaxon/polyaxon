@@ -102,6 +102,7 @@ class V1Component(
     >>>   inputs:
     >>>   outputs:
     >>>   run:
+    >>>   isApproved:
     >>>   template:
     ```
 
@@ -349,6 +350,17 @@ class V1Component(
         * [V1Spark](/docs/experimentation/distributed/spark-jobs/): for running a spark Application.
         * [V1Dask](/docs/experimentation/distributed/dask-jobs/): for running a Dask job.
         * [V1Dag](/docs/automation/flow-engine/specification/): for running a DAG/workflow.
+
+    ### isApproved
+
+    This is a flag to trigger human validation before queuing and scheduling this component.
+    the default behavior is `True` even when the field is not set, i.e. no validation is required.
+    To require a human validation prior to scheduling an operation,
+    you can set this field to `False`.
+
+    ```yaml
+    >>> isApproved: false
+    ```
     """
 
     SCHEMA = ComponentSchema

@@ -58,7 +58,8 @@ def get_server_installation(polyaxon_client=None):
 
 def get_compatibility(key: str, service: str, version: str, is_cli: bool = True):
     if not key:
-        key = uuid.uuid4().hex
+        installation = CliConfigManager.get_value("installation") or {}
+        key = installation.get("key") or uuid.uuid4().hex
     try:
         version = clean_version_for_compatibility(version)
     except Exception as e:

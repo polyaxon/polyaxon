@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **finishedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **duration** | **Integer** |  |  [optional]
 **isManaged** | **String** |  |  [optional]
+**isApproved** | **String** |  |  [optional]
 **content** | **String** |  |  [optional]
 **rawContent** | **String** |  |  [optional]
 **status** | [**V1Statuses**](V1Statuses.md) |  |  [optional]

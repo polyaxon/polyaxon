@@ -21,8 +21,10 @@ from django.test import TestCase
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
-from coredb.managers.statuses import new_run_status
+from coredb.managers.statuses import bulk_new_run_status, new_run_status
+from coredb.models.runs import Run
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
+from polyaxon.polyflow import V1RunKind
 from polycommon.events.registry import run as run_events
 
 
@@ -123,3 +125,27 @@ class TestRunStatusManager(TestCase):
         assert call_args_list[0][1]["event_type"] == run_events.RUN_NEW_STATUS
         assert call_args_list[1][1]["event_type"] == run_events.RUN_SKIPPED
         assert call_args_list[2][1]["event_type"] == run_events.RUN_DONE
+
+    def test_bulk_run_status(self):
+        run1 = RunFactory(project=self.project, kind=V1RunKind.JOB)
+        run2 = RunFactory(project=self.project, kind=V1RunKind.JOB)
+        run3 = RunFactory(project=self.project, kind=V1RunKind.SERVICE)
+        # Patch all runs to be managed
+        Run.all.update(is_managed=True)
+        assert run1.status != V1Statuses.QUEUED
+        assert run2.status != V1Statuses.QUEUED
+        assert run3.status != V1Statuses.QUEUED
+
+        condition = V1StatusCondition.get_condition(
+            type=V1Statuses.QUEUED,
+            status="True",
+            reason="PolyaxonRunQueued",
+            message="Run is queued",
+        )
+        bulk_new_run_status([run1, run2, run3], condition)
+        run1.refresh_from_db()
+        assert run1.status == V1Statuses.QUEUED
+        run2.refresh_from_db()
+        assert run2.status == V1Statuses.QUEUED
+        run3.refresh_from_db()
+        assert run3.status == V1Statuses.QUEUED

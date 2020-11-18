@@ -20,7 +20,7 @@ import tempfile
 
 from polyaxon.utils.path_utils import (
     append_basename,
-    create_project_tarfile,
+    create_tarfile_from_path,
     get_files_by_paths,
     get_files_in_path_context,
     get_path,
@@ -32,9 +32,9 @@ class TestFiles(BaseTestCase):
     def test_get_path(self):
         assert get_path("/foo", "bar") == "/foo/bar"
 
-    def test_create_project_tarfile(self):
+    def test_create_tarfile_from_path(self):
         files = ["tests/test_utils/__init__.py"]
-        with create_project_tarfile(files, "project_name") as tar_file_name:
+        with create_tarfile_from_path(files, "project_name") as tar_file_name:
             assert os.path.exists(tar_file_name)
             with tarfile.open(tar_file_name) as tf:
                 members = tf.getmembers()

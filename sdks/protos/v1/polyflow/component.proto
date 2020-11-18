@@ -77,4 +77,7 @@ message Component {
 
     // Optional flag to mark this specification as template
     Template template = 16;
+
+    // Optional flag to mark this specification requires approval before running
+    bool is_approved = 17;
 }

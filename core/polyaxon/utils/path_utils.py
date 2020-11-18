@@ -172,12 +172,10 @@ def create_tarfile(files: List[str], tar_path: str, relative_to: str = None) -> 
 
 
 @contextmanager
-def create_project_tarfile(files, project_name):
+def create_tarfile_from_path(files, path_name, relative_to: str = None):
     """Create a tar file based on the list of files passed"""
-    fd, filename = tempfile.mkstemp(
-        prefix="polyaxon_{}".format(project_name), suffix=".tar.gz"
-    )
-    create_tarfile(files, filename)
+    fd, filename = tempfile.mkstemp(prefix=path_name, suffix=".tar.gz")
+    create_tarfile(files, filename, relative_to)
     yield filename
 
     # clear
@@ -185,9 +183,15 @@ def create_project_tarfile(files, project_name):
     os.remove(filename)
 
 
-def untar_file(filename: str = None, delete_tar: bool = True, extract_path: str = None):
+def untar_file(
+    filename: str = None,
+    delete_tar: bool = True,
+    extract_path: str = None,
+    use_filepath: bool = True,
+):
     extract_path = extract_path or "."
-    extract_path = get_path(extract_path, filename.split(".tar.gz")[0])
+    if use_filepath:
+        extract_path = get_path(extract_path, filename.split(".tar.gz")[0])
     check_or_create_path(extract_path, is_dir=True)
     logger.info("Untarring the contents of the file ...")
     # Untar the file

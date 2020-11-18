@@ -109,10 +109,10 @@ def runs_delete(run_id: int, run: Optional[BaseRun]):
     run.delete()
 
 
-def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False):
+def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bool:
     run = get_run(run_id=run_id, run=run)
     if not run:
-        return
+        return False
 
     if not LifeCycle.is_compilable(run.status):
         _logger.info(
@@ -121,7 +121,7 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False):
             run.status,
             V1Statuses.COMPILED,
         )
-        return None
+        return False
 
     try:
         compiled_at = now()
@@ -134,7 +134,7 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False):
             message=f"Run compilation error: {e}",
         )
         new_run_status(run=run, condition=condition)
-        return None
+        return False
 
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.COMPILED,
@@ -145,9 +145,12 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False):
     )
     new_run_status(run=run, condition=condition)
 
+    if not run.is_approved:
+        return False
+
     if eager:
         runs_start(run_id=run.id, run=run)
-        return
+        return False
 
 
 def runs_start(run_id: int, run: Optional[BaseRun]):

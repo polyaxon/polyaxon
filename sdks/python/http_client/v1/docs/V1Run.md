@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **finished_at** | **datetime** |  | [optional] 
 **duration** | **int** |  | [optional] 
 **is_managed** | **str** |  | [optional] 
+**is_approved** | **str** |  | [optional] 
 **content** | **str** |  | [optional] 
 **raw_content** | **str** |  | [optional] 
 **status** | [**V1Statuses**](V1Statuses.md) |  | [optional] 

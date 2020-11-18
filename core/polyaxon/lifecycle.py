@@ -109,6 +109,11 @@ class LifeCycle:
         (V1Statuses.UNKNOWN, V1Statuses.UNKNOWN),
     )
     WARNING_VALUES = {V1Statuses.UNSCHEDULABLE, V1Statuses.WARNING}
+    SAFE_STOP_VALUES = {
+        V1Statuses.CREATED,
+        V1Statuses.RESUMING,
+        V1Statuses.COMPILED,
+    }
     PENDING_VALUES = {
         V1Statuses.CREATED,
         V1Statuses.RESUMING,
@@ -125,7 +130,9 @@ class LifeCycle:
         V1Statuses.PROCESSING,
         V1Statuses.RUNNING,
     }
-    ON_K8S_VALUES = RUNNING_VALUES | WARNING_VALUES | {V1Statuses.UNKNOWN}
+    ON_K8S_VALUES = (
+        RUNNING_VALUES | WARNING_VALUES | {V1Statuses.SCHEDULED, V1Statuses.UNKNOWN}
+    )
     DONE_VALUES = {
         V1Statuses.FAILED,
         V1Statuses.UPSTREAM_FAILED,
@@ -191,6 +198,11 @@ class LifeCycle:
     def is_unknown(cls, status: str) -> bool:
         """Checks if a run with this status is in an unknown state."""
         return status == V1Statuses.UNKNOWN
+
+    @classmethod
+    def is_safe_stoppable(cls, status: str) -> bool:
+        """Checks if a run with this status is an be stopped without operator."""
+        return status in cls.SAFE_STOP_VALUES
 
     @classmethod
     def is_k8s_stoppable(cls, status: str) -> bool:

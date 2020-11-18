@@ -107,6 +107,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         kind: str, should be equal to `operation`
         patch_strategy: str, optional, defaults to post_merge.
         is_preset: bool, optional
+        is_approved: bool, optional
         name: str, optional
         description: str, optional
         tags: List[str], optional
@@ -155,6 +156,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     >>>   kind: operation
     >>>   patchStrategy:
     >>>   isPreset:
+    >>>   isApproved:
     >>>   name:
     >>>   description:
     >>>   tags:
@@ -518,6 +520,17 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     >>>        image: foo:latest
     >>>        command: train --lr=0.01
     ...
+    ```
+
+    ### isApproved
+
+    This is a flag to trigger human validation before queuing and scheduling an operation.
+    the default behavior is `True` even when the field is not set, i.e. no validation is required.
+    To require a human validation prior to scheduling an operation,
+    you can set this field to `False`.
+
+    ```yaml
+    >>> isApproved: false
     ```
     """
 

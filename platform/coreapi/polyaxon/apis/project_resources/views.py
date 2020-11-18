@@ -46,6 +46,13 @@ class ProjectRunsStopView(ProjectResourceListEndpoint, PostEndpoint):
         )
 
 
+class ProjectRunsApproveView(ProjectResourceListEndpoint, PostEndpoint):
+    def post(self, request, *args, **kwargs):
+        return methods.approve_runs(
+            view=self, request=request, actor=self.project.actor, *args, **kwargs
+        )
+
+
 class ProjectRunsDeleteView(ProjectResourceListEndpoint, DestroyEndpoint):
     def delete(self, request, *args, **kwargs):
         return methods.delete_runs(

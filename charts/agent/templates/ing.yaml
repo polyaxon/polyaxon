@@ -22,7 +22,7 @@ spec:
     http:
       paths:
       - path: {{ default "/" .Values.ingress.path | quote }}
-{{ include "config.ingres.backend" . | indent 8 }}
+{{ include "config.ingress.backend" . | indent 8 }}
       {{- range .Values.ingress.extraPaths }}
       - path: {{ .path | quote }}
         backend:

@@ -32,8 +32,7 @@ from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
 from polyaxon.cli.run import run
-from polyaxon.cli.session import set_versions_config
-from polyaxon.cli.version import check_cli_version, upgrade, version
+from polyaxon.cli.version import upgrade, version
 from polyaxon.logger import configure_logger
 from polyaxon.utils.bool_utils import to_bool
 
@@ -131,18 +130,6 @@ def cli(context, verbose, offline):
     if offline:
         os.environ["POLYAXON_IS_OFFLINE"] = "true"
         settings.CLIENT_CONFIG.is_offline = True
-    if not (
-        context.invoked_subcommand in non_check_cmds
-        or offline
-        or settings.CLIENT_CONFIG.no_api
-        or settings.CLIENT_CONFIG.is_ops
-        or DOCS_GEN
-    ) and settings.CLI_CONFIG.should_check(
-        settings.CLIENT_CONFIG.compatibility_check_interval
-    ):
-        cli_config = set_versions_config(is_cli=False)
-        settings.CLI_CONFIG = cli_config
-        check_cli_version(cli_config, is_cli=False)
 
 
 cli.add_command(login)

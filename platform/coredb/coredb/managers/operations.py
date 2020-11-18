@@ -33,6 +33,8 @@ def compile_operation_run(
     params: Dict = None,
     readme: str = None,
     is_managed: bool = True,
+    is_approved: bool = True,
+    meta_info: Dict = None,
     pipeline_id: int = None,
     controller_id: int = None,
     supported_kinds: Set[str] = None,
@@ -51,6 +53,8 @@ def compile_operation_run(
         controller_id=controller_id,
         tags=tags,
         is_managed=is_managed,
+        is_approved=is_approved,
+        meta_info=meta_info,
         supported_kinds=supported_kinds,
     )
     instance.save()

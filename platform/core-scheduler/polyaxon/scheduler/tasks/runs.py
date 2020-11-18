@@ -28,8 +28,8 @@ _logger = logging.getLogger("polyaxon.scheduler")
 
 @workers.app.task(name=CoreSchedulerCeleryTasks.RUNS_PREPARE, ignore_result=True)
 def runs_prepare(run_id):
-    manager.runs_prepare(run_id=run_id, run=None)
-    workers.send(CoreSchedulerCeleryTasks.RUNS_START, kwargs={"run_id": run_id})
+    if manager.runs_prepare(run_id=run_id, run=None):
+        workers.send(CoreSchedulerCeleryTasks.RUNS_START, kwargs={"run_id": run_id})
 
 
 @workers.app.task(name=CoreSchedulerCeleryTasks.RUNS_START, ignore_result=True)

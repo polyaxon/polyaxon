@@ -1,5 +1,5 @@
 ---
-title: "Quick Start: Iterate with Polyaxon CLI"
+title: "Quick Start: Iterate with Polyaxon CLI and a remote git repo"
 sub_link: "quick-start/iterate-in-notebooks"
 meta_title: "Iterate with Polyaxon CLI - Polyaxon quick start tutorial - Core Concepts"
 meta_description: "Iterate with Polyaxon CLI - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
@@ -18,6 +18,8 @@ But during a rapid development, users will want to iterate on their code and sub
 
 In this sections we will learn how to initialize a local folder and integrate it with a repo using a git connection or using a public repo.
 
+> **Note**: To integrate your local code with the CLI, please check the previous section of this guide.
+
 ## Clone Polyaxon quick-start
 
 Head to your terminal and clone the [quick-start](https://github.com/polyaxon/polyaxon-quick-start) repo
@@ -33,7 +35,7 @@ And change to the subpath `git-integration`
 cd polyaxon-quick-start/git-integration
 ```
 
-We only have one simple polyaxonfile which we will use for this example, it's the same as the `simple.yaml` file that we used before,
+We only have one simple polyaxonfile which we will use for this example, it's the same as the `simple.yml` file that we used before,
 the only difference is that this version does not include an init section.
 
 ```yaml
@@ -73,7 +75,7 @@ which means that every time we submit a job, Polyaxon will pull the latest commi
 By initializing a local folder we can now run operations with changes based on changes made by us, because the CLI will patch the polyaxonfile with a code version before submitting an operation:
 
 ```bash
-git commit -am "Update"; git push orgin master; polyaxon run -f simple.yaml --git-preset
+git commit -am "Update"; git push orgin master; polyaxon run -f simple.yml --git-preset
 ```
 
 This will tell Polyaxon to look for the git configuration that we initialized earlier in this folder and detect the latest commit and inject it as a [preset](/docs/core/scheduling-strategies/presets/).
@@ -83,5 +85,5 @@ This will tell Polyaxon to look for the git configuration that we initialized ea
 We can also schedule experiments with specific git commit, branch, or a valid tree-ish:
 
 ```bash
-polyaxon run -f simple.yaml --git-preset --git-revision="dev"
+polyaxon run -f simple.yml --git-preset --git-revision="dev"
 ```

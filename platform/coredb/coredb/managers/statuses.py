@@ -161,6 +161,9 @@ def new_run_stopping_status(run, message) -> bool:
     if LifeCycle.is_done(run.status, progressing=True):
         return False
 
+    if LifeCycle.is_safe_stoppable(run.status):
+        new_run_stop_status(run, message)
+        return True
     message = f"Run is stopping; {message}" if message else "Run is stopping"
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.STOPPING,

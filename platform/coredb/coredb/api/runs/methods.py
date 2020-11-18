@@ -60,3 +60,11 @@ def stop_run(view, request, *args, **kwargs):
     if new_run_stopping_status(run=view.run, message="User requested to stop the run."):
         view.audit(request, *args, **kwargs)
     return Response(status=status.HTTP_200_OK, data={})
+
+
+def approve_run(view, request, *args, **kwargs):
+    if not view.run.is_approved:
+        view.run.is_approved = True
+        view.run.save()
+        view.audit(request, *args, **kwargs)
+    return Response(status=status.HTTP_200_OK, data={})

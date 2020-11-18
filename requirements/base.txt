@@ -1,9 +1,9 @@
 click<8.0
 click-completion<0.6
-tabulate<=0.8.7
+tabulate<0.9.0
 Jinja2>=2.10.3
 kubernetes>=10.0.1
-marshmallow>=3.4.0,<3.9.1
+marshmallow<3.10.0
 python-dateutil>=2.7.3
 pytz>=2019.2
 PyYAML>=5.1
@@ -12,5 +12,5 @@ psutil>=5.4.7
 requests>=2.20.1
 requests-toolbelt>=0.8.0
 sentry-sdk>=0.12.3
-urllib3>=1.25.6,<1.26
+urllib3>=1.25.6
 certifi>=2019.9.11

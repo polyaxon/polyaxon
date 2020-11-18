@@ -44,3 +44,14 @@ def to_percentage(number, rounding=2):
     rounded = round(number, rounding)
 
     return "{}%".format(number_as_int if number_as_int == rounded else rounded)
+
+
+def format_sizeof(num, suffix="B"):
+    """
+    Print in human friendly format
+    """
+    for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, "Yi", suffix)

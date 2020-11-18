@@ -67,7 +67,7 @@ class TestRunDetailViewV1(BaseTestRunApi):
         expected = self.serializer_class(self.object).data
         assert resp.data == expected
 
-    def test_patch_exp(self):  # pylint:disable=too-many-statements
+    def test_patch_exp(self):
         new_description = "updated_xp_name"
         data = {"description": new_description}
         assert self.object.description != data["description"]
@@ -90,7 +90,7 @@ class TestRunDetailViewV1(BaseTestRunApi):
         data = {"is_managed": None}
         assert new_object.is_managed is False
         resp = self.client.patch(self.url, data=data)
-        # Should raise because the run has o content
+        # Should raise because the run has no content
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.is_managed is False
@@ -102,6 +102,22 @@ class TestRunDetailViewV1(BaseTestRunApi):
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.is_managed is False
+
+        # is_approved
+        data = {"is_approved": False}
+        assert self.object.is_approved is True
+        resp = self.client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.is_approved is False
+
+        # is_approved
+        data = {"is_approved": True}
+        assert new_object.is_approved is False
+        resp = self.client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.is_approved is True
 
         # Update tags
         assert new_object.tags is None
@@ -123,8 +139,17 @@ class TestRunDetailViewV1(BaseTestRunApi):
         new_object = self.model_class.objects.get(id=self.object.id)
         assert sorted(new_object.tags) == sorted(["foo_new", "bar_new", "foo", "bar"])
 
+        # Update name
+        data = {"name": "new_name"}
+        assert new_object.name is None
+        resp = self.client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.name == data["name"]
+
+    def test_patch_exp_io(self):
         # Update inputs
-        assert new_object.inputs is None
+        assert self.object.inputs is None
         data = {"inputs": {"foo": "bar"}}
         resp = self.client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
@@ -162,14 +187,6 @@ class TestRunDetailViewV1(BaseTestRunApi):
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.outputs == {"foo_new": "bar_new", "foo": "bar", "loss": 0.001}
-
-        # Update name
-        data = {"name": "new_name"}
-        assert new_object.name is None
-        resp = self.client.patch(self.url, data=data)
-        assert resp.status_code == status.HTTP_200_OK
-        new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.name == data["name"]
 
     def test_delete_from_created_schedule_archives_and_schedules_stop(self):
         assert self.model_class.objects.count() == 1
@@ -516,18 +533,31 @@ class TestStopRunViewV1(BaseTestRunApi):
         super().setUp()
         self.url = self.url + "stop/"
 
-    def test_stop(self):
+    def test_stop_safe_stop(self):
         assert self.queryset.count() == 1
         last_run = self.queryset.last()
         last_run.is_managed = True
         last_run.save()
         assert self.queryset.last().status == V1Statuses.CREATED
         with patch("polycommon.workers.send") as workers_send:
+            resp = self.stuff_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert workers_send.call_count == 5
+        assert self.queryset.count() == 1
+        assert self.queryset.last().status == V1Statuses.STOPPED
+
+    def test_stop(self):
+        assert self.queryset.count() == 1
+        last_run = self.queryset.last()
+        last_run.is_managed = True
+        last_run.status = V1Statuses.QUEUED
+        last_run.save()
+        with patch("polycommon.workers.send") as workers_send:
             resp = self.client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert workers_send.call_count == 1
+        assert workers_send.call_count == 5
         assert self.queryset.count() == 1
-        assert self.queryset.last().status == V1Statuses.STOPPING
+        assert self.queryset.last().status == V1Statuses.STOPPED
 
     def test_stop_non_managed(self):
         assert self.queryset.count() == 1
@@ -541,3 +571,32 @@ class TestStopRunViewV1(BaseTestRunApi):
         assert workers_send.call_count == 0
         assert self.queryset.count() == 1
         assert self.queryset.last().status == V1Statuses.STOPPING
+
+
+@pytest.mark.run_mark
+class TestApproveRunViewV1(BaseTestRunApi):
+    def setUp(self):
+        super().setUp()
+        self.url = self.url + "approve/"
+
+    def test_approve(self):
+        assert self.queryset.count() == 1
+        last_run = self.queryset.last()
+        last_run.is_approved = False
+        last_run.save()
+        with patch("polycommon.workers.send") as workers_send:
+            resp = self.client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert workers_send.call_count == 2
+        assert self.queryset.count() == 1
+        assert self.queryset.last().is_approved is True
+
+    def test_approve_already_approved_run(self):
+        assert self.queryset.count() == 1
+        last_run = self.queryset.last()
+        last_run.is_approved = False
+        last_run.save()
+        resp = self.client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+        assert self.queryset.last().is_approved is True

@@ -168,11 +168,12 @@ class IgnoreConfigManager(BaseConfigManager):
             return cls.get_patterns(ignore_file)
 
     @classmethod
-    def get_unignored_filepaths(cls):
+    def get_unignored_filepaths(cls, path: str = None):
         config = cls.get_config()
         unignored_files = []
+        path = path or "."
 
-        for root, dirs, files in os.walk("."):
+        for root, dirs, files in os.walk(path):
             logger.debug("Root:%s, Dirs:%s", root, dirs)
 
             if cls.is_ignored(unix_style_path(root), config):

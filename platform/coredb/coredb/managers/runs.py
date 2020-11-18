@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Set
+from typing import Dict, List, Set
 
 from coredb import operations
 from coredb.abstracts.getter import get_run_model
@@ -32,6 +32,7 @@ def create_run(
     readme: str = None,
     tags: List[int] = None,
     raw_content: str = None,
+    meta_info: Dict = None,
 ) -> BaseRun:
     instance = get_run_model().objects.create(
         project_id=project_id,
@@ -43,6 +44,7 @@ def create_run(
         kind=V1RunKind.JOB,
         is_managed=False,
         raw_content=raw_content,
+        meta_info=meta_info,
         status_conditions=[
             V1StatusCondition.get_condition(
                 type=V1Statuses.CREATED,

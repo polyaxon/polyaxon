@@ -123,6 +123,7 @@ class TestStatusesTransition(BaseTestCase):
                 or LifeCycle.is_unschedulable(status)
                 or LifeCycle.is_warning(status=status)
                 or LifeCycle.is_unknown(status=status)
+                or status == V1Statuses.SCHEDULED
             )
             if cond:
                 assert LifeCycle.is_k8s_stoppable(status) is True

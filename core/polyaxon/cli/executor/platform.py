@@ -16,7 +16,7 @@
 
 import sys
 
-from typing import List
+from typing import Dict, List
 
 import click
 
@@ -25,8 +25,10 @@ from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
+from polyaxon.cli.operations import approve
 from polyaxon.cli.operations import logs as run_logs
 from polyaxon.cli.operations import statuses
+from polyaxon.cli.operations import upload as run_upload
 from polyaxon.client import RunClient
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.polyflow import V1CompiledOperation, V1Operation
@@ -43,9 +45,16 @@ def run(
     tags: List[str],
     op_spec: V1Operation,
     log: bool,
+    upload: bool,
+    upload_to: str,
+    upload_from: str,
     watch: bool,
     eager: bool,
 ):
+    if eager and upload:
+        Printer.print_error("You can't use upload` and `eager` at the same.")
+        sys.exit(1)
+
     polyaxon_client = RunClient(owner=owner, project=project_name)
 
     def cache_run(data):
@@ -57,14 +66,17 @@ def run(
             project=project_name,
         )
 
-    def create_run(is_manged: bool = True):
+    def create_run(is_managed: bool = True, meta_info: Dict = None):
+        is_approved = False if upload else None
         try:
             response = polyaxon_client.create(
                 name=name,
                 description=description,
                 tags=tags,
                 content=op_spec,
-                is_managed=is_manged,
+                is_managed=is_managed,
+                is_approved=is_approved,
+                meta_info=meta_info,
             )
             Printer.print_success("A new run `{}` was created".format(response.uuid))
             if not eager:
@@ -100,7 +112,8 @@ def run(
             sys.exit(1)
 
     click.echo("Creating a new run...")
-    run_uuid = create_run(not eager)
+    run_meta_info = {"eager": True} if eager or upload else None
+    run_uuid = create_run(not eager, run_meta_info)
     if eager:
         from polyaxon.polyaxonfile.manager import get_eager_matrix_operations
 
@@ -117,12 +130,17 @@ def run(
             create_run()
         return
 
+    ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
+    if upload:
+        ctx.invoke(
+            run_upload, path_to=upload_to, path_from=upload_from, sync_failure=True
+        )
+        ctx.invoke(approve)
+
     # Check if we need to invoke logs
     if watch and not eager:
-        ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
         ctx.invoke(statuses, watch=True)
 
     # Check if we need to invoke logs
     if log and not eager:
-        ctx.obj = {"project": "{}/{}".format(owner, project_name), "run_uuid": run_uuid}
         ctx.invoke(run_logs)

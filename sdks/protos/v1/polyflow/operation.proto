@@ -103,15 +103,18 @@ message Operation {
     // Optional flag to mark this specification as preset
     bool is_preset = 23;
 
+    // Optional flag to mark this specification requires approval before running
+    bool is_approved = 24;
+
     // Optional to mark this specification as template with instructions
-    Template template = 24;
+    Template template = 25;
 
     // Component template specification
     oneof definition {
-        string dag_ref = 25;
-        string url_ref = 26;
-        string path_ref = 27;
-        string hub_ref = 28;
-        Component component = 29;
+      string url_ref = 26;
+      string path_ref = 27;
+      string hub_ref = 28;
+      string dag_ref = 29;
+      Component component = 30;
     }
 }

@@ -46,6 +46,7 @@ artifactsStore:
 connections:
   - name: s3
     kind: s3
+    tags: [foo, bar]
     schema: {"bucket": "s3://foo/"}
     secret:
       name: "az-s3"

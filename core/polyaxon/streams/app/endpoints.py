@@ -15,12 +15,17 @@
 # limitations under the License.
 import os
 
+from typing import Any, Dict
+
+import ujson
+
 from dateutil import parser as dt_parser
 from starlette import status
 from starlette.background import BackgroundTask
 from starlette.datastructures import QueryParams
 from starlette.exceptions import HTTPException
-from starlette.responses import FileResponse, Response, UJSONResponse
+from starlette.requests import Request
+from starlette.responses import FileResponse, JSONResponse, Response
 
 from polyaxon import settings
 from polyaxon.k8s.async_manager import AsyncK8SManager
@@ -51,16 +56,22 @@ from polyaxon.streams.controllers.logs import (
     get_operation_logs,
     get_tmp_operation_logs,
 )
+from polyaxon.streams.controllers.uploads import handle_upload
 from polyaxon.streams.tasks.logs import clean_tmp_logs, upload_logs
 from polyaxon.streams.tasks.notification import notify_run
 from polyaxon.utils.bool_utils import to_bool
 
 
-async def health(request):
+class UJSONResponse(JSONResponse):
+    def render(self, content: Any) -> bytes:
+        return ujson.dumps(content, ensure_ascii=False).encode("utf-8")
+
+
+async def health(request: Request) -> Response:
     return Response(status_code=status.HTTP_200_OK)
 
 
-async def get_logs(request):
+async def get_logs(request: Request) -> UJSONResponse:
     run_uuid = request.path_params["run_uuid"]
     force = to_bool(request.query_params.get("force"), handle_none=True)
     last_time = QueryParams(request.url.query).get("last_time")
@@ -104,7 +115,7 @@ async def get_logs(request):
     return UJSONResponse(response.to_dict())
 
 
-async def collect_logs(request):
+async def collect_logs(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
     run_kind = request.path_params["run_kind"]
     resource_name = get_resource_name_for_kind(run_uuid=run_uuid, run_kind=run_kind)
@@ -141,7 +152,7 @@ async def collect_logs(request):
     return Response(background=task)
 
 
-async def get_multi_runs_events(request):
+async def get_multi_runs_events(request: Request) -> UJSONResponse:
     event_kind = request.path_params["event_kind"]
     force = to_bool(request.query_params.get("force"), handle_none=True)
     if event_kind not in V1ArtifactKind.allowable_values:
@@ -165,7 +176,7 @@ async def get_multi_runs_events(request):
     return UJSONResponse({"data": events})
 
 
-async def get_run_events(request):
+async def get_run_events(request: Request) -> UJSONResponse:
     run_uuid = request.path_params["run_uuid"]
     event_kind = request.path_params["event_kind"]
     force = to_bool(request.query_params.get("force"), handle_none=True)
@@ -188,7 +199,7 @@ async def get_run_events(request):
     return UJSONResponse({"data": events})
 
 
-async def get_run_resources(request):
+async def get_run_resources(request: Request) -> UJSONResponse:
     run_uuid = request.path_params["run_uuid"]
     event_names = request.query_params.get("names")
     orient = request.query_params.get("orient")
@@ -205,14 +216,14 @@ async def get_run_resources(request):
     return UJSONResponse({"data": events})
 
 
-def inject_auth_header(request, headers):
+def inject_auth_header(request: Request, headers: Dict) -> Dict:
     auth = request.headers.get("Authorization")
     if auth:
         headers["Authorization"] = auth
     return headers
 
 
-def redirect(archived_path):
+def redirect(archived_path: str) -> Response:
     if not archived_path:
         return Response(
             content="Artifact not found: filepath={}".format(archived_path),
@@ -228,7 +239,7 @@ def redirect(archived_path):
     return Response(headers=headers)
 
 
-async def notify(request):
+async def notify(request: Request) -> Response:
     namespace = request.path_params["namespace"]
     owner = request.path_params["owner"]
     project = request.path_params["project"]
@@ -268,14 +279,16 @@ async def notify(request):
     return Response(background=task)
 
 
-async def handle_artifact(request):
+async def handle_artifact(request: Request) -> Response:
     if request.method == "GET":
         return await download_artifact(request)
     if request.method == "DELETE":
         return await delete_artifact(request)
+    if request.method == "POST":
+        return await upload_artifact(request)
 
 
-async def download_artifact(request):
+async def download_artifact(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
     filepath = request.query_params.get("path", "")
     stream = to_bool(request.query_params.get("stream"), handle_none=True)
@@ -297,7 +310,11 @@ async def download_artifact(request):
     return redirect(archived_path)
 
 
-async def delete_artifact(request):
+async def upload_artifact(request: Request) -> Response:
+    return await handle_upload(request=request, is_file=True)
+
+
+async def delete_artifact(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
     filepath = request.query_params.get("path", "")
     if not filepath:
@@ -317,14 +334,16 @@ async def delete_artifact(request):
     )
 
 
-async def handle_artifacts(request):
+async def handle_artifacts(request: Request) -> Response:
     if request.method == "GET":
         return await download_artifacts(request)
     if request.method == "DELETE":
         return await delete_artifacts(request)
+    if request.method == "POST":
+        return await upload_artifacts(request)
 
 
-async def download_artifacts(request):
+async def download_artifacts(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
     path = request.query_params.get("path", "")
     subpath = "{}/{}".format(run_uuid, path).rstrip("/")
@@ -337,7 +356,11 @@ async def download_artifacts(request):
     return redirect(archived_path)
 
 
-async def delete_artifacts(request):
+async def upload_artifacts(request: Request) -> Response:
+    return await handle_upload(request=request, is_file=False)
+
+
+async def delete_artifacts(request: Request) -> Response:
     run_uuid = request.path_params["run_uuid"]
     path = request.query_params.get("path", "")
     subpath = "{}/{}".format(run_uuid, path).rstrip("/")
@@ -352,28 +375,28 @@ async def delete_artifacts(request):
     )
 
 
-async def tree_artifacts(request):
+async def tree_artifacts(request: Request) -> UJSONResponse:
     run_uuid = request.path_params["run_uuid"]
     filepath = request.query_params.get("path", "")
     ls = await list_files(subpath=run_uuid, filepath=filepath)
     return UJSONResponse(ls)
 
 
-async def error(request):
+async def error(request: Request):
     """
     An example error. Switch the `debug` setting to see either tracebacks or 500 pages.
     """
     raise RuntimeError("Oh no")
 
 
-async def not_found(request, exc):
+async def not_found(request: Request, exc) -> Response:
     """
     Return an HTTP 404 page.
     """
     return Response(status_code=status.HTTP_404_NOT_FOUND)
 
 
-async def server_error(request, exc):
+async def server_error(request: Request, exc):
     """
     Return an HTTP 500 page.
     """

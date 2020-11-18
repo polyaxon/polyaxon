@@ -48,6 +48,9 @@ RUN_DELETED_ACTOR = "{}.{}.{}".format(
 RUN_STOPPED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.STOPPED, event_subjects.ACTOR
 )
+RUN_APPROVED_ACTOR = "{}.{}.{}".format(
+    event_subjects.RUN, event_actions.APPROVED, event_subjects.ACTOR
+)
 RUN_RESUMED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.RESUMED, event_subjects.ACTOR
 )
@@ -77,6 +80,7 @@ EVENTS = {
     RUN_VIEWED_ACTOR,
     RUN_DELETED_ACTOR,
     RUN_STOPPED_ACTOR,
+    RUN_APPROVED_ACTOR,
     RUN_RESUMED_ACTOR,
     RUN_RESTARTED_ACTOR,
     RUN_COPIED_ACTOR,
@@ -161,6 +165,11 @@ class RunViewedActorEvent(ActorEvent):
 
 class RunStoppedActorEvent(ActorEvent):
     event_type = RUN_STOPPED_ACTOR
+    attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
+
+
+class RunApprovedActorEvent(ActorEvent):
+    event_type = RUN_APPROVED_ACTOR
     attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
 
 

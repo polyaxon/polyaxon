@@ -37,6 +37,7 @@ from polycommon.endpoints.base import (
     UpdateEndpoint,
 )
 from polycommon.events.registry.run import (
+    RUN_APPROVED_ACTOR,
     RUN_COPIED_ACTOR,
     RUN_DELETED_ACTOR,
     RUN_RESTARTED_ACTOR,
@@ -128,6 +129,18 @@ class RunStopView(RunEndpoint, CreateEndpoint):
 
     def post(self, request, *args, **kwargs):
         return methods.stop_run(view=self, request=request, *args, **kwargs)
+
+
+class RunApproveView(RunEndpoint, CreateEndpoint):
+    queryset = queries.deferred_runs
+
+    AUDITOR_EVENT_TYPES = {"POST": RUN_APPROVED_ACTOR}
+    AUDIT_PROJECT_RESOURCES = True
+    PROJECT_RESOURCE_KEY = RUN_UUID_KEY
+    AUDIT_INSTANCE = True
+
+    def post(self, request, *args, **kwargs):
+        return methods.approve_run(view=self, request=request, *args, **kwargs)
 
 
 class RunNamespaceView(RunEndpoint, RetrieveEndpoint):

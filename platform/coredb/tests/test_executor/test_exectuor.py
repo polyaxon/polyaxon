@@ -87,9 +87,38 @@ class TestExecutorHandlers(TestCase):
     def test_create_run_handler(self):
         States.workers = None
         data = {"id": 1, "is_managed": True, "pipeline_id": None}
-        event = MagicMock(data=data)
+        event = MagicMock(data=data, instance=MagicMock(meta_info=None))
         handle_run_created(DummyWorkers, event=event)
         assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
+
+        States.workers = None
+        event = MagicMock(data=data, instance=MagicMock(meta_info={}))
+        handle_run_created(DummyWorkers, event=event)
+        assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
+
+        States.workers = None
+        event = MagicMock(
+            data=data, instance=MagicMock(meta_info={"is_approved": False})
+        )
+        handle_run_created(DummyWorkers, event=event)
+        assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
+
+        States.workers = None
+        event = MagicMock(
+            data=data, instance=MagicMock(meta_info={"is_approved": True})
+        )
+        handle_run_created(DummyWorkers, event=event)
+        assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
+
+        States.workers = None
+        event = MagicMock(data=data, instance=MagicMock(meta_info={"eager": False}))
+        handle_run_created(DummyWorkers, event=event)
+        assert States.workers["task"] == CoreSchedulerCeleryTasks.RUNS_PREPARE
+
+        States.workers = None
+        event = MagicMock(data=data, instance=MagicMock(meta_info={"eager": True}))
+        handle_run_created(DummyWorkers, event=event)
+        assert States.workers is None
 
     def test_stop_run_handler_managed_run(self):
         States.workers = None

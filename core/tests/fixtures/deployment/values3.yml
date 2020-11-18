@@ -39,6 +39,7 @@ artifactsStore:
 connections:
   - name: outputs2
     kind: volume_claim
+    tags: [foo, bar]
     schema:
       mountPath: "/tmp/outputs"
       volumeClaim: "outputs-2-pvc"

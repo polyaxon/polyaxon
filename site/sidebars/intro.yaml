@@ -13,8 +13,10 @@
       link: /docs/intro/quick-start/distributed-training/
     - title: Hyperparameter Tuning
       link: /docs/intro/quick-start/hyperparameter-tuning/
-    - title: Iterate with Polyaxon CLI
-      link: /docs/intro/quick-start/iterate-with-cli/
+    - title: Iterate with local code
+      link: /docs/intro/quick-start/iterate-with-cli-local-code/
+    - title: Iterate with remote code
+      link: /docs/intro/quick-start/iterate-with-cli-git-code/
     - title: Automation
       link: /docs/intro/quick-start/automation/
     - title: Running on schedule

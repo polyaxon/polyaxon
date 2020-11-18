@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **finished_at** | **Date** |  | [optional] 
 **duration** | **Number** |  | [optional] 
 **is_managed** | **String** |  | [optional] 
+**is_approved** | **String** |  | [optional] 
 **content** | **String** |  | [optional] 
 **raw_content** | **String** |  | [optional] 
 **status** | [**V1Statuses**](V1Statuses.md) |  | [optional] 

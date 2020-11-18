@@ -56,12 +56,14 @@ class RunSerializer(
             "pipeline",
             "original",
             "is_managed",
+            "is_approved",
             "inputs",
             "outputs",
             "tags",
             "settings",
         )
         extra_kwargs = {
+            "is_approved": {"write_only": True},
             "is_managed": {"read_only": True},
             "cloning_kind": {"read_only": True},
         }
@@ -78,8 +80,14 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
             "description",
             "content",
             "is_managed",
+            "is_approved",
+            "meta_info",
             "tags",
         )
+        extra_kwargs = {
+            "meta_info": {"write_only": True},
+            "is_approved": {"write_only": True},
+        }
 
     def validate(self, attrs):
         attrs = super().validate(attrs)
@@ -89,6 +97,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
     def create(self, validated_data):
         is_managed = validated_data["is_managed"]
         content = validated_data.get("content")
+        meta_info = validated_data.get("meta_info") or {}
         if content:
             is_managed = True if is_managed is None else is_managed
 
@@ -121,7 +130,9 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                     name=name,
                     description=description,
                     tags=tags,
+                    meta_info=meta_info,
                     is_managed=is_managed,
+                    is_approved=validated_data.get("is_approved", True),
                     supported_kinds=validated_data.get("supported_kinds"),
                 )
             except (PolyaxonException, ValueError) as e:
@@ -133,4 +144,5 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                 name=name,
                 description=description,
                 tags=tags,
+                meta_info=meta_info,
             )

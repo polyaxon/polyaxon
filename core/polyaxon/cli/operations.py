@@ -28,8 +28,13 @@ from polyaxon.cli.options import OPTIONS_PROJECT, OPTIONS_RUN_UID
 from polyaxon.client import RunClient
 from polyaxon.client.run import get_run_logs
 from polyaxon.env_vars.getters import get_project_or_local, get_project_run_or_local
-from polyaxon.exceptions import PolyaxonClientException
+from polyaxon.exceptions import (
+    PolyaxonClientException,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError,
+)
 from polyaxon.lifecycle import LifeCycle, V1Statuses
+from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.metadata.keys import META_REWRITE_PATH
 from polyaxon.polyaxonfile import OperationSpecification
@@ -401,6 +406,41 @@ def update(ctx, project, uid, name, description, tags):
 
     Printer.print_success("Run updated.")
     get_run_details(response)
+
+
+@ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
+@click.pass_context
+def approve(ctx, project, uid):
+    """Approve a run waiting for human validation.
+
+    Uses /docs/core/cli/#caching
+
+    Examples:
+
+    \b
+    $ polyaxon ops approve
+
+    \b
+    $ polyaxon ops approve --uid=8aac02e3a62a4f0aaa257c59da5eab80
+    """
+    owner, project_name, run_uuid = get_project_run_or_local(
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
+    )
+
+    try:
+        polyaxon_client = RunClient(
+            owner=owner, project=project_name, run_uuid=run_uuid
+        )
+        polyaxon_client.approve()
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(e, message="Could not approve run `{}`.".format(run_uuid))
+        sys.exit(1)
+
+    Printer.print_success("Run is approved.")
 
 
 @ops.command()
@@ -804,6 +844,88 @@ def artifacts(ctx, project, uid, path, path_to, no_untar):
         )
         sys.exit(1)
     Printer.print_success("Files downloaded: path: {}".format(download_path))
+
+
+@ops.command()
+@click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
+@click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
+@click.option(
+    "--path-from",
+    type=click.Path(exists=False),
+    help="Path to use to upload. Defaults to current path.",
+)
+@click.option(
+    "--path-to",
+    type=str,
+    help="The destination where to upload the artifacts. If run's root artifacts path will be used.",
+)
+@click.option(
+    "--is-file",
+    is_flag=True,
+    default=False,
+    help="If the content is a single file.",
+)
+@click.option(
+    "--sync-failure",
+    is_flag=True,
+    default=False,
+    help="To set the run to failed if upload fails.",
+)
+@click.pass_context
+def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
+    """Upload runs' artifacts.
+
+    Uses /docs/core/cli/#caching
+
+    Examples:
+
+    \b
+    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80
+
+    \b
+    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80 path_from="path/to/upload"
+
+    \b
+    $ polyaxon ops upload -uid=8aac02e3a62a4f0aaa257c59da5eab80 path_to="path/to/upload/to"
+    """
+    owner, project_name, run_uuid = get_project_run_or_local(
+        project or ctx.obj.get("project"),
+        uid or ctx.obj.get("run_uuid"),
+        is_cli=True,
+    )
+    try:
+        client = RunClient(owner=owner, project=project_name, run_uuid=run_uuid)
+        if is_file:
+            response = client.upload_artifact(
+                filepath=path_from, path=path_to or "", overwrite=True
+            )
+        else:
+            files = IgnoreConfigManager.get_unignored_filepaths(path_from)
+            response = client.upload_artifacts(
+                files=files, path=path_to or "", overwrite=True, relative_to=path_from
+            )
+    except (
+        ApiException,
+        HTTPError,
+        PolyaxonHTTPError,
+        PolyaxonShouldExitError,
+        PolyaxonClientException,
+    ) as e:
+        handle_cli_error(
+            e, message="Could not upload artifacts for run `{}`.".format(run_uuid)
+        )
+        sys.exit(1)
+
+    if response.status_code == 200:
+        Printer.print_success("Artifacts uploaded.")
+    else:
+        if sync_failure:
+            client.log_failed(message="Operation failed uploading artifacts.")
+        Printer.print_error(
+            "Error uploading artifacts. "
+            "Status: {}. Error: {}.".format(response.status_code, response.content),
+            sys_exit=True,
+        )
 
 
 @ops.command()

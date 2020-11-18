@@ -114,6 +114,12 @@ class TestEventsRegistry(TestCase):
             events,
         )
         self._asser_event(
+            run.RunApprovedActorEvent,
+            run.RunApprovedActorEvent.get_event_subject(),
+            "run",
+            events,
+        )
+        self._asser_event(
             run.RunResumedActorEvent,
             run.RunResumedActorEvent.get_event_subject(),
             "run",
@@ -214,6 +220,12 @@ class TestEventsRegistry(TestCase):
             run.RunStoppedActorEvent,
             run.RunStoppedActorEvent.get_event_action(),
             "stopped",
+            events,
+        )
+        self._asser_event(
+            run.RunApprovedActorEvent,
+            run.RunApprovedActorEvent.get_event_action(),
+            "approved",
             events,
         )
         self._asser_event(

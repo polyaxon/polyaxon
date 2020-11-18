@@ -47,6 +47,9 @@ type V1Component struct {
 	// Optional inputs definition
 	Inputs []*V1IO `json:"inputs"`
 
+	// Optional flag to mark this specification requires approval before running
+	IsApproved bool `json:"is_approved,omitempty"`
+
 	// Optional component kind, should be equal to "operation"
 	Kind string `json:"kind,omitempty"`
 

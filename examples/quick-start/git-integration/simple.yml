@@ -1,7 +1,7 @@
 version: 1.1
 kind: component
-name: simple-experiment
-description: Minimum information to run this TF.Keras example
+name: experiment-with-git
+description: Example with git integration
 tags: [examples]
 run:
   kind: job
