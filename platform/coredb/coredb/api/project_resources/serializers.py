@@ -63,7 +63,6 @@ class RunSerializer(
             "settings",
         )
         extra_kwargs = {
-            "is_approved": {"write_only": True},
             "is_managed": {"read_only": True},
             "cloning_kind": {"read_only": True},
         }

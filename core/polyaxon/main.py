@@ -35,9 +35,26 @@ from polyaxon.cli.run import run
 from polyaxon.cli.version import upgrade, version
 from polyaxon.logger import configure_logger
 from polyaxon.utils.bool_utils import to_bool
+from polyaxon.utils.formatting import Printer
 
 DOCS_GEN = to_bool(os.environ.get("POLYAXON_DOCS_GEN", False))
-
+NON_CHECKS_CMDS = [
+    "completion",
+    "config",
+    "version",
+    "login",
+    "logout",
+    "deploy",
+    "admin",
+    "teardown",
+    "docker",
+    "initializer",
+    "sidecar",
+    "proxy",
+    "notify",
+    "upgrade",
+    "port-forward",
+]
 click_completion.init()
 
 
@@ -106,23 +123,10 @@ def cli(context, verbose, offline):
     """
     settings.set_cli_config()
     configure_logger(verbose)
-    non_check_cmds = [
-        "completion",
-        "config",
-        "version",
-        "login",
-        "logout",
-        "deploy",
-        "admin",
-        "teardown",
-        "docker",
-        "initializer",
-        "sidecar",
-        "proxy",
-        "notify",
-        "upgrade",
-        "port-forward",
-    ]
+    if settings.CLIENT_CONFIG.no_op:
+        Printer.print_warning(
+            "POLYAXON_NO_OP is set to `true`, some commands will not function correctly."
+        )
     context.obj = context.obj or {}
     if not settings.CLIENT_CONFIG.client_header:
         settings.CLIENT_CONFIG.set_cli_header()

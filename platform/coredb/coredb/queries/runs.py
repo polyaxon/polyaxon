@@ -46,6 +46,7 @@ SINGLE_RUN = [
     "status",
     "cloning_kind",
     "is_managed",
+    "is_approved",
     "inputs",
     "outputs",
     "tags",

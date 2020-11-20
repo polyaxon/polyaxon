@@ -56,7 +56,7 @@ Select the token and copy it.
 ## Create a secret
 
 ```yaml
-kubectl -n polyaxon create secret generic github-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="TokenHash"
+kubectl -n polyaxon create secret generic github-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="oauth2:TOKEN_HASH"
 ```
 
 ## Add the repos you want to use to the connections catalog

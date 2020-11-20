@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.3.3",
+    "version": "1.3.4",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -16984,11 +16984,11 @@
           "title": "Optional run time of the entity"
         },
         "is_managed": {
-          "type": "string",
+          "type": "boolean",
           "title": "Optional flag to tell if this entity is managed by the platform"
         },
         "is_approved": {
-          "type": "string",
+          "type": "boolean",
           "title": "Optional flag to tell if this entity requires approval before it should be scheduled"
         },
         "content": {

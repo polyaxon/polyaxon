@@ -50,6 +50,7 @@ class TestRunSerializer(BaseTestRunSerializer):
         "pipeline",
         "original",
         "is_managed",
+        "is_approved",
         "tags",
         "inputs",
         "outputs",

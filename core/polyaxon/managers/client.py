@@ -39,9 +39,9 @@ class ClientConfigManager(BaseConfigManager):
 
         config = ConfigManager.read_configs(
             [
-                os.environ,
                 ConfigSpec(tmp_path, config_type=".json", check_if_exists=False),
                 ConfigSpec(user_path, config_type=".json", check_if_exists=False),
+                os.environ,
             ]
         )
         return ClientConfig.from_dict(config.data)

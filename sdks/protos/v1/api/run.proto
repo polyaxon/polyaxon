@@ -125,10 +125,10 @@ message Run {
     int32 duration = 13;
 
     // Optional flag to tell if this entity is managed by the platform
-    string is_managed = 14;
+    bool is_managed = 14;
 
     // Optional flag to tell if this entity requires approval before it should be scheduled
-    string is_approved = 15;
+    bool is_approved = 15;
 
     // Optional content of the entity's spec
     string content = 16;

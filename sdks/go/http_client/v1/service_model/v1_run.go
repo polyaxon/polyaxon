@@ -60,10 +60,10 @@ type V1Run struct {
 	Inputs interface{} `json:"inputs,omitempty"`
 
 	// Optional flag to tell if this entity requires approval before it should be scheduled
-	IsApproved string `json:"is_approved,omitempty"`
+	IsApproved bool `json:"is_approved,omitempty"`
 
 	// Optional flag to tell if this entity is managed by the platform
-	IsManaged string `json:"is_managed,omitempty"`
+	IsManaged bool `json:"is_managed,omitempty"`
 
 	// Optional kind to tell the kind of this run
 	Kind V1RunKind `json:"kind,omitempty"`
