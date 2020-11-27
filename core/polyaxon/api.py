@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 from polyaxon import pkg
 
 VERSION_V1 = "v1"
@@ -37,7 +39,7 @@ SSO_V1_LOCATION = "/" + SSO_V1 + "/"
 EVENTS_V1_LOCATION = "/" + EVENTS_V1 + "/"
 HEALTHZ_LOCATION = "/healthz/"
 POLYAXON_CLOUD_HOST = "https://cloud.polyaxon.com"
-LOCALHOST = "http://localhost:8000"
+POLYAXON_HOST = os.getenv("POLYAXON_PLATFORM_HOST", "http://localhost:8000")
 POLYAXON_VERSIONS_HOST = "https://versions.polyaxon.com/?v={}".format(pkg.VERSION)
 
 
@@ -46,4 +48,4 @@ def get_default_host(host: str = None, service: str = None):
         return host
     if service is None:
         return POLYAXON_CLOUD_HOST
-    return LOCALHOST
+    return POLYAXON_HOST
