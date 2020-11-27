@@ -39,9 +39,7 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
 
 <br>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/compare.png" alt="compare" width="400">
-  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/dashboards.png" alt="dashboards" width="400">
-  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/tensorboard.png" alt="tensorboard" width="400">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/demo.gif" alt="demo" width="80%">
 </p>
 <br>
 
@@ -112,6 +110,15 @@ Please check [polyaxon installation guide](https://polyaxon.com/docs/setup/)
     # Start TensorBoard for a run's output
     $ polyaxon run --hub tensorboard --run-uuid=UUID
     ```
+
+<br>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/compare.png" alt="compare" width="400">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/dashboards.png" alt="dashboards" width="400">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/tensorboard.png" alt="tensorboard" width="400">
+  <img src="https://raw.githubusercontent.com/polyaxon/polyaxon/master/artifacts/notebook.png" alt="compare" width="400">
+</p>
+<br>
 
 Please check our [quick start guide](https://polyaxon.com/docs/intro/quick-start/) to start training your first experiment.
 
