@@ -13,7 +13,7 @@ sidebar: "intro"
 ---
 
 Now that we learned how to submit operations, it's important to ensure that ours jobs and services are robust 
-using the [termination section](docs/core/specification/termination/).
+using the [termination section](/docs/core/specification/termination/).
 
 You can set a default termination on the component level and override the values for each operation, 
 or you can only define termination on some operation without setting too much information on the component.

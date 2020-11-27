@@ -24,8 +24,6 @@ You can use SAML to manage your organization’s entire membership.
 
 Polyaxon supports using SAML authentication for Single Sign On, both when self-hosting and soon on the Polyaxon Cloud.
 
-> **Note**: this is a WIP.
-
 ## Configure a SAML provider
 
 Polyaxon works with various common SAML Identity Providers: [Okta](https://developer.okta.com/docs/guides/build-sso-integration/saml2/overview/) and [OneLogin](https://support.onelogin.com/hc/en-us/articles/115005181586-Configuring-SAML-for-Sentry).
@@ -34,12 +32,12 @@ You should provide a callback URL: `[Domain/IP]/sso/saml`
 
 ## Update your deployment config file
 
-Use your all information to update your deployment config file.
+Use your information to update your deployment config file.
 
 ```yaml
 externalServices:
-    auth:
-      saml:
-        enabled: true
-        options: {...}
+  auth:
+    saml:
+      enabled: true
+      options: {...}
 ```

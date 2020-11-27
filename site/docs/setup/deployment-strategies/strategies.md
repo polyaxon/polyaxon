@@ -38,7 +38,7 @@ Isolation can be used to:
 
 Replication is the process of deploying the same configuration on different environments.
 
-Replication can be used to Deploy similar configuration several times to:
+Replication can be used to deploy similar configuration several times to:
 
   * Partition and define landscapes on dev/staging/production environments.
   * Scale workload on different compute resources (on-prem, cloud clusters for extra GPUs, or different resources e.g. TPUs)

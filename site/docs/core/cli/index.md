@@ -121,14 +121,14 @@ Here are some examples:
  * Getting other projects experiments:
 
     * `polyaxon project ops -p mnist -s "-created_at"`
-    * `polyaxon project ops --project=adam/mnist -q "status: failed"`
+    * `polyaxon project ops --project=acme/mnist -q "status: failed"`
 
  * Getting services named `tensorboard` for some projects:
 
     * `polyaxon ops ls --project=mnist --query="name: tensorboard" --sort="-created_at"`
-    * `polyaxon tensorboards ls -p adam/mnist --query="name: tensorboard, status: running"`
+    * `polyaxon tensorboards ls -p acme/mnist --query="name: tensorboard, status: running"`
 
  * Getting information about a specific experiment:
 
     * `polyaxon ops get -p mnist -uid UUID`
-    * `polyaxon ops get -p adam/mnist --uid=UUID`
+    * `polyaxon ops get -p acme/mnist --uid=UUID`

@@ -34,7 +34,7 @@ Several fields accept aliases:
 
 field                                                                      | condition
 ---------------------------------------------------------------------------|------------------
-`id`                                                                       | [string condition](/docs/core/query-language/#query-with-value-condition)
+`id` or `uuid`                                                             | [string condition](/docs/core/query-language/#query-with-value-condition)
 `name`                                                                     | [string condition](/docs/core/query-language/#query-with-string-condition)
 `description`                                                              | [string condition](/docs/core/query-language/#query-with-string-condition)
 `created_at`                                                               | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)

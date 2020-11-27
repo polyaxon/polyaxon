@@ -47,6 +47,9 @@ Stateful applications are very hard to set up correctly on a Kubernetes cluster,
 
 We also recommend users to take snapshots and backups before going through a migration, this is particularly important if an upgrade contains DB or Data migrations.
 
+> **Note**: We strongly recommend that you do not deploy a production database using this chart. Although The provided database can persist data if configured, 
+ you might encounter an issue in the future if we upgrade the dependency requirements or the version of the database image.
+
 ## Other components high availability
 
 If you are running Polyaxon in production mode and using a scheduler, you might think about using a managed version of one or several dependencies. please check:

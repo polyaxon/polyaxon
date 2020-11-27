@@ -44,7 +44,7 @@ kubectl create secret -n polyaxon generic az-secret --from-literal=AZURE_ACCOUNT
 
 ```yaml
 artifactsStore:
-- name: azure-artifacts
+  name: azure-artifacts
   kind: wasb
   schema:
     bucket: "wasbs://artifacts@container.blob.core.windows.net/"

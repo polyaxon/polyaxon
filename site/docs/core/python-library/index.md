@@ -69,7 +69,7 @@ Users won't need to perform any change to their code,
 they just need to set an environment variable `POLYAXON_NO_OP` to true/1, and the Polyaxon related code will be ignored.
 
 
-## Authentication
+## Instantiation
 
 ### In-cluster
 

@@ -28,7 +28,7 @@ field                           | condition
 `description`                   | [string condition](/docs/core/query-language/#query-with-string-condition)
 `created_at`                    | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
 `updated_at`                    | [datetime condition](/docs/core/query-language/#query-with-datetime-condition)
-`user`                          | [value condition](/docs/core/query-language/#query-with-value-condition)
+`owner`                         | [string condition](/docs/core/query-language/#query-with-string-condition)
 `tags`                          | [value condition](/docs/core/query-language/#query-with-value-condition)
 
 
@@ -39,5 +39,5 @@ field:
  * `created_at`
  * `updated_at`
  * `name`
- * `user`
+ * `owner`
 
