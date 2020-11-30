@@ -17,62 +17,53 @@
 import sys
 
 from polyaxon.constants import DEFAULT
+from polyaxon.env_vars.getters import get_entity_info
+from polyaxon.env_vars.getters.user import get_local_owner
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.managers.project import ProjectConfigManager
+from polyaxon.utils.cache import get_local_project
 from polyaxon.utils.formatting import Printer
 
 
-def get_project_full_name(owner: str = None, project: str = None) -> str:
-    if owner and project:
-        return "{}/{}".format(owner, project)
-    return project
-
-
-def get_project_info(project):
-    from polyaxon import settings
-
-    parts = project.replace(".", "/").split("/")
-    if len(parts) == 2:
-        owner, project_name = parts
-    else:
-        owner = settings.AUTH_CONFIG.username
-        project_name = project
-
-    return owner, project_name
+def get_project_error_message(owner, project):
+    message_context = ""
+    if owner:
+        message_context += " owner: {}".format(owner)
+    if project:
+        message_context += " project: {}".format(project)
+    if not owner or not project:
+        return "Please provide a valid project with owner.{}".format(message_context)
 
 
 def get_project_or_local(project=None, is_cli: bool = False):
     from polyaxon import settings
 
     if not project and not ProjectConfigManager.is_initialized():
+        error_message = "Please provide a valid project or initialize a project in the current path."
         if is_cli:
-            Printer.print_error("Please provide a valid project.")
+            Printer.print_error(error_message)
             sys.exit(1)
         else:
-            raise PolyaxonClientException("Please provide a valid project.")
+            raise PolyaxonClientException(error_message)
 
     if project:
-        owner, project_name = get_project_info(project)
+        owner, project_name = get_entity_info(project)
     else:
-        try:
-            project = ProjectConfigManager.get_config()
-        except TypeError:
-            Printer.print_error(
-                "Found an invalid project config or project config cache, "
-                "if you are using Polyaxon CLI please run: "
-                "`polyaxon config purge --cache-only`",
-                sys_exit=True,
-            )
+        project = get_local_project()
 
         owner, project_name = project.owner, project.name
+
+    if not owner:
+        owner = get_local_owner(is_cli=is_cli)
 
     if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
         owner = DEFAULT
 
     if not all([owner, project_name]):
+        error_message = get_project_error_message(owner, project_name)
         if is_cli:
-            Printer.print_error("Please provide a valid project.")
+            Printer.print_error(error_message)
             sys.exit(1)
         else:
-            raise PolyaxonClientException("Please provide a valid project.")
+            raise PolyaxonClientException(error_message)
     return owner, project_name

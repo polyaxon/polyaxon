@@ -15,10 +15,24 @@
 # limitations under the License.
 
 from polyaxon.managers.project import ProjectConfigManager
+from polyaxon.utils.formatting import Printer
+
+CACHE_ERROR = (
+    "Found an invalid project config or project config cache, "
+    "if you are using Polyaxon CLI please run: "
+    "`polyaxon config purge --cache-only`",
+)
+
+
+def get_local_project():
+    try:
+        return ProjectConfigManager.get_config()
+    except:
+        Printer.print_error(CACHE_ERROR, sys_exit=True)
 
 
 def _is_same_project(owner=None, project=None):
-    local_project = ProjectConfigManager.get_config()
+    local_project = get_local_project()
     if project and project == local_project.name:
         return not all([owner, local_project.owner]) or owner == local_project.owner
 

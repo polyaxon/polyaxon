@@ -111,7 +111,7 @@ def version(check):
         config = set_versions_config()
         Printer.print_header("Platform:")
         dict_tabulate(config.installation)
-        Printer.print_header("compatibility versions:")
+        Printer.print_header("Compatibility versions:")
         dict_tabulate(config.compatibility)
         check_cli_version(config)
 

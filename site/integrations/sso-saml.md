@@ -36,8 +36,8 @@ Use your information to update your deployment config file.
 
 ```yaml
 externalServices:
-  auth:
-    saml:
-      enabled: true
-      options: {...}
+    auth:
+      saml:
+        enabled: true
+        options: {...}
 ```

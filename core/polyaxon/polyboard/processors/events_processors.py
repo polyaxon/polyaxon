@@ -64,6 +64,14 @@ def copy_dir_path(from_path: str, asset_path: str):
     shutil.copytree(from_path, asset_path)
 
 
+def copy_file_or_dir_path(from_path: str, asset_path: str):
+    check_or_create_path(asset_path, is_dir=False)
+    if os.path.isfile(from_path):
+        shutil.copy(from_path, asset_path)
+    else:
+        shutil.copytree(from_path, asset_path)
+
+
 def dataframe_path(
     from_path: str,
     asset_path: str,
@@ -83,11 +91,7 @@ def model_path(
     spec: Dict = None,
     asset_rel_path: str = None,
 ) -> V1EventModel:
-    check_or_create_path(asset_path, is_dir=False)
-    if os.path.isfile(from_path):
-        shutil.copy(from_path, asset_path)
-    else:
-        shutil.copytree(from_path, asset_path)
+    copy_file_or_dir_path(from_path, asset_path)
     return V1EventModel(
         path=asset_rel_path or asset_path, framework=framework, spec=spec
     )
@@ -96,7 +100,7 @@ def model_path(
 def artifact_path(
     from_path: str, asset_path: str, kind: str, asset_rel_path: str = None
 ) -> V1EventArtifact:
-    copy_file_path(from_path, asset_path)
+    copy_file_or_dir_path(from_path, asset_path)
     return V1EventArtifact(kind=kind, path=asset_rel_path or asset_path)
 
 

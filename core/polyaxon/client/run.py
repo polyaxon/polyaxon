@@ -30,11 +30,12 @@ from urllib3.exceptions import HTTPError
 
 from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.client import PolyaxonClient
+from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import check_no_op, check_offline
 from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS
 from polyaxon.env_vars.getters import (
-    get_project_full_name,
+    get_entity_full_name,
+    get_project_error_message,
     get_project_or_local,
     get_run_info,
     get_run_or_local,
@@ -107,7 +108,7 @@ class RunClient:
 
         try:
             owner, project = get_project_or_local(
-                get_project_full_name(owner=owner, project=project)
+                get_entity_full_name(owner=owner, entity=project)
             )
         except PolyaxonClientException:
             pass
@@ -117,10 +118,14 @@ class RunClient:
                 owner, project, _run_uuid = get_run_info()
                 run_uuid = run_uuid or _run_uuid
             else:
-                raise PolyaxonClientException("Please provide a valid project.")
+                raise PolyaxonClientException(
+                    "Please provide a valid project, "
+                    "or make sure this operatio is managed by Polyaxon."
+                )
 
-        if not owner or not project:
-            raise PolyaxonClientException("Please provide a valid project with owner.")
+        error_message = get_project_error_message(owner, project)
+        if error_message:
+            raise PolyaxonClientException(error_message)
 
         self.client = client
         if not (self.client or settings.CLIENT_CONFIG.is_offline):
@@ -145,7 +150,7 @@ class RunClient:
             and self.run_data.settings
             and self.run_data.settings.namespace
         ):
-            self._namespace = self.run_data.settings
+            self._namespace = self.run_data.settings.namespace
         else:
             self._namespace = self.get_namespace()
         return self._namespace

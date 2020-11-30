@@ -30,6 +30,7 @@ from polyaxon.client import PolyaxonClient
 from polyaxon.logger import logger
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
+from polyaxon.managers.user import UserConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig, V1Credentials
 from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 
@@ -63,6 +64,7 @@ def login(token, username, password):
             access_auth = polyaxon_client.auth_v1.login(body=body)
         except (ApiException, HTTPError) as e:
             AuthConfigManager.purge()
+            UserConfigManager.purge()
             CliConfigManager.purge()
             handle_cli_error(e, message="Could not login.")
             sys.exit(1)
@@ -102,6 +104,7 @@ def login(token, username, password):
     # Set user
     try:
         AuthConfigManager.purge()
+        UserConfigManager.purge()
         polyaxon_client = PolyaxonClient(token=access_auth.token)
         user = polyaxon_client.users_v1.get_user()
     except (ApiException, HTTPError) as e:
@@ -109,6 +112,7 @@ def login(token, username, password):
         sys.exit(1)
     access_token = AccessTokenConfig(username=user.username, token=access_auth.token)
     AuthConfigManager.set_config(access_token)
+    UserConfigManager.set_config(user)
     polyaxon_client.config.token = access_auth.token
     Printer.print_success("Login successful")
 
@@ -119,6 +123,7 @@ def login(token, username, password):
 def logout():
     """Logout Login to Polyaxon Cloud or Polyaxon EE."""
     AuthConfigManager.purge()
+    UserConfigManager.purge()
     CliConfigManager.purge()
     Printer.print_success("You are logged out")
 

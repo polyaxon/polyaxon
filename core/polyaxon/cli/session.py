@@ -28,6 +28,7 @@ from polyaxon.client import PolyaxonClient
 from polyaxon.constants import NO_AUTH
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
+from polyaxon.managers.user import UserConfigManager
 from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon.services.headers import PolyaxonServices
 from polyaxon.utils.formatting import Printer
@@ -37,6 +38,7 @@ from polyaxon.utils.versions import clean_version_for_compatibility
 
 def session_expired():
     AuthConfigManager.purge()
+    UserConfigManager.purge()
     CliConfigManager.purge()
     click.echo("Session has expired, please try again.")
     sys.exit(1)

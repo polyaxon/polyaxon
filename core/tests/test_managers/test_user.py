@@ -13,21 +13,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from polyaxon.env_vars.getters.agent import get_agent_info
-from polyaxon.env_vars.getters.component import (
-    get_component_full_name,
-    get_component_info,
-)
-from polyaxon.env_vars.getters.owner_entity import get_entity_full_name, get_entity_info
-from polyaxon.env_vars.getters.project import (
-    get_project_error_message,
-    get_project_or_local,
-)
-from polyaxon.env_vars.getters.run import (
-    get_collect_artifact,
-    get_collect_resources,
-    get_log_level,
-    get_project_run_or_local,
-    get_run_info,
-    get_run_or_local,
-)
+
+import pytest
+
+from polyaxon_sdk import V1User
+
+from polyaxon.managers.user import UserConfigManager
+from tests.utils import BaseTestCase
+
+
+@pytest.mark.managers_mark
+class TestUserConfigManager(BaseTestCase):
+    def test_default_props(self):
+        assert UserConfigManager.is_global() is True
+        assert UserConfigManager.IS_POLYAXON_DIR is True
+        assert UserConfigManager.CONFIG_FILE_NAME == ".user"
+        assert UserConfigManager.CONFIG == V1User

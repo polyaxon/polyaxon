@@ -21,6 +21,7 @@ from marshmallow import ValidationError
 from polyaxon.api import LOCALHOST
 from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_CONFIG, POLYAXON_KEYS_SET_AGENT
 from polyaxon.managers.client import ClientConfigManager
+from polyaxon.managers.user import UserConfigManager
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.formatting import Printer
 
@@ -83,6 +84,12 @@ def set_auth_config():
     except (TypeError, ValidationError):
         AuthConfigManager.purge()
         Printer.print_warning("Your auth Configuration was purged!")
+
+    try:
+        UserConfigManager.get_config_or_default()
+    except (TypeError, ValidationError):
+        UserConfigManager.purge()
+        Printer.print_warning("Your user Configuration was purged!")
 
 
 if not to_bool(os.environ.get(POLYAXON_KEYS_NO_CONFIG, False)):

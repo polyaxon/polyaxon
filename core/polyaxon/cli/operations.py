@@ -62,6 +62,8 @@ DEFAULT_EXCLUDE = [
     "readme",
     "settings",
     "meta_info",
+    "is_approved",
+    "is_managed",
     "schedule_at",
     "original",
     "pipeline",
@@ -83,6 +85,14 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
         Printer.print_header("Run outputs:")
         dict_tabulate(run.outputs)
 
+    if run.settings:
+        Printer.print_header("Run settings:")
+        dict_tabulate(run.settings.to_dict())
+
+    if run.meta_info:
+        Printer.print_header("Run meta info:")
+        dict_tabulate(run.meta_info)
+
     response = Printer.add_status_color(run.to_dict())
     response = dict_to_tabulate(
         response,
@@ -98,6 +108,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
             "is_managed",
             "settings",
             "status_conditions",
+            "meta_info",
         ],
     )
 
@@ -301,7 +312,12 @@ def get(ctx, project, uid):
             project=project_name,
         )
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not load run `{}` info.".format(run_uuid))
+        handle_cli_error(
+            e,
+            message="Could not load run `{}/{}/{}` info.".format(
+                owner, project_name, run_uuid
+            ),
+        )
         sys.exit(1)
 
     get_run_details(polyaxon_client.run_data)

@@ -20,8 +20,10 @@ import click
 from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.deploy.schemas.deployment_types import DeploymentTypes
+from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.client import ClientConfigManager
+from polyaxon.managers.user import UserConfigManager
 from polyaxon.utils.formatting import Printer
 
 
@@ -82,6 +84,8 @@ def port_forward(port, namespace, deployment_type, release_name):
     _config.host = "http://localhost:{}".format(port)
     ClientConfigManager.set_config(_config)
     CliConfigManager.purge()
+    AuthConfigManager.purge()
+    UserConfigManager.purge()
     Printer.print_header("Client configuration is updated!")
     Printer.print_success("Polyaxon will be available at: {}".format(_config.host))
     stdout = kubectl.execute(

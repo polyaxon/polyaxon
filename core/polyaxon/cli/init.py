@@ -32,6 +32,7 @@ from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.schemas.types import V1GitType
 from polyaxon.utils import constants, indentation
+from polyaxon.utils.cache import get_local_project
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.path_utils import create_init_file
 
@@ -66,7 +67,7 @@ def create_polyaxonfile():
     *OPTIONS_PROJECT["args"],
     type=str,
     help="To enable local cache in this folder, "
-    "the project name to initialize, e.g. 'mnist' or 'adam/mnist'."
+    "the project name to initialize, e.g. 'mnist' or 'acme/mnist'."
 )
 @click.option(
     "--git-connection",
@@ -126,15 +127,7 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
             sys.exit(1)
         init_project = False
         if ProjectConfigManager.is_initialized():
-            try:
-                local_project = ProjectConfigManager.get_config()
-            except TypeError:
-                Printer.print_error(
-                    "Found an invalid project config or project config cache, "
-                    "if you are using Polyaxon CLI please run: "
-                    "`polyaxon config purge --cache-only`",
-                    sys_exit=True,
-                )
+            local_project = get_local_project()
             click.echo(
                 "Warning! This project is already initialized with the following project:"
             )

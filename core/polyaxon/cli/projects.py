@@ -22,37 +22,25 @@ from polyaxon_sdk import V1Project
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
-from polyaxon import settings
 from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.init import init as init_project
 from polyaxon.cli.options import OPTIONS_OWNER, OPTIONS_PROJECT
+from polyaxon.cli.utils import get_entity_details
 from polyaxon.client import ProjectClient
-from polyaxon.constants import DEFAULT
 from polyaxon.env_vars.getters import get_project_or_local
+from polyaxon.env_vars.getters.owner_entity import resolve_entity_info
+from polyaxon.env_vars.getters.user import get_local_owner
 from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.utils import cache
+from polyaxon.utils.cache import get_local_project
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
-    dict_to_tabulate,
     get_meta_response,
     list_dicts_to_tabulate,
 )
 from polyaxon.utils.validation import validate_tags
-
-
-def get_project_details(_project):
-    if _project.description:
-        Printer.print_header("Project description:")
-        click.echo("{}\n".format(_project.description))
-
-    response = dict_to_tabulate(
-        _project.to_dict(), humanize_values=True, exclude_attrs=["description"]
-    )
-
-    Printer.print_header("Project info:")
-    dict_tabulate(response)
 
 
 @click.group()
@@ -73,7 +61,7 @@ def project(ctx, _project):  # pylint:disable=redefined-outer-name
 
 @project.command()
 @click.option(
-    "--name", type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'."
+    "--name", type=str, help="The project name, e.g. 'mnist' or 'acme/mnist'."
 )
 @click.option("--description", type=str, help="Description of the project.")
 @click.option("--tags", type=str, help="Tags of the project, comma separated values.")
@@ -90,30 +78,26 @@ def create(ctx, name, description, tags, public, init):
     Example:
 
     \b
-    $ polyaxon project create --project=cats-vs-dogs --description="Image Classification with DL"
+    $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
 
     \b
-    $ polyaxon project create --project=owner/name --description="Project Description"
+    $ polyaxon project create --name=owner/name --description="Project Description"
     """
     if not name:
         Printer.print_error(
-            "Please login provide a name to create a project.",
+            "Please provide a valid name to create a project.",
             command_help="project create",
             sys_exit=True,
         )
-    owner, project_name = get_project_or_local(
+    owner, project_name = resolve_entity_info(
         name or ctx.obj.get("project"), is_cli=True
     )
-    owner = owner or settings.AUTH_CONFIG.username
-    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
-        owner = DEFAULT
 
     tags = validate_tags(tags)
 
     if not owner:
         Printer.print_error(
-            "Please login first or provide a valid name with owner --name=owner/project. "
-            "`polyaxon login --help`"
+            "Please provide a valid name with an owner namespace: --name=owner/project."
         )
         sys.exit(1)
 
@@ -160,14 +144,9 @@ def ls(owner, query, sort, limit, offset):
 
     Uses /docs/core/cli/#caching
     """
-    owner = owner or settings.AUTH_CONFIG.username
-    if not owner and (not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce):
-        owner = DEFAULT
+    owner = owner or get_local_owner(is_cli=True)
     if not owner:
-        Printer.print_error(
-            "Please login first or provide a valid owner --owner. "
-            "`polyaxon login --help`"
-        )
+        Printer.print_error("Please provide a valid owner: --owner/-o.")
         sys.exit(1)
 
     try:
@@ -181,11 +160,11 @@ def ls(owner, query, sort, limit, offset):
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header("Projects for current user")
+        Printer.print_header("Projects for owner {}".format(owner))
         Printer.print_header("Navigation:")
         dict_tabulate(meta)
     else:
-        Printer.print_header("No projects found for current user")
+        Printer.print_header("No projects found for owner {}".format(owner))
 
     objects = list_dicts_to_tabulate(
         [o.to_dict() for o in response.results],
@@ -196,7 +175,6 @@ def ls(owner, query, sort, limit, offset):
             "description",
             "owner",
             "user_email",
-            "teams",
             "role",
             "settings",
         ],
@@ -242,7 +220,7 @@ def get(ctx, _project):
             owner=owner,
             project=project_name,
         )
-        get_project_details(polyaxon_client.project_data)
+        get_entity_details(polyaxon_client.project_data, "Project")
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e, message="Could not get project `{}`.".format(project_name), sys_exit=True
@@ -270,17 +248,9 @@ def delete(ctx, _project):
     try:
         polyaxon_client = ProjectClient(owner=owner, project=project_name)
         polyaxon_client.delete()
-        try:
-            local_project = ProjectConfigManager.get_config()
-        except TypeError:
-            Printer.print_error(
-                "Found an invalid project config or project config cache, "
-                "if you are using Polyaxon CLI please run: "
-                "`polyaxon config purge --cache-only`",
-                sys_exit=True,
-            )
+        local_project = get_local_project()
         if local_project and (owner, project_name) == (
-            local_project.user,
+            local_project.owner,
             local_project.name,
         ):
             # Purge caching
@@ -314,10 +284,10 @@ def update(ctx, _project, name, description, private):
     Example:
 
     \b
-    $ polyaxon update foobar --description="Image Classification with DL using TensorFlow"
+    $ polyaxon project update foobar --description="Image Classification with DL using TensorFlow"
 
     \b
-    $ polyaxon update mike1/foobar --description="Image Classification with DL using TensorFlow"
+    $ polyaxon project update mike1/foobar --description="Image Classification with DL using TensorFlow"
 
     \b
     $ polyaxon update --tags="foo, bar"
@@ -350,7 +320,7 @@ def update(ctx, _project, name, description, private):
         sys.exit(1)
 
     Printer.print_success("Project updated.")
-    get_project_details(response)
+    get_entity_details(response, "Project")
 
 
 @project.command()

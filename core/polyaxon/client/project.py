@@ -18,10 +18,10 @@ from typing import Dict, Union
 import polyaxon_sdk
 
 from polyaxon import settings
-from polyaxon.client import PolyaxonClient
+from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.decorators import check_no_op, check_offline
 from polyaxon.constants import DEFAULT
-from polyaxon.env_vars.getters import get_project_full_name, get_project_info
+from polyaxon.env_vars.getters import get_entity_full_name, get_entity_info
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.utils.query_params import get_query_params
 
@@ -66,12 +66,12 @@ class ProjectClient:
         client: PolyaxonClient = None,
     ):
         if not owner and project:
-            owner, project = get_project_info(
-                get_project_full_name(owner=owner, project=project)
+            owner, project = get_entity_info(
+                get_entity_full_name(owner=owner, entity=project)
             )
 
         if not owner:
-            raise PolyaxonClientException("Please provide a valid project owner.")
+            raise PolyaxonClientException("Please provide a valid owner.")
 
         self.client = client
         if not (self.client or settings.CLIENT_CONFIG.is_offline):

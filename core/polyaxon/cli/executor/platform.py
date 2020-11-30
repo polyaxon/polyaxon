@@ -97,7 +97,8 @@ def run(
                 message="Could not create a run.",
                 http_messages_mapping={
                     404: "Make sure you have a project initialized in your current workdir, "
-                    "otherwise you need to pass a project with `-p/--project`."
+                    "otherwise you need to pass a project with `-p/--project`. "
+                    "The project {}/{} does not exist.".format(owner, project_name)
                 },
             )
             sys.exit(1)

@@ -32,29 +32,13 @@ from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
 from polyaxon.cli.run import run
-from polyaxon.cli.version import upgrade, version
+from polyaxon.cli.session import set_versions_config
+from polyaxon.cli.version import check_cli_version, upgrade, version
 from polyaxon.logger import configure_logger
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.formatting import Printer
 
 DOCS_GEN = to_bool(os.environ.get("POLYAXON_DOCS_GEN", False))
-NON_CHECKS_CMDS = [
-    "completion",
-    "config",
-    "version",
-    "login",
-    "logout",
-    "deploy",
-    "admin",
-    "teardown",
-    "docker",
-    "initializer",
-    "sidecar",
-    "proxy",
-    "notify",
-    "upgrade",
-    "port-forward",
-]
 click_completion.init()
 
 
@@ -134,6 +118,38 @@ def cli(context, verbose, offline):
     if offline:
         os.environ["POLYAXON_IS_OFFLINE"] = "true"
         settings.CLIENT_CONFIG.is_offline = True
+    non_check_cmds = [
+        "completion",
+        "config",
+        "version",
+        "login",
+        "logout",
+        "deploy",
+        "admin",
+        "teardown",
+        "docker",
+        "initializer",
+        "sidecar",
+        "proxy",
+        "notify",
+        "upgrade",
+        "port-forward",
+    ]
+    if not settings.CLI_CONFIG.installation:
+        pass
+    if (
+        not (
+            context.invoked_subcommand in non_check_cmds
+            or offline
+            or settings.CLIENT_CONFIG.no_api
+            or settings.CLIENT_CONFIG.is_ops
+            or DOCS_GEN
+        )
+        and not settings.CLI_CONFIG.installation
+    ):
+        cli_config = set_versions_config(is_cli=False)
+        settings.CLI_CONFIG = cli_config
+        check_cli_version(cli_config, is_cli=False)
 
 
 cli.add_command(login)

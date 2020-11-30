@@ -22,10 +22,9 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.client import ClientConfigManager
-from polyaxon.managers.git import GitConfigManager
-from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.managers.run import RunConfigManager
+from polyaxon.managers.user import UserConfigManager
 from polyaxon.utils.formatting import Printer, dict_tabulate
 
 
@@ -46,8 +45,23 @@ def config(list):  # pylint:disable=redefined-builtin
     """Set and get the global configurations."""
     if list:
         _config = ClientConfigManager.get_config_or_default()
-        Printer.print_header("Current config:")
+        Printer.print_header("Client config:")
         dict_tabulate(_config.to_dict())
+        _config = CliConfigManager.get_config_or_default()
+        if _config:
+            Printer.print_header("CLI config:")
+            if _config.current_version:
+                click.echo("Version {}".format(_config.current_version))
+            else:
+                Printer.print_warning("This cli is not configured.")
+            if _config.installation:
+                dict_tabulate(_config.installation)
+            else:
+                Printer.print_warning("This cli is not connected to a Polyaxon Host.")
+        _config = UserConfigManager.get_config_or_default()
+        if _config:
+            Printer.print_header("User config:")
+            dict_tabulate(_config.to_dict())
 
 
 @config.command()
@@ -115,7 +129,11 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
         )
         sys.exit(1)
 
+    should_purge = False
     for key, value in kwargs.items():
+        print(key)
+        if key == "host":
+            should_purge = True
         if value is not None:
             setattr(_config, key, value)
 
@@ -123,6 +141,9 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
     Printer.print_success("Config was updated.")
     # Reset cli config
     CliConfigManager.purge()
+    if should_purge:
+        AuthConfigManager.purge()
+        UserConfigManager.purge()
 
 
 @config.command()
@@ -137,8 +158,7 @@ def purge(cache_only):
         ClientConfigManager.purge()
         CliConfigManager.purge()
         AuthConfigManager.purge()
+        UserConfigManager.purge()
     ProjectConfigManager.purge()
     RunConfigManager.purge()
-    IgnoreConfigManager.purge()
-    GitConfigManager.purge()
     Printer.print_success("Configs was removed.")

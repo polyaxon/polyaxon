@@ -19,7 +19,6 @@ import shutil
 import click
 
 from polyaxon import settings
-from polyaxon.client.transport import Transport
 from polyaxon.deploy.operators.compose import ComposeOperator
 from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.deploy.operators.helm import HelmOperator
@@ -229,6 +228,8 @@ class DeployConfigManager:
         Printer.print_success("Deployment finished.")
 
     def install_on_docker_compose(self):
+        from polyaxon.client.transport import Transport
+
         path = ComposeConfigManager.get_config_filepath()
         path = "/".join(path.split("/")[:-1])
         # Fetch docker-compose

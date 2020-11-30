@@ -17,7 +17,7 @@
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
-from polyaxon.client import PolyaxonClient
+from polyaxon.client.client import PolyaxonClient
 from polyaxon.containers.contexts import CONTEXT_MOUNT_AUTH
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.schemas.api.authentication import AccessTokenConfig

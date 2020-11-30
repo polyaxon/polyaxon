@@ -16,29 +16,29 @@
 
 import sys
 
-from polyaxon_sdk import V1Project
+from polyaxon_sdk import V1User
 
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.utils import constants
 from polyaxon.utils.formatting import Printer
 
 
-class ProjectConfigManager(BaseConfigManager):
-    """Manages project configuration .project file."""
+class UserConfigManager(BaseConfigManager):
+    """Manages user configuration .user file."""
 
-    VISIBILITY = BaseConfigManager.VISIBILITY_ALL
+    VISIBILITY = BaseConfigManager.VISIBILITY_GLOBAL
     IS_POLYAXON_DIR = True
-    CONFIG_FILE_NAME = ".project"
-    CONFIG = V1Project
+    CONFIG_FILE_NAME = ".user"
+    CONFIG = V1User
 
     @classmethod
     def get_config_or_raise(cls):
-        project = cls.get_config()
-        if not project:
-            Printer.print_error(
-                "No project was found, please initialize a project."
-                " {}".format(constants.INIT_COMMAND)
-            )
+        user = cls.get_config()
+        if not user:
+            Printer.print_error("User configuration was not found.")
             sys.exit(1)
 
-        return project
+        return user
+
+    @classmethod
+    def get_config_from_env(cls):
+        pass

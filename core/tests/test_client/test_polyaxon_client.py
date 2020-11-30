@@ -37,7 +37,6 @@ class TestPolyaxonClient(BaseTestCase):
         client = PolyaxonClient(token=None)
         assert client.config.token is None
 
-        assert isinstance(client.transport, Transport)
         assert isinstance(client.config, ClientConfig)
 
         assert isinstance(client.auth_v1, polyaxon_sdk.AuthV1Api)

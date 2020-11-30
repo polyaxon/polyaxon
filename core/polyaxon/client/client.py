@@ -17,7 +17,6 @@
 import polyaxon_sdk
 
 from polyaxon import settings
-from polyaxon.client.transport import Transport
 from polyaxon.constants import NO_AUTH
 
 
@@ -94,18 +93,6 @@ class PolyaxonClient:
         self.api_client = polyaxon_sdk.ApiClient(
             self.config.sdk_config, **self.config.client_header
         )
-
-    def set_health_check(self, url):
-        self.transport.set_health_check(url)
-
-    def unset_health_check(self, url):
-        self.transport.unset_health_check(url)
-
-    @property
-    def transport(self):
-        if not self._transport:
-            self._transport = Transport(config=self.config)
-        return self._transport
 
     @property
     def config(self):

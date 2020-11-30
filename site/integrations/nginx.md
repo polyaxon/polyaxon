@@ -70,8 +70,8 @@ Polyaxon's ingress resource can be customized by providing annotations, we recom
 ```yaml
 ingress:
   annotations:
-      ingress.kubernetes.io/rewrite-target: /
-      ingress.kubernetes.io/add-base-url: "true"
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/add-base-url: "true"
 ```
 
 If you are using the ingress without a tls, you need to set
@@ -92,6 +92,14 @@ ingress:
     ingress.kubernetes.io/proxy-send-timeout: "600"
     ingress.kubernetes.io/send-timeout: "600"
     ingress.kubernetes.io/proxy-body-size: 4G
+```
+
+You might also need to specify the class
+
+```yaml
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
 ```
 
 ## ConfigMap for the controller

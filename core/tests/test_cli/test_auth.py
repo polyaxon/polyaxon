@@ -25,8 +25,10 @@ from tests.test_cli.utils import BaseCommandTestCase
 @pytest.mark.cli_mark
 class TestCliAuth(BaseCommandTestCase):
     @patch("polyaxon.managers.auth.AuthConfigManager.purge")
-    def test_logout(self, get_user):
+    @patch("polyaxon.managers.user.UserConfigManager.purge")
+    def test_logout(self, get_user, get_auth):
         self.runner.invoke(logout)
+        assert get_auth.call_count == 1
         assert get_user.call_count == 1
 
     @patch("polyaxon_sdk.UsersV1Api.get_user")
