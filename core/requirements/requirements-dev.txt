@@ -30,7 +30,7 @@ moviepy==1.0.3
 plotly==4.13.0
 Pillow==8.0.1
 bokeh==2.2.3
-pandas==1.0.3
+pandas==1.1.4
 
 nvidia-ml-py3==7.352.0
 
