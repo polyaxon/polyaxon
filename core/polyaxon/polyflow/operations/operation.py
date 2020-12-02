@@ -316,7 +316,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     the queue of the component will be used if it exists.
 
     ```yaml
-    >>> component:
+    >>> operation:
     >>>   queue: agent-name/queue-name
     ```
 
@@ -324,7 +324,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     based on the default agent.
 
     ```yaml
-    >>> component:
+    >>> operation:
     >>>   queue: queue-name
     ```
 

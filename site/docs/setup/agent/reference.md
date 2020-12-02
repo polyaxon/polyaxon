@@ -366,4 +366,4 @@ connections: []
 notificationConnections: []
 ```
 
-You need to configure the connection to authorize for the agent. Please check [connections section](/docs/setup/connections/).
+You need to configure the connections to authorize for the agent. Please check [connections section](/docs/setup/connections/).
