@@ -87,7 +87,7 @@ type UpdateModelRegistryOK struct {
 }
 
 func (o *UpdateModelRegistryOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/models/{model.uuid}][%d] updateModelRegistryOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model.name}][%d] updateModelRegistryOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateModelRegistryOK) GetPayload() *service_model.V1ModelRegistry {
@@ -120,7 +120,7 @@ type UpdateModelRegistryNoContent struct {
 }
 
 func (o *UpdateModelRegistryNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/models/{model.uuid}][%d] updateModelRegistryNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model.name}][%d] updateModelRegistryNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UpdateModelRegistryNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type UpdateModelRegistryForbidden struct {
 }
 
 func (o *UpdateModelRegistryForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/models/{model.uuid}][%d] updateModelRegistryForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model.name}][%d] updateModelRegistryForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateModelRegistryForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type UpdateModelRegistryNotFound struct {
 }
 
 func (o *UpdateModelRegistryNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/models/{model.uuid}][%d] updateModelRegistryNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model.name}][%d] updateModelRegistryNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateModelRegistryNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *UpdateModelRegistryDefault) Code() int {
 }
 
 func (o *UpdateModelRegistryDefault) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/models/{model.uuid}][%d] UpdateModelRegistry default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model.name}][%d] UpdateModelRegistry default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *UpdateModelRegistryDefault) GetPayload() *service_model.RuntimeError {

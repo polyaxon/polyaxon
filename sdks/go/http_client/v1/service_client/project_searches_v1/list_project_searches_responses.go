@@ -87,7 +87,7 @@ type ListProjectSearchesOK struct {
 }
 
 func (o *ListProjectSearchesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches][%d] listProjectSearchesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches][%d] listProjectSearchesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListProjectSearchesOK) GetPayload() *service_model.V1ListSearchesResponse {
@@ -120,7 +120,7 @@ type ListProjectSearchesNoContent struct {
 }
 
 func (o *ListProjectSearchesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches][%d] listProjectSearchesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches][%d] listProjectSearchesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListProjectSearchesNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type ListProjectSearchesForbidden struct {
 }
 
 func (o *ListProjectSearchesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches][%d] listProjectSearchesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches][%d] listProjectSearchesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListProjectSearchesForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type ListProjectSearchesNotFound struct {
 }
 
 func (o *ListProjectSearchesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches][%d] listProjectSearchesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches][%d] listProjectSearchesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListProjectSearchesNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *ListProjectSearchesDefault) Code() int {
 }
 
 func (o *ListProjectSearchesDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches][%d] ListProjectSearches default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches][%d] ListProjectSearches default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListProjectSearchesDefault) GetPayload() *service_model.RuntimeError {

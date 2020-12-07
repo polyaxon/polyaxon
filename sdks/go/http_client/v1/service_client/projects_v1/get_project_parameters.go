@@ -74,16 +74,16 @@ for the get project operation typically these are written to a http.Request
 */
 type GetProjectParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *GetProjectParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the get project params
+func (o *GetProjectParams) WithName(name string) *GetProjectParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the get project params
+func (o *GetProjectParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the get project params
 func (o *GetProjectParams) WithOwner(owner string) *GetProjectParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *GetProjectParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the get project params
-func (o *GetProjectParams) WithProject(project string) *GetProjectParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the get project params
-func (o *GetProjectParams) SetProject(project string) {
-	o.Project = project
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *GetProjectParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *GetProjectParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

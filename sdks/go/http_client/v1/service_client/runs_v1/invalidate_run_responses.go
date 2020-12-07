@@ -86,7 +86,7 @@ type InvalidateRunOK struct {
 }
 
 func (o *InvalidateRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/invalidate][%d] invalidateRunOK ", 200)
 }
 
 func (o *InvalidateRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type InvalidateRunNoContent struct {
 }
 
 func (o *InvalidateRunNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/invalidate][%d] invalidateRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *InvalidateRunNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type InvalidateRunForbidden struct {
 }
 
 func (o *InvalidateRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/invalidate][%d] invalidateRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *InvalidateRunForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type InvalidateRunNotFound struct {
 }
 
 func (o *InvalidateRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/invalidate][%d] invalidateRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *InvalidateRunNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *InvalidateRunDefault) Code() int {
 }
 
 func (o *InvalidateRunDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] InvalidateRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/invalidate][%d] InvalidateRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *InvalidateRunDefault) GetPayload() *service_model.RuntimeError {

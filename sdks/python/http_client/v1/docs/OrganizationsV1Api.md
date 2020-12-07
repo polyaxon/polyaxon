@@ -9,10 +9,10 @@ Method | HTTP request | Description
 [**create_organization_member**](OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | Create organization member
 [**delete_organization**](OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
 [**delete_organization_invitation**](OrganizationsV1Api.md#delete_organization_invitation) | **DELETE** /api/v1/orgs/{owner}/invitations | Delete organization invitation details
-[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
+[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{name} | Delete organization member details
 [**get_organization**](OrganizationsV1Api.md#get_organization) | **GET** /api/v1/orgs/{owner} | Get organization
 [**get_organization_invitation**](OrganizationsV1Api.md#get_organization_invitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
-[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
+[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{name} | Get organization member details
 [**get_organization_settings**](OrganizationsV1Api.md#get_organization_settings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
 [**list_organization_member_names**](OrganizationsV1Api.md#list_organization_member_names) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 [**list_organization_members**](OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | Get organization members
@@ -362,7 +362,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization_member**
-> delete_organization_member(owner, user)
+> delete_organization_member(owner, name)
 
 Delete organization member details
 
@@ -401,11 +401,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-user = 'user_example' # str | Memeber under namesapce
+name = 'name_example' # str | Component under namesapce
 
     try:
         # Delete organization member details
-        api_instance.delete_organization_member(owner, user)
+        api_instance.delete_organization_member(owner, name)
     except ApiException as e:
         print("Exception when calling OrganizationsV1Api->delete_organization_member: %s\n" % e)
 ```
@@ -415,7 +415,7 @@ user = 'user_example' # str | Memeber under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **user** | **str**| Memeber under namesapce | 
+ **name** | **str**| Component under namesapce | 
 
 ### Return type
 
@@ -614,7 +614,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_organization_member**
-> V1OrganizationMember get_organization_member(owner, user)
+> V1OrganizationMember get_organization_member(owner, name)
 
 Get organization member details
 
@@ -653,11 +653,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-user = 'user_example' # str | Memeber under namesapce
+name = 'name_example' # str | Component under namesapce
 
     try:
         # Get organization member details
-        api_response = api_instance.get_organization_member(owner, user)
+        api_response = api_instance.get_organization_member(owner, name)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling OrganizationsV1Api->get_organization_member: %s\n" % e)
@@ -668,7 +668,7 @@ user = 'user_example' # str | Memeber under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **user** | **str**| Memeber under namesapce | 
+ **name** | **str**| Component under namesapce | 
 
 ### Return type
 

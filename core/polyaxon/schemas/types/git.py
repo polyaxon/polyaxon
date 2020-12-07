@@ -26,6 +26,7 @@ from polyaxon.schemas.types.base import BaseTypeConfig
 class GitTypeSchema(BaseCamelSchema):
     url = RefOrObject(fields.Str(allow_none=True))
     revision = RefOrObject(fields.Str(allow_none=True))
+    flags = RefOrObject(fields.List(fields.Str(), allow_none=True))
 
     @staticmethod
     def schema_config():
@@ -43,6 +44,7 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
     Args:
         url: str, optional.
         revision: str, optional.
+        flags: List[str], optional
 
     ### YAML usage
 
@@ -62,6 +64,10 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
     >>> params:
     >>>   test1: {value: {"url": "https://github.com/tensorflow/models"}}
     >>>   test2: {value: {revision: "branchA"}, connection: "my-git-connection"}
+    >>>   test3: {
+    >>>     value: {flags: ["--recursive", "-c http.sslVerify=false"]},
+    >>>     connection: "my-git-connection",
+    >>>   }
     ```
 
     ### Python usage
@@ -104,7 +110,7 @@ class V1GitType(BaseTypeConfig, polyaxon_sdk.V1GitType):
 
     IDENTIFIER = "git"
     SCHEMA = GitTypeSchema
-    REDUCED_ATTRIBUTES = ["url", "revision"]
+    REDUCED_ATTRIBUTES = ["url", "revision", "flags"]
 
     def get_name(self):
         if self.url:

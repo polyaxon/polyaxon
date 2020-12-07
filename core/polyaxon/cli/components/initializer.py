@@ -39,12 +39,17 @@ def auth():
 @click.option("--revision", help="The revision(commint/branch/treeish) to pull.")
 @click.option("--repo-path", help="The path to where to pull the repos.")
 @click.option("--connection", help="The connection used for pulling this repo.")
-def git(url, repo_path, revision, connection):
+@click.option("--flags", help="Additional flags for pulling this repo.")
+def git(url, repo_path, revision, connection, flags):
     """Create auth context."""
     from polyaxon.init.git import create_code_repo
 
     create_code_repo(
-        repo_path=repo_path, url=url, revision=revision, connection=connection
+        repo_path=repo_path,
+        url=url,
+        revision=revision,
+        connection=connection,
+        flags=flags,
     )
 
     Printer.print_success("Git Repo is initialized, path: `{}`".format(repo_path))

@@ -20,69 +20,19 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
-// Model regsitry specification
-message ModelRegistry {
-    // UUID
-    string uuid = 1;
-
-    // Optional component name, should be a valid fully qualified value: name[:version]
-    string name = 2;
-
-    // Model framework
-    string framework = 3;
-
-    // Optional description
-    string description = 4;
-
-    // Optional tags of this entity
-    repeated string tags = 5;
-
-    // Optional a flag to disable the model
-    bool disabled = 6;
-
-    // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 7;
-
-    // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 8;
-
-}
-
- // Request data to create/update model registries
- message ModelRegistryBodyRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Model body
-    ModelRegistry model = 2;
- }
-
-
-// Contains list model registries
-message ListModelRegistryResponse {
-    // Count of the entities
-    int32 count = 1;
-
-    // List of all entities
-    repeated ModelRegistry results = 2;
-
-    // Previous page
-    string previous = 3;
-
-    // Next page
-    string next = 4;
-}
+import "v1/polyflow/stage.proto";
+import "v1/api/stage.proto";
 
 // component hub specification
 message ComponentHub {
     // UUID
     string uuid = 1;
 
-    // Optional component name, should be a valid fully qualified value: name[:version]
-    string name = 2;
+    // Owner/namespace where the component hub was created
+    string owner = 2;
 
-    // The Component body content
-    string content = 3;
+    // Optional component name, should be a valid fully qualified value: name[:version]
+    string name = 3;
 
     // Optional description
     string description = 4;
@@ -90,14 +40,62 @@ message ComponentHub {
     // Optional tags of this entity
     repeated string tags = 5;
 
-    // Optional a flag to disable the model
-    bool disabled = 6;
+    // Optional flag to tell if this project is public
+    bool is_public = 6;
+
+    // Optional if this entity was bookmarked
+    bool bookmarked = 7;
+
+    // Current live state
+    int32 live_state = 8;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp created_at = 9;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 8;
+    google.protobuf.Timestamp updated_at = 10;
+
+    // Markdown description/readme
+    string readme = 12;
+
+    // Settings
+    ComponentHubSettings settings = 13;
+
+     // Current user's role in this (org/teams)/project
+     string role = 14;
+}
+
+// component hub specification
+message ComponentVersion {
+  // UUID
+  string uuid = 1;
+
+  // Optional component name, should be a valid fully qualified value: name[:version]
+  string name = 2;
+
+  // Optional description
+  string description = 3;
+
+  // Optional tags of this entity
+  repeated string tags = 4;
+
+  // Current live state
+  int32 live_state = 5;
+
+  // Optional time when the entity was created
+  google.protobuf.Timestamp created_at = 6;
+
+  // Optional last time the entity was updated
+  google.protobuf.Timestamp updated_at = 7;
+
+  // Optional latest stage of this entity
+  Stages stage = 8;
+
+  // The status conditions timeline
+  repeated StageCondition stage_conditions = 9;
+
+  // The Component body content
+  string content = 10;
 
 }
 
@@ -124,4 +122,52 @@ message ListComponentHubsResponse {
 
     // Next page
     string next = 4;
+}
+
+
+// Request data to create/update component version
+message ComponentVersionBodyRequest {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Component name
+  string component = 2;
+
+  // Component version body
+  ComponentVersion version = 3;
+}
+
+
+// Contains list component hub
+message ListComponentVersionsResponse {
+  // Count of the entities
+  int32 count = 1;
+
+  // List of all entities
+  repeated ComponentVersion results = 2;
+
+  // Previous page
+  string previous = 3;
+
+  // Next page
+  string next = 4;
+}
+
+
+// Hub Settings specification
+message ComponentHubSettings {
+  // Authorized teams
+  repeated string teams = 1;
+}
+
+// Request data to update hub settings
+message ComponentHubSettingsBodyRequest {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Hub name
+  string component = 2;
+
+  // Hub settings body
+  ComponentHubSettings settings = 3;
 }

@@ -24,7 +24,7 @@ import "v1/polyflow/k8s.proto";
 
 // Job specification
 message Job {
-    // Optional component kind, should be equal to "job"
+    // Optional component kind, should be equal to 'job'
     string kind = 1;
 
     // Optional environment section

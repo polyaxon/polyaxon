@@ -22,4 +22,6 @@ class ContentTypes(Enum):
     TEAM = "team"
     USER = "user"
     PROJECT = "project"
+    COMPONENT_HUB = "componenthub"
+    MODEL_REGISTRY = "modelregistry"
     RUN = "run"

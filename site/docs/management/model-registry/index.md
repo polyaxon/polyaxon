@@ -31,17 +31,28 @@ Polyaxon Model Registry is a models store and a system that provides:
 
 Each model can have multiple versions.
 
-![created-stage](../../../../content/images/dashboard/registry/created.png)
-
 Each model can list all versions, their stage, their model artifacts used, their specification, and their metrics and current usage.
 
-![production-stage](../../../../content/images/dashboard/registry/production.png)
-
 Polyaxon provides a special tag to signal the stage of your components' versions.
-
-![testing-stage](../../../../content/images/dashboard/registry/testing.png)
-
 By default, the Component Hub shows the latest version and its stage.
 
-![staging-stage](../../../../content/images/dashboard/registry/staging.png)
 
+## Managing and using models
+
+You can create and manage models and versions using the API, CLI or the dashboard.
+
+> Please check the model management guide. 
+
+Each model version uses can lock an experiment run based on its id, it can have metadata, and framework.
+By using `:tag`, you can add new versions to a model registry, Polyaxon uses the `owner/model-name` as a namespace for each model.
+
+> Please check the model version management guide.
+
+## Usage
+
+As soon as a model is registered in your organization's registry, 
+you can use API/SDK to query information about your model and use that information to deploy specific versions.
+
+At the moment the model registry is accessible to all organization for locking experiment runs, and for organizing candidate models and their lifecycle.
+
+Some customers have access to the monitoring and the post-deployment events API, which should be opened to everyone as soon as the events interface is finalized.   

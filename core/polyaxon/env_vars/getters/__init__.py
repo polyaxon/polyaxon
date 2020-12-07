@@ -14,10 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from polyaxon.env_vars.getters.agent import get_agent_info
-from polyaxon.env_vars.getters.component import (
-    get_component_full_name,
-    get_component_info,
-)
 from polyaxon.env_vars.getters.owner_entity import get_entity_full_name, get_entity_info
 from polyaxon.env_vars.getters.project import (
     get_project_error_message,
@@ -30,4 +26,10 @@ from polyaxon.env_vars.getters.run import (
     get_project_run_or_local,
     get_run_info,
     get_run_or_local,
+)
+from polyaxon.env_vars.getters.versioned_entity import (
+    get_component_info,
+    get_model_info,
+    get_versioned_entity_full_name,
+    get_versioned_entity_info,
 )

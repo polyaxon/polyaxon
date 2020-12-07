@@ -8,11 +8,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create team
 [**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create team member
-[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete team
+[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{name} | Delete team
 [**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete team member details
-[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get team
+[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{name} | Get team
 [**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get team member details
-[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get team members
+[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{name}/members | Get team members
 [**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
 [**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List teams
 [**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
@@ -128,7 +128,7 @@ Name | Type | Description  | Notes
 
 ## deleteTeam
 
-> deleteTeam(owner, team)
+> deleteTeam(owner, name)
 
 Delete team
 
@@ -145,8 +145,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.TeamsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let team = "team_example"; // String | Team under namesapce
-apiInstance.deleteTeam(owner, team, (error, data, response) => {
+let name = "name_example"; // String | Component under namesapce
+apiInstance.deleteTeam(owner, name, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -161,7 +161,7 @@ apiInstance.deleteTeam(owner, team, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team under namesapce | 
+ **name** | **String**| Component under namesapce | 
 
 ### Return type
 
@@ -232,7 +232,7 @@ null (empty response body)
 
 ## getTeam
 
-> V1Team getTeam(owner, team)
+> V1Team getTeam(owner, name)
 
 Get team
 
@@ -249,8 +249,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.TeamsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let team = "team_example"; // String | Team under namesapce
-apiInstance.getTeam(owner, team, (error, data, response) => {
+let name = "name_example"; // String | Component under namesapce
+apiInstance.getTeam(owner, name, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -265,7 +265,7 @@ apiInstance.getTeam(owner, team, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team under namesapce | 
+ **name** | **String**| Component under namesapce | 
 
 ### Return type
 
@@ -336,7 +336,7 @@ Name | Type | Description  | Notes
 
 ## listTeamMembers
 
-> V1ListTeamMembersResponse listTeamMembers(owner, team, opts)
+> V1ListTeamMembersResponse listTeamMembers(owner, name, opts)
 
 Get team members
 
@@ -353,14 +353,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.TeamsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let team = "team_example"; // String | Team under namesapce
+let name = "name_example"; // String | Entity managing the resource
 let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-apiInstance.listTeamMembers(owner, team, opts, (error, data, response) => {
+apiInstance.listTeamMembers(owner, name, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -375,7 +375,7 @@ apiInstance.listTeamMembers(owner, team, opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team under namesapce | 
+ **name** | **String**| Entity managing the resource | 
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 

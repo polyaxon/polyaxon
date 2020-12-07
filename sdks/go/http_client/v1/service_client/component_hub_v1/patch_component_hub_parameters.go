@@ -81,11 +81,11 @@ type PatchComponentHubParams struct {
 
 	*/
 	Body *service_model.V1ComponentHub
-	/*ComponentUUID
-	  UUID
+	/*ComponentName
+	  Optional component name, should be a valid fully qualified value: name[:version]
 
 	*/
-	ComponentUUID string
+	ComponentName string
 	/*Owner
 	  Owner of the namespace
 
@@ -141,15 +141,15 @@ func (o *PatchComponentHubParams) SetBody(body *service_model.V1ComponentHub) {
 	o.Body = body
 }
 
-// WithComponentUUID adds the componentUUID to the patch component hub params
-func (o *PatchComponentHubParams) WithComponentUUID(componentUUID string) *PatchComponentHubParams {
-	o.SetComponentUUID(componentUUID)
+// WithComponentName adds the componentName to the patch component hub params
+func (o *PatchComponentHubParams) WithComponentName(componentName string) *PatchComponentHubParams {
+	o.SetComponentName(componentName)
 	return o
 }
 
-// SetComponentUUID adds the componentUuid to the patch component hub params
-func (o *PatchComponentHubParams) SetComponentUUID(componentUUID string) {
-	o.ComponentUUID = componentUUID
+// SetComponentName adds the componentName to the patch component hub params
+func (o *PatchComponentHubParams) SetComponentName(componentName string) {
+	o.ComponentName = componentName
 }
 
 // WithOwner adds the owner to the patch component hub params
@@ -177,8 +177,8 @@ func (o *PatchComponentHubParams) WriteToRequest(r runtime.ClientRequest, reg st
 		}
 	}
 
-	// path param component.uuid
-	if err := r.SetPathParam("component.uuid", o.ComponentUUID); err != nil {
+	// path param component.name
+	if err := r.SetPathParam("component.name", o.ComponentName); err != nil {
 		return err
 	}
 

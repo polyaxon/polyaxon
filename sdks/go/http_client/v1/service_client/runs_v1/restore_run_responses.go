@@ -86,7 +86,7 @@ type RestoreRunOK struct {
 }
 
 func (o *RestoreRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] restoreRunOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] restoreRunOK ", 200)
 }
 
 func (o *RestoreRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type RestoreRunNoContent struct {
 }
 
 func (o *RestoreRunNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] restoreRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] restoreRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *RestoreRunNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type RestoreRunForbidden struct {
 }
 
 func (o *RestoreRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] restoreRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] restoreRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *RestoreRunForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type RestoreRunNotFound struct {
 }
 
 func (o *RestoreRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] restoreRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] restoreRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *RestoreRunNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *RestoreRunDefault) Code() int {
 }
 
 func (o *RestoreRunDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] RestoreRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] RestoreRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *RestoreRunDefault) GetPayload() *service_model.RuntimeError {

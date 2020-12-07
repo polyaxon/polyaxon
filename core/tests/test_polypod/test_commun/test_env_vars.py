@@ -379,9 +379,7 @@ class TestEnvVars(BaseTestCase):
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
         )
-        assert len(env_vars) == 8
-        # TODO: Remove in v1.2 Compatibility API_HOST
-        # assert len(env_vars) == 7
+        assert len(env_vars) == 7
         env_var_names = [env_var.name for env_var in env_vars]
         assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
         assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names
@@ -404,9 +402,7 @@ class TestEnvVars(BaseTestCase):
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
         )
-        assert len(env_vars) == 13
-        # TODO: Remove in v1.2 Compatibility API_HOST
-        # assert len(env_vars) == 12
+        assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]
         assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
         assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names
@@ -434,9 +430,7 @@ class TestEnvVars(BaseTestCase):
             api_version="v1",
             run_instance="foo.bar.runs.run_uuid",
         )
-        assert len(env_vars) == 13
-        # TODO: Remove in v1.2 Compatibility API_HOST
-        # assert len(env_vars) == 12
+        assert len(env_vars) == 12
         env_var_names = [env_var.name for env_var in env_vars]
         assert POLYAXON_KEYS_K8S_POD_ID in env_var_names
         assert POLYAXON_KEYS_K8S_NAMESPACE in env_var_names

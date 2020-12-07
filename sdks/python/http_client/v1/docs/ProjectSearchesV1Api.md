@@ -6,12 +6,12 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_project_search**](ProjectSearchesV1Api.md#create_project_search) | **POST** /api/v1/{owner}/{project}/searches | Create project search
-[**delete_project_search**](ProjectSearchesV1Api.md#delete_project_search) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
-[**get_project_search**](ProjectSearchesV1Api.md#get_project_search) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
-[**list_project_search_names**](ProjectSearchesV1Api.md#list_project_search_names) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
-[**list_project_searches**](ProjectSearchesV1Api.md#list_project_searches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+[**delete_project_search**](ProjectSearchesV1Api.md#delete_project_search) | **DELETE** /api/v1/{owner}/{entity}/searches/{uuid} | Delete project search
+[**get_project_search**](ProjectSearchesV1Api.md#get_project_search) | **GET** /api/v1/{owner}/{entity}/searches/{uuid} | Get project search
+[**list_project_search_names**](ProjectSearchesV1Api.md#list_project_search_names) | **GET** /api/v1/{owner}/{name}/searches/names | List project search names
+[**list_project_searches**](ProjectSearchesV1Api.md#list_project_searches) | **GET** /api/v1/{owner}/{name}/searches | List project searches
 [**patch_project_search**](ProjectSearchesV1Api.md#patch_project_search) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
-[**promote_project_search**](ProjectSearchesV1Api.md#promote_project_search) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+[**promote_project_search**](ProjectSearchesV1Api.md#promote_project_search) | **POST** /api/v1/{owner}/{entity}/searches/{uuid}/promote | Promote project search
 [**update_project_search**](ProjectSearchesV1Api.md#update_project_search) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
 
 
@@ -99,7 +99,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_project_search**
-> delete_project_search(owner, project, uuid)
+> delete_project_search(owner, entity, uuid)
 
 Delete project search
 
@@ -138,12 +138,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectSearchesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project
+entity = 'entity_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete project search
-        api_instance.delete_project_search(owner, project, uuid)
+        api_instance.delete_project_search(owner, entity, uuid)
     except ApiException as e:
         print("Exception when calling ProjectSearchesV1Api->delete_project_search: %s\n" % e)
 ```
@@ -153,7 +153,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project | 
+ **entity** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -181,7 +181,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_search**
-> V1Search get_project_search(owner, project, uuid)
+> V1Search get_project_search(owner, entity, uuid)
 
 Get project search
 
@@ -220,12 +220,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectSearchesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project
+entity = 'entity_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Get project search
-        api_response = api_instance.get_project_search(owner, project, uuid)
+        api_response = api_instance.get_project_search(owner, entity, uuid)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ProjectSearchesV1Api->get_project_search: %s\n" % e)
@@ -236,7 +236,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project | 
+ **entity** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -264,7 +264,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_project_search_names**
-> V1ListSearchesResponse list_project_search_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListSearchesResponse list_project_search_names(owner, name, offset=offset, limit=limit, sort=sort, query=query)
 
 List project search names
 
@@ -303,7 +303,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectSearchesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project under namesapce
+name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
@@ -311,7 +311,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
         # List project search names
-        api_response = api_instance.list_project_search_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_project_search_names(owner, name, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ProjectSearchesV1Api->list_project_search_names: %s\n" % e)
@@ -322,7 +322,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project under namesapce | 
+ **name** | **str**| Entity managing the resource | 
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
@@ -353,7 +353,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_project_searches**
-> V1ListSearchesResponse list_project_searches(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListSearchesResponse list_project_searches(owner, name, offset=offset, limit=limit, sort=sort, query=query)
 
 List project searches
 
@@ -392,7 +392,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectSearchesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project under namesapce
+name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
@@ -400,7 +400,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
         # List project searches
-        api_response = api_instance.list_project_searches(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_project_searches(owner, name, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ProjectSearchesV1Api->list_project_searches: %s\n" % e)
@@ -411,7 +411,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project under namesapce | 
+ **name** | **str**| Entity managing the resource | 
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
@@ -527,7 +527,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **promote_project_search**
-> promote_project_search(owner, project, uuid)
+> promote_project_search(owner, entity, uuid)
 
 Promote project search
 
@@ -566,12 +566,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectSearchesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project
+entity = 'entity_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Promote project search
-        api_instance.promote_project_search(owner, project, uuid)
+        api_instance.promote_project_search(owner, entity, uuid)
     except ApiException as e:
         print("Exception when calling ProjectSearchesV1Api->promote_project_search: %s\n" % e)
 ```
@@ -581,7 +581,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project | 
+ **entity** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type

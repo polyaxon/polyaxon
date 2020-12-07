@@ -83,20 +83,20 @@ func NewListModelRegistryNamesOK() *ListModelRegistryNamesOK {
 A successful response.
 */
 type ListModelRegistryNamesOK struct {
-	Payload *service_model.V1ListModelRegistryResponse
+	Payload *service_model.V1ListModelRegistriesResponse
 }
 
 func (o *ListModelRegistryNamesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/names][%d] listModelRegistryNamesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] listModelRegistryNamesOK  %+v", 200, o.Payload)
 }
 
-func (o *ListModelRegistryNamesOK) GetPayload() *service_model.V1ListModelRegistryResponse {
+func (o *ListModelRegistryNamesOK) GetPayload() *service_model.V1ListModelRegistriesResponse {
 	return o.Payload
 }
 
 func (o *ListModelRegistryNamesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(service_model.V1ListModelRegistryResponse)
+	o.Payload = new(service_model.V1ListModelRegistriesResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
@@ -120,7 +120,7 @@ type ListModelRegistryNamesNoContent struct {
 }
 
 func (o *ListModelRegistryNamesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/names][%d] listModelRegistryNamesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] listModelRegistryNamesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListModelRegistryNamesNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type ListModelRegistryNamesForbidden struct {
 }
 
 func (o *ListModelRegistryNamesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/names][%d] listModelRegistryNamesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] listModelRegistryNamesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListModelRegistryNamesForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type ListModelRegistryNamesNotFound struct {
 }
 
 func (o *ListModelRegistryNamesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/names][%d] listModelRegistryNamesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] listModelRegistryNamesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListModelRegistryNamesNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *ListModelRegistryNamesDefault) Code() int {
 }
 
 func (o *ListModelRegistryNamesDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/names][%d] ListModelRegistryNames default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] ListModelRegistryNames default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListModelRegistryNamesDefault) GetPayload() *service_model.RuntimeError {

@@ -152,7 +152,7 @@ func (a *Client) DeleteTeam(params *DeleteTeamParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteTeam",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -224,7 +224,7 @@ func (a *Client) GetTeam(params *GetTeamParams, authInfo runtime.ClientAuthInfoW
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetTeam",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -296,7 +296,7 @@ func (a *Client) ListTeamMembers(params *ListTeamMembersParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListTeamMembers",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{name}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

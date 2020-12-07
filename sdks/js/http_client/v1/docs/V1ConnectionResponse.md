@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **tags** | **[String]** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
-**disabled** | **Boolean** |  | [optional] 
+**live_state** | **Number** |  | [optional] 
 **kind** | [**V1ConnectionKind**](V1ConnectionKind.md) |  | [optional] 
 
 

@@ -14,13 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.db import models
-
 from coredb.abstracts.runs import BaseRun
 
 
 class Run(BaseRun):
-    class Meta:
+    class Meta(BaseRun.Meta):
         app_label = "coredb"
         db_table = "db_run"
-        indexes = [models.Index(fields=["name"])]

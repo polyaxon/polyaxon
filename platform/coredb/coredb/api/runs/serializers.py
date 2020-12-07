@@ -48,6 +48,7 @@ class RunDetailSerializer(RunSerializer, ProjectMixin, IsManagedMixin, TagsMixin
             "readme",
             "raw_content",
             "content",
+            "live_state",
             "merge",
         )
         extra_kwargs = {

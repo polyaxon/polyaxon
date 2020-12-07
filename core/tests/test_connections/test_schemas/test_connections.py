@@ -146,6 +146,14 @@ class TestV1GitConnection(BaseTestCase):
         config = V1GitConnection.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
+        config_dict = {
+            "url": "foo",
+            "revision": "foo",
+            "flags": ["flag1", "--flag2", "k=v"],
+        }
+        config = V1GitConnection.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
         with self.assertRaises(ValidationError):
             validate_connection(V1ConnectionKind.REGISTRY, config_dict)
 

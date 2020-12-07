@@ -25,6 +25,7 @@ from polyaxon.cli.executor import docker_run, k8s_run, platform_run
 from polyaxon.cli.options import OPTIONS_PROJECT
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.logger import clean_outputs
 from polyaxon.managers.git import GitConfigManager
 from polyaxon.polyaxonfile import (
     CompiledOperationSpecification,
@@ -166,6 +167,7 @@ from polyaxon.utils.validation import validate_tags
     "submit the manifest to be checked by the API.",
 )
 @click.pass_context
+@clean_outputs
 def run(
     ctx,
     project,

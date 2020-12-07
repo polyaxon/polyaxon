@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**disabled** | **Boolean** |  |  [optional]
+**liveState** | **Integer** |  |  [optional]
 **kind** | [**V1ConnectionKind**](V1ConnectionKind.md) |  |  [optional]
 
 

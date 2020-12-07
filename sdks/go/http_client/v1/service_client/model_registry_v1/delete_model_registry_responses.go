@@ -86,7 +86,7 @@ type DeleteModelRegistryOK struct {
 }
 
 func (o *DeleteModelRegistryOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/models/{uuid}][%d] deleteModelRegistryOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] deleteModelRegistryOK ", 200)
 }
 
 func (o *DeleteModelRegistryOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteModelRegistryNoContent struct {
 }
 
 func (o *DeleteModelRegistryNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/models/{uuid}][%d] deleteModelRegistryNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] deleteModelRegistryNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteModelRegistryNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DeleteModelRegistryForbidden struct {
 }
 
 func (o *DeleteModelRegistryForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/models/{uuid}][%d] deleteModelRegistryForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] deleteModelRegistryForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteModelRegistryForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DeleteModelRegistryNotFound struct {
 }
 
 func (o *DeleteModelRegistryNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/models/{uuid}][%d] deleteModelRegistryNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] deleteModelRegistryNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteModelRegistryNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DeleteModelRegistryDefault) Code() int {
 }
 
 func (o *DeleteModelRegistryDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/models/{uuid}][%d] DeleteModelRegistry default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] DeleteModelRegistry default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteModelRegistryDefault) GetPayload() *service_model.RuntimeError {

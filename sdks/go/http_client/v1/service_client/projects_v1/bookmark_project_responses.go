@@ -86,7 +86,7 @@ type BookmarkProjectOK struct {
 }
 
 func (o *BookmarkProjectOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] bookmarkProjectOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] bookmarkProjectOK ", 200)
 }
 
 func (o *BookmarkProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type BookmarkProjectNoContent struct {
 }
 
 func (o *BookmarkProjectNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] bookmarkProjectNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] bookmarkProjectNoContent  %+v", 204, o.Payload)
 }
 
 func (o *BookmarkProjectNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type BookmarkProjectForbidden struct {
 }
 
 func (o *BookmarkProjectForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] bookmarkProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] bookmarkProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *BookmarkProjectForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type BookmarkProjectNotFound struct {
 }
 
 func (o *BookmarkProjectNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] bookmarkProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] bookmarkProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *BookmarkProjectNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *BookmarkProjectDefault) Code() int {
 }
 
 func (o *BookmarkProjectDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] BookmarkProject default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] BookmarkProject default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *BookmarkProjectDefault) GetPayload() *service_model.RuntimeError {

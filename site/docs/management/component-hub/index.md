@@ -2,7 +2,7 @@
 title: "Component Hub"
 sub_link: "components-hub"
 is_index: true
-meta_title: "Polyaxon management UI - Agents"
+meta_title: "Polyaxon management UI - Component Hub"
 meta_description: "Polyaxon Component Hub is a product for managing versioned and reusable components,
 each component: Can have multiple versions, Can be published publicly or privately within your organization, Can define team level permissions."
 tags:
@@ -13,9 +13,6 @@ sidebar: "management"
 ---
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
-<blockquote class="info">This feature is still in Beta!</blockquote>
-
-> **Note**: We intend to make it easy for CE users to manage their private components using local storage, Github, or other backends.
 
 ## Overview
 
@@ -26,7 +23,7 @@ Polyaxon Component Hub is a product for managing versioned and reusable componen
 
 ![overview](../../../../content/images/dashboard/hub/overview.png)
 
-`Component` is the entity in Polyaxon that defines a run time, it allows to package a containerize workload or a whole workflow,
+`Component` is the entity in Polyaxon that defines a runtime, it allows to package a containerize workload or a whole workflow,
 and makes it repeatable, portable, and sharable.
 
 Polyaxon Component Hub gives you the extra utilities and features to manage access, security, and versioning.
@@ -37,18 +34,20 @@ Each component can have multiple versions, similar to docker images, to avoid br
 
 Each component can list all versions, their stage, their specification, and their usage.
 
-![production-stage](../../../../content/images/dashboard/hub/production.png)
-
 Polyaxon provides a special tag to signal the stage of your components' versions.
-By default, the Component Hub shows the latest version and its stage.
+By default, if a user runs a component without specifying the version, the Component Hub use `latest` if it exists otherwise it will raise a 404 error.
 
-![testing-stage](../../../../content/images/dashboard/hub/testing.png)
+## Managing and using components
 
-## Creation
+You can create and manage components and versions using the API, CLI or the dashboard.
 
-You can create a new component using the API or the dashboard,
-the component definition is the same [specification](/docs/core/specification/component/) that is used for running inline components.
-By using `:tag`, you can add new versions to a component, Polyaxon uses the `owner/component-name` as a namespace for the component.
+> Please check the component management guide. 
+
+Each component version uses a definition which is the same [specification](/docs/core/specification/component/) that is used for running inline components.
+By using `:tag`, you can add new versions to a component, Polyaxon uses the `owner/component-name` as a namespace for the component,
+and will default to `component-name:version` when an owner is not specified. This is the public component managed by Polyaxon itself.
+
+> Please check the component version management guide.
 
 ## Usage
 

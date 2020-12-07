@@ -86,7 +86,7 @@ type PromoteProjectDashboardOK struct {
 }
 
 func (o *PromoteProjectDashboardOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/dashboards/{uuid}/promote][%d] promoteProjectDashboardOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] promoteProjectDashboardOK ", 200)
 }
 
 func (o *PromoteProjectDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type PromoteProjectDashboardNoContent struct {
 }
 
 func (o *PromoteProjectDashboardNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/dashboards/{uuid}/promote][%d] promoteProjectDashboardNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] promoteProjectDashboardNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PromoteProjectDashboardNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type PromoteProjectDashboardForbidden struct {
 }
 
 func (o *PromoteProjectDashboardForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/dashboards/{uuid}/promote][%d] promoteProjectDashboardForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] promoteProjectDashboardForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PromoteProjectDashboardForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type PromoteProjectDashboardNotFound struct {
 }
 
 func (o *PromoteProjectDashboardNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/dashboards/{uuid}/promote][%d] promoteProjectDashboardNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] promoteProjectDashboardNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PromoteProjectDashboardNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *PromoteProjectDashboardDefault) Code() int {
 }
 
 func (o *PromoteProjectDashboardDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/dashboards/{uuid}/promote][%d] PromoteProjectDashboard default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] PromoteProjectDashboard default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *PromoteProjectDashboardDefault) GetPayload() *service_model.RuntimeError {

@@ -1,7 +1,7 @@
 version: 1.1
 kind: component
-name: tensorboard
-description: Creates a tensorboard based on an absolute path.
+name: tensorboard-s3
+tags: [visualization, dashboards]
 
 inputs:
 - name: image

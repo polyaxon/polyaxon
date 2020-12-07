@@ -1,6 +1,7 @@
 version: 1.1
 kind: component
-name: tensorboard
+name: tensorboard-multi-runs
+tags: [visualization, dashboards]
 
 inputs:
 - name: image

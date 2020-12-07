@@ -298,7 +298,7 @@ func (a *Client) GetAgentToken(params *GetAgentTokenParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetAgentToken",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/token",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/token",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

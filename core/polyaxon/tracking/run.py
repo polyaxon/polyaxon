@@ -19,7 +19,7 @@ import os
 import sys
 import time
 
-from typing import List
+from typing import Dict, List
 
 import polyaxon_sdk
 import ujson
@@ -40,7 +40,7 @@ from polyaxon.env_vars.getters import (
     get_log_level,
 )
 from polyaxon.logger import logger
-from polyaxon.polyboard.artifacts import V1ArtifactKind
+from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.polyboard.events import LoggedEventSpec, V1Event, get_asset_path
 from polyaxon.polyboard.processors import events_processors
 from polyaxon.polyboard.processors.writer import EventFileWriter, ResourceFileWriter
@@ -114,6 +114,7 @@ class Run(RunClient):
         self.track_env = track_env
         self._has_model = False
         self._has_events = False
+        self._has_metrics = False
         self._has_tensorboard = False
         self._artifacts_path = None
         self._outputs_path = None
@@ -266,6 +267,16 @@ class Run(RunClient):
             self._has_events = True
             self.log_meta(has_events=True)
 
+    def _log_has_metrics(self):
+        data = {}
+        if not self._has_metrics:
+            data["has_metrics"] = True
+        if not self._has_events:
+            data["has_events"] = True
+        if data:
+            self._has_metrics = True
+            self.log_meta(**data)
+
     def _log_has_model(self):
         if not self._has_model:
             self._has_model = True
@@ -291,7 +302,7 @@ class Run(RunClient):
             step: int, optional
             timestamp: datetime, optional
         """
-        self._log_has_events()
+        self._log_has_metrics()
 
         events = []
         event_value = events_processors.metric(value)
@@ -327,7 +338,7 @@ class Run(RunClient):
             timestamp: datetime, optional
             **metrics: **kwargs, key: value
         """
-        self._log_has_events()
+        self._log_has_metrics()
 
         events = []
         for metric in metrics:
@@ -1189,13 +1200,35 @@ class Run(RunClient):
     @check_no_op
     @check_offline
     @can_log_outputs
-    def log_env(self):
+    def log_env(self, rel_path: str = None, content: Dict = None):
         """Logs information about the environment.
 
         Called automatically if track_env is set to True.
+
+        Can be called manually, and can accept a custom content as a form of a dictionary.
+
+        Args:
+            rel_path: str, optional, default "env.json".
+            content: Dict, optional, default to current system information.
         """
         if not os.path.exists(self._outputs_path):
             return
-        env_data = get_run_env()
-        with open(os.path.join(self._outputs_path, "env.json"), "w") as env_file:
-            env_file.write(ujson.dumps(env_data))
+        if not content:
+            content = get_run_env()
+
+        rel_path = rel_path or "env.json"
+        path = self._outputs_path
+        if rel_path:
+            path = os.path.join(path, rel_path)
+
+        with open(os.path.join(path), "w") as env_file:
+            env_file.write(ujson.dumps(content))
+
+        artifact_run = V1RunArtifact(
+            name="env",
+            kind=V1ArtifactKind.ENV,
+            path=self.get_rel_asset_path(path=path),
+            summary={"path": path},
+            is_input=False,
+        )
+        self.log_artifact_lineage(body=artifact_run)

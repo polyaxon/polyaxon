@@ -87,7 +87,7 @@ type GetModelRegistryOK struct {
 }
 
 func (o *GetModelRegistryOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/{uuid}][%d] getModelRegistryOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] getModelRegistryOK  %+v", 200, o.Payload)
 }
 
 func (o *GetModelRegistryOK) GetPayload() *service_model.V1ModelRegistry {
@@ -120,7 +120,7 @@ type GetModelRegistryNoContent struct {
 }
 
 func (o *GetModelRegistryNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/{uuid}][%d] getModelRegistryNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] getModelRegistryNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetModelRegistryNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetModelRegistryForbidden struct {
 }
 
 func (o *GetModelRegistryForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/{uuid}][%d] getModelRegistryForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] getModelRegistryForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetModelRegistryForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetModelRegistryNotFound struct {
 }
 
 func (o *GetModelRegistryNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/{uuid}][%d] getModelRegistryNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] getModelRegistryNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetModelRegistryNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetModelRegistryDefault) Code() int {
 }
 
 func (o *GetModelRegistryDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/models/{uuid}][%d] GetModelRegistry default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] GetModelRegistry default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetModelRegistryDefault) GetPayload() *service_model.RuntimeError {

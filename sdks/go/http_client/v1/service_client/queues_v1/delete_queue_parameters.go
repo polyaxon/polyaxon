@@ -74,11 +74,11 @@ for the delete queue operation typically these are written to a http.Request
 */
 type DeleteQueueParams struct {
 
-	/*Agent
-	  Agent managing the resource
+	/*Entity
+	  Owner of the namespace
 
 	*/
-	Agent string
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
@@ -128,15 +128,15 @@ func (o *DeleteQueueParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithAgent adds the agent to the delete queue params
-func (o *DeleteQueueParams) WithAgent(agent string) *DeleteQueueParams {
-	o.SetAgent(agent)
+// WithEntity adds the entity to the delete queue params
+func (o *DeleteQueueParams) WithEntity(entity string) *DeleteQueueParams {
+	o.SetEntity(entity)
 	return o
 }
 
-// SetAgent adds the agent to the delete queue params
-func (o *DeleteQueueParams) SetAgent(agent string) {
-	o.Agent = agent
+// SetEntity adds the entity to the delete queue params
+func (o *DeleteQueueParams) SetEntity(entity string) {
+	o.Entity = entity
 }
 
 // WithOwner adds the owner to the delete queue params
@@ -169,8 +169,8 @@ func (o *DeleteQueueParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 	}
 	var res []error
 
-	// path param agent
-	if err := r.SetPathParam("agent", o.Agent); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 

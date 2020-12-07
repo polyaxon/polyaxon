@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **sync_statuses** | **bool** |  | [optional] 
 **auto_resume** | **bool** |  | [optional] 
 **log_level** | **str** |  | [optional] 
+**external_host** | **bool** |  | [optional] 
 **notifications** | [**list[V1Notification]**](V1Notification.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

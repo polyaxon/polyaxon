@@ -41,8 +41,8 @@ type V1Agent struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
-	// Optional a flag to disable the agent
-	Disabled bool `json:"disabled,omitempty"`
+	// Current live state
+	LiveState int32 `json:"live_state,omitempty"`
 
 	// Name
 	Name string `json:"name,omitempty"`

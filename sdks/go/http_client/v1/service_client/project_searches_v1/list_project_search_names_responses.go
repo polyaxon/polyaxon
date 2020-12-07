@@ -87,7 +87,7 @@ type ListProjectSearchNamesOK struct {
 }
 
 func (o *ListProjectSearchNamesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches/names][%d] listProjectSearchNamesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches/names][%d] listProjectSearchNamesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListProjectSearchNamesOK) GetPayload() *service_model.V1ListSearchesResponse {
@@ -120,7 +120,7 @@ type ListProjectSearchNamesNoContent struct {
 }
 
 func (o *ListProjectSearchNamesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches/names][%d] listProjectSearchNamesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches/names][%d] listProjectSearchNamesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListProjectSearchNamesNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type ListProjectSearchNamesForbidden struct {
 }
 
 func (o *ListProjectSearchNamesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches/names][%d] listProjectSearchNamesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches/names][%d] listProjectSearchNamesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListProjectSearchNamesForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type ListProjectSearchNamesNotFound struct {
 }
 
 func (o *ListProjectSearchNamesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches/names][%d] listProjectSearchNamesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches/names][%d] listProjectSearchNamesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListProjectSearchNamesNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *ListProjectSearchNamesDefault) Code() int {
 }
 
 func (o *ListProjectSearchNamesDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches/names][%d] ListProjectSearchNames default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/searches/names][%d] ListProjectSearchNames default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListProjectSearchNamesDefault) GetPayload() *service_model.RuntimeError {

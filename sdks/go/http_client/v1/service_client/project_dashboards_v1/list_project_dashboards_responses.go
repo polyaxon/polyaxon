@@ -87,7 +87,7 @@ type ListProjectDashboardsOK struct {
 }
 
 func (o *ListProjectDashboardsOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards][%d] listProjectDashboardsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards][%d] listProjectDashboardsOK  %+v", 200, o.Payload)
 }
 
 func (o *ListProjectDashboardsOK) GetPayload() *service_model.V1ListDashboardsResponse {
@@ -120,7 +120,7 @@ type ListProjectDashboardsNoContent struct {
 }
 
 func (o *ListProjectDashboardsNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards][%d] listProjectDashboardsNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards][%d] listProjectDashboardsNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListProjectDashboardsNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type ListProjectDashboardsForbidden struct {
 }
 
 func (o *ListProjectDashboardsForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards][%d] listProjectDashboardsForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards][%d] listProjectDashboardsForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListProjectDashboardsForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type ListProjectDashboardsNotFound struct {
 }
 
 func (o *ListProjectDashboardsNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards][%d] listProjectDashboardsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards][%d] listProjectDashboardsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListProjectDashboardsNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *ListProjectDashboardsDefault) Code() int {
 }
 
 func (o *ListProjectDashboardsDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards][%d] ListProjectDashboards default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards][%d] ListProjectDashboards default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListProjectDashboardsDefault) GetPayload() *service_model.RuntimeError {

@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**getAgent**](AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
 [**getAgentState**](AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
 [**getAgentStatuses**](AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
-[**getAgentToken**](AgentsV1Api.md#getAgentToken) | **GET** /api/v1/orgs/{owner}/agents/{agent}/token | Get agent token
+[**getAgentToken**](AgentsV1Api.md#getAgentToken) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/token | Get agent token
 [**listAgentNames**](AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
 [**listAgents**](AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List agents
 [**patchAgent**](AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch agent
@@ -171,7 +171,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteAgent"></a>
 # **deleteAgent**
-> deleteAgent(owner, uuid)
+> deleteAgent(owner, uuid, entity)
 
 Delete agent
 
@@ -199,8 +199,9 @@ public class Example {
     AgentsV1Api apiInstance = new AgentsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Owner of the namespace.
     try {
-      apiInstance.deleteAgent(owner, uuid);
+      apiInstance.deleteAgent(owner, uuid, entity);
     } catch (ApiException e) {
       System.err.println("Exception when calling AgentsV1Api#deleteAgent");
       System.err.println("Status code: " + e.getCode());
@@ -218,6 +219,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Owner of the namespace. | [optional]
 
 ### Return type
 
@@ -243,7 +245,7 @@ null (empty response body)
 
 <a name="getAgent"></a>
 # **getAgent**
-> V1Agent getAgent(owner, uuid)
+> V1Agent getAgent(owner, uuid, entity)
 
 Get agent
 
@@ -271,8 +273,9 @@ public class Example {
     AgentsV1Api apiInstance = new AgentsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Owner of the namespace.
     try {
-      V1Agent result = apiInstance.getAgent(owner, uuid);
+      V1Agent result = apiInstance.getAgent(owner, uuid, entity);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AgentsV1Api#getAgent");
@@ -291,6 +294,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Owner of the namespace. | [optional]
 
 ### Return type
 
@@ -462,7 +466,7 @@ Name | Type | Description  | Notes
 
 <a name="getAgentToken"></a>
 # **getAgentToken**
-> V1Token getAgentToken(owner, agent, uuid)
+> V1Token getAgentToken(owner, uuid)
 
 Get agent token
 
@@ -489,10 +493,9 @@ public class Example {
 
     AgentsV1Api apiInstance = new AgentsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String agent = "agent_example"; // String | Agent managing the resource
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity.
+    String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      V1Token result = apiInstance.getAgentToken(owner, agent, uuid);
+      V1Token result = apiInstance.getAgentToken(owner, uuid);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AgentsV1Api#getAgentToken");
@@ -510,8 +513,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **agent** | **String**| Agent managing the resource |
- **uuid** | **String**| Uuid identifier of the entity. | [optional]
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 

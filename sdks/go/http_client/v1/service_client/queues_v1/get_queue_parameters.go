@@ -74,11 +74,11 @@ for the get queue operation typically these are written to a http.Request
 */
 type GetQueueParams struct {
 
-	/*Agent
-	  Agent managing the resource
+	/*Entity
+	  Owner of the namespace
 
 	*/
-	Agent string
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
@@ -128,15 +128,15 @@ func (o *GetQueueParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithAgent adds the agent to the get queue params
-func (o *GetQueueParams) WithAgent(agent string) *GetQueueParams {
-	o.SetAgent(agent)
+// WithEntity adds the entity to the get queue params
+func (o *GetQueueParams) WithEntity(entity string) *GetQueueParams {
+	o.SetEntity(entity)
 	return o
 }
 
-// SetAgent adds the agent to the get queue params
-func (o *GetQueueParams) SetAgent(agent string) {
-	o.Agent = agent
+// SetEntity adds the entity to the get queue params
+func (o *GetQueueParams) SetEntity(entity string) {
+	o.Entity = entity
 }
 
 // WithOwner adds the owner to the get queue params
@@ -169,8 +169,8 @@ func (o *GetQueueParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regi
 	}
 	var res []error
 
-	// path param agent
-	if err := r.SetPathParam("agent", o.Agent); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 

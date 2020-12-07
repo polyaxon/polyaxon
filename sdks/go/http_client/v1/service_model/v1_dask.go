@@ -53,7 +53,7 @@ type V1Dask struct {
 	// Optional init connections/containers section
 	Init []*V1Init `json:"init"`
 
-	// Optional component kind, should be equal to "Dask"
+	// Optional component kind, should be equal to 'Dask'
 	Kind *string `json:"kind,omitempty"`
 
 	// Number of workers

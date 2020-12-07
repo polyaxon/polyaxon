@@ -9,10 +9,10 @@ Method | HTTP request | Description
 [**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Create organization member
 [**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
 [**deleteOrganizationInvitation**](OrganizationsV1Api.md#deleteOrganizationInvitation) | **DELETE** /api/v1/orgs/{owner}/invitations | Delete organization invitation details
-[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
+[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{name} | Delete organization member details
 [**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Get organization
 [**getOrganizationInvitation**](OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
-[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
+[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{name} | Get organization member details
 [**getOrganizationSettings**](OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
 [**listOrganizationMemberNames**](OrganizationsV1Api.md#listOrganizationMemberNames) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
@@ -331,7 +331,7 @@ null (empty response body)
 
 <a name="deleteOrganizationMember"></a>
 # **deleteOrganizationMember**
-> deleteOrganizationMember(owner, user)
+> deleteOrganizationMember(owner, name)
 
 Delete organization member details
 
@@ -358,9 +358,9 @@ public class Example {
 
     OrganizationsV1Api apiInstance = new OrganizationsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String user = "user_example"; // String | Memeber under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.deleteOrganizationMember(owner, user);
+      apiInstance.deleteOrganizationMember(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#deleteOrganizationMember");
       System.err.println("Status code: " + e.getCode());
@@ -377,7 +377,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **user** | **String**| Memeber under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -559,7 +559,7 @@ Name | Type | Description  | Notes
 
 <a name="getOrganizationMember"></a>
 # **getOrganizationMember**
-> V1OrganizationMember getOrganizationMember(owner, user)
+> V1OrganizationMember getOrganizationMember(owner, name)
 
 Get organization member details
 
@@ -586,9 +586,9 @@ public class Example {
 
     OrganizationsV1Api apiInstance = new OrganizationsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String user = "user_example"; // String | Memeber under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      V1OrganizationMember result = apiInstance.getOrganizationMember(owner, user);
+      V1OrganizationMember result = apiInstance.getOrganizationMember(owner, name);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OrganizationsV1Api#getOrganizationMember");
@@ -606,7 +606,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **user** | **String**| Memeber under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 

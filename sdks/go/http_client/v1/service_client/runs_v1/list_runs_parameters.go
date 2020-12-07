@@ -80,6 +80,11 @@ type ListRunsParams struct {
 
 	*/
 	Limit *int32
+	/*Name
+	  Entity managing the resource
+
+	*/
+	Name string
 	/*Offset
 	  Pagination offset.
 
@@ -90,11 +95,6 @@ type ListRunsParams struct {
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 	/*Query
 	  Query filter the search search.
 
@@ -155,6 +155,17 @@ func (o *ListRunsParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithName adds the name to the list runs params
+func (o *ListRunsParams) WithName(name string) *ListRunsParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the list runs params
+func (o *ListRunsParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOffset adds the offset to the list runs params
 func (o *ListRunsParams) WithOffset(offset *int32) *ListRunsParams {
 	o.SetOffset(offset)
@@ -175,17 +186,6 @@ func (o *ListRunsParams) WithOwner(owner string) *ListRunsParams {
 // SetOwner adds the owner to the list runs params
 func (o *ListRunsParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the list runs params
-func (o *ListRunsParams) WithProject(project string) *ListRunsParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the list runs params
-func (o *ListRunsParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithQuery adds the query to the list runs params
@@ -234,6 +234,11 @@ func (o *ListRunsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regi
 
 	}
 
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
+		return err
+	}
+
 	if o.Offset != nil {
 
 		// query param offset
@@ -252,11 +257,6 @@ func (o *ListRunsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regi
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
-		return err
-	}
-
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
 	}
 

@@ -142,38 +142,41 @@ message Run {
     // Optional if this entity was bookmarked
     bool bookmarked = 19;
 
+     // Current live state
+     int32 live_state = 20;
+
+     // Markdown description/readme
+     string readme = 21;
+
     // Optional run meta info
-    google.protobuf.Struct meta_info = 20;
+    google.protobuf.Struct meta_info = 22;
 
     // Optional kind to tell the kind of this run
-    RunKind kind = 21;
+    RunKind kind = 23;
 
     // Optional meta kind to tell the nature of this run
-    RunKind runtime = 22;
-
-    // Optional hub reference versioned component
-    string hub = 23;
+    RunKind runtime = 24;
 
     // Optional inputs of this entity
-    google.protobuf.Struct inputs = 24;
+    google.protobuf.Struct inputs = 25;
 
     // Optional outputs of this entity
-    google.protobuf.Struct outputs = 25;
+    google.protobuf.Struct outputs = 26;
 
     // Optional original run meta information
-    Cloning original = 26;
+    Cloning original = 27;
 
     // Optional pipeline run meta information
-    Pipeline pipeline = 27;
+    Pipeline pipeline = 28;
 
     // The status conditions timeline
-    repeated StatusCondition status_conditions = 28;
+    repeated StatusCondition status_conditions = 29;
 
     // Optional settings
-    RunSettings settings = 29;
+    RunSettings settings = 30;
 
     // Current user's role in this (org/teams)/project/runs
-    string role = 30;
+    string role = 31;
 }
 
 // Operation creation
@@ -226,8 +229,8 @@ message RunBodyRequest{
 
 // Request data to update run
 message EntityRunBodyRequest{
-    // Enitity Run
-    ProjectEntityResourceRequest entity = 1;
+    // Entity Run
+    OwnerSubEntityResourceRequestByUid entity = 1;
 
     // Run object
     Run run = 2;
@@ -258,6 +261,15 @@ message RunSettingsCatalog {
     string name = 2;
 }
 
+// Run Settings catalog specification
+message RunReferenceCatalog {
+  // Name
+  string name = 1;
+
+  // Name
+  string version = 2;
+}
+
 // Run Settings specification
 message RunSettings {
     // Namespace
@@ -275,9 +287,9 @@ message RunSettings {
     // Connections
     repeated RunSettingsCatalog connections = 5;
 
-    // Concurreny
-    int32 concurrency = 6;
+    // Component Hub reference
+    RunReferenceCatalog hub = 6;
 
-    // Meta
-    google.protobuf.Struct meta_info = 7;
+    // Model registry reference
+    RunReferenceCatalog registry = 7;
 }

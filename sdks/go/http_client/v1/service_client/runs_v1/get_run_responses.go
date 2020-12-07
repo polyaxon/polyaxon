@@ -87,7 +87,7 @@ type GetRunOK struct {
 }
 
 func (o *GetRunOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}][%d] getRunOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}][%d] getRunOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRunOK) GetPayload() *service_model.V1Run {
@@ -120,7 +120,7 @@ type GetRunNoContent struct {
 }
 
 func (o *GetRunNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}][%d] getRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}][%d] getRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetRunNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetRunForbidden struct {
 }
 
 func (o *GetRunForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}][%d] getRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}][%d] getRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetRunForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetRunNotFound struct {
 }
 
 func (o *GetRunNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}][%d] getRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}][%d] getRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetRunNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetRunDefault) Code() int {
 }
 
 func (o *GetRunDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}][%d] GetRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}][%d] GetRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetRunDefault) GetPayload() *service_model.RuntimeError {

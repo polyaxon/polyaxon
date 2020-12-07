@@ -86,7 +86,7 @@ type DeleteProjectDashboardOK struct {
 }
 
 func (o *DeleteProjectDashboardOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/dashboards/{uuid}][%d] deleteProjectDashboardOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] deleteProjectDashboardOK ", 200)
 }
 
 func (o *DeleteProjectDashboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteProjectDashboardNoContent struct {
 }
 
 func (o *DeleteProjectDashboardNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/dashboards/{uuid}][%d] deleteProjectDashboardNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] deleteProjectDashboardNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteProjectDashboardNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DeleteProjectDashboardForbidden struct {
 }
 
 func (o *DeleteProjectDashboardForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/dashboards/{uuid}][%d] deleteProjectDashboardForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] deleteProjectDashboardForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteProjectDashboardForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DeleteProjectDashboardNotFound struct {
 }
 
 func (o *DeleteProjectDashboardNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/dashboards/{uuid}][%d] deleteProjectDashboardNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] deleteProjectDashboardNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteProjectDashboardNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DeleteProjectDashboardDefault) Code() int {
 }
 
 func (o *DeleteProjectDashboardDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/dashboards/{uuid}][%d] DeleteProjectDashboard default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] DeleteProjectDashboard default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteProjectDashboardDefault) GetPayload() *service_model.RuntimeError {

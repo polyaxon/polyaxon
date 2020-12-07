@@ -624,3 +624,11 @@ def set_artifacts_path(artifacts_path: str):
 
 
 set_artifacts_path.__doc__ = Run.set_artifacts_path.__doc__
+
+
+def log_env(rel_path: str = None, content: Dict = None):
+    global TRACKING_RUN
+    return TRACKING_RUN.log_env(rel_path=rel_path, content=content)
+
+
+log_env.__doc__ = Run.log_env.__doc__

@@ -45,7 +45,12 @@ from polyaxon.utils.list_utils import to_list
 
 
 def get_repo_context_args(
-    name: str, url: str, revision: str, mount_path: str, connection: str = None
+    name: str,
+    url: str,
+    revision: str,
+    mount_path: str,
+    connection: str = None,
+    flags: List[str] = None,
 ) -> List[str]:
     if not name:
         raise PolypodException("A repo name is required to create a repo context.")
@@ -59,6 +64,10 @@ def get_repo_context_args(
 
     if connection:
         args.append("--connection={}".format(connection))
+
+    flags = to_list(flags, check_none=True)
+    if flags:
+        args.append('--flags="{}"'.format(" ".join(flags)))
     return args
 
 
@@ -122,6 +131,7 @@ def get_git_init_container(
         # Handle the case of custom connection
         url=getattr(connection.schema, "url", None),
         revision=getattr(connection.schema, "revision", None),
+        flags=getattr(connection.schema, "flags", None),
         mount_path=mount_path,
         connection=connection.name if track else None,
     )

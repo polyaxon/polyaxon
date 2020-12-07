@@ -31,7 +31,7 @@ def get_default_tuner_container(command, bracket_iteration: int = None):
     return V1Container(
         name=MAIN_JOB_CONTAINER,
         image="polyaxon/polyaxon-hpsearch:{}".format(pkg.VERSION),
-        image_pull_policy=PullPolicy.ALWAYS.value,
+        image_pull_policy=PullPolicy.IF_NOT_PRESENT.value,
         command=command,
         args=args,
         resources=k8s_schemas.V1ResourceRequirements(

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
-**disabled** | **bool** |  | [optional] 
+**live_state** | **int** |  | [optional] 
 **namespace** | **str** |  | [optional] 
 **version_api** | [**object**](.md) |  | [optional] 
 **version** | **str** |  | [optional] 

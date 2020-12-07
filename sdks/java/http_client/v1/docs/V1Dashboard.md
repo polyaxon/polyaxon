@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
-**disabled** | **Boolean** |  |  [optional]
+**liveState** | **Integer** |  |  [optional]
 **view** | [**DashboardView**](DashboardView.md) |  |  [optional]
 **spec** | [**Object**](.md) |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]

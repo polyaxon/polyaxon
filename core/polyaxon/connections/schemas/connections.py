@@ -99,6 +99,7 @@ class V1HostConnection(BaseConfig, polyaxon_sdk.V1HostConnection):
 class GitConnectionSchema(BaseCamelSchema):
     url = fields.Str(allow_none=True)
     revision = fields.Str(allow_none=True)
+    flags = fields.List(fields.Str(), allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -108,7 +109,7 @@ class GitConnectionSchema(BaseCamelSchema):
 class V1GitConnection(BaseConfig, polyaxon_sdk.V1GitConnection):
     SCHEMA = GitConnectionSchema
     IDENTIFIER = "git"
-    REDUCED_ATTRIBUTES = ["url", "revision"]
+    REDUCED_ATTRIBUTES = ["url", "revision", "flags"]
 
     def get_name(self):
         if self.url:
@@ -118,6 +119,7 @@ class V1GitConnection(BaseConfig, polyaxon_sdk.V1GitConnection):
     def patch(self, schema: "GitConnectionSchema"):
         self.url = schema.url or self.url
         self.revision = schema.revision or self.revision
+        self.flags = schema.flags or self.flags
 
 
 class CustomConnectionSchema(BaseCamelSchema):
@@ -179,6 +181,11 @@ class V1CustomConnection(BaseConfig):
             if "revision" not in self._schema_keys:
                 self._schema_keys.add("revision")
             setattr(self, "revision", schema.url)
+
+        if schema.flags:
+            if "flags" not in self._schema_keys:
+                self._schema_keys.add("flags")
+            setattr(self, "flags", schema.flags)
 
 
 def validate_connection(kind, definition):

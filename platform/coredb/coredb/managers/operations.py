@@ -38,6 +38,7 @@ def compile_operation_run(
     pipeline_id: int = None,
     controller_id: int = None,
     supported_kinds: Set[str] = None,
+    supported_owners: Set[str] = None,
 ) -> BaseRun:
     compiled_operation, instance = operations.init_run(
         project_id=project_id,
@@ -56,6 +57,7 @@ def compile_operation_run(
         is_approved=is_approved,
         meta_info=meta_info,
         supported_kinds=supported_kinds,
+        supported_owners=supported_owners,
     )
     instance.save()
     return instance

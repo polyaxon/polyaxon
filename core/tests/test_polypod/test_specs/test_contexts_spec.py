@@ -36,6 +36,7 @@ class TestPluginsContextsSpec(BaseTestCase):
                     "collectLogs": False,
                     "collectArtifacts": False,
                     "syncStatuses": False,
+                    "externalHost": True,
                 },
                 "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
             }
@@ -47,6 +48,7 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.collect_artifacts is False
         assert spec.collect_logs is False
         assert spec.sync_statuses is False
+        assert spec.external_host is True
 
     def test_get_from_env(self):
         config = V1Plugins(
@@ -56,6 +58,7 @@ class TestPluginsContextsSpec(BaseTestCase):
             collect_artifacts=True,
             collect_logs=True,
             sync_statuses=True,
+            external_host=True,
         )
         spec = PluginsContextsSpec.from_config(config)
         assert spec.auth is True
@@ -64,6 +67,7 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.collect_artifacts is True
         assert spec.collect_logs is True
         assert spec.sync_statuses is True
+        assert spec.external_host is True
 
     def test_get_from_empty_env(self):
         spec = PluginsContextsSpec.from_config(V1Plugins(), default_auth=True)
@@ -73,6 +77,7 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.collect_artifacts is True
         assert spec.collect_logs is True
         assert spec.sync_statuses is True
+        assert spec.external_host is False
 
         spec = PluginsContextsSpec.from_config(V1Plugins())
         assert spec.auth is False
@@ -81,3 +86,4 @@ class TestPluginsContextsSpec(BaseTestCase):
         assert spec.collect_artifacts is True
         assert spec.collect_logs is True
         assert spec.sync_statuses is True
+        assert spec.external_host is False

@@ -74,16 +74,16 @@ for the get run statuses operation typically these are written to a http.Request
 */
 type GetRunStatusesParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *GetRunStatusesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the get run statuses params
+func (o *GetRunStatusesParams) WithEntity(entity string) *GetRunStatusesParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the get run statuses params
+func (o *GetRunStatusesParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the get run statuses params
 func (o *GetRunStatusesParams) WithOwner(owner string) *GetRunStatusesParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *GetRunStatusesParams) WithOwner(owner string) *GetRunStatusesParams {
 // SetOwner adds the owner to the get run statuses params
 func (o *GetRunStatusesParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the get run statuses params
-func (o *GetRunStatusesParams) WithProject(project string) *GetRunStatusesParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the get run statuses params
-func (o *GetRunStatusesParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the get run statuses params
@@ -169,13 +169,13 @@ func (o *GetRunStatusesParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

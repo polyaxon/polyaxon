@@ -58,6 +58,9 @@ message Plugins {
     // Optional log level
     string log_level = 9;
 
+    // Optional flag to tell Polyaxon to connect to the control plan via the external host
+    bool externalHost = 10;
+
     // Option Notifications: Deprecated
-    repeated Notification notifications = 10;
+    repeated Notification notifications = 11;
 }

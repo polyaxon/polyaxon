@@ -133,7 +133,7 @@ def get_default_init_container(schema=True):
     default = {
         "image": "polyaxon/polyaxon-init",
         "imageTag": pkg.VERSION,
-        "imagePullPolicy": PullPolicy.ALWAYS.value,
+        "imagePullPolicy": PullPolicy.IF_NOT_PRESENT.value,
         "resources": {
             "limits": {"cpu": "1", "memory": "200Mi"},
             "requests": {"cpu": "0.1", "memory": "20Mi"},

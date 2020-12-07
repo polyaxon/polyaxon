@@ -80,6 +80,11 @@ type ListTeamMembersParams struct {
 
 	*/
 	Limit *int32
+	/*Name
+	  Entity managing the resource
+
+	*/
+	Name string
 	/*Offset
 	  Pagination offset.
 
@@ -100,11 +105,6 @@ type ListTeamMembersParams struct {
 
 	*/
 	Sort *string
-	/*Team
-	  Team under namesapce
-
-	*/
-	Team string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -155,6 +155,17 @@ func (o *ListTeamMembersParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithName adds the name to the list team members params
+func (o *ListTeamMembersParams) WithName(name string) *ListTeamMembersParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the list team members params
+func (o *ListTeamMembersParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOffset adds the offset to the list team members params
 func (o *ListTeamMembersParams) WithOffset(offset *int32) *ListTeamMembersParams {
 	o.SetOffset(offset)
@@ -199,17 +210,6 @@ func (o *ListTeamMembersParams) SetSort(sort *string) {
 	o.Sort = sort
 }
 
-// WithTeam adds the team to the list team members params
-func (o *ListTeamMembersParams) WithTeam(team string) *ListTeamMembersParams {
-	o.SetTeam(team)
-	return o
-}
-
-// SetTeam adds the team to the list team members params
-func (o *ListTeamMembersParams) SetTeam(team string) {
-	o.Team = team
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *ListTeamMembersParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -232,6 +232,11 @@ func (o *ListTeamMembersParams) WriteToRequest(r runtime.ClientRequest, reg strf
 			}
 		}
 
+	}
+
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
+		return err
 	}
 
 	if o.Offset != nil {
@@ -285,11 +290,6 @@ func (o *ListTeamMembersParams) WriteToRequest(r runtime.ClientRequest, reg strf
 			}
 		}
 
-	}
-
-	// path param team
-	if err := r.SetPathParam("team", o.Team); err != nil {
-		return err
 	}
 
 	if len(res) > 0 {

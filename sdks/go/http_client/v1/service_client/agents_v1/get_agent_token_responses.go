@@ -87,7 +87,7 @@ type GetAgentTokenOK struct {
 }
 
 func (o *GetAgentTokenOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/token][%d] getAgentTokenOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}/token][%d] getAgentTokenOK  %+v", 200, o.Payload)
 }
 
 func (o *GetAgentTokenOK) GetPayload() *service_model.V1Token {
@@ -120,7 +120,7 @@ type GetAgentTokenNoContent struct {
 }
 
 func (o *GetAgentTokenNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/token][%d] getAgentTokenNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}/token][%d] getAgentTokenNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetAgentTokenNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetAgentTokenForbidden struct {
 }
 
 func (o *GetAgentTokenForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/token][%d] getAgentTokenForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}/token][%d] getAgentTokenForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetAgentTokenForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetAgentTokenNotFound struct {
 }
 
 func (o *GetAgentTokenNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/token][%d] getAgentTokenNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}/token][%d] getAgentTokenNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetAgentTokenNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetAgentTokenDefault) Code() int {
 }
 
 func (o *GetAgentTokenDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/token][%d] GetAgentToken default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}/token][%d] GetAgentToken default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetAgentTokenDefault) GetPayload() *service_model.RuntimeError {

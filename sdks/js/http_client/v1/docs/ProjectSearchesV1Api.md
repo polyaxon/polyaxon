@@ -7,12 +7,12 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createProjectSearch**](ProjectSearchesV1Api.md#createProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
-[**deleteProjectSearch**](ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
-[**getProjectSearch**](ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
-[**listProjectSearchNames**](ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
-[**listProjectSearches**](ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+[**deleteProjectSearch**](ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{entity}/searches/{uuid} | Delete project search
+[**getProjectSearch**](ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{entity}/searches/{uuid} | Get project search
+[**listProjectSearchNames**](ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{name}/searches/names | List project search names
+[**listProjectSearches**](ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{name}/searches | List project searches
 [**patchProjectSearch**](ProjectSearchesV1Api.md#patchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
-[**promoteProjectSearch**](ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+[**promoteProjectSearch**](ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{entity}/searches/{uuid}/promote | Promote project search
 [**updateProjectSearch**](ProjectSearchesV1Api.md#updateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
 
 
@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 ## deleteProjectSearch
 
-> deleteProjectSearch(owner, project, uuid)
+> deleteProjectSearch(owner, entity, uuid)
 
 Delete project search
 
@@ -89,9 +89,9 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project
+let entity = "entity_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.deleteProjectSearch(owner, project, uuid, (error, data, response) => {
+apiInstance.deleteProjectSearch(owner, entity, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -106,7 +106,7 @@ apiInstance.deleteProjectSearch(owner, project, uuid, (error, data, response) =>
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project | 
+ **entity** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
@@ -125,7 +125,7 @@ null (empty response body)
 
 ## getProjectSearch
 
-> V1Search getProjectSearch(owner, project, uuid)
+> V1Search getProjectSearch(owner, entity, uuid)
 
 Get project search
 
@@ -142,9 +142,9 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project
+let entity = "entity_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.getProjectSearch(owner, project, uuid, (error, data, response) => {
+apiInstance.getProjectSearch(owner, entity, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -159,7 +159,7 @@ apiInstance.getProjectSearch(owner, project, uuid, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project | 
+ **entity** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
@@ -178,7 +178,7 @@ Name | Type | Description  | Notes
 
 ## listProjectSearchNames
 
-> V1ListSearchesResponse listProjectSearchNames(owner, project, opts)
+> V1ListSearchesResponse listProjectSearchNames(owner, name, opts)
 
 List project search names
 
@@ -195,14 +195,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project under namesapce
+let name = "name_example"; // String | Entity managing the resource
 let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-apiInstance.listProjectSearchNames(owner, project, opts, (error, data, response) => {
+apiInstance.listProjectSearchNames(owner, name, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -217,7 +217,7 @@ apiInstance.listProjectSearchNames(owner, project, opts, (error, data, response)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project under namesapce | 
+ **name** | **String**| Entity managing the resource | 
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 
 ## listProjectSearches
 
-> V1ListSearchesResponse listProjectSearches(owner, project, opts)
+> V1ListSearchesResponse listProjectSearches(owner, name, opts)
 
 List project searches
 
@@ -256,14 +256,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project under namesapce
+let name = "name_example"; // String | Entity managing the resource
 let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-apiInstance.listProjectSearches(owner, project, opts, (error, data, response) => {
+apiInstance.listProjectSearches(owner, name, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -278,7 +278,7 @@ apiInstance.listProjectSearches(owner, project, opts, (error, data, response) =>
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project under namesapce | 
+ **name** | **String**| Entity managing the resource | 
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
@@ -355,7 +355,7 @@ Name | Type | Description  | Notes
 
 ## promoteProjectSearch
 
-> promoteProjectSearch(owner, project, uuid)
+> promoteProjectSearch(owner, entity, uuid)
 
 Promote project search
 
@@ -372,9 +372,9 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project
+let entity = "entity_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.promoteProjectSearch(owner, project, uuid, (error, data, response) => {
+apiInstance.promoteProjectSearch(owner, entity, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -389,7 +389,7 @@ apiInstance.promoteProjectSearch(owner, project, uuid, (error, data, response) =
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project | 
+ **entity** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type

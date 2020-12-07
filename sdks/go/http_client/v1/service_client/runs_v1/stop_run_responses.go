@@ -86,7 +86,7 @@ type StopRunOK struct {
 }
 
 func (o *StopRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/stop][%d] stopRunOK ", 200)
 }
 
 func (o *StopRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type StopRunNoContent struct {
 }
 
 func (o *StopRunNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/stop][%d] stopRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *StopRunNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type StopRunForbidden struct {
 }
 
 func (o *StopRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/stop][%d] stopRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *StopRunForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type StopRunNotFound struct {
 }
 
 func (o *StopRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/stop][%d] stopRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *StopRunNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *StopRunDefault) Code() int {
 }
 
 func (o *StopRunDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] StopRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/stop][%d] StopRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *StopRunDefault) GetPayload() *service_model.RuntimeError {

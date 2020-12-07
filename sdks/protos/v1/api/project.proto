@@ -27,47 +27,41 @@ message Project {
     // UUID
     string uuid = 1;
 
-    // Required name of user who created this entity
-    string user = 2;
-
-    // Read-only email of user who created this entity
-    string user_email = 3;
-
-    // Required owner/namespace where the projet was created
-    string owner = 4;
+    // Owner/namespace where the project was created
+    string owner = 2;
 
     // Required name
-    string name = 5;
+    string name = 3;
 
     // Optional description
-    string description = 6;
+    string description = 4;
 
     // Optional tags of this entity
-    repeated string tags = 7;
+    repeated string tags = 5;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 6;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 7;
 
     // Optional flag to tell if this project is public
-    bool is_public = 10;
+    bool is_public = 8;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 11;
+    bool bookmarked = 9;
 
     // Optional a readme text describing this entity
-    string readme = 12;
+    string readme = 10;
 
     // Optional project settings
-    ProjectSettings settings = 13;
-
-    // Optional teams assigned to a project
-    repeated string teams = 14;
+    ProjectSettings settings = 11;
 
     // Current user's role in this (org/teams)/project
-    string role = 15;
+    string role = 12;
+
+    // Current live state
+    int32 live_state = 13;
 }
 
  // Request data to create/update project
@@ -128,24 +122,4 @@ message ProjectSettingsBodyRequest {
 
     // Project settings body
     ProjectSettings settings = 3;
- }
-
-
-// Project teams specification
-message ProjectTeams {
-    // Teams
-    repeated string teams = 1;
-}
-
-
-// Request data to update project teams
-message ProjectTeamsBodyRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Project name
-    string project = 2;
-
-    // Project settings body
-    ProjectTeams teams = 3;
  }

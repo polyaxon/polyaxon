@@ -81,11 +81,11 @@ type UpdateModelRegistryParams struct {
 
 	*/
 	Body *service_model.V1ModelRegistry
-	/*ModelUUID
-	  UUID
+	/*ModelName
+	  Optional component name, should be a valid fully qualified value: name[:version]
 
 	*/
-	ModelUUID string
+	ModelName string
 	/*Owner
 	  Owner of the namespace
 
@@ -141,15 +141,15 @@ func (o *UpdateModelRegistryParams) SetBody(body *service_model.V1ModelRegistry)
 	o.Body = body
 }
 
-// WithModelUUID adds the modelUUID to the update model registry params
-func (o *UpdateModelRegistryParams) WithModelUUID(modelUUID string) *UpdateModelRegistryParams {
-	o.SetModelUUID(modelUUID)
+// WithModelName adds the modelName to the update model registry params
+func (o *UpdateModelRegistryParams) WithModelName(modelName string) *UpdateModelRegistryParams {
+	o.SetModelName(modelName)
 	return o
 }
 
-// SetModelUUID adds the modelUuid to the update model registry params
-func (o *UpdateModelRegistryParams) SetModelUUID(modelUUID string) {
-	o.ModelUUID = modelUUID
+// SetModelName adds the modelName to the update model registry params
+func (o *UpdateModelRegistryParams) SetModelName(modelName string) {
+	o.ModelName = modelName
 }
 
 // WithOwner adds the owner to the update model registry params
@@ -177,8 +177,8 @@ func (o *UpdateModelRegistryParams) WriteToRequest(r runtime.ClientRequest, reg 
 		}
 	}
 
-	// path param model.uuid
-	if err := r.SetPathParam("model.uuid", o.ModelUUID); err != nil {
+	// path param model.name
+	if err := r.SetPathParam("model.name", o.ModelName); err != nil {
 		return err
 	}
 

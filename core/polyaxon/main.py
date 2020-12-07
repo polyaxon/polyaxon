@@ -31,10 +31,11 @@ from polyaxon.cli.init import init
 from polyaxon.cli.operations import ops
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.projects import project
+from polyaxon.cli.registry import registry
 from polyaxon.cli.run import run
 from polyaxon.cli.session import set_versions_config
 from polyaxon.cli.version import check_cli_version, upgrade, version
-from polyaxon.logger import configure_logger
+from polyaxon.logger import clean_outputs, configure_logger
 from polyaxon.utils.bool_utils import to_bool
 from polyaxon.utils.formatting import Printer
 
@@ -54,6 +55,7 @@ click_completion.init()
     "Currently used for run command in --local mode.",
 )
 @click.pass_context
+@clean_outputs
 def cli(context, verbose, offline):
     """Polyaxon - Cloud Native Machine Learning Automation & Experimentation tool.
 
@@ -163,6 +165,7 @@ cli.add_command(init)
 cli.add_command(project)
 cli.add_command(ops)
 cli.add_command(hub)
+cli.add_command(registry)
 cli.add_command(run)
 cli.add_command(dashboard)
 cli.add_command(admin)

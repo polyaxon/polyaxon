@@ -87,7 +87,7 @@ type ListProjectDashboardNamesOK struct {
 }
 
 func (o *ListProjectDashboardNamesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards/names][%d] listProjectDashboardNamesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards/names][%d] listProjectDashboardNamesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListProjectDashboardNamesOK) GetPayload() *service_model.V1ListDashboardsResponse {
@@ -120,7 +120,7 @@ type ListProjectDashboardNamesNoContent struct {
 }
 
 func (o *ListProjectDashboardNamesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards/names][%d] listProjectDashboardNamesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards/names][%d] listProjectDashboardNamesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListProjectDashboardNamesNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type ListProjectDashboardNamesForbidden struct {
 }
 
 func (o *ListProjectDashboardNamesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards/names][%d] listProjectDashboardNamesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards/names][%d] listProjectDashboardNamesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListProjectDashboardNamesForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type ListProjectDashboardNamesNotFound struct {
 }
 
 func (o *ListProjectDashboardNamesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards/names][%d] listProjectDashboardNamesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards/names][%d] listProjectDashboardNamesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListProjectDashboardNamesNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *ListProjectDashboardNamesDefault) Code() int {
 }
 
 func (o *ListProjectDashboardNamesDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/dashboards/names][%d] ListProjectDashboardNames default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/dashboards/names][%d] ListProjectDashboardNames default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListProjectDashboardNamesDefault) GetPayload() *service_model.RuntimeError {

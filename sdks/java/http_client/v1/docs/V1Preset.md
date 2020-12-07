@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **frozen** | **Boolean** |  |  [optional]
-**disabled** | **Boolean** |  |  [optional]
+**liveState** | **Integer** |  |  [optional]
 **content** | **String** |  |  [optional]
 
 

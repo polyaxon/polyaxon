@@ -50,6 +50,9 @@ type V1Plugins struct {
 	// Optional flag to tell Polyaxon if it should set a docker socket context for the run, default false
 	Docker bool `json:"docker,omitempty"`
 
+	// Optional flag to tell Polyaxon to connect to the control plan via the external host
+	ExternalHost bool `json:"externalHost,omitempty"`
+
 	// Optional log level
 	LogLevel string `json:"log_level,omitempty"`
 

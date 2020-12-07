@@ -16,12 +16,9 @@
 
 import uuid
 
-from django.core.validators import validate_slug
-from django.db import models
-
-from coredb.abstracts.projects import BaseProject
+from coredb.abstracts.catalogs import BaseLiveStateCatalog
+from coredb.abstracts.readme import ReadmeModel
 from polyaxon.constants import DEFAULT
-from polycommon.validation.blacklist import validate_blacklist_name
 
 
 class Owner:
@@ -35,15 +32,10 @@ class Actor:
     id = 1
 
 
-class Project(BaseProject):
-    name = models.CharField(
-        max_length=150, unique=True, validators=[validate_slug, validate_blacklist_name]
-    )
-
-    class Meta:
+class Project(BaseLiveStateCatalog, ReadmeModel):
+    class Meta(BaseLiveStateCatalog.Meta):
         app_label = "coredb"
         db_table = "db_project"
-        indexes = [models.Index(fields=["name"])]
 
     @property
     def owner(self):

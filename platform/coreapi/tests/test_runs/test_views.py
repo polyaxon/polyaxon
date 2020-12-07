@@ -437,7 +437,6 @@ class TestCopyRunViewV1(BaseRerunRunApi):
 
 
 @pytest.mark.run_mark
-@pytest.mark.run_mark
 class TestRunStatusListViewV1(BaseTestRunApi):
     serializer_class = RunStatusSerializer
     num_objects = 3
@@ -540,9 +539,9 @@ class TestStopRunViewV1(BaseTestRunApi):
         last_run.save()
         assert self.queryset.last().status == V1Statuses.CREATED
         with patch("polycommon.workers.send") as workers_send:
-            resp = self.stuff_client.post(self.url)
+            resp = self.client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert workers_send.call_count == 5
+        assert workers_send.call_count == 1
         assert self.queryset.count() == 1
         assert self.queryset.last().status == V1Statuses.STOPPED
 
@@ -555,9 +554,9 @@ class TestStopRunViewV1(BaseTestRunApi):
         with patch("polycommon.workers.send") as workers_send:
             resp = self.client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert workers_send.call_count == 5
+        assert workers_send.call_count == 1
         assert self.queryset.count() == 1
-        assert self.queryset.last().status == V1Statuses.STOPPED
+        assert self.queryset.last().status == V1Statuses.STOPPING
 
     def test_stop_non_managed(self):
         assert self.queryset.count() == 1
@@ -570,7 +569,7 @@ class TestStopRunViewV1(BaseTestRunApi):
         assert resp.status_code == status.HTTP_200_OK
         assert workers_send.call_count == 0
         assert self.queryset.count() == 1
-        assert self.queryset.last().status == V1Statuses.STOPPING
+        assert self.queryset.last().status == V1Statuses.STOPPED
 
 
 @pytest.mark.run_mark
@@ -587,7 +586,7 @@ class TestApproveRunViewV1(BaseTestRunApi):
         with patch("polycommon.workers.send") as workers_send:
             resp = self.client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert workers_send.call_count == 2
+        assert workers_send.call_count == 1
         assert self.queryset.count() == 1
         assert self.queryset.last().is_approved is True
 

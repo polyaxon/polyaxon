@@ -87,7 +87,7 @@ type ImpersonateTokenOK struct {
 }
 
 func (o *ImpersonateTokenOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] impersonateTokenOK  %+v", 200, o.Payload)
 }
 
 func (o *ImpersonateTokenOK) GetPayload() *service_model.V1Auth {
@@ -120,7 +120,7 @@ type ImpersonateTokenNoContent struct {
 }
 
 func (o *ImpersonateTokenNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] impersonateTokenNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ImpersonateTokenNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type ImpersonateTokenForbidden struct {
 }
 
 func (o *ImpersonateTokenForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] impersonateTokenForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ImpersonateTokenForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type ImpersonateTokenNotFound struct {
 }
 
 func (o *ImpersonateTokenNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] impersonateTokenNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ImpersonateTokenNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *ImpersonateTokenDefault) Code() int {
 }
 
 func (o *ImpersonateTokenDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] ImpersonateToken default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] ImpersonateToken default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ImpersonateTokenDefault) GetPayload() *service_model.RuntimeError {

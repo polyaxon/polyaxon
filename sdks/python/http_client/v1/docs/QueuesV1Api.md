@@ -6,12 +6,12 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_queue**](QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Create queue
-[**delete_queue**](QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete queue
-[**get_queue**](QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Get queue
+[**delete_queue**](QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid} | Delete queue
+[**get_queue**](QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid} | Get queue
 [**list_organization_queue_names**](QueuesV1Api.md#list_organization_queue_names) | **GET** /api/v1/orgs/{owner}/queues/names | List organization level queues names
 [**list_organization_queues**](QueuesV1Api.md#list_organization_queues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
-[**list_queue_names**](QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
-[**list_queues**](QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
+[**list_queue_names**](QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{name}/queues/names | List queues names
+[**list_queues**](QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{name}/queues | List queues
 [**patch_queue**](QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Patch queue
 [**update_queue**](QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Update queue
 
@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_queue**
-> delete_queue(owner, agent, uuid)
+> delete_queue(owner, entity, uuid)
 
 Delete queue
 
@@ -139,12 +139,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.QueuesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-agent = 'agent_example' # str | Agent managing the resource
+entity = 'entity_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete queue
-        api_instance.delete_queue(owner, agent, uuid)
+        api_instance.delete_queue(owner, entity, uuid)
     except ApiException as e:
         print("Exception when calling QueuesV1Api->delete_queue: %s\n" % e)
 ```
@@ -154,7 +154,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **agent** | **str**| Agent managing the resource | 
+ **entity** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -182,7 +182,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_queue**
-> V1Queue get_queue(owner, agent, uuid)
+> V1Queue get_queue(owner, entity, uuid)
 
 Get queue
 
@@ -221,12 +221,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.QueuesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-agent = 'agent_example' # str | Agent managing the resource
+entity = 'entity_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Get queue
-        api_response = api_instance.get_queue(owner, agent, uuid)
+        api_response = api_instance.get_queue(owner, entity, uuid)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling QueuesV1Api->get_queue: %s\n" % e)
@@ -237,7 +237,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **agent** | **str**| Agent managing the resource | 
+ **entity** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -439,7 +439,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_queue_names**
-> V1ListQueuesResponse list_queue_names(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListQueuesResponse list_queue_names(owner, name, offset=offset, limit=limit, sort=sort, query=query)
 
 List queues names
 
@@ -478,7 +478,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.QueuesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-agent = 'agent_example' # str | Agent man managing the resource
+name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
@@ -486,7 +486,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
         # List queues names
-        api_response = api_instance.list_queue_names(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_queue_names(owner, name, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling QueuesV1Api->list_queue_names: %s\n" % e)
@@ -497,7 +497,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **agent** | **str**| Agent man managing the resource | 
+ **name** | **str**| Entity managing the resource | 
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
@@ -528,7 +528,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_queues**
-> V1ListQueuesResponse list_queues(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListQueuesResponse list_queues(owner, name, offset=offset, limit=limit, sort=sort, query=query)
 
 List queues
 
@@ -567,7 +567,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.QueuesV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-agent = 'agent_example' # str | Agent man managing the resource
+name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
@@ -575,7 +575,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
         # List queues
-        api_response = api_instance.list_queues(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_queues(owner, name, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling QueuesV1Api->list_queues: %s\n" % e)
@@ -586,7 +586,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **agent** | **str**| Agent man managing the resource | 
+ **name** | **str**| Entity managing the resource | 
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 

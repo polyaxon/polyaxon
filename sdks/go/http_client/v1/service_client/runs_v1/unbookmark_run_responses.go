@@ -86,7 +86,7 @@ type UnbookmarkRunOK struct {
 }
 
 func (o *UnbookmarkRunOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] unbookmarkRunOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] unbookmarkRunOK ", 200)
 }
 
 func (o *UnbookmarkRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type UnbookmarkRunNoContent struct {
 }
 
 func (o *UnbookmarkRunNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] unbookmarkRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] unbookmarkRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UnbookmarkRunNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type UnbookmarkRunForbidden struct {
 }
 
 func (o *UnbookmarkRunForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] unbookmarkRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] unbookmarkRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UnbookmarkRunForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type UnbookmarkRunNotFound struct {
 }
 
 func (o *UnbookmarkRunNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] unbookmarkRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] unbookmarkRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UnbookmarkRunNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *UnbookmarkRunDefault) Code() int {
 }
 
 func (o *UnbookmarkRunDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] UnbookmarkRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] UnbookmarkRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *UnbookmarkRunDefault) GetPayload() *service_model.RuntimeError {

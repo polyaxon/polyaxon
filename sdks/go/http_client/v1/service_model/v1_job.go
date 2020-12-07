@@ -44,7 +44,7 @@ type V1Job struct {
 	// Optional init connections/containers section
 	Init []*V1Init `json:"init"`
 
-	// Optional component kind, should be equal to "job"
+	// Optional component kind, should be equal to 'job'
 	Kind *string `json:"kind,omitempty"`
 
 	// Optional sidecars section

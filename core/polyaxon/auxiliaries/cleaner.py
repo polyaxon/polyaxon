@@ -35,7 +35,7 @@ def get_default_cleaner_container(
     return V1Container(
         name=MAIN_JOB_CONTAINER,
         image="polyaxon/polyaxon-init:{}".format(pkg.VERSION),
-        image_pull_policy=PullPolicy.ALWAYS.value,
+        image_pull_policy=PullPolicy.IF_NOT_PRESENT.value,
         command=["/bin/bash", "-c"],
         args=["{} && {}".format(wait_args, clean_args)],
         resources=k8s_schemas.V1ResourceRequirements(

@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="deletePreset"></a>
 # **deletePreset**
-> deletePreset(owner, uuid)
+> deletePreset(owner, uuid, entity)
 
 Delete scheduling preset
 
@@ -117,8 +117,9 @@ public class Example {
     PresetsV1Api apiInstance = new PresetsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Owner of the namespace.
     try {
-      apiInstance.deletePreset(owner, uuid);
+      apiInstance.deletePreset(owner, uuid, entity);
     } catch (ApiException e) {
       System.err.println("Exception when calling PresetsV1Api#deletePreset");
       System.err.println("Status code: " + e.getCode());
@@ -136,6 +137,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Owner of the namespace. | [optional]
 
 ### Return type
 
@@ -161,7 +163,7 @@ null (empty response body)
 
 <a name="getPreset"></a>
 # **getPreset**
-> V1Preset getPreset(owner, uuid)
+> V1Preset getPreset(owner, uuid, entity)
 
 Get scheduling preset
 
@@ -189,8 +191,9 @@ public class Example {
     PresetsV1Api apiInstance = new PresetsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Owner of the namespace.
     try {
-      V1Preset result = apiInstance.getPreset(owner, uuid);
+      V1Preset result = apiInstance.getPreset(owner, uuid, entity);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling PresetsV1Api#getPreset");
@@ -209,6 +212,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Owner of the namespace. | [optional]
 
 ### Return type
 

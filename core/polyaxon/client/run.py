@@ -120,7 +120,7 @@ class RunClient:
             else:
                 raise PolyaxonClientException(
                     "Please provide a valid project, "
-                    "or make sure this operatio is managed by Polyaxon."
+                    "or make sure this operation is managed by Polyaxon."
                 )
 
         error_message = get_project_error_message(owner, project)

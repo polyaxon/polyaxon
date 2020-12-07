@@ -75,6 +75,11 @@ for the get run artifacts lineage operation typically these are written to a htt
 */
 type GetRunArtifactsLineageParams struct {
 
+	/*Entity
+	  Entity name under namesapce
+
+	*/
+	Entity string
 	/*Limit
 	  Limit size.
 
@@ -90,11 +95,6 @@ type GetRunArtifactsLineageParams struct {
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 	/*Query
 	  Query filter the search search.
 
@@ -106,7 +106,7 @@ type GetRunArtifactsLineageParams struct {
 	*/
 	Sort *string
 	/*UUID
-	  Entity uuid
+	  SubEntity uuid
 
 	*/
 	UUID string
@@ -149,6 +149,17 @@ func (o *GetRunArtifactsLineageParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the get run artifacts lineage params
+func (o *GetRunArtifactsLineageParams) WithEntity(entity string) *GetRunArtifactsLineageParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the get run artifacts lineage params
+func (o *GetRunArtifactsLineageParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithLimit adds the limit to the get run artifacts lineage params
 func (o *GetRunArtifactsLineageParams) WithLimit(limit *int32) *GetRunArtifactsLineageParams {
 	o.SetLimit(limit)
@@ -180,17 +191,6 @@ func (o *GetRunArtifactsLineageParams) WithOwner(owner string) *GetRunArtifactsL
 // SetOwner adds the owner to the get run artifacts lineage params
 func (o *GetRunArtifactsLineageParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the get run artifacts lineage params
-func (o *GetRunArtifactsLineageParams) WithProject(project string) *GetRunArtifactsLineageParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the get run artifacts lineage params
-func (o *GetRunArtifactsLineageParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithQuery adds the query to the get run artifacts lineage params
@@ -234,6 +234,11 @@ func (o *GetRunArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest, r
 	}
 	var res []error
 
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
+		return err
+	}
+
 	if o.Limit != nil {
 
 		// query param limit
@@ -268,11 +273,6 @@ func (o *GetRunArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest, r
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
-		return err
-	}
-
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
 	}
 

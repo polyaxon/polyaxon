@@ -86,7 +86,7 @@ type PromoteProjectSearchOK struct {
 }
 
 func (o *PromoteProjectSearchOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches/{uuid}/promote][%d] promoteProjectSearchOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] promoteProjectSearchOK ", 200)
 }
 
 func (o *PromoteProjectSearchOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type PromoteProjectSearchNoContent struct {
 }
 
 func (o *PromoteProjectSearchNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches/{uuid}/promote][%d] promoteProjectSearchNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] promoteProjectSearchNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PromoteProjectSearchNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type PromoteProjectSearchForbidden struct {
 }
 
 func (o *PromoteProjectSearchForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches/{uuid}/promote][%d] promoteProjectSearchForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] promoteProjectSearchForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PromoteProjectSearchForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type PromoteProjectSearchNotFound struct {
 }
 
 func (o *PromoteProjectSearchNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches/{uuid}/promote][%d] promoteProjectSearchNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] promoteProjectSearchNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PromoteProjectSearchNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *PromoteProjectSearchDefault) Code() int {
 }
 
 func (o *PromoteProjectSearchDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches/{uuid}/promote][%d] PromoteProjectSearch default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] PromoteProjectSearch default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *PromoteProjectSearchDefault) GetPayload() *service_model.RuntimeError {

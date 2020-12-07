@@ -17,12 +17,12 @@ import os
 
 from typing import Any, Dict, List, Optional, Union
 
-from polyaxon import settings
 from polyaxon.exceptions import PolyaxonNotificationException
 from polyaxon.logger import logger
 from polyaxon.notifiers.spec import NotificationSpec
 from polyaxon.parser import parser
-from polyaxon.utils.http_utils import add_notification_referrer_param, clean_host
+from polyaxon.utils.host_utils import get_api_host
+from polyaxon.utils.http_utils import add_notification_referrer_param
 from polyaxon.utils.list_utils import to_list
 from polyaxon.utils.urls_utils import validate_url
 
@@ -41,7 +41,7 @@ class BaseNotifier:
     @staticmethod
     def get_url():
         return add_notification_referrer_param(
-            clean_host(settings.CLIENT_CONFIG.host),
+            get_api_host(),
             provider="polyaxon",
             is_absolute=False,
         )

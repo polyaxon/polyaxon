@@ -74,16 +74,16 @@ for the get run operation typically these are written to a http.Request
 */
 type GetRunParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *GetRunParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the get run params
+func (o *GetRunParams) WithEntity(entity string) *GetRunParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the get run params
+func (o *GetRunParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the get run params
 func (o *GetRunParams) WithOwner(owner string) *GetRunParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *GetRunParams) WithOwner(owner string) *GetRunParams {
 // SetOwner adds the owner to the get run params
 func (o *GetRunParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the get run params
-func (o *GetRunParams) WithProject(project string) *GetRunParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the get run params
-func (o *GetRunParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the get run params
@@ -169,13 +169,13 @@ func (o *GetRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

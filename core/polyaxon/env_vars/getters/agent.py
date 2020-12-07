@@ -29,7 +29,7 @@ def get_agent_info(agent_instance: str = None):
         )
 
     parts = agent_instance.split(".")
-    if not len(parts) == 3:
+    if not len(parts) == 3 or parts[1] != "agents":
         raise PolyaxonAgentError(
             "agent instance is invalid `{}`, "
             "please make sure that this agent was registered in Polyaxon.".format(

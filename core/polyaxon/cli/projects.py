@@ -31,6 +31,7 @@ from polyaxon.client import ProjectClient
 from polyaxon.env_vars.getters import get_project_or_local
 from polyaxon.env_vars.getters.owner_entity import resolve_entity_info
 from polyaxon.env_vars.getters.user import get_local_owner
+from polyaxon.logger import clean_outputs
 from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.utils import cache
 from polyaxon.utils.cache import get_local_project
@@ -46,6 +47,7 @@ from polyaxon.utils.validation import validate_tags
 @click.group()
 @click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.pass_context
+@clean_outputs
 def project(ctx, _project):  # pylint:disable=redefined-outer-name
     """Commands for projects."""
     if _project:
@@ -70,6 +72,7 @@ def project(ctx, _project):  # pylint:disable=redefined-outer-name
 )
 @click.option("--init", is_flag=True, help="Initialize the project after creation.")
 @click.pass_context
+@clean_outputs
 def create(ctx, name, description, tags, public, init):
     """Create a new project.
 
@@ -90,7 +93,7 @@ def create(ctx, name, description, tags, public, init):
             sys_exit=True,
         )
     owner, project_name = resolve_entity_info(
-        name or ctx.obj.get("project"), is_cli=True
+        name or ctx.obj.get("project"), is_cli=True, entity_name="project"
     )
 
     tags = validate_tags(tags)
@@ -139,6 +142,7 @@ def create(ctx, name, description, tags, public, init):
 )
 @click.option("--limit", type=int, help="To limit the list of projects.")
 @click.option("--offset", type=int, help="To offset the list of projects.")
+@clean_outputs
 def ls(owner, query, sort, limit, offset):
     """List projects.
 
@@ -187,6 +191,7 @@ def ls(owner, query, sort, limit, offset):
 @project.command()
 @click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.pass_context
+@clean_outputs
 def get(ctx, _project):
     """Get info for current project, by project_name, or owner/project_name.
 
@@ -230,6 +235,7 @@ def get(ctx, _project):
 @project.command()
 @click.option(*OPTIONS_PROJECT["args"], "_project", **OPTIONS_PROJECT["kwargs"])
 @click.pass_context
+@clean_outputs
 def delete(ctx, _project):
     """Delete project.
 
@@ -273,10 +279,14 @@ def delete(ctx, _project):
 )
 @click.option("--description", type=str, help="Description of the project.")
 @click.option(
+    "--tags", type=str, help="Tags of the run, comma separated values (optional)."
+)
+@click.option(
     "--private", type=bool, help="Set the visibility of the project to private/public."
 )
 @click.pass_context
-def update(ctx, _project, name, description, private):
+@clean_outputs
+def update(ctx, _project, name, description, tags, private):
     """Update project.
 
     Uses /docs/core/cli/#caching
@@ -302,6 +312,10 @@ def update(ctx, _project, name, description, private):
 
     if description:
         update_dict["description"] = description
+
+    tags = validate_tags(tags)
+    if tags:
+        update_dict["tags"] = tags
 
     if private is not None:
         update_dict["is_public"] = not private
@@ -340,6 +354,7 @@ def update(ctx, _project, name, description, private):
     help="Print the url of the dashboard for this project.",
 )
 @click.pass_context
+@clean_outputs
 def dashboard(ctx, _project, yes, url):
     """Open this operation's dashboard details in browser."""
     owner, project_name = get_project_or_local(

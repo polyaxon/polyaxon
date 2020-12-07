@@ -15,8 +15,11 @@
 # limitations under the License.
 
 import datetime
+import re
+import unicodedata
 
 from decimal import Decimal
+from typing import Callable
 
 
 def strip_spaces(value, sep=None, join=True):
@@ -61,3 +64,18 @@ def force_bytes(value, encoding="utf-8", strings_only=False, errors="strict"):
     if isinstance(value, memoryview):
         return bytes(value)
     return value.encode(encoding, errors)
+
+
+def slugify(value: str, mark_safe: Callable = None) -> str:
+    """
+    Convert spaces/dots to hyphens.
+    Remove characters that aren't alphanumerics, underscores, or hyphens.
+    Also strip leading and trailing whitespace.
+    """
+    value = str(value)
+    value = (
+        unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    )
+    value = re.sub(r"[^\w\.\s-]", "", value).strip()
+    value = re.sub(r"[-\.\s]+", "-", value)
+    return mark_safe(value) if mark_safe else value

@@ -87,7 +87,7 @@ type GetComponentHubOK struct {
 }
 
 func (o *GetComponentHubOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/{uuid}][%d] getComponentHubOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{name}][%d] getComponentHubOK  %+v", 200, o.Payload)
 }
 
 func (o *GetComponentHubOK) GetPayload() *service_model.V1ComponentHub {
@@ -120,7 +120,7 @@ type GetComponentHubNoContent struct {
 }
 
 func (o *GetComponentHubNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/{uuid}][%d] getComponentHubNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{name}][%d] getComponentHubNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetComponentHubNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetComponentHubForbidden struct {
 }
 
 func (o *GetComponentHubForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/{uuid}][%d] getComponentHubForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{name}][%d] getComponentHubForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetComponentHubForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetComponentHubNotFound struct {
 }
 
 func (o *GetComponentHubNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/{uuid}][%d] getComponentHubNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{name}][%d] getComponentHubNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetComponentHubNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetComponentHubDefault) Code() int {
 }
 
 func (o *GetComponentHubDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/{uuid}][%d] GetComponentHub default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{name}][%d] GetComponentHub default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetComponentHubDefault) GetPayload() *service_model.RuntimeError {

@@ -87,7 +87,7 @@ type ListComponentHubsOK struct {
 }
 
 func (o *ListComponentHubsOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components][%d] listComponentHubsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] listComponentHubsOK  %+v", 200, o.Payload)
 }
 
 func (o *ListComponentHubsOK) GetPayload() *service_model.V1ListComponentHubsResponse {
@@ -120,7 +120,7 @@ type ListComponentHubsNoContent struct {
 }
 
 func (o *ListComponentHubsNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components][%d] listComponentHubsNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] listComponentHubsNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListComponentHubsNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type ListComponentHubsForbidden struct {
 }
 
 func (o *ListComponentHubsForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components][%d] listComponentHubsForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] listComponentHubsForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListComponentHubsForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type ListComponentHubsNotFound struct {
 }
 
 func (o *ListComponentHubsNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components][%d] listComponentHubsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] listComponentHubsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListComponentHubsNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *ListComponentHubsDefault) Code() int {
 }
 
 func (o *ListComponentHubsDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components][%d] ListComponentHubs default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] ListComponentHubs default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListComponentHubsDefault) GetPayload() *service_model.RuntimeError {

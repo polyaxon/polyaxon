@@ -87,7 +87,7 @@ type ListComponentHubNamesOK struct {
 }
 
 func (o *ListComponentHubNamesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/names][%d] listComponentHubNamesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/names][%d] listComponentHubNamesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListComponentHubNamesOK) GetPayload() *service_model.V1ListComponentHubsResponse {
@@ -120,7 +120,7 @@ type ListComponentHubNamesNoContent struct {
 }
 
 func (o *ListComponentHubNamesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/names][%d] listComponentHubNamesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/names][%d] listComponentHubNamesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListComponentHubNamesNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type ListComponentHubNamesForbidden struct {
 }
 
 func (o *ListComponentHubNamesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/names][%d] listComponentHubNamesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/names][%d] listComponentHubNamesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListComponentHubNamesForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type ListComponentHubNamesNotFound struct {
 }
 
 func (o *ListComponentHubNamesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/names][%d] listComponentHubNamesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/names][%d] listComponentHubNamesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListComponentHubNamesNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *ListComponentHubNamesDefault) Code() int {
 }
 
 func (o *ListComponentHubNamesDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/components/names][%d] ListComponentHubNames default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/hub/names][%d] ListComponentHubNames default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListComponentHubNamesDefault) GetPayload() *service_model.RuntimeError {

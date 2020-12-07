@@ -74,16 +74,16 @@ for the get project dashboard operation typically these are written to a http.Re
 */
 type GetProjectDashboardParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *GetProjectDashboardParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the get project dashboard params
+func (o *GetProjectDashboardParams) WithEntity(entity string) *GetProjectDashboardParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the get project dashboard params
+func (o *GetProjectDashboardParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the get project dashboard params
 func (o *GetProjectDashboardParams) WithOwner(owner string) *GetProjectDashboardParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *GetProjectDashboardParams) WithOwner(owner string) *GetProjectDashboard
 // SetOwner adds the owner to the get project dashboard params
 func (o *GetProjectDashboardParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the get project dashboard params
-func (o *GetProjectDashboardParams) WithProject(project string) *GetProjectDashboardParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the get project dashboard params
-func (o *GetProjectDashboardParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the get project dashboard params
@@ -169,13 +169,13 @@ func (o *GetProjectDashboardParams) WriteToRequest(r runtime.ClientRequest, reg 
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

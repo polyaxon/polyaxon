@@ -74,16 +74,16 @@ for the archive run operation typically these are written to a http.Request
 */
 type ArchiveRunParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *ArchiveRunParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the archive run params
+func (o *ArchiveRunParams) WithEntity(entity string) *ArchiveRunParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the archive run params
+func (o *ArchiveRunParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the archive run params
 func (o *ArchiveRunParams) WithOwner(owner string) *ArchiveRunParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *ArchiveRunParams) WithOwner(owner string) *ArchiveRunParams {
 // SetOwner adds the owner to the archive run params
 func (o *ArchiveRunParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the archive run params
-func (o *ArchiveRunParams) WithProject(project string) *ArchiveRunParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the archive run params
-func (o *ArchiveRunParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the archive run params
@@ -169,13 +169,13 @@ func (o *ArchiveRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

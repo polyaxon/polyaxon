@@ -31,6 +31,7 @@ class PluginsSchema(BaseCamelSchema):
     collect_resources = fields.Bool(allow_none=True)
     sync_statuses = fields.Bool(allow_none=True)
     auto_resume = fields.Bool(allow_none=True)
+    external_host = fields.Bool(allow_none=True)
     log_level = fields.Str(allow_none=True)
     notifications = fields.List(fields.Nested(NotificationSchema), allow_none=True)
 
@@ -71,6 +72,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   collectResources:
     >>>   autoResume:
     >>>   syncStatuses:
+    >>>   externalHost:
     >>>   logLevel:
     >>>   notifications:
     ```
@@ -88,6 +90,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>     collect_resources=False
     >>>     auto_resume=False,
     >>>     sync_statuses=False,
+    >>>     external_host=False,
     >>>     log_level="INFO",
     >>>     notifications=[V1Notification(...)]
     >>> )
@@ -256,6 +259,17 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   syncStatuses: false
     ```
 
+    ### externalHost
+    <blockquote class="light">Default is False.</blockquote>
+    In some edge cases where the auxiliaries and/or the main container cannot reach the API/Streams
+    services via the internal networking interface, you can enable this flag to tell Polyaxon
+    resolve the external host instead of the default behavior with the in-cluster host.
+
+    ```yaml
+    >>> plugins:
+    >>>   externalHost: true
+    ```
+
     ### logLevel
 
     <blockquote class="light">Default is None.</blockquote>
@@ -304,6 +318,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         "collectResources",
         "autoResume",
         "syncStatuses",
+        "externalHost",
         "logLevel",
         "notifications",
     ]

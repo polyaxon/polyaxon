@@ -74,21 +74,16 @@ for the get agent token operation typically these are written to a http.Request
 */
 type GetAgentTokenParams struct {
 
-	/*Agent
-	  Agent managing the resource
-
-	*/
-	Agent string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
 	/*UUID
-	  Uuid identifier of the entity.
+	  Uuid identifier of the entity
 
 	*/
-	UUID *string
+	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -128,17 +123,6 @@ func (o *GetAgentTokenParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithAgent adds the agent to the get agent token params
-func (o *GetAgentTokenParams) WithAgent(agent string) *GetAgentTokenParams {
-	o.SetAgent(agent)
-	return o
-}
-
-// SetAgent adds the agent to the get agent token params
-func (o *GetAgentTokenParams) SetAgent(agent string) {
-	o.Agent = agent
-}
-
 // WithOwner adds the owner to the get agent token params
 func (o *GetAgentTokenParams) WithOwner(owner string) *GetAgentTokenParams {
 	o.SetOwner(owner)
@@ -151,13 +135,13 @@ func (o *GetAgentTokenParams) SetOwner(owner string) {
 }
 
 // WithUUID adds the uuid to the get agent token params
-func (o *GetAgentTokenParams) WithUUID(uuid *string) *GetAgentTokenParams {
+func (o *GetAgentTokenParams) WithUUID(uuid string) *GetAgentTokenParams {
 	o.SetUUID(uuid)
 	return o
 }
 
 // SetUUID adds the uuid to the get agent token params
-func (o *GetAgentTokenParams) SetUUID(uuid *string) {
+func (o *GetAgentTokenParams) SetUUID(uuid string) {
 	o.UUID = uuid
 }
 
@@ -169,30 +153,14 @@ func (o *GetAgentTokenParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 	}
 	var res []error
 
-	// path param agent
-	if err := r.SetPathParam("agent", o.Agent); err != nil {
-		return err
-	}
-
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 
-	if o.UUID != nil {
-
-		// query param uuid
-		var qrUUID string
-		if o.UUID != nil {
-			qrUUID = *o.UUID
-		}
-		qUUID := qrUUID
-		if qUUID != "" {
-			if err := r.SetQueryParam("uuid", qUUID); err != nil {
-				return err
-			}
-		}
-
+	// path param uuid
+	if err := r.SetPathParam("uuid", o.UUID); err != nil {
+		return err
 	}
 
 	if len(res) > 0 {

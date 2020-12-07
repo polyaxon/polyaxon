@@ -26,7 +26,7 @@ import "v1/polyflow/k8s.proto";
 
 // Service specification
 message Service {
-    // Optional component kind, should be equal to "service"
+    // Optional component kind, should be equal to 'service'
     string kind = 1;
 
     // Optional environment section

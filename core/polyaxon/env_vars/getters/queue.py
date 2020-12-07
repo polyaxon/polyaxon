@@ -18,6 +18,9 @@ from polyaxon.exceptions import PolyaxonSchemaError
 
 
 def get_queue_info(queue: str):
+    if not queue:
+        raise PolyaxonSchemaError("Received an invalid queue {}".format(queue))
+
     parts = queue.replace(".", "/").split("/")
     agent = None
     queue_name = queue

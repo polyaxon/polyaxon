@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **queue** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  | [optional] 
 **artifacts_store** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  | [optional] 
 **connections** | [**[V1RunSettingsCatalog]**](V1RunSettingsCatalog.md) |  | [optional] 
-**concurrency** | **Number** |  | [optional] 
-**meta_info** | [**Object**](.md) |  | [optional] 
+**hub** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  | [optional] 
+**registry** | [**V1RunReferenceCatalog**](V1RunReferenceCatalog.md) |  | [optional] 
 
 

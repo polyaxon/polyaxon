@@ -6,12 +6,12 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createProjectDashboard**](ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
-[**deleteProjectDashboard**](ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
-[**getProjectDashboard**](ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
-[**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
-[**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+[**deleteProjectDashboard**](ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{entity}/dashboards/{uuid} | Delete project dashboard
+[**getProjectDashboard**](ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{entity}/dashboards/{uuid} | Get project dashboard
+[**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{name}/dashboards/names | List project dashboard
+[**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{name}/dashboards | List project dashboards
 [**patchProjectDashboard**](ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{uuid}/promote | Promote project dashboard
+[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{entity}/dashboards/{uuid}/promote | Promote project dashboard
 [**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteProjectDashboard"></a>
 # **deleteProjectDashboard**
-> deleteProjectDashboard(owner, project, uuid)
+> deleteProjectDashboard(owner, entity, uuid)
 
 Delete project dashboard
 
@@ -119,10 +119,10 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project
+    String entity = "entity_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      apiInstance.deleteProjectDashboard(owner, project, uuid);
+      apiInstance.deleteProjectDashboard(owner, entity, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#deleteProjectDashboard");
       System.err.println("Status code: " + e.getCode());
@@ -139,7 +139,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project |
+ **entity** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
@@ -166,7 +166,7 @@ null (empty response body)
 
 <a name="getProjectDashboard"></a>
 # **getProjectDashboard**
-> V1Dashboard getProjectDashboard(owner, project, uuid)
+> V1Dashboard getProjectDashboard(owner, entity, uuid)
 
 Get project dashboard
 
@@ -193,10 +193,10 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project
+    String entity = "entity_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      V1Dashboard result = apiInstance.getProjectDashboard(owner, project, uuid);
+      V1Dashboard result = apiInstance.getProjectDashboard(owner, entity, uuid);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#getProjectDashboard");
@@ -214,7 +214,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project |
+ **entity** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
@@ -241,7 +241,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectDashboardNames"></a>
 # **listProjectDashboardNames**
-> V1ListDashboardsResponse listProjectDashboardNames(owner, project, offset, limit, sort, query)
+> V1ListDashboardsResponse listProjectDashboardNames(owner, name, offset, limit, sort, query)
 
 List project dashboard
 
@@ -268,13 +268,13 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Entity managing the resource
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search search.
     try {
-      V1ListDashboardsResponse result = apiInstance.listProjectDashboardNames(owner, project, offset, limit, sort, query);
+      V1ListDashboardsResponse result = apiInstance.listProjectDashboardNames(owner, name, offset, limit, sort, query);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#listProjectDashboardNames");
@@ -292,7 +292,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Entity managing the resource |
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
@@ -322,7 +322,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectDashboards"></a>
 # **listProjectDashboards**
-> V1ListDashboardsResponse listProjectDashboards(owner, project, offset, limit, sort, query)
+> V1ListDashboardsResponse listProjectDashboards(owner, name, offset, limit, sort, query)
 
 List project dashboards
 
@@ -349,13 +349,13 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Entity managing the resource
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search search.
     try {
-      V1ListDashboardsResponse result = apiInstance.listProjectDashboards(owner, project, offset, limit, sort, query);
+      V1ListDashboardsResponse result = apiInstance.listProjectDashboards(owner, name, offset, limit, sort, query);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#listProjectDashboards");
@@ -373,7 +373,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Entity managing the resource |
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
@@ -480,7 +480,7 @@ Name | Type | Description  | Notes
 
 <a name="promoteProjectDashboard"></a>
 # **promoteProjectDashboard**
-> promoteProjectDashboard(owner, project, uuid)
+> promoteProjectDashboard(owner, entity, uuid)
 
 Promote project dashboard
 
@@ -507,10 +507,10 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project
+    String entity = "entity_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      apiInstance.promoteProjectDashboard(owner, project, uuid);
+      apiInstance.promoteProjectDashboard(owner, entity, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectDashboardsV1Api#promoteProjectDashboard");
       System.err.println("Status code: " + e.getCode());
@@ -527,7 +527,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project |
+ **entity** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type

@@ -7,8 +7,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **String** |  |  [optional]
-**user** | **String** |  |  [optional]
-**userEmail** | **String** |  |  [optional]
 **owner** | **String** |  |  [optional]
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
@@ -19,8 +17,8 @@ Name | Type | Description | Notes
 **bookmarked** | **Boolean** |  |  [optional]
 **readme** | **String** |  |  [optional]
 **settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  |  [optional]
-**teams** | **List&lt;String&gt;** |  |  [optional]
 **role** | **String** |  |  [optional]
+**liveState** | **Integer** |  |  [optional]
 
 
 

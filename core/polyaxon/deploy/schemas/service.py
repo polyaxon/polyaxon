@@ -623,6 +623,7 @@ class ExternalServicesSchema(BaseCamelSchema):
     metrics = fields.Nested(ExternalBackendSchema, allow_none=True)
     errors = fields.Nested(ExternalBackendSchema, allow_none=True)
     auth = fields.Nested(AuthServicesSchema, allow_none=True)
+    allowed_versions = fields.List(fields.Str(), allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -642,6 +643,7 @@ class ExternalServicesConfig(BaseConfig):
         "metrics",
         "errors",
         "auth",
+        "allowedVersions",
     ]
 
     def __init__(
@@ -656,6 +658,7 @@ class ExternalServicesConfig(BaseConfig):
         metrics=None,
         errors=None,
         auth=None,
+        allowed_versions=None,
     ):
         self.redis = redis
         self.rabbitmq = rabbitmq
@@ -667,3 +670,4 @@ class ExternalServicesConfig(BaseConfig):
         self.metrics = metrics
         self.errors = errors
         self.auth = auth
+        self.allowed_versions = allowed_versions

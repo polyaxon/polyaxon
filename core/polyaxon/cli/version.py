@@ -21,9 +21,9 @@ import click
 from polyaxon import pkg
 from polyaxon.cli.session import set_versions_config
 from polyaxon.deploy.operators.pip import PipOperator
-from polyaxon.logger import logger
+from polyaxon.logger import clean_outputs, logger
 from polyaxon.utils import indentation
-from polyaxon.utils.formatting import Printer, dict_tabulate
+from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 from polyaxon.utils.versions import clean_version_for_check
 
 PROJECT_CLI_NAME = "polyaxon-cli"
@@ -104,19 +104,26 @@ def check_cli_version(config, is_cli: bool = True):
 @click.option(
     "--check", is_flag=True, default=False, help="Check compatibility versions."
 )
+@clean_outputs
 def version(check):
     """Print the current version of the cli and platform."""
     Printer.print_header("Current cli version: {}.".format(pkg.VERSION))
     if check:
         config = set_versions_config()
         Printer.print_header("Platform:")
-        dict_tabulate(config.installation)
+        config_installation = dict_to_tabulate(
+            config.installation,
+            humanize_values=True,
+            exclude_attrs=["hmac", "auth", "host"],
+        )
+        dict_tabulate(config_installation)
         Printer.print_header("Compatibility versions:")
         dict_tabulate(config.compatibility)
         check_cli_version(config)
 
 
 @click.command()
+@clean_outputs
 def upgrade():
     """Install/Upgrade polyaxon cli."""
     try:

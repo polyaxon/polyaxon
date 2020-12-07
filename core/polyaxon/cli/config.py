@@ -19,13 +19,14 @@ import sys
 import click
 
 from polyaxon.cli.errors import handle_cli_error
+from polyaxon.logger import clean_outputs
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.client import ClientConfigManager
 from polyaxon.managers.project import ProjectConfigManager
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.managers.user import UserConfigManager
-from polyaxon.utils.formatting import Printer, dict_tabulate
+from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 
 
 def validate_options(ctx, param, value):
@@ -40,39 +41,66 @@ def validate_options(ctx, param, value):
 
 
 @click.group(invoke_without_command=True)
-@click.option("--list", "-l", is_flag=True, help="List all global config values.")
-def config(list):  # pylint:disable=redefined-builtin
+@click.option(
+    "--list",
+    "-l",
+    "_list",
+    is_flag=True,
+    help="Deprecated, please use `polyaxon config show`.",
+)
+@clean_outputs
+def config(_list):  # pylint:disable=redefined-builtin
     """Set and get the global configurations."""
-    if list:
-        _config = ClientConfigManager.get_config_or_default()
-        Printer.print_header("Client config:")
-        dict_tabulate(_config.to_dict())
-        _config = CliConfigManager.get_config_or_default()
-        if _config:
-            Printer.print_header("CLI config:")
-            if _config.current_version:
-                click.echo("Version {}".format(_config.current_version))
-            else:
-                Printer.print_warning("This cli is not configured.")
-            if _config.installation:
-                dict_tabulate(_config.installation)
-            else:
-                Printer.print_warning("This cli is not connected to a Polyaxon Host.")
-        _config = UserConfigManager.get_config_or_default()
-        if _config:
-            Printer.print_header("User config:")
-            dict_tabulate(_config.to_dict())
+    if _list:
+        Printer.print_warning(
+            "`polyaxon config -l` is deprecated, please use `polyaxon config show`!"
+        )
+
+
+@config.command()
+@clean_outputs
+def show():
+    """Show the current cli, client, and user configs."""
+    _config = ClientConfigManager.get_config_or_default()
+    Printer.print_header("Client config:")
+    dict_tabulate(_config.to_dict())
+    _config = CliConfigManager.get_config_or_default()
+    if _config:
+        Printer.print_header("CLI config:")
+        if _config.current_version:
+            click.echo("Version {}".format(_config.current_version))
+        else:
+            Printer.print_warning("This cli is not configured.")
+        if _config.installation:
+            config_installation = dict_to_tabulate(
+                _config.installation,
+                humanize_values=True,
+                exclude_attrs=["hmac", "auth", "host"],
+            )
+            dict_tabulate(config_installation)
+        else:
+            Printer.print_warning("This cli is not connected to a Polyaxon Host.")
+    _config = UserConfigManager.get_config_or_default()
+    if _config:
+        Printer.print_header("User config:")
+        config_user = dict_to_tabulate(
+            _config.to_dict(),
+            humanize_values=True,
+            exclude_attrs=["theme"],
+        )
+        dict_tabulate(config_user)
 
 
 @config.command()
 @click.argument("keys", type=str, nargs=-1)
+@clean_outputs
 def get(keys):
-    """Get the global config values by keys.
+    """Get the specific keys from the global configuration.
 
     Example:
 
     \b
-    $ polyaxon config get host port
+    $ polyaxon config get host verify-ssl
     """
     _config = ClientConfigManager.get_config_or_default()
 
@@ -81,6 +109,7 @@ def get(keys):
 
     print_values = {}
     for key in keys:
+        key = key.replace("-", "_")
         if hasattr(_config, key):
             print_values[key] = getattr(_config, key)
         else:
@@ -103,15 +132,11 @@ def get(keys):
     help="To set whether or not to verify the SSL certificate.",
 )
 @click.option(
-    "--compatibility-check-interval",
-    type=int,
-    help="To set the compatibility check interval, to disable set this flag to -1.",
-)
-@click.option(
     "--disable-errors-reporting",
     type=bool,
     help="To set the disable errors reporting.",
 )
+@clean_outputs
 def set(**kwargs):  # pylint:disable=redefined-builtin
     """Set the global config values.
 
@@ -131,7 +156,6 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 
     should_purge = False
     for key, value in kwargs.items():
-        print(key)
         if key == "host":
             should_purge = True
         if value is not None:
@@ -150,8 +174,9 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 @click.option(
     "--cache-only",
     is_flag=True,
-    help="To purge cache only.",
+    help="To purge the cache only.",
 )
+@clean_outputs
 def purge(cache_only):
     """Purge the global config values."""
     if not cache_only:

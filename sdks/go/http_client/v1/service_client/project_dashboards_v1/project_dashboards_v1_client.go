@@ -106,7 +106,7 @@ func (a *Client) DeleteProjectDashboard(params *DeleteProjectDashboardParams, au
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteProjectDashboard",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{uuid}",
+		PathPattern:        "/api/v1/{owner}/{entity}/dashboards/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -142,7 +142,7 @@ func (a *Client) GetProjectDashboard(params *GetProjectDashboardParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetProjectDashboard",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{uuid}",
+		PathPattern:        "/api/v1/{owner}/{entity}/dashboards/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -178,7 +178,7 @@ func (a *Client) ListProjectDashboardNames(params *ListProjectDashboardNamesPara
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListProjectDashboardNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/dashboards/names",
+		PathPattern:        "/api/v1/{owner}/{name}/dashboards/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -214,7 +214,7 @@ func (a *Client) ListProjectDashboards(params *ListProjectDashboardsParams, auth
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListProjectDashboards",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/dashboards",
+		PathPattern:        "/api/v1/{owner}/{name}/dashboards",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -286,7 +286,7 @@ func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PromoteProjectDashboard",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{uuid}/promote",
+		PathPattern:        "/api/v1/{owner}/{entity}/dashboards/{uuid}/promote",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

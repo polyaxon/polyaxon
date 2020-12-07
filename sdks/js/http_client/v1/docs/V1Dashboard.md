@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **name** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
-**disabled** | **Boolean** |  | [optional] 
+**live_state** | **Number** |  | [optional] 
 **view** | [**DashboardView**](DashboardView.md) |  | [optional] 
 **spec** | [**Object**](.md) |  | [optional] 
 **created_at** | **Date** |  | [optional] 

@@ -87,7 +87,7 @@ type GetTeamOK struct {
 }
 
 func (o *GetTeamOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}][%d] getTeamOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] getTeamOK  %+v", 200, o.Payload)
 }
 
 func (o *GetTeamOK) GetPayload() *service_model.V1Team {
@@ -120,7 +120,7 @@ type GetTeamNoContent struct {
 }
 
 func (o *GetTeamNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}][%d] getTeamNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] getTeamNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetTeamNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetTeamForbidden struct {
 }
 
 func (o *GetTeamForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}][%d] getTeamForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] getTeamForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetTeamForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetTeamNotFound struct {
 }
 
 func (o *GetTeamNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}][%d] getTeamNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] getTeamNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetTeamNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetTeamDefault) Code() int {
 }
 
 func (o *GetTeamDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}][%d] GetTeam default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] GetTeam default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetTeamDefault) GetPayload() *service_model.RuntimeError {

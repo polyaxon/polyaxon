@@ -7,11 +7,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create team
 [**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create team member
-[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete team
+[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{name} | Delete team
 [**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete team member details
-[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get team
+[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{name} | Get team
 [**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get team member details
-[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get team members
+[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{name}/members | Get team members
 [**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
 [**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List teams
 [**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteTeam"></a>
 # **deleteTeam**
-> deleteTeam(owner, team)
+> deleteTeam(owner, name)
 
 Delete team
 
@@ -197,9 +197,9 @@ public class Example {
 
     TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String team = "team_example"; // String | Team under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.deleteTeam(owner, team);
+      apiInstance.deleteTeam(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling TeamsV1Api#deleteTeam");
       System.err.println("Status code: " + e.getCode());
@@ -216,7 +216,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **team** | **String**| Team under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -316,7 +316,7 @@ null (empty response body)
 
 <a name="getTeam"></a>
 # **getTeam**
-> V1Team getTeam(owner, team)
+> V1Team getTeam(owner, name)
 
 Get team
 
@@ -343,9 +343,9 @@ public class Example {
 
     TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String team = "team_example"; // String | Team under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      V1Team result = apiInstance.getTeam(owner, team);
+      V1Team result = apiInstance.getTeam(owner, name);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TeamsV1Api#getTeam");
@@ -363,7 +363,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **team** | **String**| Team under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -464,7 +464,7 @@ Name | Type | Description  | Notes
 
 <a name="listTeamMembers"></a>
 # **listTeamMembers**
-> V1ListTeamMembersResponse listTeamMembers(owner, team, offset, limit, sort, query)
+> V1ListTeamMembersResponse listTeamMembers(owner, name, offset, limit, sort, query)
 
 Get team members
 
@@ -491,13 +491,13 @@ public class Example {
 
     TeamsV1Api apiInstance = new TeamsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String team = "team_example"; // String | Team under namesapce
+    String name = "name_example"; // String | Entity managing the resource
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search search.
     try {
-      V1ListTeamMembersResponse result = apiInstance.listTeamMembers(owner, team, offset, limit, sort, query);
+      V1ListTeamMembersResponse result = apiInstance.listTeamMembers(owner, name, offset, limit, sort, query);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TeamsV1Api#listTeamMembers");
@@ -515,7 +515,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **team** | **String**| Team under namesapce |
+ **name** | **String**| Entity managing the resource |
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]

@@ -17,7 +17,6 @@
 from coredb.query_managers.manager import BaseQueryManager
 from polyaxon.pql.builder import (
     ArrayCondition,
-    BoolCondition,
     DateTimeCondition,
     SearchCondition,
     ValueCondition,
@@ -74,5 +73,5 @@ class ProjectQueryManager(BaseQueryManager):
         # Tags
         "tags": ArrayCondition,
         # Live state
-        "live_state": BoolCondition,
+        "live_state": ValueCondition,
     }

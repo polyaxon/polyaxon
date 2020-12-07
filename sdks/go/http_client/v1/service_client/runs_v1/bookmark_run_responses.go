@@ -86,7 +86,7 @@ type BookmarkRunOK struct {
 }
 
 func (o *BookmarkRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] bookmarkRunOK ", 200)
 }
 
 func (o *BookmarkRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type BookmarkRunNoContent struct {
 }
 
 func (o *BookmarkRunNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] bookmarkRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *BookmarkRunNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type BookmarkRunForbidden struct {
 }
 
 func (o *BookmarkRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] bookmarkRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *BookmarkRunForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type BookmarkRunNotFound struct {
 }
 
 func (o *BookmarkRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] bookmarkRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *BookmarkRunNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *BookmarkRunDefault) Code() int {
 }
 
 func (o *BookmarkRunDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] BookmarkRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] BookmarkRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *BookmarkRunDefault) GetPayload() *service_model.RuntimeError {

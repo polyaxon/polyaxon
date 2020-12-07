@@ -190,3 +190,40 @@ class TestInitGit(BaseTestCase):
             ),
             get_auth_context_mount(read_only=True),
         ]
+
+        connection = V1ConnectionType(
+            name="user/foo",
+            kind=V1ConnectionKind.GIT,
+            schema=V1GitConnection(
+                url="foo.com",
+                revision="00b9d2ea01c40f58d6b4051319f9375675a43c02",
+                flags=["--falg1", "--flag2=test", "k=v"],
+            ),
+        )
+        container = get_git_init_container(
+            polyaxon_init=V1PolyaxonInitContainer(
+                image="init/init", image_tag="", image_pull_policy="IfNotPresent"
+            ),
+            connection=connection,
+            mount_path="/somepath",
+            contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
+        )
+        assert container.name == generate_container_name(
+            INIT_GIT_CONTAINER_PREFIX, connection.name
+        )
+        assert container.image == "init/init"
+        assert container.image_pull_policy == "IfNotPresent"
+        assert container.command == ["polyaxon", "initializer", "git"]
+        assert container.args == [
+            "--repo-path=/somepath/{}".format(connection.name),
+            "--url={}".format(connection.schema.url),
+            "--revision=00b9d2ea01c40f58d6b4051319f9375675a43c02",
+            '--flags="--falg1 --flag2=test k=v"',
+        ]
+        assert container.resources == get_init_resources()
+        assert container.volume_mounts == [
+            get_connections_context_mount(
+                name=get_volume_name("/somepath"), mount_path="/somepath"
+            ),
+            get_auth_context_mount(read_only=True),
+        ]

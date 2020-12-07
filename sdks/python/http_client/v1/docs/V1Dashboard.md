@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
-**disabled** | **bool** |  | [optional] 
+**live_state** | **int** |  | [optional] 
 **view** | [**DashboardView**](DashboardView.md) |  | [optional] 
 **spec** | [**object**](.md) |  | [optional] 
 **created_at** | **datetime** |  | [optional] 

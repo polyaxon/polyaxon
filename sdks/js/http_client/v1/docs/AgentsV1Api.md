@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**getAgent**](AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
 [**getAgentState**](AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
 [**getAgentStatuses**](AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
-[**getAgentToken**](AgentsV1Api.md#getAgentToken) | **GET** /api/v1/orgs/{owner}/agents/{agent}/token | Get agent token
+[**getAgentToken**](AgentsV1Api.md#getAgentToken) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/token | Get agent token
 [**listAgentNames**](AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
 [**listAgents**](AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List agents
 [**patchAgent**](AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch agent
@@ -129,7 +129,7 @@ Name | Type | Description  | Notes
 
 ## deleteAgent
 
-> deleteAgent(owner, uuid)
+> deleteAgent(owner, uuid, opts)
 
 Delete agent
 
@@ -147,7 +147,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 let apiInstance = new PolyaxonSdk.AgentsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.deleteAgent(owner, uuid, (error, data, response) => {
+let opts = {
+  'entity': "entity_example" // String | Owner of the namespace.
+};
+apiInstance.deleteAgent(owner, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -163,6 +166,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
+ **entity** | **String**| Owner of the namespace. | [optional] 
 
 ### Return type
 
@@ -180,7 +184,7 @@ null (empty response body)
 
 ## getAgent
 
-> V1Agent getAgent(owner, uuid)
+> V1Agent getAgent(owner, uuid, opts)
 
 Get agent
 
@@ -198,7 +202,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 let apiInstance = new PolyaxonSdk.AgentsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.getAgent(owner, uuid, (error, data, response) => {
+let opts = {
+  'entity': "entity_example" // String | Owner of the namespace.
+};
+apiInstance.getAgent(owner, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -214,6 +221,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
+ **entity** | **String**| Owner of the namespace. | [optional] 
 
 ### Return type
 
@@ -333,7 +341,7 @@ Name | Type | Description  | Notes
 
 ## getAgentToken
 
-> V1Token getAgentToken(owner, agent, opts)
+> V1Token getAgentToken(owner, uuid)
 
 Get agent token
 
@@ -350,11 +358,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.AgentsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let agent = "agent_example"; // String | Agent managing the resource
-let opts = {
-  'uuid': "uuid_example" // String | Uuid identifier of the entity.
-};
-apiInstance.getAgentToken(owner, agent, opts, (error, data, response) => {
+let uuid = "uuid_example"; // String | Uuid identifier of the entity
+apiInstance.getAgentToken(owner, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -369,8 +374,7 @@ apiInstance.getAgentToken(owner, agent, opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **agent** | **String**| Agent managing the resource | 
- **uuid** | **String**| Uuid identifier of the entity. | [optional] 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 

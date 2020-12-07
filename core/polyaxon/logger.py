@@ -50,19 +50,27 @@ def configure_logger(verbose):
 
 def clean_outputs(fn):
     """Decorator for CLI with Sentry client handling.
-
-    see https://github.com/getsentry/raven-python/issues/904 for more details.
+    see https://github.com/getsentry/sentry-python/issues/862#issuecomment-712697356
     """
 
     @wraps(fn)
     def clean_outputs_wrapper(*args, **kwargs):
-        try:
+        from polyaxon import settings
+
+        cli_config = settings.CLI_CONFIG
+        if cli_config and cli_config.log_handler and cli_config.log_handler.dsn:
+            import sentry_sdk
+
+            try:
+                sentry_sdk.flush()
+                return fn(*args, **kwargs)
+            except Exception as e:
+                sentry_sdk.capture_exception(e)
+                sentry_sdk.flush()
+                raise e
+            finally:
+                sentry_sdk.flush()
+        else:
             return fn(*args, **kwargs)
-        except SystemExit as e:
-            sys.stdout = StringIO()
-            sys.exit(e.code)  # make sure we still exit with the proper code
-        except Exception as e:
-            sys.stdout = StringIO()
-            raise e
 
     return clean_outputs_wrapper

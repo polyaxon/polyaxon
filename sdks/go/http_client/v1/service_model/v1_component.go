@@ -50,7 +50,7 @@ type V1Component struct {
 	// Optional flag to mark this specification requires approval before running
 	IsApproved bool `json:"is_approved,omitempty"`
 
-	// Optional component kind, should be equal to "operation"
+	// Optional component kind, should be equal to 'operation'
 	Kind string `json:"kind,omitempty"`
 
 	// Optional component name, should be a valid fully qualified value: name[:version]

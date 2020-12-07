@@ -86,7 +86,7 @@ type RestoreProjectOK struct {
 }
 
 func (o *RestoreProjectOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/restore][%d] restoreProjectOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] restoreProjectOK ", 200)
 }
 
 func (o *RestoreProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type RestoreProjectNoContent struct {
 }
 
 func (o *RestoreProjectNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/restore][%d] restoreProjectNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] restoreProjectNoContent  %+v", 204, o.Payload)
 }
 
 func (o *RestoreProjectNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type RestoreProjectForbidden struct {
 }
 
 func (o *RestoreProjectForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/restore][%d] restoreProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] restoreProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *RestoreProjectForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type RestoreProjectNotFound struct {
 }
 
 func (o *RestoreProjectNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/restore][%d] restoreProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] restoreProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *RestoreProjectNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *RestoreProjectDefault) Code() int {
 }
 
 func (o *RestoreProjectDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/restore][%d] RestoreProject default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] RestoreProject default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *RestoreProjectDefault) GetPayload() *service_model.RuntimeError {

@@ -43,8 +43,8 @@ message Preset {
     // Optional a flag to freeze the scheduling preset
     bool frozen = 9;
 
-    // Optional a flag to disable the scheduling preset
-    bool disabled = 10;
+    // Current live state
+    int32 live_state = 10;
 
     // The content of the preset
     string content = 11;

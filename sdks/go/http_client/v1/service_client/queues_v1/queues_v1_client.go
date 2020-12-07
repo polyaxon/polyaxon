@@ -108,7 +108,7 @@ func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientA
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteQueue",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -144,7 +144,7 @@ func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInf
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetQueue",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -252,7 +252,7 @@ func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.C
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListQueueNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/names",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{name}/queues/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -288,7 +288,7 @@ func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListQueues",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{name}/queues",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

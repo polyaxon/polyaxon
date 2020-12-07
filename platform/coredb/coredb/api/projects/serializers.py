@@ -46,7 +46,10 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class ProjectDetailSerializer(ProjectSerializer, TagsMixin):
     class Meta(ProjectSerializer.Meta):
-        fields = ProjectSerializer.Meta.fields + ("readme",)
+        fields = ProjectSerializer.Meta.fields + (
+            "readme",
+            "live_state",
+        )
 
     def update(self, instance, validated_data):
         validated_data = self.validated_tags(

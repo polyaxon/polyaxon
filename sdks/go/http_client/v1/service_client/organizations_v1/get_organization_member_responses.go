@@ -87,7 +87,7 @@ type GetOrganizationMemberOK struct {
 }
 
 func (o *GetOrganizationMemberOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{user}][%d] getOrganizationMemberOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{name}][%d] getOrganizationMemberOK  %+v", 200, o.Payload)
 }
 
 func (o *GetOrganizationMemberOK) GetPayload() *service_model.V1OrganizationMember {
@@ -120,7 +120,7 @@ type GetOrganizationMemberNoContent struct {
 }
 
 func (o *GetOrganizationMemberNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{user}][%d] getOrganizationMemberNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{name}][%d] getOrganizationMemberNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetOrganizationMemberNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetOrganizationMemberForbidden struct {
 }
 
 func (o *GetOrganizationMemberForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{user}][%d] getOrganizationMemberForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{name}][%d] getOrganizationMemberForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetOrganizationMemberForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetOrganizationMemberNotFound struct {
 }
 
 func (o *GetOrganizationMemberNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{user}][%d] getOrganizationMemberNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{name}][%d] getOrganizationMemberNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetOrganizationMemberNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetOrganizationMemberDefault) Code() int {
 }
 
 func (o *GetOrganizationMemberDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{user}][%d] GetOrganizationMember default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/{name}][%d] GetOrganizationMember default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetOrganizationMemberDefault) GetPayload() *service_model.RuntimeError {

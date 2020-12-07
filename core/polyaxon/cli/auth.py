@@ -27,7 +27,7 @@ from polyaxon.cli.dashboard import get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error, handle_command_not_in_ce
 from polyaxon.cli.session import session_expired, set_versions_config
 from polyaxon.client import PolyaxonClient
-from polyaxon.logger import logger
+from polyaxon.logger import clean_outputs, logger
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.user import UserConfigManager
@@ -39,6 +39,7 @@ from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 @click.option("--token", "-t", help="Polyaxon token.")
 @click.option("--username", "-u", help="Polyaxon username or email.")
 @click.option("--password", "-p", help="Polyaxon password.")
+@clean_outputs
 def login(token, username, password):
     """Login to Polyaxon Cloud or Polyaxon EE."""
     if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce:
@@ -120,6 +121,7 @@ def login(token, username, password):
 
 
 @click.command()
+@clean_outputs
 def logout():
     """Logout Login to Polyaxon Cloud or Polyaxon EE."""
     AuthConfigManager.purge()
@@ -129,6 +131,7 @@ def logout():
 
 
 @click.command()
+@clean_outputs
 def whoami():
     """Show current logged Polyaxon Cloud or Polyaxon EE user."""
     if not settings.CLI_CONFIG or settings.CLI_CONFIG.is_ce:
@@ -144,6 +147,6 @@ def whoami():
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not load user info.", sys_exit=True)
 
-    response = dict_to_tabulate(user.to_dict(), exclude_attrs=["role"])
+    response = dict_to_tabulate(user.to_dict(), exclude_attrs=["role", "theme"])
     Printer.print_header("User info:")
     dict_tabulate(response)

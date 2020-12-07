@@ -16,8 +16,10 @@
 from typing import List
 
 from polyaxon.env_vars.keys import (
+    POLYAXON_KEYS_PLATFORM_HOST,
     POLYAXON_KEYS_UI_ADMIN_ENABLED,
     POLYAXON_KEYS_UI_ASSETS_VERSION,
+    POLYAXON_KEYS_UI_BASE_URL,
     POLYAXON_KEYS_UI_ENABLED,
     POLYAXON_KEYS_UI_OFFLINE,
 )
@@ -26,7 +28,7 @@ from polycommon.config_manager import ConfigManager
 
 def set_api(context, config: ConfigManager, processors: List[str] = None):
     context["ROOT_URLCONF"] = "polyconf.urls"
-    platform_host = config.get_string("POLYAXON_PLATFORM_HOST", is_optional=True)
+    platform_host = config.get_string(POLYAXON_KEYS_PLATFORM_HOST, is_optional=True)
     context["PLATFORM_HOST"] = platform_host
 
     def get_allowed_hosts():
@@ -59,7 +61,8 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
         "django.template.context_processors.tz",
         "django.contrib.messages.context_processors.messages",
         "polycommon.settings.context_processors.version",
-        "polycommon.settings.context_processors.assets_version",
+        "polycommon.settings.context_processors.ui_assets_version",
+        "polycommon.settings.context_processors.ui_base_url",
         "polycommon.settings.context_processors.ui_offline",
         "polycommon.settings.context_processors.ui_enabled",
     ] + processors
@@ -73,6 +76,12 @@ def set_api(context, config: ConfigManager, processors: List[str] = None):
     context["UI_ADMIN_ENABLED"] = config.get_boolean(
         POLYAXON_KEYS_UI_ADMIN_ENABLED, is_optional=True, default=False
     )
+    base_url = config.get_string(POLYAXON_KEYS_UI_BASE_URL, is_optional=True)
+    if base_url:
+        context["UI_BASE_URL"] = base_url
+        context["FORCE_SCRIPT_NAME"] = base_url
+    else:
+        context["UI_BASE_URL"] = "/"
     context["UI_ASSETS_VERSION"] = config.get_string(
         POLYAXON_KEYS_UI_ASSETS_VERSION, is_optional=True, default=""
     )

@@ -28,14 +28,20 @@ message Team {
     // Name
     string name = 2;
 
-    // Name
+    // projects
     repeated string projects = 3;
 
+    // hubs
+    repeated string hubs = 4;
+
+    // registries
+    repeated string registries = 5;
+
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp created_at = 6;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 5;
+    google.protobuf.Timestamp updated_at = 7;
 
 }
 

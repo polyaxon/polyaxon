@@ -53,6 +53,19 @@ class TestV1IOs(BaseTestCase):
         with self.assertRaises(ValidationError):
             V1IO.from_dict({"name": "input1", "type": types.FLOAT, "isFlag": True})
 
+    def test_io_name_blacklist(self):
+        config_dict = {"name": "params"}
+        with self.assertRaises(ValidationError):
+            V1IO.from_dict(config_dict)
+
+        config_dict = {"name": "globals"}
+        with self.assertRaises(ValidationError):
+            V1IO.from_dict(config_dict)
+
+        config_dict = {"name": "connections"}
+        with self.assertRaises(ValidationError):
+            V1IO.from_dict(config_dict)
+
     def test_io_config_optionals(self):
         config_dict = {"name": "input1"}
         config = V1IO.from_dict(config_dict)

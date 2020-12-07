@@ -74,16 +74,16 @@ for the unbookmark run operation typically these are written to a http.Request
 */
 type UnbookmarkRunParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *UnbookmarkRunParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the unbookmark run params
+func (o *UnbookmarkRunParams) WithEntity(entity string) *UnbookmarkRunParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the unbookmark run params
+func (o *UnbookmarkRunParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the unbookmark run params
 func (o *UnbookmarkRunParams) WithOwner(owner string) *UnbookmarkRunParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *UnbookmarkRunParams) WithOwner(owner string) *UnbookmarkRunParams {
 // SetOwner adds the owner to the unbookmark run params
 func (o *UnbookmarkRunParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the unbookmark run params
-func (o *UnbookmarkRunParams) WithProject(project string) *UnbookmarkRunParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the unbookmark run params
-func (o *UnbookmarkRunParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the unbookmark run params
@@ -169,13 +169,13 @@ func (o *UnbookmarkRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

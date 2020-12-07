@@ -87,7 +87,7 @@ type CopyRunOK struct {
 }
 
 func (o *CopyRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] copyRunOK  %+v", 200, o.Payload)
 }
 
 func (o *CopyRunOK) GetPayload() *service_model.V1Run {
@@ -120,7 +120,7 @@ type CopyRunNoContent struct {
 }
 
 func (o *CopyRunNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] copyRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CopyRunNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type CopyRunForbidden struct {
 }
 
 func (o *CopyRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] copyRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CopyRunForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type CopyRunNotFound struct {
 }
 
 func (o *CopyRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] copyRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CopyRunNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *CopyRunDefault) Code() int {
 }
 
 func (o *CopyRunDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] CopyRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] CopyRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *CopyRunDefault) GetPayload() *service_model.RuntimeError {
