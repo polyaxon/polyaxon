@@ -80,6 +80,11 @@ type ListProjectDashboardsParams struct {
 
 	*/
 	Limit *int32
+	/*Name
+	  Entity managing the resource
+
+	*/
+	Name string
 	/*Offset
 	  Pagination offset.
 
@@ -90,11 +95,6 @@ type ListProjectDashboardsParams struct {
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 	/*Query
 	  Query filter the search search.
 
@@ -155,6 +155,17 @@ func (o *ListProjectDashboardsParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithName adds the name to the list project dashboards params
+func (o *ListProjectDashboardsParams) WithName(name string) *ListProjectDashboardsParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the list project dashboards params
+func (o *ListProjectDashboardsParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOffset adds the offset to the list project dashboards params
 func (o *ListProjectDashboardsParams) WithOffset(offset *int32) *ListProjectDashboardsParams {
 	o.SetOffset(offset)
@@ -175,17 +186,6 @@ func (o *ListProjectDashboardsParams) WithOwner(owner string) *ListProjectDashbo
 // SetOwner adds the owner to the list project dashboards params
 func (o *ListProjectDashboardsParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the list project dashboards params
-func (o *ListProjectDashboardsParams) WithProject(project string) *ListProjectDashboardsParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the list project dashboards params
-func (o *ListProjectDashboardsParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithQuery adds the query to the list project dashboards params
@@ -234,6 +234,11 @@ func (o *ListProjectDashboardsParams) WriteToRequest(r runtime.ClientRequest, re
 
 	}
 
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
+		return err
+	}
+
 	if o.Offset != nil {
 
 		// query param offset
@@ -252,11 +257,6 @@ func (o *ListProjectDashboardsParams) WriteToRequest(r runtime.ClientRequest, re
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
-		return err
-	}
-
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
 	}
 

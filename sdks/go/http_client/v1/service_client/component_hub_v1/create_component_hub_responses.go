@@ -87,7 +87,7 @@ type CreateComponentHubOK struct {
 }
 
 func (o *CreateComponentHubOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/components][%d] createComponentHubOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/hub/create][%d] createComponentHubOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateComponentHubOK) GetPayload() *service_model.V1ComponentHub {
@@ -120,7 +120,7 @@ type CreateComponentHubNoContent struct {
 }
 
 func (o *CreateComponentHubNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/components][%d] createComponentHubNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/hub/create][%d] createComponentHubNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateComponentHubNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type CreateComponentHubForbidden struct {
 }
 
 func (o *CreateComponentHubForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/components][%d] createComponentHubForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/hub/create][%d] createComponentHubForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateComponentHubForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type CreateComponentHubNotFound struct {
 }
 
 func (o *CreateComponentHubNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/components][%d] createComponentHubNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/hub/create][%d] createComponentHubNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateComponentHubNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *CreateComponentHubDefault) Code() int {
 }
 
 func (o *CreateComponentHubDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/components][%d] CreateComponentHub default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/hub/create][%d] CreateComponentHub default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *CreateComponentHubDefault) GetPayload() *service_model.RuntimeError {

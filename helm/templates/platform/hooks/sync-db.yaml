@@ -23,7 +23,7 @@ spec:
 {{ include "config.scheduling" . | indent 6 }}
 {{ include "config.imagePullSecrets" . | indent 6}}
       restartPolicy: Never
-      activeDeadlineSeconds: 360
+      activeDeadlineSeconds: 900
       containers:
       - name: sync-db-job
         image: "{{ template "config.apiHooks.image" . }}:{{ template "config.apiHooks.imageTag" . }}"

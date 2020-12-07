@@ -4,8 +4,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **str** |  | [optional] 
-**user** | **str** |  | [optional] 
-**user_email** | **str** |  | [optional] 
 **owner** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
@@ -16,8 +14,8 @@ Name | Type | Description | Notes
 **bookmarked** | **bool** |  | [optional] 
 **readme** | **str** |  | [optional] 
 **settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  | [optional] 
-**teams** | **list[str]** |  | [optional] 
 **role** | **str** |  | [optional] 
+**live_state** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

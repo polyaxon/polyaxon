@@ -74,16 +74,16 @@ for the delete organization member operation typically these are written to a ht
 */
 type DeleteOrganizationMemberParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*User
-	  Memeber under namesapce
-
-	*/
-	User string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *DeleteOrganizationMemberParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the delete organization member params
+func (o *DeleteOrganizationMemberParams) WithName(name string) *DeleteOrganizationMemberParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the delete organization member params
+func (o *DeleteOrganizationMemberParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the delete organization member params
 func (o *DeleteOrganizationMemberParams) WithOwner(owner string) *DeleteOrganizationMemberParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *DeleteOrganizationMemberParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithUser adds the user to the delete organization member params
-func (o *DeleteOrganizationMemberParams) WithUser(user string) *DeleteOrganizationMemberParams {
-	o.SetUser(user)
-	return o
-}
-
-// SetUser adds the user to the delete organization member params
-func (o *DeleteOrganizationMemberParams) SetUser(user string) {
-	o.User = user
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteOrganizationMemberParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *DeleteOrganizationMemberParams) WriteToRequest(r runtime.ClientRequest,
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param user
-	if err := r.SetPathParam("user", o.User); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

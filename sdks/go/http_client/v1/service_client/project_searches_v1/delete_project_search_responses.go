@@ -86,7 +86,7 @@ type DeleteProjectSearchOK struct {
 }
 
 func (o *DeleteProjectSearchOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] deleteProjectSearchOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/searches/{uuid}][%d] deleteProjectSearchOK ", 200)
 }
 
 func (o *DeleteProjectSearchOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteProjectSearchNoContent struct {
 }
 
 func (o *DeleteProjectSearchNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] deleteProjectSearchNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/searches/{uuid}][%d] deleteProjectSearchNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteProjectSearchNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DeleteProjectSearchForbidden struct {
 }
 
 func (o *DeleteProjectSearchForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] deleteProjectSearchForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/searches/{uuid}][%d] deleteProjectSearchForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteProjectSearchForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DeleteProjectSearchNotFound struct {
 }
 
 func (o *DeleteProjectSearchNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] deleteProjectSearchNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/searches/{uuid}][%d] deleteProjectSearchNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteProjectSearchNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DeleteProjectSearchDefault) Code() int {
 }
 
 func (o *DeleteProjectSearchDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] DeleteProjectSearch default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/searches/{uuid}][%d] DeleteProjectSearch default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteProjectSearchDefault) GetPayload() *service_model.RuntimeError {

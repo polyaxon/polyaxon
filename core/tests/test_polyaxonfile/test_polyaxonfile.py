@@ -17,11 +17,12 @@
 import os
 import pytest
 
-from mock import patch
+from mock import MagicMock, patch
 
 from marshmallow import ValidationError
 
 from polyaxon import pkg
+from polyaxon.env_vars.keys import POLYAXON_KEYS_USE_GIT_REGISTRY
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile import check_polyaxonfile
 from polyaxon.polyaxonfile.specs import (
@@ -88,10 +89,25 @@ class TestPolyaxonfiles(BaseTestCase):
         with self.assertRaises(PolyaxonfileError):
             check_polyaxonfile(hub="component:12", is_cli=False, to_op=False)
 
-    def test_from_public_hub(self):
+    def test_from_git_hub(self):
+        os.environ[POLYAXON_KEYS_USE_GIT_REGISTRY] = "true"
         with patch("polyaxon.config_reader.spec._read_from_public_hub") as request_mock:
             request_mock.return_value = os.path.abspath(
                 "tests/fixtures/plain/simple_job.yml"
+            )
+            operation = check_polyaxonfile(hub="component:12", is_cli=False, to_op=True)
+
+        assert request_mock.call_count == 1
+        assert operation.kind == "operation"
+        assert operation.hub_ref == "component:12"
+        del os.environ[POLYAXON_KEYS_USE_GIT_REGISTRY]
+
+    def test_from_public_hub(self):
+        with patch(
+            "polyaxon_sdk.ComponentHubV1Api.get_component_version"
+        ) as request_mock:
+            request_mock.return_value = MagicMock(
+                content=os.path.abspath("tests/fixtures/plain/simple_job.yml"),
             )
             operation = check_polyaxonfile(hub="component:12", is_cli=False, to_op=True)
 

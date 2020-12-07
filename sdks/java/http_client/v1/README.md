@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.3.4
+- API version: 1.4.0
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.3.4</version>
+  <version>1.4.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.3.4"
+compile "org.openapitools:openapi-java-client:1.4.0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.3.4.jar`
+* `target/openapi-java-client-1.4.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -121,7 +121,7 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**getAgent**](docs/AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
 *AgentsV1Api* | [**getAgentState**](docs/AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
 *AgentsV1Api* | [**getAgentStatuses**](docs/AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
-*AgentsV1Api* | [**getAgentToken**](docs/AgentsV1Api.md#getAgentToken) | **GET** /api/v1/orgs/{owner}/agents/{agent}/token | Get agent token
+*AgentsV1Api* | [**getAgentToken**](docs/AgentsV1Api.md#getAgentToken) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/token | Get agent token
 *AgentsV1Api* | [**listAgentNames**](docs/AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
 *AgentsV1Api* | [**listAgents**](docs/AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List agents
 *AgentsV1Api* | [**patchAgent**](docs/AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch agent
@@ -135,13 +135,29 @@ Class | Method | HTTP request | Description
 *AuthV1Api* | [**resetPassword**](docs/AuthV1Api.md#resetPassword) | **POST** /api/v1/auth/reset-password | Reset password
 *AuthV1Api* | [**resetPasswordConfirm**](docs/AuthV1Api.md#resetPasswordConfirm) | **POST** /api/v1/auth/reset-password-confirm | Reset password confirm
 *AuthV1Api* | [**signup**](docs/AuthV1Api.md#signup) | **POST** /api/v1/auth/signup | Signup
-*ComponentHubV1Api* | [**createComponentHub**](docs/ComponentHubV1Api.md#createComponentHub) | **POST** /api/v1/orgs/{owner}/components | Create hub component
-*ComponentHubV1Api* | [**deleteComponentHub**](docs/ComponentHubV1Api.md#deleteComponentHub) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
-*ComponentHubV1Api* | [**getComponentHub**](docs/ComponentHubV1Api.md#getComponentHub) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub component
-*ComponentHubV1Api* | [**listComponentHubNames**](docs/ComponentHubV1Api.md#listComponentHubNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub component names
-*ComponentHubV1Api* | [**listComponentHubs**](docs/ComponentHubV1Api.md#listComponentHubs) | **GET** /api/v1/orgs/{owner}/components | List hub components
-*ComponentHubV1Api* | [**patchComponentHub**](docs/ComponentHubV1Api.md#patchComponentHub) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub component
-*ComponentHubV1Api* | [**updateComponentHub**](docs/ComponentHubV1Api.md#updateComponentHub) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub component
+*ComponentHubV1Api* | [**archiveComponentHub**](docs/ComponentHubV1Api.md#archiveComponentHub) | **POST** /api/v1/{owner}/hub/{name}/archive | Archive hub component
+*ComponentHubV1Api* | [**bookmarkComponentHub**](docs/ComponentHubV1Api.md#bookmarkComponentHub) | **POST** /api/v1/{owner}/hub/{name}/bookmark | Bookmark component hub
+*ComponentHubV1Api* | [**createComponentHub**](docs/ComponentHubV1Api.md#createComponentHub) | **POST** /api/v1/{owner}/hub/create | Create hub component
+*ComponentHubV1Api* | [**createComponentVersion**](docs/ComponentHubV1Api.md#createComponentVersion) | **POST** /api/v1/{owner}/hub/{component}/versions | Create component version
+*ComponentHubV1Api* | [**createComponentVersionStage**](docs/ComponentHubV1Api.md#createComponentVersionStage) | **POST** /api/v1/{owner}/hub/{entity}/versions/{name}/stages | Create new component version stage
+*ComponentHubV1Api* | [**deleteComponentHub**](docs/ComponentHubV1Api.md#deleteComponentHub) | **DELETE** /api/v1/{owner}/hub/{name} | Delete hub component
+*ComponentHubV1Api* | [**deleteComponentVersion**](docs/ComponentHubV1Api.md#deleteComponentVersion) | **DELETE** /api/v1/{owner}/hub/{entity}/versions/{name} | Delete component version
+*ComponentHubV1Api* | [**getComponentHub**](docs/ComponentHubV1Api.md#getComponentHub) | **GET** /api/v1/{owner}/hub/{name} | Get hub component
+*ComponentHubV1Api* | [**getComponentHubSettings**](docs/ComponentHubV1Api.md#getComponentHubSettings) | **GET** /api/v1/{owner}/hub/{name}/settings | Get hub component settings
+*ComponentHubV1Api* | [**getComponentVersion**](docs/ComponentHubV1Api.md#getComponentVersion) | **GET** /api/v1/{owner}/hub/{entity}/versions/{name} | Get component version
+*ComponentHubV1Api* | [**getComponentVersionStages**](docs/ComponentHubV1Api.md#getComponentVersionStages) | **GET** /api/v1/{owner}/hub/{entity}/versions/{name}/stages | Get component version stages
+*ComponentHubV1Api* | [**listComponentHubNames**](docs/ComponentHubV1Api.md#listComponentHubNames) | **GET** /api/v1/{owner}/hub/names | List hub component names
+*ComponentHubV1Api* | [**listComponentHubs**](docs/ComponentHubV1Api.md#listComponentHubs) | **GET** /api/v1/{owner}/hub/list | List hub components
+*ComponentHubV1Api* | [**listComponentVersionNames**](docs/ComponentHubV1Api.md#listComponentVersionNames) | **GET** /api/v1/{owner}/hub/{name}/versions/names | List component version names
+*ComponentHubV1Api* | [**listComponentVersions**](docs/ComponentHubV1Api.md#listComponentVersions) | **GET** /api/v1/{owner}/hub/{name}/versions | List component versions
+*ComponentHubV1Api* | [**patchComponentHub**](docs/ComponentHubV1Api.md#patchComponentHub) | **PATCH** /api/v1/{owner}/hub/{component.name} | Patch hub component
+*ComponentHubV1Api* | [**patchComponentHubSettings**](docs/ComponentHubV1Api.md#patchComponentHubSettings) | **PATCH** /api/v1/{owner}/hub/{component}/settings | Patch hub component settings
+*ComponentHubV1Api* | [**patchComponentVersion**](docs/ComponentHubV1Api.md#patchComponentVersion) | **PATCH** /api/v1/{owner}/hub/{component}/versions/{version.name} | Patch component version
+*ComponentHubV1Api* | [**restoreComponentHub**](docs/ComponentHubV1Api.md#restoreComponentHub) | **POST** /api/v1/{owner}/hub/{name}/restore | Restore hub component
+*ComponentHubV1Api* | [**unbookmarkComponentHub**](docs/ComponentHubV1Api.md#unbookmarkComponentHub) | **DELETE** /api/v1/{owner}/hub/{name}/unbookmark | Unbookmark component hub
+*ComponentHubV1Api* | [**updateComponentHub**](docs/ComponentHubV1Api.md#updateComponentHub) | **PUT** /api/v1/{owner}/hub/{component.name} | Update hub component
+*ComponentHubV1Api* | [**updateComponentHubSettings**](docs/ComponentHubV1Api.md#updateComponentHubSettings) | **PUT** /api/v1/{owner}/hub/{component}/settings | Update hub component settings
+*ComponentHubV1Api* | [**updateComponentVersion**](docs/ComponentHubV1Api.md#updateComponentVersion) | **PUT** /api/v1/{owner}/hub/{component}/versions/{version.name} | Update component version
 *ConnectionsV1Api* | [**createConnection**](docs/ConnectionsV1Api.md#createConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
 *ConnectionsV1Api* | [**deleteConnection**](docs/ConnectionsV1Api.md#deleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
 *ConnectionsV1Api* | [**getConnection**](docs/ConnectionsV1Api.md#getConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
@@ -156,21 +172,37 @@ Class | Method | HTTP request | Description
 *DashboardsV1Api* | [**listDashboards**](docs/DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List dashboards
 *DashboardsV1Api* | [**patchDashboard**](docs/DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Patch dashboard
 *DashboardsV1Api* | [**updateDashboard**](docs/DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update dashboard
-*ModelRegistryV1Api* | [**createModelRegistry**](docs/ModelRegistryV1Api.md#createModelRegistry) | **POST** /api/v1/orgs/{owner}/models | Create hub model
-*ModelRegistryV1Api* | [**deleteModelRegistry**](docs/ModelRegistryV1Api.md#deleteModelRegistry) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete hub model
-*ModelRegistryV1Api* | [**getModelRegistry**](docs/ModelRegistryV1Api.md#getModelRegistry) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get hub model
-*ModelRegistryV1Api* | [**listModelRegistry**](docs/ModelRegistryV1Api.md#listModelRegistry) | **GET** /api/v1/orgs/{owner}/models | List hub models
-*ModelRegistryV1Api* | [**listModelRegistryNames**](docs/ModelRegistryV1Api.md#listModelRegistryNames) | **GET** /api/v1/orgs/{owner}/models/names | List hub model names
-*ModelRegistryV1Api* | [**patchModelRegistry**](docs/ModelRegistryV1Api.md#patchModelRegistry) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch hub model
-*ModelRegistryV1Api* | [**updateModelRegistry**](docs/ModelRegistryV1Api.md#updateModelRegistry) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update hub model
+*ModelRegistryV1Api* | [**archiveModelRegistry**](docs/ModelRegistryV1Api.md#archiveModelRegistry) | **POST** /api/v1/{owner}/registry/{name}/archive | Archive registry model
+*ModelRegistryV1Api* | [**bookmarkModelRegistry**](docs/ModelRegistryV1Api.md#bookmarkModelRegistry) | **POST** /api/v1/{owner}/registry/{name}/bookmark | Bookmark registry model
+*ModelRegistryV1Api* | [**createModelRegistry**](docs/ModelRegistryV1Api.md#createModelRegistry) | **POST** /api/v1/{owner}/registry/create | Create registry model
+*ModelRegistryV1Api* | [**createModelVersion**](docs/ModelRegistryV1Api.md#createModelVersion) | **POST** /api/v1/{owner}/registry/{model}/versions | Create model version
+*ModelRegistryV1Api* | [**createModelVersionStage**](docs/ModelRegistryV1Api.md#createModelVersionStage) | **POST** /api/v1/{owner}/registry/{entity}/versions/{name}/stages | Create new model version stage
+*ModelRegistryV1Api* | [**deleteModelRegistry**](docs/ModelRegistryV1Api.md#deleteModelRegistry) | **DELETE** /api/v1/{owner}/registry/{name} | Delete registry model
+*ModelRegistryV1Api* | [**deleteModelVersion**](docs/ModelRegistryV1Api.md#deleteModelVersion) | **DELETE** /api/v1/{owner}/registry/{entity}/versions/{name} | Delete model version
+*ModelRegistryV1Api* | [**getModelRegistry**](docs/ModelRegistryV1Api.md#getModelRegistry) | **GET** /api/v1/{owner}/registry/{name} | Get registry model
+*ModelRegistryV1Api* | [**getModelRegistrySettings**](docs/ModelRegistryV1Api.md#getModelRegistrySettings) | **GET** /api/v1/{owner}/registry/{name}/settings | Get registry model settings
+*ModelRegistryV1Api* | [**getModelVersion**](docs/ModelRegistryV1Api.md#getModelVersion) | **GET** /api/v1/{owner}/registry/{entity}/versions/{name} | Get model version
+*ModelRegistryV1Api* | [**getModelVersionStages**](docs/ModelRegistryV1Api.md#getModelVersionStages) | **GET** /api/v1/{owner}/registry/{entity}/versions/{name}/stages | Get model version stages
+*ModelRegistryV1Api* | [**listModelRegistries**](docs/ModelRegistryV1Api.md#listModelRegistries) | **GET** /api/v1/{owner}/registry/list | List registry models
+*ModelRegistryV1Api* | [**listModelRegistryNames**](docs/ModelRegistryV1Api.md#listModelRegistryNames) | **GET** /api/v1/{owner}/registry/names | List registry model names
+*ModelRegistryV1Api* | [**listModelVersionNames**](docs/ModelRegistryV1Api.md#listModelVersionNames) | **GET** /api/v1/{owner}/registry/{name}/versions/names | List model versions names
+*ModelRegistryV1Api* | [**listModelVersions**](docs/ModelRegistryV1Api.md#listModelVersions) | **GET** /api/v1/{owner}/registry/{name}/versions | List model versions
+*ModelRegistryV1Api* | [**patchModelRegistry**](docs/ModelRegistryV1Api.md#patchModelRegistry) | **PATCH** /api/v1/{owner}/registry/{model.name} | Patch registry model
+*ModelRegistryV1Api* | [**patchModelRegistrySettings**](docs/ModelRegistryV1Api.md#patchModelRegistrySettings) | **PATCH** /api/v1/{owner}/registry/{model}/settings | Patch registry model settings
+*ModelRegistryV1Api* | [**patchModelVersion**](docs/ModelRegistryV1Api.md#patchModelVersion) | **PATCH** /api/v1/{owner}/registry/{model}/versions/{version.name} | Patch model version
+*ModelRegistryV1Api* | [**restoreModelRegistry**](docs/ModelRegistryV1Api.md#restoreModelRegistry) | **POST** /api/v1/{owner}/registry/{name}/restore | Restore registry model
+*ModelRegistryV1Api* | [**unbookmarkModelRegistry**](docs/ModelRegistryV1Api.md#unbookmarkModelRegistry) | **DELETE** /api/v1/{owner}/registry/{name}/unbookmark | Unbookmark registry model
+*ModelRegistryV1Api* | [**updateModelRegistry**](docs/ModelRegistryV1Api.md#updateModelRegistry) | **PUT** /api/v1/{owner}/registry/{model.name} | Update registry model
+*ModelRegistryV1Api* | [**updateModelRegistrySettings**](docs/ModelRegistryV1Api.md#updateModelRegistrySettings) | **PUT** /api/v1/{owner}/registry/{model}/settings | Update registry model settings
+*ModelRegistryV1Api* | [**updateModelVersion**](docs/ModelRegistryV1Api.md#updateModelVersion) | **PUT** /api/v1/{owner}/registry/{model}/versions/{version.name} | Update model version
 *OrganizationsV1Api* | [**createOrganization**](docs/OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | Create organization
 *OrganizationsV1Api* | [**createOrganizationMember**](docs/OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Create organization member
 *OrganizationsV1Api* | [**deleteOrganization**](docs/OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
 *OrganizationsV1Api* | [**deleteOrganizationInvitation**](docs/OrganizationsV1Api.md#deleteOrganizationInvitation) | **DELETE** /api/v1/orgs/{owner}/invitations | Delete organization invitation details
-*OrganizationsV1Api* | [**deleteOrganizationMember**](docs/OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
+*OrganizationsV1Api* | [**deleteOrganizationMember**](docs/OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{name} | Delete organization member details
 *OrganizationsV1Api* | [**getOrganization**](docs/OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Get organization
 *OrganizationsV1Api* | [**getOrganizationInvitation**](docs/OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
-*OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
+*OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{name} | Get organization member details
 *OrganizationsV1Api* | [**getOrganizationSettings**](docs/OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
 *OrganizationsV1Api* | [**listOrganizationMemberNames**](docs/OrganizationsV1Api.md#listOrganizationMemberNames) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 *OrganizationsV1Api* | [**listOrganizationMembers**](docs/OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
@@ -193,99 +225,96 @@ Class | Method | HTTP request | Description
 *PresetsV1Api* | [**patchPreset**](docs/PresetsV1Api.md#patchPreset) | **PATCH** /api/v1/orgs/{owner}/presets/{preset.uuid} | Patch scheduling preset
 *PresetsV1Api* | [**updatePreset**](docs/PresetsV1Api.md#updatePreset) | **PUT** /api/v1/orgs/{owner}/presets/{preset.uuid} | Update scheduling preset
 *ProjectDashboardsV1Api* | [**createProjectDashboard**](docs/ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
-*ProjectDashboardsV1Api* | [**deleteProjectDashboard**](docs/ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
-*ProjectDashboardsV1Api* | [**getProjectDashboard**](docs/ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
-*ProjectDashboardsV1Api* | [**listProjectDashboardNames**](docs/ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
-*ProjectDashboardsV1Api* | [**listProjectDashboards**](docs/ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+*ProjectDashboardsV1Api* | [**deleteProjectDashboard**](docs/ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{entity}/dashboards/{uuid} | Delete project dashboard
+*ProjectDashboardsV1Api* | [**getProjectDashboard**](docs/ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{entity}/dashboards/{uuid} | Get project dashboard
+*ProjectDashboardsV1Api* | [**listProjectDashboardNames**](docs/ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{name}/dashboards/names | List project dashboard
+*ProjectDashboardsV1Api* | [**listProjectDashboards**](docs/ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{name}/dashboards | List project dashboards
 *ProjectDashboardsV1Api* | [**patchProjectDashboard**](docs/ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-*ProjectDashboardsV1Api* | [**promoteProjectDashboard**](docs/ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{uuid}/promote | Promote project dashboard
+*ProjectDashboardsV1Api* | [**promoteProjectDashboard**](docs/ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{entity}/dashboards/{uuid}/promote | Promote project dashboard
 *ProjectDashboardsV1Api* | [**updateProjectDashboard**](docs/ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 *ProjectSearchesV1Api* | [**createProjectSearch**](docs/ProjectSearchesV1Api.md#createProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
-*ProjectSearchesV1Api* | [**deleteProjectSearch**](docs/ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
-*ProjectSearchesV1Api* | [**getProjectSearch**](docs/ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
-*ProjectSearchesV1Api* | [**listProjectSearchNames**](docs/ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
-*ProjectSearchesV1Api* | [**listProjectSearches**](docs/ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+*ProjectSearchesV1Api* | [**deleteProjectSearch**](docs/ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{entity}/searches/{uuid} | Delete project search
+*ProjectSearchesV1Api* | [**getProjectSearch**](docs/ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{entity}/searches/{uuid} | Get project search
+*ProjectSearchesV1Api* | [**listProjectSearchNames**](docs/ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{name}/searches/names | List project search names
+*ProjectSearchesV1Api* | [**listProjectSearches**](docs/ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{name}/searches | List project searches
 *ProjectSearchesV1Api* | [**patchProjectSearch**](docs/ProjectSearchesV1Api.md#patchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
-*ProjectSearchesV1Api* | [**promoteProjectSearch**](docs/ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+*ProjectSearchesV1Api* | [**promoteProjectSearch**](docs/ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{entity}/searches/{uuid}/promote | Promote project search
 *ProjectSearchesV1Api* | [**updateProjectSearch**](docs/ProjectSearchesV1Api.md#updateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
-*ProjectsV1Api* | [**archiveProject**](docs/ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Archive project
-*ProjectsV1Api* | [**bookmarkProject**](docs/ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
+*ProjectsV1Api* | [**archiveProject**](docs/ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{name}/archive | Archive project
+*ProjectsV1Api* | [**bookmarkProject**](docs/ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{name}/bookmark | Bookmark project
 *ProjectsV1Api* | [**createProject**](docs/ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Create new project
-*ProjectsV1Api* | [**deleteProject**](docs/ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete project
-*ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
-*ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
-*ProjectsV1Api* | [**fetchProjectTeams**](docs/ProjectsV1Api.md#fetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
-*ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Get project
-*ProjectsV1Api* | [**getProjectSettings**](docs/ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
+*ProjectsV1Api* | [**deleteProject**](docs/ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{name} | Delete project
+*ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{name}/ci | Disbale project CI
+*ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{name}/ci | Enable project CI
+*ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{name} | Get project
+*ProjectsV1Api* | [**getProjectSettings**](docs/ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{name}/settings | Get Project settings
 *ProjectsV1Api* | [**listArchivedProjects**](docs/ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
 *ProjectsV1Api* | [**listBookmarkedProjects**](docs/ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
 *ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
 *ProjectsV1Api* | [**listProjects**](docs/ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List projects
 *ProjectsV1Api* | [**patchProject**](docs/ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
 *ProjectsV1Api* | [**patchProjectSettings**](docs/ProjectsV1Api.md#patchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
-*ProjectsV1Api* | [**patchProjectTeams**](docs/ProjectsV1Api.md#patchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
-*ProjectsV1Api* | [**restoreProject**](docs/ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Restore project
-*ProjectsV1Api* | [**unbookmarkProject**](docs/ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
+*ProjectsV1Api* | [**restoreProject**](docs/ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{name}/restore | Restore project
+*ProjectsV1Api* | [**unbookmarkProject**](docs/ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{name}/unbookmark | Unbookmark project
 *ProjectsV1Api* | [**updateProject**](docs/ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Update project
 *ProjectsV1Api* | [**updateProjectSettings**](docs/ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
-*ProjectsV1Api* | [**updateProjectTeams**](docs/ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
 *ProjectsV1Api* | [**uploadProjectArtifact**](docs/ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
 *QueuesV1Api* | [**createQueue**](docs/QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Create queue
-*QueuesV1Api* | [**deleteQueue**](docs/QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete queue
-*QueuesV1Api* | [**getQueue**](docs/QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Get queue
+*QueuesV1Api* | [**deleteQueue**](docs/QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid} | Delete queue
+*QueuesV1Api* | [**getQueue**](docs/QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid} | Get queue
 *QueuesV1Api* | [**listOrganizationQueueNames**](docs/QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List organization level queues names
 *QueuesV1Api* | [**listOrganizationQueues**](docs/QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
-*QueuesV1Api* | [**listQueueNames**](docs/QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
-*QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
+*QueuesV1Api* | [**listQueueNames**](docs/QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{name}/queues/names | List queues names
+*QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{name}/queues | List queues
 *QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Patch queue
 *QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Update queue
-*RunsV1Api* | [**approveRun**](docs/RunsV1Api.md#approveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/approve | Approve run
+*RunsV1Api* | [**approveRun**](docs/RunsV1Api.md#approveRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/approve | Approve run
 *RunsV1Api* | [**approveRuns**](docs/RunsV1Api.md#approveRuns) | **POST** /api/v1/{owner}/{project}/runs/approve | Approve runs
-*RunsV1Api* | [**archiveRun**](docs/RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
-*RunsV1Api* | [**bookmarkRun**](docs/RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
+*RunsV1Api* | [**archiveRun**](docs/RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/archive | Archive run
+*RunsV1Api* | [**bookmarkRun**](docs/RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/bookmark | Bookmark run
 *RunsV1Api* | [**bookmarkRuns**](docs/RunsV1Api.md#bookmarkRuns) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
 *RunsV1Api* | [**collectRunLogs**](docs/RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
-*RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
+*RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy | Restart run with copy
 *RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 *RunsV1Api* | [**createRunArtifactsLineage**](docs/RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run artifacts lineage
 *RunsV1Api* | [**createRunStatus**](docs/RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
-*RunsV1Api* | [**deleteRun**](docs/RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
+*RunsV1Api* | [**deleteRun**](docs/RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid} | Delete run
 *RunsV1Api* | [**deleteRunArtifact**](docs/RunsV1Api.md#deleteRunArtifact) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Delete run artifact
 *RunsV1Api* | [**deleteRunArtifactLineage**](docs/RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
 *RunsV1Api* | [**deleteRunArtifacts**](docs/RunsV1Api.md#deleteRunArtifacts) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Delete run artifacts
 *RunsV1Api* | [**deleteRuns**](docs/RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 *RunsV1Api* | [**getMultiRunEvents**](docs/RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
-*RunsV1Api* | [**getRun**](docs/RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
+*RunsV1Api* | [**getRun**](docs/RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{entity}/runs/{uuid} | Get run
 *RunsV1Api* | [**getRunArtifact**](docs/RunsV1Api.md#getRunArtifact) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Get run artifact
 *RunsV1Api* | [**getRunArtifactLineage**](docs/RunsV1Api.md#getRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Get run artifacts lineage
 *RunsV1Api* | [**getRunArtifacts**](docs/RunsV1Api.md#getRunArtifacts) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Get run artifacts
-*RunsV1Api* | [**getRunArtifactsLineage**](docs/RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
-*RunsV1Api* | [**getRunArtifactsLineageNames**](docs/RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
+*RunsV1Api* | [**getRunArtifactsLineage**](docs/RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
+*RunsV1Api* | [**getRunArtifactsLineageNames**](docs/RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
 *RunsV1Api* | [**getRunArtifactsTree**](docs/RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
 *RunsV1Api* | [**getRunEvents**](docs/RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 *RunsV1Api* | [**getRunLogs**](docs/RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
-*RunsV1Api* | [**getRunNamespace**](docs/RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
+*RunsV1Api* | [**getRunNamespace**](docs/RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/namespace | Get Run namespace
 *RunsV1Api* | [**getRunResources**](docs/RunsV1Api.md#getRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
-*RunsV1Api* | [**getRunSettings**](docs/RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
-*RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run statuses
-*RunsV1Api* | [**getRunsArtifactsLineage**](docs/RunsV1Api.md#getRunsArtifactsLineage) | **GET** /api/v1/{owner}/{project}/runs/artifacts_lineage | Get runs artifacts lineage
-*RunsV1Api* | [**impersonateToken**](docs/RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
-*RunsV1Api* | [**invalidateRun**](docs/RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
+*RunsV1Api* | [**getRunSettings**](docs/RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/settings | Get Run settings
+*RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/statuses | Get run statuses
+*RunsV1Api* | [**getRunsArtifactsLineage**](docs/RunsV1Api.md#getRunsArtifactsLineage) | **GET** /api/v1/{owner}/{name}/runs/artifacts_lineage | Get runs artifacts lineage
+*RunsV1Api* | [**impersonateToken**](docs/RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/impersonate | Impersonate run token
+*RunsV1Api* | [**invalidateRun**](docs/RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/invalidate | Invalidate run
 *RunsV1Api* | [**invalidateRuns**](docs/RunsV1Api.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 *RunsV1Api* | [**listArchivedRuns**](docs/RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 *RunsV1Api* | [**listBookmarkedRuns**](docs/RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
-*RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
+*RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{name}/runs | List runs
 *RunsV1Api* | [**notifyRunStatus**](docs/RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 *RunsV1Api* | [**patchRun**](docs/RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-*RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
-*RunsV1Api* | [**restoreRun**](docs/RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
-*RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
-*RunsV1Api* | [**startRunTensorboard**](docs/RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
-*RunsV1Api* | [**stopRun**](docs/RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
-*RunsV1Api* | [**stopRunTensorboard**](docs/RunsV1Api.md#stopRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
+*RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart | Restart run
+*RunsV1Api* | [**restoreRun**](docs/RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/restore | Restore run
+*RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume | Resume run
+*RunsV1Api* | [**startRunTensorboard**](docs/RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start | Start run tensorboard
+*RunsV1Api* | [**stopRun**](docs/RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/stop | Stop run
+*RunsV1Api* | [**stopRunTensorboard**](docs/RunsV1Api.md#stopRunTensorboard) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 *RunsV1Api* | [**stopRuns**](docs/RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *RunsV1Api* | [**tagRuns**](docs/RunsV1Api.md#tagRuns) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
-*RunsV1Api* | [**unbookmarkRun**](docs/RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
+*RunsV1Api* | [**unbookmarkRun**](docs/RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark | Unbookmark run
 *RunsV1Api* | [**updateRun**](docs/RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *RunsV1Api* | [**uploadRunArtifact**](docs/RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
 *RunsV1Api* | [**uploadRunLogs**](docs/RunsV1Api.md#uploadRunLogs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
@@ -299,11 +328,11 @@ Class | Method | HTTP request | Description
 *SearchesV1Api* | [**updateSearch**](docs/SearchesV1Api.md#updateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
 *TeamsV1Api* | [**createTeam**](docs/TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create team
 *TeamsV1Api* | [**createTeamMember**](docs/TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create team member
-*TeamsV1Api* | [**deleteTeam**](docs/TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete team
+*TeamsV1Api* | [**deleteTeam**](docs/TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{name} | Delete team
 *TeamsV1Api* | [**deleteTeamMember**](docs/TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete team member details
-*TeamsV1Api* | [**getTeam**](docs/TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get team
+*TeamsV1Api* | [**getTeam**](docs/TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{name} | Get team
 *TeamsV1Api* | [**getTeamMember**](docs/TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get team member details
-*TeamsV1Api* | [**listTeamMembers**](docs/TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get team members
+*TeamsV1Api* | [**listTeamMembers**](docs/TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{name}/members | Get team members
 *TeamsV1Api* | [**listTeamNames**](docs/TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
 *TeamsV1Api* | [**listTeams**](docs/TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List teams
 *TeamsV1Api* | [**patchTeam**](docs/TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
@@ -354,6 +383,8 @@ Class | Method | HTTP request | Description
  - [V1CompiledOperation](docs/V1CompiledOperation.md)
  - [V1Component](docs/V1Component.md)
  - [V1ComponentHub](docs/V1ComponentHub.md)
+ - [V1ComponentHubSettings](docs/V1ComponentHubSettings.md)
+ - [V1ComponentVersion](docs/V1ComponentVersion.md)
  - [V1ConnectionKind](docs/V1ConnectionKind.md)
  - [V1ConnectionResponse](docs/V1ConnectionResponse.md)
  - [V1ConnectionSchema](docs/V1ConnectionSchema.md)
@@ -370,6 +401,7 @@ Class | Method | HTTP request | Description
  - [V1EarlyStopping](docs/V1EarlyStopping.md)
  - [V1EntitiesTags](docs/V1EntitiesTags.md)
  - [V1EntityNotificationBody](docs/V1EntityNotificationBody.md)
+ - [V1EntityStageBodyRequest](docs/V1EntityStageBodyRequest.md)
  - [V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
  - [V1Environment](docs/V1Environment.md)
  - [V1Event](docs/V1Event.md)
@@ -427,9 +459,11 @@ Class | Method | HTTP request | Description
  - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
  - [V1ListBookmarksResponse](docs/V1ListBookmarksResponse.md)
  - [V1ListComponentHubsResponse](docs/V1ListComponentHubsResponse.md)
+ - [V1ListComponentVersionsResponse](docs/V1ListComponentVersionsResponse.md)
  - [V1ListConnectionsResponse](docs/V1ListConnectionsResponse.md)
  - [V1ListDashboardsResponse](docs/V1ListDashboardsResponse.md)
- - [V1ListModelRegistryResponse](docs/V1ListModelRegistryResponse.md)
+ - [V1ListModelRegistriesResponse](docs/V1ListModelRegistriesResponse.md)
+ - [V1ListModelVersionsResponse](docs/V1ListModelVersionsResponse.md)
  - [V1ListOrganizationMembersResponse](docs/V1ListOrganizationMembersResponse.md)
  - [V1ListOrganizationsResponse](docs/V1ListOrganizationsResponse.md)
  - [V1ListPresetsResponse](docs/V1ListPresetsResponse.md)
@@ -451,6 +485,8 @@ Class | Method | HTTP request | Description
  - [V1MedianStoppingPolicy](docs/V1MedianStoppingPolicy.md)
  - [V1MetricEarlyStopping](docs/V1MetricEarlyStopping.md)
  - [V1ModelRegistry](docs/V1ModelRegistry.md)
+ - [V1ModelRegistrySettings](docs/V1ModelRegistrySettings.md)
+ - [V1ModelVersion](docs/V1ModelVersion.md)
  - [V1Notification](docs/V1Notification.md)
  - [V1Operation](docs/V1Operation.md)
  - [V1OperationBody](docs/V1OperationBody.md)
@@ -460,6 +496,7 @@ Class | Method | HTTP request | Description
  - [V1OptimizationResource](docs/V1OptimizationResource.md)
  - [V1Organization](docs/V1Organization.md)
  - [V1OrganizationMember](docs/V1OrganizationMember.md)
+ - [V1OwnerSubEntityResourceRequestByUid](docs/V1OwnerSubEntityResourceRequestByUid.md)
  - [V1Param](docs/V1Param.md)
  - [V1ParamSearch](docs/V1ParamSearch.md)
  - [V1PasswordChange](docs/V1PasswordChange.md)
@@ -472,9 +509,7 @@ Class | Method | HTTP request | Description
  - [V1PolyaxonSidecarContainer](docs/V1PolyaxonSidecarContainer.md)
  - [V1Preset](docs/V1Preset.md)
  - [V1Project](docs/V1Project.md)
- - [V1ProjectEntityResourceRequest](docs/V1ProjectEntityResourceRequest.md)
  - [V1ProjectSettings](docs/V1ProjectSettings.md)
- - [V1ProjectTeams](docs/V1ProjectTeams.md)
  - [V1PytorchJob](docs/V1PytorchJob.md)
  - [V1Queue](docs/V1Queue.md)
  - [V1RandomSearch](docs/V1RandomSearch.md)
@@ -485,6 +520,7 @@ Class | Method | HTTP request | Description
  - [V1RunArtifact](docs/V1RunArtifact.md)
  - [V1RunArtifacts](docs/V1RunArtifacts.md)
  - [V1RunKind](docs/V1RunKind.md)
+ - [V1RunReferenceCatalog](docs/V1RunReferenceCatalog.md)
  - [V1RunSchema](docs/V1RunSchema.md)
  - [V1RunSettings](docs/V1RunSettings.md)
  - [V1RunSettingsCatalog](docs/V1RunSettingsCatalog.md)
@@ -498,6 +534,9 @@ Class | Method | HTTP request | Description
  - [V1Spark](docs/V1Spark.md)
  - [V1SparkReplica](docs/V1SparkReplica.md)
  - [V1SparkType](docs/V1SparkType.md)
+ - [V1Stage](docs/V1Stage.md)
+ - [V1StageCondition](docs/V1StageCondition.md)
+ - [V1Stages](docs/V1Stages.md)
  - [V1Status](docs/V1Status.md)
  - [V1StatusCond](docs/V1StatusCond.md)
  - [V1StatusCondition](docs/V1StatusCondition.md)

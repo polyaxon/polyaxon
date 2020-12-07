@@ -41,11 +41,11 @@ type V1Preset struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
-	// Optional a flag to disable the scheduling preset
-	Disabled bool `json:"disabled,omitempty"`
-
 	// Optional a flag to freeze the scheduling preset
 	Frozen bool `json:"frozen,omitempty"`
+
+	// Current live state
+	LiveState int32 `json:"live_state,omitempty"`
 
 	// Name
 	Name string `json:"name,omitempty"`

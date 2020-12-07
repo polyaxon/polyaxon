@@ -81,16 +81,16 @@ type CopyRunParams struct {
 
 	*/
 	Body *service_model.V1Run
+	/*EntityEntity
+	  Owner of the namespace
+
+	*/
+	EntityEntity string
 	/*EntityOwner
 	  Owner of the namespace
 
 	*/
 	EntityOwner string
-	/*EntityProject
-	  Project
-
-	*/
-	EntityProject string
 	/*EntityUUID
 	  Uuid identifier of the entity
 
@@ -146,6 +146,17 @@ func (o *CopyRunParams) SetBody(body *service_model.V1Run) {
 	o.Body = body
 }
 
+// WithEntityEntity adds the entityEntity to the copy run params
+func (o *CopyRunParams) WithEntityEntity(entityEntity string) *CopyRunParams {
+	o.SetEntityEntity(entityEntity)
+	return o
+}
+
+// SetEntityEntity adds the entityEntity to the copy run params
+func (o *CopyRunParams) SetEntityEntity(entityEntity string) {
+	o.EntityEntity = entityEntity
+}
+
 // WithEntityOwner adds the entityOwner to the copy run params
 func (o *CopyRunParams) WithEntityOwner(entityOwner string) *CopyRunParams {
 	o.SetEntityOwner(entityOwner)
@@ -155,17 +166,6 @@ func (o *CopyRunParams) WithEntityOwner(entityOwner string) *CopyRunParams {
 // SetEntityOwner adds the entityOwner to the copy run params
 func (o *CopyRunParams) SetEntityOwner(entityOwner string) {
 	o.EntityOwner = entityOwner
-}
-
-// WithEntityProject adds the entityProject to the copy run params
-func (o *CopyRunParams) WithEntityProject(entityProject string) *CopyRunParams {
-	o.SetEntityProject(entityProject)
-	return o
-}
-
-// SetEntityProject adds the entityProject to the copy run params
-func (o *CopyRunParams) SetEntityProject(entityProject string) {
-	o.EntityProject = entityProject
 }
 
 // WithEntityUUID adds the entityUUID to the copy run params
@@ -193,13 +193,13 @@ func (o *CopyRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regis
 		}
 	}
 
-	// path param entity.owner
-	if err := r.SetPathParam("entity.owner", o.EntityOwner); err != nil {
+	// path param entity.entity
+	if err := r.SetPathParam("entity.entity", o.EntityEntity); err != nil {
 		return err
 	}
 
-	// path param entity.project
-	if err := r.SetPathParam("entity.project", o.EntityProject); err != nil {
+	// path param entity.owner
+	if err := r.SetPathParam("entity.owner", o.EntityOwner); err != nil {
 		return err
 	}
 

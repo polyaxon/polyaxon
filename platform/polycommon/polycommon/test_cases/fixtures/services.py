@@ -85,3 +85,14 @@ def get_fxt_service_with_upstream_runs(run_uuid: UUID):
             },
         },
     }
+
+
+def get_fxt_job_with_hub_ref():
+    return {
+        "version": 1.1,
+        "kind": "operation",
+        "name": "foo",
+        "description": "a description",
+        "params": {"image": {"value": "foo/bar"}},
+        "hubRef": "notebook",
+    }

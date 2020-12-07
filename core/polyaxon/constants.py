@@ -16,5 +16,6 @@
 
 UNKNOWN = "unknown"
 DEFAULT = "default"
+DEFAULT_HUB = "polyaxon"
 NO_AUTH = "no-auth"
 PLATFORM_DIST_CE = "ce"

@@ -84,24 +84,29 @@ def get_clone_url(url: str) -> str:
     return url
 
 
-def clone_git_repo(repo_path: str, url: str) -> str:
+def clone_git_repo(repo_path: str, url: str, flags: str = None) -> str:
+    if flags:
+        flags = flags.split(" ")
     if has_ssh_access():
+        flags.append("--recurse-submodules")
         return GitRepo.clone_from(
             url=url,
             to_path=repo_path,
-            multi_options=["--recurse-submodules"],
+            multi_options=flags,
             env={"GIT_SSH_COMMAND": get_ssh_cmd()},
         )
-    return GitRepo.clone_from(url=url, to_path=repo_path)
+    return GitRepo.clone_from(url=url, to_path=repo_path, multi_options=flags)
 
 
-def create_code_repo(repo_path: str, url: str, revision: str, connection: str = None):
+def create_code_repo(
+    repo_path: str, url: str, revision: str, connection: str = None, flags: str = None
+):
     try:
         clone_url = get_clone_url(url)
     except Exception as e:
         raise PolyaxonContainerException("Error parsing url: {}.".format(url)) from e
 
-    clone_git_repo(repo_path=repo_path, url=clone_url)
+    clone_git_repo(repo_path=repo_path, url=clone_url, flags=flags)
     set_remote(repo_path=repo_path, url=url)
     if revision:
         checkout_revision(repo_path=repo_path, revision=revision)

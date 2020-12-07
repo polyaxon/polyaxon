@@ -44,10 +44,13 @@ type V1Project struct {
 	// Optional flag to tell if this project is public
 	IsPublic bool `json:"is_public,omitempty"`
 
+	// Current live state
+	LiveState int32 `json:"live_state,omitempty"`
+
 	// Required name
 	Name string `json:"name,omitempty"`
 
-	// Required owner/namespace where the projet was created
+	// Owner/namespace where the project was created
 	Owner string `json:"owner,omitempty"`
 
 	// Optional a readme text describing this entity
@@ -62,18 +65,9 @@ type V1Project struct {
 	// Optional tags of this entity
 	Tags []string `json:"tags"`
 
-	// Optional teams assigned to a project
-	Teams []string `json:"teams"`
-
 	// Optional last time the entity was updated
 	// Format: date-time
 	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
-
-	// Required name of user who created this entity
-	User string `json:"user,omitempty"`
-
-	// Read-only email of user who created this entity
-	UserEmail string `json:"user_email,omitempty"`
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`

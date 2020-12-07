@@ -36,8 +36,10 @@ import "v1/api/preset.proto";
 import "v1/api/user.proto";
 import "v1/api/search.proto";
 import "v1/api/status.proto";
+import "v1/api/stage.proto";
 import "v1/api/team.proto";
 import "v1/api/hub.proto";
+import "v1/api/registry.proto";
 import "v1/polyboard/log.proto";
 import "v1/polyboard/artifact.proto";
 import "v1/polyboard/event.proto";
@@ -46,7 +48,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.3.4";
+        version: "1.4.0";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -110,9 +112,9 @@ service RunsV1 {
   }
 
   // List runs
-  rpc ListRuns(ProjectResourceListRequest) returns (ListRunsResponse) {
+  rpc ListRuns(OwnerEntityResourceListRequestByName) returns (ListRunsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs"
+      get: "/api/v1/{owner}/{name}/runs"
     };
   }
 
@@ -125,9 +127,9 @@ service RunsV1 {
   }
 
   // Get run
-  rpc GetRun(ProjectEntityResourceRequest) returns (Run) {
+  rpc GetRun(OwnerSubEntityResourceRequestByUid) returns (Run) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs/{uuid}"
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}"
     };
   }
 
@@ -148,9 +150,9 @@ service RunsV1 {
   }
 
   // Delete run
-  rpc DeleteRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/{owner}/{project}/runs/{uuid}"
+      delete: "/api/v1/{owner}/{entity}/runs/{uuid}"
     };
   }
 
@@ -163,9 +165,9 @@ service RunsV1 {
   }
 
   // Stop run
-  rpc StopRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc StopRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/stop"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/stop"
     };
   }
 
@@ -178,9 +180,9 @@ service RunsV1 {
   }
 
   // Approve run
-  rpc ApproveRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc ApproveRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/approve"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/approve"
     };
   }
 
@@ -201,9 +203,9 @@ service RunsV1 {
   }
 
   // Invalidate run
-  rpc InvalidateRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc InvalidateRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/invalidate"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/invalidate"
     };
   }
 
@@ -218,7 +220,7 @@ service RunsV1 {
   // Restart run with copy
   rpc CopyRun(EntityRunBodyRequest) returns (Run) {
     option (google.api.http) = {
-      post: "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy"
+      post: "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy"
       body: "run"
     };
   }
@@ -226,7 +228,7 @@ service RunsV1 {
   // Restart run
   rpc RestartRun(EntityRunBodyRequest) returns (Run) {
     option (google.api.http) = {
-      post: "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart"
+      post: "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart"
       body: "run"
     };
   }
@@ -234,29 +236,29 @@ service RunsV1 {
   // Resume run
   rpc ResumeRun(EntityRunBodyRequest) returns (Run) {
     option (google.api.http) = {
-      post: "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume"
+      post: "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume"
       body: "run"
     };
   }
 
   // Archive run
-  rpc ArchiveRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc ArchiveRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/archive"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/archive"
     };
   }
 
   // Restore run
-  rpc RestoreRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc RestoreRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/restore"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/restore"
     };
   }
 
   // Bookmark run
-  rpc BookmarkRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc BookmarkRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/bookmark"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/bookmark"
     };
   }
 
@@ -269,31 +271,31 @@ service RunsV1 {
   }
 
   // Unbookmark run
-  rpc UnbookmarkRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc UnbookmarkRun(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark"
+      delete: "/api/v1/{owner}/{entity}/runs/{uuid}/unbookmark"
     };
   }
 
   // Start run tensorboard
-  rpc StartRunTensorboard(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {  // TODO: should be a tensorboard object
+  rpc StartRunTensorboard(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {  // TODO: should be a tensorboard object
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start"
       body: "*"
     };
   }
 
   // Stop run tensorboard
-  rpc StopRunTensorboard(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc StopRunTensorboard(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/stop"
     };
   }
 
   // Get run statuses
-  rpc GetRunStatuses(ProjectEntityResourceRequest) returns (Status) {
+  rpc GetRunStatuses(OwnerSubEntityResourceRequestByUid) returns (Status) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs/{uuid}/statuses"
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/statuses"
     };
   }
 
@@ -306,44 +308,44 @@ service RunsV1 {
   }
 
   // Impersonate run token
-  rpc ImpersonateToken(ProjectEntityResourceRequest) returns (Auth) {
+  rpc ImpersonateToken(OwnerSubEntityResourceRequestByUid) returns (Auth) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/impersonate"
+      post: "/api/v1/{owner}/{entity}/runs/{uuid}/impersonate"
     };
   }
 
   // Get Run settings
-  rpc GetRunSettings(ProjectEntityResourceRequest) returns (RunSettings) {
+  rpc GetRunSettings(OwnerSubEntityResourceRequestByUid) returns (RunSettings) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs/{uuid}/settings"
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/settings"
     };
   }
 
   // Get Run namespace
-  rpc GetRunNamespace(ProjectEntityResourceRequest) returns (RunSettings) {
+  rpc GetRunNamespace(OwnerSubEntityResourceRequestByUid) returns (RunSettings) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs/{uuid}/namespace"
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/namespace"
     };
   }
 
   // Get run artifacts lineage
-  rpc GetRunArtifactsLineage(EntityResourceListRequest) returns (ListRunArtifactsResponse) {
+  rpc GetRunArtifactsLineage(OwnerSubEntityResourceListRequestByUid) returns (ListRunArtifactsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage"
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage"
     };
   }
 
   // Get runs artifacts lineage
-  rpc GetRunsArtifactsLineage(ProjectResourceListRequest) returns (ListRunArtifactsResponse) {
+  rpc GetRunsArtifactsLineage(OwnerEntityResourceListRequestByName) returns (ListRunArtifactsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs/artifacts_lineage"
+      get: "/api/v1/{owner}/{name}/runs/artifacts_lineage"
     };
   }
 
   // Get run artifacts lineage names
-  rpc GetRunArtifactsLineageNames(EntityResourceListRequest) returns (ListRunArtifactsResponse) {
+  rpc GetRunArtifactsLineageNames(OwnerSubEntityResourceListRequestByUid) returns (ListRunArtifactsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names"
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names"
     };
   }
 
@@ -436,18 +438,18 @@ service RunsV1 {
 
 // Service to manage project
 service ProjectsV1 {
-  // List projects
-  rpc ListProjects(OwnerResourceListRequest) returns (ListProjectsResponse) {
-    option (google.api.http) = {
-      get: "/api/v1/{owner}/projects/list"
-    };
-  }
-
   // Create new project
   rpc CreateProject(ProjectBodyRequest) returns (Project) {
     option (google.api.http) = {
       post: "/api/v1/{owner}/projects/create"
       body: "project"
+    };
+  }
+
+  // List projects
+  rpc ListProjects(OwnerResourceListRequest) returns (ListProjectsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/projects/list"
     };
   }
 
@@ -473,9 +475,9 @@ service ProjectsV1 {
   }
 
   // Get project
-  rpc GetProject(ProjectResourceRequest) returns (Project) {
+  rpc GetProject(OwnerEntityResourceRequestByName) returns (Project) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}"
+      get: "/api/v1/{owner}/{name}"
     };
   }
 
@@ -496,58 +498,58 @@ service ProjectsV1 {
   }
 
   // Delete project
-  rpc DeleteProject(ProjectResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteProject(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/{owner}/{project}"
+      delete: "/api/v1/{owner}/{name}"
     };
   }
 
   // Archive project
-  rpc ArchiveProject(ProjectResourceRequest) returns (google.protobuf.Empty) {
+  rpc ArchiveProject(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/archive"
+      post: "/api/v1/{owner}/{name}/archive"
     };
   }
 
   // Restore project
-  rpc RestoreProject(ProjectResourceRequest) returns (google.protobuf.Empty) {
+  rpc RestoreProject(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/restore"
+      post: "/api/v1/{owner}/{name}/restore"
     };
   }
 
   // Bookmark project
-  rpc BookmarkProject(ProjectResourceRequest) returns (google.protobuf.Empty) {
+  rpc BookmarkProject(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/bookmark"
+      post: "/api/v1/{owner}/{name}/bookmark"
     };
   }
 
   // Unbookmark project
-  rpc UnbookmarkProject(ProjectResourceRequest) returns (google.protobuf.Empty) {
+  rpc UnbookmarkProject(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/{owner}/{project}/unbookmark"
+      delete: "/api/v1/{owner}/{name}/unbookmark"
     };
   }
 
   // Enable project CI
-  rpc EnableProjectCI(ProjectResourceRequest) returns (google.protobuf.Empty) {
+  rpc EnableProjectCI(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/ci"
+      post: "/api/v1/{owner}/{name}/ci"
     };
   }
 
   // Disbale project CI
-  rpc DisableProjectCI(ProjectResourceRequest) returns (google.protobuf.Empty) {
+  rpc DisableProjectCI(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/{owner}/{project}/ci"
+      delete: "/api/v1/{owner}/{name}/ci"
     };
   }
 
   // Get Project settings
-  rpc GetProjectSettings(ProjectResourceRequest) returns (ProjectSettings) {
+  rpc GetProjectSettings(OwnerEntityResourceRequestByName) returns (ProjectSettings) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/settings"
+      get: "/api/v1/{owner}/{name}/settings"
     };
   }
 
@@ -564,29 +566,6 @@ service ProjectsV1 {
     option (google.api.http) = {
       patch: "/api/v1/{owner}/{project}/settings"
       body: "settings"
-    };
-  }
-
-  // Get project teams
-  rpc FetchProjectTeams(ProjectResourceRequest) returns (ProjectTeams) {
-    option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/teams"
-    };
-  }
-
-  // Update project teams
-  rpc UpdateProjectTeams(ProjectTeamsBodyRequest) returns (ProjectTeams) {
-    option (google.api.http) = {
-      put: "/api/v1/{owner}/{project}/teams"
-      body: "teams"
-    };
-  }
-
-  // Patch project teams
-  rpc PatchProjectTeams(ProjectTeamsBodyRequest) returns (ProjectTeams) {
-    option (google.api.http) = {
-      patch: "/api/v1/{owner}/{project}/teams"
-      body: "teams"
     };
   }
 }
@@ -616,7 +595,7 @@ service ConnectionsV1 {
   }
 
   // Get connection
-  rpc GetConnection(OwnerEntityResourceRequest) returns (ConnectionResponse) {
+  rpc GetConnection(OwnerEntityResourceRequestByUid) returns (ConnectionResponse) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/connections/{uuid}"
     };
@@ -639,7 +618,7 @@ service ConnectionsV1 {
   }
 
   // Delete connection
-  rpc DeleteConnection(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteConnection(OwnerEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/api/v1/orgs/{owner}/connections/{uuid}"
     };
@@ -649,16 +628,16 @@ service ConnectionsV1 {
 // Service to manage project searches
 service ProjectSearchesV1 {
   // List project search names
-  rpc ListProjectSearchNames(ProjectResourceListRequest) returns (ListSearchesResponse) {
+  rpc ListProjectSearchNames(OwnerEntityResourceListRequestByName) returns (ListSearchesResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/searches/names"
+      get: "/api/v1/{owner}/{name}/searches/names"
     };
   }
 
   // List project searches
-  rpc ListProjectSearches(ProjectResourceListRequest) returns (ListSearchesResponse) {
+  rpc ListProjectSearches(OwnerEntityResourceListRequestByName) returns (ListSearchesResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/searches"
+      get: "/api/v1/{owner}/{name}/searches"
     };
   }
 
@@ -671,9 +650,9 @@ service ProjectSearchesV1 {
   }
 
   // Get project search
-  rpc GetProjectSearch(ProjectEntityResourceRequest) returns (Search) {
+  rpc GetProjectSearch(OwnerSubEntityResourceRequestByUid) returns (Search) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/searches/{uuid}"
+      get: "/api/v1/{owner}/{entity}/searches/{uuid}"
     };
   }
 
@@ -694,16 +673,16 @@ service ProjectSearchesV1 {
   }
 
   // Delete project search
-  rpc DeleteProjectSearch(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteProjectSearch(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/{owner}/{project}/searches/{uuid}"
+      delete: "/api/v1/{owner}/{entity}/searches/{uuid}"
     };
   }
 
   // Promote project search
-  rpc PromoteProjectSearch(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc PromoteProjectSearch(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/searches/{uuid}/promote"
+      post: "/api/v1/{owner}/{entity}/searches/{uuid}/promote"
     };
   }
 }
@@ -733,7 +712,7 @@ service SearchesV1 {
   }
 
   // Get search
-  rpc GetSearch(OwnerEntityResourceRequest) returns (Search) {
+  rpc GetSearch(OwnerEntityResourceRequestByUid) returns (Search) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/searches/{uuid}"
     };
@@ -756,7 +735,7 @@ service SearchesV1 {
   }
 
   // Delete search
-  rpc DeleteSearch(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteSearch(OwnerEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/api/v1/orgs/{owner}/searches/{uuid}"
     };
@@ -766,16 +745,16 @@ service SearchesV1 {
 // Service to manage project dashboards
 service ProjectDashboardsV1 {
   // List project dashboard
-  rpc ListProjectDashboardNames(ProjectResourceListRequest) returns (ListDashboardsResponse) {
+  rpc ListProjectDashboardNames(OwnerEntityResourceListRequestByName) returns (ListDashboardsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/dashboards/names"
+      get: "/api/v1/{owner}/{name}/dashboards/names"
     };
   }
 
   // List project dashboards
-  rpc ListProjectDashboards(ProjectResourceListRequest) returns (ListDashboardsResponse) {
+  rpc ListProjectDashboards(OwnerEntityResourceListRequestByName) returns (ListDashboardsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/dashboards"
+      get: "/api/v1/{owner}/{name}/dashboards"
     };
   }
 
@@ -788,9 +767,9 @@ service ProjectDashboardsV1 {
   }
 
   // Get project dashboard
-  rpc GetProjectDashboard(ProjectEntityResourceRequest) returns (Dashboard) {
+  rpc GetProjectDashboard(OwnerSubEntityResourceRequestByUid) returns (Dashboard) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/dashboards/{uuid}"
+      get: "/api/v1/{owner}/{entity}/dashboards/{uuid}"
     };
   }
 
@@ -811,16 +790,16 @@ service ProjectDashboardsV1 {
   }
 
   // Delete project dashboard
-  rpc DeleteProjectDashboard(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteProjectDashboard(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/{owner}/{project}/dashboards/{uuid}"
+      delete: "/api/v1/{owner}/{entity}/dashboards/{uuid}"
     };
   }
 
   // Promote project dashboard
-  rpc PromoteProjectDashboard(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc PromoteProjectDashboard(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/dashboards/{uuid}/promote"
+      post: "/api/v1/{owner}/{entity}/dashboards/{uuid}/promote"
     };
   }
 }
@@ -850,7 +829,7 @@ service DashboardsV1 {
   }
 
   // Get dashboard
-  rpc GetDashboard(OwnerEntityResourceRequest) returns (Dashboard) {
+  rpc GetDashboard(OwnerEntityResourceRequestByUid) returns (Dashboard) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/dashboards/{uuid}"
     };
@@ -873,7 +852,7 @@ service DashboardsV1 {
   }
 
   // Delete dashboard
-  rpc DeleteDashboard(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteDashboard(OwnerEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/api/v1/orgs/{owner}/dashboards/{uuid}"
     };
@@ -882,94 +861,212 @@ service DashboardsV1 {
 
 // Service to manage models on a hosted polyaxon hub
 service ModelRegistryV1 {
-  // List hub model names
-  rpc ListModelRegistryNames(OwnerResourceListRequest) returns (ListModelRegistryResponse) {
-    option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/models/names"
-    };
-  }
-
-  // List hub models
-  rpc ListModelRegistry(OwnerResourceListRequest) returns (ListModelRegistryResponse) {
-    option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/models"
-    };
-  }
-
-  // Create hub model
+  // Create registry model
   rpc CreateModelRegistry(ModelRegistryBodyRequest) returns (ModelRegistry) {
     option (google.api.http) = {
-      post: "/api/v1/orgs/{owner}/models"
+      post: "/api/v1/{owner}/registry/create"
       body: "model"
     };
   }
 
-  // Get hub model
-  rpc GetModelRegistry(OwnerEntityResourceRequest) returns (ModelRegistry) {
+  // List registry models
+  rpc ListModelRegistries(OwnerResourceListRequest) returns (ListModelRegistriesResponse) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/models/{uuid}"
+      get: "/api/v1/{owner}/registry/list"
     };
   }
 
-  // Update hub model
+  // List registry model names
+  rpc ListModelRegistryNames(OwnerResourceListRequest) returns (ListModelRegistriesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/registry/names"
+    };
+  }
+
+  // Get registry model
+  rpc GetModelRegistry(OwnerEntityResourceRequestByName) returns (ModelRegistry) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/registry/{name}"
+    };
+  }
+
+  // Update registry model
   rpc UpdateModelRegistry(ModelRegistryBodyRequest) returns (ModelRegistry) {
     option (google.api.http) = {
-      put: "/api/v1/orgs/{owner}/models/{model.uuid}"
+      put: "/api/v1/{owner}/registry/{model.name}"
       body: "model"
     };
   }
 
-  // Patch hub model
+  // Patch registry model
   rpc PatchModelRegistry(ModelRegistryBodyRequest) returns (ModelRegistry) {
     option (google.api.http) = {
-      patch: "/api/v1/orgs/{owner}/models/{model.uuid}"
+      patch: "/api/v1/{owner}/registry/{model.name}"
       body: "model"
     };
   }
 
-  // Delete hub model
-  rpc DeleteModelRegistry(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+  // Delete registry model
+  rpc DeleteModelRegistry(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/orgs/{owner}/models/{uuid}"
+      delete: "/api/v1/{owner}/registry/{name}"
+    };
+  }
+
+  // Archive registry model
+  rpc ArchiveModelRegistry(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/registry/{name}/archive"
+    };
+  }
+
+  // Restore registry model
+  rpc RestoreModelRegistry(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/registry/{name}/restore"
+    };
+  }
+
+  // Bookmark registry model
+  rpc BookmarkModelRegistry(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/registry/{name}/bookmark"
+    };
+  }
+
+  // Unbookmark registry model
+  rpc UnbookmarkModelRegistry(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/{owner}/registry/{name}/unbookmark"
+    };
+  }
+
+  // Get registry model settings
+  rpc GetModelRegistrySettings(OwnerEntityResourceRequestByName) returns (ModelRegistrySettings) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/registry/{name}/settings"
+    };
+  }
+
+  // Update registry model settings
+  rpc UpdateModelRegistrySettings(ModelRegistrySettingsBodyRequest) returns (ModelRegistrySettings) {
+    option (google.api.http) = {
+      put: "/api/v1/{owner}/registry/{model}/settings"
+      body: "settings"
+    };
+  }
+
+  // Patch registry model settings
+  rpc PatchModelRegistrySettings(ModelRegistrySettingsBodyRequest) returns (ModelRegistrySettings) {
+    option (google.api.http) = {
+      patch: "/api/v1/{owner}/registry/{model}/settings"
+      body: "settings"
+    };
+  }
+
+  // Create model version
+  rpc CreateModelVersion(ModelVersionBodyRequest) returns (ModelVersion) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/registry/{model}/versions"
+      body: "version"
+    };
+  }
+
+  // List model versions
+  rpc ListModelVersions(OwnerEntityResourceListRequestByName) returns (ListModelVersionsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/registry/{name}/versions"
+    };
+  }
+
+  // List model versions names
+  rpc ListModelVersionNames(OwnerEntityResourceListRequestByName) returns (ListModelVersionsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/registry/{name}/versions/names"
+    };
+  }
+
+  // Get model version
+  rpc GetModelVersion(OwnerSubEntityResourceRequestByName) returns (ModelVersion) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/registry/{entity}/versions/{name}"
+    };
+  }
+
+  // Update model version
+  rpc UpdateModelVersion(ModelVersionBodyRequest) returns (ModelVersion) {
+    option (google.api.http) = {
+      put: "/api/v1/{owner}/registry/{model}/versions/{version.name}"
+      body: "version"
+    };
+  }
+
+  // Patch model version
+  rpc PatchModelVersion(ModelVersionBodyRequest) returns (ModelVersion) {
+    option (google.api.http) = {
+      patch: "/api/v1/{owner}/registry/{model}/versions/{version.name}"
+      body: "version"
+    };
+  }
+
+  // Delete model version
+  rpc DeleteModelVersion(OwnerSubEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/{owner}/registry/{entity}/versions/{name}"
+    };
+  }
+
+  // Get model version stages
+  rpc GetModelVersionStages(OwnerSubEntityResourceRequestByName) returns (Stage) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/registry/{entity}/versions/{name}/stages"
+    };
+  }
+
+  // Create new model version stage
+  rpc CreateModelVersionStage(EntityStageBodyRequest) returns (Stage) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/registry/{entity}/versions/{name}/stages"
+      body: "*"
     };
   }
 }
 
 // Service to manage component on a hosted polyaxon hub
 service ComponentHubV1 {
-  // List hub component names
-  rpc ListComponentHubNames(OwnerResourceListRequest) returns (ListComponentHubsResponse) {
+  // Create hub component
+  rpc CreateComponentHub(ComponentHubBodyRequest) returns (ComponentHub) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/components/names"
+      post: "/api/v1/{owner}/hub/create"
+      body: "component"
     };
   }
 
   // List hub components
   rpc ListComponentHubs(OwnerResourceListRequest) returns (ListComponentHubsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/components"
+      get: "/api/v1/{owner}/hub/list"
     };
   }
 
-  // Create hub component
-  rpc CreateComponentHub(ComponentHubBodyRequest) returns (ComponentHub) {
+  // List hub component names
+  rpc ListComponentHubNames(OwnerResourceListRequest) returns (ListComponentHubsResponse) {
     option (google.api.http) = {
-      post: "/api/v1/orgs/{owner}/components"
-      body: "component"
+      get: "/api/v1/{owner}/hub/names"
     };
   }
 
   // Get hub component
-  rpc GetComponentHub(OwnerEntityResourceRequest) returns (ComponentHub) {
+  rpc GetComponentHub(OwnerEntityResourceRequestByName) returns (ComponentHub) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/components/{uuid}"
+      get: "/api/v1/{owner}/hub/{name}"
     };
   }
 
   // Update hub component
   rpc UpdateComponentHub(ComponentHubBodyRequest) returns (ComponentHub) {
     option (google.api.http) = {
-      put: "/api/v1/orgs/{owner}/components/{component.uuid}"
+      put: "/api/v1/{owner}/hub/{component.name}"
       body: "component"
     };
   }
@@ -977,15 +1074,133 @@ service ComponentHubV1 {
   // Patch hub component
   rpc PatchComponentHub(ComponentHubBodyRequest) returns (ComponentHub) {
     option (google.api.http) = {
-      patch: "/api/v1/orgs/{owner}/components/{component.uuid}"
+      patch: "/api/v1/{owner}/hub/{component.name}"
       body: "component"
     };
   }
 
   // Delete hub component
-  rpc DeleteComponentHub(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteComponentHub(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/orgs/{owner}/components/{uuid}"
+      delete: "/api/v1/{owner}/hub/{name}"
+    };
+  }
+
+  // Archive hub component
+  rpc ArchiveComponentHub(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/hub/{name}/archive"
+    };
+  }
+
+  // Restore hub component
+  rpc RestoreComponentHub(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/hub/{name}/restore"
+    };
+  }
+
+  // Bookmark component hub
+  rpc BookmarkComponentHub(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/hub/{name}/bookmark"
+    };
+  }
+
+  // Unbookmark component hub
+  rpc UnbookmarkComponentHub(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/{owner}/hub/{name}/unbookmark"
+    };
+  }
+
+  // Get hub component settings
+  rpc GetComponentHubSettings(OwnerEntityResourceRequestByName) returns (ComponentHubSettings) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/hub/{name}/settings"
+    };
+  }
+
+  // Update hub component settings
+  rpc UpdateComponentHubSettings(ComponentHubSettingsBodyRequest) returns (ComponentHubSettings) {
+    option (google.api.http) = {
+      put: "/api/v1/{owner}/hub/{component}/settings"
+      body: "settings"
+    };
+  }
+
+  // Patch hub component settings
+  rpc PatchComponentHubSettings(ComponentHubSettingsBodyRequest) returns (ComponentHubSettings) {
+    option (google.api.http) = {
+      patch: "/api/v1/{owner}/hub/{component}/settings"
+      body: "settings"
+    };
+  }
+
+  // Create component version
+  rpc CreateComponentVersion(ComponentVersionBodyRequest) returns (ComponentVersion) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/hub/{component}/versions"
+      body: "version"
+    };
+  }
+
+  // List component versions
+  rpc ListComponentVersions(OwnerEntityResourceListRequestByName) returns (ListComponentVersionsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/hub/{name}/versions"
+    };
+  }
+
+  // List component version names
+  rpc ListComponentVersionNames(OwnerEntityResourceListRequestByName) returns (ListComponentVersionsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/hub/{name}/versions/names"
+    };
+  }
+
+  // Get component version
+  rpc GetComponentVersion(OwnerSubEntityResourceRequestByName) returns (ComponentVersion) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/hub/{entity}/versions/{name}"
+    };
+  }
+
+  // Update component version
+  rpc UpdateComponentVersion(ComponentVersionBodyRequest) returns (ComponentVersion) {
+    option (google.api.http) = {
+      put: "/api/v1/{owner}/hub/{component}/versions/{version.name}"
+      body: "version"
+    };
+  }
+
+  // Patch component version
+  rpc PatchComponentVersion(ComponentVersionBodyRequest) returns (ComponentVersion) {
+    option (google.api.http) = {
+      patch: "/api/v1/{owner}/hub/{component}/versions/{version.name}"
+      body: "version"
+    };
+  }
+
+  // Delete component version
+  rpc DeleteComponentVersion(OwnerSubEntityResourceRequestByName) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/{owner}/hub/{entity}/versions/{name}"
+    };
+  }
+
+  // Get component version stages
+  rpc GetComponentVersionStages(OwnerSubEntityResourceRequestByName) returns (Stage) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/hub/{entity}/versions/{name}/stages"
+    };
+  }
+
+  // Create new component version stage
+  rpc CreateComponentVersionStage(EntityStageBodyRequest) returns (Stage) {
+    option (google.api.http) = {
+      post: "/api/v1/{owner}/hub/{entity}/versions/{name}/stages"
+      body: "*"
     };
   }
 }
@@ -1015,7 +1230,7 @@ service PresetsV1 {
   }
 
   // Get scheduling preset
-  rpc GetPreset(OwnerEntityResourceRequest) returns (Preset) {
+  rpc GetPreset(OwnerSubEntityResourceRequestByUid) returns (Preset) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/presets/{uuid}"
     };
@@ -1038,7 +1253,7 @@ service PresetsV1 {
   }
 
   // Delete scheduling preset
-  rpc DeletePreset(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeletePreset(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/api/v1/orgs/{owner}/presets/{uuid}"
     };
@@ -1070,7 +1285,7 @@ service AgentsV1 {
   }
 
   // Get agent
-  rpc GetAgent(OwnerEntityResourceRequest) returns (Agent) {
+  rpc GetAgent(OwnerSubEntityResourceRequestByUid) returns (Agent) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/agents/{uuid}"
     };
@@ -1093,14 +1308,14 @@ service AgentsV1 {
   }
 
   // Delete agent
-  rpc DeleteAgent(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteAgent(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/api/v1/orgs/{owner}/agents/{uuid}"
     };
   }
 
   // Get State (queues/runs)
-  rpc GetAgentState(OwnerEntityResourceRequest) returns (AgentStateResponse) {
+  rpc GetAgentState(OwnerEntityResourceRequestByUid) returns (AgentStateResponse) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/agents/{uuid}/state"
     };
@@ -1115,7 +1330,7 @@ service AgentsV1 {
   }
 
   // Get agent status
-  rpc GetAgentStatuses(OwnerEntityResourceRequest) returns (Status) {
+  rpc GetAgentStatuses(OwnerEntityResourceRequestByUid) returns (Status) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/agents/{uuid}/statuses"
     };
@@ -1130,9 +1345,9 @@ service AgentsV1 {
   }
 
   // Get agent token
-  rpc GetAgentToken(AgentEntityResourceRequest) returns (Token) {
+  rpc GetAgentToken(OwnerEntityResourceRequestByUid) returns (Token) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/agents/{agent}/token"
+      get: "/api/v1/orgs/{owner}/agents/{uuid}/token"
     };
   }
 
@@ -1170,16 +1385,16 @@ service QueuesV1 {
   }
 
   // List queues names
-  rpc ListQueueNames(AgentResourceListRequest) returns (ListQueuesResponse) {
+  rpc ListQueueNames(OwnerEntityResourceListRequestByName) returns (ListQueuesResponse) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/agents/{agent}/queues/names"
+      get: "/api/v1/orgs/{owner}/agents/{name}/queues/names"
     };
   }
 
   // List queues
-  rpc ListQueues(AgentResourceListRequest) returns (ListQueuesResponse) {
+  rpc ListQueues(OwnerEntityResourceListRequestByName) returns (ListQueuesResponse) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/agents/{agent}/queues"
+      get: "/api/v1/orgs/{owner}/agents/{name}/queues"
     };
   }
 
@@ -1192,9 +1407,9 @@ service QueuesV1 {
   }
 
   // Get queue
-  rpc GetQueue(AgentEntityResourceRequest) returns (Queue) {
+  rpc GetQueue(OwnerSubEntityResourceRequestByUid) returns (Queue) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}"
+      get: "/api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}"
     };
   }
 
@@ -1215,9 +1430,9 @@ service QueuesV1 {
   }
 
   // Delete queue
-  rpc DeleteQueue(AgentEntityResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteQueue(OwnerSubEntityResourceRequestByUid) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}"
+      delete: "/api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}"
     };
   }
 }
@@ -1436,9 +1651,9 @@ service OrganizationsV1 {
   }
 
   // Get organization member details
-  rpc GetOrganizationMember(OrgMemeberResourceRequest) returns (OrganizationMember) {
+  rpc GetOrganizationMember(OwnerEntityResourceRequestByName) returns (OrganizationMember) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/members/{user}"
+      get: "/api/v1/orgs/{owner}/members/{name}"
     };
   }
 
@@ -1459,9 +1674,9 @@ service OrganizationsV1 {
   }
 
   // Delete organization member details
-  rpc DeleteOrganizationMember(OrgMemeberResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteOrganizationMember(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/orgs/{owner}/members/{user}"
+      delete: "/api/v1/orgs/{owner}/members/{name}"
     };
   }
 
@@ -1552,9 +1767,9 @@ service TeamsV1 {
   }
 
   // Get team
-  rpc GetTeam(TeamResourceRequest) returns (Team) {
+  rpc GetTeam(OwnerEntityResourceRequestByName) returns (Team) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/teams/{team}"
+      get: "/api/v1/orgs/{owner}/teams/{name}"
     };
   }
 
@@ -1575,16 +1790,16 @@ service TeamsV1 {
   }
 
   // Delete team
-  rpc DeleteTeam(TeamResourceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteTeam(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/orgs/{owner}/teams/{team}"
+      delete: "/api/v1/orgs/{owner}/teams/{name}"
     };
   }
 
   // Get team members
-  rpc ListTeamMembers(TeamResourceListRequest) returns (ListTeamMembersResponse) {
+  rpc ListTeamMembers(OwnerEntityResourceListRequestByName) returns (ListTeamMembersResponse) {
     option (google.api.http) = {
-      get: "/api/v1/orgs/{owner}/teams/{team}/members"
+      get: "/api/v1/orgs/{owner}/teams/{name}/members"
     };
   }
 

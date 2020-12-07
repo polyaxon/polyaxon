@@ -86,7 +86,7 @@ type ApproveRunOK struct {
 }
 
 func (o *ApproveRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/approve][%d] approveRunOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/approve][%d] approveRunOK ", 200)
 }
 
 func (o *ApproveRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type ApproveRunNoContent struct {
 }
 
 func (o *ApproveRunNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/approve][%d] approveRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/approve][%d] approveRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ApproveRunNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type ApproveRunForbidden struct {
 }
 
 func (o *ApproveRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/approve][%d] approveRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/approve][%d] approveRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ApproveRunForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type ApproveRunNotFound struct {
 }
 
 func (o *ApproveRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/approve][%d] approveRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/approve][%d] approveRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ApproveRunNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *ApproveRunDefault) Code() int {
 }
 
 func (o *ApproveRunDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/approve][%d] ApproveRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/approve][%d] ApproveRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ApproveRunDefault) GetPayload() *service_model.RuntimeError {

@@ -18,6 +18,28 @@ import polyaxon_sdk
 from polyaxon.utils.tz_utils import now
 
 
+class V1Stages(polyaxon_sdk.V1Stages):
+    """Stage is the information that represents the current stage of an entity's version.
+
+    You can describe what stage a component or a model version is at.
+
+    The supported stages by Polyaxon.
+
+    Enum:
+        TESTING: "testing"
+        STAGING: "staging"
+        PRODUCTION: "production"
+        DISABLED: "disabled"
+    """
+
+    CHOICES = (
+        (polyaxon_sdk.V1Stages.TESTING, polyaxon_sdk.V1Stages.TESTING),
+        (polyaxon_sdk.V1Stages.STAGING, polyaxon_sdk.V1Stages.STAGING),
+        (polyaxon_sdk.V1Stages.PRODUCTION, polyaxon_sdk.V1Stages.PRODUCTION),
+        (polyaxon_sdk.V1Stages.DISABLED, polyaxon_sdk.V1Stages.DISABLED),
+    )
+
+
 class V1Statuses(polyaxon_sdk.V1Statuses):
     """Status is the information that represents the current state of a run.
 
@@ -45,6 +67,31 @@ class V1Statuses(polyaxon_sdk.V1Statuses):
         RETRYING: "retrying"
         UNKNOWN: "unknown"
     """
+
+    CHOICES = (
+        (polyaxon_sdk.V1Statuses.CREATED, polyaxon_sdk.V1Statuses.CREATED),
+        (polyaxon_sdk.V1Statuses.RESUMING, polyaxon_sdk.V1Statuses.RESUMING),
+        (polyaxon_sdk.V1Statuses.WARNING, polyaxon_sdk.V1Statuses.WARNING),
+        (polyaxon_sdk.V1Statuses.UNSCHEDULABLE, polyaxon_sdk.V1Statuses.UNSCHEDULABLE),
+        (polyaxon_sdk.V1Statuses.COMPILED, polyaxon_sdk.V1Statuses.COMPILED),
+        (polyaxon_sdk.V1Statuses.QUEUED, polyaxon_sdk.V1Statuses.QUEUED),
+        (polyaxon_sdk.V1Statuses.SCHEDULED, polyaxon_sdk.V1Statuses.SCHEDULED),
+        (polyaxon_sdk.V1Statuses.STARTING, polyaxon_sdk.V1Statuses.STARTING),
+        (polyaxon_sdk.V1Statuses.RUNNING, polyaxon_sdk.V1Statuses.RUNNING),
+        (polyaxon_sdk.V1Statuses.INITIALIZING, polyaxon_sdk.V1Statuses.INITIALIZING),
+        (polyaxon_sdk.V1Statuses.PROCESSING, polyaxon_sdk.V1Statuses.PROCESSING),
+        (polyaxon_sdk.V1Statuses.SUCCEEDED, polyaxon_sdk.V1Statuses.SUCCEEDED),
+        (polyaxon_sdk.V1Statuses.FAILED, polyaxon_sdk.V1Statuses.FAILED),
+        (
+            polyaxon_sdk.V1Statuses.UPSTREAM_FAILED,
+            polyaxon_sdk.V1Statuses.UPSTREAM_FAILED,
+        ),
+        (polyaxon_sdk.V1Statuses.STOPPING, polyaxon_sdk.V1Statuses.STOPPING),
+        (polyaxon_sdk.V1Statuses.STOPPED, polyaxon_sdk.V1Statuses.STOPPED),
+        (polyaxon_sdk.V1Statuses.SKIPPED, polyaxon_sdk.V1Statuses.SKIPPED),
+        (polyaxon_sdk.V1Statuses.RETRYING, polyaxon_sdk.V1Statuses.RETRYING),
+        (polyaxon_sdk.V1Statuses.UNKNOWN, polyaxon_sdk.V1Statuses.UNKNOWN),
+    )
 
 
 class StatusColor:
@@ -87,27 +134,6 @@ class StatusColor:
 class LifeCycle:
     """The Run LifeCycle is state machine for status transition."""
 
-    CHOICES = (
-        (V1Statuses.CREATED, V1Statuses.CREATED),
-        (V1Statuses.RESUMING, V1Statuses.RESUMING),
-        (V1Statuses.WARNING, V1Statuses.WARNING),
-        (V1Statuses.UNSCHEDULABLE, V1Statuses.UNSCHEDULABLE),
-        (V1Statuses.COMPILED, V1Statuses.COMPILED),
-        (V1Statuses.QUEUED, V1Statuses.QUEUED),
-        (V1Statuses.SCHEDULED, V1Statuses.SCHEDULED),
-        (V1Statuses.STARTING, V1Statuses.STARTING),
-        (V1Statuses.RUNNING, V1Statuses.RUNNING),
-        (V1Statuses.INITIALIZING, V1Statuses.INITIALIZING),
-        (V1Statuses.PROCESSING, V1Statuses.PROCESSING),
-        (V1Statuses.SUCCEEDED, V1Statuses.SUCCEEDED),
-        (V1Statuses.FAILED, V1Statuses.FAILED),
-        (V1Statuses.UPSTREAM_FAILED, V1Statuses.UPSTREAM_FAILED),
-        (V1Statuses.STOPPING, V1Statuses.STOPPING),
-        (V1Statuses.STOPPED, V1Statuses.STOPPED),
-        (V1Statuses.SKIPPED, V1Statuses.SKIPPED),
-        (V1Statuses.RETRYING, V1Statuses.RETRYING),
-        (V1Statuses.UNKNOWN, V1Statuses.UNKNOWN),
-    )
     WARNING_VALUES = {V1Statuses.UNSCHEDULABLE, V1Statuses.WARNING}
     SAFE_STOP_VALUES = {
         V1Statuses.CREATED,
@@ -248,7 +274,7 @@ class LifeCycle:
         return status == V1Statuses.SKIPPED
 
 
-class V1StatusCondition(polyaxon_sdk.V1StatusCondition):
+class ConditionMixin:
     @classmethod
     def get_condition(
         cls,
@@ -258,7 +284,7 @@ class V1StatusCondition(polyaxon_sdk.V1StatusCondition):
         last_transition_time=None,
         reason=None,
         message=None,
-    ) -> "V1StatusCondition":
+    ):
         current_time = now()
         last_update_time = last_update_time or current_time
         last_transition_time = last_transition_time or current_time
@@ -271,10 +297,13 @@ class V1StatusCondition(polyaxon_sdk.V1StatusCondition):
             message=message,
         )
 
-    def __eq__(self, other: "V1StatusCondition"):
-        return (
-            self.type == other.type
-            and self.status == other.status
-            and self.reason == self.reason
-            and self.message == self.message
-        )
+    def __eq__(self, other):
+        return self.type == other.type and self.status == other.status
+
+
+class V1StatusCondition(ConditionMixin, polyaxon_sdk.V1StatusCondition):
+    pass
+
+
+class V1StageCondition(ConditionMixin, polyaxon_sdk.V1StageCondition):
+    pass

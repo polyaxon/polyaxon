@@ -105,6 +105,7 @@ def clone_run(
     readme: str = None,
     tags: List[int] = None,
     supported_kinds: Set[str] = None,
+    **kwargs,
 ) -> BaseRun:
     op_spec = V1Operation.read(run.raw_content)
     compiled_operation, instance = operations.init_run(
@@ -120,6 +121,7 @@ def clone_run(
         tags=tags or run.tags,
         override=content,
         supported_kinds=supported_kinds,
+        **kwargs,
     )
     instance.save()
     return instance
@@ -134,6 +136,7 @@ def restart_run(
     readme: str = None,
     tags: List[int] = None,
     supported_kinds: Set[str] = None,
+    **kwargs,
 ) -> BaseRun:
     return clone_run(
         run=run,
@@ -145,6 +148,7 @@ def restart_run(
         readme=readme,
         tags=tags,
         supported_kinds=supported_kinds,
+        **kwargs,
     )
 
 
@@ -157,6 +161,7 @@ def copy_run(
     readme: str = None,
     tags: List[int] = None,
     supported_kinds: Set[str] = None,
+    **kwargs,
 ) -> BaseRun:
     return clone_run(
         run=run,
@@ -168,4 +173,5 @@ def copy_run(
         readme=readme,
         tags=tags,
         supported_kinds=supported_kinds,
+        **kwargs,
     )

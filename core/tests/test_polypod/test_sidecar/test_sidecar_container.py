@@ -900,6 +900,7 @@ class TestSidecarContainer(BaseTestCase):
             collect_resources=True,
             auto_resume=True,
             sync_statuses=True,
+            external_host=False,
         )
 
         sidecar = get_sidecar_container(

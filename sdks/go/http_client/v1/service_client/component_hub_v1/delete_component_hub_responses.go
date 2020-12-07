@@ -86,7 +86,7 @@ type DeleteComponentHubOK struct {
 }
 
 func (o *DeleteComponentHubOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/components/{uuid}][%d] deleteComponentHubOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] deleteComponentHubOK ", 200)
 }
 
 func (o *DeleteComponentHubOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteComponentHubNoContent struct {
 }
 
 func (o *DeleteComponentHubNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/components/{uuid}][%d] deleteComponentHubNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] deleteComponentHubNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteComponentHubNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DeleteComponentHubForbidden struct {
 }
 
 func (o *DeleteComponentHubForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/components/{uuid}][%d] deleteComponentHubForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] deleteComponentHubForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteComponentHubForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DeleteComponentHubNotFound struct {
 }
 
 func (o *DeleteComponentHubNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/components/{uuid}][%d] deleteComponentHubNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] deleteComponentHubNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteComponentHubNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DeleteComponentHubDefault) Code() int {
 }
 
 func (o *DeleteComponentHubDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/components/{uuid}][%d] DeleteComponentHub default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] DeleteComponentHub default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteComponentHubDefault) GetPayload() *service_model.RuntimeError {

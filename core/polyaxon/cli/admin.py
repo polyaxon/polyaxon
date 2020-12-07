@@ -20,6 +20,7 @@ import click
 
 from polyaxon.cli.dashboard import get_dashboard, get_dashboard_url
 from polyaxon.cli.errors import handle_cli_error
+from polyaxon.logger import clean_outputs
 from polyaxon.managers.deploy import DeployConfigManager
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.list_utils import to_list
@@ -49,6 +50,7 @@ def read_deployment_config(filepaths, command: str):
 
 
 @click.group()
+@clean_outputs
 def admin():
     """Commands for admin management."""
 
@@ -83,6 +85,7 @@ def admin():
     default=False,
     help="Dry run the configuration and generate a debuggable output.",
 )
+@clean_outputs
 def deploy(config_file, deployment_type, manager_path, check, dry_run):
     """Deploy polyaxon."""
     config = read_deployment_config(config_file, command="deploy")
@@ -147,6 +150,7 @@ def deploy(config_file, deployment_type, manager_path, check, dry_run):
     default=False,
     help="Dry run the configuration and generate a debuggable output.",
 )
+@clean_outputs
 def upgrade(config_file, deployment_type, manager_path, check, dry_run):
     """Upgrade a Polyaxon deployment."""
     config = read_deployment_config(config_file, command="upgrade")
@@ -193,6 +197,7 @@ def upgrade(config_file, deployment_type, manager_path, check, dry_run):
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
 )
+@clean_outputs
 def teardown(config_file, manager_path):
     """Teardown a polyaxon deployment given a config file."""
     config = read_deployment_config(config_file, command="teardown")
@@ -225,6 +230,7 @@ def teardown(config_file, manager_path):
 @click.option(
     "--url", is_flag=True, default=False, help="Print the url of the dashboard."
 )
+@clean_outputs
 def dashboard(yes, url):
     """Open dashboard in browser."""
     get_dashboard(dashboard_url=get_dashboard_url(base="_admin"), url_only=url, yes=yes)

@@ -152,6 +152,8 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
         runs_start(run_id=run.id, run=run)
         return False
 
+    return True
+
 
 def runs_start(run_id: int, run: Optional[BaseRun]):
     run = get_run(run_id=run_id, run=run)

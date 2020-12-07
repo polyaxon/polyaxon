@@ -74,16 +74,16 @@ for the get project settings operation typically these are written to a http.Req
 */
 type GetProjectSettingsParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *GetProjectSettingsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the get project settings params
+func (o *GetProjectSettingsParams) WithName(name string) *GetProjectSettingsParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the get project settings params
+func (o *GetProjectSettingsParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the get project settings params
 func (o *GetProjectSettingsParams) WithOwner(owner string) *GetProjectSettingsParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *GetProjectSettingsParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the get project settings params
-func (o *GetProjectSettingsParams) WithProject(project string) *GetProjectSettingsParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the get project settings params
-func (o *GetProjectSettingsParams) SetProject(project string) {
-	o.Project = project
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *GetProjectSettingsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *GetProjectSettingsParams) WriteToRequest(r runtime.ClientRequest, reg s
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

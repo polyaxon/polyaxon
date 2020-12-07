@@ -86,7 +86,7 @@ type ArchiveRunOK struct {
 }
 
 func (o *ArchiveRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] archiveRunOK ", 200)
 }
 
 func (o *ArchiveRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type ArchiveRunNoContent struct {
 }
 
 func (o *ArchiveRunNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] archiveRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ArchiveRunNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type ArchiveRunForbidden struct {
 }
 
 func (o *ArchiveRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] archiveRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ArchiveRunForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type ArchiveRunNotFound struct {
 }
 
 func (o *ArchiveRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] archiveRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ArchiveRunNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *ArchiveRunDefault) Code() int {
 }
 
 func (o *ArchiveRunDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] ArchiveRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] ArchiveRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ArchiveRunDefault) GetPayload() *service_model.RuntimeError {

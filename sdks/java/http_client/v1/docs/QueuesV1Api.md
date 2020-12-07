@@ -6,12 +6,12 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createQueue**](QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Create queue
-[**deleteQueue**](QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete queue
-[**getQueue**](QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Get queue
+[**deleteQueue**](QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid} | Delete queue
+[**getQueue**](QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid} | Get queue
 [**listOrganizationQueueNames**](QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List organization level queues names
 [**listOrganizationQueues**](QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
-[**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
-[**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
+[**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{name}/queues/names | List queues names
+[**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{name}/queues | List queues
 [**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Patch queue
 [**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid} | Update queue
 
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteQueue"></a>
 # **deleteQueue**
-> deleteQueue(owner, agent, uuid)
+> deleteQueue(owner, entity, uuid)
 
 Delete queue
 
@@ -120,10 +120,10 @@ public class Example {
 
     QueuesV1Api apiInstance = new QueuesV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String agent = "agent_example"; // String | Agent managing the resource
+    String entity = "entity_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      apiInstance.deleteQueue(owner, agent, uuid);
+      apiInstance.deleteQueue(owner, entity, uuid);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#deleteQueue");
       System.err.println("Status code: " + e.getCode());
@@ -140,7 +140,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **agent** | **String**| Agent managing the resource |
+ **entity** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
@@ -167,7 +167,7 @@ null (empty response body)
 
 <a name="getQueue"></a>
 # **getQueue**
-> V1Queue getQueue(owner, agent, uuid)
+> V1Queue getQueue(owner, entity, uuid)
 
 Get queue
 
@@ -194,10 +194,10 @@ public class Example {
 
     QueuesV1Api apiInstance = new QueuesV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String agent = "agent_example"; // String | Agent managing the resource
+    String entity = "entity_example"; // String | Owner of the namespace
     String uuid = "uuid_example"; // String | Uuid identifier of the entity
     try {
-      V1Queue result = apiInstance.getQueue(owner, agent, uuid);
+      V1Queue result = apiInstance.getQueue(owner, entity, uuid);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#getQueue");
@@ -215,7 +215,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **agent** | **String**| Agent managing the resource |
+ **entity** | **String**| Owner of the namespace |
  **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
@@ -400,7 +400,7 @@ Name | Type | Description  | Notes
 
 <a name="listQueueNames"></a>
 # **listQueueNames**
-> V1ListQueuesResponse listQueueNames(owner, agent, offset, limit, sort, query)
+> V1ListQueuesResponse listQueueNames(owner, name, offset, limit, sort, query)
 
 List queues names
 
@@ -427,13 +427,13 @@ public class Example {
 
     QueuesV1Api apiInstance = new QueuesV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String agent = "agent_example"; // String | Agent man managing the resource
+    String name = "name_example"; // String | Entity managing the resource
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search search.
     try {
-      V1ListQueuesResponse result = apiInstance.listQueueNames(owner, agent, offset, limit, sort, query);
+      V1ListQueuesResponse result = apiInstance.listQueueNames(owner, name, offset, limit, sort, query);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#listQueueNames");
@@ -451,7 +451,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **agent** | **String**| Agent man managing the resource |
+ **name** | **String**| Entity managing the resource |
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
@@ -481,7 +481,7 @@ Name | Type | Description  | Notes
 
 <a name="listQueues"></a>
 # **listQueues**
-> V1ListQueuesResponse listQueues(owner, agent, offset, limit, sort, query)
+> V1ListQueuesResponse listQueues(owner, name, offset, limit, sort, query)
 
 List queues
 
@@ -508,13 +508,13 @@ public class Example {
 
     QueuesV1Api apiInstance = new QueuesV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String agent = "agent_example"; // String | Agent man managing the resource
+    String name = "name_example"; // String | Entity managing the resource
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
     String query = "query_example"; // String | Query filter the search search.
     try {
-      V1ListQueuesResponse result = apiInstance.listQueues(owner, agent, offset, limit, sort, query);
+      V1ListQueuesResponse result = apiInstance.listQueues(owner, name, offset, limit, sort, query);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QueuesV1Api#listQueues");
@@ -532,7 +532,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **agent** | **String**| Agent man managing the resource |
+ **name** | **String**| Entity managing the resource |
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]

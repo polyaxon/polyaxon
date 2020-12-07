@@ -74,16 +74,16 @@ for the delete team operation typically these are written to a http.Request
 */
 type DeleteTeamParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Team
-	  Team under namesapce
-
-	*/
-	Team string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *DeleteTeamParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the delete team params
+func (o *DeleteTeamParams) WithName(name string) *DeleteTeamParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the delete team params
+func (o *DeleteTeamParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the delete team params
 func (o *DeleteTeamParams) WithOwner(owner string) *DeleteTeamParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *DeleteTeamParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithTeam adds the team to the delete team params
-func (o *DeleteTeamParams) WithTeam(team string) *DeleteTeamParams {
-	o.SetTeam(team)
-	return o
-}
-
-// SetTeam adds the team to the delete team params
-func (o *DeleteTeamParams) SetTeam(team string) {
-	o.Team = team
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteTeamParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *DeleteTeamParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param team
-	if err := r.SetPathParam("team", o.Team); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

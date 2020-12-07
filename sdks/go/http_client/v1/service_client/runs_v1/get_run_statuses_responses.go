@@ -87,7 +87,7 @@ type GetRunStatusesOK struct {
 }
 
 func (o *GetRunStatusesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] getRunStatusesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/statuses][%d] getRunStatusesOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRunStatusesOK) GetPayload() *service_model.V1Status {
@@ -120,7 +120,7 @@ type GetRunStatusesNoContent struct {
 }
 
 func (o *GetRunStatusesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] getRunStatusesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/statuses][%d] getRunStatusesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetRunStatusesNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetRunStatusesForbidden struct {
 }
 
 func (o *GetRunStatusesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] getRunStatusesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/statuses][%d] getRunStatusesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetRunStatusesForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetRunStatusesNotFound struct {
 }
 
 func (o *GetRunStatusesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] getRunStatusesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/statuses][%d] getRunStatusesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetRunStatusesNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetRunStatusesDefault) Code() int {
 }
 
 func (o *GetRunStatusesDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] GetRunStatuses default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/statuses][%d] GetRunStatuses default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetRunStatusesDefault) GetPayload() *service_model.RuntimeError {

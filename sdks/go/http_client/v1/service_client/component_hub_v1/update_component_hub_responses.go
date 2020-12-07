@@ -87,7 +87,7 @@ type UpdateComponentHubOK struct {
 }
 
 func (o *UpdateComponentHubOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/components/{component.uuid}][%d] updateComponentHubOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] updateComponentHubOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateComponentHubOK) GetPayload() *service_model.V1ComponentHub {
@@ -120,7 +120,7 @@ type UpdateComponentHubNoContent struct {
 }
 
 func (o *UpdateComponentHubNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/components/{component.uuid}][%d] updateComponentHubNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] updateComponentHubNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UpdateComponentHubNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type UpdateComponentHubForbidden struct {
 }
 
 func (o *UpdateComponentHubForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/components/{component.uuid}][%d] updateComponentHubForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] updateComponentHubForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateComponentHubForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type UpdateComponentHubNotFound struct {
 }
 
 func (o *UpdateComponentHubNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/components/{component.uuid}][%d] updateComponentHubNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] updateComponentHubNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateComponentHubNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *UpdateComponentHubDefault) Code() int {
 }
 
 func (o *UpdateComponentHubDefault) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/components/{component.uuid}][%d] UpdateComponentHub default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] UpdateComponentHub default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *UpdateComponentHubDefault) GetPayload() *service_model.RuntimeError {

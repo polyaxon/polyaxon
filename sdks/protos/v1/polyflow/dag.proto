@@ -27,7 +27,7 @@ import "v1/polyflow/k8s.proto";
 
 // Dag specificaiton
 message Dag {
-    // Optional component kind, should be equal to "dag"
+    // Optional component kind, should be equal to 'dag'
     string kind = 1;
 
     // Ops used in the graph

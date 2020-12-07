@@ -86,7 +86,7 @@ type EnableProjectCIOK struct {
 }
 
 func (o *EnableProjectCIOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCIOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] enableProjectCIOK ", 200)
 }
 
 func (o *EnableProjectCIOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type EnableProjectCINoContent struct {
 }
 
 func (o *EnableProjectCINoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCINoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] enableProjectCINoContent  %+v", 204, o.Payload)
 }
 
 func (o *EnableProjectCINoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type EnableProjectCIForbidden struct {
 }
 
 func (o *EnableProjectCIForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCIForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] enableProjectCIForbidden  %+v", 403, o.Payload)
 }
 
 func (o *EnableProjectCIForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type EnableProjectCINotFound struct {
 }
 
 func (o *EnableProjectCINotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCINotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] enableProjectCINotFound  %+v", 404, o.Payload)
 }
 
 func (o *EnableProjectCINotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *EnableProjectCIDefault) Code() int {
 }
 
 func (o *EnableProjectCIDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] EnableProjectCI default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] EnableProjectCI default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *EnableProjectCIDefault) GetPayload() *service_model.RuntimeError {

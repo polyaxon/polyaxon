@@ -25,7 +25,37 @@ OPTIONS_OWNER = {
 
 OPTIONS_PROJECT = {
     "args": ["--project", "-p"],
-    "kwargs": dict(type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'."),
+    "kwargs": dict(type=str, help="The project name, e.g. 'mnist' or 'acme/mnist'."),
+}
+
+OPTIONS_MODEL_REGISTRY = {
+    "args": ["--model", "-m"],
+    "kwargs": dict(
+        type=str, help="The model registry name, e.g. 'model-a' or 'acme/model-a'."
+    ),
+}
+
+OPTIONS_MODEL_VERSION = {
+    "args": ["--version", "-ver"],
+    "kwargs": dict(
+        type=str,
+        help="The component version, e.g. 'model-a:1.3.4' or 'acme/model-a:v1'.",
+    ),
+}
+
+OPTIONS_COMPONENT_HUB = {
+    "args": ["--component", "-c"],
+    "kwargs": dict(
+        type=str, help="The component hub name, e.g. 'kaniko' or 'acme/kaniko'."
+    ),
+}
+
+OPTIONS_COMPONENT_VERSION = {
+    "args": ["--version", "-ver"],
+    "kwargs": dict(
+        type=str,
+        help="The component version, e.g. 'kaniko:test' or 'acme/kaniko:test'.",
+    ),
 }
 
 OPTIONS_RUN_UID = {

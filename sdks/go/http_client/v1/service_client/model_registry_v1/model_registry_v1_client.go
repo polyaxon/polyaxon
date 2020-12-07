@@ -39,25 +39,129 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	ArchiveModelRegistry(params *ArchiveModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveModelRegistryOK, *ArchiveModelRegistryNoContent, error)
+
+	BookmarkModelRegistry(params *BookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkModelRegistryOK, *BookmarkModelRegistryNoContent, error)
+
 	CreateModelRegistry(params *CreateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelRegistryOK, *CreateModelRegistryNoContent, error)
+
+	CreateModelVersion(params *CreateModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelVersionOK, *CreateModelVersionNoContent, error)
+
+	CreateModelVersionStage(params *CreateModelVersionStageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelVersionStageOK, *CreateModelVersionStageNoContent, error)
 
 	DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteModelRegistryOK, *DeleteModelRegistryNoContent, error)
 
+	DeleteModelVersion(params *DeleteModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteModelVersionOK, *DeleteModelVersionNoContent, error)
+
 	GetModelRegistry(params *GetModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryOK, *GetModelRegistryNoContent, error)
 
-	ListModelRegistry(params *ListModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistryOK, *ListModelRegistryNoContent, error)
+	GetModelRegistrySettings(params *GetModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistrySettingsOK, *GetModelRegistrySettingsNoContent, error)
+
+	GetModelVersion(params *GetModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionOK, *GetModelVersionNoContent, error)
+
+	GetModelVersionStages(params *GetModelVersionStagesParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionStagesOK, *GetModelVersionStagesNoContent, error)
+
+	ListModelRegistries(params *ListModelRegistriesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistriesOK, *ListModelRegistriesNoContent, error)
 
 	ListModelRegistryNames(params *ListModelRegistryNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistryNamesOK, *ListModelRegistryNamesNoContent, error)
 
+	ListModelVersionNames(params *ListModelVersionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelVersionNamesOK, *ListModelVersionNamesNoContent, error)
+
+	ListModelVersions(params *ListModelVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelVersionsOK, *ListModelVersionsNoContent, error)
+
 	PatchModelRegistry(params *PatchModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelRegistryOK, *PatchModelRegistryNoContent, error)
 
+	PatchModelRegistrySettings(params *PatchModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelRegistrySettingsOK, *PatchModelRegistrySettingsNoContent, error)
+
+	PatchModelVersion(params *PatchModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelVersionOK, *PatchModelVersionNoContent, error)
+
+	RestoreModelRegistry(params *RestoreModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreModelRegistryOK, *RestoreModelRegistryNoContent, error)
+
+	UnbookmarkModelRegistry(params *UnbookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkModelRegistryOK, *UnbookmarkModelRegistryNoContent, error)
+
 	UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelRegistryOK, *UpdateModelRegistryNoContent, error)
+
+	UpdateModelRegistrySettings(params *UpdateModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelRegistrySettingsOK, *UpdateModelRegistrySettingsNoContent, error)
+
+	UpdateModelVersion(params *UpdateModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelVersionOK, *UpdateModelVersionNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  CreateModelRegistry creates hub model
+  ArchiveModelRegistry archives registry model
+*/
+func (a *Client) ArchiveModelRegistry(params *ArchiveModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveModelRegistryOK, *ArchiveModelRegistryNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewArchiveModelRegistryParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ArchiveModelRegistry",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/registry/{name}/archive",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ArchiveModelRegistryReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ArchiveModelRegistryOK:
+		return value, nil, nil
+	case *ArchiveModelRegistryNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ArchiveModelRegistryDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  BookmarkModelRegistry bookmarks registry model
+*/
+func (a *Client) BookmarkModelRegistry(params *BookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkModelRegistryOK, *BookmarkModelRegistryNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewBookmarkModelRegistryParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "BookmarkModelRegistry",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/registry/{name}/bookmark",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &BookmarkModelRegistryReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *BookmarkModelRegistryOK:
+		return value, nil, nil
+	case *BookmarkModelRegistryNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*BookmarkModelRegistryDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  CreateModelRegistry creates registry model
 */
 func (a *Client) CreateModelRegistry(params *CreateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelRegistryOK, *CreateModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
@@ -68,7 +172,7 @@ func (a *Client) CreateModelRegistry(params *CreateModelRegistryParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateModelRegistry",
 		Method:             "POST",
-		PathPattern:        "/api/v1/orgs/{owner}/models",
+		PathPattern:        "/api/v1/{owner}/registry/create",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -93,7 +197,79 @@ func (a *Client) CreateModelRegistry(params *CreateModelRegistryParams, authInfo
 }
 
 /*
-  DeleteModelRegistry deletes hub model
+  CreateModelVersion creates model version
+*/
+func (a *Client) CreateModelVersion(params *CreateModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelVersionOK, *CreateModelVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateModelVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateModelVersion",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/registry/{model}/versions",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateModelVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateModelVersionOK:
+		return value, nil, nil
+	case *CreateModelVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateModelVersionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  CreateModelVersionStage creates new model version stage
+*/
+func (a *Client) CreateModelVersionStage(params *CreateModelVersionStageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateModelVersionStageOK, *CreateModelVersionStageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateModelVersionStageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateModelVersionStage",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/registry/{entity}/versions/{name}/stages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateModelVersionStageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateModelVersionStageOK:
+		return value, nil, nil
+	case *CreateModelVersionStageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateModelVersionStageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  DeleteModelRegistry deletes registry model
 */
 func (a *Client) DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteModelRegistryOK, *DeleteModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +280,7 @@ func (a *Client) DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteModelRegistry",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/orgs/{owner}/models/{uuid}",
+		PathPattern:        "/api/v1/{owner}/registry/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -129,7 +305,43 @@ func (a *Client) DeleteModelRegistry(params *DeleteModelRegistryParams, authInfo
 }
 
 /*
-  GetModelRegistry gets hub model
+  DeleteModelVersion deletes model version
+*/
+func (a *Client) DeleteModelVersion(params *DeleteModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteModelVersionOK, *DeleteModelVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteModelVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DeleteModelVersion",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/{owner}/registry/{entity}/versions/{name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteModelVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteModelVersionOK:
+		return value, nil, nil
+	case *DeleteModelVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteModelVersionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetModelRegistry gets registry model
 */
 func (a *Client) GetModelRegistry(params *GetModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryOK, *GetModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
@@ -140,7 +352,7 @@ func (a *Client) GetModelRegistry(params *GetModelRegistryParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetModelRegistry",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/models/{uuid}",
+		PathPattern:        "/api/v1/{owner}/registry/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -165,23 +377,23 @@ func (a *Client) GetModelRegistry(params *GetModelRegistryParams, authInfo runti
 }
 
 /*
-  ListModelRegistry lists hub models
+  GetModelRegistrySettings gets registry model settings
 */
-func (a *Client) ListModelRegistry(params *ListModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistryOK, *ListModelRegistryNoContent, error) {
+func (a *Client) GetModelRegistrySettings(params *GetModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistrySettingsOK, *GetModelRegistrySettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListModelRegistryParams()
+		params = NewGetModelRegistrySettingsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListModelRegistry",
+		ID:                 "GetModelRegistrySettings",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/models",
+		PathPattern:        "/api/v1/{owner}/registry/{name}/settings",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListModelRegistryReader{formats: a.formats},
+		Reader:             &GetModelRegistrySettingsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -190,18 +402,126 @@ func (a *Client) ListModelRegistry(params *ListModelRegistryParams, authInfo run
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListModelRegistryOK:
+	case *GetModelRegistrySettingsOK:
 		return value, nil, nil
-	case *ListModelRegistryNoContent:
+	case *GetModelRegistrySettingsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListModelRegistryDefault)
+	unexpectedSuccess := result.(*GetModelRegistrySettingsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListModelRegistryNames lists hub model names
+  GetModelVersion gets model version
+*/
+func (a *Client) GetModelVersion(params *GetModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionOK, *GetModelVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetModelVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetModelVersion",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/registry/{entity}/versions/{name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetModelVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetModelVersionOK:
+		return value, nil, nil
+	case *GetModelVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetModelVersionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetModelVersionStages gets model version stages
+*/
+func (a *Client) GetModelVersionStages(params *GetModelVersionStagesParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionStagesOK, *GetModelVersionStagesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetModelVersionStagesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetModelVersionStages",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/registry/{entity}/versions/{name}/stages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetModelVersionStagesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetModelVersionStagesOK:
+		return value, nil, nil
+	case *GetModelVersionStagesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetModelVersionStagesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ListModelRegistries lists registry models
+*/
+func (a *Client) ListModelRegistries(params *ListModelRegistriesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistriesOK, *ListModelRegistriesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListModelRegistriesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListModelRegistries",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/registry/list",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListModelRegistriesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListModelRegistriesOK:
+		return value, nil, nil
+	case *ListModelRegistriesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListModelRegistriesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ListModelRegistryNames lists registry model names
 */
 func (a *Client) ListModelRegistryNames(params *ListModelRegistryNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelRegistryNamesOK, *ListModelRegistryNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -212,7 +532,7 @@ func (a *Client) ListModelRegistryNames(params *ListModelRegistryNamesParams, au
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListModelRegistryNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/models/names",
+		PathPattern:        "/api/v1/{owner}/registry/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -237,7 +557,79 @@ func (a *Client) ListModelRegistryNames(params *ListModelRegistryNamesParams, au
 }
 
 /*
-  PatchModelRegistry patches hub model
+  ListModelVersionNames lists model versions names
+*/
+func (a *Client) ListModelVersionNames(params *ListModelVersionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelVersionNamesOK, *ListModelVersionNamesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListModelVersionNamesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListModelVersionNames",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/registry/{name}/versions/names",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListModelVersionNamesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListModelVersionNamesOK:
+		return value, nil, nil
+	case *ListModelVersionNamesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListModelVersionNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ListModelVersions lists model versions
+*/
+func (a *Client) ListModelVersions(params *ListModelVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListModelVersionsOK, *ListModelVersionsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListModelVersionsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListModelVersions",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/registry/{name}/versions",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListModelVersionsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListModelVersionsOK:
+		return value, nil, nil
+	case *ListModelVersionsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListModelVersionsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  PatchModelRegistry patches registry model
 */
 func (a *Client) PatchModelRegistry(params *PatchModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelRegistryOK, *PatchModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
@@ -248,7 +640,7 @@ func (a *Client) PatchModelRegistry(params *PatchModelRegistryParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchModelRegistry",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/orgs/{owner}/models/{model.uuid}",
+		PathPattern:        "/api/v1/{owner}/registry/{model.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -273,7 +665,151 @@ func (a *Client) PatchModelRegistry(params *PatchModelRegistryParams, authInfo r
 }
 
 /*
-  UpdateModelRegistry updates hub model
+  PatchModelRegistrySettings patches registry model settings
+*/
+func (a *Client) PatchModelRegistrySettings(params *PatchModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelRegistrySettingsOK, *PatchModelRegistrySettingsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchModelRegistrySettingsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchModelRegistrySettings",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/{owner}/registry/{model}/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &PatchModelRegistrySettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *PatchModelRegistrySettingsOK:
+		return value, nil, nil
+	case *PatchModelRegistrySettingsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchModelRegistrySettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  PatchModelVersion patches model version
+*/
+func (a *Client) PatchModelVersion(params *PatchModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchModelVersionOK, *PatchModelVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchModelVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchModelVersion",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/{owner}/registry/{model}/versions/{version.name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &PatchModelVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *PatchModelVersionOK:
+		return value, nil, nil
+	case *PatchModelVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchModelVersionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  RestoreModelRegistry restores registry model
+*/
+func (a *Client) RestoreModelRegistry(params *RestoreModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreModelRegistryOK, *RestoreModelRegistryNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRestoreModelRegistryParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "RestoreModelRegistry",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/registry/{name}/restore",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &RestoreModelRegistryReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *RestoreModelRegistryOK:
+		return value, nil, nil
+	case *RestoreModelRegistryNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*RestoreModelRegistryDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UnbookmarkModelRegistry unbookmarks registry model
+*/
+func (a *Client) UnbookmarkModelRegistry(params *UnbookmarkModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkModelRegistryOK, *UnbookmarkModelRegistryNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUnbookmarkModelRegistryParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UnbookmarkModelRegistry",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/{owner}/registry/{name}/unbookmark",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UnbookmarkModelRegistryReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UnbookmarkModelRegistryOK:
+		return value, nil, nil
+	case *UnbookmarkModelRegistryNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UnbookmarkModelRegistryDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateModelRegistry updates registry model
 */
 func (a *Client) UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelRegistryOK, *UpdateModelRegistryNoContent, error) {
 	// TODO: Validate the params before sending
@@ -284,7 +820,7 @@ func (a *Client) UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateModelRegistry",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/orgs/{owner}/models/{model.uuid}",
+		PathPattern:        "/api/v1/{owner}/registry/{model.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -305,6 +841,78 @@ func (a *Client) UpdateModelRegistry(params *UpdateModelRegistryParams, authInfo
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateModelRegistryDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateModelRegistrySettings updates registry model settings
+*/
+func (a *Client) UpdateModelRegistrySettings(params *UpdateModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelRegistrySettingsOK, *UpdateModelRegistrySettingsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateModelRegistrySettingsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UpdateModelRegistrySettings",
+		Method:             "PUT",
+		PathPattern:        "/api/v1/{owner}/registry/{model}/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UpdateModelRegistrySettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateModelRegistrySettingsOK:
+		return value, nil, nil
+	case *UpdateModelRegistrySettingsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateModelRegistrySettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateModelVersion updates model version
+*/
+func (a *Client) UpdateModelVersion(params *UpdateModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateModelVersionOK, *UpdateModelVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateModelVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UpdateModelVersion",
+		Method:             "PUT",
+		PathPattern:        "/api/v1/{owner}/registry/{model}/versions/{version.name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UpdateModelVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateModelVersionOK:
+		return value, nil, nil
+	case *UpdateModelVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateModelVersionDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

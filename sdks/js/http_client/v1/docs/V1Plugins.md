@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **sync_statuses** | **Boolean** |  | [optional] 
 **auto_resume** | **Boolean** |  | [optional] 
 **log_level** | **String** |  | [optional] 
+**externalHost** | **Boolean** |  | [optional] 
 **notifications** | [**[V1Notification]**](V1Notification.md) |  | [optional] 
 
 

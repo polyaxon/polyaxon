@@ -24,6 +24,13 @@ from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.parser import parser
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
+IO_NAME_BLACK_LIST = ["globals", "params", "connections"]
+IO_NAME_ERROR = (
+    "Received an input/output with a name in {}, "
+    "please use a different name that does "
+    "not already taken by the context".format(IO_NAME_BLACK_LIST)
+)
+
 
 def validate_io_value(
     name: str,
@@ -85,7 +92,9 @@ def validate_io(name, iotype, value, is_optional, is_list, is_flag, options):
 
 
 class IOSchema(BaseCamelSchema):
-    name = fields.Str(required=True)
+    name = fields.Str(
+        required=True, validate=validate.NoneOf(IO_NAME_BLACK_LIST, error=IO_NAME_ERROR)
+    )
     description = fields.Str(allow_none=True)
     iotype = fields.Str(
         allow_none=True, data_key="type", validate=validate.OneOf(types.VALUES)

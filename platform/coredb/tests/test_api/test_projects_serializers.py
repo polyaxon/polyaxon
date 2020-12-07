@@ -68,6 +68,7 @@ class TestProjectDetailSerializer(TestProjectSerializer):
     serializer_class = ProjectDetailSerializer
     expected_keys = TestProjectSerializer.expected_keys | {
         "readme",
+        "live_state",
     }
 
     def test_serialize_one(self):

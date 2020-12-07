@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**get_agent**](AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get agent
 [**get_agent_state**](AgentsV1Api.md#get_agent_state) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | Get State (queues/runs)
 [**get_agent_statuses**](AgentsV1Api.md#get_agent_statuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | Get agent status
-[**get_agent_token**](AgentsV1Api.md#get_agent_token) | **GET** /api/v1/orgs/{owner}/agents/{agent}/token | Get agent token
+[**get_agent_token**](AgentsV1Api.md#get_agent_token) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/token | Get agent token
 [**list_agent_names**](AgentsV1Api.md#list_agent_names) | **GET** /api/v1/orgs/{owner}/agents/names | List agents names
 [**list_agents**](AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List agents
 [**patch_agent**](AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch agent
@@ -186,7 +186,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_agent**
-> delete_agent(owner, uuid)
+> delete_agent(owner, uuid, entity=entity)
 
 Delete agent
 
@@ -226,10 +226,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     api_instance = polyaxon_sdk.AgentsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
+entity = 'entity_example' # str | Owner of the namespace. (optional)
 
     try:
         # Delete agent
-        api_instance.delete_agent(owner, uuid)
+        api_instance.delete_agent(owner, uuid, entity=entity)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->delete_agent: %s\n" % e)
 ```
@@ -240,6 +241,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
+ **entity** | **str**| Owner of the namespace. | [optional] 
 
 ### Return type
 
@@ -266,7 +268,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_agent**
-> V1Agent get_agent(owner, uuid)
+> V1Agent get_agent(owner, uuid, entity=entity)
 
 Get agent
 
@@ -306,10 +308,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     api_instance = polyaxon_sdk.AgentsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
+entity = 'entity_example' # str | Owner of the namespace. (optional)
 
     try:
         # Get agent
-        api_response = api_instance.get_agent(owner, uuid)
+        api_response = api_instance.get_agent(owner, uuid, entity=entity)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->get_agent: %s\n" % e)
@@ -321,6 +324,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
+ **entity** | **str**| Owner of the namespace. | [optional] 
 
 ### Return type
 
@@ -509,7 +513,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_agent_token**
-> V1Token get_agent_token(owner, agent, uuid=uuid)
+> V1Token get_agent_token(owner, uuid)
 
 Get agent token
 
@@ -548,12 +552,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.AgentsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-agent = 'agent_example' # str | Agent managing the resource
-uuid = 'uuid_example' # str | Uuid identifier of the entity. (optional)
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Get agent token
-        api_response = api_instance.get_agent_token(owner, agent, uuid=uuid)
+        api_response = api_instance.get_agent_token(owner, uuid)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling AgentsV1Api->get_agent_token: %s\n" % e)
@@ -564,8 +567,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **agent** | **str**| Agent managing the resource | 
- **uuid** | **str**| Uuid identifier of the entity. | [optional] 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 

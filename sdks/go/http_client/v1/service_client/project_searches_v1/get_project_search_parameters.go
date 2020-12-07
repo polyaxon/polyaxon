@@ -74,16 +74,16 @@ for the get project search operation typically these are written to a http.Reque
 */
 type GetProjectSearchParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *GetProjectSearchParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the get project search params
+func (o *GetProjectSearchParams) WithEntity(entity string) *GetProjectSearchParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the get project search params
+func (o *GetProjectSearchParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the get project search params
 func (o *GetProjectSearchParams) WithOwner(owner string) *GetProjectSearchParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *GetProjectSearchParams) WithOwner(owner string) *GetProjectSearchParams
 // SetOwner adds the owner to the get project search params
 func (o *GetProjectSearchParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the get project search params
-func (o *GetProjectSearchParams) WithProject(project string) *GetProjectSearchParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the get project search params
-func (o *GetProjectSearchParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the get project search params
@@ -169,13 +169,13 @@ func (o *GetProjectSearchParams) WriteToRequest(r runtime.ClientRequest, reg str
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

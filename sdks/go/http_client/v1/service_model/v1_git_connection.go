@@ -29,6 +29,9 @@ import (
 // swagger:model v1GitConnection
 type V1GitConnection struct {
 
+	// Addional command flag
+	Flags []string `json:"flags"`
+
 	// revision
 	Revision bool `json:"revision,omitempty"`
 

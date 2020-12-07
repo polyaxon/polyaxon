@@ -40,7 +40,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon-api",
-    version="1.3.4",
+    version="1.4.0",
     description="Polyaxon core api.",
     maintainer="Polyaxon, Inc.",
     maintainer_email="contact@polyaxon.com",

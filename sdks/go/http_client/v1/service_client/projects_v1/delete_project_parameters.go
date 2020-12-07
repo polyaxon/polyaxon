@@ -74,16 +74,16 @@ for the delete project operation typically these are written to a http.Request
 */
 type DeleteProjectParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *DeleteProjectParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the delete project params
+func (o *DeleteProjectParams) WithName(name string) *DeleteProjectParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the delete project params
+func (o *DeleteProjectParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the delete project params
 func (o *DeleteProjectParams) WithOwner(owner string) *DeleteProjectParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *DeleteProjectParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the delete project params
-func (o *DeleteProjectParams) WithProject(project string) *DeleteProjectParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the delete project params
-func (o *DeleteProjectParams) SetProject(project string) {
-	o.Project = project
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteProjectParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *DeleteProjectParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

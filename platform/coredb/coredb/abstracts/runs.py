@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from django.conf import settings
+from django.core.validators import validate_slug
 from django.db import models
 
 from coredb.abstracts.describable import DescribableModel
@@ -43,6 +44,13 @@ class BaseRun(
     TagModel,
     LiveStateModel,
 ):
+    name = models.CharField(
+        max_length=128,
+        blank=True,
+        null=True,
+        default=None,
+        validators=[validate_slug],
+    )
     kind = models.CharField(max_length=12, db_index=True, choices=V1RunKind.CHOICES)
     runtime = models.CharField(max_length=12, db_index=True, null=True, blank=True)
     user = models.ForeignKey(
@@ -94,6 +102,7 @@ class BaseRun(
 
     class Meta:
         abstract = True
+        indexes = [models.Index(fields=["name"])]
 
     @property
     def subpath(self):

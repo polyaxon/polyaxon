@@ -74,16 +74,16 @@ for the approve run operation typically these are written to a http.Request
 */
 type ApproveRunParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *ApproveRunParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the approve run params
+func (o *ApproveRunParams) WithEntity(entity string) *ApproveRunParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the approve run params
+func (o *ApproveRunParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the approve run params
 func (o *ApproveRunParams) WithOwner(owner string) *ApproveRunParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *ApproveRunParams) WithOwner(owner string) *ApproveRunParams {
 // SetOwner adds the owner to the approve run params
 func (o *ApproveRunParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the approve run params
-func (o *ApproveRunParams) WithProject(project string) *ApproveRunParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the approve run params
-func (o *ApproveRunParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the approve run params
@@ -169,13 +169,13 @@ func (o *ApproveRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

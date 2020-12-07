@@ -32,6 +32,7 @@ APPROVED = "approved"
 SKIPPED = "skipped"
 SETTINGS = "settings"
 NEW_STATUS = "new_status"
+NEW_STAGE = "new_stage"
 NEW_ARTIFACTS = "new_artifacts"
 
 WRITE_ACTIONS = [

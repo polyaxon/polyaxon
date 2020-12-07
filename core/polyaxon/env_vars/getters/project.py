@@ -28,9 +28,11 @@ from polyaxon.utils.formatting import Printer
 def get_project_error_message(owner, project):
     message_context = ""
     if owner:
-        message_context += " owner: {}".format(owner)
+        message_context += " <owner: {}>".format(owner)
     if project:
-        message_context += " project: {}".format(project)
+        message_context += " <project: {}>".format(project)
+    if message_context:
+        message_context = " Context:{}".format(message_context)
     if not owner or not project:
         return "Please provide a valid project with owner.{}".format(message_context)
 

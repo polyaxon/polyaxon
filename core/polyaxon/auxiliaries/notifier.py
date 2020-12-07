@@ -24,15 +24,15 @@ def get_default_notification_container():
     return V1Container(
         name=MAIN_JOB_CONTAINER,
         image="polyaxon/polyaxon-events-handlers:{}".format(pkg.VERSION),
-        image_pull_policy=PullPolicy.ALWAYS.value,
+        image_pull_policy=PullPolicy.IF_NOT_PRESENT.value,
         command=["polyaxon", "notify"],
         args=[
             "--kind={{kind}}",
             "--owner={{owner}}",
             "--project={{project}}",
             "--run-uuid={{run_uuid}}",
-            "--run-name={{run_name}}",
             "--condition={{condition}}",
+            "{{params.run_name.as_arg}}",
         ],
         resources=k8s_schemas.V1ResourceRequirements(
             limits={"cpu": "0.5", "memory": "100Mi"},

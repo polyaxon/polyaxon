@@ -87,7 +87,7 @@ type GetRunArtifactsLineageNamesOK struct {
 }
 
 func (o *GetRunArtifactsLineageNamesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names][%d] getRunArtifactsLineageNamesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names][%d] getRunArtifactsLineageNamesOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageNamesOK) GetPayload() *service_model.V1ListRunArtifactsResponse {
@@ -120,7 +120,7 @@ type GetRunArtifactsLineageNamesNoContent struct {
 }
 
 func (o *GetRunArtifactsLineageNamesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names][%d] getRunArtifactsLineageNamesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names][%d] getRunArtifactsLineageNamesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageNamesNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetRunArtifactsLineageNamesForbidden struct {
 }
 
 func (o *GetRunArtifactsLineageNamesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names][%d] getRunArtifactsLineageNamesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names][%d] getRunArtifactsLineageNamesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageNamesForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetRunArtifactsLineageNamesNotFound struct {
 }
 
 func (o *GetRunArtifactsLineageNamesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names][%d] getRunArtifactsLineageNamesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names][%d] getRunArtifactsLineageNamesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageNamesNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetRunArtifactsLineageNamesDefault) Code() int {
 }
 
 func (o *GetRunArtifactsLineageNamesDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names][%d] GetRunArtifactsLineageNames default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names][%d] GetRunArtifactsLineageNames default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageNamesDefault) GetPayload() *service_model.RuntimeError {

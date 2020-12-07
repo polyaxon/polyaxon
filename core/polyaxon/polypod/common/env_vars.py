@@ -23,7 +23,6 @@ from polyaxon.connections.reader import (
     get_connection_schema_env_name,
 )
 from polyaxon.env_vars.keys import (
-    POLYAXON_KEYS_API_HOST,
     POLYAXON_KEYS_API_VERSION,
     POLYAXON_KEYS_AUTH_TOKEN,
     POLYAXON_KEYS_AUTHENTICATION_TYPE,
@@ -246,9 +245,6 @@ def get_service_env_vars(
 ) -> List[k8s_schemas.V1EnvVar]:
     env_vars = get_base_env_vars() + [
         get_env_var(name=POLYAXON_KEYS_HOST, value=api_host),
-        get_env_var(
-            name=POLYAXON_KEYS_API_HOST, value=api_host
-        ),  # TODO: Remove in v1.2
         get_env_var(name=POLYAXON_KEYS_IS_MANAGED, value=True),
         get_env_var(name=POLYAXON_KEYS_API_VERSION, value=api_version),
         get_run_instance_env_var(run_instance),

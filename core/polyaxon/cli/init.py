@@ -26,6 +26,7 @@ from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.options import OPTIONS_PROJECT
 from polyaxon.client import ProjectClient
 from polyaxon.env_vars.getters import get_project_or_local
+from polyaxon.logger import clean_outputs
 from polyaxon.managers.git import GitConfigManager
 from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.managers.project import ProjectConfigManager
@@ -98,10 +99,11 @@ def create_polyaxonfile():
     show_default=False,
     help="Init a polyaxonignore file in this project.",
 )
+@clean_outputs
 def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
     """Initialize a new local project and cache directory.
 
-    Note: We recommend that you add the local cache `.polyaxon`
+    Note: Make sure to add the local cache `.polyaxon`
     to your `.gitignore` and `.dockerignore` files.
     """
     if not any([project, git_connection, git_url, polyaxonfile, polyaxonignore]):
@@ -150,6 +152,10 @@ def init(project, git_connection, git_url, polyaxonfile, polyaxonignore):
                 config, init=True, visibility=ProjectConfigManager.VISIBILITY_LOCAL
             )
             Printer.print_success("Project was initialized")
+            Printer.print_header(
+                "Make sure to add the local cache `.polyaxon` "
+                "to your `.gitignore` and `.dockerignore` files."
+            )
         else:
             Printer.print_header("Project config was not changed.")
 

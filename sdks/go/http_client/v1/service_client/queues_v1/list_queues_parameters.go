@@ -75,16 +75,16 @@ for the list queues operation typically these are written to a http.Request
 */
 type ListQueuesParams struct {
 
-	/*Agent
-	  Agent man managing the resource
-
-	*/
-	Agent string
 	/*Limit
 	  Limit size.
 
 	*/
 	Limit *int32
+	/*Name
+	  Entity managing the resource
+
+	*/
+	Name string
 	/*Offset
 	  Pagination offset.
 
@@ -144,17 +144,6 @@ func (o *ListQueuesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithAgent adds the agent to the list queues params
-func (o *ListQueuesParams) WithAgent(agent string) *ListQueuesParams {
-	o.SetAgent(agent)
-	return o
-}
-
-// SetAgent adds the agent to the list queues params
-func (o *ListQueuesParams) SetAgent(agent string) {
-	o.Agent = agent
-}
-
 // WithLimit adds the limit to the list queues params
 func (o *ListQueuesParams) WithLimit(limit *int32) *ListQueuesParams {
 	o.SetLimit(limit)
@@ -164,6 +153,17 @@ func (o *ListQueuesParams) WithLimit(limit *int32) *ListQueuesParams {
 // SetLimit adds the limit to the list queues params
 func (o *ListQueuesParams) SetLimit(limit *int32) {
 	o.Limit = limit
+}
+
+// WithName adds the name to the list queues params
+func (o *ListQueuesParams) WithName(name string) *ListQueuesParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the list queues params
+func (o *ListQueuesParams) SetName(name string) {
+	o.Name = name
 }
 
 // WithOffset adds the offset to the list queues params
@@ -218,11 +218,6 @@ func (o *ListQueuesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 	}
 	var res []error
 
-	// path param agent
-	if err := r.SetPathParam("agent", o.Agent); err != nil {
-		return err
-	}
-
 	if o.Limit != nil {
 
 		// query param limit
@@ -237,6 +232,11 @@ func (o *ListQueuesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 			}
 		}
 
+	}
+
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
+		return err
 	}
 
 	if o.Offset != nil {

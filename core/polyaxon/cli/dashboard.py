@@ -19,6 +19,7 @@ import sys
 import click
 
 from polyaxon import settings
+from polyaxon.logger import clean_outputs
 from polyaxon.utils.http_utils import clean_host
 
 
@@ -55,6 +56,7 @@ def get_dashboard(dashboard_url: str, url_only: bool, yes: bool):
 @click.option(
     "--url", is_flag=True, default=False, help="Print the url of the dashboard."
 )
+@clean_outputs
 def dashboard(yes, url):
     """Open dashboard in browser."""
     get_dashboard(dashboard_url=get_dashboard_url(), url_only=url, yes=yes)

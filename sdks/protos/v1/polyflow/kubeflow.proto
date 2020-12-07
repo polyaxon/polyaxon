@@ -55,7 +55,7 @@ enum CleanPodPolicy {
 
 // MPI Job specification
 message MPIJob {
-    // Optional component kind, should be equal to "mpi_job"
+    // Optional component kind, should be equal to 'mpi_job'
     string kind = 1;
 
     // optional clean pod policy section
@@ -73,7 +73,7 @@ message MPIJob {
 
 // Pytorch Job specification
 message PytorchJob {
-    // Optional component kind, should be equal to "pytorch_job"
+    // Optional component kind, should be equal to 'pytorch_job'
     string kind = 1;
 
     // optional clean pod policy section
@@ -88,7 +88,7 @@ message PytorchJob {
 
 // TF Job specification
 message TFJob {
-    // Optional component kind, should be equal to "pytorch_job"
+    // Optional component kind, should be equal to 'pytorch_job'
     string kind = 1;
 
     // optional clean pod policy section

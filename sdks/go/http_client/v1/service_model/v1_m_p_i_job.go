@@ -33,7 +33,7 @@ type V1MPIJob struct {
 	// optional clean pod policy section
 	CleanPodPolicy V1CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
 
-	// Optional component kind, should be equal to "mpi_job"
+	// Optional component kind, should be equal to 'mpi_job'
 	Kind *string `json:"kind,omitempty"`
 
 	// Optional launcher replica definition

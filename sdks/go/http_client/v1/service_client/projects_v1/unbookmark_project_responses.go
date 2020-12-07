@@ -86,7 +86,7 @@ type UnbookmarkProjectOK struct {
 }
 
 func (o *UnbookmarkProjectOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] unbookmarkProjectOK ", 200)
 }
 
 func (o *UnbookmarkProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type UnbookmarkProjectNoContent struct {
 }
 
 func (o *UnbookmarkProjectNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] unbookmarkProjectNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UnbookmarkProjectNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type UnbookmarkProjectForbidden struct {
 }
 
 func (o *UnbookmarkProjectForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] unbookmarkProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UnbookmarkProjectForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type UnbookmarkProjectNotFound struct {
 }
 
 func (o *UnbookmarkProjectNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] unbookmarkProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UnbookmarkProjectNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *UnbookmarkProjectDefault) Code() int {
 }
 
 func (o *UnbookmarkProjectDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] UnbookmarkProject default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] UnbookmarkProject default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *UnbookmarkProjectDefault) GetPayload() *service_model.RuntimeError {

@@ -47,7 +47,7 @@ type V1Dag struct {
 	// Optional environment section
 	Environment *V1Environment `json:"environment,omitempty"`
 
-	// Optional component kind, should be equal to "dag"
+	// Optional component kind, should be equal to 'dag'
 	Kind *string `json:"kind,omitempty"`
 
 	// Ops used in the graph

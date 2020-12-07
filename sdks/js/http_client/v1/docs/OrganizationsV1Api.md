@@ -10,10 +10,10 @@ Method | HTTP request | Description
 [**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Create organization member
 [**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
 [**deleteOrganizationInvitation**](OrganizationsV1Api.md#deleteOrganizationInvitation) | **DELETE** /api/v1/orgs/{owner}/invitations | Delete organization invitation details
-[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
+[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{name} | Delete organization member details
 [**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Get organization
 [**getOrganizationInvitation**](OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
-[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
+[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{name} | Get organization member details
 [**getOrganizationSettings**](OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
 [**listOrganizationMemberNames**](OrganizationsV1Api.md#listOrganizationMemberNames) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
@@ -253,7 +253,7 @@ null (empty response body)
 
 ## deleteOrganizationMember
 
-> deleteOrganizationMember(owner, user)
+> deleteOrganizationMember(owner, name)
 
 Delete organization member details
 
@@ -270,8 +270,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let user = "user_example"; // String | Memeber under namesapce
-apiInstance.deleteOrganizationMember(owner, user, (error, data, response) => {
+let name = "name_example"; // String | Component under namesapce
+apiInstance.deleteOrganizationMember(owner, name, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -286,7 +286,7 @@ apiInstance.deleteOrganizationMember(owner, user, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **user** | **String**| Memeber under namesapce | 
+ **name** | **String**| Component under namesapce | 
 
 ### Return type
 
@@ -420,7 +420,7 @@ Name | Type | Description  | Notes
 
 ## getOrganizationMember
 
-> V1OrganizationMember getOrganizationMember(owner, user)
+> V1OrganizationMember getOrganizationMember(owner, name)
 
 Get organization member details
 
@@ -437,8 +437,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let user = "user_example"; // String | Memeber under namesapce
-apiInstance.getOrganizationMember(owner, user, (error, data, response) => {
+let name = "name_example"; // String | Component under namesapce
+apiInstance.getOrganizationMember(owner, name, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -453,7 +453,7 @@ apiInstance.getOrganizationMember(owner, user, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **user** | **String**| Memeber under namesapce | 
+ **name** | **String**| Component under namesapce | 
 
 ### Return type
 

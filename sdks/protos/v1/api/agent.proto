@@ -37,8 +37,8 @@ message Agent {
     // Optional tags of this entity
     repeated string tags = 4;
 
-    // Optional a flag to disable the agent
-    bool disabled = 5;
+    // Current live state
+    int32 live_state = 5;
 
     // Namespace where the agent is deployed
     string namespace = 6;

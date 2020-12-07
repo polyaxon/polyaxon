@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **tags** | **list[str]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
-**disabled** | **bool** |  | [optional] 
+**live_state** | **int** |  | [optional] 
 **kind** | [**V1ConnectionKind**](V1ConnectionKind.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

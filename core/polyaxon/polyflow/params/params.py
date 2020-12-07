@@ -285,7 +285,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     if the initial Input/Output definition has a predefined connection and this connection
     is provided, it will override the that value and will be added to the context.
 
-    ### to_init
+    ### toInit
 
     if True the param will be converted to an init container.
     """

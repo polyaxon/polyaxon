@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 ## deletePreset
 
-> deletePreset(owner, uuid)
+> deletePreset(owner, uuid, opts)
 
 Delete scheduling preset
 
@@ -87,7 +87,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 let apiInstance = new PolyaxonSdk.PresetsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.deletePreset(owner, uuid, (error, data, response) => {
+let opts = {
+  'entity': "entity_example" // String | Owner of the namespace.
+};
+apiInstance.deletePreset(owner, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -103,6 +106,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
+ **entity** | **String**| Owner of the namespace. | [optional] 
 
 ### Return type
 
@@ -120,7 +124,7 @@ null (empty response body)
 
 ## getPreset
 
-> V1Preset getPreset(owner, uuid)
+> V1Preset getPreset(owner, uuid, opts)
 
 Get scheduling preset
 
@@ -138,7 +142,10 @@ ApiKey.apiKey = 'YOUR API KEY';
 let apiInstance = new PolyaxonSdk.PresetsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.getPreset(owner, uuid, (error, data, response) => {
+let opts = {
+  'entity': "entity_example" // String | Owner of the namespace.
+};
+apiInstance.getPreset(owner, uuid, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -154,6 +161,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
+ **entity** | **String**| Owner of the namespace. | [optional] 
 
 ### Return type
 

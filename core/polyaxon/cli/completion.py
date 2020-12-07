@@ -16,6 +16,8 @@
 import click
 import click_completion
 
+from polyaxon.logger import clean_outputs
+
 
 @click.command()
 @click.option(
@@ -27,6 +29,7 @@ import click_completion
     type=click_completion.DocumentedChoice(click_completion.core.shells),
 )
 @click.argument("path", required=False)
+@clean_outputs
 def completion(append, shell, path):
     """Install the auto-completion for polyaxon-cli"""
     shell, path = click_completion.core.install(shell=shell, path=path, append=append)

@@ -74,16 +74,16 @@ for the bookmark project operation typically these are written to a http.Request
 */
 type BookmarkProjectParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *BookmarkProjectParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the bookmark project params
+func (o *BookmarkProjectParams) WithName(name string) *BookmarkProjectParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the bookmark project params
+func (o *BookmarkProjectParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the bookmark project params
 func (o *BookmarkProjectParams) WithOwner(owner string) *BookmarkProjectParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *BookmarkProjectParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the bookmark project params
-func (o *BookmarkProjectParams) WithProject(project string) *BookmarkProjectParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the bookmark project params
-func (o *BookmarkProjectParams) SetProject(project string) {
-	o.Project = project
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *BookmarkProjectParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *BookmarkProjectParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

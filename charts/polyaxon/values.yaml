@@ -66,8 +66,8 @@ broker: rabbitmq
 gateway:
   enabled: true
   image: polyaxon/polyaxon-gateway
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
     limits:
@@ -90,8 +90,8 @@ api:
   enabled: true
   useResolver: true
   image: polyaxon/polyaxon-api
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
     limits:
@@ -118,8 +118,8 @@ api:
 streams:
   enabled: true
   image: polyaxon/polyaxon-streams
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
     limits:
@@ -145,8 +145,8 @@ streams:
 
 init:
   image: polyaxon/polyaxon-init
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   resources:
     limits:
       cpu: 1000m
@@ -157,8 +157,8 @@ init:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   sleepInterval: 10
   syncInterval: 10
   resources:
@@ -174,8 +174,8 @@ agent:
   instance:
   enabled: false
   image: polyaxon/polyaxon-agent
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   resources:
     limits:
       cpu: 500m
@@ -188,8 +188,8 @@ operator:
   enabled: true
   skipCRD: false
   image: polyaxon/polyaxon-operator
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   resources:
     limits:
       cpu: 200m
@@ -201,8 +201,8 @@ operator:
 scheduler:
   enabled: false
   image: polyaxon/polyaxon-scheduler
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
   resources:
@@ -222,8 +222,8 @@ scheduler:
 worker:
   enabled: false
   image:
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   replicas: 1
   concurrency: 2
   resources:
@@ -243,8 +243,8 @@ worker:
 beat:
   enabled: false
   image:
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
     limits:
@@ -280,13 +280,13 @@ apiHooks: {}
 
 cleanHooks:
   image: polyaxon/polyaxon-cli
-  imageTag: 1.3.4
-  imagePullPolicy: Always
+  imageTag: 1.4.0
+  imagePullPolicy: IfNotPresent
 
 tablesHook:
   image: polyaxon/polyaxon-tables
   imageTag: 0.4.4
-  imagePullPolicy: Always
+  imagePullPolicy: IfNotPresent
 
 externalServices:
   postgresql:
@@ -311,6 +311,7 @@ externalServices:
 
   gateway: {}
   api: {}
+  allowedVersions: []
 
   metrics:
     enabled: false

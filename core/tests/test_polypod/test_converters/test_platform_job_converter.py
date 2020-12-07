@@ -289,7 +289,11 @@ class TestJobConverter(BaseTestCase):
 
     def test_get_init_containers_with_git_without_connection(self):
         git1 = V1GitConnection(revision="test", url="https://test.com")
-        git2 = V1GitConnection(revision="test", url="https://test.com")
+        git2 = V1GitConnection(
+            revision="test",
+            url="https://test.com",
+            flags=["--falg1", "--flag2=test", "k=v"],
+        )
         containers = self.converter.get_init_containers(
             contexts=None,
             artifacts_store=None,
@@ -313,7 +317,7 @@ class TestJobConverter(BaseTestCase):
             get_git_init_container(
                 container=k8s_schemas.V1Container(name="test"),
                 connection=V1ConnectionType(
-                    name=git2.get_name(), kind=V1ConnectionKind.GIT, schema=git1
+                    name=git2.get_name(), kind=V1ConnectionKind.GIT, schema=git2
                 ),
                 mount_path="/test",
                 polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),

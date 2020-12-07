@@ -35,11 +35,17 @@ type V1Team struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// hubs
+	Hubs []string `json:"hubs"`
+
 	// Name
 	Name string `json:"name,omitempty"`
 
-	// Name
+	// projects
 	Projects []string `json:"projects"`
+
+	// registries
+	Registries []string `json:"registries"`
 
 	// Optional last time the entity was updated
 	// Format: date-time

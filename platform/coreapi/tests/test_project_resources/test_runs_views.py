@@ -175,7 +175,7 @@ class TestProjectRunsApproveViewV1(BaseTest):
         )
 
     @patch("polycommon.workers.send")
-    def test_approve(self, workers_send):
+    def test_approve(self, _):
         data = {"uuids": [self.objects[0].uuid.hex, self.objects[1].uuid.hex]}
         assert set(
             Run.objects.only("is_approved").values_list("is_approved", flat=True)
@@ -184,8 +184,13 @@ class TestProjectRunsApproveViewV1(BaseTest):
             resp = self.client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert set(
-            Run.objects.only("is_approved").values_list("is_approved", flat=True)
+            Run.objects.filter(uuid__in=data["uuids"])
+                .only("is_approved")
+                .values_list("is_approved", flat=True)
         ) == {True}
+        assert set(
+            Run.objects.only("is_approved").values_list("is_approved", flat=True)
+        ) == {True, False}
         assert auditor_record.call_count == 2
 
 
@@ -906,7 +911,7 @@ class TestProjectRunCreateViewV1(BaseTest):
             resp = self.client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
-        assert auditor_record.call_count == 2
+        assert auditor_record.call_count == 1
         assert Run.objects.count() == 2
         last_run = Run.objects.last()
         assert last_run.is_managed is True

@@ -74,6 +74,11 @@ for the delete preset operation typically these are written to a http.Request
 */
 type DeletePresetParams struct {
 
+	/*Entity
+	  Owner of the namespace.
+
+	*/
+	Entity *string
 	/*Owner
 	  Owner of the namespace
 
@@ -123,6 +128,17 @@ func (o *DeletePresetParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the delete preset params
+func (o *DeletePresetParams) WithEntity(entity *string) *DeletePresetParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the delete preset params
+func (o *DeletePresetParams) SetEntity(entity *string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the delete preset params
 func (o *DeletePresetParams) WithOwner(owner string) *DeletePresetParams {
 	o.SetOwner(owner)
@@ -152,6 +168,22 @@ func (o *DeletePresetParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		return err
 	}
 	var res []error
+
+	if o.Entity != nil {
+
+		// query param entity
+		var qrEntity string
+		if o.Entity != nil {
+			qrEntity = *o.Entity
+		}
+		qEntity := qrEntity
+		if qEntity != "" {
+			if err := r.SetQueryParam("entity", qEntity); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {

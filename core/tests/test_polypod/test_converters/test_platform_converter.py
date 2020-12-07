@@ -13,9 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 
 from polyaxon import settings
 from polyaxon.api import VERSION_V1
+from polyaxon.env_vars.keys import POLYAXON_KEYS_PLATFORM_HOST
 from polyaxon.exceptions import PolypodException
 from polyaxon.polypod.common.env_vars import get_service_env_vars
 from polyaxon.polypod.compiler.converters import BaseConverter
@@ -34,7 +36,7 @@ class DummyConverter(PlatformConverterMixin, BaseConverter):
     K8S_LABELS_COMPONENT = "dummies_component"
     K8S_LABELS_PART_OF = "dummies_part_of"
 
-    def get_main_env_vars(self):
+    def get_main_env_vars(self, external_host: bool = False, **kwargs):
         pass
 
     def get_resource(self):
@@ -118,6 +120,58 @@ class TestBaseConverter(BaseTestCase):
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
         )
+        env_vars = self.converter.get_service_env_vars(
+            service_header="sa-foo",
+            header="header-foo",
+            authentication_type="internal",
+            include_secret_key=False,
+            include_internal_token=False,
+            include_agent_token=True,
+            external_host=True,
+        )
+        # Default platform host
+        assert env_vars == get_service_env_vars(
+            service_header="sa-foo",
+            header="header-foo",
+            authentication_type="internal",
+            include_secret_key=False,
+            include_internal_token=False,
+            include_agent_token=True,
+            polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
+            polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
+            api_host=settings.CLIENT_CONFIG.host,
+            api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
+        )
+        # Setting an env var for the POLYAXON_KEYS_PLATFORM_HOST
+        current = os.environ.get(POLYAXON_KEYS_PLATFORM_HOST)
+        os.environ[POLYAXON_KEYS_PLATFORM_HOST] = "foo"
+        env_vars = self.converter.get_service_env_vars(
+            service_header="sa-foo",
+            header="header-foo",
+            authentication_type="internal",
+            include_secret_key=False,
+            include_internal_token=False,
+            include_agent_token=True,
+            external_host=True,
+        )
+        assert env_vars == get_service_env_vars(
+            service_header="sa-foo",
+            header="header-foo",
+            authentication_type="internal",
+            include_secret_key=False,
+            include_internal_token=False,
+            include_agent_token=True,
+            polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
+            polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
+            api_host="foo",
+            api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
+        )
+        if current:
+            os.environ[POLYAXON_KEYS_PLATFORM_HOST] = current
+        else:
+            del os.environ[POLYAXON_KEYS_PLATFORM_HOST]
 
         with self.assertRaises(PolypodException):
             self.converter.get_service_env_vars(
@@ -161,6 +215,42 @@ class TestBaseConverter(BaseTestCase):
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
         )
+        env_vars = self.converter.get_auth_service_env_vars(external_host=True)
+        # Default platform host
+        assert env_vars == get_service_env_vars(
+            header=PolyaxonServiceHeaders.SERVICE,
+            service_header=PolyaxonServices.INITIALIZER,
+            authentication_type=AuthenticationTypes.TOKEN,
+            include_secret_key=False,
+            include_internal_token=False,
+            include_agent_token=True,
+            polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
+            polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
+            api_host=settings.CLIENT_CONFIG.host,
+            api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
+        )
+        # Setting an env var for the POLYAXON_KEYS_PLATFORM_HOST
+        current = os.environ.get(POLYAXON_KEYS_PLATFORM_HOST)
+        os.environ[POLYAXON_KEYS_PLATFORM_HOST] = "foo"
+        env_vars = self.converter.get_auth_service_env_vars(external_host=True)
+        assert env_vars == get_service_env_vars(
+            header=PolyaxonServiceHeaders.SERVICE,
+            service_header=PolyaxonServices.INITIALIZER,
+            authentication_type=AuthenticationTypes.TOKEN,
+            include_secret_key=False,
+            include_internal_token=False,
+            include_agent_token=True,
+            polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
+            polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
+            api_host="foo",
+            api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
+        )
+        if current:
+            os.environ[POLYAXON_KEYS_PLATFORM_HOST] = current
+        else:
+            del os.environ[POLYAXON_KEYS_PLATFORM_HOST]
 
     def test_get_polyaxon_sidecar_service_env_vars(self):
         self.converter.internal_auth = True
@@ -194,3 +284,43 @@ class TestBaseConverter(BaseTestCase):
             api_version=VERSION_V1,
             run_instance=self.converter.run_instance,
         )
+        env_vars = self.converter.get_polyaxon_sidecar_service_env_vars(
+            external_host=True
+        )
+        # Default platform host
+        assert env_vars == get_service_env_vars(
+            header=PolyaxonServiceHeaders.SERVICE,
+            service_header=PolyaxonServices.SIDECAR,
+            authentication_type=AuthenticationTypes.TOKEN,
+            include_secret_key=False,
+            include_internal_token=False,
+            include_agent_token=False,
+            polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
+            polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
+            api_host=settings.CLIENT_CONFIG.host,
+            api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
+        )
+        # Setting an env var for the POLYAXON_KEYS_PLATFORM_HOST
+        current = os.environ.get(POLYAXON_KEYS_PLATFORM_HOST)
+        os.environ[POLYAXON_KEYS_PLATFORM_HOST] = "foo"
+        env_vars = self.converter.get_polyaxon_sidecar_service_env_vars(
+            external_host=True
+        )
+        assert env_vars == get_service_env_vars(
+            header=PolyaxonServiceHeaders.SERVICE,
+            service_header=PolyaxonServices.SIDECAR,
+            authentication_type=AuthenticationTypes.TOKEN,
+            include_secret_key=False,
+            include_internal_token=False,
+            include_agent_token=False,
+            polyaxon_default_secret_ref=settings.AGENT_CONFIG.app_secret_name,
+            polyaxon_agent_secret_ref=settings.AGENT_CONFIG.agent_secret_name,
+            api_host="foo",
+            api_version=VERSION_V1,
+            run_instance=self.converter.run_instance,
+        )
+        if current:
+            os.environ[POLYAXON_KEYS_PLATFORM_HOST] = current
+        else:
+            del os.environ[POLYAXON_KEYS_PLATFORM_HOST]

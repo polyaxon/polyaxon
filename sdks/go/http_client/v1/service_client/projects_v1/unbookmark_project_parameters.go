@@ -74,16 +74,16 @@ for the unbookmark project operation typically these are written to a http.Reque
 */
 type UnbookmarkProjectParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *UnbookmarkProjectParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the unbookmark project params
+func (o *UnbookmarkProjectParams) WithName(name string) *UnbookmarkProjectParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the unbookmark project params
+func (o *UnbookmarkProjectParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the unbookmark project params
 func (o *UnbookmarkProjectParams) WithOwner(owner string) *UnbookmarkProjectParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *UnbookmarkProjectParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the unbookmark project params
-func (o *UnbookmarkProjectParams) WithProject(project string) *UnbookmarkProjectParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the unbookmark project params
-func (o *UnbookmarkProjectParams) SetProject(project string) {
-	o.Project = project
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *UnbookmarkProjectParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *UnbookmarkProjectParams) WriteToRequest(r runtime.ClientRequest, reg st
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

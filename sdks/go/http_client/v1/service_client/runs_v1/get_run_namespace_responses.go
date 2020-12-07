@@ -87,7 +87,7 @@ type GetRunNamespaceOK struct {
 }
 
 func (o *GetRunNamespaceOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/namespace][%d] getRunNamespaceOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] getRunNamespaceOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRunNamespaceOK) GetPayload() *service_model.V1RunSettings {
@@ -120,7 +120,7 @@ type GetRunNamespaceNoContent struct {
 }
 
 func (o *GetRunNamespaceNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/namespace][%d] getRunNamespaceNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] getRunNamespaceNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetRunNamespaceNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetRunNamespaceForbidden struct {
 }
 
 func (o *GetRunNamespaceForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/namespace][%d] getRunNamespaceForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] getRunNamespaceForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetRunNamespaceForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetRunNamespaceNotFound struct {
 }
 
 func (o *GetRunNamespaceNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/namespace][%d] getRunNamespaceNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] getRunNamespaceNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetRunNamespaceNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetRunNamespaceDefault) Code() int {
 }
 
 func (o *GetRunNamespaceDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/namespace][%d] GetRunNamespace default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] GetRunNamespace default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetRunNamespaceDefault) GetPayload() *service_model.RuntimeError {

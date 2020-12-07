@@ -35,8 +35,8 @@ message Dashboard {
     // Optional tags of this entity
     repeated string tags = 4;
 
-    // Optional a flag to disable the store
-    bool disabled = 5;
+    // Current live state
+    int32 live_state = 5;
 
     // Dashboard view
     enum View {

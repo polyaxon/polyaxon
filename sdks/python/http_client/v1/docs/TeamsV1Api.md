@@ -7,11 +7,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_team**](TeamsV1Api.md#create_team) | **POST** /api/v1/orgs/{owner}/teams | Create team
 [**create_team_member**](TeamsV1Api.md#create_team_member) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create team member
-[**delete_team**](TeamsV1Api.md#delete_team) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete team
+[**delete_team**](TeamsV1Api.md#delete_team) | **DELETE** /api/v1/orgs/{owner}/teams/{name} | Delete team
 [**delete_team_member**](TeamsV1Api.md#delete_team_member) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete team member details
-[**get_team**](TeamsV1Api.md#get_team) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get team
+[**get_team**](TeamsV1Api.md#get_team) | **GET** /api/v1/orgs/{owner}/teams/{name} | Get team
 [**get_team_member**](TeamsV1Api.md#get_team_member) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get team member details
-[**list_team_members**](TeamsV1Api.md#list_team_members) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get team members
+[**list_team_members**](TeamsV1Api.md#list_team_members) | **GET** /api/v1/orgs/{owner}/teams/{name}/members | Get team members
 [**list_team_names**](TeamsV1Api.md#list_team_names) | **GET** /api/v1/orgs/{owner}/teams/names | List teams names
 [**list_teams**](TeamsV1Api.md#list_teams) | **GET** /api/v1/orgs/{owner}/teams | List teams
 [**patch_team**](TeamsV1Api.md#patch_team) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch team
@@ -185,7 +185,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_team**
-> delete_team(owner, team)
+> delete_team(owner, name)
 
 Delete team
 
@@ -224,11 +224,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.TeamsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-team = 'team_example' # str | Team under namesapce
+name = 'name_example' # str | Component under namesapce
 
     try:
         # Delete team
-        api_instance.delete_team(owner, team)
+        api_instance.delete_team(owner, name)
     except ApiException as e:
         print("Exception when calling TeamsV1Api->delete_team: %s\n" % e)
 ```
@@ -238,7 +238,7 @@ team = 'team_example' # str | Team under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team under namesapce | 
+ **name** | **str**| Component under namesapce | 
 
 ### Return type
 
@@ -347,7 +347,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_team**
-> V1Team get_team(owner, team)
+> V1Team get_team(owner, name)
 
 Get team
 
@@ -386,11 +386,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.TeamsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-team = 'team_example' # str | Team under namesapce
+name = 'name_example' # str | Component under namesapce
 
     try:
         # Get team
-        api_response = api_instance.get_team(owner, team)
+        api_response = api_instance.get_team(owner, name)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TeamsV1Api->get_team: %s\n" % e)
@@ -401,7 +401,7 @@ team = 'team_example' # str | Team under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team under namesapce | 
+ **name** | **str**| Component under namesapce | 
 
 ### Return type
 
@@ -511,7 +511,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_team_members**
-> V1ListTeamMembersResponse list_team_members(owner, team, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListTeamMembersResponse list_team_members(owner, name, offset=offset, limit=limit, sort=sort, query=query)
 
 Get team members
 
@@ -550,7 +550,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.TeamsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-team = 'team_example' # str | Team under namesapce
+name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
@@ -558,7 +558,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
         # Get team members
-        api_response = api_instance.list_team_members(owner, team, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_team_members(owner, name, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TeamsV1Api->list_team_members: %s\n" % e)
@@ -569,7 +569,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team under namesapce | 
+ **name** | **str**| Entity managing the resource | 
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 

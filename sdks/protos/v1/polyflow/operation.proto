@@ -36,7 +36,7 @@ message Operation {
     // Spec version
     float version = 1;
 
-    // Optional component kind, should be equal to "operation"
+    // Optional component kind, should be equal to 'operation'
     string kind = 2;
 
     // Optional component name override, should a valid slug

@@ -39,21 +39,125 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	ArchiveComponentHub(params *ArchiveComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveComponentHubOK, *ArchiveComponentHubNoContent, error)
+
+	BookmarkComponentHub(params *BookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkComponentHubOK, *BookmarkComponentHubNoContent, error)
+
 	CreateComponentHub(params *CreateComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentHubOK, *CreateComponentHubNoContent, error)
+
+	CreateComponentVersion(params *CreateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentVersionOK, *CreateComponentVersionNoContent, error)
+
+	CreateComponentVersionStage(params *CreateComponentVersionStageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentVersionStageOK, *CreateComponentVersionStageNoContent, error)
 
 	DeleteComponentHub(params *DeleteComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteComponentHubOK, *DeleteComponentHubNoContent, error)
 
+	DeleteComponentVersion(params *DeleteComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteComponentVersionOK, *DeleteComponentVersionNoContent, error)
+
 	GetComponentHub(params *GetComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubOK, *GetComponentHubNoContent, error)
+
+	GetComponentHubSettings(params *GetComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubSettingsOK, *GetComponentHubSettingsNoContent, error)
+
+	GetComponentVersion(params *GetComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionOK, *GetComponentVersionNoContent, error)
+
+	GetComponentVersionStages(params *GetComponentVersionStagesParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionStagesOK, *GetComponentVersionStagesNoContent, error)
 
 	ListComponentHubNames(params *ListComponentHubNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentHubNamesOK, *ListComponentHubNamesNoContent, error)
 
 	ListComponentHubs(params *ListComponentHubsParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentHubsOK, *ListComponentHubsNoContent, error)
 
+	ListComponentVersionNames(params *ListComponentVersionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentVersionNamesOK, *ListComponentVersionNamesNoContent, error)
+
+	ListComponentVersions(params *ListComponentVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentVersionsOK, *ListComponentVersionsNoContent, error)
+
 	PatchComponentHub(params *PatchComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentHubOK, *PatchComponentHubNoContent, error)
+
+	PatchComponentHubSettings(params *PatchComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentHubSettingsOK, *PatchComponentHubSettingsNoContent, error)
+
+	PatchComponentVersion(params *PatchComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentVersionOK, *PatchComponentVersionNoContent, error)
+
+	RestoreComponentHub(params *RestoreComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreComponentHubOK, *RestoreComponentHubNoContent, error)
+
+	UnbookmarkComponentHub(params *UnbookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkComponentHubOK, *UnbookmarkComponentHubNoContent, error)
 
 	UpdateComponentHub(params *UpdateComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentHubOK, *UpdateComponentHubNoContent, error)
 
+	UpdateComponentHubSettings(params *UpdateComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentHubSettingsOK, *UpdateComponentHubSettingsNoContent, error)
+
+	UpdateComponentVersion(params *UpdateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentVersionOK, *UpdateComponentVersionNoContent, error)
+
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  ArchiveComponentHub archives hub component
+*/
+func (a *Client) ArchiveComponentHub(params *ArchiveComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveComponentHubOK, *ArchiveComponentHubNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewArchiveComponentHubParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ArchiveComponentHub",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/hub/{name}/archive",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ArchiveComponentHubReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ArchiveComponentHubOK:
+		return value, nil, nil
+	case *ArchiveComponentHubNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ArchiveComponentHubDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  BookmarkComponentHub bookmarks component hub
+*/
+func (a *Client) BookmarkComponentHub(params *BookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkComponentHubOK, *BookmarkComponentHubNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewBookmarkComponentHubParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "BookmarkComponentHub",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/hub/{name}/bookmark",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &BookmarkComponentHubReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *BookmarkComponentHubOK:
+		return value, nil, nil
+	case *BookmarkComponentHubNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*BookmarkComponentHubDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -68,7 +172,7 @@ func (a *Client) CreateComponentHub(params *CreateComponentHubParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateComponentHub",
 		Method:             "POST",
-		PathPattern:        "/api/v1/orgs/{owner}/components",
+		PathPattern:        "/api/v1/{owner}/hub/create",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -93,6 +197,78 @@ func (a *Client) CreateComponentHub(params *CreateComponentHubParams, authInfo r
 }
 
 /*
+  CreateComponentVersion creates component version
+*/
+func (a *Client) CreateComponentVersion(params *CreateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentVersionOK, *CreateComponentVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateComponentVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateComponentVersion",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/hub/{component}/versions",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateComponentVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateComponentVersionOK:
+		return value, nil, nil
+	case *CreateComponentVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateComponentVersionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  CreateComponentVersionStage creates new component version stage
+*/
+func (a *Client) CreateComponentVersionStage(params *CreateComponentVersionStageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateComponentVersionStageOK, *CreateComponentVersionStageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateComponentVersionStageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateComponentVersionStage",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/hub/{entity}/versions/{name}/stages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateComponentVersionStageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateComponentVersionStageOK:
+		return value, nil, nil
+	case *CreateComponentVersionStageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateComponentVersionStageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   DeleteComponentHub deletes hub component
 */
 func (a *Client) DeleteComponentHub(params *DeleteComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteComponentHubOK, *DeleteComponentHubNoContent, error) {
@@ -104,7 +280,7 @@ func (a *Client) DeleteComponentHub(params *DeleteComponentHubParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteComponentHub",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/orgs/{owner}/components/{uuid}",
+		PathPattern:        "/api/v1/{owner}/hub/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -129,6 +305,42 @@ func (a *Client) DeleteComponentHub(params *DeleteComponentHubParams, authInfo r
 }
 
 /*
+  DeleteComponentVersion deletes component version
+*/
+func (a *Client) DeleteComponentVersion(params *DeleteComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteComponentVersionOK, *DeleteComponentVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteComponentVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DeleteComponentVersion",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/{owner}/hub/{entity}/versions/{name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteComponentVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteComponentVersionOK:
+		return value, nil, nil
+	case *DeleteComponentVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteComponentVersionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetComponentHub gets hub component
 */
 func (a *Client) GetComponentHub(params *GetComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubOK, *GetComponentHubNoContent, error) {
@@ -140,7 +352,7 @@ func (a *Client) GetComponentHub(params *GetComponentHubParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetComponentHub",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/components/{uuid}",
+		PathPattern:        "/api/v1/{owner}/hub/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -165,6 +377,114 @@ func (a *Client) GetComponentHub(params *GetComponentHubParams, authInfo runtime
 }
 
 /*
+  GetComponentHubSettings gets hub component settings
+*/
+func (a *Client) GetComponentHubSettings(params *GetComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubSettingsOK, *GetComponentHubSettingsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetComponentHubSettingsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetComponentHubSettings",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/hub/{name}/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetComponentHubSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetComponentHubSettingsOK:
+		return value, nil, nil
+	case *GetComponentHubSettingsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetComponentHubSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetComponentVersion gets component version
+*/
+func (a *Client) GetComponentVersion(params *GetComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionOK, *GetComponentVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetComponentVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetComponentVersion",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/hub/{entity}/versions/{name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetComponentVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetComponentVersionOK:
+		return value, nil, nil
+	case *GetComponentVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetComponentVersionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetComponentVersionStages gets component version stages
+*/
+func (a *Client) GetComponentVersionStages(params *GetComponentVersionStagesParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionStagesOK, *GetComponentVersionStagesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetComponentVersionStagesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetComponentVersionStages",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/hub/{entity}/versions/{name}/stages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetComponentVersionStagesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetComponentVersionStagesOK:
+		return value, nil, nil
+	case *GetComponentVersionStagesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetComponentVersionStagesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   ListComponentHubNames lists hub component names
 */
 func (a *Client) ListComponentHubNames(params *ListComponentHubNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentHubNamesOK, *ListComponentHubNamesNoContent, error) {
@@ -176,7 +496,7 @@ func (a *Client) ListComponentHubNames(params *ListComponentHubNamesParams, auth
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListComponentHubNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/components/names",
+		PathPattern:        "/api/v1/{owner}/hub/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -212,7 +532,7 @@ func (a *Client) ListComponentHubs(params *ListComponentHubsParams, authInfo run
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListComponentHubs",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/components",
+		PathPattern:        "/api/v1/{owner}/hub/list",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -237,6 +557,78 @@ func (a *Client) ListComponentHubs(params *ListComponentHubsParams, authInfo run
 }
 
 /*
+  ListComponentVersionNames lists component version names
+*/
+func (a *Client) ListComponentVersionNames(params *ListComponentVersionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentVersionNamesOK, *ListComponentVersionNamesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListComponentVersionNamesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListComponentVersionNames",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/hub/{name}/versions/names",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListComponentVersionNamesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListComponentVersionNamesOK:
+		return value, nil, nil
+	case *ListComponentVersionNamesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListComponentVersionNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ListComponentVersions lists component versions
+*/
+func (a *Client) ListComponentVersions(params *ListComponentVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListComponentVersionsOK, *ListComponentVersionsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListComponentVersionsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListComponentVersions",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/hub/{name}/versions",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListComponentVersionsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListComponentVersionsOK:
+		return value, nil, nil
+	case *ListComponentVersionsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListComponentVersionsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   PatchComponentHub patches hub component
 */
 func (a *Client) PatchComponentHub(params *PatchComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentHubOK, *PatchComponentHubNoContent, error) {
@@ -248,7 +640,7 @@ func (a *Client) PatchComponentHub(params *PatchComponentHubParams, authInfo run
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchComponentHub",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/orgs/{owner}/components/{component.uuid}",
+		PathPattern:        "/api/v1/{owner}/hub/{component.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -273,6 +665,150 @@ func (a *Client) PatchComponentHub(params *PatchComponentHubParams, authInfo run
 }
 
 /*
+  PatchComponentHubSettings patches hub component settings
+*/
+func (a *Client) PatchComponentHubSettings(params *PatchComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentHubSettingsOK, *PatchComponentHubSettingsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchComponentHubSettingsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchComponentHubSettings",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/{owner}/hub/{component}/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &PatchComponentHubSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *PatchComponentHubSettingsOK:
+		return value, nil, nil
+	case *PatchComponentHubSettingsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchComponentHubSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  PatchComponentVersion patches component version
+*/
+func (a *Client) PatchComponentVersion(params *PatchComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchComponentVersionOK, *PatchComponentVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchComponentVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchComponentVersion",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/{owner}/hub/{component}/versions/{version.name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &PatchComponentVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *PatchComponentVersionOK:
+		return value, nil, nil
+	case *PatchComponentVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchComponentVersionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  RestoreComponentHub restores hub component
+*/
+func (a *Client) RestoreComponentHub(params *RestoreComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreComponentHubOK, *RestoreComponentHubNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRestoreComponentHubParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "RestoreComponentHub",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/hub/{name}/restore",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &RestoreComponentHubReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *RestoreComponentHubOK:
+		return value, nil, nil
+	case *RestoreComponentHubNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*RestoreComponentHubDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UnbookmarkComponentHub unbookmarks component hub
+*/
+func (a *Client) UnbookmarkComponentHub(params *UnbookmarkComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkComponentHubOK, *UnbookmarkComponentHubNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUnbookmarkComponentHubParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UnbookmarkComponentHub",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/{owner}/hub/{name}/unbookmark",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UnbookmarkComponentHubReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UnbookmarkComponentHubOK:
+		return value, nil, nil
+	case *UnbookmarkComponentHubNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UnbookmarkComponentHubDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   UpdateComponentHub updates hub component
 */
 func (a *Client) UpdateComponentHub(params *UpdateComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentHubOK, *UpdateComponentHubNoContent, error) {
@@ -284,7 +820,7 @@ func (a *Client) UpdateComponentHub(params *UpdateComponentHubParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateComponentHub",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/orgs/{owner}/components/{component.uuid}",
+		PathPattern:        "/api/v1/{owner}/hub/{component.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -305,6 +841,78 @@ func (a *Client) UpdateComponentHub(params *UpdateComponentHubParams, authInfo r
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateComponentHubDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateComponentHubSettings updates hub component settings
+*/
+func (a *Client) UpdateComponentHubSettings(params *UpdateComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentHubSettingsOK, *UpdateComponentHubSettingsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateComponentHubSettingsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UpdateComponentHubSettings",
+		Method:             "PUT",
+		PathPattern:        "/api/v1/{owner}/hub/{component}/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UpdateComponentHubSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateComponentHubSettingsOK:
+		return value, nil, nil
+	case *UpdateComponentHubSettingsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateComponentHubSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateComponentVersion updates component version
+*/
+func (a *Client) UpdateComponentVersion(params *UpdateComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateComponentVersionOK, *UpdateComponentVersionNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateComponentVersionParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UpdateComponentVersion",
+		Method:             "PUT",
+		PathPattern:        "/api/v1/{owner}/hub/{component}/versions/{version.name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UpdateComponentVersionReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateComponentVersionOK:
+		return value, nil, nil
+	case *UpdateComponentVersionNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateComponentVersionDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

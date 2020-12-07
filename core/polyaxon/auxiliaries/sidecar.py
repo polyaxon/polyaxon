@@ -175,7 +175,7 @@ def get_default_sidecar_container(schema=True):
     default = {
         "image": "polyaxon/polyaxon-sidecar",
         "imageTag": pkg.VERSION,
-        "imagePullPolicy": PullPolicy.ALWAYS.value,
+        "imagePullPolicy": PullPolicy.IF_NOT_PRESENT.value,
         "resources": {
             "limits": {"cpu": "1", "memory": "100Mi"},
             "requests": {"cpu": "0.1", "memory": "60Mi"},

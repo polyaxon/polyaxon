@@ -41,12 +41,11 @@ message StatusCondition {
 
     // last transition time
     google.protobuf.Timestamp last_transition_time = 6;
-
 }
 
 // Status specification
 message Status {
-    // The uuid of the run
+    // The uuid of the status
     string uuid = 1;
 
     // The current status

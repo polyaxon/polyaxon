@@ -86,7 +86,7 @@ type DeleteTeamOK struct {
 }
 
 func (o *DeleteTeamOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}][%d] deleteTeamOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{name}][%d] deleteTeamOK ", 200)
 }
 
 func (o *DeleteTeamOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteTeamNoContent struct {
 }
 
 func (o *DeleteTeamNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}][%d] deleteTeamNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{name}][%d] deleteTeamNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteTeamNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DeleteTeamForbidden struct {
 }
 
 func (o *DeleteTeamForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}][%d] deleteTeamForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{name}][%d] deleteTeamForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteTeamForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DeleteTeamNotFound struct {
 }
 
 func (o *DeleteTeamNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}][%d] deleteTeamNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{name}][%d] deleteTeamNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteTeamNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DeleteTeamDefault) Code() int {
 }
 
 func (o *DeleteTeamDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}][%d] DeleteTeam default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{name}][%d] DeleteTeam default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteTeamDefault) GetPayload() *service_model.RuntimeError {

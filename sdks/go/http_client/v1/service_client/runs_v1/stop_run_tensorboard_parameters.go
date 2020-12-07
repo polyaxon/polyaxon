@@ -74,16 +74,16 @@ for the stop run tensorboard operation typically these are written to a http.Req
 */
 type StopRunTensorboardParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *StopRunTensorboardParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the stop run tensorboard params
+func (o *StopRunTensorboardParams) WithEntity(entity string) *StopRunTensorboardParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the stop run tensorboard params
+func (o *StopRunTensorboardParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the stop run tensorboard params
 func (o *StopRunTensorboardParams) WithOwner(owner string) *StopRunTensorboardParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *StopRunTensorboardParams) WithOwner(owner string) *StopRunTensorboardPa
 // SetOwner adds the owner to the stop run tensorboard params
 func (o *StopRunTensorboardParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the stop run tensorboard params
-func (o *StopRunTensorboardParams) WithProject(project string) *StopRunTensorboardParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the stop run tensorboard params
-func (o *StopRunTensorboardParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the stop run tensorboard params
@@ -169,13 +169,13 @@ func (o *StopRunTensorboardParams) WriteToRequest(r runtime.ClientRequest, reg s
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

@@ -6,5 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **url** | **String** |  | [optional] 
 **revision** | **Boolean** |  | [optional] 
+**flags** | **[String]** |  | [optional] 
 
 

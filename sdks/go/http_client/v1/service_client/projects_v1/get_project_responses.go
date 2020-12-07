@@ -87,7 +87,7 @@ type GetProjectOK struct {
 }
 
 func (o *GetProjectOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}][%d] getProjectOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] getProjectOK  %+v", 200, o.Payload)
 }
 
 func (o *GetProjectOK) GetPayload() *service_model.V1Project {
@@ -120,7 +120,7 @@ type GetProjectNoContent struct {
 }
 
 func (o *GetProjectNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}][%d] getProjectNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] getProjectNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetProjectNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetProjectForbidden struct {
 }
 
 func (o *GetProjectForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}][%d] getProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] getProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetProjectForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetProjectNotFound struct {
 }
 
 func (o *GetProjectNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}][%d] getProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] getProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetProjectNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetProjectDefault) Code() int {
 }
 
 func (o *GetProjectDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}][%d] GetProject default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] GetProject default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetProjectDefault) GetPayload() *service_model.RuntimeError {

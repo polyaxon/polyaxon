@@ -96,7 +96,7 @@ class V1ConnectionType(BaseConfig, polyaxon_sdk.V1ConnectionType):
     For some distributions, Polyaxon will exposes:
         * Analytics about how often connections are used.
         * Jobs that requested those connections.
-        * Profiling and run time meta data to optimize access to those resources and connections.
+        * Profiling and runtime meta data to optimize access to those resources and connections.
         * Additional RBAC and ACL rules to control who can access the connections.
 
     Args:

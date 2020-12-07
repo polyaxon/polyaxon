@@ -6,12 +6,12 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_project_dashboard**](ProjectDashboardsV1Api.md#create_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
-[**delete_project_dashboard**](ProjectDashboardsV1Api.md#delete_project_dashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
-[**get_project_dashboard**](ProjectDashboardsV1Api.md#get_project_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
-[**list_project_dashboard_names**](ProjectDashboardsV1Api.md#list_project_dashboard_names) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
-[**list_project_dashboards**](ProjectDashboardsV1Api.md#list_project_dashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+[**delete_project_dashboard**](ProjectDashboardsV1Api.md#delete_project_dashboard) | **DELETE** /api/v1/{owner}/{entity}/dashboards/{uuid} | Delete project dashboard
+[**get_project_dashboard**](ProjectDashboardsV1Api.md#get_project_dashboard) | **GET** /api/v1/{owner}/{entity}/dashboards/{uuid} | Get project dashboard
+[**list_project_dashboard_names**](ProjectDashboardsV1Api.md#list_project_dashboard_names) | **GET** /api/v1/{owner}/{name}/dashboards/names | List project dashboard
+[**list_project_dashboards**](ProjectDashboardsV1Api.md#list_project_dashboards) | **GET** /api/v1/{owner}/{name}/dashboards | List project dashboards
 [**patch_project_dashboard**](ProjectDashboardsV1Api.md#patch_project_dashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**promote_project_dashboard**](ProjectDashboardsV1Api.md#promote_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{uuid}/promote | Promote project dashboard
+[**promote_project_dashboard**](ProjectDashboardsV1Api.md#promote_project_dashboard) | **POST** /api/v1/{owner}/{entity}/dashboards/{uuid}/promote | Promote project dashboard
 [**update_project_dashboard**](ProjectDashboardsV1Api.md#update_project_dashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
@@ -99,7 +99,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_project_dashboard**
-> delete_project_dashboard(owner, project, uuid)
+> delete_project_dashboard(owner, entity, uuid)
 
 Delete project dashboard
 
@@ -138,12 +138,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project
+entity = 'entity_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Delete project dashboard
-        api_instance.delete_project_dashboard(owner, project, uuid)
+        api_instance.delete_project_dashboard(owner, entity, uuid)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->delete_project_dashboard: %s\n" % e)
 ```
@@ -153,7 +153,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project | 
+ **entity** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -181,7 +181,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_dashboard**
-> V1Dashboard get_project_dashboard(owner, project, uuid)
+> V1Dashboard get_project_dashboard(owner, entity, uuid)
 
 Get project dashboard
 
@@ -220,12 +220,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project
+entity = 'entity_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Get project dashboard
-        api_response = api_instance.get_project_dashboard(owner, project, uuid)
+        api_response = api_instance.get_project_dashboard(owner, entity, uuid)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->get_project_dashboard: %s\n" % e)
@@ -236,7 +236,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project | 
+ **entity** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -264,7 +264,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_project_dashboard_names**
-> V1ListDashboardsResponse list_project_dashboard_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListDashboardsResponse list_project_dashboard_names(owner, name, offset=offset, limit=limit, sort=sort, query=query)
 
 List project dashboard
 
@@ -303,7 +303,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project under namesapce
+name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
@@ -311,7 +311,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
         # List project dashboard
-        api_response = api_instance.list_project_dashboard_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_project_dashboard_names(owner, name, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->list_project_dashboard_names: %s\n" % e)
@@ -322,7 +322,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project under namesapce | 
+ **name** | **str**| Entity managing the resource | 
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
@@ -353,7 +353,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_project_dashboards**
-> V1ListDashboardsResponse list_project_dashboards(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+> V1ListDashboardsResponse list_project_dashboards(owner, name, offset=offset, limit=limit, sort=sort, query=query)
 
 List project dashboards
 
@@ -392,7 +392,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project under namesapce
+name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
@@ -400,7 +400,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
     try:
         # List project dashboards
-        api_response = api_instance.list_project_dashboards(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+        api_response = api_instance.list_project_dashboards(owner, name, offset=offset, limit=limit, sort=sort, query=query)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->list_project_dashboards: %s\n" % e)
@@ -411,7 +411,7 @@ query = 'query_example' # str | Query filter the search search. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project under namesapce | 
+ **name** | **str**| Entity managing the resource | 
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
@@ -527,7 +527,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **promote_project_dashboard**
-> promote_project_dashboard(owner, project, uuid)
+> promote_project_dashboard(owner, entity, uuid)
 
 Promote project dashboard
 
@@ -566,12 +566,12 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project
+entity = 'entity_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
     try:
         # Promote project dashboard
-        api_instance.promote_project_dashboard(owner, project, uuid)
+        api_instance.promote_project_dashboard(owner, entity, uuid)
     except ApiException as e:
         print("Exception when calling ProjectDashboardsV1Api->promote_project_dashboard: %s\n" % e)
 ```
@@ -581,7 +581,7 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project | 
+ **entity** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type

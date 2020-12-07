@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **name** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
 **tags** | **[String]** |  | [optional] 
-**disabled** | **Boolean** |  | [optional] 
+**live_state** | **Number** |  | [optional] 
 **namespace** | **String** |  | [optional] 
 **version_api** | [**Object**](.md) |  | [optional] 
 **version** | **String** |  | [optional] 

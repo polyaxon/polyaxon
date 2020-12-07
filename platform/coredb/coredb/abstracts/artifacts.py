@@ -23,7 +23,7 @@ from polyaxon.polyboard.artifacts import V1ArtifactKind
 
 
 class BaseArtifact(DiffModel, StateModel):
-    name = models.CharField(max_length=64, db_index=True)
+    name = models.CharField(max_length=128, db_index=True)
     kind = models.CharField(
         max_length=12,
         db_index=True,

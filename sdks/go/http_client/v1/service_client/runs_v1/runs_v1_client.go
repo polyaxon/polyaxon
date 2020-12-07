@@ -156,7 +156,7 @@ func (a *Client) ApproveRun(params *ApproveRunParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ApproveRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/approve",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/approve",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -228,7 +228,7 @@ func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ArchiveRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/archive",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -264,7 +264,7 @@ func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientA
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "BookmarkRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/bookmark",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -372,7 +372,7 @@ func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoW
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CopyRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -516,7 +516,7 @@ func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthI
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteRun",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -732,7 +732,7 @@ func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWri
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRun",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -876,7 +876,7 @@ func (a *Client) GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, au
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunArtifactsLineage",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -912,7 +912,7 @@ func (a *Client) GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNames
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunArtifactsLineageNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1056,7 +1056,7 @@ func (a *Client) GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunNamespace",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/namespace",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/namespace",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1128,7 +1128,7 @@ func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.C
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunSettings",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/settings",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/settings",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1164,7 +1164,7 @@ func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.C
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunStatuses",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1200,7 +1200,7 @@ func (a *Client) GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunsArtifactsLineage",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/artifacts_lineage",
+		PathPattern:        "/api/v1/{owner}/{name}/runs/artifacts_lineage",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1236,7 +1236,7 @@ func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ImpersonateToken",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/impersonate",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/impersonate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1272,7 +1272,7 @@ func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "InvalidateRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/invalidate",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/invalidate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1416,7 +1416,7 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListRuns",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs",
+		PathPattern:        "/api/v1/{owner}/{name}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1524,7 +1524,7 @@ func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestartRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1560,7 +1560,7 @@ func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestoreRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/restore",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1596,7 +1596,7 @@ func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthI
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ResumeRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1632,7 +1632,7 @@ func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StartRunTensorboard",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1668,7 +1668,7 @@ func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoW
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/stop",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1704,7 +1704,7 @@ func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopRunTensorboard",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1812,7 +1812,7 @@ func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UnbookmarkRun",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

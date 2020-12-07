@@ -74,16 +74,16 @@ for the disable project c i operation typically these are written to a http.Requ
 */
 type DisableProjectCIParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *DisableProjectCIParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the disable project c i params
+func (o *DisableProjectCIParams) WithName(name string) *DisableProjectCIParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the disable project c i params
+func (o *DisableProjectCIParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the disable project c i params
 func (o *DisableProjectCIParams) WithOwner(owner string) *DisableProjectCIParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *DisableProjectCIParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the disable project c i params
-func (o *DisableProjectCIParams) WithProject(project string) *DisableProjectCIParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the disable project c i params
-func (o *DisableProjectCIParams) SetProject(project string) {
-	o.Project = project
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *DisableProjectCIParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *DisableProjectCIParams) WriteToRequest(r runtime.ClientRequest, reg str
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

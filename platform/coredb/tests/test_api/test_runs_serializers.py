@@ -51,6 +51,7 @@ class TestRunDetailSerializer(BaseTestRunSerializer):
         "original",
         "is_managed",
         "is_approved",
+        "live_state",
         "tags",
         "inputs",
         "outputs",

@@ -45,8 +45,8 @@ message ConnectionResponse {
     // Optional last time the entity was updated
     google.protobuf.Timestamp updated_at = 7;
 
-    // Optional a flag to disable the store
-    bool disabled = 8;
+    // Current live state
+    int32 live_state = 8;
 
     // The connection kind
     ConnectionKind kind = 9;

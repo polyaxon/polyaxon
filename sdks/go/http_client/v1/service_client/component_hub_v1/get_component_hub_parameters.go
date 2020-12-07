@@ -74,16 +74,16 @@ for the get component hub operation typically these are written to a http.Reques
 */
 type GetComponentHubParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
-
-	*/
-	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *GetComponentHubParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the get component hub params
+func (o *GetComponentHubParams) WithName(name string) *GetComponentHubParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the get component hub params
+func (o *GetComponentHubParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the get component hub params
 func (o *GetComponentHubParams) WithOwner(owner string) *GetComponentHubParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *GetComponentHubParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithUUID adds the uuid to the get component hub params
-func (o *GetComponentHubParams) WithUUID(uuid string) *GetComponentHubParams {
-	o.SetUUID(uuid)
-	return o
-}
-
-// SetUUID adds the uuid to the get component hub params
-func (o *GetComponentHubParams) SetUUID(uuid string) {
-	o.UUID = uuid
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *GetComponentHubParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *GetComponentHubParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param uuid
-	if err := r.SetPathParam("uuid", o.UUID); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

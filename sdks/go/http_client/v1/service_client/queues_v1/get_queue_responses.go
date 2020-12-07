@@ -87,7 +87,7 @@ type GetQueueOK struct {
 }
 
 func (o *GetQueueOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] getQueueOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] getQueueOK  %+v", 200, o.Payload)
 }
 
 func (o *GetQueueOK) GetPayload() *service_model.V1Queue {
@@ -120,7 +120,7 @@ type GetQueueNoContent struct {
 }
 
 func (o *GetQueueNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] getQueueNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] getQueueNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetQueueNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetQueueForbidden struct {
 }
 
 func (o *GetQueueForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] getQueueForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] getQueueForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetQueueForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetQueueNotFound struct {
 }
 
 func (o *GetQueueNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] getQueueNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] getQueueNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetQueueNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetQueueDefault) Code() int {
 }
 
 func (o *GetQueueDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] GetQueue default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] GetQueue default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetQueueDefault) GetPayload() *service_model.RuntimeError {

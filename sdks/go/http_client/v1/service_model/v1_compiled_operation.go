@@ -62,7 +62,7 @@ type V1CompiledOperation struct {
 	// Optional flag to mark this specification requires approval before running
 	IsApproved bool `json:"is_approved,omitempty"`
 
-	// Optional component kind, should be equal to "operation"
+	// Optional component kind, should be equal to 'operation'
 	Kind string `json:"kind,omitempty"`
 
 	// Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)

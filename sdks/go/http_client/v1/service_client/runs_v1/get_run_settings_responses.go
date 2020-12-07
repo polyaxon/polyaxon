@@ -87,7 +87,7 @@ type GetRunSettingsOK struct {
 }
 
 func (o *GetRunSettingsOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/settings][%d] getRunSettingsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] getRunSettingsOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRunSettingsOK) GetPayload() *service_model.V1RunSettings {
@@ -120,7 +120,7 @@ type GetRunSettingsNoContent struct {
 }
 
 func (o *GetRunSettingsNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/settings][%d] getRunSettingsNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] getRunSettingsNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetRunSettingsNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetRunSettingsForbidden struct {
 }
 
 func (o *GetRunSettingsForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/settings][%d] getRunSettingsForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] getRunSettingsForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetRunSettingsForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetRunSettingsNotFound struct {
 }
 
 func (o *GetRunSettingsNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/settings][%d] getRunSettingsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] getRunSettingsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetRunSettingsNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetRunSettingsDefault) Code() int {
 }
 
 func (o *GetRunSettingsDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/settings][%d] GetRunSettings default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] GetRunSettings default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetRunSettingsDefault) GetPayload() *service_model.RuntimeError {

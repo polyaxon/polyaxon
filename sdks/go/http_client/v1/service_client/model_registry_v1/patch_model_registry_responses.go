@@ -87,7 +87,7 @@ type PatchModelRegistryOK struct {
 }
 
 func (o *PatchModelRegistryOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/models/{model.uuid}][%d] patchModelRegistryOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] patchModelRegistryOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchModelRegistryOK) GetPayload() *service_model.V1ModelRegistry {
@@ -120,7 +120,7 @@ type PatchModelRegistryNoContent struct {
 }
 
 func (o *PatchModelRegistryNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/models/{model.uuid}][%d] patchModelRegistryNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] patchModelRegistryNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchModelRegistryNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type PatchModelRegistryForbidden struct {
 }
 
 func (o *PatchModelRegistryForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/models/{model.uuid}][%d] patchModelRegistryForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] patchModelRegistryForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchModelRegistryForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type PatchModelRegistryNotFound struct {
 }
 
 func (o *PatchModelRegistryNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/models/{model.uuid}][%d] patchModelRegistryNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] patchModelRegistryNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchModelRegistryNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *PatchModelRegistryDefault) Code() int {
 }
 
 func (o *PatchModelRegistryDefault) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/models/{model.uuid}][%d] PatchModelRegistry default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] PatchModelRegistry default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *PatchModelRegistryDefault) GetPayload() *service_model.RuntimeError {

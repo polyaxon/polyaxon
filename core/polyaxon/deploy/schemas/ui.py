@@ -23,6 +23,7 @@ class UISchema(BaseCamelSchema):
     enabled = fields.Bool(allow_none=True)
     offline = fields.Bool(allow_none=True)
     static_url = fields.Str(allow_none=True)
+    base_url = fields.Str(allow_none=True)
     assets_version = fields.Str(allow_none=True)
     admin_enabled = fields.Bool(allow_none=True)
 
@@ -36,6 +37,7 @@ class UIConfig(BaseConfig):
     REDUCED_ATTRIBUTES = [
         "enabled",
         "jsOffline",
+        "baseUrl",
         "staticUrl",
         "assetsVersion",
         "adminEnabled",
@@ -45,6 +47,7 @@ class UIConfig(BaseConfig):
         self,
         enabled=None,
         offline=None,
+        base_url=None,
         static_url=None,
         assets_version=None,
         admin_enabled=None,
@@ -52,5 +55,6 @@ class UIConfig(BaseConfig):
         self.enabled = enabled
         self.offline = offline
         self.assets_version = assets_version
+        self.base_url = base_url
         self.static_url = static_url
         self.admin_enabled = admin_enabled

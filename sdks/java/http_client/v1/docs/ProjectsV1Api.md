@@ -5,33 +5,30 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Archive project
-[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
+[**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{name}/archive | Archive project
+[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{name}/bookmark | Bookmark project
 [**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Create new project
-[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete project
-[**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
-[**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
-[**fetchProjectTeams**](ProjectsV1Api.md#fetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
-[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Get project
-[**getProjectSettings**](ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
+[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{name} | Delete project
+[**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{name}/ci | Disbale project CI
+[**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{name}/ci | Enable project CI
+[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{name} | Get project
+[**getProjectSettings**](ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{name}/settings | Get Project settings
 [**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
 [**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
 [**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
 [**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List projects
 [**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
 [**patchProjectSettings**](ProjectsV1Api.md#patchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
-[**patchProjectTeams**](ProjectsV1Api.md#patchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
-[**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Restore project
-[**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
+[**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{name}/restore | Restore project
+[**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{name}/unbookmark | Unbookmark project
 [**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Update project
 [**updateProjectSettings**](ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
-[**updateProjectTeams**](ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
 [**uploadProjectArtifact**](ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
 
 
 <a name="archiveProject"></a>
 # **archiveProject**
-> archiveProject(owner, project)
+> archiveProject(owner, name)
 
 Archive project
 
@@ -58,9 +55,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.archiveProject(owner, project);
+      apiInstance.archiveProject(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#archiveProject");
       System.err.println("Status code: " + e.getCode());
@@ -77,7 +74,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -103,7 +100,7 @@ null (empty response body)
 
 <a name="bookmarkProject"></a>
 # **bookmarkProject**
-> bookmarkProject(owner, project)
+> bookmarkProject(owner, name)
 
 Bookmark project
 
@@ -130,9 +127,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.bookmarkProject(owner, project);
+      apiInstance.bookmarkProject(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#bookmarkProject");
       System.err.println("Status code: " + e.getCode());
@@ -149,7 +146,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -248,7 +245,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteProject"></a>
 # **deleteProject**
-> deleteProject(owner, project)
+> deleteProject(owner, name)
 
 Delete project
 
@@ -275,9 +272,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.deleteProject(owner, project);
+      apiInstance.deleteProject(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#deleteProject");
       System.err.println("Status code: " + e.getCode());
@@ -294,7 +291,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -320,7 +317,7 @@ null (empty response body)
 
 <a name="disableProjectCI"></a>
 # **disableProjectCI**
-> disableProjectCI(owner, project)
+> disableProjectCI(owner, name)
 
 Disbale project CI
 
@@ -347,9 +344,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.disableProjectCI(owner, project);
+      apiInstance.disableProjectCI(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#disableProjectCI");
       System.err.println("Status code: " + e.getCode());
@@ -366,7 +363,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -392,7 +389,7 @@ null (empty response body)
 
 <a name="enableProjectCI"></a>
 # **enableProjectCI**
-> enableProjectCI(owner, project)
+> enableProjectCI(owner, name)
 
 Enable project CI
 
@@ -419,9 +416,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.enableProjectCI(owner, project);
+      apiInstance.enableProjectCI(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#enableProjectCI");
       System.err.println("Status code: " + e.getCode());
@@ -438,7 +435,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -462,82 +459,9 @@ null (empty response body)
 **404** | Resource does not exist. |  -  |
 **0** | An unexpected error response. |  -  |
 
-<a name="fetchProjectTeams"></a>
-# **fetchProjectTeams**
-> V1ProjectTeams fetchProjectTeams(owner, project)
-
-Get project teams
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.ProjectsV1Api;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKey
-    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-    ApiKey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKey.setApiKeyPrefix("Token");
-
-    ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
-    String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
-    try {
-      V1ProjectTeams result = apiInstance.fetchProjectTeams(owner, project);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ProjectsV1Api#fetchProjectTeams");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
-
-### Return type
-
-[**V1ProjectTeams**](V1ProjectTeams.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A successful response. |  -  |
-**204** | No content. |  -  |
-**403** | You don&#39;t have permission to access the resource. |  -  |
-**404** | Resource does not exist. |  -  |
-**0** | An unexpected error response. |  -  |
-
 <a name="getProject"></a>
 # **getProject**
-> V1Project getProject(owner, project)
+> V1Project getProject(owner, name)
 
 Get project
 
@@ -564,9 +488,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      V1Project result = apiInstance.getProject(owner, project);
+      V1Project result = apiInstance.getProject(owner, name);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#getProject");
@@ -584,7 +508,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -610,7 +534,7 @@ Name | Type | Description  | Notes
 
 <a name="getProjectSettings"></a>
 # **getProjectSettings**
-> V1ProjectSettings getProjectSettings(owner, project)
+> V1ProjectSettings getProjectSettings(owner, name)
 
 Get Project settings
 
@@ -637,9 +561,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      V1ProjectSettings result = apiInstance.getProjectSettings(owner, project);
+      V1ProjectSettings result = apiInstance.getProjectSettings(owner, name);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#getProjectSettings");
@@ -657,7 +581,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -1147,84 +1071,9 @@ Name | Type | Description  | Notes
 **404** | Resource does not exist. |  -  |
 **0** | An unexpected error response. |  -  |
 
-<a name="patchProjectTeams"></a>
-# **patchProjectTeams**
-> V1ProjectTeams patchProjectTeams(owner, project, body)
-
-Patch project teams
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.ProjectsV1Api;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKey
-    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-    ApiKey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKey.setApiKeyPrefix("Token");
-
-    ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
-    String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project name
-    V1ProjectTeams body = new V1ProjectTeams(); // V1ProjectTeams | Project settings body
-    try {
-      V1ProjectTeams result = apiInstance.patchProjectTeams(owner, project, body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ProjectsV1Api#patchProjectTeams");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project name |
- **body** | [**V1ProjectTeams**](V1ProjectTeams.md)| Project settings body |
-
-### Return type
-
-[**V1ProjectTeams**](V1ProjectTeams.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A successful response. |  -  |
-**204** | No content. |  -  |
-**403** | You don&#39;t have permission to access the resource. |  -  |
-**404** | Resource does not exist. |  -  |
-**0** | An unexpected error response. |  -  |
-
 <a name="restoreProject"></a>
 # **restoreProject**
-> restoreProject(owner, project)
+> restoreProject(owner, name)
 
 Restore project
 
@@ -1251,9 +1100,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.restoreProject(owner, project);
+      apiInstance.restoreProject(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#restoreProject");
       System.err.println("Status code: " + e.getCode());
@@ -1270,7 +1119,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -1296,7 +1145,7 @@ null (empty response body)
 
 <a name="unbookmarkProject"></a>
 # **unbookmarkProject**
-> unbookmarkProject(owner, project)
+> unbookmarkProject(owner, name)
 
 Unbookmark project
 
@@ -1323,9 +1172,9 @@ public class Example {
 
     ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project under namesapce
+    String name = "name_example"; // String | Component under namesapce
     try {
-      apiInstance.unbookmarkProject(owner, project);
+      apiInstance.unbookmarkProject(owner, name);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsV1Api#unbookmarkProject");
       System.err.println("Status code: " + e.getCode());
@@ -1342,7 +1191,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
+ **name** | **String**| Component under namesapce |
 
 ### Return type
 
@@ -1497,81 +1346,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ProjectSettings**](V1ProjectSettings.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A successful response. |  -  |
-**204** | No content. |  -  |
-**403** | You don&#39;t have permission to access the resource. |  -  |
-**404** | Resource does not exist. |  -  |
-**0** | An unexpected error response. |  -  |
-
-<a name="updateProjectTeams"></a>
-# **updateProjectTeams**
-> V1ProjectTeams updateProjectTeams(owner, project, body)
-
-Update project teams
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.ProjectsV1Api;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKey
-    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-    ApiKey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKey.setApiKeyPrefix("Token");
-
-    ProjectsV1Api apiInstance = new ProjectsV1Api(defaultClient);
-    String owner = "owner_example"; // String | Owner of the namespace
-    String project = "project_example"; // String | Project name
-    V1ProjectTeams body = new V1ProjectTeams(); // V1ProjectTeams | Project settings body
-    try {
-      V1ProjectTeams result = apiInstance.updateProjectTeams(owner, project, body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ProjectsV1Api#updateProjectTeams");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project name |
- **body** | [**V1ProjectTeams**](V1ProjectTeams.md)| Project settings body |
-
-### Return type
-
-[**V1ProjectTeams**](V1ProjectTeams.md)
 
 ### Authorization
 

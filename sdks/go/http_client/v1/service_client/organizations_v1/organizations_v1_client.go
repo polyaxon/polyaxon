@@ -242,7 +242,7 @@ func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteOrganizationMember",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/orgs/{owner}/members/{user}",
+		PathPattern:        "/api/v1/orgs/{owner}/members/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -350,7 +350,7 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetOrganizationMember",
 		Method:             "GET",
-		PathPattern:        "/api/v1/orgs/{owner}/members/{user}",
+		PathPattern:        "/api/v1/orgs/{owner}/members/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

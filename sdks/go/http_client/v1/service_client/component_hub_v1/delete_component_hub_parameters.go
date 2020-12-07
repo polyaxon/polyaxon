@@ -74,16 +74,16 @@ for the delete component hub operation typically these are written to a http.Req
 */
 type DeleteComponentHubParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
-
-	*/
-	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *DeleteComponentHubParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the delete component hub params
+func (o *DeleteComponentHubParams) WithName(name string) *DeleteComponentHubParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the delete component hub params
+func (o *DeleteComponentHubParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the delete component hub params
 func (o *DeleteComponentHubParams) WithOwner(owner string) *DeleteComponentHubParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *DeleteComponentHubParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithUUID adds the uuid to the delete component hub params
-func (o *DeleteComponentHubParams) WithUUID(uuid string) *DeleteComponentHubParams {
-	o.SetUUID(uuid)
-	return o
-}
-
-// SetUUID adds the uuid to the delete component hub params
-func (o *DeleteComponentHubParams) SetUUID(uuid string) {
-	o.UUID = uuid
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteComponentHubParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *DeleteComponentHubParams) WriteToRequest(r runtime.ClientRequest, reg s
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param uuid
-	if err := r.SetPathParam("uuid", o.UUID); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

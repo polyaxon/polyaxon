@@ -288,7 +288,7 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_metrics:
+        with patch("polyaxon.tracking.run.Run._log_has_metrics") as log_metrics:
             self.run.log_metrics()
         assert log_metrics.call_count == 1
         self.event_logger.flush()
@@ -310,7 +310,7 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_metrics:
+        with patch("polyaxon.tracking.run.Run._log_has_metrics") as log_metrics:
             self.run.log_metrics(step=1, metric1=1.1)
         assert log_metrics.call_count == 1
         self.event_logger.flush()
@@ -338,7 +338,7 @@ class TestRunLogging(TestEnvVarsCase):
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))
             is False
         )
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_metrics:
+        with patch("polyaxon.tracking.run.Run._log_has_metrics") as log_metrics:
             self.run.log_metrics(step=1, metric1=1.1, metric2=21.1)
         assert log_metrics.call_count == 1
         self.event_logger.flush()
@@ -364,9 +364,9 @@ class TestRunLogging(TestEnvVarsCase):
         results = V1Events.read(kind="metric", name="metric2", data=events_file)
         assert len(results.df.values) == 1
 
-        with patch("polyaxon.tracking.run.Run._log_has_events") as log_dashboard:
+        with patch("polyaxon.tracking.run.Run._log_has_metrics") as log_metrics:
             self.run.log_metrics(step=2, metric1=1.1, metric2=21.1, metric3=12.1)
-        assert log_dashboard.call_count == 1
+        assert log_metrics.call_count == 1
         self.event_logger.flush()
         assert (
             os.path.exists(get_asset_path(self.run_path, kind=V1ArtifactKind.METRIC))

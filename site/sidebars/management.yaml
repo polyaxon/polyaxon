@@ -49,7 +49,15 @@
     items:
     - title: Overview
       link: /docs/management/component-hub/
+    - title: Components
+      link: /docs/management/component-hub/components/
+    - title: Versions
+      link: /docs/management/component-hub/versions/
   - group: Models registry
     items:
     - title: Overview
       link: /docs/management/model-registry/
+    - title: Models
+      link: /docs/management/model-registry/models/
+    - title: Versions
+      link: /docs/management/model-registry/versions/

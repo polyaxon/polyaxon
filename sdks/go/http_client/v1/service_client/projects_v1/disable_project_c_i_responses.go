@@ -86,7 +86,7 @@ type DisableProjectCIOK struct {
 }
 
 func (o *DisableProjectCIOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCIOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] disableProjectCIOK ", 200)
 }
 
 func (o *DisableProjectCIOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DisableProjectCINoContent struct {
 }
 
 func (o *DisableProjectCINoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCINoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] disableProjectCINoContent  %+v", 204, o.Payload)
 }
 
 func (o *DisableProjectCINoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DisableProjectCIForbidden struct {
 }
 
 func (o *DisableProjectCIForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCIForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] disableProjectCIForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DisableProjectCIForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DisableProjectCINotFound struct {
 }
 
 func (o *DisableProjectCINotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCINotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] disableProjectCINotFound  %+v", 404, o.Payload)
 }
 
 func (o *DisableProjectCINotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DisableProjectCIDefault) Code() int {
 }
 
 func (o *DisableProjectCIDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] DisableProjectCI default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] DisableProjectCI default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DisableProjectCIDefault) GetPayload() *service_model.RuntimeError {

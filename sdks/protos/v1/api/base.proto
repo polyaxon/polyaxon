@@ -46,7 +46,7 @@ message UuidResourceRequest {
 }
 
 // Request data to get/delete entity
-message OwnerEntityResourceRequest {
+message OwnerEntityResourceRequestByUid {
     // Owner of the namespace
     string owner = 1;
 
@@ -54,22 +54,37 @@ message OwnerEntityResourceRequest {
     string uuid = 2;
 }
 
-// Request data with owner/project namespace
-message ProjectResourceRequest {
-    // Owner of the namespace
-    string owner = 1;
+// Request data with owner/entity namespace
+message OwnerEntityResourceRequestByName {
+  // Owner of the namespace
+  string owner = 1;
 
-    // Project under namesapce
-    string project = 2;
+  // Component under namesapce
+  string name = 2;
 }
 
-// Request data with owner/team namespace
-message TeamResourceRequest {
-    // Owner of the namespace
-    string owner = 1;
+// Request data to get/delete sub-entity
+message OwnerSubEntityResourceRequestByUid {
+  // Owner of the namespace
+  string owner = 1;
 
-    // Team under namesapce
-    string team = 2;
+  // Owner of the namespace
+  string entity = 2;
+
+  // Uuid identifier of the entity
+  string uuid = 3;
+}
+
+// Request data with owner/entity/sub-entity namespace
+message OwnerSubEntityResourceRequestByName {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Owner of the namespace
+  string entity = 2;
+
+  // Component under namesapce
+  string name = 3;
 }
 
 // Request data with owner/team/member namespace
@@ -82,15 +97,6 @@ message TeamMemeberResourceRequest {
 
     // Member under team
     string user = 3;
-}
-
-// Request data with owner/member namespace
-message OrgMemeberResourceRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Memeber under namesapce
-    string user = 2;
 }
 
 message Uuids {
@@ -125,31 +131,6 @@ message ProjectTagResourceUuidsBodyRequest {
     // Data
     EntitiesTags data = 3;
 }
-
-// Request data to get/delete project resource entity
-message ProjectEntityResourceRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Project
-    string project = 2;
-
-    // Uuid identifier of the entity
-    string uuid = 3;
-}
-
-// Request data to get/delete agent's entity
-message AgentEntityResourceRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Agent managing the resource
-    string agent = 2;
-
-    // Uuid identifier of the entity
-    string uuid = 3;
-}
-
 
 // Request list data
 message ResourceListRequest {
@@ -202,55 +183,13 @@ message OwnerResourceListRequest {
     string query = 5;
 }
 
-// Request list data with owner/team namespace
-message TeamResourceListRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Team under namesapce
-    string team = 2;
-
-    // Pagination offset
-    int32 offset = 3;
-
-    // Limit size
-    int32 limit = 4;
-
-     // Sort to order the search
-    string sort = 5;
-
-     // Query filter the search search
-    string query = 6;
-}
-
-// Request list data with owner/project namespace
-message ProjectResourceListRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Project under namesapce
-    string project = 2;
-
-    // Pagination offset
-    int32 offset = 3;
-
-    // Limit size
-    int32 limit = 4;
-
-     // Sort to order the search
-    string sort = 5;
-
-     // Query filter the search search
-    string query = 6;
-}
-
 // Request list data with owner/agent namespace
-message AgentResourceListRequest {
+message OwnerEntityResourceListRequestByName {
     // Owner of the namespace
     string owner = 1;
 
-    // Agent man managing the resource
-    string agent = 2;
+    // Entity managing the resource
+    string name = 2;
 
     // Pagination offset
     int32 offset = 3;
@@ -265,15 +204,15 @@ message AgentResourceListRequest {
     string query = 6;
 }
 
-// Request list data with owner/project/enitity namespace
-message EntityResourceListRequest {
+// Request list data with owner/project/entity namespace
+message OwnerSubEntityResourceListRequestByUid {
     // Owner of the namespace
     string owner = 1;
 
-    // Project under namesapce
-    string project = 2;
+    // Entity name under namesapce
+    string entity = 2;
 
-    // Entity uuid
+    // SubEntity uuid
     string uuid = 3;
 
     // Pagination offset
@@ -287,6 +226,30 @@ message EntityResourceListRequest {
 
      // Query filter the search search
     string query = 7;
+}
+
+// Request list data with owner/project/entity namespace
+message OwnerSubEntityResourceListRequestByName {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Entity name under namesapce
+  string entity = 2;
+
+  // SubEntity name
+  string name = 3;
+
+  // Pagination offset
+  int32 offset = 4;
+
+  // Limit size
+  int32 limit = 5;
+
+   // Sort to order the search
+  string sort = 6;
+
+   // Query filter the search search
+  string query = 7;
 }
 
 // Artifact tree response

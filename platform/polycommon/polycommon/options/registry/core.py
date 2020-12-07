@@ -30,6 +30,7 @@ HEALTH_CHECK_WORKER_TIMEOUT = "HEALTH_CHECK_WORKER_TIMEOUT"
 SCHEDULER_ENABLED = "SCHEDULER_ENABLED"
 UI_ADMIN_ENABLED = "UI_ADMIN_ENABLED"
 UI_ASSETS_VERSION = "UI_ASSETS_VERSION"
+UI_BASE_URL = "UI_BASE_URL"
 UI_OFFLINE = "UI_OFFLINE"
 UI_ENABLED = "UI_ENABLED"
 
@@ -44,6 +45,7 @@ OPTIONS = {
     SCHEDULER_ENABLED,
     UI_ADMIN_ENABLED,
     UI_ASSETS_VERSION,
+    UI_BASE_URL,
     UI_OFFLINE,
     UI_ENABLED,
 }
@@ -167,6 +169,18 @@ class UiAssetsVersion(Option):
     store = OptionStores.SETTINGS
     typing = types.STR
     default = ""
+    options = None
+
+
+class UiBaseUrl(Option):
+    key = UI_BASE_URL
+    scope = OptionScope.GLOBAL
+    is_secret = False
+    is_optional = True
+    is_list = False
+    store = OptionStores.SETTINGS
+    typing = types.STR
+    default = "/"
     options = None
 
 

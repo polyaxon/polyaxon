@@ -38,20 +38,20 @@ type V1RunSettings struct {
 	// Artifacts Store
 	ArtifactsStore *V1RunSettingsCatalog `json:"artifacts_store,omitempty"`
 
-	// Concurreny
-	Concurrency int32 `json:"concurrency,omitempty"`
-
 	// Connections
 	Connections []*V1RunSettingsCatalog `json:"connections"`
 
-	// Meta
-	MetaInfo interface{} `json:"meta_info,omitempty"`
+	// Component Hub reference
+	Hub *V1RunReferenceCatalog `json:"hub,omitempty"`
 
 	// Namespace
 	Namespace string `json:"namespace,omitempty"`
 
 	// Queue
 	Queue *V1RunSettingsCatalog `json:"queue,omitempty"`
+
+	// Model registry reference
+	Registry *V1RunReferenceCatalog `json:"registry,omitempty"`
 }
 
 // Validate validates this v1 run settings
@@ -70,7 +70,15 @@ func (m *V1RunSettings) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateHub(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateQueue(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRegistry(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -141,6 +149,24 @@ func (m *V1RunSettings) validateConnections(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1RunSettings) validateHub(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Hub) { // not required
+		return nil
+	}
+
+	if m.Hub != nil {
+		if err := m.Hub.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("hub")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1RunSettings) validateQueue(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Queue) { // not required
@@ -151,6 +177,24 @@ func (m *V1RunSettings) validateQueue(formats strfmt.Registry) error {
 		if err := m.Queue.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("queue")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSettings) validateRegistry(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Registry) { // not required
+		return nil
+	}
+
+	if m.Registry != nil {
+		if err := m.Registry.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("registry")
 			}
 			return err
 		}

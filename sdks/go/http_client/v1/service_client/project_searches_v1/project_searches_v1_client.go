@@ -106,7 +106,7 @@ func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteProjectSearch",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/searches/{uuid}",
+		PathPattern:        "/api/v1/{owner}/{entity}/searches/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -142,7 +142,7 @@ func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetProjectSearch",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/searches/{uuid}",
+		PathPattern:        "/api/v1/{owner}/{entity}/searches/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -178,7 +178,7 @@ func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, au
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListProjectSearchNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/searches/names",
+		PathPattern:        "/api/v1/{owner}/{name}/searches/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -214,7 +214,7 @@ func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListProjectSearches",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/searches",
+		PathPattern:        "/api/v1/{owner}/{name}/searches",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -286,7 +286,7 @@ func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PromoteProjectSearch",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/searches/{uuid}/promote",
+		PathPattern:        "/api/v1/{owner}/{entity}/searches/{uuid}/promote",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

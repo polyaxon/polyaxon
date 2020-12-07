@@ -133,6 +133,7 @@ class OperationCreateSerializer(serializers.ModelSerializer, IsManagedMixin):
                     is_managed=is_managed,
                     is_approved=validated_data.get("is_approved", True),
                     supported_kinds=validated_data.get("supported_kinds"),
+                    supported_owners=validated_data.get("supported_owners"),
                 )
             except (PolyaxonException, ValueError) as e:
                 raise ValidationError(e)

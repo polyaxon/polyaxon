@@ -80,6 +80,11 @@ type GetRunsArtifactsLineageParams struct {
 
 	*/
 	Limit *int32
+	/*Name
+	  Entity managing the resource
+
+	*/
+	Name string
 	/*Offset
 	  Pagination offset.
 
@@ -90,11 +95,6 @@ type GetRunsArtifactsLineageParams struct {
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 	/*Query
 	  Query filter the search search.
 
@@ -155,6 +155,17 @@ func (o *GetRunsArtifactsLineageParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithName adds the name to the get runs artifacts lineage params
+func (o *GetRunsArtifactsLineageParams) WithName(name string) *GetRunsArtifactsLineageParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the get runs artifacts lineage params
+func (o *GetRunsArtifactsLineageParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOffset adds the offset to the get runs artifacts lineage params
 func (o *GetRunsArtifactsLineageParams) WithOffset(offset *int32) *GetRunsArtifactsLineageParams {
 	o.SetOffset(offset)
@@ -175,17 +186,6 @@ func (o *GetRunsArtifactsLineageParams) WithOwner(owner string) *GetRunsArtifact
 // SetOwner adds the owner to the get runs artifacts lineage params
 func (o *GetRunsArtifactsLineageParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the get runs artifacts lineage params
-func (o *GetRunsArtifactsLineageParams) WithProject(project string) *GetRunsArtifactsLineageParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the get runs artifacts lineage params
-func (o *GetRunsArtifactsLineageParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithQuery adds the query to the get runs artifacts lineage params
@@ -234,6 +234,11 @@ func (o *GetRunsArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest, 
 
 	}
 
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
+		return err
+	}
+
 	if o.Offset != nil {
 
 		// query param offset
@@ -252,11 +257,6 @@ func (o *GetRunsArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest, 
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
-		return err
-	}
-
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
 	}
 

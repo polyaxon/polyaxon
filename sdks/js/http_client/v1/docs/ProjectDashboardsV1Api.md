@@ -7,12 +7,12 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createProjectDashboard**](ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
-[**deleteProjectDashboard**](ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
-[**getProjectDashboard**](ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
-[**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
-[**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+[**deleteProjectDashboard**](ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{entity}/dashboards/{uuid} | Delete project dashboard
+[**getProjectDashboard**](ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{entity}/dashboards/{uuid} | Get project dashboard
+[**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{name}/dashboards/names | List project dashboard
+[**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{name}/dashboards | List project dashboards
 [**patchProjectDashboard**](ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{uuid}/promote | Promote project dashboard
+[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{entity}/dashboards/{uuid}/promote | Promote project dashboard
 [**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 ## deleteProjectDashboard
 
-> deleteProjectDashboard(owner, project, uuid)
+> deleteProjectDashboard(owner, entity, uuid)
 
 Delete project dashboard
 
@@ -89,9 +89,9 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project
+let entity = "entity_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.deleteProjectDashboard(owner, project, uuid, (error, data, response) => {
+apiInstance.deleteProjectDashboard(owner, entity, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -106,7 +106,7 @@ apiInstance.deleteProjectDashboard(owner, project, uuid, (error, data, response)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project | 
+ **entity** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
@@ -125,7 +125,7 @@ null (empty response body)
 
 ## getProjectDashboard
 
-> V1Dashboard getProjectDashboard(owner, project, uuid)
+> V1Dashboard getProjectDashboard(owner, entity, uuid)
 
 Get project dashboard
 
@@ -142,9 +142,9 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project
+let entity = "entity_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.getProjectDashboard(owner, project, uuid, (error, data, response) => {
+apiInstance.getProjectDashboard(owner, entity, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -159,7 +159,7 @@ apiInstance.getProjectDashboard(owner, project, uuid, (error, data, response) =>
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project | 
+ **entity** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
@@ -178,7 +178,7 @@ Name | Type | Description  | Notes
 
 ## listProjectDashboardNames
 
-> V1ListDashboardsResponse listProjectDashboardNames(owner, project, opts)
+> V1ListDashboardsResponse listProjectDashboardNames(owner, name, opts)
 
 List project dashboard
 
@@ -195,14 +195,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project under namesapce
+let name = "name_example"; // String | Entity managing the resource
 let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-apiInstance.listProjectDashboardNames(owner, project, opts, (error, data, response) => {
+apiInstance.listProjectDashboardNames(owner, name, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -217,7 +217,7 @@ apiInstance.listProjectDashboardNames(owner, project, opts, (error, data, respon
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project under namesapce | 
+ **name** | **String**| Entity managing the resource | 
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 
 ## listProjectDashboards
 
-> V1ListDashboardsResponse listProjectDashboards(owner, project, opts)
+> V1ListDashboardsResponse listProjectDashboards(owner, name, opts)
 
 List project dashboards
 
@@ -256,14 +256,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project under namesapce
+let name = "name_example"; // String | Entity managing the resource
 let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
-apiInstance.listProjectDashboards(owner, project, opts, (error, data, response) => {
+apiInstance.listProjectDashboards(owner, name, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -278,7 +278,7 @@ apiInstance.listProjectDashboards(owner, project, opts, (error, data, response) 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project under namesapce | 
+ **name** | **String**| Entity managing the resource | 
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
@@ -355,7 +355,7 @@ Name | Type | Description  | Notes
 
 ## promoteProjectDashboard
 
-> promoteProjectDashboard(owner, project, uuid)
+> promoteProjectDashboard(owner, entity, uuid)
 
 Promote project dashboard
 
@@ -372,9 +372,9 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let project = "project_example"; // String | Project
+let entity = "entity_example"; // String | Owner of the namespace
 let uuid = "uuid_example"; // String | Uuid identifier of the entity
-apiInstance.promoteProjectDashboard(owner, project, uuid, (error, data, response) => {
+apiInstance.promoteProjectDashboard(owner, entity, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -389,7 +389,7 @@ apiInstance.promoteProjectDashboard(owner, project, uuid, (error, data, response
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project | 
+ **entity** | **String**| Owner of the namespace | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type

@@ -86,7 +86,7 @@ type DeleteRunOK struct {
 }
 
 func (o *DeleteRunOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] deleteRunOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] deleteRunOK ", 200)
 }
 
 func (o *DeleteRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteRunNoContent struct {
 }
 
 func (o *DeleteRunNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] deleteRunNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] deleteRunNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteRunNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DeleteRunForbidden struct {
 }
 
 func (o *DeleteRunForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] deleteRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] deleteRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteRunForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DeleteRunNotFound struct {
 }
 
 func (o *DeleteRunNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] deleteRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] deleteRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteRunNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DeleteRunDefault) Code() int {
 }
 
 func (o *DeleteRunDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] DeleteRun default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] DeleteRun default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteRunDefault) GetPayload() *service_model.RuntimeError {

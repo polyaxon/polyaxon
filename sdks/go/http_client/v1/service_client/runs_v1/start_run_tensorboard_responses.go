@@ -86,7 +86,7 @@ type StartRunTensorboardOK struct {
 }
 
 func (o *StartRunTensorboardOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardOK ", 200)
 }
 
 func (o *StartRunTensorboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type StartRunTensorboardNoContent struct {
 }
 
 func (o *StartRunTensorboardNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardNoContent  %+v", 204, o.Payload)
 }
 
 func (o *StartRunTensorboardNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type StartRunTensorboardForbidden struct {
 }
 
 func (o *StartRunTensorboardForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardForbidden  %+v", 403, o.Payload)
 }
 
 func (o *StartRunTensorboardForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type StartRunTensorboardNotFound struct {
 }
 
 func (o *StartRunTensorboardNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardNotFound  %+v", 404, o.Payload)
 }
 
 func (o *StartRunTensorboardNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *StartRunTensorboardDefault) Code() int {
 }
 
 func (o *StartRunTensorboardDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] StartRunTensorboard default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] StartRunTensorboard default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *StartRunTensorboardDefault) GetPayload() *service_model.RuntimeError {

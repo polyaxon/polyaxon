@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 **frozen** | **Boolean** |  | [optional] 
-**disabled** | **Boolean** |  | [optional] 
+**live_state** | **Number** |  | [optional] 
 **content** | **String** |  | [optional] 
 
 

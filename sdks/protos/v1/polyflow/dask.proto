@@ -24,7 +24,7 @@ import "v1/polyflow/k8s.proto";
 
 // Dask specification
 message Dask {
-    // Optional component kind, should be equal to "Dask"
+    // Optional component kind, should be equal to 'Dask'
     string kind = 1;
 
     // Number of threads

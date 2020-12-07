@@ -23,12 +23,10 @@ from polyaxon.polyflow.io import IOSchema
 from polyaxon.polyflow.references import RefMixin
 from polyaxon.polyflow.run import RunMixin, RunSchema
 from polyaxon.polyflow.templates import TemplateMixinConfig, TemplateMixinSchema
-from polyaxon.schemas.base import NAME_REGEX
 
 
 class ComponentSchema(BaseComponentSchema, TemplateMixinSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("component"))
-    name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     inputs = fields.Nested(IOSchema, allow_none=True, many=True)
     outputs = fields.Nested(IOSchema, allow_none=True, many=True)
     run = fields.Nested(RunSchema, required=True)

@@ -75,16 +75,16 @@ for the list queue names operation typically these are written to a http.Request
 */
 type ListQueueNamesParams struct {
 
-	/*Agent
-	  Agent man managing the resource
-
-	*/
-	Agent string
 	/*Limit
 	  Limit size.
 
 	*/
 	Limit *int32
+	/*Name
+	  Entity managing the resource
+
+	*/
+	Name string
 	/*Offset
 	  Pagination offset.
 
@@ -144,17 +144,6 @@ func (o *ListQueueNamesParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithAgent adds the agent to the list queue names params
-func (o *ListQueueNamesParams) WithAgent(agent string) *ListQueueNamesParams {
-	o.SetAgent(agent)
-	return o
-}
-
-// SetAgent adds the agent to the list queue names params
-func (o *ListQueueNamesParams) SetAgent(agent string) {
-	o.Agent = agent
-}
-
 // WithLimit adds the limit to the list queue names params
 func (o *ListQueueNamesParams) WithLimit(limit *int32) *ListQueueNamesParams {
 	o.SetLimit(limit)
@@ -164,6 +153,17 @@ func (o *ListQueueNamesParams) WithLimit(limit *int32) *ListQueueNamesParams {
 // SetLimit adds the limit to the list queue names params
 func (o *ListQueueNamesParams) SetLimit(limit *int32) {
 	o.Limit = limit
+}
+
+// WithName adds the name to the list queue names params
+func (o *ListQueueNamesParams) WithName(name string) *ListQueueNamesParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the list queue names params
+func (o *ListQueueNamesParams) SetName(name string) {
+	o.Name = name
 }
 
 // WithOffset adds the offset to the list queue names params
@@ -218,11 +218,6 @@ func (o *ListQueueNamesParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 	}
 	var res []error
 
-	// path param agent
-	if err := r.SetPathParam("agent", o.Agent); err != nil {
-		return err
-	}
-
 	if o.Limit != nil {
 
 		// query param limit
@@ -237,6 +232,11 @@ func (o *ListQueueNamesParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 			}
 		}
 
+	}
+
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
+		return err
 	}
 
 	if o.Offset != nil {

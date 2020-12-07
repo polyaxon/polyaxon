@@ -34,6 +34,7 @@ from polyaxon.exceptions import (
     PolyaxonShouldExitError,
 )
 from polyaxon.lifecycle import LifeCycle, V1Statuses
+from polyaxon.logger import clean_outputs
 from polyaxon.managers.ignore import IgnoreConfigManager
 from polyaxon.managers.run import RunConfigManager
 from polyaxon.metadata.keys import META_REWRITE_PATH
@@ -106,8 +107,8 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
             "inputs",
             "outputs",
             "is_managed",
-            "settings",
             "status_conditions",
+            "settings",
             "meta_info",
         ],
     )
@@ -120,6 +121,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
+@clean_outputs
 def ops(ctx, project, uid):
     """Commands for ops/runs."""
     ctx.obj = ctx.obj or {}
@@ -156,6 +158,7 @@ def ops(ctx, project, uid):
 @click.option("--offset", "-off", type=int, help="To offset the list of runs.")
 @click.option("--columns", "-c", type=str, help="The columns to show.")
 @click.pass_context
+@clean_outputs
 def ls(ctx, project, io, to_csv, query, sort, limit, offset, columns):
     """List runs for this project.
 
@@ -271,6 +274,7 @@ def ls(ctx, project, io, to_csv, query, sort, limit, offset, columns):
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
+@clean_outputs
 def get(ctx, project, uid):
     """Get run.
 
@@ -327,6 +331,7 @@ def get(ctx, project, uid):
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
+@clean_outputs
 def delete(ctx, project, uid):
     """Delete a run.
 
@@ -375,6 +380,7 @@ def delete(ctx, project, uid):
     "--tags", type=str, help="Tags of the run, comma separated values (optional)."
 )
 @click.pass_context
+@clean_outputs
 def update(ctx, project, uid, name, description, tags):
     """Update run.
 
@@ -428,6 +434,7 @@ def update(ctx, project, uid, name, description, tags):
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
+@clean_outputs
 def approve(ctx, project, uid):
     """Approve a run waiting for human validation.
 
@@ -471,6 +478,7 @@ def approve(ctx, project, uid):
     'Assume "yes" as answer to all prompts and run non-interactively.',
 )
 @click.pass_context
+@clean_outputs
 def stop(ctx, project, uid, yes):
     """Stop run.
 
@@ -526,6 +534,7 @@ def stop(ctx, project, uid, yes):
     help="The polyaxonfiles to update with, they should be an operation preset.",
 )
 @click.pass_context
+@clean_outputs
 def restart(ctx, project, uid, copy, polyaxonfile):
     """Restart run.
 
@@ -574,6 +583,7 @@ def restart(ctx, project, uid, copy, polyaxonfile):
     help="The polyaxonfiles to update with, they should be an operation preset.",
 )
 @click.pass_context
+@clean_outputs
 def resume(ctx, project, uid, polyaxonfile):
     """Resume run.
 
@@ -610,6 +620,7 @@ def resume(ctx, project, uid, polyaxonfile):
 @click.option(*OPTIONS_PROJECT["args"], **OPTIONS_PROJECT["kwargs"])
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.pass_context
+@clean_outputs
 def invalidate(ctx, project, uid):
     """Invalidate the run's cache state.
 
@@ -642,6 +653,7 @@ def invalidate(ctx, project, uid):
 @click.option(*OPTIONS_RUN_UID["args"], **OPTIONS_RUN_UID["kwargs"])
 @click.option("--watch", "-w", is_flag=True, help="Watch statuses.")
 @click.pass_context
+@clean_outputs
 def statuses(ctx, project, uid, watch):
     """Get run or run job statuses.
 
@@ -771,6 +783,7 @@ def statuses(ctx, project, uid, watch):
     help="Whether to show all information including container names, pod names, and node names.",
 )
 @click.pass_context
+@clean_outputs
 def logs(ctx, project, uid, follow, hide_time, all_containers, all_info):
     """Get run or run job logs.
 
@@ -828,6 +841,7 @@ def logs(ctx, project, uid, follow, hide_time, all_containers, all_info):
     help="Disable the automatic untar of the downloaded the artifacts.",
 )
 @click.pass_context
+@clean_outputs
 def artifacts(ctx, project, uid, path, path_to, no_untar):
     """Download outputs/artifacts for run.
 
@@ -888,6 +902,7 @@ def artifacts(ctx, project, uid, path, path_to, no_untar):
     help="To set the run to failed if upload fails.",
 )
 @click.pass_context
+@clean_outputs
 def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
     """Upload runs' artifacts.
 
@@ -962,6 +977,7 @@ def upload(ctx, project, uid, path_from, path_to, is_file, sync_failure):
     help="Print the url of the dashboard for this run.",
 )
 @click.pass_context
+@clean_outputs
 def dashboard(ctx, project, uid, yes, url):
     """Open this operation's dashboard details in browser."""
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -999,6 +1015,7 @@ def dashboard(ctx, project, uid, yes, url):
     help="Print the url of the dashboard or external service.",
 )
 @click.pass_context
+@clean_outputs
 def service(ctx, project, uid, yes, external, url):
     """Open the operation service in browser.
 

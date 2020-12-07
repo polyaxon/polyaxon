@@ -74,16 +74,16 @@ for the bookmark run operation typically these are written to a http.Request
 */
 type BookmarkRunParams struct {
 
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -128,6 +128,17 @@ func (o *BookmarkRunParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the bookmark run params
+func (o *BookmarkRunParams) WithEntity(entity string) *BookmarkRunParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the bookmark run params
+func (o *BookmarkRunParams) SetEntity(entity string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the bookmark run params
 func (o *BookmarkRunParams) WithOwner(owner string) *BookmarkRunParams {
 	o.SetOwner(owner)
@@ -137,17 +148,6 @@ func (o *BookmarkRunParams) WithOwner(owner string) *BookmarkRunParams {
 // SetOwner adds the owner to the bookmark run params
 func (o *BookmarkRunParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the bookmark run params
-func (o *BookmarkRunParams) WithProject(project string) *BookmarkRunParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the bookmark run params
-func (o *BookmarkRunParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the bookmark run params
@@ -169,13 +169,13 @@ func (o *BookmarkRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

@@ -87,7 +87,7 @@ type CreateModelRegistryOK struct {
 }
 
 func (o *CreateModelRegistryOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/models][%d] createModelRegistryOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] createModelRegistryOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateModelRegistryOK) GetPayload() *service_model.V1ModelRegistry {
@@ -120,7 +120,7 @@ type CreateModelRegistryNoContent struct {
 }
 
 func (o *CreateModelRegistryNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/models][%d] createModelRegistryNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] createModelRegistryNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateModelRegistryNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type CreateModelRegistryForbidden struct {
 }
 
 func (o *CreateModelRegistryForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/models][%d] createModelRegistryForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] createModelRegistryForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateModelRegistryForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type CreateModelRegistryNotFound struct {
 }
 
 func (o *CreateModelRegistryNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/models][%d] createModelRegistryNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] createModelRegistryNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateModelRegistryNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *CreateModelRegistryDefault) Code() int {
 }
 
 func (o *CreateModelRegistryDefault) Error() string {
-	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/models][%d] CreateModelRegistry default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] CreateModelRegistry default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *CreateModelRegistryDefault) GetPayload() *service_model.RuntimeError {

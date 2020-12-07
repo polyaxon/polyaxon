@@ -32,7 +32,7 @@ type Metrics struct {
 	cli                    client.Client
 	OperationsRunning      *prometheus.GaugeVec
 	OperationsCreated      *prometheus.CounterVec
-	OperationsFaildCreated *prometheus.CounterVec
+	OperationsFailedCreated *prometheus.CounterVec
 }
 
 // NewMetrics prometheus initializer
@@ -53,7 +53,7 @@ func NewMetrics(cli client.Client) *Metrics {
 			},
 			[]string{"namespace"},
 		),
-		OperationsFaildCreated: prometheus.NewCounterVec(
+		OperationsFailedCreated: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
 				Name: "notebook_create_failed_total",
 				Help: "Total nuber of operations creation failures",
@@ -70,7 +70,7 @@ func NewMetrics(cli client.Client) *Metrics {
 func (m *Metrics) Describe(ch chan<- *prometheus.Desc) {
 	m.OperationsRunning.Describe(ch)
 	m.OperationsCreated.Describe(ch)
-	m.OperationsFaildCreated.Describe(ch)
+	m.OperationsFailedCreated.Describe(ch)
 }
 
 // Collect implements the prometheus.Collector interface.
@@ -78,7 +78,7 @@ func (m *Metrics) Collect(ch chan<- prometheus.Metric) {
 	m.scrape()
 	m.OperationsRunning.Collect(ch)
 	m.OperationsCreated.Collect(ch)
-	m.OperationsFaildCreated.Collect(ch)
+	m.OperationsFailedCreated.Collect(ch)
 }
 
 // scrape gets current running operations.

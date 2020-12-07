@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_preset**
-> delete_preset(owner, uuid)
+> delete_preset(owner, uuid, entity=entity)
 
 Delete scheduling preset
 
@@ -136,10 +136,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     api_instance = polyaxon_sdk.PresetsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
+entity = 'entity_example' # str | Owner of the namespace. (optional)
 
     try:
         # Delete scheduling preset
-        api_instance.delete_preset(owner, uuid)
+        api_instance.delete_preset(owner, uuid, entity=entity)
     except ApiException as e:
         print("Exception when calling PresetsV1Api->delete_preset: %s\n" % e)
 ```
@@ -150,6 +151,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
+ **entity** | **str**| Owner of the namespace. | [optional] 
 
 ### Return type
 
@@ -176,7 +178,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_preset**
-> V1Preset get_preset(owner, uuid)
+> V1Preset get_preset(owner, uuid, entity=entity)
 
 Get scheduling preset
 
@@ -216,10 +218,11 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     api_instance = polyaxon_sdk.PresetsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
+entity = 'entity_example' # str | Owner of the namespace. (optional)
 
     try:
         # Get scheduling preset
-        api_response = api_instance.get_preset(owner, uuid)
+        api_response = api_instance.get_preset(owner, uuid, entity=entity)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling PresetsV1Api->get_preset: %s\n" % e)
@@ -231,6 +234,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **uuid** | **str**| Uuid identifier of the entity | 
+ **entity** | **str**| Owner of the namespace. | [optional] 
 
 ### Return type
 

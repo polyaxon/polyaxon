@@ -45,8 +45,8 @@ class RunQueryManager(BaseQueryManager):
         "id": "uuid",
         "uid": "uuid",
         "user": "user__username",
-        "agent": "settings__agent__name",
-        "queue": "settings__queue__name",
+        "agent": "agent__name",
+        "queue": "queue__name",
     }
     FIELDS_ORDERING = (
         "created_at",
@@ -60,6 +60,7 @@ class RunQueryManager(BaseQueryManager):
         "user",
         "uuid",
         "duration",
+        "status",
     )
     FIELDS_ORDERING_PROXY = {
         "metrics": {"field": "outputs", "annotate": True},
@@ -71,7 +72,6 @@ class RunQueryManager(BaseQueryManager):
         "meta_flags": {"field": "meta_info", "annotate": True},
         "meta_info": {"field": "meta_info", "annotate": True},
         "meta_values": {"field": "meta_info", "annotate": True},
-        "agent": "settings__agent",
     }
     FIELDS_DEFAULT_ORDERING = ("-updated_at",)
     CHECK_ALIVE = True

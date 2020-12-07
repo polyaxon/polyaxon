@@ -86,7 +86,7 @@ type DeleteProjectOK struct {
 }
 
 func (o *DeleteProjectOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}][%d] deleteProjectOK ", 200)
 }
 
 func (o *DeleteProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteProjectNoContent struct {
 }
 
 func (o *DeleteProjectNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}][%d] deleteProjectNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteProjectNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DeleteProjectForbidden struct {
 }
 
 func (o *DeleteProjectForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}][%d] deleteProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteProjectForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DeleteProjectNotFound struct {
 }
 
 func (o *DeleteProjectNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}][%d] deleteProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteProjectNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DeleteProjectDefault) Code() int {
 }
 
 func (o *DeleteProjectDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] DeleteProject default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}][%d] DeleteProject default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteProjectDefault) GetPayload() *service_model.RuntimeError {

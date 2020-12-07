@@ -87,7 +87,7 @@ type GetProjectSettingsOK struct {
 }
 
 func (o *GetProjectSettingsOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/settings][%d] getProjectSettingsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] getProjectSettingsOK  %+v", 200, o.Payload)
 }
 
 func (o *GetProjectSettingsOK) GetPayload() *service_model.V1ProjectSettings {
@@ -120,7 +120,7 @@ type GetProjectSettingsNoContent struct {
 }
 
 func (o *GetProjectSettingsNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/settings][%d] getProjectSettingsNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] getProjectSettingsNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetProjectSettingsNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetProjectSettingsForbidden struct {
 }
 
 func (o *GetProjectSettingsForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/settings][%d] getProjectSettingsForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] getProjectSettingsForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetProjectSettingsForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetProjectSettingsNotFound struct {
 }
 
 func (o *GetProjectSettingsNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/settings][%d] getProjectSettingsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] getProjectSettingsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetProjectSettingsNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetProjectSettingsDefault) Code() int {
 }
 
 func (o *GetProjectSettingsDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/settings][%d] GetProjectSettings default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] GetProjectSettings default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetProjectSettingsDefault) GetPayload() *service_model.RuntimeError {

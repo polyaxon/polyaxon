@@ -18,7 +18,7 @@ import sys
 
 from polyaxon.constants import DEFAULT
 from polyaxon.env_vars.getters.user import get_local_owner
-from polyaxon.exceptions import PolyaxonClientException
+from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.utils.formatting import Printer
 
 
@@ -29,8 +29,16 @@ def get_entity_full_name(owner: str = None, entity: str = None) -> str:
 
 
 def get_entity_info(entity):
+    if not entity:
+        raise PolyaxonSchemaError(
+            "Received an invalid entity reference: `{}`".format(entity)
+        )
 
     parts = entity.replace(".", "/").split("/")
+    if len(parts) > 2:
+        raise PolyaxonSchemaError(
+            "Received an invalid entity reference: `{}`".format(entity)
+        )
     if len(parts) == 2:
         owner, entity_name = parts
     else:
@@ -40,9 +48,7 @@ def get_entity_info(entity):
     return owner, entity_name
 
 
-def resolve_entity_info(
-    entity=None, is_cli: bool = False, entity_name: str = "project"
-):
+def resolve_entity_info(entity: str, entity_name: str, is_cli: bool = False):
     from polyaxon import settings
 
     if not entity:

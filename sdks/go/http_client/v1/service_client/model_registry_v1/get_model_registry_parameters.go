@@ -74,16 +74,16 @@ for the get model registry operation typically these are written to a http.Reque
 */
 type GetModelRegistryParams struct {
 
+	/*Name
+	  Component under namesapce
+
+	*/
+	Name string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
-
-	*/
-	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -123,6 +123,17 @@ func (o *GetModelRegistryParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the get model registry params
+func (o *GetModelRegistryParams) WithName(name string) *GetModelRegistryParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the get model registry params
+func (o *GetModelRegistryParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOwner adds the owner to the get model registry params
 func (o *GetModelRegistryParams) WithOwner(owner string) *GetModelRegistryParams {
 	o.SetOwner(owner)
@@ -134,17 +145,6 @@ func (o *GetModelRegistryParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithUUID adds the uuid to the get model registry params
-func (o *GetModelRegistryParams) WithUUID(uuid string) *GetModelRegistryParams {
-	o.SetUUID(uuid)
-	return o
-}
-
-// SetUUID adds the uuid to the get model registry params
-func (o *GetModelRegistryParams) SetUUID(uuid string) {
-	o.UUID = uuid
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *GetModelRegistryParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -153,13 +153,13 @@ func (o *GetModelRegistryParams) WriteToRequest(r runtime.ClientRequest, reg str
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
 	}
 
-	// path param uuid
-	if err := r.SetPathParam("uuid", o.UUID); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

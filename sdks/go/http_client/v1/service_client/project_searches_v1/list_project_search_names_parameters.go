@@ -80,6 +80,11 @@ type ListProjectSearchNamesParams struct {
 
 	*/
 	Limit *int32
+	/*Name
+	  Entity managing the resource
+
+	*/
+	Name string
 	/*Offset
 	  Pagination offset.
 
@@ -90,11 +95,6 @@ type ListProjectSearchNamesParams struct {
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
-
-	*/
-	Project string
 	/*Query
 	  Query filter the search search.
 
@@ -155,6 +155,17 @@ func (o *ListProjectSearchNamesParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithName adds the name to the list project search names params
+func (o *ListProjectSearchNamesParams) WithName(name string) *ListProjectSearchNamesParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the list project search names params
+func (o *ListProjectSearchNamesParams) SetName(name string) {
+	o.Name = name
+}
+
 // WithOffset adds the offset to the list project search names params
 func (o *ListProjectSearchNamesParams) WithOffset(offset *int32) *ListProjectSearchNamesParams {
 	o.SetOffset(offset)
@@ -175,17 +186,6 @@ func (o *ListProjectSearchNamesParams) WithOwner(owner string) *ListProjectSearc
 // SetOwner adds the owner to the list project search names params
 func (o *ListProjectSearchNamesParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the list project search names params
-func (o *ListProjectSearchNamesParams) WithProject(project string) *ListProjectSearchNamesParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the list project search names params
-func (o *ListProjectSearchNamesParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithQuery adds the query to the list project search names params
@@ -234,6 +234,11 @@ func (o *ListProjectSearchNamesParams) WriteToRequest(r runtime.ClientRequest, r
 
 	}
 
+	// path param name
+	if err := r.SetPathParam("name", o.Name); err != nil {
+		return err
+	}
+
 	if o.Offset != nil {
 
 		// query param offset
@@ -252,11 +257,6 @@ func (o *ListProjectSearchNamesParams) WriteToRequest(r runtime.ClientRequest, r
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
-		return err
-	}
-
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
 	}
 

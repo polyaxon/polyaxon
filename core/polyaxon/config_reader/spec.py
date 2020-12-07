@@ -24,8 +24,13 @@ from requests import HTTPError
 from yaml.parser import ParserError
 from yaml.scanner import ScannerError
 
+from polyaxon_sdk import ApiException
+
 from polyaxon.config_reader.utils import deep_update
-from polyaxon.env_vars.keys import POLYAXON_KEYS_PUBLIC_REGISTRY
+from polyaxon.env_vars.keys import (
+    POLYAXON_KEYS_PUBLIC_REGISTRY,
+    POLYAXON_KEYS_USE_GIT_REGISTRY,
+)
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonSchemaError
 from polyaxon.utils.list_utils import to_list
 
@@ -81,7 +86,9 @@ class ConfigSpec:
             return _read_from_url(self.value)
 
         if self.config_type == "hub":
-            return _read_from_public_hub(self.value)
+            if os.environ.get(POLYAXON_KEYS_USE_GIT_REGISTRY, False):
+                return _read_from_public_hub(self.value)
+            return _read_from_polyaxon_hub(self.value)
 
         raise PolyaxonSchemaError(
             "Received an invalid configuration: `{}`".format(self.value)
@@ -151,6 +158,24 @@ def _read_from_public_hub(hub: str):
                 "Component `{}` was not found, "
                 "please check that the name and tag are valid".format(hub)
             )
+        raise PolyaxonClientException(
+            "Component `{}` could not be fetched, "
+            "an error was encountered".format(hub, e)
+        )
+
+
+def _read_from_polyaxon_hub(hub: str):
+    from polyaxon.client import PolyaxonClient
+    from polyaxon.env_vars.getters import get_component_info
+
+    owner, component, version = get_component_info(hub)
+
+    try:
+        response = PolyaxonClient().component_hub_v1.get_component_version(
+            owner, component, version
+        )
+        return _read_from_stream(response.content)
+    except (ApiException, HTTPError) as e:
         raise PolyaxonClientException(
             "Component `{}` could not be fetched, "
             "an error was encountered".format(hub, e)

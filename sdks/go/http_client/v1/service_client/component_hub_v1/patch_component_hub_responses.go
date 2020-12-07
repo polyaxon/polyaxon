@@ -87,7 +87,7 @@ type PatchComponentHubOK struct {
 }
 
 func (o *PatchComponentHubOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/components/{component.uuid}][%d] patchComponentHubOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component.name}][%d] patchComponentHubOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchComponentHubOK) GetPayload() *service_model.V1ComponentHub {
@@ -120,7 +120,7 @@ type PatchComponentHubNoContent struct {
 }
 
 func (o *PatchComponentHubNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/components/{component.uuid}][%d] patchComponentHubNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component.name}][%d] patchComponentHubNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchComponentHubNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type PatchComponentHubForbidden struct {
 }
 
 func (o *PatchComponentHubForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/components/{component.uuid}][%d] patchComponentHubForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component.name}][%d] patchComponentHubForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchComponentHubForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type PatchComponentHubNotFound struct {
 }
 
 func (o *PatchComponentHubNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/components/{component.uuid}][%d] patchComponentHubNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component.name}][%d] patchComponentHubNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchComponentHubNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *PatchComponentHubDefault) Code() int {
 }
 
 func (o *PatchComponentHubDefault) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/components/{component.uuid}][%d] PatchComponentHub default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component.name}][%d] PatchComponentHub default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *PatchComponentHubDefault) GetPayload() *service_model.RuntimeError {

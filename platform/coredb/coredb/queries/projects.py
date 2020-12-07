@@ -20,6 +20,7 @@ PROJECT_DETAIL = [
     "description",
     "created_at",
     "updated_at",
+    "tags",
     "readme",
 ]
 
@@ -29,4 +30,5 @@ PROJECT_LIST = [
     "description",
     "created_at",
     "updated_at",
+    "tags",
 ]

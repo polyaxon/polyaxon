@@ -34,7 +34,7 @@ Starting a notebook is similar to running any other Polyaxon components, i.e. yo
 Let's run one of the public notebook components:
 
 ```bash
-$ polyaxon run --hub jupyter-lab:tensorflow -w
+$ polyaxon run --hub jupyterlab:tensorflow -w
 ```
 
 > For more details about this command please run `polyaxon run --help`,
@@ -46,7 +46,7 @@ we can create an operation to customize the resources, request GPUs ... in case 
 ```yaml
 version: 1.1
 kind: operation
-hubRef: jupyter-hub:tensorflow
+hubRef: jupyterlab:tensorflow
 runPatch:
   container:
     resources:

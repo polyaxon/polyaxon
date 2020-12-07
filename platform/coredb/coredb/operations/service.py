@@ -38,8 +38,9 @@ class OperationsService(Service):
     __all__ = ("init_run",)
 
     @staticmethod
-    def set_spec(spec: V1Operation) -> V1Operation:
-        return spec
+    def set_spec(spec: V1Operation, **kwargs) -> Tuple[V1Operation, Dict]:
+        kwargs["raw_content"] = spec.to_dict(dump=True)
+        return spec, kwargs
 
     @staticmethod
     def get_kind(compiled_operation: V1CompiledOperation) -> Tuple[str, Optional[str]]:
@@ -107,7 +108,13 @@ class OperationsService(Service):
 
     @staticmethod
     def sanitize_kwargs(**kwargs):
-        return {}
+        results = {}
+        if kwargs.get("raw_content"):
+            results["raw_content"] = kwargs["raw_content"]
+        if kwargs.get("content"):
+            results["content"] = kwargs["content"]
+
+        return results
 
     def init_run(
         self,
@@ -130,11 +137,8 @@ class OperationsService(Service):
         supported_kinds: Set[str] = None,
         **kwargs,
     ) -> Tuple[V1CompiledOperation, BaseRun]:
-        content = None
-        raw_content = None
         if op_spec:
-            op_spec = self.set_spec(op_spec)
-            raw_content = op_spec.to_dict(dump=True)
+            op_spec, kwargs = self.set_spec(op_spec, **kwargs)
         if op_spec:
             if not compiled_operation or override:
                 compiled_operation = OperationSpecification.compile_operation(
@@ -166,7 +170,7 @@ class OperationsService(Service):
                 compiled_operation.run.add_init(
                     V1Init(artifacts=V1ArtifactsType(dirs=[original_uuid]))
                 )
-            content = compiled_operation.to_dict(dump=True)
+            kwargs["content"] = compiled_operation.to_dict(dump=True)
         instance = get_run_model()(
             project_id=project_id,
             user_id=user_id,
@@ -174,8 +178,6 @@ class OperationsService(Service):
             description=description,
             tags=tags,
             readme=readme,
-            raw_content=raw_content,
-            content=content,
             params=params,
             inputs=inputs,
             kind=kind,

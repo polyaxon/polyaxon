@@ -38,8 +38,8 @@ type V1Search struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
-	// Optional a flag to disable the store
-	Disabled bool `json:"disabled,omitempty"`
+	// Current live state
+	LiveState int32 `json:"live_state,omitempty"`
 
 	// Optional name
 	Name string `json:"name,omitempty"`

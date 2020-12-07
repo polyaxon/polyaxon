@@ -80,6 +80,9 @@ data:
   {{- if .Values.externalServices.errors.enabled }}
   POLYAXON_ERRORS_BACKEND: {{ default "default" .Values.externalServices.errors.backend | quote }}
   {{- end }}
+  {{- if .Values.externalServices.allowedVersions }}
+  POLYAXON_ALLOWED_VERSIONS: {{ toJson .Values.externalServices.allowedVersions | quote }}
+  {{- end }}
   # Auth
   {{- if .Values.ldap.enabled }}
   POLYAXON_AUTH_LDAP: "true"

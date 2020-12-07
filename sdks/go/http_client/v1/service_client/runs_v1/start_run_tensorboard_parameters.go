@@ -77,17 +77,17 @@ for the start run tensorboard operation typically these are written to a http.Re
 type StartRunTensorboardParams struct {
 
 	/*Body*/
-	Body *service_model.V1ProjectEntityResourceRequest
+	Body *service_model.V1OwnerSubEntityResourceRequestByUID
+	/*Entity
+	  Owner of the namespace
+
+	*/
+	Entity string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project
-
-	*/
-	Project string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -133,14 +133,25 @@ func (o *StartRunTensorboardParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the start run tensorboard params
-func (o *StartRunTensorboardParams) WithBody(body *service_model.V1ProjectEntityResourceRequest) *StartRunTensorboardParams {
+func (o *StartRunTensorboardParams) WithBody(body *service_model.V1OwnerSubEntityResourceRequestByUID) *StartRunTensorboardParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the start run tensorboard params
-func (o *StartRunTensorboardParams) SetBody(body *service_model.V1ProjectEntityResourceRequest) {
+func (o *StartRunTensorboardParams) SetBody(body *service_model.V1OwnerSubEntityResourceRequestByUID) {
 	o.Body = body
+}
+
+// WithEntity adds the entity to the start run tensorboard params
+func (o *StartRunTensorboardParams) WithEntity(entity string) *StartRunTensorboardParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the start run tensorboard params
+func (o *StartRunTensorboardParams) SetEntity(entity string) {
+	o.Entity = entity
 }
 
 // WithOwner adds the owner to the start run tensorboard params
@@ -152,17 +163,6 @@ func (o *StartRunTensorboardParams) WithOwner(owner string) *StartRunTensorboard
 // SetOwner adds the owner to the start run tensorboard params
 func (o *StartRunTensorboardParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithProject adds the project to the start run tensorboard params
-func (o *StartRunTensorboardParams) WithProject(project string) *StartRunTensorboardParams {
-	o.SetProject(project)
-	return o
-}
-
-// SetProject adds the project to the start run tensorboard params
-func (o *StartRunTensorboardParams) SetProject(project string) {
-	o.Project = project
 }
 
 // WithUUID adds the uuid to the start run tensorboard params
@@ -190,13 +190,13 @@ func (o *StartRunTensorboardParams) WriteToRequest(r runtime.ClientRequest, reg 
 		}
 	}
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity
+	if err := r.SetPathParam("entity", o.Entity); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 

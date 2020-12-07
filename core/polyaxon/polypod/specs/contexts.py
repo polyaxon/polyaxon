@@ -30,7 +30,8 @@ class PluginsContextsSpec(
         "collect_artifacts "
         "collect_resources "
         "auto_resume "
-        "sync_statuses",
+        "sync_statuses "
+        "external_host",
     )
 ):
     @classmethod
@@ -45,6 +46,7 @@ class PluginsContextsSpec(
         collect_resources = True
         auto_resume = True
         sync_statuses = True
+        external_host = False
         if config:
             if config.collect_logs is not None:
                 collect_logs = config.collect_logs
@@ -56,6 +58,8 @@ class PluginsContextsSpec(
                 auto_resume = config.auto_resume
             if config.sync_statuses is not None:
                 sync_statuses = config.sync_statuses
+            if config.external_host is not None:
+                external_host = config.external_host
             if config.auth is not None:
                 auth = config.auth
             if config.docker is not None:
@@ -77,4 +81,5 @@ class PluginsContextsSpec(
             collect_resources=collect_resources,
             auto_resume=auto_resume,
             sync_statuses=sync_statuses,
+            external_host=external_host,
         )

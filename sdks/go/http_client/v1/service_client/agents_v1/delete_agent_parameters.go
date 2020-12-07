@@ -74,6 +74,11 @@ for the delete agent operation typically these are written to a http.Request
 */
 type DeleteAgentParams struct {
 
+	/*Entity
+	  Owner of the namespace.
+
+	*/
+	Entity *string
 	/*Owner
 	  Owner of the namespace
 
@@ -123,6 +128,17 @@ func (o *DeleteAgentParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithEntity adds the entity to the delete agent params
+func (o *DeleteAgentParams) WithEntity(entity *string) *DeleteAgentParams {
+	o.SetEntity(entity)
+	return o
+}
+
+// SetEntity adds the entity to the delete agent params
+func (o *DeleteAgentParams) SetEntity(entity *string) {
+	o.Entity = entity
+}
+
 // WithOwner adds the owner to the delete agent params
 func (o *DeleteAgentParams) WithOwner(owner string) *DeleteAgentParams {
 	o.SetOwner(owner)
@@ -152,6 +168,22 @@ func (o *DeleteAgentParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 		return err
 	}
 	var res []error
+
+	if o.Entity != nil {
+
+		// query param entity
+		var qrEntity string
+		if o.Entity != nil {
+			qrEntity = *o.Entity
+		}
+		qEntity := qrEntity
+		if qEntity != "" {
+			if err := r.SetQueryParam("entity", qEntity); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {

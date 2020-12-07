@@ -69,7 +69,7 @@ type V1Operation struct {
 	// Optional flag to mark this specification as preset
 	IsPreset bool `json:"is_preset,omitempty"`
 
-	// Optional component kind, should be equal to "operation"
+	// Optional component kind, should be equal to 'operation'
 	Kind string `json:"kind,omitempty"`
 
 	// Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)

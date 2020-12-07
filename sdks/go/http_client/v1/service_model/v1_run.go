@@ -53,9 +53,6 @@ type V1Run struct {
 	// Format: date-time
 	FinishedAt strfmt.DateTime `json:"finished_at,omitempty"`
 
-	// Optional hub reference versioned component
-	Hub string `json:"hub,omitempty"`
-
 	// Optional inputs of this entity
 	Inputs interface{} `json:"inputs,omitempty"`
 
@@ -67,6 +64,9 @@ type V1Run struct {
 
 	// Optional kind to tell the kind of this run
 	Kind V1RunKind `json:"kind,omitempty"`
+
+	// Current live state
+	LiveState int32 `json:"live_state,omitempty"`
 
 	// Optional run meta info
 	MetaInfo interface{} `json:"meta_info,omitempty"`
@@ -91,6 +91,9 @@ type V1Run struct {
 
 	// Optional content of the entity's spec
 	RawContent string `json:"raw_content,omitempty"`
+
+	// Markdown description/readme
+	Readme string `json:"readme,omitempty"`
 
 	// Current user's role in this (org/teams)/project/runs
 	Role string `json:"role,omitempty"`

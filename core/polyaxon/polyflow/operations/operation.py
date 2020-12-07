@@ -390,7 +390,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     The run patch provides a way to override information about the component's run section,
     for example the container's resources or the environment section.
 
-    The run patch is a dictionary that can modify most of the run time information and
+    The run patch is a dictionary that can modify most of the runtime information and
     will be resolved against the corresponding run kind:
 
         * [V1Job](/docs/experimentation/jobs/): for running batch jobs, model training experiments,

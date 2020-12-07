@@ -38,7 +38,7 @@ type V1Status struct {
 	// The status conditions timeline
 	StatusConditions []*V1StatusCondition `json:"status_conditions"`
 
-	// The uuid of the run
+	// The uuid of the status
 	UUID string `json:"uuid,omitempty"`
 }
 

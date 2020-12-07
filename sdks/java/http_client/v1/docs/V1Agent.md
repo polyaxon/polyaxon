@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
 **tags** | **List&lt;String&gt;** |  |  [optional]
-**disabled** | **Boolean** |  |  [optional]
+**liveState** | **Integer** |  |  [optional]
 **namespace** | **String** |  |  [optional]
 **versionApi** | [**Object**](.md) |  |  [optional]
 **version** | **String** |  |  [optional]
