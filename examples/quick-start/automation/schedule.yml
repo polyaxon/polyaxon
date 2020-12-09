@@ -1,10 +1,10 @@
 version: 1.1
 kind: operation
-name: every monday check
+name: every-monday-check
 schedule:
   kind: cron
   cron: "0 0 * * MON"
 params:
-  optimizer: {value: sgd}
-  epochs: {value: 1}
+  optimizer: { value: sgd }
+  epochs: { value: 1 }
 urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
