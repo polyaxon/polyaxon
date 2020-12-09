@@ -166,12 +166,20 @@ def _read_from_public_hub(hub: str):
 
 def _read_from_polyaxon_hub(hub: str):
     from polyaxon.client import PolyaxonClient
+    from polyaxon.constants import DEFAULT_HUB, NO_AUTH
     from polyaxon.env_vars.getters import get_component_info
+    from polyaxon.schemas.cli.client_config import ClientConfig
 
     owner, component, version = get_component_info(hub)
 
     try:
-        response = PolyaxonClient().component_hub_v1.get_component_version(
+        config = None
+        if owner == DEFAULT_HUB:
+            config = ClientConfig()
+        response = PolyaxonClient(
+            config=config,
+            token=NO_AUTH,
+        ).component_hub_v1.get_component_version(
             owner, component, version
         )
         return _read_from_stream(response.content)
