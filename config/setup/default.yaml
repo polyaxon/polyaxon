@@ -1,3 +1,3 @@
 deploymentChart: platform
-deploymentVersion: 1.4.0
+deploymentVersion: 1.4.1
 namespace: test

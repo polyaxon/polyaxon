@@ -61,7 +61,6 @@ data:
   {{- end }}
   {{- if .Values.ui.baseUrl }}
   POLYAXON_UI_BASE_URL: {{ .Values.ui.baseUrl | quote }}
-  SCRIPT_NAME: {{ .Values.ui.baseUrl | quote }}
   {{- end }}
   {{- if .Values.ui.staticUrl }}
   POLYAXON_STATIC_URL: {{ .Values.ui.staticUrl | quote }}
