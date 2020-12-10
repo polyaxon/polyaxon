@@ -15,8 +15,6 @@
 # limitations under the License.
 from typing import List
 
-import ujson
-
 from polyaxon import settings
 from polyaxon.agents.spawners.async_spawner import AsyncSpawner
 from polyaxon.lifecycle import V1StatusCondition
@@ -24,6 +22,7 @@ from polyaxon.logger import logger
 from polyaxon.operations import get_notifier_operation
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polypod import compiler
+from polyaxon.polypod.compiler.converters import PLATFORM_CONVERTERS
 
 
 async def notify_run(
@@ -57,7 +56,7 @@ async def notify_run(
             project=project,
             run_uuid=run_uuid,
             run_name=run_name,
-            condition=ujson.dumps(condition.to_dict()),
+            condition=condition.to_dict(),
         )
         compiled_operation = OperationSpecification.compile_operation(operation)
         resource = compiler.make(
@@ -69,6 +68,7 @@ async def notify_run(
             run_path=run_uuid,
             compiled_operation=compiled_operation,
             params=operation.params,
+            converters=PLATFORM_CONVERTERS,
         )
         await spawner.create(
             run_uuid=run_uuid,

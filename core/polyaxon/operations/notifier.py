@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Dict, Union
 
 from polyaxon import types
 from polyaxon.auxiliaries import get_default_notification_container
@@ -34,7 +35,7 @@ def get_notifier_operation(
     project: str,
     run_uuid: str,
     run_name: str,
-    condition: str,
+    condition: Union[str, Dict],
 ) -> V1Operation:
     return V1Operation(
         params={
@@ -55,6 +56,7 @@ def get_notifier_operation(
                 collect_resources=False,
                 auto_resume=False,
                 sync_statuses=False,
+                external_host=True,
             ),
             inputs=[
                 V1IO(name="kind", iotype=types.STR, is_optional=False),
@@ -62,7 +64,7 @@ def get_notifier_operation(
                 V1IO(name="project", iotype=types.STR, is_optional=False),
                 V1IO(name="run_uuid", iotype=types.STR, is_optional=False),
                 V1IO(name="run_name", iotype=types.STR, is_optional=True),
-                V1IO(name="condition", iotype=types.STR, is_optional=True),
+                V1IO(name="condition", iotype=types.DICT, is_optional=True),
                 V1IO(name="connection", iotype=types.STR, is_optional=True),
             ],
             run=V1Notifier(

@@ -68,4 +68,4 @@ class WebHookNotifier(BaseNotifier):
                         url=web_hook["url"], method=web_hook["method"], params=data
                     )
             except RequestException:
-                logger.warning("Could not send web hook, execption.", exc_info=True)
+                logger.warning("Could not send web hook, exception.", exc_info=True)
