@@ -17,11 +17,11 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
+from polyaxon.utils.urls_utils import get_fqn_run_url, get_project_url
 from polycommon import user_system
 from polycommon.events import event_context
 from polycommon.events.event import Attribute, Event
 from polycommon.events.event_context import EventItemContextSpec
-from polycommon.unique_urls import get_project_url, get_run_url
 
 
 class TestEventContext(TestCase):
@@ -75,7 +75,7 @@ class TestEventContext(TestCase):
         mock_object.unique_name = "user.project.1"
         event_spec = EventItemContextSpec(
             mock_object.unique_name,
-            "app{}".format(get_run_url(mock_object.unique_name)),
+            "ui{}".format(get_fqn_run_url(mock_object.unique_name)),
             1,
         )
         assert event_context.get_event_object_context(mock_object, "run") == event_spec
@@ -84,7 +84,7 @@ class TestEventContext(TestCase):
         mock_object.unique_name = "user.project"
         event_spec = EventItemContextSpec(
             mock_object.unique_name,
-            "app{}".format(get_project_url(mock_object.unique_name)),
+            "ui{}".format(get_project_url(mock_object.unique_name)),
             1,
         )
         assert (

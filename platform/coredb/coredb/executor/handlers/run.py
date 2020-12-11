@@ -16,7 +16,7 @@
 
 from coredb.scheduler import manager
 from polycommon import conf
-from polycommon.celery.tasks import CoreSchedulerCeleryTasks
+from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from polycommon.options.registry.core import SCHEDULER_ENABLED
 
 

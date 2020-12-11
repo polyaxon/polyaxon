@@ -481,14 +481,15 @@ class ParamSpec(
         return str(self)
 
     def as_arg(self):
-        if self.iotype == types.BOOL:
-            return "--{}".format(self.name) if self.param.value else ""
         if self.arg_format:
+            from polyaxon.polyaxonfile.specs.libs.parser import Parser
             return (
-                self.arg_format.format(**{self.name: self.param.value})
+                Parser.parse_expression(self.arg_format, {self.name: self.param.value})
                 if self.param.value is not None
                 else ""
             )
+        if self.iotype == types.BOOL:
+            return "--{}".format(self.name) if self.param.value else ""
         return (
             "--{}={}".format(self.name.replace("_", "-"), self.as_str())
             if self.param.value is not None

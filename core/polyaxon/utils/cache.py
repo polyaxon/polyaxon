@@ -20,7 +20,7 @@ from polyaxon.utils.formatting import Printer
 CACHE_ERROR = (
     "Found an invalid project config or project config cache, "
     "if you are using Polyaxon CLI please run: "
-    "`polyaxon config purge --cache-only`",
+    "`polyaxon config purge --cache-only`"
 )
 
 

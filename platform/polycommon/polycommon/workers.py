@@ -15,8 +15,8 @@
 # limitations under the License.
 
 from polycommon import conf
-from polycommon.celery.app import app
-from polycommon.celery.polyaxon_task import PolyaxonTask
+from polycommon.celeryp.app import app
+from polycommon.celeryp.polyaxon_task import PolyaxonTask
 from polycommon.options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 
 app.Task = PolyaxonTask  # Custom base class for logging

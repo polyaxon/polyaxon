@@ -38,7 +38,7 @@ class PagerDutyWebHookNotifier(WebHookNotifier):
             "details": notification.get_details(),
             "incident_key": "trigger",
             "client": "polyaxon",
-            "client_url": cls.get_url(),
+            "client_url": cls.get_url(notification),
             "contexts": [],
         }
 

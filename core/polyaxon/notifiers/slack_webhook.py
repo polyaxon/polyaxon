@@ -39,7 +39,7 @@ class SlackWebHookNotifier(WebHookNotifier):
         payload = {
             "fallback": notification.condition.type,
             "title": notification.get_title(),
-            "title_link": cls.get_url(),
+            "title_link": cls.get_url(notification),
             "text": notification.get_details(),
             "fields": fields,
             "mrkdwn_in": ["text"],

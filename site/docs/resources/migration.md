@@ -9,7 +9,7 @@ tags:
     - reference
 ---
 
-> **Important**: Polyaxon v1 is not backward compatible with Polyaxon v0, this guide is a WIP for the community edition's users.
+> **Important**: Polyaxon v1 is not backward compatible with Polyaxon v0, this guide is for the community edition's users.
 
 This is a WIP guide for manually migrating your Polyaxon CE deployment from v0 to v1.
 

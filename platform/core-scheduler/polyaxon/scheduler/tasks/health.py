@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from polycommon.checks import health_task
-from polycommon.celery.tasks import CoreSchedulerCeleryTasks
+from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from polycommon import workers
 
 

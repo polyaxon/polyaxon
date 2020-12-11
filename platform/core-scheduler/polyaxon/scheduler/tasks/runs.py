@@ -20,7 +20,7 @@ from typing import Dict, List
 
 from coredb.scheduler import manager
 from polycommon import workers
-from polycommon.celery.tasks import CoreSchedulerCeleryTasks
+from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from polyconf.settings import Intervals
 
 _logger = logging.getLogger("polyaxon.scheduler")

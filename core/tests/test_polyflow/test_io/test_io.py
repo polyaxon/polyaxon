@@ -450,7 +450,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=False,
             is_list=False,
             is_context=False,
-            arg_format="--sdf={foo}",
+            arg_format="--sdf={{ foo }}",
         ) == ParamSpec(
             name="foo",
             iotype=types.STR,
@@ -458,7 +458,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=False,
             is_list=False,
             is_context=False,
-            arg_format="--sdf={foo}",
+            arg_format="--sdf={{ foo }}",
         )
         assert (
             ParamSpec(
@@ -468,7 +468,7 @@ class TestV1IOs(BaseTestCase):
                 is_flag=False,
                 is_list=False,
                 is_context=False,
-                arg_format="--sdf={foo}",
+                arg_format="--sdf={{ foo }}",
             ).as_arg()
             == "--sdf=SDfd"
         )
@@ -481,7 +481,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=False,
             is_list=False,
             is_context=False,
-            arg_format="--sdf={foo}",
+            arg_format="--sdf={{ foo }}",
         ) == ParamSpec(
             name="foo",
             iotype=types.STR,
@@ -489,7 +489,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=False,
             is_list=False,
             is_context=False,
-            arg_format="--sdf={foo}",
+            arg_format="--sdf={{ foo }}",
         )
         assert (
             ParamSpec(
@@ -499,7 +499,7 @@ class TestV1IOs(BaseTestCase):
                 is_flag=False,
                 is_list=False,
                 is_context=False,
-                arg_format="--sdf={foo}",
+                arg_format="--sdf={{ foo }}",
             ).as_arg()
             == ""
         )
@@ -512,7 +512,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=False,
             is_list=False,
             is_context=False,
-            arg_format="--sdf={foo}",
+            arg_format="--sdf={{ foo }}",
         ) == ParamSpec(
             name="foo",
             iotype=types.INT,
@@ -520,7 +520,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=False,
             is_list=False,
             is_context=False,
-            arg_format="--sdf={foo}",
+            arg_format="--sdf={{ foo }}",
         )
         assert (
             ParamSpec(
@@ -530,9 +530,70 @@ class TestV1IOs(BaseTestCase):
                 is_flag=False,
                 is_list=False,
                 is_context=False,
-                arg_format="--sdf={foo}",
+                arg_format="--sdf={{ foo }}",
             ).as_arg()
             == "--sdf=0"
+        )
+
+        # Custom arg_format with bool value
+        param = V1Param(value=True)
+        assert param.get_spec(
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="{{'true-var' if foo else 'false-var'}}",
+        ) == ParamSpec(
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="{{'true-var' if foo else 'false-var'}}",
+        )
+        assert (
+            ParamSpec(
+                name="foo",
+                iotype=types.BOOL,
+                param=param,
+                is_flag=False,
+                is_list=False,
+                is_context=False,
+                arg_format="{{'true-var' if foo else 'false-var'}}",
+            ).as_arg()
+            == "true-var"
+        )
+
+        param = V1Param(value=False)
+        assert param.get_spec(
+            name="foo",
+            iotype=types.BOOL,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="{{'true-var' if foo else 'false-var'}}",
+        ) == ParamSpec(
+            name="foo",
+            iotype=types.BOOL,
+            param=param,
+            is_flag=False,
+            is_list=False,
+            is_context=False,
+            arg_format="{{'true-var' if foo else 'false-var'}}",
+        )
+        assert (
+            ParamSpec(
+                name="foo",
+                iotype=types.BOOL,
+                param=param,
+                is_flag=False,
+                is_list=False,
+                is_context=False,
+                arg_format="{{'true-var' if foo else 'false-var'}}",
+            ).as_arg()
+            == "false-var"
         )
 
         # isFlag
@@ -543,7 +604,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=True,
             is_list=False,
             is_context=False,
-            arg_format="{foo}",
+            arg_format="{{foo}}",
         ) == ParamSpec(
             name="foo",
             iotype=types.STR,
@@ -551,7 +612,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=True,
             is_list=False,
             is_context=False,
-            arg_format="{foo}",
+            arg_format="{{foo}}",
         )
         assert (
             str(
@@ -562,7 +623,7 @@ class TestV1IOs(BaseTestCase):
                     is_flag=True,
                     is_list=False,
                     is_context=False,
-                    arg_format="{foo}",
+                    arg_format="{{foo}}",
                 )
             )
             == "--foo"
@@ -576,7 +637,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=True,
             is_list=False,
             is_context=False,
-            arg_format="{foo}",
+            arg_format="{{foo}}",
         ) == ParamSpec(
             name="foo",
             iotype=types.STR,
@@ -584,7 +645,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=True,
             is_list=False,
             is_context=False,
-            arg_format="{foo}",
+            arg_format="{{foo}}",
         )
         assert (
             str(
@@ -595,7 +656,7 @@ class TestV1IOs(BaseTestCase):
                     is_flag=True,
                     is_list=False,
                     is_context=False,
-                    arg_format="{foo}",
+                    arg_format="{{foo}}",
                 )
             )
             == ""
@@ -609,7 +670,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=False,
             is_list=False,
             is_context=True,
-            arg_format="{foo}",
+            arg_format="{{foo}}",
         ) == ParamSpec(
             name="foo",
             iotype=types.STR,
@@ -617,7 +678,7 @@ class TestV1IOs(BaseTestCase):
             is_flag=False,
             is_list=False,
             is_context=True,
-            arg_format="{foo}",
+            arg_format="{{foo}}",
         )
         assert (
             ParamSpec(

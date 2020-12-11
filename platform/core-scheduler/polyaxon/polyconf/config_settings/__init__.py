@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # Default configs
-from polycommon.celery.routes import get_routes
+from polycommon.celeryp.routes import get_routes
 from polycommon.settings.apps import set_apps
 from polycommon.settings.celery import set_celery
 from polycommon.settings.core import set_core

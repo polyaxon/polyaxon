@@ -36,7 +36,7 @@ from coredb.models.artifacts import Artifact, ArtifactLineage
 from polyaxon.api import API_V1
 from polyaxon.polyboard.artifacts.kinds import V1ArtifactKind
 from polyaxon.polyboard.artifacts.schemas import V1RunArtifact
-from polycommon.celery.tasks import CoreSchedulerCeleryTasks
+from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
 
 

@@ -15,8 +15,10 @@
 # limitations under the License
 
 from collections import namedtuple
+from typing import Optional
 
 from polyaxon.lifecycle import StatusColor
+from polyaxon.utils.urls_utils import get_run_url
 
 
 class NotificationSpec(
@@ -38,5 +40,12 @@ class NotificationSpec(
         details += "Status: {}\n".format(self.condition.type)
         return details
 
-    def get_color(self):
+    def get_color(self) -> str:
         return StatusColor.get_color(self.condition.type)
+
+    def get_url_path(self) -> Optional[str]:
+        if self.owner and self.project and self.uuid:
+            uri = get_run_url(
+                owner=self.owner, project_name=self.project, run_uuid=self.uuid
+            )
+            return "ui{}".format(uri)
