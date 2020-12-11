@@ -24,7 +24,7 @@ data:
   {{- end }}
   POLYAXON_K8S_NAMESPACE: {{ .Release.Namespace | quote }}
   POLYAXON_K8S_APP_SECRET_NAME: {{ template "config.platformSecret" . }}
-  POLYAXON_LOG_LEVEL: {{ default "WARN" .Values.logLevel | quote }}
+  POLYAXON_LOG_LEVEL: {{ default "WARNING" .Values.logLevel | quote }}
   POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
   POLYAXON_TIME_ZONE: {{ .Values.timezone | quote }}
   # Versions
