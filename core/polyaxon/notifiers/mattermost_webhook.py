@@ -38,7 +38,7 @@ class MattermostWebHookNotifier(WebHookNotifier):
             "color": notification.get_color(),
             "fields": [],
             "author_name": "Polyaxon",
-            "author_link": cls.get_url(),
+            "author_link": cls.get_url(notification),
             "author_icon": None,
         }
 

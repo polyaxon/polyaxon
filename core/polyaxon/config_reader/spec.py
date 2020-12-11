@@ -179,9 +179,7 @@ def _read_from_polyaxon_hub(hub: str):
         response = PolyaxonClient(
             config=config,
             token=NO_AUTH,
-        ).component_hub_v1.get_component_version(
-            owner, component, version
-        )
+        ).component_hub_v1.get_component_version(owner, component, version)
         return _read_from_stream(response.content)
     except (ApiException, HTTPError) as e:
         raise PolyaxonClientException(

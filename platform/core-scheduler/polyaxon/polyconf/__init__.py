@@ -14,4 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polycommon.celery.app import app
+from polycommon.celeryp.app import app

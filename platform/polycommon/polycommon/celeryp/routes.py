@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polycommon.celery.queues import CeleryCoreQueues
-from polycommon.celery.tasks import CoreSchedulerCeleryTasks
+from polycommon.celeryp.queues import CeleryCoreQueues
+from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 
 SCHEDULER_CORE_ROUTES = {
     # Scheduler health

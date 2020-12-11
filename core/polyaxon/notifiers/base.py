@@ -39,9 +39,13 @@ class BaseNotifier:
     validate_keys = None
 
     @staticmethod
-    def get_url():
+    def get_url(notification: NotificationSpec):
+        run_path = notification.get_url_path()
+        if not run_path:
+            return
+        url = "{}/{}".format(clean_host(settings.CLIENT_CONFIG.host), run_path)
         return add_notification_referrer_param(
-            clean_host(settings.CLIENT_CONFIG.host),
+            url,
             provider="polyaxon",
             is_absolute=False,
         )

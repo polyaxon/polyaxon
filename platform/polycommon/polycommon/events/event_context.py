@@ -18,7 +18,8 @@ from collections import namedtuple
 from typing import Any, Optional
 
 from polyaxon.utils.http_utils import absolute_uri
-from polycommon import unique_urls, user_system
+from polyaxon.utils.urls_utils import get_fqn_run_url, get_owner_url, get_project_url
+from polycommon import user_system
 from polycommon.events import event_subjects
 
 
@@ -69,7 +70,7 @@ def get_event_actor_context(
     if username == user_system.USER_SYSTEM_NAME:
         return EventItemContextSpec(name=username, url="/", object_id=None)
     return EventItemContextSpec(
-        name=username, url=unique_urls.get_user_url(username), object_id=None
+        name=username, url=get_owner_url(username), object_id=None
     )
 
 
@@ -91,18 +92,18 @@ def get_event_object_context(
     if hasattr(event_content_object, "unique_name"):
         object_name = event_content_object.unique_name
         if event_subject == event_subjects.PROJECT:
-            object_url = unique_urls.get_project_url(object_name)
+            object_url = get_project_url(object_name)
         elif event_subject == event_subjects.RUN:
-            object_url = unique_urls.get_run_url(object_name)
+            object_url = get_fqn_run_url(object_name)
 
     elif hasattr(event_content_object, "name"):
         object_name = event_content_object.name
     elif hasattr(event_content_object, "username"):
         object_name = event_content_object.username
-        object_url = unique_urls.get_user_url(event_content_object.username)
+        object_url = get_owner_url(event_content_object.username)
 
     # Set proper url
-    object_url = absolute_uri("app{}".format(object_url))
+    object_url = absolute_uri("ui{}".format(object_url))
     return EventItemContextSpec(name=object_name, url=object_url, object_id=object_id)
 
 

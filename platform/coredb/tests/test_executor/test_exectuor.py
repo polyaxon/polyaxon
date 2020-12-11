@@ -24,7 +24,7 @@ from coredb.executor.handlers.run import (
     handle_run_stopped_triggered,
 )
 from polycommon import auditor
-from polycommon.celery.tasks import CoreSchedulerCeleryTasks
+from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from polycommon.events.registry import run as run_events
 
 

@@ -17,7 +17,7 @@
 # isort: skip_file
 
 # Default configs
-from polycommon.celery.routes import get_routes
+from polycommon.celeryp.routes import get_routes
 from polycommon.settings.api import set_api
 from polycommon.settings.apps import set_apps
 from polycommon.settings.assets import set_assets

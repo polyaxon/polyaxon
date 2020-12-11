@@ -37,7 +37,7 @@ from polyaxon.api import API_V1
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyflow import V1CloningKind, V1RunKind
-from polycommon.celery.tasks import CoreSchedulerCeleryTasks
+from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
 
 
@@ -185,8 +185,8 @@ class TestProjectRunsApproveViewV1(BaseTest):
         assert resp.status_code == status.HTTP_200_OK
         assert set(
             Run.objects.filter(uuid__in=data["uuids"])
-                .only("is_approved")
-                .values_list("is_approved", flat=True)
+            .only("is_approved")
+            .values_list("is_approved", flat=True)
         ) == {True}
         assert set(
             Run.objects.only("is_approved").values_list("is_approved", flat=True)
