@@ -130,7 +130,7 @@ class PolyaxonHTTPError(PolyaxonClientException):
 
 
 HTTP_ERROR_MESSAGES_MAPPING = {
-    400: "Statuts: 400. One or more request parameters is incorrect",
+    400: "Statuts: 400. One or more request parameters are incorrect",
     401: "Status: 401. Authentication failed. Retry by invoking Polyaxon login.",
     403: "Status: 403. You are not authorized to access this resource on Polyaxon.",
     404: "Status: 404. "

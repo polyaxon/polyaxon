@@ -195,6 +195,9 @@ class TestConfigManager(BaseTestCase):
         value = self.config.get_float("float_key_3")
         self.assertEqual(value, 123)
 
+        value = self.config.get_float("float_key_4")
+        self.assertEqual(value, 123.0)
+
         value = self.config.get_float("float_list_key_1", is_list=True)
         self.assertEqual(value, [1.23, 13.3, 4.4, 555.0, 66.0])
 
@@ -206,9 +209,6 @@ class TestConfigManager(BaseTestCase):
 
         with self.assertRaises(PolyaxonSchemaError):
             self.config.get_float("float_error_key_3")
-
-        with self.assertRaises(PolyaxonSchemaError):
-            self.config.get_float("float_error_key_4")
 
         with self.assertRaises(PolyaxonSchemaError):
             self.config.get_float("float_list_key_1")

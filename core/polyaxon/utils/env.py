@@ -22,8 +22,6 @@ import sys
 
 from polyaxon.logger import logger
 
-PROJECT_CLIENT_NAME = "polyaxon-client"
-
 
 def is_notebook():
     return "ipykernel" in sys.modules
@@ -61,7 +59,7 @@ def get_run_env():
             return []
 
     try:
-        version = pkg_resources.get_distribution(PROJECT_CLIENT_NAME).version
+        version = pkg_resources.get_distribution("polyaxon").version
     except pkg_resources.DistributionNotFound:
         version = ""
     try:

@@ -257,6 +257,9 @@ class TestParser(BaseTestCase):
         )
         self.assertEqual(value, [1.23, 13.3, 4.4, 555.0, 66.0])
 
+        value = parser.get_float(key="float_from_int", value=123)
+        self.assertEqual(value, 123.0)
+
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_float(key="float_error_key_1", value=None)
 
@@ -268,9 +271,6 @@ class TestParser(BaseTestCase):
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_float(key="float_error_key_3", value="foo")
-
-        with self.assertRaises(PolyaxonSchemaError):
-            parser.get_float(key="float_error_key_4", value=123)
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_float(

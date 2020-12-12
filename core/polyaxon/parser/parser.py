@@ -114,6 +114,7 @@ def get_float(key, value, is_list=False, is_optional=False, default=None, option
         is_optional=is_optional,
         default=default,
         options=options,
+        base_types=(str, int),
     )
 
 
