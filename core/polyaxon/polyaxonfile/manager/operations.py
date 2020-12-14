@@ -39,7 +39,6 @@ def get_op_specification(
     queue: str = None,
     nocache: bool = None,
     cache: bool = None,
-    path_context: str = None,
     validate_params: bool = True,
     preset_files: List[str] = None,
     git_init: V1Init = None,
@@ -91,15 +90,12 @@ def get_op_specification(
         config = config.patch(git_preset, strategy=V1PatchStrategy.PRE_MERGE)
 
     # Sanity check if params were passed and we are not dealing with a hub component
-    public_hub = config.has_public_hub_reference
-    hub = config.hub_ref
     params = copy.deepcopy(config.params)
-    if validate_params and not (hub and not public_hub):
+    if validate_params:
         # Avoid in-place patch
         run_config = get_specification(config.to_dict())
         run_config = OperationSpecification.compile_operation(run_config)
         run_config.validate_params(params=params, is_template=False)
         if run_config.is_dag_run:
-            run_config.run.set_path_context(path_context)
             CompiledOperationSpecification.apply_operation_contexts(run_config)
     return config

@@ -80,17 +80,17 @@ class Parser:
         contexts = getattr(config, Sections.CONTEXTS)
         if contexts:
             parsed_data[Sections.CONTEXTS] = [
-                cls.parse_expression(io.to_dict(), parsed_params) for io in contexts
+                cls.parse_io(io.to_dict(), parsed_params) for io in contexts
             ]
         inputs = getattr(config, Sections.INPUTS)
         if inputs:
             parsed_data[Sections.INPUTS] = [
-                cls.parse_expression(io.to_dict(), parsed_params) for io in inputs
+                cls.parse_io(io.to_dict(), parsed_params) for io in inputs
             ]
         outputs = getattr(config, Sections.OUTPUTS)
         if outputs:
             parsed_data[Sections.OUTPUTS] = [
-                cls.parse_expression(io.to_dict(), parsed_params) for io in outputs
+                cls.parse_io(io.to_dict(), parsed_params) for io in outputs
             ]
 
         # Check workflow
@@ -159,6 +159,20 @@ class Parser:
         if config_section:
             return cls.parse_expression(config_section, param_spec)
         return config_section
+
+    @classmethod
+    def parse_io(
+        cls,
+        expression: Dict,
+        params: Dict[str, ParamSpec],
+        check_operators: bool = False,
+    ):
+        # Arg format should not be converted
+        arg_format = expression.pop("argFormat", None)
+        value = cls.parse_expression(expression, params, check_operators)
+        if arg_format:
+            value["argFormat"] = arg_format
+        return value
 
     @classmethod
     def parse_expression(  # pylint:disable=too-many-branches

@@ -116,7 +116,15 @@ class TestPolyaxonfiles(BaseTestCase):
         assert operation.hub_ref == "component:12"
 
     def test_from_hub(self):
-        operation = check_polyaxonfile(hub="org/component:12", is_cli=False, to_op=True)
+        with patch(
+            "polyaxon_sdk.ComponentHubV1Api.get_component_version"
+        ) as request_mock:
+            request_mock.return_value = MagicMock(
+                content=os.path.abspath("tests/fixtures/plain/simple_job.yml"),
+            )
+            operation = check_polyaxonfile(
+                hub="org/component:12", is_cli=False, to_op=True
+            )
         assert operation.version == pkg.SCHEMA_VERSION
         assert operation.kind == "operation"
         assert operation.hub_ref == "org/component:12"

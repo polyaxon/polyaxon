@@ -79,7 +79,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     Args:
         kind: str, should be equal `dag`
         operations: List[[V1Operation](/docs/core/specification/operation/)]
-        components: List[[V1Operation](/docs/core/specification/component/)], optional
+        components: List[[V1Component](/docs/core/specification/component/)], optional
         environment: [V1Environment](/docs/core/specification/environment/), optional
         connections: List[str], optional
         volumes: List[[Kubernetes Volume](https://kubernetes.io/docs/concepts/storage/volumes/)],
@@ -468,11 +468,6 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
         self._components_by_names = {}  # ComponentName -> Component
         self._op_component_mapping = {}  # OpName -> ComponentName
         self._context = {}  # Ops output names -> types
-        # This is only usable from cli, the full op must be resolved before it can be submitted
-        self._path_context = None
-
-    def set_path_context(self, path_context):
-        self._path_context = path_context
 
     @property
     def dag(self):
@@ -562,8 +557,6 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
         return dags.sort_topologically(dag or self.dag, flatten=flatten)
 
     def process_components(self, inputs=None):
-        from polyaxon.polyaxonfile.check import collect_references
-
         inputs = inputs or []
         self._context["dag.name"] = V1IO(
             name="name", iotype=types.STR, value="", is_optional=True
@@ -593,17 +586,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
 
         for op in self.operations:
             op_name = op.name
-            if op.has_url_reference or op.has_path_reference:
-                try:
-                    op = collect_references(op, self._path_context)
-                except Exception as e:
-                    raise PolyaxonSchemaError(
-                        "Pipeline op with name `{}` requires a component with ref `{}`, "
-                        "the reference could not be resolved. Error: {}".format(
-                            op_name, op.hub_ref or op.url_ref or op.path_ref, e
-                        )
-                    )
-            elif op.has_hub_reference:
+            if op.has_hub_reference:
                 continue
             if op.has_component_reference:
                 outputs = op.component.outputs

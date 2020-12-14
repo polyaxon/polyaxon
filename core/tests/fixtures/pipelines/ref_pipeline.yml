@@ -16,7 +16,7 @@ run:
         str-input:
           value: some-value
     - name: ref-url-op
-      pathRef: https://foo.bar
+      urlRef: https://foo.bar
       dependencies: [ref-path-op]
       params:
         str-input:

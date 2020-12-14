@@ -114,10 +114,12 @@ class TestConnectionType(BaseTestCase):
 
         assert result.name == spec.name
         assert result.kind == spec.kind
-        assert result.schema == spec.schema
+        if spec.schema is None:
+            assert result.schema == spec.schema
+        else:
+            assert result.schema.to_dict() == spec.schema.to_dict()
         assert result.secret == spec.secret
 
-    @flaky(max_runs=3)
     def test_get_from_model(self):
         self.assert_from_model(self.s3_store)
         self.assert_from_model(self.gcs_store)

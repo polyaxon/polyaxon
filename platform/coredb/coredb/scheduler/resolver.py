@@ -15,7 +15,8 @@
 # limitations under the License.
 from datetime import datetime
 
-from marshmallow import ValidationError
+from marshmallow import ValidationError as MarshmallowValidationError
+from rest_framework.exceptions import ValidationError
 
 from coredb.abstracts.runs import BaseRun
 from coredb.managers.artifacts import set_artifacts
@@ -78,7 +79,8 @@ def resolve(run: BaseRun, compiled_at: datetime = None, resolver_cls=None):
     except (
         AccessNotAuthorized,
         AccessNotFound,
-        ValidationError,
+        MarshmallowValidationError,
         PolyaxonSchemaError,
+        ValidationError,
     ) as e:
         raise PolyaxonCompilerError("Compilation Error: %s" % e) from e

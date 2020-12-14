@@ -21,24 +21,38 @@ from typing import Dict, List
 
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.config_reader.spec import ConfigSpec
-from polyaxon.exceptions import PolyaxonfileError
+from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
 from polyaxon.polyaxonfile.manager import (
     get_op_specification,
     is_supported_in_eager_mode,
 )
 from polyaxon.polyaxonfile.params import parse_params
 from polyaxon.polyaxonfile.specs import get_specification, kinds
-from polyaxon.polyflow import V1Init, V1Operation
+from polyaxon.polyflow import V1Dag, V1Init, V1Operation
 from polyaxon.utils.formatting import Printer, dict_tabulate
 from polyaxon.utils.list_utils import to_list
 
 
+def collect_dag_components(dag: V1Dag, path_context: str = None):
+    """Collect components that cannot be resolved by the scheduler"""
+    for op in dag.operations:
+        op_name = op.name
+        if op.has_url_reference or op.has_path_reference:
+            try:
+                op = collect_references(op, path_context)
+            except Exception as e:
+                raise PolyaxonSchemaError(
+                    "Pipeline op with name `{}` requires a component with ref `{}`, "
+                    "the reference could not be resolved. Error: {}".format(
+                        op_name, op.hub_ref or op.url_ref or op.path_ref, e
+                    )
+                )
+
+
 def collect_references(config: V1Operation, path_context: str = None):
-    if config.has_component_reference or (
-        config.has_hub_reference and not config.has_public_hub_reference
-    ):
+    if config.has_component_reference:
         return config
-    elif config.has_public_hub_reference:
+    elif config.has_hub_reference:
         component = ConfigSpec.get_from(config.hub_ref, "hub").read()
     elif config.has_url_reference:
         component = ConfigSpec.get_from(config.url_ref, "url").read()
@@ -66,6 +80,8 @@ def collect_references(config: V1Operation, path_context: str = None):
             )
         )
     config.component = component
+    if component.is_dag_run:
+        component.run.collect_components()
     return config
 
 
@@ -80,7 +96,6 @@ def check_polyaxonfile(
     nocache: bool = None,
     cache: bool = None,
     verbose: bool = True,
-    eager_hub: bool = True,
     is_cli: bool = True,
     to_op: bool = True,
     validate_params: bool = True,
@@ -133,32 +148,33 @@ def check_polyaxonfile(
             raise PolyaxonfileError(message)
 
     try:
-        plx_file = None
         path_context = None
-        public_hub = hub and "/" not in hub
 
-        if not hub or (public_hub and eager_hub):
-            if python_module:
-                path_context = python_module
-                plx_file = (
-                    ConfigSpec.get_from(python_module, config_type=".py")
-                    .read()
-                    .to_dict(include_kind=True, include_version=True)
-                )
+        # Collecting manifests (TODO: in the future we should collect hub directly on Polyaxon)
+        if python_module:
+            path_context = python_module
+            plx_file = (
+                ConfigSpec.get_from(python_module, config_type=".py")
+                .read()
+                .to_dict(include_kind=True, include_version=True)
+            )
+        elif url:
+            plx_file = ConfigSpec.get_from(url, "url").read()
+        elif hub:
+            plx_file = ConfigSpec.get_from(hub, "hub").read()
+        else:
+            path_context = polyaxonfile.pop(0)
+            plx_file = ConfigSpec.read_from(path_context)
 
-            elif url:
-                plx_file = ConfigSpec.get_from(url, "url").read()
+        plx_file = get_specification(data=plx_file)
+        if plx_file.kind == kinds.OPERATION:
+            plx_file = collect_references(plx_file, path_context)
+            plx_component = plx_file.component
+        else:
+            plx_component = plx_file
 
-            elif hub:
-                plx_file = ConfigSpec.get_from(hub, "hub").read()
-
-            else:
-                path_context = polyaxonfile.pop(0)
-                plx_file = ConfigSpec.read_from(path_context)
-
-            plx_file = get_specification(data=plx_file)
-            if plx_file.kind == kinds.OPERATION:
-                plx_file = collect_references(plx_file, path_context)
+        if plx_component.is_dag_run:
+            collect_dag_components(plx_component.run, path_context)
 
         if to_op or hub:
             plx_file = get_op_specification(
@@ -169,7 +185,6 @@ def check_polyaxonfile(
                 queue=queue,
                 nocache=nocache,
                 cache=cache,
-                path_context=path_context,
                 validate_params=validate_params,
                 preset_files=polyaxonfile,
                 git_init=git_init,
