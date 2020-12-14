@@ -13,5 +13,6 @@ Name | Type | Description | Notes
 **expires_at** | **Date** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
+**expiration** | **Number** |  | [optional] 
 
 

@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.4.0",
+    "version": "1.4.4",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -20010,6 +20010,11 @@
           "type": "string",
           "format": "date-time",
           "title": "Optional last time the entity was updated"
+        },
+        "expiration": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Write only expiration day"
         }
       },
       "title": "Token specification"

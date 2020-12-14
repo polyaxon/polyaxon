@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **expiresAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**expiration** | **Integer** |  |  [optional]
 
 
 

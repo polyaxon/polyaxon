@@ -576,12 +576,6 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         return bool(self.hub_ref)
 
     @property
-    def has_public_hub_reference(self) -> bool:
-        if not self.has_hub_reference:
-            return False
-        return "/" not in self.hub_ref
-
-    @property
     def has_path_reference(self) -> bool:
         return bool(self.path_ref)
 

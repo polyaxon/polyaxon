@@ -35,6 +35,9 @@ type V1Token struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Write only expiration day
+	Expiration int32 `json:"expiration,omitempty"`
+
 	// Optional time when the entity was created
 	// Format: date-time
 	ExpiresAt strfmt.DateTime `json:"expires_at,omitempty"`

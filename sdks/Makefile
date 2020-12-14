@@ -146,11 +146,23 @@ clean:
 	rm -rf openapi-html/$(VERSION)
 	mkdir openapi-html/$(VERSION)
 
+swagger-clean:
+	rm -rf swagger/$(VERSION)/api
+	rm -rf swagger/$(VERSION)/polyboard
+	rm -rf swagger/$(VERSION)/polyflow
+	rm -rf swagger/$(VERSION)/schemas
+	rm -rf swagger/$(VERSION)/types
+	rm -rf python/$(HTTP_CLIENT)/$(VERSION)/.openapi-generator
+	rm -rf js/$(HTTP_CLIENT)/$(VERSION)/.openapi-generator
+	rm -rf ts/$(HTTP_CLIENT)/$(VERSION)/.openapi-generator
+	rm -rf java/$(HTTP_CLIENT)/$(VERSION)/.openapi-generator
+
 swagger-generate: generate-go-swagger \
 	generate-js-swagger \
 	generate-ts-swagger \
 	generate-java-swagger \
-	generate-py-swagger
+	generate-py-swagger \
+  swagger-clean
 	# generate-html-openapi
 
 swagger-concat:

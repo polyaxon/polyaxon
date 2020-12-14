@@ -42,5 +42,5 @@ Timeout can be combined with hooks/notifications to deliver the necessary inform
 ## Debugging with TTL
 
 The third key in the termination section is [ttl](/docs/core/specification/termination/#ttl).
-By default, Polyaxon cleans out adn removes all cluster resources as soon as an operation is done.
+By default, Polyaxon cleans out and removes all cluster resources as soon as an operation is done.
 It is often necessary to keep a job or a service after it's done for sanity checks or debugging purposes. 

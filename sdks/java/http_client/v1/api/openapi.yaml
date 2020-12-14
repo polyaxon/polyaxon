@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.4.0
+  version: 1.4.4
 servers:
 - url: /
 security:
@@ -19736,6 +19736,7 @@ components:
           name: name
           started_at: 2000-01-23T04:56:07.000+00:00
           created_at: 2000-01-23T04:56:07.000+00:00
+          expiration: 0
           scopes:
           - scopes
           - scopes
@@ -19749,6 +19750,7 @@ components:
           name: name
           started_at: 2000-01-23T04:56:07.000+00:00
           created_at: 2000-01-23T04:56:07.000+00:00
+          expiration: 0
           scopes:
           - scopes
           - scopes
@@ -29559,6 +29561,7 @@ components:
         name: name
         started_at: 2000-01-23T04:56:07.000+00:00
         created_at: 2000-01-23T04:56:07.000+00:00
+        expiration: 0
         scopes:
         - scopes
         - scopes
@@ -29603,6 +29606,10 @@ components:
           format: date-time
           title: Optional last time the entity was updated
           type: string
+        expiration:
+          format: int32
+          title: Write only expiration day
+          type: integer
       title: Token specification
       type: object
     v1Toleration:

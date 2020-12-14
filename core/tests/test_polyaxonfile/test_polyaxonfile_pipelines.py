@@ -22,6 +22,7 @@ from mock import patch
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.k8s.k8s_schemas import V1Container
 from polyaxon.polyaxonfile import check_polyaxonfile
+from polyaxon.polyaxonfile.check import collect_dag_components
 from polyaxon.polyaxonfile.specs import (
     CompiledOperationSpecification,
     OperationSpecification,
@@ -118,9 +119,10 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
                 inputs=[V1IO(name="str-input", iotype="str")],
                 run=V1Job(container=V1Container(name="test")),
             ).to_dict()
-            compiled_op = CompiledOperationSpecification.apply_operation_contexts(
-                run_config
-            )
+            collect_dag_components(run_config.run)
+        compiled_op = CompiledOperationSpecification.apply_operation_contexts(
+            run_config
+        )
         assert compiled_op.run is not None
         assert len(compiled_op.run.operations) == 2
         assert compiled_op.run.operations[0].name == "ref-path-op"

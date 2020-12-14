@@ -100,6 +100,8 @@ message Token {
     // Optional last time the entity was updated
     google.protobuf.Timestamp updated_at = 9;
 
+    // Write only expiration day
+    int32 expiration = 10;
 }
 
  // Request data to create/update token

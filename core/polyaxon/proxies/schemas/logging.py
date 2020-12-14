@@ -26,6 +26,4 @@ def get_logging_config():
     log_level = settings.PROXIES_CONFIG.log_level
     if log_level and log_level.lower() == "warning":
         log_level = "warn"
-    return get_config(
-        options=OPTIONS, indent=0, level=log_level
-    )
+    return get_config(options=OPTIONS, indent=0, level=log_level)

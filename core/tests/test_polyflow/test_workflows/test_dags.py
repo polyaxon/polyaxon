@@ -1045,7 +1045,6 @@ class TestWorkflowV1Dags(BaseTestCase):
 
         # Process the dag
         config.process_dag()
-        # Todo must resolve the components from the hub
         config.process_components()
         config.validate_dag()
         dag = config.dag
@@ -1131,7 +1130,6 @@ class TestWorkflowV1Dags(BaseTestCase):
 
         # Process the dag
         config.process_dag()
-        # Todo must resolve the components from the hub
         config.process_components()
         config.validate_dag()
         dag = config.dag
