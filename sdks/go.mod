@@ -1,6 +1,6 @@
 module github.com/polyaxon/polyaxon/sdks
 
-go 1.13
+go 1.15
 
 require (
 	github.com/go-openapi/errors v0.19.8

@@ -11,7 +11,7 @@ RUN apt-get -y update && \
 
 # Install Go
 RUN mkdir -p /goroot && \
-  curl https://dl.google.com/go/go1.13.12.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
+  curl https://dl.google.com/go/go1.15.6.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
 
 # Set environment variables.
 ENV GOROOT /goroot
