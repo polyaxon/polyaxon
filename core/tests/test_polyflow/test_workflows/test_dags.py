@@ -1213,7 +1213,6 @@ class TestWorkflowV1Dags(BaseTestCase):
 
         # Process the dag
         config.process_dag()
-        # TODO resolve components from hub
         config.process_components()
         config.validate_dag()
         dag = config.dag

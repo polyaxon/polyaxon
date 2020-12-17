@@ -19,6 +19,115 @@ from uuid import UUID
 from polyaxon.polyflow import V1RunKind
 
 
+def get_fxt_templated_pipeline_without_params():
+    return {
+        "version": 1.1,
+        "kind": "operation",
+        "component": {
+            "name": "test-build-run",
+            "description": "testing a build and run pipeline",
+            "tags": ["backend", "native"],
+            "run": {
+                "kind": V1RunKind.DAG,
+                "operations": [
+                    {
+                        "dagRef": "build-template",
+                        "name": "build",
+                        "params": {
+                            "env_vars": {
+                                "value": [["env1", "value1"], ["env2", "value2"]]
+                            }
+                        },
+                    },
+                    {
+                        "dagRef": "experiment-template",
+                        "name": "run",
+                        "dependencies": ["build"],
+                        "params": {
+                            "image": {
+                                "ref": "ops.build",
+                                "value": "outputs.docker-image",
+                            },
+                            "lr": {"value": 0.001},
+                            "dag_uuid": {
+                                "value": "uuid",
+                                "ref": "dag",
+                                "contextOnly": True,
+                            },
+                            "op_uuid": {
+                                "value": "uuid",
+                                "ref": "ops.build",
+                                "contextOnly": True,
+                            },
+                        },
+                    },
+                ],
+                "components": [
+                    {
+                        "name": "experiment-template",
+                        "description": "experiment to predict something",
+                        "tags": ["key", "value"],
+                        "inputs": [
+                            {
+                                "name": "lr",
+                                "type": "float",
+                                "value": 0.1,
+                                "isOptional": True,
+                            },
+                            {"name": "image", "type": "str"},
+                        ],
+                        "termination": {"maxRetries": 2},
+                        "run": {
+                            "kind": V1RunKind.JOB,
+                            "environment": {
+                                "nodeSelector": {"polyaxon": "experiments"},
+                                "serviceAccountName": "service",
+                                "imagePullSecrets": ["secret1", "secret2"],
+                            },
+                            "container": {
+                                "image": "{{ image }}",
+                                "command": ["python3", "main.py"],
+                                "args": "--lr={{ lr }}",
+                                "resources": {"requests": {"cpu": 1}},
+                            },
+                        },
+                    },
+                    {
+                        "name": "build-template",
+                        "description": "build images",
+                        "tags": ["backend", "kaniko"],
+                        "inputs": [
+                            {"name": "env_vars", "type": "list", "isList": "true"}
+                        ],
+                        "outputs": [{"name": "docker-image", "type": "str"}],
+                        "termination": {"maxRetries": 2},
+                        "run": {
+                            "kind": V1RunKind.JOB,
+                            "environment": {
+                                "nodeSelector": {"polyaxon": "experiments"},
+                                "serviceAccountName": "service",
+                                "imagePullSecrets": ["secret1", "secret2"],
+                            },
+                            "container": {
+                                "image": "base",
+                                "resources": {"requests": {"cpu": 1}},
+                            },
+                            "init": [
+                                {
+                                    "dockerfile": {
+                                        "image": "base",
+                                        "env": "{{ env_vars }}",
+                                    }
+                                }
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    }
+
+
 def get_fxt_templated_pipeline_with_upstream_run(run_uuid: UUID):
     return {
         "version": 1.1,
@@ -77,6 +186,11 @@ def get_fxt_templated_pipeline_with_upstream_run(run_uuid: UUID):
                             "dag_uuid": {
                                 "value": "uuid",
                                 "ref": "dag",
+                                "contextOnly": True,
+                            },
+                            "op_uuid": {
+                                "value": "uuid",
+                                "ref": "ops.build",
                                 "contextOnly": True,
                             },
                         },

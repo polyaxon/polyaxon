@@ -117,7 +117,11 @@ class TestConnectionType(BaseTestCase):
         if spec.schema is None:
             assert result.schema == spec.schema
         else:
-            assert result.schema.to_dict() == spec.schema.to_dict()
+            value_dict = spec.schema.to_dict()
+            result_dict = result.schema.to_dict()
+            assert value_dict.keys() == result_dict.keys()
+            for k in result_dict.keys():
+                assert value_dict[k] == result_dict[k]
         assert result.secret == spec.secret
 
     def test_get_from_model(self):

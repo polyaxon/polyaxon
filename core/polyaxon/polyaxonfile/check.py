@@ -150,7 +150,6 @@ def check_polyaxonfile(
     try:
         path_context = None
 
-        # Collecting manifests (TODO: in the future we should collect hub directly on Polyaxon)
         if python_module:
             path_context = python_module
             plx_file = (

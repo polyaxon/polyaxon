@@ -123,7 +123,7 @@ def login(token, username, password):
 @click.command()
 @clean_outputs
 def logout():
-    """Logout Login to Polyaxon Cloud or Polyaxon EE."""
+    """Logout from Polyaxon Cloud or Polyaxon EE."""
     AuthConfigManager.purge()
     UserConfigManager.purge()
     CliConfigManager.purge()
