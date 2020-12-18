@@ -218,7 +218,7 @@ class TestInitGit(BaseTestCase):
             "--repo-path=/somepath/{}".format(connection.name),
             "--url={}".format(connection.schema.url),
             "--revision=00b9d2ea01c40f58d6b4051319f9375675a43c02",
-            '--flags="--falg1 --flag2=test k=v"',
+            '--flags=["--falg1","--flag2=test","k=v"]',
         ]
         assert container.resources == get_init_resources()
         assert container.volume_mounts == [

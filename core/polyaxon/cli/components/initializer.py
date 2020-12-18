@@ -17,6 +17,7 @@
 import click
 
 from polyaxon.connections.kinds import V1ConnectionKind
+from polyaxon.parser import parser
 from polyaxon.schemas.types import V1ConnectionType
 from polyaxon.utils.formatting import Printer
 
@@ -43,6 +44,9 @@ def auth():
 def git(url, repo_path, revision, connection, flags):
     """Create auth context."""
     from polyaxon.init.git import create_code_repo
+
+    if flags:
+        flags = parser.get_string("flags", flags, is_list=True)
 
     create_code_repo(
         repo_path=repo_path,

@@ -17,6 +17,8 @@
 import logging
 import os
 
+from typing import List
+
 from git import Repo as GitRepo
 
 from polyaxon import settings
@@ -84,10 +86,9 @@ def get_clone_url(url: str) -> str:
     return url
 
 
-def clone_git_repo(repo_path: str, url: str, flags: str = None) -> str:
-    if flags:
-        flags = flags.split(" ")
+def clone_git_repo(repo_path: str, url: str, flags: List[str] = None) -> str:
     if has_ssh_access():
+        flags = flags or []
         flags.append("--recurse-submodules")
         return GitRepo.clone_from(
             url=url,
@@ -99,7 +100,11 @@ def clone_git_repo(repo_path: str, url: str, flags: str = None) -> str:
 
 
 def create_code_repo(
-    repo_path: str, url: str, revision: str, connection: str = None, flags: str = None
+    repo_path: str,
+    url: str,
+    revision: str,
+    connection: str = None,
+    flags: List[str] = None,
 ):
     try:
         clone_url = get_clone_url(url)

@@ -181,7 +181,9 @@ def _read_from_polyaxon_hub(hub: str):
             )
         else:
             client = PolyaxonClient()
-        response = client.component_hub_v1.get_component_version(owner, component, version)
+        response = client.component_hub_v1.get_component_version(
+            owner, component, version
+        )
         return _read_from_stream(response.content)
     except (ApiException, HTTPError) as e:
         raise PolyaxonClientException(

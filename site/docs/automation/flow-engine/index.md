@@ -26,7 +26,7 @@ This means that operations in a DAG can be jobs, services, distributed jobs, par
 
 Oftentimes, Polyaxon's users tend to run complex jobs and experiments that depend on each other.
 Polyaxon defines main primitives, Component/Operation, that can run independently.
-The flow engine is an extension to these primitives to allow users to automate workflows and define complex interactions.
+The flow engine is an extension to these primitives to allow the users to automate workflows and define complex interactions.
 
 Polyaxon DAGs can be used with other Polyaxon experimentation and automation features:
 

@@ -13,8 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from typing import List, Optional
+
+import ujson
 
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.connections.kinds import V1ConnectionKind
@@ -67,7 +68,7 @@ def get_repo_context_args(
 
     flags = to_list(flags, check_none=True)
     if flags:
-        args.append('--flags="{}"'.format(" ".join(flags)))
+        args.append("--flags={}".format(ujson.dumps(flags)))
     return args
 
 
