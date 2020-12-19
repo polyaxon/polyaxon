@@ -16,7 +16,7 @@
 
 import polyaxon_sdk
 
-from marshmallow import INCLUDE, ValidationError, fields
+from marshmallow import INCLUDE, ValidationError, fields, post_dump
 
 from polyaxon.connections.kinds import V1ConnectionKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig, BaseOneOfSchema
@@ -130,6 +130,12 @@ class CustomConnectionSchema(BaseCamelSchema):
     def schema_config():
         return V1CustomConnection
 
+    @post_dump(pass_original=True)
+    def unmake_custom(self, data, obj, **kwargs):
+        value = self.schema_config().remove_reduced_attrs(data)
+        value.update({k: getattr(obj, k) for k in obj._schema_keys})
+        return value
+
 
 class V1CustomConnection(BaseConfig):
     UNKNOWN_BEHAVIOUR = INCLUDE
@@ -141,25 +147,6 @@ class V1CustomConnection(BaseConfig):
         for k, v in kwargs.items():
             self._schema_keys.add(k)
             self.__setattr__(k, v)
-
-    @classmethod
-    def obj_to_dict(
-        cls,
-        obj,
-        humanize_values=False,
-        unknown=None,
-        include_kind=False,
-        include_version=False,
-    ):
-        value = super().obj_to_dict(
-            obj=obj,
-            humanize_values=humanize_values,
-            unknown=cls.UNKNOWN_BEHAVIOUR,
-            include_kind=include_kind,
-            include_version=include_version,
-        )
-        value.update({k: getattr(obj, k) for k in obj._schema_keys})
-        return value
 
     @classmethod
     def from_dict(cls, value, unknown=None):
@@ -180,7 +167,7 @@ class V1CustomConnection(BaseConfig):
         if schema.revision:
             if "revision" not in self._schema_keys:
                 self._schema_keys.add("revision")
-            setattr(self, "revision", schema.url)
+            setattr(self, "revision", schema.revision)
 
         if schema.flags:
             if "flags" not in self._schema_keys:

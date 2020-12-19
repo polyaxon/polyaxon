@@ -41,7 +41,8 @@ class PolypodConfig:
     def resolve(
         self, compiled_operation: V1CompiledOperation, agent_config: AgentConfig = None
     ):
-        agent_config = agent_config or settings.AGENT_CONFIG
+        if not agent_config and settings.AGENT_CONFIG:
+            agent_config = settings.AGENT_CONFIG.clone()
         if not agent_config:
             raise PolyaxonCompilerError(
                 "Polypod configuration not found or agent not configured."

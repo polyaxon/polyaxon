@@ -31,10 +31,13 @@ from polyaxon.env_vars.keys import (
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
 from polyaxon.utils.code_reference import (
+    add_remote,
     checkout_revision,
     get_code_reference,
-    set_remote,
+    git_fetch,
+    git_init,
 )
+from polyaxon.utils.path_utils import check_or_create_path
 
 _logger = logging.getLogger("polyaxon.repos.git")
 
@@ -59,7 +62,7 @@ def get_ssh_cmd():
 def get_clone_url(url: str) -> str:
     if not url:
         raise ValueError(
-            "Git initializer requires a valid url, receveied {}".format(url)
+            "Git initializer requires a valid url, received {}".format(url)
         )
 
     if has_cred_access():
@@ -88,8 +91,6 @@ def get_clone_url(url: str) -> str:
 
 def clone_git_repo(repo_path: str, url: str, flags: List[str] = None) -> str:
     if has_ssh_access():
-        flags = flags or []
-        flags.append("--recurse-submodules")
         return GitRepo.clone_from(
             url=url,
             to_path=repo_path,
@@ -97,6 +98,32 @@ def clone_git_repo(repo_path: str, url: str, flags: List[str] = None) -> str:
             env={"GIT_SSH_COMMAND": get_ssh_cmd()},
         )
     return GitRepo.clone_from(url=url, to_path=repo_path, multi_options=flags)
+
+
+def clone_and_checkout_git_repo(
+    repo_path: str,
+    clone_url: str,
+    revision: str,
+    flags: List[str] = None,
+):
+    clone_git_repo(repo_path=repo_path, url=clone_url, flags=flags)
+    if revision:
+        checkout_revision(repo_path=repo_path, revision=revision)
+
+
+def fetch_git_repo(
+    repo_path: str,
+    clone_url: str,
+    revision: str,
+    flags: List[str] = None,
+):
+    check_or_create_path(repo_path, is_dir=True)
+    git_init(repo_path)
+    add_remote(repo_path, clone_url)
+    env = None
+    if has_ssh_access():
+        env = {"GIT_SSH_COMMAND": get_ssh_cmd()}
+    git_fetch(repo_path=repo_path, revision=revision, flags=flags, env=env)
 
 
 def create_code_repo(
@@ -111,10 +138,15 @@ def create_code_repo(
     except Exception as e:
         raise PolyaxonContainerException("Error parsing url: {}.".format(url)) from e
 
-    clone_git_repo(repo_path=repo_path, url=clone_url, flags=flags)
-    set_remote(repo_path=repo_path, url=url)
-    if revision:
-        checkout_revision(repo_path=repo_path, revision=revision)
+    if flags and "--experimental-fetch" in flags:
+        flags.remove("--experimental-fetch")
+        fetch_git_repo(
+            repo_path=repo_path, clone_url=clone_url, revision=revision, flags=flags
+        )
+    else:
+        clone_and_checkout_git_repo(
+            repo_path=repo_path, clone_url=clone_url, revision=revision, flags=flags
+        )
 
     if settings.CLIENT_CONFIG.no_api:
         return

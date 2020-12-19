@@ -201,6 +201,9 @@ class BaseConfig:
         with open(filepath, "w") as config_file:
             config_file.write(self.to_dict(dump=True))
 
+    def clone(self):
+        return self.from_dict(self.to_dict())
+
     @staticmethod
     def patch_normal_merge(current_value, value, strategy: V1PatchStrategy = None):
         strategy = strategy or V1PatchStrategy.POST_MERGE

@@ -115,6 +115,7 @@ class Agent(BaseAgent):
                     V1ConnectionType.from_dict(c) for c in connections
                 ]
 
+            self.content = settings.AGENT_CONFIG.to_dict(dump=True)
             self.sync()
 
     def log_agent_running(self):

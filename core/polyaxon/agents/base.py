@@ -22,6 +22,7 @@ import polyaxon_sdk
 
 from kubernetes.client.rest import ApiException
 
+from polyaxon import settings
 from polyaxon.agents import converter
 from polyaxon.agents.spawners.spawner import Spawner
 from polyaxon.client import PolyaxonClient
@@ -42,6 +43,7 @@ class BaseAgent:
         self.spawner = Spawner()
         self.client = PolyaxonClient()
         self._graceful_shutdown = False
+        self.content = settings.AGENT_CONFIG.to_dict(dump=True)
 
     def get_info(self) -> polyaxon_sdk.V1Agent:
         raise NotImplementedError
@@ -274,6 +276,7 @@ class BaseAgent:
                 run_uuid=run_uuid,
                 content=content,
                 default_auth=True,
+                agent_content=self.content,
             )
         except PolypodException as e:
             self.log_run_failed(
@@ -301,6 +304,8 @@ class BaseAgent:
             run_uuid=run_uuid,
             content=run_data[3],
         )
+        if not resource:
+            return
 
         try:
             self.spawner.create(
@@ -340,6 +345,8 @@ class BaseAgent:
             run_uuid=run_uuid,
             content=run_data[3],
         )
+        if not resource:
+            return
 
         try:
             self.spawner.create(
@@ -380,6 +387,8 @@ class BaseAgent:
             content=run_data[3],
             default_auth=default_auth,
         )
+        if not resource:
+            return
 
         try:
             self.spawner.create(
@@ -406,6 +415,8 @@ class BaseAgent:
             run_uuid=run_uuid,
             content=run_data[3],
         )
+        if not resource:
+            return
 
         try:
             self.spawner.apply(

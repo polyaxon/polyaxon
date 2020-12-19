@@ -124,7 +124,7 @@ class TestConnectionType(BaseTestCase):
                 assert value_dict[k] == result_dict[k]
         assert result.secret == spec.secret
 
-    def test_get_from_model(self):
+    def test_get_from_model_s(self):
         self.assert_from_model(self.s3_store)
         self.assert_from_model(self.gcs_store)
         self.assert_from_model(self.az_store)

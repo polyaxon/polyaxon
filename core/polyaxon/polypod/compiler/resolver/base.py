@@ -137,7 +137,8 @@ class BaseResolver:
         pass
 
     def resolve_agent(self):
-        self.agent_config = settings.AGENT_CONFIG
+        if settings.AGENT_CONFIG:
+            self.agent_config = settings.AGENT_CONFIG.clone()
 
     def apply_operation_contexts(self):
         try:

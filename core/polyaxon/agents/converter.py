@@ -19,6 +19,7 @@ from polyaxon.polyaxonfile import CompiledOperationSpecification, OperationSpeci
 from polyaxon.polypod.compiler import converter, make
 from polyaxon.polypod.compiler.config import PolypodConfig
 from polyaxon.polypod.compiler.converters import PLATFORM_CONVERTERS
+from polyaxon.schemas.cli.agent_config import AgentConfig
 
 
 def convert(
@@ -28,11 +29,15 @@ def convert(
     run_uuid: str,
     content: str,
     default_auth: bool,
+    agent_content: str = None,
 ) -> Dict:
     polypod_config = PolypodConfig()
     compiled_operation = CompiledOperationSpecification.read(content)
 
-    polypod_config.resolve(compiled_operation=compiled_operation)
+    polypod_config.resolve(
+        compiled_operation=compiled_operation,
+        agent_config=AgentConfig.read(agent_content) if agent_content else None,
+    )
     return converter.convert(
         compiled_operation=compiled_operation,
         owner_name=owner_name,

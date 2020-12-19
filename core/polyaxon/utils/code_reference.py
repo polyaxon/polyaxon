@@ -16,10 +16,28 @@
 
 import os
 
+from typing import List
+
 from polyaxon.utils.cmd import run_command
 
 
-def checkout_revision(repo_path, revision):  # pylint:disable=redefined-outer-name
+def git_init(repo_path):
+    run_command(
+        cmd="git init {}".format(repo_path), data=None, location=repo_path, chw=True
+    )
+
+
+def git_fetch(repo_path: str, revision: str, flags: List[str], env=None):
+    flags = flags or []
+    fetch_cmd = "git fetch {} origin".format(" ".join(flags))
+    if revision:
+        fetch_cmd = "{} {}".format(fetch_cmd, revision)
+    fetch_cmd = "{} --update-head-ok --force".format(fetch_cmd)
+    run_command(cmd=fetch_cmd, data=None, location=repo_path, chw=True, env=env)
+    run_command(cmd="git checkout FETCH_HEAD", data=None, location=repo_path, chw=True)
+
+
+def checkout_revision(repo_path, revision):
     """Checkout to a specific revision.
 
     If commit is None then checkout to master.
@@ -27,6 +45,15 @@ def checkout_revision(repo_path, revision):  # pylint:disable=redefined-outer-na
     revision = revision or "master"
     run_command(
         cmd="git checkout {}".format(revision), data=None, location=repo_path, chw=True
+    )
+
+
+def add_remote(repo_path, url):
+    run_command(
+        cmd="git remote add origin {}".format(url),
+        data=None,
+        location=repo_path,
+        chw=True,
     )
 
 
@@ -43,7 +70,7 @@ def get_status(repo_path):
     return run_command(cmd="git status -s", data=None, location=repo_path, chw=True)
 
 
-def get_committed_files(repo_path, commit_hash):  # pylint:disable=redefined-outer-name
+def get_committed_files(repo_path, commit_hash):
     files_committed = run_command(
         cmd="git diff-tree --no-commit-id --name-only -r {}".format(commit_hash),
         data=None,
@@ -53,12 +80,12 @@ def get_committed_files(repo_path, commit_hash):  # pylint:disable=redefined-out
     return [f for f in files_committed if f]
 
 
-def undo(repo_path):
+def git_undo(repo_path):
     run_command(cmd="git reset --hard", data=None, location=repo_path, chw=True)
     run_command(cmd="git clean -fd", data=None, location=repo_path, chw=True)
 
 
-def commit(repo_path=".", user_email=None, user_name=None, message=None):
+def git_commit(repo_path=".", user_email=None, user_name=None, message=None):
     message = message or "updated"
     run_command(cmd="git add -A", data=None, location=repo_path, chw=True)
     git_auth = "-c user.email=<{}> -c user.name={}".format(user_email, user_name)

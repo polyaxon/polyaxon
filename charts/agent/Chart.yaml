@@ -1,8 +1,8 @@
 apiVersion: v1
 description: An enterprise-grade open-source platform for building, training, and monitoring large scale deep learning applications.
 name: agent
-version: 1.4.5
-appVersion: 1.4.5
+version: 1.4.6
+appVersion: 1.4.6
 keywords:
   - deep learning
   - a.i.
