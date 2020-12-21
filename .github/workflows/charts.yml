@@ -29,7 +29,7 @@ jobs:
           helm repo add bitnami https://charts.bitnami.com/bitnami
           cmd/helm/all
           cmd/helm/build
-      - uses: actions/setup-python@v2.1.4
+      - uses: actions/setup-python@v2.2.1
         with:
           python-version: 3.7
       - name: test
