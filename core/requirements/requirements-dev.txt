@@ -27,7 +27,7 @@ python-multipart==0.0.5
 altair==4.1.0
 matplotlib==3.3.3
 moviepy==1.0.3
-plotly==4.6.0
+plotly==4.14.1
 Pillow==7.1.2
 bokeh==2.0.2
 pandas==1.0.3
