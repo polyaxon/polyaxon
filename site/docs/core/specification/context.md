@@ -49,7 +49,7 @@ run:
 
 ## Params
 
-Sometimes you need to access the meta=information about your inputs and outputs and not just the values, 
+Sometimes you need to access the meta-information about your inputs and outputs and not just the values, 
 for instance let take the example of a component that outputs a docker image:
 
 ```yaml

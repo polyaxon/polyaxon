@@ -26,18 +26,22 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
+with open(os.path.join("./polyaxon/pkg.py"), encoding="utf8") as f:
+    pkg = {}
+    exec(f.read(), pkg)
+
 setup(
-    name="polyaxon",
-    version="1.4.6",
-    description="Command Line Interface (CLI) and client to interact with Polyaxon API.",
+    name=pkg["NAME"],
+    version=pkg["VERSION"],
+    description=pkg["DESC"],
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    maintainer="Polyaxon, Inc.",
-    maintainer_email="contact@polyaxon.com",
-    author="Polyaxon, Inc.",
-    author_email="contact@polyaxon.com",
-    url="https://github.com/polyaxon/polyaxon",
-    license="Apache 2.0",
+    maintainer=pkg["AUTHOR"],
+    maintainer_email=pkg["EMAIL"],
+    author=pkg["AUTHOR"],
+    author_email=pkg["EMAIL"],
+    url=pkg["URL"],
+    license=pkg["LICENSE"],
     platforms="any",
     packages=find_packages(),
     keywords=[
@@ -69,8 +73,8 @@ setup(
         "tabulate<0.9.0",
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
-        "marshmallow<3.10.0",
-        "polyaxon-sdk==1.4.4",
+        "marshmallow<3.11.0",
+        "polyaxon-sdk==1.4.8-rc1",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "PyYAML>=5.1",

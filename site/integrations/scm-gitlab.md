@@ -56,7 +56,7 @@ Select the token and copy it.
 ## Create a secret
 
 ```yaml
-kubectl -n polyaxon create secret generic github-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="oauth2:TOKEN_HASH"
+kubectl -n polyaxon create secret generic gitlab-connection-1 --from-literal=POLYAXON_GIT_CREDENTIALS="oauth2:TOKEN_HASH"
 ```
 
 ## Add the repos you want to use to the connections catalog
@@ -66,19 +66,19 @@ connections:
   - name: repo1
     kind: git
     schema:
-      url: https://github.com/org/repo1
+      url: https://gitlab.com/org/repo1
     secret:
-      name: "github-connection-1"
+      name: "gitlab-connection-1"
   - name: repo2
     kind: git
     schema:
-      url: https://github.com/org/repo2
+      url: https://gitlab.com/org/repo2
     secret:
-      name: "github-connection-1"
+      name: "gitlab-connection-1"
   - name: repo3
     kind: git
     schema:
-      url: https://github.com/org/repo3
+      url: https://gitlab.com/org/repo3
     secret:
       name: "other-connection"
 ```
