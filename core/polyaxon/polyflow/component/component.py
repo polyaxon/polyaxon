@@ -27,8 +27,8 @@ from polyaxon.polyflow.templates import TemplateMixinConfig, TemplateMixinSchema
 
 class ComponentSchema(BaseComponentSchema, TemplateMixinSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("component"))
-    inputs = fields.Nested(IOSchema, allow_none=True, many=True)
-    outputs = fields.Nested(IOSchema, allow_none=True, many=True)
+    inputs = fields.List(fields.Nested(IOSchema), allow_none=True)
+    outputs = fields.List(fields.Nested(IOSchema), allow_none=True)
     run = fields.Nested(RunSchema, required=True)
 
     @staticmethod
@@ -119,8 +119,8 @@ class V1Component(
     >>>     plugins=V1Plugins(...),
     >>>     actions=[V1Action(...)],
     >>>     hooks=[V1Hook(...)],
-    >>>     inputs=V1IO(...),
-    >>>     outputs=V1IO(...),
+    >>>     inputs=[V1IO(...)],
+    >>>     outputs=[V1IO(...)],
     >>>     run=...
     >>> )
     ```

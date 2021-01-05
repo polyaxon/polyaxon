@@ -80,7 +80,7 @@
   versions:
   - latest
   - custom
-- name: jupyter-lab
+- name: jupyterlab
   title: JupyterLab
   meta_title: JupyterLab
   meta_description: Polyaxon makes it easy to start JupyterLab on your projects for you and your team members.
@@ -96,7 +96,7 @@
   - pyspark
   - scipy
   - tensorflow
-- name: jupyter-notebook
+- name: notebook
   title: Jupyter Notebook
   meta_title: Jupyter Notebook
   meta_description: Polyaxon makes it easy to start Jupyter Notebooks on your projects for you and your team members.

@@ -71,7 +71,7 @@ def cli(context, verbose, offline):
 
       - You can initialize a project with: polyaxon init -p [project name]
 
-      - Otherwise Polyaxon will the default global path will be used for the cache.
+      - Otherwise Polyaxon will use the default global path will be used for the cache.
 
     You can check the version of you CLI by running:
 

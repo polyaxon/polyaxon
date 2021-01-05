@@ -25,22 +25,6 @@ status: published
 
 To learn about this component definition or customize its behavior, please check [{{name}} on polyaxon-hub](https://github.com/polyaxon/polyaxon-hub/tree/master/{{name}}).
 
-## Component info using Polyaxon CLI
-
-You can use the CLI to learn about this component:
-
-```bash
-polyaxon hub --name={{name}} get
-```
-
-## Fetch component to the current working dir
-
-You can use the CLI to fetch the component to a local file:
-
-```bash
-polyaxon hub --name={{name}} get --save
-```
-
 ## Run this component using the CLI
 
 To run the latest version of this component using Polyaxon CLI:

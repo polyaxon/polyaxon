@@ -36,7 +36,7 @@ We will start first by exploring the iris dataset in a notebook session running 
 Let's start a new notebook session and wait until it reaches the running state:
 
 ```bash
-polyaxon run --hub jupyter-lab -w
+polyaxon run --hub jupyterlab -w
 ```
 
 Let's create a new notebook and start by examining the dataset's features:

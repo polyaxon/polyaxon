@@ -138,7 +138,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         conditions: [conditions](/docs/automation/flow-engine/specification/#conditions),
                     optional
         skip_on_upstream_skip:
-            [skip_on_upstream_skip](/docs/automation/flow-engine/skiponupstreamskip/),
+            [skip_on_upstream_skip](/docs/automation/flow-engine/specification/skiponupstreamskip/),
             optional
         run_patch: Dict, optional
         hub_ref: str, optional
@@ -181,7 +181,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
 
     ```python
     >>> from polyaxon.polyflow import (
-    >>>     V1Action, V1Cache, V1Component, V1Hook, V1Param, V1Plugins, V1Operation, V1Termination
+    >>>     V1Cache, V1Component, V1Hook, V1Param, V1Plugins, V1Operation, V1Termination
     >>> )
     >>> from polyaxon.schemas import V1PatchStrategy
     >>> operation = V1Operation(
