@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -49,12 +49,28 @@ URLS_RUNS_STATUSES = r"^{}/{}/runs/{}/statuses/?$".format(
 URLS_RUNS_NAMESPACE = r"^{}/{}/runs/{}/namespace/?$".format(
     OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, RUN_UUID_PATTERN
 )
-URLS_RUNS_ARTIFACTS_LINEAGE_LIST = r"^{}/{}/runs/{}/artifacts_lineage/?$".format(
+URLS_RUNS_ARTIFACTS_LINEAGE_LIST_V0 = r"^{}/{}/runs/{}/artifacts_lineage/?$".format(
     OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, RUN_UUID_PATTERN
 )
-URLS_RUNS_ARTIFACTS_LINEAGE_NAMES = r"^{}/{}/runs/{}/artifacts_lineage/names/?$".format(
+URLS_RUNS_ARTIFACTS_LINEAGE_NAMES_V0 = (
+    r"^{}/{}/runs/{}/artifacts_lineage/names/?$".format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, RUN_UUID_PATTERN
+    )
+)
+URLS_RUNS_ARTIFACTS_LINEAGE_DETAILS_V0 = (
+    r"^{}/{}/runs/{}/artifacts_lineage/{}/?$".format(
+        OWNER_NAME_PATTERN,
+        PROJECT_NAME_PATTERN,
+        RUN_UUID_PATTERN,
+        ARTIFACT_NAME_PATTERN,
+    )
+)
+URLS_RUNS_ARTIFACTS_LINEAGE_LIST = r"^{}/{}/runs/{}/lineage/artifacts/?$".format(
     OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, RUN_UUID_PATTERN
 )
-URLS_RUNS_ARTIFACTS_LINEAGE_DETAILS = r"^{}/{}/runs/{}/artifacts_lineage/{}/?$".format(
+URLS_RUNS_ARTIFACTS_LINEAGE_NAMES = r"^{}/{}/runs/{}/lineage/artifacts/names/?$".format(
+    OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, RUN_UUID_PATTERN
+)
+URLS_RUNS_ARTIFACTS_LINEAGE_DETAILS = r"^{}/{}/runs/{}/lineage/artifacts/{}/?$".format(
     OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, RUN_UUID_PATTERN, ARTIFACT_NAME_PATTERN
 )

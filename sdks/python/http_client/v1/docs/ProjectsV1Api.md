@@ -712,7 +712,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List archived projects for user
@@ -730,7 +730,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -799,7 +799,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List bookmarked projects for user
@@ -817,7 +817,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -886,7 +886,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List project names
@@ -904,7 +904,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -973,7 +973,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List projects
@@ -991,7 +991,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 

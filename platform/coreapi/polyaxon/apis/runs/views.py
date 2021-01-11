@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ from rest_framework.response import Response
 
 from django.http import Http404
 
-from coredb.api.runs import methods, queries
+from coredb.api.runs import methods
 from coredb.api.runs.serializers import (
     RunDetailSerializer,
     RunSerializer,
@@ -26,6 +26,7 @@ from coredb.api.runs.serializers import (
 )
 from coredb.managers.runs import copy_run, restart_run, resume_run
 from coredb.models.runs import Run
+from coredb.queries.runs import STATUS_UPDATE_COLUMNS_DEFER
 from endpoints.run import RunEndpoint
 from polyaxon.lifecycle import LifeCycle
 from polycommon import conf
@@ -48,7 +49,7 @@ from polycommon.options.registry.k8s import K8S_NAMESPACE
 
 
 class RunDetailView(RunEndpoint, RetrieveEndpoint, DestroyEndpoint, UpdateEndpoint):
-    queryset = queries.single_run
+    queryset = Run.all.select_related("original", "project")
     serializer_class = RunDetailSerializer
     AUDITOR_EVENT_TYPES = {
         "DELETE": RUN_DELETED_ACTOR,
@@ -62,7 +63,6 @@ class RunDetailView(RunEndpoint, RetrieveEndpoint, DestroyEndpoint, UpdateEndpoi
 
 
 class RunCloneView(RunEndpoint, CreateEndpoint):
-    queryset = queries.single_run
     serializer_class = RunSerializer
     AUDIT_PROJECT_RESOURCES = True
     PROJECT_RESOURCE_KEY = RUN_UUID_KEY
@@ -107,7 +107,7 @@ class RunCopyView(RunCloneView):
 
 
 class RunStatusListView(RunEndpoint, RetrieveEndpoint, CreateEndpoint):
-    queryset = Run.objects.only("status_conditions", "status").prefetch_related(
+    queryset = Run.objects.defer(*STATUS_UPDATE_COLUMNS_DEFER).select_related(
         "project",
     )
     serializer_class = RunStatusSerializer
@@ -120,8 +120,6 @@ class RunStatusListView(RunEndpoint, RetrieveEndpoint, CreateEndpoint):
 
 
 class RunStopView(RunEndpoint, CreateEndpoint):
-    queryset = queries.deferred_runs
-
     AUDITOR_EVENT_TYPES = {"POST": RUN_STOPPED_ACTOR}
     AUDIT_PROJECT_RESOURCES = True
     PROJECT_RESOURCE_KEY = RUN_UUID_KEY
@@ -132,8 +130,6 @@ class RunStopView(RunEndpoint, CreateEndpoint):
 
 
 class RunApproveView(RunEndpoint, CreateEndpoint):
-    queryset = queries.deferred_runs
-
     AUDITOR_EVENT_TYPES = {"POST": RUN_APPROVED_ACTOR}
     AUDIT_PROJECT_RESOURCES = True
     PROJECT_RESOURCE_KEY = RUN_UUID_KEY

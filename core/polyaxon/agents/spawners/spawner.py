@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 from typing import Dict
 
 from polyaxon.agents.spawners.base import BaseSpawner
-from polyaxon.k8s.custom_resources.operation import get_resource_name
 from polyaxon.k8s.manager import K8SManager
+from polyaxon.utils.fqn_utils import get_resource_name
 
 
 class Spawner(BaseSpawner):

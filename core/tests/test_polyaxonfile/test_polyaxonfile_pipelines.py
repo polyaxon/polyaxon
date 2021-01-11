@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -124,9 +124,10 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             run_config
         )
         assert compiled_op.run is not None
-        assert len(compiled_op.run.operations) == 2
+        assert len(compiled_op.run.operations) == 3
         assert compiled_op.run.operations[0].name == "ref-path-op"
         assert compiled_op.run.operations[1].name == "ref-url-op"
+        assert compiled_op.run.operations[2].name == "ref-hub-op"
 
     def test_interval_pipeline(self):
         plx_file = check_polyaxonfile(
@@ -205,6 +206,37 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
             "job2",
             "experiment1",
             "experiment2",
+        }
+        assert run_config.run.concurrency == 2
+        assert run_config.schedule is None
+
+    def test_joins_pipeline(self):
+        run_config = V1CompiledOperation.read(
+            [
+                os.path.abspath("tests/fixtures/pipelines/simple_joins_pipeline.yml"),
+                {"kind": "compiled_operation"},
+            ]
+        )
+
+        run_config = CompiledOperationSpecification.apply_operation_contexts(run_config)
+        assert len(run_config.run.operations) == 5
+        assert run_config.run.operations[0].name == "job1"
+        assert run_config.run.operations[0].dependencies is None
+        assert run_config.run.operations[1].name == "job2"
+        assert run_config.run.operations[1].dependencies is None
+        assert run_config.run.operations[2].name == "experiment1"
+        assert run_config.run.operations[2].dependencies is None
+        assert run_config.run.operations[3].name == "experiment2"
+        assert run_config.run.operations[3].dependencies is None
+        assert run_config.run.operations[4].name == "reduce"
+        assert run_config.run.operations[4].dependencies is None
+        dag_strategy = run_config.run
+        assert set(dag_strategy.sort_topologically(dag_strategy.dag)[0]) == {
+            "job1",
+            "job2",
+            "experiment1",
+            "experiment2",
+            "reduce",
         }
         assert run_config.run.concurrency == 2
         assert run_config.schedule is None
@@ -347,7 +379,7 @@ class TestPolyaxonfileWithPipelines(BaseTestCase):
         assert len(template_random.early_stopping) == 1
         assert isinstance(template_random.early_stopping[0], V1MetricEarlyStopping)
 
-    def test_matrix_file_passess(self):
+    def test_matrix_file_passes(self):
         run_config = V1CompiledOperation.read(
             [
                 os.path.abspath("tests/fixtures/pipelines/matrix_file.yml"),

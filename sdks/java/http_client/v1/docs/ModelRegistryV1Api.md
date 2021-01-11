@@ -500,8 +500,8 @@ public class Example {
 
     ModelRegistryV1Api apiInstance = new ModelRegistryV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String name = "name_example"; // String | Component under namesapce
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String name = "name_example"; // String | Sub-entity name
     try {
       apiInstance.deleteModelVersion(owner, entity, name);
     } catch (ApiException e) {
@@ -520,8 +520,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **name** | **String**| Component under namesapce |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **name** | **String**| Sub-entity name |
 
 ### Return type
 
@@ -720,8 +720,8 @@ public class Example {
 
     ModelRegistryV1Api apiInstance = new ModelRegistryV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String name = "name_example"; // String | Component under namesapce
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String name = "name_example"; // String | Sub-entity name
     try {
       V1ModelVersion result = apiInstance.getModelVersion(owner, entity, name);
       System.out.println(result);
@@ -741,8 +741,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **name** | **String**| Component under namesapce |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **name** | **String**| Sub-entity name |
 
 ### Return type
 
@@ -795,8 +795,8 @@ public class Example {
 
     ModelRegistryV1Api apiInstance = new ModelRegistryV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String name = "name_example"; // String | Component under namesapce
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String name = "name_example"; // String | Sub-entity name
     try {
       V1Stage result = apiInstance.getModelVersionStages(owner, entity, name);
       System.out.println(result);
@@ -816,8 +816,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **name** | **String**| Component under namesapce |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **name** | **String**| Sub-entity name |
 
 ### Return type
 
@@ -873,7 +873,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListModelRegistriesResponse result = apiInstance.listModelRegistries(owner, offset, limit, sort, query);
       System.out.println(result);
@@ -896,7 +896,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -952,7 +952,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListModelRegistriesResponse result = apiInstance.listModelRegistryNames(owner, offset, limit, sort, query);
       System.out.println(result);
@@ -975,7 +975,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -1032,7 +1032,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListModelVersionsResponse result = apiInstance.listModelVersionNames(owner, name, offset, limit, sort, query);
       System.out.println(result);
@@ -1056,7 +1056,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -1113,7 +1113,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListModelVersionsResponse result = apiInstance.listModelVersions(owner, name, offset, limit, sort, query);
       System.out.println(result);
@@ -1137,7 +1137,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 

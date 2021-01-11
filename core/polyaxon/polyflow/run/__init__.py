@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,12 @@ from polyaxon.polyflow.run.dag import DagSchema, V1Dag
 from polyaxon.polyflow.run.dask import DaskSchema, V1Dask
 from polyaxon.polyflow.run.flink import FlinkSchema, V1Flink
 from polyaxon.polyflow.run.job import JobSchema, V1Job
-from polyaxon.polyflow.run.kinds import V1CloningKind, V1PipelineKind, V1RunKind
+from polyaxon.polyflow.run.kinds import (
+    V1CloningKind,
+    V1PipelineKind,
+    V1RunEdgeKind,
+    V1RunKind,
+)
 from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
 from polyaxon.polyflow.run.kubeflow.mpi_job import MPIJobSchema, V1MPIJob
 from polyaxon.polyflow.run.kubeflow.pytorch_job import PytorchJobSchema, V1PytorchJob

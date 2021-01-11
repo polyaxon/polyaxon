@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,10 +23,10 @@ from polyaxon.polyflow import (
     V1Component,
     V1Hyperband,
     V1Hyperopt,
+    V1Join,
     V1Matrix,
     V1Operation,
     V1Param,
-    V1ParamSearch,
     V1Plugins,
     V1Tuner,
 )
@@ -37,18 +37,18 @@ def get_tuner(
     name: str,
     container: V1Container,
     matrix: V1Matrix,
-    search: V1ParamSearch,
+    join: V1Join,
     iteration: int,
     bracket_iteration: int = None,
 ) -> V1Operation:
     params = {
         "matrix": V1Param(value=matrix.to_dict()),
-        "search": V1Param(value=search.to_dict()),
+        "join": V1Param(value=join.to_dict()),
         "iteration": V1Param(value=iteration),
     }
     inputs = [
         V1IO(name="matrix", iotype=types.DICT, is_list=False, is_optional=True),
-        V1IO(name="search", iotype=types.DICT, is_list=False, is_optional=True),
+        V1IO(name="join", iotype=types.DICT, is_list=False, is_optional=True),
         V1IO(name="iteration", iotype=types.INT, is_list=False, is_optional=True),
     ]
     if bracket_iteration is not None:
@@ -109,7 +109,7 @@ def get_container(
 
 def get_bo_tuner(
     matrix: V1Bayes,
-    search: V1ParamSearch,
+    join: V1Join,
     iteration: int,
 ) -> V1Operation:
     iteration = matrix.create_iteration(iteration)
@@ -120,14 +120,14 @@ def get_bo_tuner(
             container=matrix.container,
         ),
         matrix=matrix,
-        search=search,
+        join=join,
         iteration=iteration,
     )
 
 
 def get_hyperband_tuner(
     matrix: V1Hyperband,
-    search: V1ParamSearch,
+    join: V1Join,
     iteration: int,
     bracket_iteration: int,
 ) -> V1Operation:
@@ -143,7 +143,7 @@ def get_hyperband_tuner(
             container=matrix.container,
         ),
         matrix=matrix,
-        search=search,
+        join=join,
         iteration=iteration,
         bracket_iteration=bracket_iteration,
     )
@@ -151,7 +151,7 @@ def get_hyperband_tuner(
 
 def get_hyperopt_tuner(
     matrix: V1Hyperopt,
-    search: V1ParamSearch,
+    join: V1Join,
     iteration: int,
 ) -> V1Operation:
     iteration = matrix.create_iteration(iteration)
@@ -164,6 +164,6 @@ def get_hyperopt_tuner(
             container=matrix.container,
         ),
         matrix=matrix,
-        search=search,
+        join=join,
         iteration=iteration,
     )

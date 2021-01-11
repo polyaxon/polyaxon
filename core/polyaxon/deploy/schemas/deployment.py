@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -140,7 +140,15 @@ def wrong_agent_deployment_keys(**kwargs):
 
 
 def validate_platform_deployment(
-    postgresql, redis, rabbitmq, broker, scheduler, worker, beat, external_services
+    postgresql,
+    redis,
+    rabbitmq,
+    broker,
+    scheduler,
+    compiler,
+    worker,
+    beat,
+    external_services,
 ):
     check_postgres(postgresql, external_services)
     redis_used, redis_is_broker = check_redis(redis, external_services, broker)
@@ -151,7 +159,7 @@ def validate_platform_deployment(
             "you don't need to deploy both!"
         )
     broker_defined = rabbitmq_used or redis_used
-    services = [scheduler, worker, beat]
+    services = [scheduler, compiler, worker, beat]
     if broker_is_required(services) and not broker_defined:
         raise ValidationError(
             "You enabled some services that require a broker, please set redis or rabbitmq!"
@@ -220,6 +228,7 @@ class DeploymentSchema(BaseCamelSchema):
     api = fields.Nested(ApiServiceSchema, allow_none=True)
     streams = fields.Nested(ApiServiceSchema, allow_none=True)
     scheduler = fields.Nested(WorkerServiceSchema, allow_none=True)
+    compiler = fields.Nested(WorkerServiceSchema, allow_none=True)
     worker = fields.Nested(WorkerServiceSchema, allow_none=True)
     beat = fields.Nested(ServiceSchema, allow_none=True)
     agent = fields.Nested(AgentServiceSchema, allow_none=True)
@@ -283,6 +292,7 @@ class DeploymentSchema(BaseCamelSchema):
             rabbitmq=data.get("rabbitmq"),
             broker=data.get("broker"),
             scheduler=data.get("scheduler"),
+            compiler=data.get("compiler"),
             worker=data.get("worker"),
             beat=data.get("beat"),
             external_services=data.get("external_services"),
@@ -349,6 +359,7 @@ class DeploymentConfig(BaseConfig):
         api=None,
         streams=None,
         scheduler=None,
+        compiler=None,
         worker=None,
         beat=None,
         agent=None,
@@ -398,6 +409,7 @@ class DeploymentConfig(BaseConfig):
             rabbitmq=rabbitmq,
             broker=broker,
             scheduler=scheduler,
+            compiler=compiler,
             worker=worker,
             beat=beat,
             external_services=external_services,
@@ -431,6 +443,7 @@ class DeploymentConfig(BaseConfig):
         self.api = api
         self.streams = streams
         self.scheduler = scheduler
+        self.compiler = compiler
         self.worker = worker
         self.beat = beat
         self.agent = agent
@@ -479,6 +492,7 @@ class DeploymentConfig(BaseConfig):
                 global_concurrency=global_concurrency,
                 api=api,
                 scheduler=scheduler,
+                compiler=compiler,
                 worker=worker,
                 beat=beat,
                 tables_hook=tables_hook,

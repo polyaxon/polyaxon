@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ from polyaxon.utils.code_reference import (
     get_code_reference,
     git_fetch,
     git_init,
+    set_remote,
 )
 from polyaxon.utils.path_utils import check_or_create_path
 
@@ -147,6 +148,8 @@ def create_code_repo(
         clone_and_checkout_git_repo(
             repo_path=repo_path, clone_url=clone_url, revision=revision, flags=flags
         )
+    # Update remote
+    set_remote(repo_path=repo_path, url=url)
 
     if settings.CLIENT_CONFIG.no_api:
         return

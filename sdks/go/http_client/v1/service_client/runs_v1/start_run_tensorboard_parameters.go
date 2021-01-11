@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ type StartRunTensorboardParams struct {
 	/*Body*/
 	Body *service_model.V1OwnerSubEntityResourceRequestByUID
 	/*Entity
-	  Owner of the namespace
+	  Entity: project name, hub name, registry name, ...
 
 	*/
 	Entity string
@@ -89,7 +89,7 @@ type StartRunTensorboardParams struct {
 	*/
 	Owner string
 	/*UUID
-	  Uuid identifier of the entity
+	  Uuid identifier of the sub-entity
 
 	*/
 	UUID string

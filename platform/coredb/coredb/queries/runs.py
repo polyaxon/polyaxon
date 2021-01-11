@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,44 +28,19 @@ STATS_RUN = [
     "outputs",
     "tags",
 ]
-SINGLE_RUN = [
-    "original__id",
-    "original__uuid",
-    "original__name",
-    "user__username",
-    "id",
-    "uuid",
-    "name",
-    "kind",
-    "meta_info",
-    "description",
-    "created_at",
-    "updated_at",
-    "started_at",
-    "finished_at",
-    "status",
-    "cloning_kind",
-    "is_managed",
-    "is_approved",
-    "inputs",
-    "outputs",
-    "tags",
-    "live_state",
-]
 STATUS_UPDATE_COLUMNS_ONLY = [
     "id",
     "status",
     "status_conditions",
-    "status",
     "started_at",
     "updated_at",
     "finished_at",
     "duration",
+    "meta_info",
 ]
 STATUS_UPDATE_COLUMNS_DEFER = [
     "original",
     "cloning_kind",
-    "meta_info",
     "description",
     "inputs",
     "outputs",
@@ -74,26 +49,7 @@ STATUS_UPDATE_COLUMNS_DEFER = [
     "live_state",
     "readme",
     "content",
+    "is_managed",
+    "is_approved",
 ]
-API_COLUMNS_DEFER = [
-    "original",
-    "cloning_kind",
-    "user",
-    "kind",
-    "meta_info",
-    "description",
-    "created_at",
-    "updated_at",
-    "started_at",
-    "finished_at",
-    "duration",
-    "status",
-    "status_conditions",
-    "inputs",
-    "outputs",
-    "tags",
-    "description",
-    "live_state",
-    "readme",
-    "content",
-]
+DEFAULT_COLUMNS_DEFER = ["description", "readme", "content", "raw_content"]

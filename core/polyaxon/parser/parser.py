@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 import json
 import re
+import uuid
 
 from collections.abc import Mapping
 from datetime import date, datetime
@@ -104,6 +105,7 @@ def get_float(key, value, is_list=False, is_optional=False, default=None, option
             is_optional=is_optional,
             default=default,
             options=options,
+            base_types=(str, int),
         )
 
     return _get_typed_value(
@@ -560,6 +562,47 @@ def get_date(key, value, is_list=False, is_optional=False, default=None, options
         default=default,
         options=options,
     )
+
+
+def get_uuid(key, value, is_list=False, is_optional=False, default=None, options=None):
+    """
+    Get the value corresponding to the key and converts it to `uuid`/`list(uuid)`.
+
+    Args:
+        key: the dict key.
+        value: the value to parse.
+        is_list: If this is one element or a list of elements.
+        is_optional: To raise an error if key was not found.
+        default: default value if is_optional is True.
+        options: list/tuple if provided, the value must be one of these values.
+
+    Returns:
+        `date`: value corresponding to the key.
+    """
+    if is_list:
+        value = _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=uuid.UUID,
+            type_convert=fields.UUID(format="hex").deserialize,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
+        if value:
+            return [u.hex for u in value]
+
+    value = _get_typed_value(
+        key=key,
+        value=value,
+        target_type=uuid.UUID,
+        type_convert=fields.UUID(format="hex").deserialize,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
+    if value:
+        return value.hex
 
 
 def get_datetime(
@@ -1145,6 +1188,7 @@ TYPE_MAPPING = {
     types.METADATA: get_dict,
     types.DATE: get_date,
     types.DATETIME: get_datetime,
+    types.UUID: get_uuid,
     types.DOCKERFILE: get_dockerfile_init,
     types.GIT: get_git_init,
     types.IMAGE: get_image_init,

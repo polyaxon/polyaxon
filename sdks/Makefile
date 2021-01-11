@@ -97,24 +97,24 @@ generate-go-swagger:
 	$(SWAGGER) generate client -f swagger/$(VERSION)/polyaxon_sdk.swagger.json -A polyaxon-sdk --principal models.Principal -c service_client -m service_model -t go/$(HTTP_CLIENT)/$(VERSION)
 	# Executes the //go:generate directives in the generated code.
 	$(GO) generate ./...
-	$(DOCKER_RUN) find ./ -name "*.go" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.go" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2021 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-js-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -g javascript -o js/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-base.json
-	$(DOCKER_RUN) find ./ -name "*.js" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.js" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2021 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-ts-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -g typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-base.json
-	$(DOCKER_RUN) find ./ -name "*.ts" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.ts" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2021 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-java-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -g java -o java/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-java.json
-	$(DOCKER_RUN) find ./ -name "*.java" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.java" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2021 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-py-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -g python -o python/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-py.json
 	$(DOCKER_RUN) rm -rf python/$(HTTP_CLIENT)/$(VERSION)/test
-	$(DOCKER_RUN) find ./ -name "*.py" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.py" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2021 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-html-openapi:
 	$(DOCKER_RUN) bootprint openapi swagger/$(VERSION)/polyaxon_sdk.swagger.json openapi-html/$(VERSION)

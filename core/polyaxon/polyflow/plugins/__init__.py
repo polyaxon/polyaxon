@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ class PluginsSchema(BaseCamelSchema):
 
 
 class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
-    """Plugins section provides a way to set notifications and customize extrat Polyaxon utilities.
+    """Plugins section provides a way to customize extra Polyaxon utilities.
 
     By default, Polyaxon injects some information for example an auth context
     and triggers some mechanisms for collecting logs and outputs.
@@ -58,7 +58,6 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
         auto_resume: bool, optional, default: True
         sync_statuses: bool, optional, default: True
         log_level: str, optional
-        notifications: List[[V1Notification](/docs/core/specification/notifications/)], deprecated.
 
     ## YAML usage
 
@@ -74,13 +73,12 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   syncStatuses:
     >>>   externalHost:
     >>>   logLevel:
-    >>>   notifications:
     ```
 
     ## Python usage
 
     ```python
-    >>> from polyaxon.polyflow import V1Notification, V1Plugins
+    >>> from polyaxon.polyflow import V1Plugins
     >>> plugins = V1Plugins(
     >>>     auth=False,
     >>>     docker=True,
@@ -92,7 +90,6 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>     sync_statuses=False,
     >>>     external_host=False,
     >>>     log_level="INFO",
-    >>>     notifications=[V1Notification(...)]
     >>> )
     ```
 
@@ -283,28 +280,6 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     >>>   logLevel: warning
     ```
 
-    ### notifications
-
-    <blockquote class="light">Default is None.</blockquote>
-    <blockquote class="Warning">
-        This field is deprecated and will be removed in favor of the component level field "hooks".
-    </blockquote>
-
-    Polyaxon used to only expose a global way for sending notifications about runs.
-
-    This plugin allows you to enable per run notification configuration.
-
-    For more information about notifications please check the
-    [notifications section](/docs/core/specification/notifications/)
-
-    ```yaml
-    >>> plugins:
-    >>>   notifications:
-    >>>     - connections: [slack-connection]
-    >>>       trigger: succeeded
-    >>>     - connections: [slack-connection, pagerduty-connection]
-    >>>       trigger: failed
-    ```
     """
 
     IDENTIFIER = "plugins"

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@ from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 class MappingSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal(V1MatrixKind.MAPPING))
     values = RefOrObject(fields.List(fields.Dict(), required=True), required=True)
-    concurrency = fields.Int(allow_none=True)
-    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
+    concurrency = RefOrObject(fields.Int(allow_none=True))
+    early_stopping = fields.List(fields.Nested(EarlyStoppingSchema), allow_none=True)
 
     @staticmethod
     def schema_config():

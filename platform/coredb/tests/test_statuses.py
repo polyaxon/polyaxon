@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -217,7 +217,7 @@ class TestStatuses(TestCase):
         new_run_status(
             self.run,
             condition=V1StatusCondition.get_condition(
-                type=V1Statuses.SCHEDULED, status=True
+                type=V1Statuses.COMPILED, status=True
             ),
         )
         self.run.refresh_from_db()

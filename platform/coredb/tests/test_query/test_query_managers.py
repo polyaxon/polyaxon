@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,9 +38,7 @@ from tests.test_query.base import BaseTestQuery
 class TestQueryManager(BaseTestQuery):
     def setUp(self):
         super().setUp()
-        self.query1 = (
-            "updated_at:<=2020-10-10, started_at:>2010-10-10, started_at:~2016-10-01"
-        )
+        self.query1 = "updated_at:<=2020-10-10,started_at:>2010-10-10,started_at:~2016-10-01 10:10"
         self.query2 = "metrics.loss:<=0.8, status:starting|running"
         self.query3 = "finished_at:2012-12-12..2042-12-12"
         self.query4 = "tags:~tag1|tag2,tags:tag3"
@@ -55,7 +53,7 @@ class TestQueryManager(BaseTestQuery):
         tokenized_query = RunQueryManager.tokenize(self.query1)
         assert dict(tokenized_query.items()) == {
             "updated_at": ["<=2020-10-10"],
-            "started_at": [">2010-10-10", "~2016-10-01"],
+            "started_at": [">2010-10-10", "~2016-10-01 10:10"],
         }
 
         tokenized_query = RunQueryManager.tokenize(self.query2)
@@ -89,7 +87,7 @@ class TestQueryManager(BaseTestQuery):
             "updated_at": [QueryOpSpec(op="<=", negation=False, params="2020-10-10")],
             "started_at": [
                 QueryOpSpec(op=">", negation=False, params="2010-10-10"),
-                QueryOpSpec(op="=", negation=True, params="2016-10-01"),
+                QueryOpSpec(op="=", negation=True, params="2016-10-01 10:10"),
             ],
         }
 
@@ -141,7 +139,7 @@ class TestQueryManager(BaseTestQuery):
                     DateTimeCondition(op=">", negation=False), params="2010-10-10"
                 ),
                 QueryCondSpec(
-                    DateTimeCondition(op="=", negation=True), params="2016-10-01"
+                    DateTimeCondition(op="=", negation=True), params="2016-10-01 10:10"
                 ),
             ],
         }
@@ -225,7 +223,7 @@ class TestQueryManager(BaseTestQuery):
             Run.objects.filter(
                 Q(updated_at__lte="2020-10-10"),
                 Q(started_at__gt="2010-10-10"),
-                ~Q(started_at="2016-10-01"),
+                ~Q(started_at="2016-10-01 10:10"),
             ).query
         )
         assert str(result_queryset.query) == expected_query

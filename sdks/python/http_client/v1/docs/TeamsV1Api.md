@@ -554,7 +554,7 @@ name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # Get team members
@@ -573,7 +573,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -642,7 +642,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List teams names
@@ -660,7 +660,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -729,7 +729,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List teams
@@ -747,7 +747,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 

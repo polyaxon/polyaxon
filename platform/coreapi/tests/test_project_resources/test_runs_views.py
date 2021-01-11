@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -323,6 +323,16 @@ class TestProjectRunsArtifactsViewV1(BaseTest):
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data["next"] is None
         assert resp.data["count"] == 0
+
+
+@pytest.mark.projects_resources_mark
+class TestProjectRunsArtifactsViewV15(TestProjectRunsArtifactsViewV1):
+    def setUp(self):
+        super().setUp()
+        self.url = "/{}/polyaxon/{}/runs/lineage/artifacts/".format(
+            API_V1,
+            self.project.name,
+        )
 
 
 @pytest.mark.projects_resources_mark

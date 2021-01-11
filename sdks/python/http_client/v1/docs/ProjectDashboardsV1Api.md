@@ -138,8 +138,8 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-entity = 'entity_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Uuid identifier of the entity
+entity = 'entity_example' # str | Entity: project name, hub name, registry name, ...
+uuid = 'uuid_example' # str | Uuid identifier of the sub-entity
 
     try:
         # Delete project dashboard
@@ -153,8 +153,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **entity** | **str**| Owner of the namespace | 
- **uuid** | **str**| Uuid identifier of the entity | 
+ **entity** | **str**| Entity: project name, hub name, registry name, ... | 
+ **uuid** | **str**| Uuid identifier of the sub-entity | 
 
 ### Return type
 
@@ -220,8 +220,8 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-entity = 'entity_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Uuid identifier of the entity
+entity = 'entity_example' # str | Entity: project name, hub name, registry name, ...
+uuid = 'uuid_example' # str | Uuid identifier of the sub-entity
 
     try:
         # Get project dashboard
@@ -236,8 +236,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **entity** | **str**| Owner of the namespace | 
- **uuid** | **str**| Uuid identifier of the entity | 
+ **entity** | **str**| Entity: project name, hub name, registry name, ... | 
+ **uuid** | **str**| Uuid identifier of the sub-entity | 
 
 ### Return type
 
@@ -307,7 +307,7 @@ name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List project dashboard
@@ -326,7 +326,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -396,7 +396,7 @@ name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List project dashboards
@@ -415,7 +415,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -566,8 +566,8 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ProjectDashboardsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-entity = 'entity_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Uuid identifier of the entity
+entity = 'entity_example' # str | Entity: project name, hub name, registry name, ...
+uuid = 'uuid_example' # str | Uuid identifier of the sub-entity
 
     try:
         # Promote project dashboard
@@ -581,8 +581,8 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **entity** | **str**| Owner of the namespace | 
- **uuid** | **str**| Uuid identifier of the entity | 
+ **entity** | **str**| Entity: project name, hub name, registry name, ... | 
+ **uuid** | **str**| Uuid identifier of the sub-entity | 
 
 ### Return type
 

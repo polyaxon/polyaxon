@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ message Cache {
     // Optional flag to disable cache, Cache is enabled by default
     bool disable = 1;
 
-    // Optional time to live for the cache before it gets invalidated automatically, 
+    // Optional time to live for the cache before it gets invalidated automatically,
     // the TTL is caclculated based on the time the run starts
     int32 ttl = 2;
 

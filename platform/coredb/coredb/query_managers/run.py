@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +34,14 @@ from polyaxon.pql.parser import (
 
 class RunQueryManager(BaseQueryManager):
     NAME = "run"
-    FIELDS_USE_UUID = {"project", "original", "pipeline", "agent", "queue"}
+    FIELDS_USE_UUID = {
+        "project",
+        "original",
+        "pipeline",
+        "agent",
+        "queue",
+        "artifacts_store",
+    }
     FIELDS_PROXY = {
         "params": "inputs",
         "in": "inputs",
@@ -47,6 +54,7 @@ class RunQueryManager(BaseQueryManager):
         "user": "user__username",
         "agent": "agent__name",
         "queue": "queue__name",
+        "artifacts_store": "artifacts_store__name",
     }
     FIELDS_ORDERING = (
         "created_at",
@@ -137,6 +145,8 @@ class RunQueryManager(BaseQueryManager):
         # Agent
         "agent": parse_value_operation,
         "queue": parse_value_operation,
+        # Artifacts store
+        "artifacts_store": parse_value_operation,
         # Flags
         "is_managed": parse_value_operation,
         "is_approved": parse_value_operation,
@@ -207,6 +217,8 @@ class RunQueryManager(BaseQueryManager):
         # Agent
         "agent": ValueCondition,
         "queue": ValueCondition,
+        # Artifacts store
+        "artifacts_store": ValueCondition,
         # Flags
         "is_managed": BoolCondition,
         "is_approved": BoolCondition,

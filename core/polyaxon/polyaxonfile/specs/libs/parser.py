@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ class Parser:
         return parsed_params
 
     @classmethod
-    def parse(
+    def parse_operation(
         cls, config, param_spec: Dict[str, ParamSpec]
     ):  # pylint:disable=too-many-branches
         parsed_params = cls.get_parsed_params(param_spec)
@@ -94,12 +94,6 @@ class Parser:
             ]
 
         # Check workflow
-        matrix_section = cls._get_section(config, Sections.MATRIX)
-        if matrix_section:
-            parsed_data[Sections.MATRIX] = cls.parse_expression(
-                matrix_section, parsed_params
-            )
-
         for section in Sections.PARSING_SECTIONS:
             config_section = cls._get_section(config, section)
             if config_section:
@@ -107,22 +101,36 @@ class Parser:
                     config_section, parsed_params
                 )
 
-        for section in Sections.OP_PARSING_SECTIONS:
-            config_section = cls._get_section(config, section)
-            if config_section:
-                parsed_data[section] = cls.parse_expression(
-                    config_section, parsed_params
-                )
+        parsed_data = cls._parse_conditions(parsed_data)
 
+        config_section = cls._get_section(config, Sections.RUN)
+        if config_section:
+            parsed_data[Sections.RUN] = config_section
+        config_section = cls._get_section(config, Sections.HOOKS)
+        if config_section:
+            parsed_data[Sections.HOOKS] = config_section
+
+        return parsed_data
+
+    @classmethod
+    def _parse_conditions(cls, parsed_data: Dict) -> Dict:
         if Sections.CONDITIONS in parsed_data and not isinstance(
             parsed_data[Sections.CONDITIONS], str
         ):
             parsed_data[Sections.CONDITIONS] = str(parsed_data[Sections.CONDITIONS])
-        config_section = cls._get_section(config, Sections.RUN)
-        if config_section:
-            parsed_data[Sections.RUN] = config_section
-
         return parsed_data
+
+    @classmethod
+    def _parse_hook(cls, config, param_spec: Dict[str, ParamSpec]):
+        hook = cls.parse_section(config, param_spec=param_spec, parse_params=True)
+        return cls._parse_conditions(hook)
+
+    @classmethod
+    def parse_hooks(cls, config, param_spec: Dict[str, ParamSpec]):
+        hooks = config.hooks or []
+        return [
+            cls._parse_hook(hook.to_dict(), param_spec=param_spec) for hook in hooks
+        ]
 
     @classmethod
     def parse_runtime(cls, parsed_data, param_spec: Dict[str, ParamSpec]):

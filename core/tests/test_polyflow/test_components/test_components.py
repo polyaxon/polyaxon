@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -628,15 +628,11 @@ class TestComponentsConfigs(BaseTestCase):
         config = V1Component.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
-    def test_component_actions_and_hooks(self):
+    def test_component_and_hooks(self):
         config_dict = {
             "kind": "component",
-            "actions": [
-                {"hubRef": "ref1"},
-                {"hubRef": "ref2", "label": "customLabel", "many": True},
-            ],
             "hooks": [
-                {"trigger": "succeeded", "connection": "connection1"},
+                {"trigger": "succeeded", "connection": "connection1", "hubRef": "ref1"},
                 {"connection": "connection1", "hubRef": "ref2"},
             ],
             "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
@@ -647,12 +643,8 @@ class TestComponentsConfigs(BaseTestCase):
     def test_component_template(self):
         config_dict = {
             "kind": "component",
-            "actions": [
-                {"hubRef": "ref1"},
-                {"hubRef": "ref2", "label": "customLabel", "many": True},
-            ],
             "hooks": [
-                {"trigger": "succeeded", "connection": "connection1"},
+                {"trigger": "succeeded", "connection": "connection1", "hubRef": "ref2"},
                 {"connection": "connection1", "hubRef": "ref2"},
             ],
             "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},

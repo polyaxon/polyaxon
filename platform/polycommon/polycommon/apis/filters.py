@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -69,7 +69,10 @@ class QueryFilter(BaseFilterBackend):
                     manager=query_manager, query_spec=query_spec, queryset=queryset
                 )
             except PQLException as e:
-                raise ValidationError(e)
+                if getattr(view, "exception_class", False):
+                    raise e
+                else:
+                    raise ValidationError(e)
 
         return queryset
 

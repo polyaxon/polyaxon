@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,10 +29,6 @@ from starlette.responses import FileResponse, JSONResponse, Response
 
 from polyaxon import settings
 from polyaxon.k8s.async_manager import AsyncK8SManager
-from polyaxon.k8s.custom_resources.operation import (
-    get_resource_name,
-    get_resource_name_for_kind,
-)
 from polyaxon.k8s.logging.async_monitor import query_k8s_operation_logs
 from polyaxon.lifecycle import V1StatusCondition
 from polyaxon.polyboard.artifacts import V1ArtifactKind
@@ -60,6 +56,7 @@ from polyaxon.streams.controllers.uploads import handle_upload
 from polyaxon.streams.tasks.logs import clean_tmp_logs, upload_logs
 from polyaxon.streams.tasks.notification import notify_run
 from polyaxon.utils.bool_utils import to_bool
+from polyaxon.utils.fqn_utils import get_resource_name, get_resource_name_for_kind
 
 
 class UJSONResponse(JSONResponse):

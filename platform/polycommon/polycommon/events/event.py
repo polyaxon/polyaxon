@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ class Event:
         "datetime",
         "instance",
         "instance_id",
-        "instance_contenttype",
+        "instance_uuid",
     ]
 
     event_type = None  # The event type should ideally follow subject.action
@@ -71,6 +71,9 @@ class Event:
     actor = False
     actor_id = "actor_id"
     actor_name = "actor_name"
+    entity_uuid = None
+    owner_id = None
+    owner_name = None
 
     @classmethod
     def get_event_attributes(cls) -> Iterable["Attribute"]:
@@ -90,7 +93,7 @@ class Event:
         datetime: AwareDT = None,
         instance: Any = None,
         instance_id: int = None,
-        instance_contenttype: str = None,
+        instance_uuid: str = None,
         ref_id: str = None,
         event_data: Mapping = None,
         **items
@@ -99,7 +102,7 @@ class Event:
         self.datetime = datetime or timezone.now()
         self.instance = instance
         self.instance_id = instance_id
-        self.instance_contenttype = instance_contenttype
+        self.instance_uuid = instance_uuid
         self.ref_id = None
         if ref_id:
             self.ref_id = UUID(ref_id) if isinstance(ref_id, str) else ref_id
@@ -195,7 +198,7 @@ class Event:
         }
         if include_instance_info:
             data["instance_id"] = self.instance_id
-            data["instance_contenttype"] = self.instance_contenttype
+            data["instance_uuid"] = self.instance_uuid
         return dumps_htmlsafe(data) if dumps else data
 
     @classmethod
@@ -213,10 +216,10 @@ class Event:
     @staticmethod
     def get_instance_info(instance: Any) -> Dict:
         if isinstance(instance, Model):
-            from django.contrib.contenttypes.models import ContentType
-
             return {
-                "instance_contenttype": ContentType.objects.get_for_model(instance).id,
+                "instance_uuid": instance.uuid.hex
+                if hasattr(instance, "uuid")
+                else None,
                 "instance_id": instance.id,
             }
         return {}
@@ -230,9 +233,9 @@ class Event:
             instance_id = kwargs.get("instance_id")
             if instance_id:
                 values["instance_id"] = instance_id
-            instance_contenttype = kwargs.get("instance_contenttype")
-            if instance_contenttype:
-                values["instance_contenttype"] = instance_contenttype
+            instance_uuid = kwargs.get("instance_uuid")
+            if instance_uuid:
+                values["instance_uuid"] = instance_uuid
 
         for attr in cls.get_event_attributes():
             # Convert dot notation
@@ -251,7 +254,7 @@ class Event:
             event_data=event_data.get("data"),
             instance=event_data.get("instance"),
             instance_id=event_data.get("instance_id"),
-            instance_contenttype=event_data.get("instance_contenttype"),
+            instance_uuid=event_data.get("instance_uuid"),
             **kwargs
         )
 

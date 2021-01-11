@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,13 +19,22 @@ from polycommon.events.event import Attribute
 OWNER_ATTRIBUTES = (Attribute("id"), Attribute("name"))
 
 OWNER_RESOURCE_ATTRIBUTES = (
-    Attribute("uuid"),
+    Attribute("uuid", is_uuid=True),
     Attribute("name"),
     Attribute("owner.name"),
-    Attribute("owner.id"),
+    Attribute("owner_id"),
 )
 
-PROJECT_ATTRIBUTES = (Attribute("name"), Attribute("owner.name"))
+AGENT_RESOURCE_ATTRIBUTES = (
+    Attribute("uuid", is_uuid=True),
+    Attribute("name"),
+    Attribute("owner.name"),
+    Attribute("owner_id"),
+    Attribute("agent_name"),
+    Attribute("agent_uuid"),
+    Attribute("agent_id"),
+)
+
 PROJECT_OWNER_ATTRIBUTES = (
     Attribute("name"),
     Attribute("owner.name"),
@@ -34,26 +43,22 @@ PROJECT_OWNER_ATTRIBUTES = (
 
 PROJECT_RESOURCE_ATTRIBUTES = (
     Attribute("uuid", is_uuid=True),
+    Attribute("project.uuid", is_uuid=True),
     Attribute("project.name"),
     Attribute("project.owner.name"),
 )
 
 PROJECT_RESOURCE_OWNER_ATTRIBUTES = (
     Attribute("uuid", is_uuid=True),
+    Attribute("project.uuid", is_uuid=True),
     Attribute("project.name"),
     Attribute("project.owner.name"),
     Attribute("owner_id"),
 )
 
-PROJECT_RUN_ATTRIBUTES = (
-    Attribute("uuid", is_uuid=True),
-    Attribute("project.name"),
-    Attribute("project.owner.name"),
-)
-
-
 PROJECT_RUN_EXECUTOR_ATTRIBUTES = (
     Attribute("uuid", is_uuid=True),
+    Attribute("project.uuid", is_uuid=True),
     Attribute("project.name"),
     Attribute("project.owner.name"),
     Attribute("is_managed", attr_type=bool, is_required=False),
@@ -62,6 +67,7 @@ PROJECT_RUN_EXECUTOR_ATTRIBUTES = (
 
 PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES = (
     Attribute("uuid", is_uuid=True),
+    Attribute("project.uuid", is_uuid=True),
     Attribute("project.name"),
     Attribute("owner_id"),
     Attribute("project.owner.name"),

@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,17 +31,20 @@ import (
 // swagger:model v1Hook
 type V1Hook struct {
 
-	// Connection to use for this hook
+	// An optional list of condition to check before starting the run, entities should be a valid Condition
+	Conditions []interface{} `json:"conditions"`
+
+	// Optional connection
 	Connection string `json:"connection,omitempty"`
 
-	// Component name to use, if not provided Polyaxon will check the action name isntead
+	// Component name to use
 	HubRef string `json:"hub_ref,omitempty"`
 
 	// Optional dict of params
 	Params map[string]V1Param `json:"params,omitempty"`
 
-	// Optional a run section to override  the content of the run in the template
-	RunPatch interface{} `json:"run_patch,omitempty"`
+	// Optional preset to use for running this operation
+	Presets []string `json:"presets"`
 
 	// Optional trigger policy, default done
 	Trigger V1Statuses `json:"trigger,omitempty"`

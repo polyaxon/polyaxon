@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -82,9 +82,23 @@ class BaseResolver:
         self.artifacts = []
         self.created_at = created_at
         self.compiled_at = compiled_at
+        self.schedule_at = None
+        self.started_at = None
+        self.finished_at = None
+        self.duration = None
         self.cloning_kind = cloning_kind
         self.original_uuid = original_uuid
         self._param_spec = {}
+
+    @classmethod
+    def is_kind_supported(cls, compiled_operation: V1CompiledOperation):
+        run_kind = compiled_operation.get_run_kind()
+        if run_kind not in cls.KINDS:
+            raise PolyaxonCompilerError(
+                "Resolver Error. "
+                "Specification with run kind: {} "
+                "is not supported in this deployment version.".format(run_kind)
+            )
 
     @property
     def param_spec(self):
@@ -110,7 +124,7 @@ class BaseResolver:
     def resolve_params(self):
         pass
 
-    def apply_params(self):
+    def apply_params(self, should_be_resolved: bool = True):
         self.compiled_operation = CompiledOperationSpecification.apply_params(
             config=self.compiled_operation,
             params=self.params,
@@ -119,7 +133,7 @@ class BaseResolver:
         self._param_spec = CompiledOperationSpecification.calculate_context_spec(
             config=self.compiled_operation,
             contexts=self.globals,
-            should_be_resolved=True,
+            should_be_resolved=should_be_resolved,
         )
 
     def resolve_connections_params(self):
@@ -130,6 +144,7 @@ class BaseResolver:
                 if self.agent_config
                 else None,
                 contexts=self.globals,
+                param_spec=self.param_spec,
             )
         )
 
@@ -145,7 +160,7 @@ class BaseResolver:
             self.compiled_operation = (
                 CompiledOperationSpecification.apply_operation_contexts(
                     self.compiled_operation,
-                    param_spec=self._param_spec,
+                    param_spec=self.param_spec,
                     contexts=self.globals,
                 )
             )
@@ -184,14 +199,14 @@ class BaseResolver:
             run_name=self.run_name,
             run_path=self.run_path,
             run_uuid=self.run_uuid,
-            param_spec=self._param_spec,
+            param_spec=self.param_spec,
             compiled_operation=self.compiled_operation,
             connection_by_names=self.connection_by_names,
             artifacts_store=self.artifacts_store,
         )
 
-    def _apply_runtime_contexts(self):
-        contexts = resolve_contexts(
+    def _resolve_contexts(self):
+        return resolve_contexts(
             namespace=self.namespace,
             owner_name=self.owner_name,
             project_name=self.project_name,
@@ -208,6 +223,9 @@ class BaseResolver:
             cloning_kind=self.cloning_kind,
             original_uuid=self.original_uuid,
         )
+
+    def _apply_runtime_contexts(self):
+        contexts = self._resolve_contexts()
         return CompiledOperationSpecification.apply_runtime_contexts(
             self.compiled_operation, contexts=contexts
         )
@@ -244,7 +262,6 @@ class BaseResolver:
         self.resolve_io()
         self.resolve_access()
         self.resolve_connections()
-        self.resolve_actions()
         self.resolve_artifacts_lineage()
         self.resolve_state()
         self.apply_runtime_contexts()

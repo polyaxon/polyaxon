@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,15 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/struct.proto";
+
 // Artifacts type specification
 message ArtifactsType {
     // Optional files to initialize
-    repeated string files = 1;
+    repeated google.protobuf.Struct files = 1;
 
     // Optional dirs to initialize
-    repeated string dirs = 2;
+    repeated google.protobuf.Struct dirs = 2;
 
     // Optional number of concurrent threads to use
     int32 workers = 3;

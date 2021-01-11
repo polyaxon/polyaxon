@@ -5,7 +5,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **value** | [**object**](.md) |  | [optional] 
 **ref** | **str** |  | [optional] 
-**search** | [**V1ParamSearch**](V1ParamSearch.md) |  | [optional] 
 **connection** | **str** |  | [optional] 
 **to_init** | **bool** |  | [optional] 
 **context_only** | **bool** |  | [optional] 

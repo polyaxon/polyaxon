@@ -48,7 +48,7 @@ The content of `notification-secret.json` should contain all the webhooks that y
 Now you can add your PagerDuty's webhook to the integrations' section:
 
 ```yaml
-notificationConnections:
+connections:
   - name: pagerduty-connection1
     kind: pagerduty
     secret:

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -91,7 +91,7 @@ def parse_datetime_operation(operation: str) -> "QueryOpSpec":
     # Check not allowed ops
     if "|" in _operation:
         raise PQLException(
-            "`|` is not allowed for datetime operations. "
+            "`|` is not allowed for datetime conditions. "
             "Operation: {}".format(operation)
         )
 
@@ -146,12 +146,12 @@ def parse_scalar_operation(operation: str) -> "QueryOpSpec":
     # Check not allowed ops
     if "|" in _operation:
         raise PQLException(
-            "`|` is not allowed for scalar operations. "
+            "`|` is not allowed for scalar conditions. "
             "Operation: {}".format(operation)
         )
     if ".." in _operation:
         raise PQLException(
-            "`..` is not allowed for scalar operations. "
+            "`..` is not allowed for scalar conditions. "
             "Operation: {}".format(operation)
         )
 
@@ -201,7 +201,7 @@ def parse_value_operation(operation: str) -> "QueryOpSpec":
     # Check range not allowed
     if ".." in _operation:
         raise PQLException(
-            "`..` is not allowed for value operations. "
+            "`..` is not allowed for value conditions. "
             "Operation: {}".format(operation)
         )
 
@@ -217,7 +217,7 @@ def parse_value_operation(operation: str) -> "QueryOpSpec":
     op, _operation = parse_comparison_operation(_operation)
     if op:
         raise PQLException(
-            "`{}` is not allowed for value operations, "
+            "`{}` is not allowed for value conditions, "
             "Operation: {}".format(op, operation)
         )
 
@@ -228,7 +228,7 @@ def parse_value_operation(operation: str) -> "QueryOpSpec":
         params = [param.strip() for param in params if param.strip()]
         if len(params) <= 1:
             raise PQLException(
-                "`{}` is not allowed for value operations, "
+                "`{}` is not allowed for value conditions, "
                 "Operation: {}".format(op, operation)
             )
         return QueryOpSpec(op, negation, params)
@@ -263,7 +263,7 @@ def parse_search_operation(operation: str) -> "QueryOpSpec":
     # Check range not allowed
     if ".." in _operation:
         raise PQLException(
-            "`..` is not allowed for value operations. "
+            "`..` is not allowed for search conditions. "
             "Operation: {}".format(operation)
         )
 
@@ -279,7 +279,7 @@ def parse_search_operation(operation: str) -> "QueryOpSpec":
     op, _operation = parse_comparison_operation(_operation)
     if op:
         raise PQLException(
-            "`{}` is not allowed for value operations, "
+            "`{}` is not allowed for search conditions, "
             "Operation: {}".format(op, operation)
         )
 
@@ -290,7 +290,7 @@ def parse_search_operation(operation: str) -> "QueryOpSpec":
         params = [param.strip() for param in params if param.strip()]
         if len(params) <= 1:
             raise PQLException(
-                "`{}` is not allowed for value operations, "
+                "`{}` is not allowed for search conditions, "
                 "Operation: {}".format(op, operation)
             )
         return QueryOpSpec(op, negation, params)
@@ -304,7 +304,7 @@ def parse_search_operation(operation: str) -> "QueryOpSpec":
         params = [param.strip() for param in params if param.strip()]
         if len(params) != 1:
             raise PQLException(
-                "`{}` is not allowed for value operations, "
+                "`{}` is not allowed for search conditions, "
                 "Operation: {}".format(op, operation)
             )
         return QueryOpSpec(op, negation, params[0])
@@ -315,7 +315,7 @@ def parse_search_operation(operation: str) -> "QueryOpSpec":
         params = [param.strip() for param in params if param.strip()]
         if len(params) != 1:
             raise PQLException(
-                "`{}` is not allowed for value operations, "
+                "`{}` is not allowed for search conditions, "
                 "Operation: {}".format(op, operation)
             )
         return QueryOpSpec(op, negation, params[0])
@@ -326,7 +326,7 @@ def parse_search_operation(operation: str) -> "QueryOpSpec":
         params = [param.strip() for param in params if param.strip()]
         if len(params) != 1:
             raise PQLException(
-                "`{}` is not allowed for value operations, "
+                "`{}` is not allowed for search conditions, "
                 "Operation: {}".format(op, operation)
             )
         return QueryOpSpec(op, negation, params[0])
@@ -351,9 +351,9 @@ def parse_expression(expression: str) -> Tuple[str, str]:
     """
     try:
         _expression = expression.strip()
-        name, operation = _expression.split(":")
-        name = name.strip()
-        operation = operation.strip()
+        parts = _expression.split(":")
+        name = parts[0].strip()
+        operation = ":".join(parts[1:]).strip()
         if not name or not operation:
             raise ValueError
     except (ValueError, AttributeError):

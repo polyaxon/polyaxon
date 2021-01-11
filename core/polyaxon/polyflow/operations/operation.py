@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import polyaxon_sdk
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.polyflow.component.component import ComponentSchema
+from polyaxon.polyflow.hooks import V1Hook
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
 from polyaxon.polyflow.params import ParamSchema
 from polyaxon.polyflow.references import V1DagRef, V1HubRef, V1PathRef, V1UrlRef
@@ -120,9 +121,8 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         schedule: Union[[V1CronSchedule](/docs/automation/schedules/cron/)
                   [V1IntervalSchedule](/docs/automation/schedules/interval/),
                   [V1DateTimeSchedule](/docs/automation/schedules/datetime/)], optional
-        events: List[[str](/docs/automation/extensions/events/)], optional
-        actions: List[[V1Action](/docs/automation/extensions/actions/)], optional
-        hooks: List[[V1Hook](/docs/automation/extensions/hooks/)], optional
+        events: List[[V1EventTrigger](/docs/automation/events/)], optional
+        hooks: List[[V1Hook](/docs/automation/hooks/)], optional
         matrix: Union[[V1Mapping](/docs/automation/mapping/),
                   [V1GridSearch](/docs/automation/optimization-engine/grid-search/),
                   [V1RandomSearch](/docs/automation/optimization-engine/random-search/),
@@ -130,6 +130,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
                   [V1Bayes](/docs/automation/optimization-engine/bayesian-optimization/),
                   [V1Hyperopt](/docs/automation/optimization-engine/hyperopt/),
                   [V1Iterative](/docs/automation/optimization-engine/iterative/)], optional
+        joins: List[[V1Join](/docs/automation/joins/)], optional
         dependencies:
             [dependencies](/docs/automation/flow-engine/specification/#dependencies),
             optional
@@ -374,7 +375,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
     The [params](/docs/core/specification/params/)  to pass to the component,
     they will be validated against the inputs/outputs.
     If a parameter is passed and the component does not define a corresponding inputs/outputs,
-    a validation error will be raised unless the param has the contextOnly flag enabled.
+    a validation error will be raised unless the param has the `contextOnly` flag enabled.
 
     ```yaml
     >>> operation:
@@ -647,3 +648,15 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         run_patch.pop("kind")
         result.run_patch = run_patch
         return result
+
+    @classmethod
+    def from_hook(cls, hook: V1Hook):
+        run_patch = None
+        if hook.connection:
+            run_patch = {"connections": [hook.connection]}
+        return cls(
+            run_patch=run_patch,
+            hub_ref=hook.hub_ref,
+            presets=hook.presets,
+            params=hook.params,
+        )

@@ -1,5 +1,5 @@
 /*
-Copyright 2018-2020 Polyaxon, Inc.
+Copyright 2018-2021 Polyaxon, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -90,6 +90,7 @@ func main() {
 		Scheme:             scheme,
 		MetricsBindAddress: metricsAddr,
 		LeaderElection:     enableLeaderElection,
+		LeaderElectionID:   "ops.core.polyaxon.com",
 		Port:               9443,
 		Namespace:          namespace,
 	})

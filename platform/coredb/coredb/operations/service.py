@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,13 @@ from typing import Dict, Optional, Set, Tuple, Union
 from coredb.abstracts.getter import get_run_model
 from coredb.abstracts.runs import BaseRun
 from polyaxon.lifecycle import V1StatusCondition, V1Statuses
-from polyaxon.metadata.keys import META_HAS_DAGS, META_HAS_JOBS, META_HAS_SERVICES
+from polyaxon.metadata.keys import (
+    META_HAS_DAGS,
+    META_HAS_HOOKS,
+    META_HAS_JOBS,
+    META_HAS_MATRICES,
+    META_HAS_SERVICES,
+)
 from polyaxon.polyaxonfile import OperationSpecification
 from polyaxon.polyflow import (
     V1CloningKind,
@@ -54,6 +60,8 @@ class OperationsService(Service):
             return V1RunKind.JOB, V1RunKind.DASK
         elif compiled_operation.is_spark_run:
             return V1RunKind.JOB, V1RunKind.SPARK
+        elif compiled_operation.is_tuner_run:
+            return V1RunKind.TUNER, V1RunKind.JOB
         # Default case
         kind = compiled_operation.run.kind
         return kind, kind
@@ -89,17 +97,26 @@ class OperationsService(Service):
         **kwargs,
     ) -> Tuple[str, str, Dict]:
         meta_info = meta_info or {}
-        if compiled_operation.matrix or compiled_operation.schedule:
+        if compiled_operation.hooks:
+            meta_info[META_HAS_HOOKS] = True
+        if compiled_operation.schedule:
+            if compiled_operation.matrix:
+                meta_info[META_HAS_MATRICES] = True
+            elif kind == V1RunKind.JOB:
+                meta_info[META_HAS_JOBS] = True
+            elif kind == V1RunKind.SERVICE:
+                meta_info[META_HAS_SERVICES] = True
+            elif kind == V1RunKind.DAG:
+                meta_info[META_HAS_DAGS] = True
+            kind = V1RunKind.SCHEDULE
+            runtime = compiled_operation.schedule.kind
+        elif compiled_operation.matrix:
             if kind == V1RunKind.JOB:
                 meta_info[META_HAS_JOBS] = True
             elif kind == V1RunKind.SERVICE:
                 meta_info[META_HAS_SERVICES] = True
             elif kind == V1RunKind.DAG:
                 meta_info[META_HAS_DAGS] = True
-        if compiled_operation.schedule:
-            kind = V1RunKind.SCHEDULE
-            runtime = compiled_operation.schedule.kind
-        elif compiled_operation.matrix:
             kind = V1RunKind.MATRIX
             runtime = compiled_operation.matrix.kind
 
@@ -165,10 +182,16 @@ class OperationsService(Service):
             if cloning_kind == V1CloningKind.COPY:
                 if runtime not in {V1RunKind.JOB, V1RunKind.SERVICE}:
                     raise ValueError(
-                        "Operation with kind `{}` does not support restart with copy mode."
+                        "Operation with kind `{}` does not support restart with copy mode.".format(
+                            runtime
+                        )
                     )
                 compiled_operation.run.add_init(
-                    V1Init(artifacts=V1ArtifactsType(dirs=[original_uuid]))
+                    V1Init(
+                        artifacts=V1ArtifactsType(
+                            dirs=[[original_uuid, "{{ globals.run_artifacts_path }}"]]
+                        )
+                    )
                 )
             kwargs["content"] = compiled_operation.to_dict(dump=True)
         instance = get_run_model()(

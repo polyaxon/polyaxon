@@ -22,3 +22,6 @@ run:
         str-input:
           ref: ops.ref-path-op
           value: inputs.str-input
+    - name: ref-hub-op
+      hubRef: ref-hub
+      events: [{ref: ref-url-op, kinds: [run_status_done]}]

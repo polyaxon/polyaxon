@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_TIME_ZONE,
 )
 from polyaxon.parser import parser
+from polycommon import pkg
 
 TESTING = parser.get_boolean(
     "TESTING", os.getenv("TESTING", "0"), is_optional=True, default=False
@@ -51,7 +52,7 @@ class ConfigManager(BaseConfigManager):
             "POLYAXON_SCHEDULER_ENABLED", is_optional=True, default=False
         )
         self._chart_version = self.get_string(
-            "POLYAXON_CHART_VERSION", is_optional=True, default="1.4.5"
+            "POLYAXON_CHART_VERSION", is_optional=True, default=pkg.VERSION
         )
         self._redis_protocol = self.get_string(
             "POLYAXON_REDIS_PROTOCOL", is_optional=True, default="redis"

@@ -232,7 +232,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listTokens(opts, (error, data, response) => {
   if (error) {
@@ -251,7 +251,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 

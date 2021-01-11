@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ executor.subscribe(run.RunCreatedEvent)
 executor.subscribe(run.RunResumedActorEvent)
 executor.subscribe(run.RunStoppedActorEvent)
 executor.subscribe(run.RunApprovedActorEvent)
+executor.subscribe(run.RunNewStatusEvent)
 executor.subscribe(run.RunDoneEvent)
 executor.subscribe(run.RunDeletedActorEvent)
 executor.subscribe(run.RunNewArtifactsEvent)

@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -87,7 +87,7 @@ type GetRunArtifactsLineageOK struct {
 }
 
 func (o *GetRunArtifactsLineageOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage][%d] getRunArtifactsLineageOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts][%d] getRunArtifactsLineageOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageOK) GetPayload() *service_model.V1ListRunArtifactsResponse {
@@ -120,7 +120,7 @@ type GetRunArtifactsLineageNoContent struct {
 }
 
 func (o *GetRunArtifactsLineageNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage][%d] getRunArtifactsLineageNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts][%d] getRunArtifactsLineageNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageNoContent) GetPayload() interface{} {
@@ -151,7 +151,7 @@ type GetRunArtifactsLineageForbidden struct {
 }
 
 func (o *GetRunArtifactsLineageForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage][%d] getRunArtifactsLineageForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts][%d] getRunArtifactsLineageForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageForbidden) GetPayload() interface{} {
@@ -182,7 +182,7 @@ type GetRunArtifactsLineageNotFound struct {
 }
 
 func (o *GetRunArtifactsLineageNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage][%d] getRunArtifactsLineageNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts][%d] getRunArtifactsLineageNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageNotFound) GetPayload() interface{} {
@@ -222,7 +222,7 @@ func (o *GetRunArtifactsLineageDefault) Code() int {
 }
 
 func (o *GetRunArtifactsLineageDefault) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage][%d] GetRunArtifactsLineage default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts][%d] GetRunArtifactsLineage default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *GetRunArtifactsLineageDefault) GetPayload() *service_model.RuntimeError {

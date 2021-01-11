@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,41 +18,4 @@ import polyaxon_sdk
 
 
 class V1ArtifactKind(polyaxon_sdk.V1ArtifactKind):
-    CHOICES = (
-        (polyaxon_sdk.V1ArtifactKind.MODEL, polyaxon_sdk.V1ArtifactKind.MODEL),
-        (polyaxon_sdk.V1ArtifactKind.AUDIO, polyaxon_sdk.V1ArtifactKind.AUDIO),
-        (polyaxon_sdk.V1ArtifactKind.VIDEO, polyaxon_sdk.V1ArtifactKind.VIDEO),
-        (polyaxon_sdk.V1ArtifactKind.HISTOGRAM, polyaxon_sdk.V1ArtifactKind.HISTOGRAM),
-        (polyaxon_sdk.V1ArtifactKind.IMAGE, polyaxon_sdk.V1ArtifactKind.IMAGE),
-        (polyaxon_sdk.V1ArtifactKind.TENSOR, polyaxon_sdk.V1ArtifactKind.TENSOR),
-        (polyaxon_sdk.V1ArtifactKind.DATAFRAME, polyaxon_sdk.V1ArtifactKind.DATAFRAME),
-        (polyaxon_sdk.V1ArtifactKind.CHART, polyaxon_sdk.V1ArtifactKind.CHART),
-        (polyaxon_sdk.V1ArtifactKind.CSV, polyaxon_sdk.V1ArtifactKind.CSV),
-        (polyaxon_sdk.V1ArtifactKind.TSV, polyaxon_sdk.V1ArtifactKind.TSV),
-        (polyaxon_sdk.V1ArtifactKind.PSV, polyaxon_sdk.V1ArtifactKind.PSV),
-        (polyaxon_sdk.V1ArtifactKind.SSV, polyaxon_sdk.V1ArtifactKind.SSV),
-        (polyaxon_sdk.V1ArtifactKind.METRIC, polyaxon_sdk.V1ArtifactKind.METRIC),
-        (polyaxon_sdk.V1ArtifactKind.ENV, polyaxon_sdk.V1ArtifactKind.ENV),
-        (polyaxon_sdk.V1ArtifactKind.HTML, polyaxon_sdk.V1ArtifactKind.HTML),
-        (polyaxon_sdk.V1ArtifactKind.TEXT, polyaxon_sdk.V1ArtifactKind.TEXT),
-        (polyaxon_sdk.V1ArtifactKind.FILE, polyaxon_sdk.V1ArtifactKind.FILE),
-        (polyaxon_sdk.V1ArtifactKind.DIR, polyaxon_sdk.V1ArtifactKind.DIR),
-        (
-            polyaxon_sdk.V1ArtifactKind.TENSORBOARD,
-            polyaxon_sdk.V1ArtifactKind.TENSORBOARD,
-        ),
-        (
-            polyaxon_sdk.V1ArtifactKind.DOCKERFILE,
-            polyaxon_sdk.V1ArtifactKind.DOCKERFILE,
-        ),
-        (
-            polyaxon_sdk.V1ArtifactKind.DOCKER_IMAGE,
-            polyaxon_sdk.V1ArtifactKind.DOCKER_IMAGE,
-        ),
-        (polyaxon_sdk.V1ArtifactKind.DATA, polyaxon_sdk.V1ArtifactKind.DATA),
-        (polyaxon_sdk.V1ArtifactKind.CODEREF, polyaxon_sdk.V1ArtifactKind.CODEREF),
-        (polyaxon_sdk.V1ArtifactKind.TABLE, polyaxon_sdk.V1ArtifactKind.TABLE),
-        (polyaxon_sdk.V1ArtifactKind.CURVE, polyaxon_sdk.V1ArtifactKind.CURVE),
-        (polyaxon_sdk.V1ArtifactKind.ANALYSIS, polyaxon_sdk.V1ArtifactKind.ANALYSIS),
-        (polyaxon_sdk.V1ArtifactKind.ITERATION, polyaxon_sdk.V1ArtifactKind.ITERATION),
-    )
+    pass

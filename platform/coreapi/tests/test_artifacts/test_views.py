@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ from polycommon.celeryp.tasks import CoreSchedulerCeleryTasks
 from tests.base.case import BaseTest
 
 
-@pytest.mark.artifacts_mark
+@pytest.mark.lineages_mark
 class TestRunArtifactNameListViewV1(BaseTest):
     serializer_class = RunArtifactNameSerializer
     model_class = Artifact
@@ -98,7 +98,16 @@ class TestRunArtifactNameListViewV1(BaseTest):
         assert data == self.serializer_class(self.query, many=True).data
 
 
-@pytest.mark.artifacts_mark
+@pytest.mark.lineages_mark
+class TestRunArtifactNameListViewV15(TestRunArtifactNameListViewV1):
+    def setUp(self):
+        super().setUp()
+        self.url = "/{}/{}/{}/runs/{}/lineage/artifacts/names/".format(
+            API_V1, "polyaxon", self.project.name, self.run.uuid.hex
+        )
+
+
+@pytest.mark.lineages_mark
 class TestRunArtifactListViewV1(BaseTest):
     serializer_class = RunArtifactSerializer
     model_class = Artifact
@@ -217,7 +226,16 @@ class TestRunArtifactListViewV1(BaseTest):
         }
 
 
-@pytest.mark.artifacts_mark
+@pytest.mark.lineages_mark
+class TestRunArtifactListViewV15(TestRunArtifactListViewV1):
+    def setUp(self):
+        super().setUp()
+        self.url = "/{}/{}/{}/runs/{}/lineage/artifacts/".format(
+            API_V1, "polyaxon", self.project.name, self.run.uuid.hex
+        )
+
+
+@pytest.mark.lineages_mark
 class TestRunArtifactDetailViewV1(BaseTest):
     serializer_class = RunArtifactSerializer
     model_class = Artifact
@@ -258,3 +276,16 @@ class TestRunArtifactDetailViewV1(BaseTest):
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert Artifact.objects.count() == 1
         assert ArtifactLineage.objects.count() == 0
+
+
+@pytest.mark.lineages_mark
+class TestRunArtifactDetailViewV15(TestRunArtifactDetailViewV1):
+    def setUp(self):
+        super().setUp()
+        self.url = "/{}/{}/{}/runs/{}/lineage/artifacts/{}/".format(
+            API_V1,
+            "polyaxon",
+            self.project.name,
+            self.run.uuid.hex,
+            self.artifact.name,
+        )

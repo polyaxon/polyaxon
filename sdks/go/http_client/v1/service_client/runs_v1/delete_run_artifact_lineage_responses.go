@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@ type DeleteRunArtifactLineageOK struct {
 }
 
 func (o *DeleteRunArtifactLineageOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}][%d] deleteRunArtifactLineageOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] deleteRunArtifactLineageOK ", 200)
 }
 
 func (o *DeleteRunArtifactLineageOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -108,7 +108,7 @@ type DeleteRunArtifactLineageNoContent struct {
 }
 
 func (o *DeleteRunArtifactLineageNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}][%d] deleteRunArtifactLineageNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] deleteRunArtifactLineageNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteRunArtifactLineageNoContent) GetPayload() interface{} {
@@ -139,7 +139,7 @@ type DeleteRunArtifactLineageForbidden struct {
 }
 
 func (o *DeleteRunArtifactLineageForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}][%d] deleteRunArtifactLineageForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] deleteRunArtifactLineageForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteRunArtifactLineageForbidden) GetPayload() interface{} {
@@ -170,7 +170,7 @@ type DeleteRunArtifactLineageNotFound struct {
 }
 
 func (o *DeleteRunArtifactLineageNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}][%d] deleteRunArtifactLineageNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] deleteRunArtifactLineageNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteRunArtifactLineageNotFound) GetPayload() interface{} {
@@ -210,7 +210,7 @@ func (o *DeleteRunArtifactLineageDefault) Code() int {
 }
 
 func (o *DeleteRunArtifactLineageDefault) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}][%d] DeleteRunArtifactLineage default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] DeleteRunArtifactLineage default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteRunArtifactLineageDefault) GetPayload() *service_model.RuntimeError {

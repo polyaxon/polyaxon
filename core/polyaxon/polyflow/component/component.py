@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -67,8 +67,7 @@ class V1Component(
         cache: [V1Cache](/docs/automation/helpers/cache/), optional
         termination: [V1Termination](/docs/core/specification/termination/), optional
         plugins: [V1Plugins](/docs/core/specification/plugins/), optional
-        actions: List[[V1Action](/docs/automation/extensions/actions/)], optional
-        hooks: List[[V1Hook](/docs/automation/extensions/hooks/)], optional
+        hooks: List[[V1Hook](/docs/automation/hooks/)], optional
         inputs: [V1IO](/docs/core/specification/io/), optional
         outputs: [V1IO](/docs/core/specification/io/), optional
         run: Union[[V1Job](/docs/experimentation/jobs/),

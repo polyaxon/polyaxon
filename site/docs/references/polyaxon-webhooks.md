@@ -2,7 +2,7 @@
 title: "Polyaxon Webhooks"
 sub_link: "polyaxon-webhooks"
 meta_title: "Polyaxon Webhooks - Polyaxon References"
-meta_description: "Polyaxon WebhooksWebhooks are specific events triggered when something happens in Polyaxon, like experiment success, job deletion, ..."
+meta_description: "Polyaxon Webhooks are specific events triggered when something happens in Polyaxon, like experiment success, job deletion, ..."
 visibility: public
 status: published
 tags:

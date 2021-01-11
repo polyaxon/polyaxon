@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.4.4
+  version: 1.5.0
 servers:
 - url: /
 security:
@@ -39,7 +39,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -106,7 +106,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -397,7 +397,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -464,7 +464,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -994,7 +994,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -1114,7 +1114,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -1650,13 +1650,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -1703,13 +1703,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -1783,7 +1783,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -1856,7 +1856,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -1906,13 +1906,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
         schema:
           type: string
-      - description: Owner of the namespace.
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: query
         name: entity
         schema:
@@ -1958,13 +1958,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
         schema:
           type: string
-      - description: Owner of the namespace.
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: query
         name: entity
         schema:
@@ -2242,7 +2242,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -2362,7 +2362,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -2646,7 +2646,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -2766,7 +2766,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -3316,7 +3316,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -3441,7 +3441,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -3789,7 +3789,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -3909,7 +3909,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -4078,13 +4078,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
         schema:
           type: string
-      - description: Owner of the namespace.
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: query
         name: entity
         schema:
@@ -4130,13 +4130,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
         schema:
           type: string
-      - description: Owner of the namespace.
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: query
         name: entity
         schema:
@@ -4203,7 +4203,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -4270,7 +4270,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -4337,7 +4337,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -4457,7 +4457,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -4939,7 +4939,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -5059,7 +5059,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -5230,7 +5230,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -5839,7 +5839,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -6128,13 +6128,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity.entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: entity.uuid
         required: true
@@ -6194,13 +6194,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity.entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: entity.uuid
         required: true
@@ -6260,13 +6260,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity.entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: entity.uuid
         required: true
@@ -6397,7 +6397,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -6464,7 +6464,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -6947,13 +6947,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Component under namesapce
+      - description: Sub-entity name
         in: path
         name: name
         required: true
@@ -7000,13 +7000,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Component under namesapce
+      - description: Sub-entity name
         in: path
         name: name
         required: true
@@ -7057,13 +7057,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Component under namesapce
+      - description: Sub-entity name
         in: path
         name: name
         required: true
@@ -7542,7 +7542,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -7615,7 +7615,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -7736,7 +7736,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -7803,7 +7803,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -7924,7 +7924,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -7991,7 +7991,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -8041,13 +8041,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Component under namesapce
+      - description: Sub-entity name
         in: path
         name: name
         required: true
@@ -8094,13 +8094,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Component under namesapce
+      - description: Sub-entity name
         in: path
         name: name
         required: true
@@ -8151,13 +8151,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Component under namesapce
+      - description: Sub-entity name
         in: path
         name: name
         required: true
@@ -9069,7 +9069,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -9142,7 +9142,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -9192,13 +9192,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9245,13 +9245,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9302,13 +9302,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9356,13 +9356,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9409,13 +9409,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9466,13 +9466,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9520,13 +9520,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9564,164 +9564,6 @@ paths:
       tags:
       - RunsV1
       x-accepts: application/json
-  /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage:
-    get:
-      operationId: GetRunArtifactsLineage
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Entity name under namesapce
-        in: path
-        name: entity
-        required: true
-        schema:
-          type: string
-      - description: SubEntity uuid
-        in: path
-        name: uuid
-        required: true
-        schema:
-          type: string
-      - description: Pagination offset.
-        in: query
-        name: offset
-        schema:
-          format: int32
-          type: integer
-      - description: Limit size.
-        in: query
-        name: limit
-        schema:
-          format: int32
-          type: integer
-      - description: Sort to order the search.
-        in: query
-        name: sort
-        schema:
-          type: string
-      - description: Query filter the search search.
-        in: query
-        name: query
-        schema:
-          type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1ListRunArtifactsResponse'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response.
-      summary: Get run artifacts lineage
-      tags:
-      - RunsV1
-      x-accepts: application/json
-  /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names:
-    get:
-      operationId: GetRunArtifactsLineageNames
-      parameters:
-      - description: Owner of the namespace
-        in: path
-        name: owner
-        required: true
-        schema:
-          type: string
-      - description: Entity name under namesapce
-        in: path
-        name: entity
-        required: true
-        schema:
-          type: string
-      - description: SubEntity uuid
-        in: path
-        name: uuid
-        required: true
-        schema:
-          type: string
-      - description: Pagination offset.
-        in: query
-        name: offset
-        schema:
-          format: int32
-          type: integer
-      - description: Limit size.
-        in: query
-        name: limit
-        schema:
-          format: int32
-          type: integer
-      - description: Sort to order the search.
-        in: query
-        name: sort
-        schema:
-          type: string
-      - description: Query filter the search search.
-        in: query
-        name: query
-        schema:
-          type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1ListRunArtifactsResponse'
-          description: A successful response.
-        "204":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: No content.
-        "403":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: You don't have permission to access the resource.
-        "404":
-          content:
-            application/json:
-              schema:
-                type: object
-          description: Resource does not exist.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/runtimeError'
-          description: An unexpected error response.
-      summary: Get run artifacts lineage names
-      tags:
-      - RunsV1
-      x-accepts: application/json
   /api/v1/{owner}/{entity}/runs/{uuid}/bookmark:
     post:
       operationId: BookmarkRun
@@ -9732,13 +9574,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9786,13 +9628,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9843,13 +9685,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9887,6 +9729,401 @@ paths:
       tags:
       - RunsV1
       x-accepts: application/json
+  /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts:
+    get:
+      operationId: GetRunArtifactsLineage
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity name under namesapce
+        in: path
+        name: entity
+        required: true
+        schema:
+          type: string
+      - description: SubEntity uuid
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListRunArtifactsResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get run artifacts lineage
+      tags:
+      - RunsV1
+      x-accepts: application/json
+  /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names:
+    get:
+      operationId: GetRunArtifactsLineageNames
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity name under namesapce
+        in: path
+        name: entity
+        required: true
+        schema:
+          type: string
+      - description: SubEntity uuid
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListRunArtifactsResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get run artifacts lineage names
+      tags:
+      - RunsV1
+      x-accepts: application/json
+  /api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections:
+    get:
+      operationId: GetRunConnectionsLineage
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity name under namesapce
+        in: path
+        name: entity
+        required: true
+        schema:
+          type: string
+      - description: SubEntity uuid
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListRunConnectionsResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get run connections lineage
+      tags:
+      - RunsV1
+      x-accepts: application/json
+  /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream:
+    get:
+      operationId: GetRunDownstreamLineage
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity name under namesapce
+        in: path
+        name: entity
+        required: true
+        schema:
+          type: string
+      - description: SubEntity uuid
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListRunEdgesResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get run downstream lineage
+      tags:
+      - RunsV1
+      x-accepts: application/json
+  /api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream:
+    get:
+      operationId: GetRunUpstreamLineage
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity name under namesapce
+        in: path
+        name: entity
+        required: true
+        schema:
+          type: string
+      - description: SubEntity uuid
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListRunEdgesResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get run upstream lineage
+      tags:
+      - RunsV1
+      x-accepts: application/json
   /api/v1/{owner}/{entity}/runs/{uuid}/namespace:
     get:
       operationId: GetRunNamespace
@@ -9897,13 +10134,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -9954,13 +10191,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10008,13 +10245,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10065,13 +10302,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10122,13 +10359,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10176,13 +10413,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10238,13 +10475,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10292,13 +10529,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10346,13 +10583,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10399,13 +10636,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10456,13 +10693,13 @@ paths:
         required: true
         schema:
           type: string
-      - description: Owner of the namespace
+      - description: 'Entity: project name, hub name, registry name, ...'
         in: path
         name: entity
         required: true
         schema:
           type: string
-      - description: Uuid identifier of the entity
+      - description: Uuid identifier of the sub-entity
         in: path
         name: uuid
         required: true
@@ -10822,7 +11059,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -10895,7 +11132,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -11016,7 +11253,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -11056,7 +11293,7 @@ paths:
       tags:
       - RunsV1
       x-accepts: application/json
-  /api/v1/{owner}/{name}/runs/artifacts_lineage:
+  /api/v1/{owner}/{name}/runs/lineage/artifacts:
     get:
       operationId: GetRunsArtifactsLineage
       parameters:
@@ -11089,7 +11326,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -11162,7 +11399,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -11235,7 +11472,7 @@ paths:
         name: sort
         schema:
           type: string
-      - description: Query filter the search search.
+      - description: Query filter the search.
         in: query
         name: query
         schema:
@@ -12217,7 +12454,7 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
-  /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage:
+  /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts:
     post:
       operationId: CreateRunArtifactsLineage
       parameters:
@@ -12280,7 +12517,7 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
-  /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}:
+  /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}:
     delete:
       operationId: DeleteRunArtifactLineage
       parameters:
@@ -14166,50 +14403,6 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
       type: object
-    v1Action:
-      example:
-        run_patch: '{}'
-        hub_ref: hub_ref
-        label: label
-        many: many
-        params:
-          key:
-            ref: ref
-            search:
-              offset: 3
-              query: query
-              limit: 3
-              sort: sort
-            connection: connection
-            to_init: true
-            context_only: true
-            value: '{}'
-      properties:
-        hub_ref:
-          title: Component name to use, if not provided Polyaxon will check the action
-            name isntead
-          type: string
-        label:
-          title: UI label to use for the button, if not provided it will default to
-            the component's hub reference
-          type: string
-        many:
-          title: A flag to tell if the action should be applied on a single or multiple
-            runs
-          type: string
-        params:
-          additionalProperties:
-            $ref: '#/components/schemas/v1Param'
-          title: Optional dict of params
-          type: object
-        run_patch:
-          properties: {}
-          title: |-
-            Optional a run section to override  the content of the run in the template
-            should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
-          type: object
-      title: Action definition
-      type: object
     v1Affinity:
       title: Placeholder for Affinity
       type: object
@@ -14416,21 +14609,23 @@ components:
     v1ArtifactsType:
       example:
         files:
-        - files
-        - files
+        - '{}'
+        - '{}'
         dirs:
-        - dirs
-        - dirs
+        - '{}'
+        - '{}'
         workers: 3
       properties:
         files:
           items:
-            type: string
+            properties: {}
+            type: object
           title: Optional files to initialize
           type: array
         dirs:
           items:
-            type: string
+            properties: {}
+            type: object
           title: Optional dirs to initialize
           type: array
         workers:
@@ -14544,8 +14739,9 @@ components:
           type: boolean
         ttl:
           format: int32
-          title: "Optional time to live for the cache before it gets invalidated automatically,\
-            \ \nthe TTL is caclculated based on the time the run starts"
+          title: |-
+            Optional time to live for the cache before it gets invalidated automatically,
+            the TTL is caclculated based on the time the run starts
           type: integer
         inputs:
           items:
@@ -14635,6 +14831,19 @@ components:
           max_retries: 4
           ttl: 8
           timeout: 7
+        joins:
+          key:
+            ref: ref
+            offset: 3
+            query: query
+            limit: 3
+            sort: sort
+            params:
+              key:
+                connection: connection
+                to_init: true
+                context_only: true
+                value: value
         outputs:
         - arg_format: arg_format
           is_flag: true
@@ -14767,74 +14976,47 @@ components:
         conditions:
         - '{}'
         - '{}'
-        actions:
-        - run_patch: '{}'
-          hub_ref: hub_ref
-          label: label
-          many: many
-          params:
-            key:
-              ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
-              connection: connection
-              to_init: true
-              context_only: true
-              value: '{}'
-        - run_patch: '{}'
-          hub_ref: hub_ref
-          label: label
-          many: many
-          params:
-            key:
-              ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
-              connection: connection
-              to_init: true
-              context_only: true
-              value: '{}'
         hooks:
-        - run_patch: '{}'
+        - presets:
+          - presets
+          - presets
           hub_ref: hub_ref
           connection: connection
+          conditions:
+          - '{}'
+          - '{}'
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
               value: '{}'
-        - run_patch: '{}'
+        - presets:
+          - presets
+          - presets
           hub_ref: hub_ref
           connection: connection
+          conditions:
+          - '{}'
+          - '{}'
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
               value: '{}'
         queue: queue
         events:
-        - events
-        - events
+        - ref: ref
+          kinds:
+          - null
+          - null
+        - ref: ref
+          kinds:
+          - null
+          - null
       properties:
         version:
           format: float
@@ -14874,23 +15056,15 @@ components:
           type: object
         events:
           items:
-            type: string
-          title: Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
-          type: array
-        actions:
-          items:
-            $ref: '#/components/schemas/v1Action'
-          title: Optional actions section
+            $ref: '#/components/schemas/v1EventTrigger'
+          title: Optional events section, must be a valid List of EventTrigger option
+            (Run/Git/Alert/Webhook/Dataset)
           type: array
         hooks:
           items:
             $ref: '#/components/schemas/v1Hook'
           title: Optional hooks section
           type: array
-        matrix:
-          properties: {}
-          title: Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-          type: object
         dependencies:
           items:
             type: string
@@ -14908,6 +15082,15 @@ components:
         skip_on_upstream_skip:
           title: Optional flag to skip this run if upstream was skipped
           type: boolean
+        matrix:
+          properties: {}
+          title: Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
+          type: object
+        joins:
+          additionalProperties:
+            $ref: '#/components/schemas/v1Join'
+          title: Optional dict of joins
+          type: object
         inputs:
           items:
             $ref: '#/components/schemas/v1IO'
@@ -14929,7 +15112,7 @@ components:
           type: boolean
         run:
           properties: {}
-          title: 'Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag'
+          title: 'Run definition, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag'
           type: object
       title: CompiledOperation specification
       type: object
@@ -15039,66 +15222,33 @@ components:
         - presets
         name: name
         is_approved: true
-        actions:
-        - run_patch: '{}'
-          hub_ref: hub_ref
-          label: label
-          many: many
-          params:
-            key:
-              ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
-              connection: connection
-              to_init: true
-              context_only: true
-              value: '{}'
-        - run_patch: '{}'
-          hub_ref: hub_ref
-          label: label
-          many: many
-          params:
-            key:
-              ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
-              connection: connection
-              to_init: true
-              context_only: true
-              value: '{}'
         hooks:
-        - run_patch: '{}'
+        - presets:
+          - presets
+          - presets
           hub_ref: hub_ref
           connection: connection
+          conditions:
+          - '{}'
+          - '{}'
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
               value: '{}'
-        - run_patch: '{}'
+        - presets:
+          - presets
+          - presets
           hub_ref: hub_ref
           connection: connection
+          conditions:
+          - '{}'
+          - '{}'
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
@@ -15138,11 +15288,6 @@ components:
           $ref: '#/components/schemas/v1Termination'
         plugins:
           $ref: '#/components/schemas/v1Plugins'
-        actions:
-          items:
-            $ref: '#/components/schemas/v1Action'
-          title: Optional actions section
-          type: array
         hooks:
           items:
             $ref: '#/components/schemas/v1Hook'
@@ -15636,66 +15781,33 @@ components:
           - presets
           name: name
           is_approved: true
-          actions:
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
           hooks:
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
@@ -15805,66 +15917,33 @@ components:
           - presets
           name: name
           is_approved: true
-          actions:
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
           hooks:
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
@@ -15899,7 +15978,20 @@ components:
           affinity: '{}'
           hostPID: hostPID
         operations:
-        - template:
+        - joins:
+            key:
+              ref: ref
+              offset: 3
+              query: query
+              limit: 3
+              sort: sort
+              params:
+                key:
+                  connection: connection
+                  to_init: true
+                  context_only: true
+                  value: value
+          template:
             description: description
             fields:
             - fields
@@ -15930,39 +16022,45 @@ components:
           run_patch: '{}'
           dag_ref: dag_ref
           hooks:
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
           events:
-          - events
-          - events
+          - ref: ref
+            kinds:
+            - null
+            - null
+          - ref: ref
+            kinds:
+            - null
+            - null
           termination:
             max_retries: 4
             ttl: 8
@@ -15980,11 +16078,6 @@ components:
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
@@ -16102,66 +16195,33 @@ components:
             - presets
             name: name
             is_approved: true
-            actions:
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
             hooks:
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
@@ -16175,41 +16235,21 @@ components:
           conditions:
           - conditions
           - conditions
-          actions:
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
           queue: queue
-        - template:
+        - joins:
+            key:
+              ref: ref
+              offset: 3
+              query: query
+              limit: 3
+              sort: sort
+              params:
+                key:
+                  connection: connection
+                  to_init: true
+                  context_only: true
+                  value: value
+          template:
             description: description
             fields:
             - fields
@@ -16240,39 +16280,45 @@ components:
           run_patch: '{}'
           dag_ref: dag_ref
           hooks:
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
           events:
-          - events
-          - events
+          - ref: ref
+            kinds:
+            - null
+            - null
+          - ref: ref
+            kinds:
+            - null
+            - null
           termination:
             max_retries: 4
             ttl: 8
@@ -16290,11 +16336,6 @@ components:
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
@@ -16412,66 +16453,33 @@ components:
             - presets
             name: name
             is_approved: true
-            actions:
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
             hooks:
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
@@ -16485,39 +16493,6 @@ components:
           conditions:
           - conditions
           - conditions
-          actions:
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
           queue: queue
         kind: dag
         volumes:
@@ -16664,11 +16639,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         - container: '{}'
           path: path
@@ -16699,11 +16674,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         sidecars:
         - null
@@ -17412,6 +17387,42 @@ components:
           type: string
       title: Image spec definition
       type: object
+    v1EventKind:
+      default: run_status_created
+      enum:
+      - run_status_created
+      - run_status_resuming
+      - run_status_compiled
+      - run_status_on_schedule
+      - run_status_queued
+      - run_status_scheduled
+      - run_status_starting
+      - run_status_running
+      - run_status_processing
+      - run_status_stopping
+      - run_status_failed
+      - run_status_stopped
+      - run_status_succeeded
+      - run_status_skipped
+      - run_status_warning
+      - run_status_unschedulable
+      - run_status_upstream_failed
+      - run_status_retrying
+      - run_status_unknown
+      - run_status_done
+      - run_approved_actor
+      - run_invalidated_actor
+      - run_new_artifacts
+      - connection_git_commit
+      - connection_dataset_version
+      - connection_registry_image
+      - alert_info
+      - alert_warning
+      - alert_critical
+      - model_version_new_metric
+      - project_custom_event
+      - org_custom_event
+      type: string
     v1EventModel:
       example:
         path: path
@@ -17429,6 +17440,23 @@ components:
           title: Model spec (a dictionnary defnining the requirement for the model)
           type: object
       title: Model spec definition
+      type: object
+    v1EventTrigger:
+      example:
+        ref: ref
+        kinds:
+        - null
+        - null
+      properties:
+        kinds:
+          items:
+            $ref: '#/components/schemas/v1EventKind'
+          title: The event kinds to subscribe to for the current reference
+          type: array
+        ref:
+          title: Ref corresponds to a reference of an object
+          type: string
+      title: Event definition
       type: object
     v1EventType:
       example:
@@ -17626,41 +17654,47 @@ components:
       type: object
     v1Hook:
       example:
-        run_patch: '{}'
+        presets:
+        - presets
+        - presets
         hub_ref: hub_ref
         connection: connection
+        conditions:
+        - '{}'
+        - '{}'
         params:
           key:
             ref: ref
-            search:
-              offset: 3
-              query: query
-              limit: 3
-              sort: sort
             connection: connection
             to_init: true
             context_only: true
             value: '{}'
       properties:
-        hub_ref:
-          title: Component name to use, if not provided Polyaxon will check the action
-            name isntead
+        connection:
+          title: Optional connection
           type: string
         trigger:
           $ref: '#/components/schemas/v1Statuses'
-        connection:
-          title: Connection to use for this hook
+        hub_ref:
+          title: Component name to use
           type: string
+        conditions:
+          items:
+            properties: {}
+            type: object
+          title: An optional list of condition to check before starting the run, entities
+            should be a valid Condition
+          type: array
         params:
           additionalProperties:
             $ref: '#/components/schemas/v1Param'
           title: Optional dict of params
           type: object
-        run_patch:
-          properties: {}
-          title: Optional a run section to override  the content of the run in the
-            template
-          type: object
+        presets:
+          items:
+            type: string
+          title: Optional preset to use for running this operation
+          type: array
       title: Hook definition
       type: object
     v1HostAlias:
@@ -18222,11 +18256,11 @@ components:
         connection: connection
         artifacts:
           files:
-          - files
-          - files
+          - '{}'
+          - '{}'
           dirs:
-          - dirs
-          - dirs
+          - '{}'
+          - '{}'
           workers: 3
       properties:
         artifacts:
@@ -18405,11 +18439,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         - container: '{}'
           path: path
@@ -18440,11 +18474,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         sidecars:
         - null
@@ -18515,6 +18549,68 @@ components:
           title: Placeholder for Container
           type: object
       title: Job specification
+      type: object
+    v1Join:
+      example:
+        ref: ref
+        offset: 3
+        query: query
+        limit: 3
+        sort: sort
+        params:
+          key:
+            connection: connection
+            to_init: true
+            context_only: true
+            value: value
+      properties:
+        ref:
+          title: An optional ref to an already saved search
+          type: string
+        query:
+          title: The search query
+          type: string
+        sort:
+          title: The search sort
+          type: string
+        limit:
+          format: int32
+          title: The search limit
+          type: integer
+        offset:
+          format: int32
+          title: The search offset
+          type: integer
+        params:
+          additionalProperties:
+            $ref: '#/components/schemas/v1JoinParam'
+          title: The params mapping keys to the values to pull from the join
+          type: object
+      title: Join specification
+      type: object
+    v1JoinParam:
+      example:
+        connection: connection
+        to_init: true
+        context_only: true
+        value: value
+      properties:
+        value:
+          title: The value to pass, if no ref or search is passed then it corresponds
+            to a literal value
+          type: string
+        connection:
+          title: A flag to signal to Polyaxon that this param is used with a connection
+          type: string
+        to_init:
+          title: A flag to signal to Polyaxon that this param must be tranformed to
+            an init container
+          type: boolean
+        context_only:
+          title: A flag to signal to Polyaxon that this param should not be validated
+            against io
+          type: boolean
+      title: JoinParam specification
       type: object
     v1K8sResourceSchema:
       example:
@@ -18593,11 +18689,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         - container: '{}'
           path: path
@@ -18628,11 +18724,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         sidecars:
         - null
@@ -19431,6 +19527,312 @@ components:
           type: string
       title: Contains list run artifacts
       type: object
+    v1ListRunConnectionsResponse:
+      example:
+        next: next
+        previous: previous
+        count: 0
+        results:
+        - kind: kind
+          name: name
+          uuid: uuid
+        - kind: kind
+          name: name
+          uuid: uuid
+      properties:
+        count:
+          format: int32
+          title: Count of the entities
+          type: integer
+        results:
+          items:
+            $ref: '#/components/schemas/v1RunConnection'
+          title: List of all entities
+          type: array
+        previous:
+          title: Previous page
+          type: string
+        next:
+          title: Next page
+          type: string
+      title: Contains list runs
+      type: object
+    v1ListRunEdgesResponse:
+      example:
+        next: next
+        previous: previous
+        count: 0
+        results:
+        - upstream:
+            outputs: '{}'
+            role: role
+            finished_at: 2000-01-23T04:56:07.000+00:00
+            inputs: '{}'
+            description: description
+            project: project
+            created_at: 2000-01-23T04:56:07.000+00:00
+            uuid: uuid
+            content: content
+            duration: 6
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            meta_info: '{}'
+            owner: owner
+            settings:
+              registry:
+                name: name
+                version: version
+              agent:
+                name: name
+                uuid: uuid
+              hub:
+                name: name
+                version: version
+              namespace: namespace
+              artifacts_store:
+                name: name
+                uuid: uuid
+              queue:
+                name: name
+                uuid: uuid
+            raw_content: raw_content
+            original:
+              name: name
+              uuid: uuid
+            schedule_at: 2000-01-23T04:56:07.000+00:00
+            bookmarked: true
+            live_state: 1
+            readme: readme
+            tags:
+            - tags
+            - tags
+            pipeline:
+              name: name
+              uuid: uuid
+            name: name
+            started_at: 2000-01-23T04:56:07.000+00:00
+            is_approved: true
+            user: user
+            status_conditions:
+            - reason: reason
+              last_update_time: 2000-01-23T04:56:07.000+00:00
+              last_transition_time: 2000-01-23T04:56:07.000+00:00
+              message: message
+              status: status
+            - reason: reason
+              last_update_time: 2000-01-23T04:56:07.000+00:00
+              last_transition_time: 2000-01-23T04:56:07.000+00:00
+              message: message
+              status: status
+            is_managed: true
+          values: '{}'
+          downstream:
+            outputs: '{}'
+            role: role
+            finished_at: 2000-01-23T04:56:07.000+00:00
+            inputs: '{}'
+            description: description
+            project: project
+            created_at: 2000-01-23T04:56:07.000+00:00
+            uuid: uuid
+            content: content
+            duration: 6
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            meta_info: '{}'
+            owner: owner
+            settings:
+              registry:
+                name: name
+                version: version
+              agent:
+                name: name
+                uuid: uuid
+              hub:
+                name: name
+                version: version
+              namespace: namespace
+              artifacts_store:
+                name: name
+                uuid: uuid
+              queue:
+                name: name
+                uuid: uuid
+            raw_content: raw_content
+            original:
+              name: name
+              uuid: uuid
+            schedule_at: 2000-01-23T04:56:07.000+00:00
+            bookmarked: true
+            live_state: 1
+            readme: readme
+            tags:
+            - tags
+            - tags
+            pipeline:
+              name: name
+              uuid: uuid
+            name: name
+            started_at: 2000-01-23T04:56:07.000+00:00
+            is_approved: true
+            user: user
+            status_conditions:
+            - reason: reason
+              last_update_time: 2000-01-23T04:56:07.000+00:00
+              last_transition_time: 2000-01-23T04:56:07.000+00:00
+              message: message
+              status: status
+            - reason: reason
+              last_update_time: 2000-01-23T04:56:07.000+00:00
+              last_transition_time: 2000-01-23T04:56:07.000+00:00
+              message: message
+              status: status
+            is_managed: true
+          statuses:
+          - null
+          - null
+        - upstream:
+            outputs: '{}'
+            role: role
+            finished_at: 2000-01-23T04:56:07.000+00:00
+            inputs: '{}'
+            description: description
+            project: project
+            created_at: 2000-01-23T04:56:07.000+00:00
+            uuid: uuid
+            content: content
+            duration: 6
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            meta_info: '{}'
+            owner: owner
+            settings:
+              registry:
+                name: name
+                version: version
+              agent:
+                name: name
+                uuid: uuid
+              hub:
+                name: name
+                version: version
+              namespace: namespace
+              artifacts_store:
+                name: name
+                uuid: uuid
+              queue:
+                name: name
+                uuid: uuid
+            raw_content: raw_content
+            original:
+              name: name
+              uuid: uuid
+            schedule_at: 2000-01-23T04:56:07.000+00:00
+            bookmarked: true
+            live_state: 1
+            readme: readme
+            tags:
+            - tags
+            - tags
+            pipeline:
+              name: name
+              uuid: uuid
+            name: name
+            started_at: 2000-01-23T04:56:07.000+00:00
+            is_approved: true
+            user: user
+            status_conditions:
+            - reason: reason
+              last_update_time: 2000-01-23T04:56:07.000+00:00
+              last_transition_time: 2000-01-23T04:56:07.000+00:00
+              message: message
+              status: status
+            - reason: reason
+              last_update_time: 2000-01-23T04:56:07.000+00:00
+              last_transition_time: 2000-01-23T04:56:07.000+00:00
+              message: message
+              status: status
+            is_managed: true
+          values: '{}'
+          downstream:
+            outputs: '{}'
+            role: role
+            finished_at: 2000-01-23T04:56:07.000+00:00
+            inputs: '{}'
+            description: description
+            project: project
+            created_at: 2000-01-23T04:56:07.000+00:00
+            uuid: uuid
+            content: content
+            duration: 6
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            meta_info: '{}'
+            owner: owner
+            settings:
+              registry:
+                name: name
+                version: version
+              agent:
+                name: name
+                uuid: uuid
+              hub:
+                name: name
+                version: version
+              namespace: namespace
+              artifacts_store:
+                name: name
+                uuid: uuid
+              queue:
+                name: name
+                uuid: uuid
+            raw_content: raw_content
+            original:
+              name: name
+              uuid: uuid
+            schedule_at: 2000-01-23T04:56:07.000+00:00
+            bookmarked: true
+            live_state: 1
+            readme: readme
+            tags:
+            - tags
+            - tags
+            pipeline:
+              name: name
+              uuid: uuid
+            name: name
+            started_at: 2000-01-23T04:56:07.000+00:00
+            is_approved: true
+            user: user
+            status_conditions:
+            - reason: reason
+              last_update_time: 2000-01-23T04:56:07.000+00:00
+              last_transition_time: 2000-01-23T04:56:07.000+00:00
+              message: message
+              status: status
+            - reason: reason
+              last_update_time: 2000-01-23T04:56:07.000+00:00
+              last_transition_time: 2000-01-23T04:56:07.000+00:00
+              message: message
+              status: status
+            is_managed: true
+          statuses:
+          - null
+          - null
+      properties:
+        count:
+          format: int32
+          title: Count of the entities
+          type: integer
+        results:
+          items:
+            $ref: '#/components/schemas/v1RunEdge'
+          title: List of all entities
+          type: array
+        previous:
+          title: Previous page
+          type: string
+        next:
+          title: Next page
+          type: string
+      title: Contains list run edges
+      type: object
     v1ListRunsResponse:
       example:
         next: next
@@ -19466,11 +19868,6 @@ components:
               uuid: uuid
             queue:
               name: name
-              uuid: uuid
-            connections:
-            - name: name
-              uuid: uuid
-            - name: name
               uuid: uuid
           raw_content: raw_content
           original:
@@ -19531,11 +19928,6 @@ components:
               uuid: uuid
             queue:
               name: name
-              uuid: uuid
-            connections:
-            - name: name
-              uuid: uuid
-            - name: name
               uuid: uuid
           raw_content: raw_content
           original:
@@ -19887,11 +20279,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -19922,11 +20314,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -19998,11 +20390,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -20033,11 +20425,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -20480,6 +20872,19 @@ components:
       type: object
     v1Operation:
       example:
+        joins:
+          key:
+            ref: ref
+            offset: 3
+            query: query
+            limit: 3
+            sort: sort
+            params:
+              key:
+                connection: connection
+                to_init: true
+                context_only: true
+                value: value
         template:
           description: description
           fields:
@@ -20511,39 +20916,45 @@ components:
         run_patch: '{}'
         dag_ref: dag_ref
         hooks:
-        - run_patch: '{}'
+        - presets:
+          - presets
+          - presets
           hub_ref: hub_ref
           connection: connection
+          conditions:
+          - '{}'
+          - '{}'
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
               value: '{}'
-        - run_patch: '{}'
+        - presets:
+          - presets
+          - presets
           hub_ref: hub_ref
           connection: connection
+          conditions:
+          - '{}'
+          - '{}'
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
               value: '{}'
         events:
-        - events
-        - events
+        - ref: ref
+          kinds:
+          - null
+          - null
+        - ref: ref
+          kinds:
+          - null
+          - null
         termination:
           max_retries: 4
           ttl: 8
@@ -20561,11 +20972,6 @@ components:
         params:
           key:
             ref: ref
-            search:
-              offset: 3
-              query: query
-              limit: 3
-              sort: sort
             connection: connection
             to_init: true
             context_only: true
@@ -20683,66 +21089,33 @@ components:
           - presets
           name: name
           is_approved: true
-          actions:
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
           hooks:
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
@@ -20756,39 +21129,6 @@ components:
         conditions:
         - conditions
         - conditions
-        actions:
-        - run_patch: '{}'
-          hub_ref: hub_ref
-          label: label
-          many: many
-          params:
-            key:
-              ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
-              connection: connection
-              to_init: true
-              context_only: true
-              value: '{}'
-        - run_patch: '{}'
-          hub_ref: hub_ref
-          label: label
-          many: many
-          params:
-            key:
-              ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
-              connection: connection
-              to_init: true
-              context_only: true
-              value: '{}'
         queue: queue
       properties:
         version:
@@ -20829,23 +21169,15 @@ components:
           type: object
         events:
           items:
-            type: string
-          title: Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
-          type: array
-        actions:
-          items:
-            $ref: '#/components/schemas/v1Action'
-          title: Optional actions section
+            $ref: '#/components/schemas/v1EventTrigger'
+          title: Optional events section, must be a valid List of EventTrigger option
+            (Run/Git/Alert/Webhook/Dataset)
           type: array
         hooks:
           items:
             $ref: '#/components/schemas/v1Hook'
           title: Optional hooks section
           type: array
-        matrix:
-          properties: {}
-          title: Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-          type: object
         dependencies:
           items:
             type: string
@@ -20862,6 +21194,15 @@ components:
         skip_on_upstream_skip:
           title: Optional flag to skip this run if upstream was skipped
           type: boolean
+        matrix:
+          properties: {}
+          title: Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
+          type: object
+        joins:
+          additionalProperties:
+            $ref: '#/components/schemas/v1Join'
+          title: Optional dict of joins
+          type: object
         params:
           additionalProperties:
             $ref: '#/components/schemas/v1Param'
@@ -21065,21 +21406,16 @@ components:
           title: Owner of the namespace
           type: string
         entity:
-          title: Owner of the namespace
+          description: 'Entity: project name, hub name, registry name, ...'
           type: string
         uuid:
-          title: Uuid identifier of the entity
+          title: Uuid identifier of the sub-entity
           type: string
       title: Request data to get/delete sub-entity
       type: object
     v1Param:
       example:
         ref: ref
-        search:
-          offset: 3
-          query: query
-          limit: 3
-          sort: sort
         connection: connection
         to_init: true
         context_only: true
@@ -21093,8 +21429,6 @@ components:
         ref:
           title: Ref corresponds to a reference of an object
           type: string
-        search:
-          $ref: '#/components/schemas/v1ParamSearch'
         connection:
           title: A flag to signal to Polyaxon that this param is used with a connection
           type: string
@@ -21107,29 +21441,6 @@ components:
             against io
           type: boolean
       title: Param specification
-      type: object
-    v1ParamSearch:
-      example:
-        offset: 3
-        query: query
-        limit: 3
-        sort: sort
-      properties:
-        query:
-          title: The search query
-          type: string
-        sort:
-          title: The search sort
-          type: string
-        limit:
-          format: int32
-          title: The search limit
-          type: integer
-        offset:
-          format: int32
-          title: The search offset
-          type: integer
-      title: Param search specification
       type: object
     v1PasswordChange:
       properties:
@@ -21523,11 +21834,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -21558,11 +21869,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -21634,11 +21945,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -21669,11 +21980,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -21902,11 +22213,6 @@ components:
           queue:
             name: name
             uuid: uuid
-          connections:
-          - name: name
-            uuid: uuid
-          - name: name
-            uuid: uuid
         raw_content: raw_content
         original:
           name: name
@@ -22083,6 +22389,177 @@ components:
           type: array
       title: Run Artifacts spec definition
       type: object
+    v1RunConnection:
+      example:
+        kind: kind
+        name: name
+        uuid: uuid
+      properties:
+        uuid:
+          title: Uuid
+          type: string
+        name:
+          title: Name
+          type: string
+        kind:
+          title: Kind
+          type: string
+      type: object
+    v1RunEdge:
+      example:
+        upstream:
+          outputs: '{}'
+          role: role
+          finished_at: 2000-01-23T04:56:07.000+00:00
+          inputs: '{}'
+          description: description
+          project: project
+          created_at: 2000-01-23T04:56:07.000+00:00
+          uuid: uuid
+          content: content
+          duration: 6
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          meta_info: '{}'
+          owner: owner
+          settings:
+            registry:
+              name: name
+              version: version
+            agent:
+              name: name
+              uuid: uuid
+            hub:
+              name: name
+              version: version
+            namespace: namespace
+            artifacts_store:
+              name: name
+              uuid: uuid
+            queue:
+              name: name
+              uuid: uuid
+          raw_content: raw_content
+          original:
+            name: name
+            uuid: uuid
+          schedule_at: 2000-01-23T04:56:07.000+00:00
+          bookmarked: true
+          live_state: 1
+          readme: readme
+          tags:
+          - tags
+          - tags
+          pipeline:
+            name: name
+            uuid: uuid
+          name: name
+          started_at: 2000-01-23T04:56:07.000+00:00
+          is_approved: true
+          user: user
+          status_conditions:
+          - reason: reason
+            last_update_time: 2000-01-23T04:56:07.000+00:00
+            last_transition_time: 2000-01-23T04:56:07.000+00:00
+            message: message
+            status: status
+          - reason: reason
+            last_update_time: 2000-01-23T04:56:07.000+00:00
+            last_transition_time: 2000-01-23T04:56:07.000+00:00
+            message: message
+            status: status
+          is_managed: true
+        values: '{}'
+        downstream:
+          outputs: '{}'
+          role: role
+          finished_at: 2000-01-23T04:56:07.000+00:00
+          inputs: '{}'
+          description: description
+          project: project
+          created_at: 2000-01-23T04:56:07.000+00:00
+          uuid: uuid
+          content: content
+          duration: 6
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          meta_info: '{}'
+          owner: owner
+          settings:
+            registry:
+              name: name
+              version: version
+            agent:
+              name: name
+              uuid: uuid
+            hub:
+              name: name
+              version: version
+            namespace: namespace
+            artifacts_store:
+              name: name
+              uuid: uuid
+            queue:
+              name: name
+              uuid: uuid
+          raw_content: raw_content
+          original:
+            name: name
+            uuid: uuid
+          schedule_at: 2000-01-23T04:56:07.000+00:00
+          bookmarked: true
+          live_state: 1
+          readme: readme
+          tags:
+          - tags
+          - tags
+          pipeline:
+            name: name
+            uuid: uuid
+          name: name
+          started_at: 2000-01-23T04:56:07.000+00:00
+          is_approved: true
+          user: user
+          status_conditions:
+          - reason: reason
+            last_update_time: 2000-01-23T04:56:07.000+00:00
+            last_transition_time: 2000-01-23T04:56:07.000+00:00
+            message: message
+            status: status
+          - reason: reason
+            last_update_time: 2000-01-23T04:56:07.000+00:00
+            last_transition_time: 2000-01-23T04:56:07.000+00:00
+            message: message
+            status: status
+          is_managed: true
+        statuses:
+        - null
+        - null
+      properties:
+        upstream:
+          $ref: '#/components/schemas/v1Run'
+        downstream:
+          $ref: '#/components/schemas/v1Run'
+        kind:
+          $ref: '#/components/schemas/v1RunEdgeKind'
+        values:
+          properties: {}
+          title: Optional edge values
+          type: object
+        statuses:
+          items:
+            $ref: '#/components/schemas/v1Statuses'
+          title: Options statuses events
+          type: array
+      type: object
+    v1RunEdgeKind:
+      default: action
+      enum:
+      - action
+      - event
+      - hook
+      - dag
+      - join
+      - run
+      type: string
     v1RunKind:
       default: job
       enum:
@@ -22160,11 +22637,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -22195,11 +22672,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -22271,11 +22748,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -22306,11 +22783,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -22393,11 +22870,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -22428,11 +22905,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -22498,11 +22975,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -22533,11 +23010,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -22613,11 +23090,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -22648,11 +23125,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -22805,66 +23282,33 @@ components:
             - presets
             name: name
             is_approved: true
-            actions:
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
             hooks:
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
@@ -22974,66 +23418,33 @@ components:
             - presets
             name: name
             is_approved: true
-            actions:
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
             hooks:
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
@@ -23068,7 +23479,20 @@ components:
             affinity: '{}'
             hostPID: hostPID
           operations:
-          - template:
+          - joins:
+              key:
+                ref: ref
+                offset: 3
+                query: query
+                limit: 3
+                sort: sort
+                params:
+                  key:
+                    connection: connection
+                    to_init: true
+                    context_only: true
+                    value: value
+            template:
               description: description
               fields:
               - fields
@@ -23099,39 +23523,45 @@ components:
             run_patch: '{}'
             dag_ref: dag_ref
             hooks:
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
             events:
-            - events
-            - events
+            - ref: ref
+              kinds:
+              - null
+              - null
+            - ref: ref
+              kinds:
+              - null
+              - null
             termination:
               max_retries: 4
               ttl: 8
@@ -23149,11 +23579,6 @@ components:
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
@@ -23271,66 +23696,33 @@ components:
               - presets
               name: name
               is_approved: true
-              actions:
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
               hooks:
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
                     value: '{}'
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
@@ -23344,41 +23736,21 @@ components:
             conditions:
             - conditions
             - conditions
-            actions:
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
             queue: queue
-          - template:
+          - joins:
+              key:
+                ref: ref
+                offset: 3
+                query: query
+                limit: 3
+                sort: sort
+                params:
+                  key:
+                    connection: connection
+                    to_init: true
+                    context_only: true
+                    value: value
+            template:
               description: description
               fields:
               - fields
@@ -23409,39 +23781,45 @@ components:
             run_patch: '{}'
             dag_ref: dag_ref
             hooks:
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
             events:
-            - events
-            - events
+            - ref: ref
+              kinds:
+              - null
+              - null
+            - ref: ref
+              kinds:
+              - null
+              - null
             termination:
               max_retries: 4
               ttl: 8
@@ -23459,11 +23837,6 @@ components:
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
@@ -23581,66 +23954,33 @@ components:
               - presets
               name: name
               is_approved: true
-              actions:
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
               hooks:
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
                     value: '{}'
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
@@ -23654,39 +23994,6 @@ components:
             conditions:
             - conditions
             - conditions
-            actions:
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
             queue: queue
           kind: dag
           volumes:
@@ -23732,11 +24039,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -23767,11 +24074,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -23847,11 +24154,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -23882,11 +24189,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -23959,11 +24266,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -23994,11 +24301,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -24071,11 +24378,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -24106,11 +24413,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -24182,11 +24489,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -24217,11 +24524,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -24293,11 +24600,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -24328,11 +24635,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -24407,11 +24714,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -24442,11 +24749,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -24518,11 +24825,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -24553,11 +24860,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -24637,11 +24944,6 @@ components:
         queue:
           name: name
           uuid: uuid
-        connections:
-        - name: name
-          uuid: uuid
-        - name: name
-          uuid: uuid
       properties:
         namespace:
           title: Namespace
@@ -24652,11 +24954,6 @@ components:
           $ref: '#/components/schemas/v1RunSettingsCatalog'
         artifacts_store:
           $ref: '#/components/schemas/v1RunSettingsCatalog'
-        connections:
-          items:
-            $ref: '#/components/schemas/v1RunSettingsCatalog'
-          title: Connections
-          type: array
         hub:
           $ref: '#/components/schemas/v1RunReferenceCatalog'
         registry:
@@ -24753,6 +25050,19 @@ components:
             max_retries: 4
             ttl: 8
             timeout: 7
+          joins:
+            key:
+              ref: ref
+              offset: 3
+              query: query
+              limit: 3
+              sort: sort
+              params:
+                key:
+                  connection: connection
+                  to_init: true
+                  context_only: true
+                  value: value
           outputs:
           - arg_format: arg_format
             is_flag: true
@@ -24885,74 +25195,47 @@ components:
           conditions:
           - '{}'
           - '{}'
-          actions:
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
           hooks:
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
           queue: queue
           events:
-          - events
-          - events
+          - ref: ref
+            kinds:
+            - null
+            - null
+          - ref: ref
+            kinds:
+            - null
+            - null
         run:
           flink:
             kind: flink
@@ -24991,11 +25274,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -25026,11 +25309,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -25102,11 +25385,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -25137,11 +25420,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -25224,11 +25507,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -25259,11 +25542,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -25329,11 +25612,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -25364,11 +25647,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -25444,11 +25727,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -25479,11 +25762,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -25636,66 +25919,33 @@ components:
               - presets
               name: name
               is_approved: true
-              actions:
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
               hooks:
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
                     value: '{}'
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
@@ -25805,66 +26055,33 @@ components:
               - presets
               name: name
               is_approved: true
-              actions:
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
               hooks:
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
                     value: '{}'
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
@@ -25899,7 +26116,20 @@ components:
               affinity: '{}'
               hostPID: hostPID
             operations:
-            - template:
+            - joins:
+                key:
+                  ref: ref
+                  offset: 3
+                  query: query
+                  limit: 3
+                  sort: sort
+                  params:
+                    key:
+                      connection: connection
+                      to_init: true
+                      context_only: true
+                      value: value
+              template:
                 description: description
                 fields:
                 - fields
@@ -25930,39 +26160,45 @@ components:
               run_patch: '{}'
               dag_ref: dag_ref
               hooks:
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
                     value: '{}'
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
                     value: '{}'
               events:
-              - events
-              - events
+              - ref: ref
+                kinds:
+                - null
+                - null
+              - ref: ref
+                kinds:
+                - null
+                - null
               termination:
                 max_retries: 4
                 ttl: 8
@@ -25980,11 +26216,6 @@ components:
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
@@ -26102,66 +26333,33 @@ components:
                 - presets
                 name: name
                 is_approved: true
-                actions:
-                - run_patch: '{}'
-                  hub_ref: hub_ref
-                  label: label
-                  many: many
-                  params:
-                    key:
-                      ref: ref
-                      search:
-                        offset: 3
-                        query: query
-                        limit: 3
-                        sort: sort
-                      connection: connection
-                      to_init: true
-                      context_only: true
-                      value: '{}'
-                - run_patch: '{}'
-                  hub_ref: hub_ref
-                  label: label
-                  many: many
-                  params:
-                    key:
-                      ref: ref
-                      search:
-                        offset: 3
-                        query: query
-                        limit: 3
-                        sort: sort
-                      connection: connection
-                      to_init: true
-                      context_only: true
-                      value: '{}'
                 hooks:
-                - run_patch: '{}'
+                - presets:
+                  - presets
+                  - presets
                   hub_ref: hub_ref
                   connection: connection
+                  conditions:
+                  - '{}'
+                  - '{}'
                   params:
                     key:
                       ref: ref
-                      search:
-                        offset: 3
-                        query: query
-                        limit: 3
-                        sort: sort
                       connection: connection
                       to_init: true
                       context_only: true
                       value: '{}'
-                - run_patch: '{}'
+                - presets:
+                  - presets
+                  - presets
                   hub_ref: hub_ref
                   connection: connection
+                  conditions:
+                  - '{}'
+                  - '{}'
                   params:
                     key:
                       ref: ref
-                      search:
-                        offset: 3
-                        query: query
-                        limit: 3
-                        sort: sort
                       connection: connection
                       to_init: true
                       context_only: true
@@ -26175,41 +26373,21 @@ components:
               conditions:
               - conditions
               - conditions
-              actions:
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
               queue: queue
-            - template:
+            - joins:
+                key:
+                  ref: ref
+                  offset: 3
+                  query: query
+                  limit: 3
+                  sort: sort
+                  params:
+                    key:
+                      connection: connection
+                      to_init: true
+                      context_only: true
+                      value: value
+              template:
                 description: description
                 fields:
                 - fields
@@ -26240,39 +26418,45 @@ components:
               run_patch: '{}'
               dag_ref: dag_ref
               hooks:
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
                     value: '{}'
-              - run_patch: '{}'
+              - presets:
+                - presets
+                - presets
                 hub_ref: hub_ref
                 connection: connection
+                conditions:
+                - '{}'
+                - '{}'
                 params:
                   key:
                     ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
                     connection: connection
                     to_init: true
                     context_only: true
                     value: '{}'
               events:
-              - events
-              - events
+              - ref: ref
+                kinds:
+                - null
+                - null
+              - ref: ref
+                kinds:
+                - null
+                - null
               termination:
                 max_retries: 4
                 ttl: 8
@@ -26290,11 +26474,6 @@ components:
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
@@ -26412,66 +26591,33 @@ components:
                 - presets
                 name: name
                 is_approved: true
-                actions:
-                - run_patch: '{}'
-                  hub_ref: hub_ref
-                  label: label
-                  many: many
-                  params:
-                    key:
-                      ref: ref
-                      search:
-                        offset: 3
-                        query: query
-                        limit: 3
-                        sort: sort
-                      connection: connection
-                      to_init: true
-                      context_only: true
-                      value: '{}'
-                - run_patch: '{}'
-                  hub_ref: hub_ref
-                  label: label
-                  many: many
-                  params:
-                    key:
-                      ref: ref
-                      search:
-                        offset: 3
-                        query: query
-                        limit: 3
-                        sort: sort
-                      connection: connection
-                      to_init: true
-                      context_only: true
-                      value: '{}'
                 hooks:
-                - run_patch: '{}'
+                - presets:
+                  - presets
+                  - presets
                   hub_ref: hub_ref
                   connection: connection
+                  conditions:
+                  - '{}'
+                  - '{}'
                   params:
                     key:
                       ref: ref
-                      search:
-                        offset: 3
-                        query: query
-                        limit: 3
-                        sort: sort
                       connection: connection
                       to_init: true
                       context_only: true
                       value: '{}'
-                - run_patch: '{}'
+                - presets:
+                  - presets
+                  - presets
                   hub_ref: hub_ref
                   connection: connection
+                  conditions:
+                  - '{}'
+                  - '{}'
                   params:
                     key:
                       ref: ref
-                      search:
-                        offset: 3
-                        query: query
-                        limit: 3
-                        sort: sort
                       connection: connection
                       to_init: true
                       context_only: true
@@ -26485,39 +26631,6 @@ components:
               conditions:
               - conditions
               - conditions
-              actions:
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
-              - run_patch: '{}'
-                hub_ref: hub_ref
-                label: label
-                many: many
-                params:
-                  key:
-                    ref: ref
-                    search:
-                      offset: 3
-                      query: query
-                      limit: 3
-                      sort: sort
-                    connection: connection
-                    to_init: true
-                    context_only: true
-                    value: '{}'
               queue: queue
             kind: dag
             volumes:
@@ -26563,11 +26676,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -26598,11 +26711,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -26678,11 +26791,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             - container: '{}'
               path: path
@@ -26713,11 +26826,11 @@ components:
               connection: connection
               artifacts:
                 files:
-                - files
-                - files
+                - '{}'
+                - '{}'
                 dirs:
-                - dirs
-                - dirs
+                - '{}'
+                - '{}'
                 workers: 3
             sidecars:
             - null
@@ -26790,11 +26903,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -26825,11 +26938,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -26902,11 +27015,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -26937,11 +27050,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -27013,11 +27126,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -27048,11 +27161,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -27124,11 +27237,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -27159,11 +27272,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -27238,11 +27351,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -27273,11 +27386,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -27349,11 +27462,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               - container: '{}'
                 path: path
@@ -27384,11 +27497,11 @@ components:
                 connection: connection
                 artifacts:
                   files:
-                  - files
-                  - files
+                  - '{}'
+                  - '{}'
                   dirs:
-                  - dirs
-                  - dirs
+                  - '{}'
+                  - '{}'
                   workers: 3
               sidecars:
               - null
@@ -27568,11 +27681,11 @@ components:
           is_requested: true
         artifacs:
           files:
-          - files
-          - files
+          - '{}'
+          - '{}'
           dirs:
-          - dirs
-          - dirs
+          - '{}'
+          - '{}'
           workers: 3
         git:
           flags:
@@ -27771,6 +27884,19 @@ components:
             kind: qnormal
             value: '{}'
         operation:
+          joins:
+            key:
+              ref: ref
+              offset: 3
+              query: query
+              limit: 3
+              sort: sort
+              params:
+                key:
+                  connection: connection
+                  to_init: true
+                  context_only: true
+                  value: value
           template:
             description: description
             fields:
@@ -27802,39 +27928,45 @@ components:
           run_patch: '{}'
           dag_ref: dag_ref
           hooks:
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
-          - run_patch: '{}'
+          - presets:
+            - presets
+            - presets
             hub_ref: hub_ref
             connection: connection
+            conditions:
+            - '{}'
+            - '{}'
             params:
               key:
                 ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
                 connection: connection
                 to_init: true
                 context_only: true
                 value: '{}'
           events:
-          - events
-          - events
+          - ref: ref
+            kinds:
+            - null
+            - null
+          - ref: ref
+            kinds:
+            - null
+            - null
           termination:
             max_retries: 4
             ttl: 8
@@ -27852,11 +27984,6 @@ components:
           params:
             key:
               ref: ref
-              search:
-                offset: 3
-                query: query
-                limit: 3
-                sort: sort
               connection: connection
               to_init: true
               context_only: true
@@ -27974,66 +28101,33 @@ components:
             - presets
             name: name
             is_approved: true
-            actions:
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
-            - run_patch: '{}'
-              hub_ref: hub_ref
-              label: label
-              many: many
-              params:
-                key:
-                  ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
-                  connection: connection
-                  to_init: true
-                  context_only: true
-                  value: '{}'
             hooks:
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
                   value: '{}'
-            - run_patch: '{}'
+            - presets:
+              - presets
+              - presets
               hub_ref: hub_ref
               connection: connection
+              conditions:
+              - '{}'
+              - '{}'
               params:
                 key:
                   ref: ref
-                  search:
-                    offset: 3
-                    query: query
-                    limit: 3
-                    sort: sort
                   connection: connection
                   to_init: true
                   context_only: true
@@ -28047,39 +28141,6 @@ components:
           conditions:
           - conditions
           - conditions
-          actions:
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
-          - run_patch: '{}'
-            hub_ref: hub_ref
-            label: label
-            many: many
-            params:
-              key:
-                ref: ref
-                search:
-                  offset: 3
-                  query: query
-                  limit: 3
-                  sort: sort
-                connection: connection
-                to_init: true
-                context_only: true
-                value: '{}'
           queue: queue
       properties:
         operation_cond:
@@ -28244,11 +28305,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         - container: '{}'
           path: path
@@ -28279,11 +28340,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         sidecars:
         - null
@@ -28414,11 +28475,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -28449,11 +28510,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -28519,11 +28580,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -28554,11 +28615,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -28706,11 +28767,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         - container: '{}'
           path: path
@@ -28741,11 +28802,11 @@ components:
           connection: connection
           artifacts:
             files:
-            - files
-            - files
+            - '{}'
+            - '{}'
             dirs:
-            - dirs
-            - dirs
+            - '{}'
+            - '{}'
             workers: 3
         sidecars:
         - null
@@ -28952,11 +29013,11 @@ components:
       enum:
       - created
       - resuming
+      - on_schedule
       - compiled
       - queued
       - scheduled
       - starting
-      - initializing
       - running
       - processing
       - stopping
@@ -29005,11 +29066,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -29040,11 +29101,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -29117,11 +29178,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -29152,11 +29213,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -29228,11 +29289,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -29263,11 +29324,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null
@@ -29339,11 +29400,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           - container: '{}'
             path: path
@@ -29374,11 +29435,11 @@ components:
             connection: connection
             artifacts:
               files:
-              - files
-              - files
+              - '{}'
+              - '{}'
               dirs:
-              - dirs
-              - dirs
+              - '{}'
+              - '{}'
               workers: 3
           sidecars:
           - null

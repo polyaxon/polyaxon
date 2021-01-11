@@ -19,8 +19,6 @@
       link: /docs/core/specification/params/
     - title: Plugins
       link: /docs/core/specification/plugins/
-    - title: Notifications
-      link: /docs/core/specification/notifications/
     - title: Init
       link: /docs/core/specification/init/
     - title: Sidecars

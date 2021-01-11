@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,12 +32,7 @@ class V1Stages(polyaxon_sdk.V1Stages):
         DISABLED: "disabled"
     """
 
-    CHOICES = (
-        (polyaxon_sdk.V1Stages.TESTING, polyaxon_sdk.V1Stages.TESTING),
-        (polyaxon_sdk.V1Stages.STAGING, polyaxon_sdk.V1Stages.STAGING),
-        (polyaxon_sdk.V1Stages.PRODUCTION, polyaxon_sdk.V1Stages.PRODUCTION),
-        (polyaxon_sdk.V1Stages.DISABLED, polyaxon_sdk.V1Stages.DISABLED),
-    )
+    pass
 
 
 class V1Statuses(polyaxon_sdk.V1Statuses):
@@ -50,6 +45,7 @@ class V1Statuses(polyaxon_sdk.V1Statuses):
 
     Enum:
         CREATED: "created"
+        ON_SCHEDULE: "on_schedule"
         RESUMING: "resuming"
         WARNING: "warning"
         UNSCHEDULABLE: "unschedulable"
@@ -68,30 +64,14 @@ class V1Statuses(polyaxon_sdk.V1Statuses):
         UNKNOWN: "unknown"
     """
 
-    CHOICES = (
-        (polyaxon_sdk.V1Statuses.CREATED, polyaxon_sdk.V1Statuses.CREATED),
-        (polyaxon_sdk.V1Statuses.RESUMING, polyaxon_sdk.V1Statuses.RESUMING),
-        (polyaxon_sdk.V1Statuses.WARNING, polyaxon_sdk.V1Statuses.WARNING),
-        (polyaxon_sdk.V1Statuses.UNSCHEDULABLE, polyaxon_sdk.V1Statuses.UNSCHEDULABLE),
-        (polyaxon_sdk.V1Statuses.COMPILED, polyaxon_sdk.V1Statuses.COMPILED),
-        (polyaxon_sdk.V1Statuses.QUEUED, polyaxon_sdk.V1Statuses.QUEUED),
-        (polyaxon_sdk.V1Statuses.SCHEDULED, polyaxon_sdk.V1Statuses.SCHEDULED),
-        (polyaxon_sdk.V1Statuses.STARTING, polyaxon_sdk.V1Statuses.STARTING),
-        (polyaxon_sdk.V1Statuses.RUNNING, polyaxon_sdk.V1Statuses.RUNNING),
-        (polyaxon_sdk.V1Statuses.INITIALIZING, polyaxon_sdk.V1Statuses.INITIALIZING),
-        (polyaxon_sdk.V1Statuses.PROCESSING, polyaxon_sdk.V1Statuses.PROCESSING),
-        (polyaxon_sdk.V1Statuses.SUCCEEDED, polyaxon_sdk.V1Statuses.SUCCEEDED),
-        (polyaxon_sdk.V1Statuses.FAILED, polyaxon_sdk.V1Statuses.FAILED),
-        (
-            polyaxon_sdk.V1Statuses.UPSTREAM_FAILED,
-            polyaxon_sdk.V1Statuses.UPSTREAM_FAILED,
-        ),
-        (polyaxon_sdk.V1Statuses.STOPPING, polyaxon_sdk.V1Statuses.STOPPING),
-        (polyaxon_sdk.V1Statuses.STOPPED, polyaxon_sdk.V1Statuses.STOPPED),
-        (polyaxon_sdk.V1Statuses.SKIPPED, polyaxon_sdk.V1Statuses.SKIPPED),
-        (polyaxon_sdk.V1Statuses.RETRYING, polyaxon_sdk.V1Statuses.RETRYING),
-        (polyaxon_sdk.V1Statuses.UNKNOWN, polyaxon_sdk.V1Statuses.UNKNOWN),
-    )
+    allowable_hook_values = [
+        polyaxon_sdk.V1Statuses.FAILED,
+        polyaxon_sdk.V1Statuses.STOPPED,
+        polyaxon_sdk.V1Statuses.SUCCEEDED,
+        polyaxon_sdk.V1Statuses.SKIPPED,
+        polyaxon_sdk.V1Statuses.UPSTREAM_FAILED,
+        polyaxon_sdk.V1Statuses.DONE,
+    ]
 
 
 class StatusColor:
@@ -137,28 +117,28 @@ class LifeCycle:
     WARNING_VALUES = {V1Statuses.UNSCHEDULABLE, V1Statuses.WARNING}
     SAFE_STOP_VALUES = {
         V1Statuses.CREATED,
+        V1Statuses.ON_SCHEDULE,
         V1Statuses.RESUMING,
         V1Statuses.COMPILED,
     }
     PENDING_VALUES = {
         V1Statuses.CREATED,
+        V1Statuses.ON_SCHEDULE,
         V1Statuses.RESUMING,
-        V1Statuses.SCHEDULED,
     }
     COMPILABLE_VALUES = {
         V1Statuses.CREATED,
+        V1Statuses.ON_SCHEDULE,
         V1Statuses.RESUMING,
         V1Statuses.RETRYING,
     }
     RUNNING_VALUES = {
+        V1Statuses.SCHEDULED,
         V1Statuses.STARTING,
-        V1Statuses.INITIALIZING,
         V1Statuses.PROCESSING,
         V1Statuses.RUNNING,
     }
-    ON_K8S_VALUES = (
-        RUNNING_VALUES | WARNING_VALUES | {V1Statuses.SCHEDULED, V1Statuses.UNKNOWN}
-    )
+    ON_K8S_VALUES = RUNNING_VALUES | WARNING_VALUES | {V1Statuses.UNKNOWN}
     DONE_VALUES = {
         V1Statuses.FAILED,
         V1Statuses.UPSTREAM_FAILED,

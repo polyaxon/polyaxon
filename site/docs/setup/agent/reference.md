@@ -363,7 +363,6 @@ This will enable a security context to run all containers using a UID/GID == 111
 ```yaml
 artifactsStore: {}
 connections: []
-notificationConnections: []
 ```
 
 You need to configure the connections to authorize for the agent. Please check [connections section](/docs/setup/connections/).

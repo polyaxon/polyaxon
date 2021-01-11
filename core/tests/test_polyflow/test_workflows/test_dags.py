@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ from marshmallow import ValidationError
 
 from polyaxon import types
 from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow import V1RunKind, dags
 from polyaxon.polyflow.io import V1IO
 from polyaxon.polyflow.operations import V1Operation
@@ -110,6 +111,30 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "tags": ["tag31", "tag32"],
                     "dependencies": ["B", "C"],
                     "termination": {"maxRetries": 3},
+                    "runPatch": {
+                        "kind": V1RunKind.JOB,
+                        "container": {"resources": {"requests": {"cpu": 1}}},
+                        "environment": {
+                            "nodeSelector": {"polyaxon": "core"},
+                            "serviceAccountName": "service",
+                            "imagePullSecrets": ["secret1", "secret2"],
+                            "restartPolicy": "Never",
+                        },
+                    },
+                },
+                {
+                    "pathRef": "./relative/path/to/my-template.yaml",
+                    "name": "E",
+                    "description": "description E",
+                    "tags": ["tag31", "tag32"],
+                    "hooks": [
+                        {
+                            "hubRef": "componentName",
+                            "trigger": "done",
+                            "connection": "c1",
+                        }
+                    ],
+                    "events": [{"kinds": ["run_status_running"], "ref": "ops.A"}],
                     "runPatch": {
                         "kind": V1RunKind.JOB,
                         "container": {"resources": {"requests": {"cpu": 1}}},
@@ -275,6 +300,11 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "name": "D",
                     "dependencies": ["B", "C"],
                 },
+                {
+                    "pathRef": "/absolute/path/to/my-template.yaml",
+                    "name": "E",
+                    "events": [{"kinds": ["run_status_running"], "ref": "ops.D"}],
+                },
             ],
         }
         config = V1Dag.from_dict(config_dict)
@@ -289,7 +319,7 @@ class TestWorkflowV1Dags(BaseTestCase):
 
         config.validate_dag()
         dag = config.dag
-        assert len(dag) == 4
+        assert len(dag) == 5
         assert config.get_independent_ops(dag=dag) == {"A", "C"}
         assert dags.get_independent_ops(dag=dag) == {"A", "C"}
         assert config.get_orphan_ops(dag=dag) == set([])
@@ -298,6 +328,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[0] in [["A", "C"], ["C", "A"]]
         assert sorted_dag[1] == ["B"]
         assert sorted_dag[2] == ["D"]
+        assert sorted_dag[3] == ["E"]
 
         assert config.dag["A"].op.name == "A"
         assert config.dag["A"].op.definition.to_dict() == {
@@ -329,7 +360,23 @@ class TestWorkflowV1Dags(BaseTestCase):
             "path": "./relative/path/to/my-template.yaml",
         }
         assert config.dag["D"].upstream == {"B", "C"}
-        assert config.dag["D"].downstream == set()
+        assert config.dag["D"].downstream == {"E"}
+
+        assert config.dag["E"].op.name == "E"
+        assert config.dag["E"].op.definition.to_dict() == {
+            "kind": "path_ref",
+            "path": "/absolute/path/to/my-template.yaml",
+        }
+        assert config.dag["E"].upstream == {"D"}
+        assert config.dag["E"].downstream == set()
+
+        # Check events refs
+        assert config.dag["E"].op.get_upstream_statuses_events({"B"}) == {"B": []}
+        assert config.dag["E"].op.get_upstream_statuses_events({"D"}) == {
+            "D": [V1Statuses.RUNNING]
+        }
+        assert config.dag["E"].op.has_events_for_upstream("B") is False
+        assert config.dag["E"].op.has_events_for_upstream("D") is True
 
     def test_dag_matrix_ops(self):
         config_dict = {
@@ -1088,6 +1135,135 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
+        # Check events refs
+        assert config.dag["B"].op.get_upstream_statuses_events({"A"}) == {"A": []}
+        assert config.dag["B"].op.has_events_for_upstream("C") is False
+        assert config.dag["B"].op.has_events_for_upstream("A") is False
+
+        # Check events refs
+        assert config.dag["C"].op.get_upstream_statuses_events({"A", "B"}) == {
+            "B": [],
+            "A": [],
+        }
+        assert config.dag["C"].op.has_events_for_upstream("B") is False
+        assert config.dag["C"].op.has_events_for_upstream("A") is False
+
+        # Check events refs
+        assert config.dag["D"].op.get_upstream_statuses_events({"B", "C"}) == {
+            "B": [],
+            "C": [],
+        }
+        assert config.dag["D"].op.has_events_for_upstream("B") is False
+        assert config.dag["D"].op.has_events_for_upstream("A") is False
+        assert config.dag["D"].op.has_events_for_upstream("C") is False
+
+    def test_dag_dependency_from_events(self):
+        config_dict = {
+            "kind": V1RunKind.DAG,
+            "operations": [
+                {
+                    "hubRef": "echo",
+                    "name": "A",
+                    "params": {
+                        "param1": {"value": "text"},
+                        "param2": {"value": 12},
+                        "param3": {"value": "https://foo.com"},
+                    },
+                },
+                {
+                    "hubRef": "echo",
+                    "name": "B",
+                    "events": [{"kinds": ["run_status_running"], "ref": "ops.A"}],
+                    "params": {
+                        "param2": {"value": 12},
+                        "param3": {"value": "https://foo.com"},
+                    },
+                },
+                {
+                    "hubRef": "echo",
+                    "name": "C",
+                    "events": [
+                        {"kinds": ["run_status_running"], "ref": "ops.A"},
+                        {"kinds": ["run_status_running"], "ref": "ops.B"},
+                    ],
+                },
+                {"hubRef": "echo", "name": "D", "dependencies": ["B", "C"]},
+            ],
+        }
+
+        config = V1Dag.from_dict(config_dict)
+        config_to_light = config.to_light_dict()
+        assert config_to_light == config_dict
+        assert config.dag == {}
+
+        # Process the dag
+        config.process_dag()
+        config.process_components()
+        config.validate_dag()
+        dag = config.dag
+        assert len(dag) == 4
+        assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
+        assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
+        assert config.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
+        assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
+
+        assert config.dag["A"].op.name == "A"
+        assert config.dag["A"].op.definition.to_dict() == {
+            "kind": "hub_ref",
+            "name": "echo",
+        }
+        assert config.dag["A"].upstream == set()
+        assert config.dag["A"].downstream == {"B", "C"}
+
+        assert config.dag["B"].op.name == "B"
+        assert config.dag["B"].op.definition.to_dict() == {
+            "kind": "hub_ref",
+            "name": "echo",
+        }
+        assert config.dag["B"].upstream == {"A"}
+        assert config.dag["B"].downstream == {"C", "D"}
+
+        assert config.dag["C"].op.name == "C"
+        assert config.dag["C"].op.definition.to_dict() == {
+            "kind": "hub_ref",
+            "name": "echo",
+        }
+        assert config.dag["C"].upstream == {"A", "B"}
+        assert config.dag["C"].downstream == {"D"}
+
+        assert config.dag["D"].op.name == "D"
+        assert config.dag["D"].op.definition.to_dict() == {
+            "kind": "hub_ref",
+            "name": "echo",
+        }
+        assert config.dag["D"].upstream == {"B", "C"}
+        assert config.dag["D"].downstream == set()
+
+        # Check events refs
+        assert config.dag["B"].op.get_upstream_statuses_events({"C", "D"}) == {
+            "C": [],
+            "D": [],
+        }
+        assert config.dag["B"].op.get_upstream_statuses_events({"A", "C", "D"}) == {
+            "A": [V1Statuses.RUNNING],
+            "C": [],
+            "D": [],
+        }
+        assert config.dag["B"].op.has_events_for_upstream("C") is False
+        assert config.dag["B"].op.has_events_for_upstream("A") is True
+
+        # Check events refs
+        assert config.dag["C"].op.get_upstream_statuses_events({"A", "B", "D"}) == {
+            "A": [V1Statuses.RUNNING],
+            "B": [V1Statuses.RUNNING],
+            "D": [],
+        }
+        assert config.dag["C"].op.has_events_for_upstream("C") is False
+        assert config.dag["C"].op.has_events_for_upstream("A") is True
+        assert config.dag["C"].op.has_events_for_upstream("B") is True
+
     def test_dag_dependency_from_metainfo(self):
         config_dict = {
             "kind": V1RunKind.DAG,
@@ -1105,8 +1281,8 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "hubRef": "echo",
                     "name": "B",
                     "params": {
-                        "param1": {"value": "status", "ref": "ops.A"},
-                        "param2": {"value": "project_name", "ref": "ops.A"},
+                        "param1": {"value": "globals.status", "ref": "ops.A"},
+                        "param2": {"value": "globals.project_name", "ref": "ops.A"},
                         "param3": {"value": "https://foo.com"},
                     },
                 },
@@ -1115,8 +1291,10 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "name": "C",
                     "params": {
                         "param1": {"value": "inputs", "ref": "ops.A"},
-                        "param2": {"value": "uuid", "ref": "ops.B"},
+                        "param2": {"value": "globals.uuid", "ref": "ops.B"},
                         "param3": {"value": "outputs", "ref": "ops.B"},
+                        "param4": {"value": "artifacts", "ref": "ops.B"},
+                        "param5": {"value": "artifacts.foo", "ref": "ops.B"},
                     },
                 },
                 {"hubRef": "echo", "name": "D", "dependencies": ["B", "C"]},
@@ -1173,7 +1351,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
-    def test_dag_dependency_and_params(self):
+    def test_dag_dependency_and_params_and_events(self):
         config_dict = {
             "kind": V1RunKind.DAG,
             "operations": [
@@ -1202,7 +1380,19 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "params": {"param2": {"value": "outputs.x", "ref": "ops.B"}},
                     "dependencies": ["A"],
                 },
-                {"hubRef": "echo", "name": "D", "dependencies": ["B", "C"]},
+                {
+                    "hubRef": "echo",
+                    "name": "D",
+                    "events": [{"kinds": ["run_status_running"], "ref": "ops.B"}],
+                    "dependencies": ["C"],
+                },
+                {
+                    "hubRef": "echo",
+                    "name": "E",
+                    "events": [{"kinds": ["run_status_running"], "ref": "ops.D"}],
+                    "params": {"param2": {"value": "outputs.x", "ref": "ops.D"}},
+                    "dependencies": ["D"],
+                },
             ],
         }
 
@@ -1216,13 +1406,13 @@ class TestWorkflowV1Dags(BaseTestCase):
         config.process_components()
         config.validate_dag()
         dag = config.dag
-        assert len(dag) == 4
+        assert len(dag) == 5
         assert config.get_independent_ops(dag=dag) == {"A"}
         assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
         assert dags.get_orphan_ops(dag=dag) == set([])
-        assert config.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
-        assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
+        assert config.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"], ["E"]]
+        assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"], ["E"]]
 
         assert config.dag["A"].op.name == "A"
         assert config.dag["A"].op.definition.to_dict() == {
@@ -1254,7 +1444,37 @@ class TestWorkflowV1Dags(BaseTestCase):
             "name": "echo",
         }
         assert config.dag["D"].upstream == {"B", "C"}
-        assert config.dag["D"].downstream == set()
+        assert config.dag["D"].downstream == {"E"}
+
+        assert config.dag["E"].op.name == "E"
+        assert config.dag["E"].op.definition.to_dict() == {
+            "kind": "hub_ref",
+            "name": "echo",
+        }
+        assert config.dag["E"].upstream == {"D"}
+        assert config.dag["E"].downstream == set()
+
+        # Check events refs
+        assert config.dag["D"].op.get_upstream_statuses_events(
+            {"A", "B", "C", "E"}
+        ) == {
+            "B": [V1Statuses.RUNNING],
+            "A": [],
+            "C": [],
+            "E": [],
+        }
+        assert config.dag["D"].op.has_events_for_upstream("C") is False
+        assert config.dag["D"].op.has_events_for_upstream("A") is False
+        assert config.dag["D"].op.has_events_for_upstream("B") is True
+
+        # Check events refs
+        assert config.dag["E"].op.get_upstream_statuses_events(
+            {"A", "B", "C", "D"}
+        ) == {"D": [V1Statuses.RUNNING], "B": [], "A": [], "C": []}
+        assert config.dag["E"].op.has_events_for_upstream("C") is False
+        assert config.dag["E"].op.has_events_for_upstream("A") is False
+        assert config.dag["E"].op.has_events_for_upstream("B") is False
+        assert config.dag["E"].op.has_events_for_upstream("D") is True
 
     def test_dag_orphan_ops(self):
         config_dict = {
@@ -1458,6 +1678,48 @@ class TestWorkflowV1Dags(BaseTestCase):
         with self.assertRaises(ValidationError):
             config.process_components()
 
+    def test_dag_with_template_not_defining_inputs_and_ops_with_joins(self):
+        config_dict = {
+            "kind": V1RunKind.DAG,
+            "operations": [
+                {
+                    "name": "A",
+                    "component": {
+                        "name": "build-template",
+                        "tags": ["kaniko"],
+                        "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                    },
+                },
+                {
+                    "name": "B",
+                    "component": {
+                        "name": "build-template",
+                        "tags": ["kaniko"],
+                        "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                    },
+                },
+                {
+                    "name": "C",
+                    "joins": [
+                        {
+                            "query": "name: build_template",
+                            "params": {
+                                "test_param": {"value": "outputs.value"},
+                            },
+                        },
+                    ],
+                    "component": {
+                        "name": "job-template",
+                        "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                    },
+                },
+            ],
+        }
+        config = V1Dag.from_dict(config_dict)
+        assert config.to_light_dict() == config_dict
+        with self.assertRaises(ValidationError):
+            config.process_components()
+
     def test_pipelines_with_template_not_defining_inputs_and_ops_with_params_template(
         self,
     ):
@@ -1628,7 +1890,78 @@ class TestWorkflowV1Dags(BaseTestCase):
         with self.assertRaises(ValidationError):
             config.process_components()
 
+    def test_dag_with_ops_template_optional_inputs_and_wrong_join_param(self):
+        config_dict = {
+            "kind": V1RunKind.DAG,
+            "operations": [
+                {
+                    "name": "A",
+                    "joins": [
+                        {
+                            "query": "name: build_template",
+                            "params": {
+                                "input1": {"value": "outputs.value"},
+                            },
+                        },
+                    ],
+                    "component": {
+                        "name": "job-template",
+                        "inputs": [
+                            {
+                                "name": "input1",
+                                "description": "some text",
+                                "type": types.FLOAT,
+                                "isOptional": True,
+                                "value": 12.2,
+                            }
+                        ],
+                        "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                    },
+                }
+            ],
+        }
+        config = V1Dag.from_dict(config_dict)
+        config_to_light = config.to_light_dict()
+        assert config_to_light == config_dict
+        with self.assertRaises(ValidationError):
+            config.process_components()
+
     def test_pipelines_with_ops_template_optional_inputs_and_wrong_param_components(
+        self,
+    ):
+        config_dict = {
+            "kind": V1RunKind.DAG,
+            "operations": [
+                {
+                    "dagRef": "job-template",
+                    "name": "A",
+                    "params": {"input1": {"value": "foo"}},
+                }
+            ],
+            "components": [
+                {
+                    "kind": "component",
+                    "name": "job-template",
+                    "inputs": [
+                        {
+                            "name": "input1",
+                            "description": "some text",
+                            "type": types.FLOAT,
+                            "isOptional": True,
+                            "value": 12.2,
+                        }
+                    ],
+                    "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                }
+            ],
+        }
+        config = V1Dag.from_dict(config_dict)
+        config_to_light = config.to_light_dict()
+        assert config_to_light == config_dict
+        with self.assertRaises(ValidationError):
+            config.process_components()
+
+    def test_pipelines_with_ops_template_optional_inputs_and_wrong_join_param_components(
         self,
     ):
         config_dict = {
@@ -1805,6 +2138,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                         "input2": {"value": "gs://bucket/path/to/blob/"},
                         "input4": {"value": "failed"},
                         "input5": {"value": {"foo": "bar"}},
+                        "input6": {"value": {"files": ["file1", "file2"]}},
                     },
                 },
                 {
@@ -1814,8 +2148,9 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "params": {
                         "input1": {"value": "outputs.output1", "ref": "ops.A"},
                         "input2": {"value": "gs://bucket/path/to/blob/"},
-                        "input4": {"value": "status", "ref": "ops.A"},
+                        "input4": {"value": "globals.status", "ref": "ops.A"},
                         "input5": {"value": "inputs", "ref": "ops.A"},
+                        "input6": {"value": "artifacts.test", "ref": "ops.A"},
                     },
                 },
             ],
@@ -1843,6 +2178,11 @@ class TestWorkflowV1Dags(BaseTestCase):
                         },
                         {"name": "input4", "description": "status", "type": types.STR},
                         {"name": "input5", "description": "dict", "type": types.DICT},
+                        {
+                            "name": "input6",
+                            "description": "dict",
+                            "type": types.ARTIFACTS,
+                        },
                     ],
                     "outputs": [
                         {
@@ -1859,6 +2199,74 @@ class TestWorkflowV1Dags(BaseTestCase):
         }
         config = V1Dag.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
+        config.process_components()
+
+    def test_dag_with_correct_joins(self):
+        # Correct the input type
+        config_dict = {
+            "kind": V1RunKind.DAG,
+            "operations": [
+                {
+                    "name": "A",
+                    "joins": [
+                        {
+                            "query": "name: build_template",
+                            "params": {
+                                "input1": {"value": "outputs.value"},
+                            },
+                        },
+                    ],
+                    "component": {
+                        "name": "job-template",
+                        "inputs": [
+                            {
+                                "name": "input1",
+                                "description": "some text",
+                                "type": types.FLOAT,
+                                "isList": True,
+                            }
+                        ],
+                        "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                    },
+                }
+            ],
+        }
+        config = V1Dag.from_dict(config_dict)
+        config_to_light = config.to_light_dict()
+        assert config_to_light == config_dict
+        config.process_components()
+
+        # Correct artifacts with isList
+        config_dict = {
+            "kind": V1RunKind.DAG,
+            "operations": [
+                {
+                    "name": "A",
+                    "joins": [
+                        {
+                            "query": "name: build_template",
+                            "params": {
+                                "input1": {"value": "artifacts.value"},
+                            },
+                        },
+                    ],
+                    "component": {
+                        "name": "job-template",
+                        "inputs": [
+                            {
+                                "name": "input1",
+                                "description": "some text",
+                                "type": types.ARTIFACTS,
+                            }
+                        ],
+                        "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                    },
+                }
+            ],
+        }
+        config = V1Dag.from_dict(config_dict)
+        config_to_light = config.to_light_dict()
+        assert config_to_light == config_dict
         config.process_components()
 
     def test_dag_with_correct_ref_and_wrong_ref_type(self):
@@ -1955,6 +2363,44 @@ class TestWorkflowV1Dags(BaseTestCase):
         with self.assertRaises(ValidationError):
             config.process_components()
 
+    def test_dag_with_template_not_defining_inputs_and_ops_joins_params(self):
+        config_dict = {
+            "kind": V1RunKind.DAG,
+            "operations": [
+                {"dagRef": "build-template", "name": "A"},
+                {
+                    "dagRef": "job-template",
+                    "name": "B",
+                    "dependencies": ["A"],
+                    "joins": [
+                        {
+                            "query": "name: build_template",
+                            "params": {
+                                "input1": {"value": "outputs.value"},
+                            },
+                        },
+                    ],
+                },
+            ],
+            "components": [
+                {
+                    "kind": "component",
+                    "name": "job-template",
+                    "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                },
+                {
+                    "kind": "component",
+                    "name": "build-template",
+                    "tags": ["kaniko"],
+                    "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                },
+            ],
+        }
+        config = V1Dag.from_dict(config_dict)
+        assert config.to_light_dict() == config_dict
+        with self.assertRaises(ValidationError):
+            config.process_components()
+
     def test_dag_with_ops_and_components(self):
         config_dict = {
             "kind": V1RunKind.DAG,
@@ -2012,6 +2458,43 @@ class TestWorkflowV1Dags(BaseTestCase):
                         "output1": {"value": "S3://foo.com"},
                     },
                     "termination": {"maxRetries": 5},
+                    "runPatch": {
+                        "kind": V1RunKind.JOB,
+                        "container": {"resources": {"requests": {"cpu": 1}}},
+                        "environment": {
+                            "nodeSelector": {"polyaxon": "core"},
+                            "serviceAccountName": "service",
+                            "imagePullSecrets": ["secret1", "secret2"],
+                        },
+                    },
+                },
+                {
+                    "dagRef": "reduce-template",
+                    "name": "D",
+                    "description": "description D",
+                    "tags": ["tag41", "tag42"],
+                    "joins": [
+                        {
+                            "query": "project.name: {{ globals.project_name }}",
+                            "params": {
+                                "run_uuids": {"value": "globals.uuid"},
+                                "run_count": {
+                                    "value": "annotations.count",
+                                    "contextOnly": True,
+                                },
+                            },
+                        },
+                    ],
+                    "dependencies": ["C"],
+                    "conditions": "count > 10",
+                    "termination": {"maxRetries": 5},
+                    "hooks": [
+                        {
+                            "hubRef": "ref2",
+                            "trigger": "succeeded",
+                            "connection": "conn1",
+                        }
+                    ],
                     "runPatch": {
                         "kind": V1RunKind.JOB,
                         "container": {"resources": {"requests": {"cpu": 1}}},
@@ -2120,6 +2603,31 @@ class TestWorkflowV1Dags(BaseTestCase):
                 },
                 {
                     "kind": "component",
+                    "name": "reduce-template",
+                    "description": "description reduce",
+                    "inputs": [
+                        {
+                            "name": "run_uuids",
+                            "description": "some text",
+                            "type": types.UUID,
+                            "isList": True,
+                        },
+                    ],
+                    "run": {
+                        "kind": V1RunKind.JOB,
+                        "environment": {
+                            "nodeSelector": {"polyaxon": "core"},
+                            "serviceAccountName": "service",
+                            "imagePullSecrets": ["secret1", "secret2"],
+                        },
+                        "container": {
+                            "image": "test",
+                            "resources": {"requests": {"cpu": 1}},
+                        },
+                    },
+                },
+                {
+                    "kind": "component",
                     "name": "build-template",
                     "description": "description build",
                     "tags": ["tag11", "tag12"],
@@ -2188,7 +2696,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         config.validate_dag()
         config.process_components()
         dag = config.dag
-        assert len(dag) == 3
+        assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"A"}
         assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
@@ -2198,6 +2706,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert sorted_dag[0] == ["A"]
         assert sorted_dag[1] == ["B"]
         assert sorted_dag[2] == ["C"]
+        assert sorted_dag[3] == ["D"]
 
         # op upstreams
         op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
@@ -2251,6 +2760,10 @@ class TestWorkflowV1Dags(BaseTestCase):
                 is_context=None,
                 arg_format=None,
             )
+        op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
+            params=config.dag["D"].op.params
+        )
+        assert op_upstream_by_names == {}
 
         # run upstreams
         run_upstream_by_names = ops_params.get_upstream_run_params_by_names(
@@ -2278,6 +2791,11 @@ class TestWorkflowV1Dags(BaseTestCase):
         )
         assert run_upstream_by_names == {}
 
+        run_upstream_by_names = ops_params.get_upstream_run_params_by_names(
+            params=config.dag["D"].op.params
+        )
+        assert run_upstream_by_names == {}
+
         # pipeline upstreams
         pipeline_by_names = ops_params.get_dag_params_by_names(
             params=config.dag["A"].op.params
@@ -2289,6 +2807,10 @@ class TestWorkflowV1Dags(BaseTestCase):
         assert pipeline_by_names == {}
         pipeline_by_names = ops_params.get_dag_params_by_names(
             params=config.dag["C"].op.params
+        )
+        assert pipeline_by_names == {}
+        pipeline_by_names = ops_params.get_dag_params_by_names(
+            params=config.dag["D"].op.params
         )
         assert pipeline_by_names == {}
 
@@ -2316,7 +2838,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "params": {
                         "input1": {"value": "inputs.input4", "ref": "ops.A"},
                         "input2": {"value": "outputs.output1", "ref": "ops.A"},
-                        "input3": {"value": "status", "ref": "ops.A"},
+                        "input3": {"value": "globals.status", "ref": "ops.A"},
                         "input4": {"value": "inputs", "ref": "ops.A"},
                     },
                 },
@@ -2326,9 +2848,22 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "params": {
                         "input1": {"ref": "dag", "value": "inputs.input_pipe"},
                         "input2": {"ref": "ops.B", "value": "outputs.output1"},
-                        "input3": {"ref": "ops.A", "value": "status"},
+                        "input3": {"ref": "ops.A", "value": "globals.status"},
                         "input4": {"ref": "ops.B", "value": "inputs"},
                     },
+                },
+                {
+                    "dagRef": "C",
+                    "name": "D",
+                    "events": [{"kinds": ["run_status_running"], "ref": "ops.A"}],
+                    "joins": [
+                        {
+                            "query": "outputs.field: value",
+                            "params": {
+                                "input3": {"value": "outputs.value"},
+                            },
+                        },
+                    ],
                 },
             ],
             "components": [
@@ -2374,6 +2909,15 @@ class TestWorkflowV1Dags(BaseTestCase):
                     "outputs": [{"name": "output1", "type": types.S3}],
                     "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
                 },
+                {
+                    "kind": "component",
+                    "name": "C",
+                    "inputs": [
+                        {"name": "input3", "type": types.STR, "isList": True},
+                    ],
+                    "outputs": [{"name": "output1", "type": types.S3}],
+                    "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}},
+                },
             ],
         }
 
@@ -2385,7 +2929,7 @@ class TestWorkflowV1Dags(BaseTestCase):
             inputs=[V1IO.from_dict({"name": "input_pipe", "type": types.S3})]
         )
         dag = config.dag
-        assert len(dag) == 3
+        assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"A"}
         assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
@@ -2393,7 +2937,7 @@ class TestWorkflowV1Dags(BaseTestCase):
         sorted_dag = config.sort_topologically(dag=dag)
         assert config.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] == ["A"]
-        assert sorted_dag[1] == ["B"]
+        assert sorted_dag[1] in [["B", "D"], ["D", "B"]]
         assert sorted_dag[2] == ["C"]
 
         # op upstreams
@@ -2452,7 +2996,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                 ops_params.ParamSpec(
                     name="input3",
                     iotype=None,
-                    param=V1Param(ref="ops.A", value="status"),
+                    param=V1Param(ref="ops.A", value="globals.status"),
                     is_flag=None,
                     is_list=None,
                     is_context=None,
@@ -2506,6 +3050,10 @@ class TestWorkflowV1Dags(BaseTestCase):
             params=config.dag["C"].op.params
         )
         assert run_upstream_by_names == {}
+        run_upstream_by_names = ops_params.get_upstream_run_params_by_names(
+            params=config.dag["D"].op.params
+        )
+        assert run_upstream_by_names == {}
 
         # pipeline upstreams
         pipeline_by_names = ops_params.get_dag_params_by_names(
@@ -2530,3 +3078,7 @@ class TestWorkflowV1Dags(BaseTestCase):
                 arg_format=None,
             )
         ]
+        pipeline_by_names = ops_params.get_dag_params_by_names(
+            params=config.dag["D"].op.params
+        )
+        assert pipeline_by_names == {}

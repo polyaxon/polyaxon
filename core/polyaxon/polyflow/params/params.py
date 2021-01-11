@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import uuid
 
 from collections import namedtuple
+from collections.abc import Mapping
 from typing import Dict, Optional
 
 import polyaxon_sdk
@@ -24,95 +24,169 @@ import ujson
 from marshmallow import ValidationError, fields, validates_schema
 
 from polyaxon import types
+from polyaxon.contexts import refs as contexts_refs
+from polyaxon.contexts import sections as contexts_sections
+from polyaxon.contexts.params import PARAM_REGEX
 from polyaxon.polyflow.init import V1Init
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
-from polyaxon.schemas.fields.params import PARAM_REGEX
-
-INPUTS = "inputs"
-OUTPUTS = "outputs"
-INPUTS_OUTPUTS = "io"
-ARTIFACTS = "artifacts"
-EVENTS = "events"
-STATUS = "status"
-NAME = "name"
-UUID = "uuid"
-PROJECT_NAME = "project_name"
-PROJECT_UUID = "project_uuid"
-ITERATION = "iteration"
-CONTEXTS = {
-    INPUTS,
-    OUTPUTS,
-    INPUTS_OUTPUTS,
-    ARTIFACTS,
-    EVENTS,
-    STATUS,
-    NAME,
-    UUID,
-    PROJECT_NAME,
-    PROJECT_UUID,
-    ITERATION,
-}
-CONTEXTS_WITH_NESTING = {
-    INPUTS,
-    OUTPUTS,
-    ARTIFACTS,
-    EVENTS,
-}
-
-OPS = "ops"
-RUNS = "runs"
-DAG = "dag"
-DAG_ENTITY_REF = "_"
-ENTITIES = {OPS, RUNS}
 
 
-def validate_param_value(value, search, ref, to_init, context_only):
-    if search and ref:
+def validate_param_value(value, ref, to_init, context_only):
+    if ref and not isinstance(value, str):
         raise ValidationError(
-            "Only one field `ref` or `search` is possible, received both:\n"
-            "ref: {}\n"
-            "search: {}".format(ref, search)
-        )
-    if (search or ref) and not isinstance(value, str):
-        raise ValidationError(
-            "Value `{}` must be of type string when a search or ref is provided.".format(
-                value
-            )
-        )
-
-    if to_init and context_only:
-        raise ValidationError(
-            "Params cannot use `to_init` and `context_only` at the same time, "
-            "params require valid type be turned to an initializer automatically! "
-            "Please set an input with a type to use the `to_init` field, "
-            "or turn this param to an init manually."
+            "Value `{}` must be of type string when a ref is provided.".format(value)
         )
 
 
-class ParamSearchSchema(BaseCamelSchema):
-    query = fields.Str(required=True)
-    sort = fields.Str(allow_none=True)
-    limit = fields.Int(allow_none=True)
-    offset = fields.Int(allow_none=True)
+class ParamValueMixin:
+    @property
+    def is_literal(self):
+        raise NotImplementedError
 
-    @staticmethod
-    def schema_config():
-        return V1ParamSearch
+    @property
+    def is_ref(self):
+        raise NotImplementedError
 
+    @property
+    def is_join_ref(self):
+        raise NotImplementedError
 
-class V1ParamSearch(BaseConfig, polyaxon_sdk.V1ParamSearch):
-    SCHEMA = ParamSearchSchema
-    IDENTIFIER = "search_param"
-    REDUCED_ATTRIBUTES = [
-        "sort",
-        "limit",
-        "offset",
-    ]
+    @property
+    def is_runs_ref(self):
+        raise NotImplementedError
+
+    @property
+    def is_ops_ref(self):
+        raise NotImplementedError
+
+    def validate(self):
+        validate_param_value(
+            value=self.value,
+            ref=self.ref,
+            to_init=self.to_init,
+            context_only=self.context_only,
+        )
+
+    @property
+    def entity_value(self) -> Optional[str]:
+        if not self.is_ref:
+            return None
+        return contexts_refs.get_entity_value(self.value)
+
+    @property
+    def entity_type(self) -> Optional[str]:
+        if not self.is_ref:
+            return None
+        return contexts_refs.get_entity_type(self.value)
+
+    @property
+    def searchable_ref(self) -> str:
+        if not self.is_ref or self.is_join_ref:
+            return ""
+        return "{}.{}".format(self.ref, self.value)
+
+    def get_spec(
+        self,
+        name: str,
+        iotype: str,
+        is_flag: bool,
+        is_list: bool,
+        is_context: bool,
+        arg_format: str,
+    ):
+        """
+        Checks if the value is param ref and validates it.
+
+        returns: ParamSpec or None
+        raises: ValidationError
+        """
+        if not self.is_literal and not (
+            self.is_join_ref and isinstance(self.value, Mapping)
+        ):
+            # value validation is the same for search and ref
+            value_parts = PARAM_REGEX.search(self.value)
+            if value_parts:
+                value_parts = value_parts.group(1)
+            else:
+                value_parts = self.value
+
+            value_parts = [s.strip() for s in value_parts.split(".")]
+            if len(value_parts) > 3:
+                raise ValidationError(
+                    "Could not parse value `{}` for param `{}`.".format(
+                        self.value, name
+                    )
+                )
+            if (
+                len(value_parts) == 1
+                and value_parts[0] not in contexts_sections.CONTEXTS
+            ):
+                raise ValidationError(
+                    "Received an invalid value `{}` for param `{}`. "
+                    "Value must be one of `{}`".format(
+                        self.value, name, contexts_sections.CONTEXTS
+                    )
+                )
+            # Check the case of current DAG, it should not allow to use outputs
+            if (
+                len(value_parts) == 1
+                and self.is_dag_ref
+                and value_parts[0] == contexts_sections.OUTPUTS
+            ):
+                raise ValidationError(
+                    "Received an invalid value `{}` for param `{}`. "
+                    "You can not use `{}` of current dag".format(
+                        self.value, name, contexts_sections.OUTPUTS
+                    )
+                )
+            if (
+                len(value_parts) == 2
+                and value_parts[0] not in contexts_sections.CONTEXTS_WITH_NESTING
+            ):
+                raise ValidationError(
+                    "Received an invalid value `{}` for param `{}`. "
+                    "Value `{}` must be one of `{}`".format(
+                        self.value,
+                        name,
+                        value_parts[0],
+                        contexts_sections.CONTEXTS_WITH_NESTING,
+                    )
+                )
+            if len(value_parts) == 3 and value_parts[0] != contexts_sections.ARTIFACTS:
+                raise ValidationError(
+                    "Received an invalid value `{}` for param `{}`. "
+                    "Value `{}` must can only be equal to `{}`".format(
+                        self.value, name, value_parts[0], contexts_sections.ARTIFACTS
+                    )
+                )
+        if self.is_ref:
+            if self.is_join_ref:
+                if not is_context and not is_list and iotype != types.ARTIFACTS:
+                    raise ValidationError(
+                        "Param `{}` has a an input type `{}`, "
+                        "it does not expect a list of values from the join. "
+                        "You should either pass a single value or add `isList` "
+                        "to you IO definition".format(
+                            name,
+                            iotype,
+                        )
+                    )
+            else:
+                contexts_refs.validate_ref(ref=self.ref, name=name)
+
+        return ParamSpec(
+            name=name,
+            iotype=iotype,
+            param=self,
+            is_flag=is_flag,
+            is_list=is_list,
+            is_context=is_context,
+            arg_format=arg_format,
+        )
 
 
 class ParamSchema(BaseCamelSchema):
     value = fields.Raw(required=True, allow_none=True)
-    search = fields.Nested(ParamSearchSchema, allow_none=True)
     ref = fields.Str(allow_none=True)
     context_only = fields.Bool(allow_none=True)
     connection = fields.Str(allow_none=True)
@@ -126,14 +200,15 @@ class ParamSchema(BaseCamelSchema):
     def validate_param(self, values, **kwargs):
         validate_param_value(
             value=values.get("value"),
-            search=values.get("search"),
             ref=values.get("ref"),
             context_only=values.get("context_only"),
             to_init=values.get("to_init"),
         )
 
 
-class V1Param(BaseConfig, polyaxon_sdk.V1Param):
+class V1Param(
+    BaseConfig, contexts_refs.RefMixin, ParamValueMixin, polyaxon_sdk.V1Param
+):
     """Params can provide values to inputs/outputs.
 
     Params can be passed in several ways
@@ -142,8 +217,6 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
           Polyaxon will validate during the compilation time if the user who initiated the run
           has access to that organization/project/run.
         * a reference from an upstream operation in the context of a DAG.
-        * a search, in which case the param will be a list of values based on the results
-          from executing the search.
 
 
     When a param is passed from the CLI or directly in the YAML/Python specification,
@@ -152,7 +225,6 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
     Args:
          value: any
-         search: V1ParamSearch, optional
          ref: str, optional
          context_only: bool, optional
          connection: str, optional
@@ -189,7 +261,7 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
     ### value
 
-    The value to pass, if no `ref` or `search` is passed then it corresponds to a literal value,
+    The value to pass, if no `ref` is passed then it corresponds to a literal value,
     and will be validated eagerly.
     Otherwise it will be a future validation during the compilation time.
 
@@ -197,6 +269,8 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     >>> params:
     >>>   loss:
     >>>     value: MeanSquaredError
+    >>>   learning_rate:
+    >>>     value: 0.001
     ```
 
     The value could be coming from the [context](/docs/core/specification/context/), for example:
@@ -207,7 +281,58 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     >>>     value: {{globals.project_name}}
     >>>   current_run:
     >>>     value: {{globals.uuid}}
+    >>>   fully_resolved_artifacts_path:
+    >>>     value: {{globals.run_artifacts_path}}
+    >>>   fully_resolved_artifacts_outputs_path:
+    >>>     value: {{globals.run_outputs_path}}
     ```
+
+    Resolving values from the IO (inputs/outputs) of the reference:
+
+    ```yaml
+    >>>   specific_input:
+    >>>     value: {{inputs.input_name}}
+    >>>   specific_outputs:
+    >>>     value: {{outputs.output_name}}
+    >>>   all_inputs_dict:
+    >>>     value: {{inputs}}
+    >>>   all_outputs_dict:
+    >>>     value: {{outputs}}
+    >>>   specific_input:
+    >>>     value: {{inputs.input_name}}
+    >>>   specific_outputs:
+    >>>     value: {{outputs.output_name}}
+    ```
+
+    Resolving paths from the artifacts and lineages of the reference:
+
+    ```yaml
+    >>>   run_artifacts_subpath_without_context:
+    >>>     value: {{artifacts}}
+    >>>   run_artifacts_outputs_subpath_without_context:
+    >>>     value: {{artifacts.outputs}}
+    >>>   run_path_of_lineage:
+    >>>     value: {{artifacts.lineage_name}}
+    >>>   run_tensorboard_path_from_lineage:
+    >>>     value: {{artifacts.tensorboard}}
+    >>>   run_tensorboard_path_from_lineage:
+    >>>     value: {{artifacts.tensorboard}}
+    ```
+
+    Resolving artifacts manually from the reference based on the
+    [ArtifactsType](/docs/core/specification/types/#v1artifactstype)
+
+    ```yaml
+    >>>   files_and_dirs:
+    >>>     value:
+    >>>       - files: ["subpath/file1", "another/subpath/file2.ext"]
+    >>>       - dirs: ["subpath/dir1", "another/subpath/dir2"]
+    ```
+
+    > **Note**: the difference between using `artfiacts.lineage_name`
+    and [ArtifactsType](/docs/core/specification/types/#v1artifactstype),
+    is that the former will only expose the path based on any lineage logged during the runtime,
+    the later is a manual way of selecting specific files and dirs.
 
     ### ref
 
@@ -229,30 +354,6 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
     >>>     value: outputs.loss
     >>>     ref: runs.fcc462d764104eb698d3cca509f34154
     ```
-
-    ### search
-
-    A Search corresponds to a valid search that can be resolved by Polyaxon,
-    the result will be injected to resolve the param value.
-
-    ```yaml
-    >>> params:
-    >>>   paths:
-    >>>     value: outputs.artifacts
-    >>>     search: {query: "metrics.loss: <0.01", sort: "metrics.loss", limit: 5}
-    ```
-
-    ```python
-    >>> params = {
-    >>>     "paths": V1Param(
-    >>>         value="outputs.artifacts",
-    >>>         search=V1ParamSearch(query="metrics.loss: <0.01", sort="metrics.loss", limit=5),
-    >>>     )
-    >>> }
-    ```
-
-    This will expose the artifacts generated by
-    the top 5 runs where the loss is less than 0.01 ascending.
 
     ### contextOnly
 
@@ -281,187 +382,35 @@ class V1Param(BaseConfig, polyaxon_sdk.V1Param):
 
     ### connection
 
-    A connection to use with the parame.
+    A connection to use with the parameter.
     if the initial Input/Output definition has a predefined connection and this connection
     is provided, it will override the that value and will be added to the context.
 
     ### toInit
 
     if True the param will be converted to an init container.
+
+    For example, to initialize some artifacts without using the
+    [init section](/docs/core/specification/init/), you can use `toInit` to turn an artifacts value
+    or git value to an init container:
+
+    ```yaml
+    >>>   files_and_dirs:
+    >>>     toInit: true
+    >>>     value:
+    >>>       - files: ["subpath/file1", "another/subpath/file2.ext"]
+    >>>       - dirs: ["subpath/dir1", "another/subpath/dir2"]
+    ```
     """
 
     SCHEMA = ParamSchema
     IDENTIFIER = "param"
     REDUCED_ATTRIBUTES = [
-        "search",
         "ref",
         "contextOnly",
         "connection",
         "toInit",
     ]
-
-    def validate(self):
-        validate_param_value(
-            value=self.value,
-            search=self.search,
-            ref=self.ref,
-            to_init=self.to_init,
-            context_only=self.context_only,
-        )
-
-    @property
-    def is_literal(self):
-        return not any([self.search, self.ref])
-
-    @property
-    def is_ref(self):
-        return self.ref is not None
-
-    @property
-    def is_runs_ref(self):
-        if not self.is_ref:
-            return False
-
-        return self.ref.split(".")[0] == RUNS
-
-    @property
-    def is_ops_ref(self):
-        if not self.is_ref:
-            return False
-
-        return self.ref.split(".")[0] == OPS
-
-    @property
-    def is_dag_ref(self):
-        if not self.is_ref:
-            return False
-
-        return self.ref.split(".")[0] == DAG
-
-    @property
-    def is_search(self):
-        return self.search is not None
-
-    @property
-    def entity_ref(self) -> Optional[str]:
-        if self.is_ops_ref or self.is_runs_ref:
-            return self.ref.split(".")[1]
-        if self.is_dag_ref:
-            return DAG_ENTITY_REF
-        return None
-
-    @property
-    def entity_value(self) -> Optional[str]:
-        if not self.is_ref:
-            return None
-        value_parts = PARAM_REGEX.search(self.value)
-        if value_parts:
-            value_parts = value_parts.group(1)
-        else:
-            value_parts = self.value
-
-        return value_parts.split(".")[-1]
-
-    @property
-    def searchable_ref(self) -> str:
-        if not self.is_ref:
-            return ""
-        return "{}.{}".format(self.ref, self.value)
-
-    def get_spec(
-        self,
-        name: str,
-        iotype: str,
-        is_flag: bool,
-        is_list: bool,
-        is_context: bool,
-        arg_format: str,
-    ):
-        """
-        Checks if the value is param ref and validates it.
-
-        returns: ParamSpec or None
-        raises: ValidationError
-        """
-        if not self.is_literal:
-            # value validation is the same for search and ref
-            value_parts = PARAM_REGEX.search(self.value)
-            if value_parts:
-                value_parts = value_parts.group(1)
-            else:
-                value_parts = self.value
-
-            value_parts = [s.strip() for s in value_parts.split(".")]
-            if len(value_parts) > 3:
-                raise ValidationError(
-                    "Could not parse value `{}` for param `{}`.".format(
-                        self.value, name
-                    )
-                )
-            if len(value_parts) == 1 and value_parts[0] not in CONTEXTS:
-                raise ValidationError(
-                    "Received an invalid value `{}` for param `{}`. "
-                    "Value must be one of `{}`".format(self.value, name, CONTEXTS)
-                )
-            # Check the case of current DAG, it should not allow to use outputs
-            if len(value_parts) == 1 and self.is_dag_ref and value_parts[0] == OUTPUTS:
-                raise ValidationError(
-                    "Received an invalid value `{}` for param `{}`. "
-                    "You can not use `{}` of current dag".format(
-                        self.value, name, OUTPUTS
-                    )
-                )
-            if len(value_parts) == 2 and value_parts[0] not in CONTEXTS_WITH_NESTING:
-                raise ValidationError(
-                    "Received an invalid value `{}` for param `{}`. "
-                    "Value `{}` must be one of `{}`".format(
-                        self.value, name, value_parts[0], CONTEXTS_WITH_NESTING
-                    )
-                )
-            if len(value_parts) == 3 and value_parts[0] != EVENTS:
-                raise ValidationError(
-                    "Received an invalid value `{}` for param `{}`. "
-                    "Value `{}` must can only be equal to `{}`".format(
-                        self.value, name, value_parts[0], EVENTS
-                    )
-                )
-        if self.is_ref:
-            # validate ref
-            ref_parts = self.ref.split(".")
-            if len(ref_parts) > 2:
-                raise ValidationError(
-                    "Could not parse ref `{}` for param `{}`.".format(self.ref, name)
-                )
-            if len(ref_parts) == 1 and ref_parts[0] != DAG:
-                raise ValidationError(
-                    "Could not parse ref `{}` for param `{}`.".format(
-                        ref_parts[0], name
-                    )
-                )
-            if len(ref_parts) == 2 and ref_parts[0] not in ENTITIES:
-                raise ValidationError(
-                    "Could not parse ref `{}` for param `{}`. "
-                    "Ref must be one of `{}`".format(ref_parts[0], name, ENTITIES)
-                )
-            if ref_parts[0] == RUNS:
-                try:
-                    uuid.UUID(ref_parts[1])
-                except (KeyError, ValueError):
-                    raise ValidationError(
-                        "Param value `{}` should reference a valid run uuid.".format(
-                            ref_parts[1]
-                        )
-                    )
-
-        return ParamSpec(
-            name=name,
-            iotype=iotype,
-            param=self,
-            is_flag=is_flag,
-            is_list=is_list,
-            is_context=is_context,
-            arg_format=arg_format,
-        )
 
 
 class ParamSpec(
@@ -561,12 +510,26 @@ class ParamSpec(
         Given a param reference to an operation, we check that the operation exists in the context,
         and that the types
         """
+        if self.param.is_join_ref:
+            if not self.is_list and self.iotype != types.ARTIFACTS:
+                raise ValidationError(
+                    "Param `{}` has a an input type `{}`"
+                    "and it does not expect a list of values from the join.".format(
+                        self.name,
+                        self.param.value,
+                    )
+                )
+            return
+
         if is_template or (self.param.is_runs_ref and not check_runs):
             return
 
         context = context or {}
 
         if self.param.searchable_ref not in context:
+            # Artifacts can be logged during runtime
+            if self.param.entity_type == types.ARTIFACTS:
+                return
             raise ValidationError(
                 "Param `{}` has a ref value `{}`, "
                 "but reference with name `{}` has no such information, "
@@ -586,7 +549,7 @@ class ParamSpec(
         if self.is_list != context[self.param.searchable_ref].is_list:
             raise ValidationError(
                 "Param `{}` has a an input type List[`{}`]"
-                "and it does not correspond to the output type of ref `{}.".format(
+                "and it does not correspond to the output type of ref `{}`.".format(
                     self.name, self.param.value, self.param.ref
                 )
             )

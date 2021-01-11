@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ from polyaxon.client.decorators import (
     check_offline,
 )
 from polyaxon.constants import UNKNOWN
-from polyaxon.containers.contexts import CONTEXT_MOUNT_ARTIFACTS_FORMAT
+from polyaxon.containers import contexts as container_contexts
 from polyaxon.env_vars.getters import (
     get_collect_artifact,
     get_collect_resources,
@@ -222,10 +222,13 @@ class Run(RunClient):
         Args:
             artifacts_path: str, optional
         """
-        _artifacts_path = artifacts_path or CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(
-            self.run_uuid
+        _artifacts_path = (
+            artifacts_path
+            or container_contexts.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(self.run_uuid)
         )
-        _outputs_path = "{}/outputs".format(_artifacts_path)
+        _outputs_path = container_contexts.CONTEXTS_OUTPUTS_SUBPATH_FORMAT.format(
+            _artifacts_path
+        )
         self._artifacts_path = _artifacts_path
         self._outputs_path = _outputs_path
 

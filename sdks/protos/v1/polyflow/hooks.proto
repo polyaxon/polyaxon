@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,23 +21,26 @@ package v1;
 import "google/protobuf/struct.proto";
 
 import "v1/polyflow/io.proto";
-
+import "v1/polyflow/patch_strategy.proto";
 import "v1/polyflow/status.proto";
 
 // Hook definition
 message Hook {
-    // Component name to use, if not provided Polyaxon will check the action name isntead
-    string hub_ref = 1;
+    // Optional connection
+    string connection = 1;
 
     // Optional trigger policy, default done
     Statuses trigger = 2;
 
-    // Connection to use for this hook
-    string connection = 3;
+    // Component name to use
+    string hub_ref = 3;
+
+    // An optional list of condition to check before starting the run, entities should be a valid Condition
+    repeated google.protobuf.Struct conditions = 4;
 
     // Optional dict of params
-    map<string, Param> params = 4;
+    map<string, Param> params = 5;
 
-    // Optional a run section to override  the content of the run in the template
-    google.protobuf.Struct run_patch = 5;
+    // Optional preset to use for running this operation
+    repeated string presets = 6;
 }

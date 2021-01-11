@@ -363,8 +363,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ComponentHubV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let entity = "entity_example"; // String | Owner of the namespace
-let name = "name_example"; // String | Component under namesapce
+let entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+let name = "name_example"; // String | Sub-entity name
 apiInstance.deleteComponentVersion(owner, entity, name, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -380,8 +380,8 @@ apiInstance.deleteComponentVersion(owner, entity, name, (error, data, response) 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **entity** | **String**| Owner of the namespace | 
- **name** | **String**| Component under namesapce | 
+ **entity** | **String**| Entity: project name, hub name, registry name, ... | 
+ **name** | **String**| Sub-entity name | 
 
 ### Return type
 
@@ -518,8 +518,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ComponentHubV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let entity = "entity_example"; // String | Owner of the namespace
-let name = "name_example"; // String | Component under namesapce
+let entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+let name = "name_example"; // String | Sub-entity name
 apiInstance.getComponentVersion(owner, entity, name, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -535,8 +535,8 @@ apiInstance.getComponentVersion(owner, entity, name, (error, data, response) => 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **entity** | **String**| Owner of the namespace | 
- **name** | **String**| Component under namesapce | 
+ **entity** | **String**| Entity: project name, hub name, registry name, ... | 
+ **name** | **String**| Sub-entity name | 
 
 ### Return type
 
@@ -571,8 +571,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.ComponentHubV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let entity = "entity_example"; // String | Owner of the namespace
-let name = "name_example"; // String | Component under namesapce
+let entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+let name = "name_example"; // String | Sub-entity name
 apiInstance.getComponentVersionStages(owner, entity, name, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -588,8 +588,8 @@ apiInstance.getComponentVersionStages(owner, entity, name, (error, data, respons
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **entity** | **String**| Owner of the namespace | 
- **name** | **String**| Component under namesapce | 
+ **entity** | **String**| Entity: project name, hub name, registry name, ... | 
+ **name** | **String**| Sub-entity name | 
 
 ### Return type
 
@@ -628,7 +628,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listComponentHubNames(owner, opts, (error, data, response) => {
   if (error) {
@@ -648,7 +648,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -687,7 +687,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listComponentHubs(owner, opts, (error, data, response) => {
   if (error) {
@@ -707,7 +707,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -747,7 +747,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listComponentVersionNames(owner, name, opts, (error, data, response) => {
   if (error) {
@@ -768,7 +768,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -808,7 +808,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listComponentVersions(owner, name, opts, (error, data, response) => {
   if (error) {
@@ -829,7 +829,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 

@@ -1,0 +1,55 @@
+/**
+ * Copyright 2018-2021 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// JoinParam specification
+message JoinParam {
+  // The value to pass, if no ref or search is passed then it corresponds to a literal value
+  string value = 1;
+
+  // A flag to signal to Polyaxon that this param is used with a connection
+  string connection = 2;
+
+  // A flag to signal to Polyaxon that this param must be tranformed to an init container
+  bool to_init = 3;
+
+  // A flag to signal to Polyaxon that this param should not be validated against io
+  bool context_only = 4;
+}
+
+// Join specification
+message Join {
+    // An optional ref to an already saved search
+    string ref = 1;
+
+    // The search query
+    string query = 2;
+
+    // The search sort
+    string sort = 3;
+
+    // The search limit
+    int32 limit = 4;
+
+    // The search offset
+    int32 offset = 5;
+
+    // The params mapping keys to the values to pull from the join
+    map<string, JoinParam> params = 6;
+}

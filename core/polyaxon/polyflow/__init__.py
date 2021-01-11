@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polyflow.actions import ActionSchema, V1Action
 from polyaxon.polyflow.cache import CacheSchema, V1Cache
 from polyaxon.polyflow.component import ComponentSchema, V1Component
 from polyaxon.polyflow.dags import DagOpSpec
@@ -33,9 +32,11 @@ from polyaxon.polyflow.early_stopping import (
     V1TruncationStoppingPolicy,
 )
 from polyaxon.polyflow.environment import EnvironmentSchema, V1Environment
+from polyaxon.polyflow.events import EventTriggerSchema, V1EventKind, V1EventTrigger
 from polyaxon.polyflow.hooks import HookSchema, V1Hook
 from polyaxon.polyflow.init import InitSchema, V1Init
 from polyaxon.polyflow.io import V1IO, IOSchema
+from polyaxon.polyflow.joins import JoinParamSchema, JoinSchema, V1Join, V1JoinParam
 from polyaxon.polyflow.matrix import (
     AcquisitionFunctions,
     BayesSchema,
@@ -91,13 +92,7 @@ from polyaxon.polyflow.optimization import (
     V1OptimizationMetric,
     V1OptimizationResource,
 )
-from polyaxon.polyflow.params import (
-    DAG_ENTITY_REF,
-    ParamSpec,
-    V1Param,
-    V1ParamSearch,
-    ops_params,
-)
+from polyaxon.polyflow.params import ParamSpec, V1Param, ops_params
 from polyaxon.polyflow.plugins import PluginsSchema, V1Plugins
 from polyaxon.polyflow.references import (
     DagRefSchema,
@@ -139,6 +134,7 @@ from polyaxon.polyflow.run import (
     V1Notifier,
     V1PipelineKind,
     V1PytorchJob,
+    V1RunEdgeKind,
     V1RunKind,
     V1Service,
     V1Spark,

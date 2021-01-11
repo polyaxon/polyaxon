@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ from typing import Dict, List
 from polyaxon.client import RunClient
 from polyaxon.logger import logger
 from polyaxon.polyboard.artifacts import V1ArtifactKind, V1RunArtifact
-from polyaxon.polyflow import V1ParamSearch
+from polyaxon.polyflow import V1Join
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.np_utils import sanitize_dict, sanitize_np_types
 
@@ -29,17 +29,17 @@ from polyaxon.utils.np_utils import sanitize_dict, sanitize_np_types
 def get_iteration_definition(
     client: RunClient,
     iteration: int,
-    search: V1ParamSearch,
+    join: V1Join,
     optimization_metric: str,
     name: str = None,
 ):
     def handler():
         runs = (
             client.list(
-                query=search.query,
-                sort=search.sort,
-                limit=search.limit,
-                offset=search.offset,
+                query=join.query,
+                sort=join.sort,
+                limit=join.limit,
+                offset=join.offset,
             ).results
             or []
         )

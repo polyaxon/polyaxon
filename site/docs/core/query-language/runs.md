@@ -52,6 +52,7 @@ field                                                                      | con
 `commit`                                                                   | [value condition](/docs/core/query-language/#query-with-value-condition)
 `agent`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
 `queue`                                                                    | [value condition](/docs/core/query-language/#query-with-value-condition)
+`artifacts_store`                                                          | [value condition](/docs/core/query-language/#query-with-value-condition)
 `kind`                                                                     | [value condition](/docs/core/query-language/#query-with-value-condition)
 `runtime`                                                                  | [value condition](/docs/core/query-language/#query-with-value-condition)
 `meta_info.*`                                                              | [value condition](/docs/core/query-language/#query-with-value-condition)
@@ -80,3 +81,6 @@ field:
  * `inputs.*`
  * `outputs.*`
  * `metrics.*`
+ * `agent`
+ * `queue`
+ * `artifacts_store`

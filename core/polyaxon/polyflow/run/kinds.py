@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,23 +18,6 @@ import polyaxon_sdk
 
 
 class V1RunKind(polyaxon_sdk.V1RunKind):
-    CHOICES = (
-        (polyaxon_sdk.V1RunKind.JOB, polyaxon_sdk.V1RunKind.JOB),
-        (polyaxon_sdk.V1RunKind.SERVICE, polyaxon_sdk.V1RunKind.SERVICE),
-        (polyaxon_sdk.V1RunKind.DAG, polyaxon_sdk.V1RunKind.DAG),
-        (polyaxon_sdk.V1RunKind.MATRIX, polyaxon_sdk.V1RunKind.MATRIX),
-        (polyaxon_sdk.V1RunKind.SPARK, polyaxon_sdk.V1RunKind.SPARK),
-        (polyaxon_sdk.V1RunKind.DASK, polyaxon_sdk.V1RunKind.DASK),
-        (polyaxon_sdk.V1RunKind.FLINK, polyaxon_sdk.V1RunKind.FLINK),
-        (polyaxon_sdk.V1RunKind.RAY, polyaxon_sdk.V1RunKind.RAY),
-        (polyaxon_sdk.V1RunKind.MPIJOB, polyaxon_sdk.V1RunKind.MPIJOB),
-        (polyaxon_sdk.V1RunKind.TFJOB, polyaxon_sdk.V1RunKind.TFJOB),
-        (polyaxon_sdk.V1RunKind.PYTORCHJOB, polyaxon_sdk.V1RunKind.PYTORCHJOB),
-        (polyaxon_sdk.V1RunKind.SCHEDULE, polyaxon_sdk.V1RunKind.SCHEDULE),
-        (polyaxon_sdk.V1RunKind.TUNER, polyaxon_sdk.V1RunKind.TUNER),
-        (polyaxon_sdk.V1RunKind.WATCHDOG, polyaxon_sdk.V1RunKind.WATCHDOG),
-        (polyaxon_sdk.V1RunKind.NOTIFIER, polyaxon_sdk.V1RunKind.NOTIFIER),
-    )
     eager_values = {
         polyaxon_sdk.V1RunKind.MATRIX,
     }
@@ -52,17 +35,7 @@ class V1RunKind(polyaxon_sdk.V1RunKind):
 
 
 class V1CloningKind(polyaxon_sdk.V1CloningKind):
-    CHOICES = (
-        (polyaxon_sdk.V1CloningKind.COPY, polyaxon_sdk.V1CloningKind.COPY),
-        (
-            polyaxon_sdk.V1CloningKind.RESTART,
-            polyaxon_sdk.V1CloningKind.RESTART,
-        ),
-        (
-            polyaxon_sdk.V1CloningKind.CACHE,
-            polyaxon_sdk.V1CloningKind.CACHE,
-        ),
-    )
+    pass
 
 
 class V1PipelineKind(polyaxon_sdk.V1PipelineKind):
@@ -72,4 +45,15 @@ class V1PipelineKind(polyaxon_sdk.V1PipelineKind):
             polyaxon_sdk.V1PipelineKind.MATRIX,
             polyaxon_sdk.V1PipelineKind.MATRIX,
         ),
+    )
+
+
+class V1RunEdgeKind(polyaxon_sdk.V1RunEdgeKind):
+    CHOICES = (
+        (polyaxon_sdk.V1RunEdgeKind.ACTION, polyaxon_sdk.V1RunEdgeKind.ACTION),
+        (polyaxon_sdk.V1RunEdgeKind.HOOK, polyaxon_sdk.V1RunEdgeKind.HOOK),
+        (polyaxon_sdk.V1RunEdgeKind.DAG, polyaxon_sdk.V1RunEdgeKind.DAG),
+        (polyaxon_sdk.V1RunEdgeKind.JOIN, polyaxon_sdk.V1RunEdgeKind.JOIN),
+        (polyaxon_sdk.V1RunEdgeKind.RUN, polyaxon_sdk.V1RunEdgeKind.RUN),
+        (polyaxon_sdk.V1RunEdgeKind.EVENT, polyaxon_sdk.V1RunEdgeKind.EVENT),
     )

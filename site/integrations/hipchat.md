@@ -48,7 +48,7 @@ The content of `notification-secret.json` should contain all the webhooks that y
 Now you can add your Hipchat's webhook to the integrations' section:
 
 ```yaml
-notificationConnections:
+connections:
   - name: hipchat-connection1
     kind: hipchat
     secret:

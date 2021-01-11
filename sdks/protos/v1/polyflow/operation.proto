@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,10 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
-import "v1/polyflow/actions.proto";
 import "v1/polyflow/cache.proto";
 import "v1/polyflow/component.proto";
+import "v1/polyflow/events.proto";
+import "v1/polyflow/joins.proto";
 import "v1/polyflow/io.proto";
 import "v1/polyflow/hooks.proto";
 import "v1/polyflow/plugins.proto";
@@ -66,29 +67,29 @@ message Operation {
     // Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
     google.protobuf.Struct schedule = 11;
 
-    // Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
-    repeated string events = 12;
-
-    // Optional actions section
-    repeated Action actions = 13;
+    // Optional events section, must be a valid List of EventTrigger option (Run/Git/Alert/Webhook/Dataset)
+    repeated EventTrigger events = 12;
 
     // Optional hooks section
-    repeated Hook hooks = 14;
-
-    // Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-    google.protobuf.Struct matrix = 15;
+    repeated Hook hooks = 13;
 
     // Optional graph dependencies of this op
-    repeated string dependencies = 16;
+    repeated string dependencies = 14;
 
     // Optional trigger policy
-    TriggerPolicy trigger = 17;
+    TriggerPolicy trigger = 15;
 
     // An optional list of condition to check before starting the run, entities should be a valid Condition
-    repeated string conditions = 18;
+    repeated string conditions = 16;
 
     // Optional flag to skip this run if upstream was skipped
-    bool skip_on_upstream_skip = 19;
+    bool skip_on_upstream_skip = 17;
+
+    // Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
+    google.protobuf.Struct matrix = 18;
+
+    // Optional dict of joins
+    map<string, Join> joins = 19;
 
     // Optional dict of params
     map<string, Param> params = 20;
@@ -97,7 +98,7 @@ message Operation {
     // should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
     google.protobuf.Struct run_patch = 21;
 
-    // Optional patch startegy, default post_merge
+    // Optional patch strategy, default post_merge
     PatchStrategy patch_strategy = 22;
 
     // Optional flag to mark this specification as preset

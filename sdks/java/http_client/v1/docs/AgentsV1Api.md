@@ -198,8 +198,8 @@ public class Example {
 
     AgentsV1Api apiInstance = new AgentsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
-    String entity = "entity_example"; // String | Owner of the namespace.
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
     try {
       apiInstance.deleteAgent(owner, uuid, entity);
     } catch (ApiException e) {
@@ -218,8 +218,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
- **entity** | **String**| Owner of the namespace. | [optional]
+ **uuid** | **String**| Uuid identifier of the sub-entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... | [optional]
 
 ### Return type
 
@@ -272,8 +272,8 @@ public class Example {
 
     AgentsV1Api apiInstance = new AgentsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
-    String entity = "entity_example"; // String | Owner of the namespace.
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
     try {
       V1Agent result = apiInstance.getAgent(owner, uuid, entity);
       System.out.println(result);
@@ -293,8 +293,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
- **entity** | **String**| Owner of the namespace. | [optional]
+ **uuid** | **String**| Uuid identifier of the sub-entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... | [optional]
 
 ### Return type
 
@@ -569,7 +569,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListAgentsResponse result = apiInstance.listAgentNames(owner, offset, limit, sort, query);
       System.out.println(result);
@@ -592,7 +592,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -648,7 +648,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListAgentsResponse result = apiInstance.listAgents(owner, offset, limit, sort, query);
       System.out.println(result);
@@ -671,7 +671,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 

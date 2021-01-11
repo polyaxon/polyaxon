@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,11 +22,14 @@ SCHEDULER_CORE_ROUTES = {
     CoreSchedulerCeleryTasks.SCHEDULER_HEALTH: {
         "queue": CeleryCoreQueues.SCHEDULER_HEALTH
     },
+    # compiler
+    CoreSchedulerCeleryTasks.RUNS_START: {"queue": CeleryCoreQueues.SCHEDULER_COMPILER},
+    CoreSchedulerCeleryTasks.RUNS_PREPARE: {
+        "queue": CeleryCoreQueues.SCHEDULER_COMPILER
+    },
     # Scheduler runs
-    CoreSchedulerCeleryTasks.RUNS_START: {"queue": CeleryCoreQueues.SCHEDULER_RUNS},
     CoreSchedulerCeleryTasks.RUNS_STOP: {"queue": CeleryCoreQueues.SCHEDULER_RUNS},
     CoreSchedulerCeleryTasks.RUNS_DELETE: {"queue": CeleryCoreQueues.SCHEDULER_RUNS},
-    CoreSchedulerCeleryTasks.RUNS_PREPARE: {"queue": CeleryCoreQueues.SCHEDULER_RUNS},
     # Scheduler artifacts
     CoreSchedulerCeleryTasks.RUNS_SET_ARTIFACTS: {
         "queue": CeleryCoreQueues.SCHEDULER_ARTIFACTS

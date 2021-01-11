@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import polyaxon_sdk
 from marshmallow import fields, validate
 
 from polyaxon import types
+from polyaxon.contexts import sections as contexts_sections
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.k8s import k8s_schemas
 from polyaxon.pkg import SCHEMA_VERSION
@@ -32,6 +33,7 @@ from polyaxon.polyflow.io import V1IO
 from polyaxon.polyflow.params import ops_params
 from polyaxon.polyflow.run.kinds import V1RunKind
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.fields.swagger import SwaggerField
 
 
@@ -42,7 +44,7 @@ class DagSchema(BaseCamelSchema):
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     connections = fields.List(fields.Str(), allow_none=True)
     volumes = fields.List(SwaggerField(cls=k8s_schemas.V1Volume), allow_none=True)
-    concurrency = fields.Int(allow_none=True)
+    concurrency = RefOrObject(fields.Int(allow_none=True))
     early_stopping = fields.List(fields.Nested(EarlyStoppingSchema), allow_none=True)
 
     @staticmethod
@@ -484,31 +486,46 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             )
         self.sort_topologically(dag=dag)
 
-    def _get_op_upstream(self, op) -> Set:
-        upstream = set(op.dependencies) if op.dependencies else set([])
-
-        if not op.params:
-            return upstream
-
+    def _get_op_upstream_from_params(self, op) -> set:
+        upstream = set([])
         if not isinstance(op.params, Mapping):
             raise PolyaxonSchemaError(
                 "Op `{}` defines a malformed params `{}`, "
-                "params should be a dictionary of form <name: value>".format(
+                "params should be a dictionary of form <name: Param>".format(
                     op.name, op.params
                 )
             )
 
-        for param in op.params:
-            param_spec = op.params[param].get_spec(
-                name=param,
-                iotype=None,
-                is_flag=None,
-                is_list=None,
-                is_context=None,
-                arg_format=None,
+        for param in op.params.values():
+            if param.is_ops_ref:
+                upstream.add(param.entity_ref)
+
+        return upstream
+
+    def _get_op_upstream_from_events(self, op) -> set:
+        upstream = set([])
+        if not isinstance(op.events, list):
+            raise PolyaxonSchemaError(
+                "Op `{}` defines a malformed events `{}`, "
+                "events should be a list of dictionaries of form <List[EventTrigger]>".format(
+                    op.name, op.events
+                )
             )
-            if param_spec.param.is_ops_ref:
-                upstream.add(param_spec.param.entity_ref)
+
+        for event in op.events:
+            if event.is_ops_ref:
+                upstream.add(event.entity_ref)
+
+        return upstream
+
+    def _get_op_upstream(self, op) -> Set:
+        upstream = set(op.dependencies) if op.dependencies else set([])
+
+        if op.params:
+            upstream |= self._get_op_upstream_from_params(op)
+
+        if op.events:
+            upstream |= self._get_op_upstream_from_events(op)
 
         return upstream
 
@@ -619,38 +636,38 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                     self._context[
                         "ops.{}.outputs.{}".format(op_name, output.name)
                     ] = output
+                    if output.iotype == types.ARTIFACTS:
+                        self._context[
+                            "ops.{}.artifacts.{}".format(op_name, output.name)
+                        ] = output
 
             if inputs:
                 for cinput in inputs:
                     self._context[
                         "ops.{}.inputs.{}".format(op_name, cinput.name)
                     ] = cinput
+                    if cinput.iotype == types.ARTIFACTS:
+                        self._context[
+                            "ops.{}.artifacts.{}".format(op_name, cinput.name)
+                        ] = cinput
+            for g_context in contexts_sections.GLOBALS_CONTEXTS:
+                self._context["ops.{}.globals.{}".format(op_name, g_context)] = V1IO(
+                    name=g_context, iotype=types.STR, value="", is_optional=True
+                )
 
             # We allow to resolve name, status, project, all outputs/inputs, iteration
-            self._context["ops.{}.inputs".format(op_name)] = V1IO(
+            self._context["ops.{}.{}".format(op_name, contexts_sections.INPUTS)] = V1IO(
                 name="inputs", iotype=types.DICT, value={}, is_optional=True
             )
-            self._context["ops.{}.outputs".format(op_name)] = V1IO(
-                name="outputs", iotype=types.DICT, value={}, is_optional=True
-            )
-            self._context["ops.{}.status".format(op_name)] = V1IO(
-                name="status", iotype=types.STR, value="", is_optional=True
-            )
-            self._context["ops.{}.name".format(op_name)] = V1IO(
-                name="name", iotype=types.STR, value="", is_optional=True
-            )
-            self._context["ops.{}.uuid".format(op_name)] = V1IO(
-                name="uuid", iotype=types.STR, value="", is_optional=True
-            )
-            self._context["ops.{}.project_name".format(op_name)] = V1IO(
-                name="project_name", iotype=types.STR, value="", is_optional=True
-            )
-            self._context["ops.{}.project_uuid".format(op_name)] = V1IO(
-                name="project_uuid", iotype=types.STR, value="", is_optional=True
-            )
-            self._context["ops.{}.iteration".format(op_name)] = V1IO(
-                name="iteration", iotype=types.STR, value="", is_optional=True
-            )
+            self._context[
+                "ops.{}.{}".format(op_name, contexts_sections.OUTPUTS)
+            ] = V1IO(name="outputs", iotype=types.DICT, value={}, is_optional=True)
+            self._context[
+                "ops.{}.{}".format(op_name, contexts_sections.GLOBALS)
+            ] = V1IO(name="globals", iotype=types.STR, value="", is_optional=True)
+            self._context[
+                "ops.{}.{}".format(op_name, contexts_sections.ARTIFACTS)
+            ] = V1IO(name="artifacts", iotype=types.STR, value="", is_optional=True)
 
         for op in self.operations:
             if op.has_hub_reference:
@@ -673,6 +690,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
                 outputs=outputs,
                 context=self._context,
                 matrix=op.matrix,
+                joins=op.joins,
                 is_template=False,
                 check_runs=False,
                 extra_info="<op {}>.<component {}>".format(op.name, component_ref),

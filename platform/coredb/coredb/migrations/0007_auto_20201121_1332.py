@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -81,25 +81,26 @@ class Migration(migrations.Migration):
             field=models.CharField(
                 blank=True,
                 choices=[
-                    ("created", "created"),
-                    ("resuming", "resuming"),
-                    ("warning", "warning"),
-                    ("unschedulable", "unschedulable"),
                     ("compiled", "compiled"),
-                    ("queued", "queued"),
-                    ("scheduled", "scheduled"),
-                    ("starting", "starting"),
-                    ("running", "running"),
-                    ("initializing", "initializing"),
-                    ("processing", "processing"),
-                    ("succeeded", "succeeded"),
+                    ("created", "created"),
+                    ("done", "done"),
                     ("failed", "failed"),
-                    ("upstream_failed", "upstream_failed"),
-                    ("stopping", "stopping"),
-                    ("stopped", "stopped"),
-                    ("skipped", "skipped"),
+                    ("on_schedule", "on_schedule"),
+                    ("processing", "processing"),
+                    ("queued", "queued"),
+                    ("resuming", "resuming"),
                     ("retrying", "retrying"),
+                    ("running", "running"),
+                    ("scheduled", "scheduled"),
+                    ("skipped", "skipped"),
+                    ("starting", "starting"),
+                    ("stopped", "stopped"),
+                    ("stopping", "stopping"),
+                    ("succeeded", "succeeded"),
                     ("unknown", "unknown"),
+                    ("unschedulable", "unschedulable"),
+                    ("upstream_failed", "upstream_failed"),
+                    ("warning", "warning"),
                 ],
                 db_index=True,
                 default="created",

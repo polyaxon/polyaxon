@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ from typing import Dict, List, Union
 from marshmallow import ValidationError
 
 from polyaxon.polyflow.io.io import V1IO
+from polyaxon.polyflow.joins import V1Join
 from polyaxon.polyflow.matrix import V1Mapping, V1Matrix
 from polyaxon.polyflow.params.params import ParamSpec, V1Param
 
@@ -29,6 +30,7 @@ def validate_params(
     outputs: List[V1IO],
     contexts: List[V1IO] = None,
     matrix: V1Matrix = None,
+    joins: List[V1Join] = None,
     context: Dict = None,
     is_template: bool = True,
     check_runs: bool = False,
@@ -69,6 +71,10 @@ def validate_params(
 
     params = params or {}
     params = {k: parse_param(k, params[k]) for k in params}
+    # Extend with params coming from joins
+    params.update(
+        {k: v for j in (joins or []) for k, v in j.params.items() if k not in params}
+    )
 
     if requires_params(inputs, outputs):
         if not is_template and not params and not matrix:
@@ -110,7 +116,7 @@ def validate_params(
             )
             if param_spec.param.is_ref:
                 param_spec.validate_ref(context, is_template, check_runs)
-            else:  # Plain value
+            else:
                 parsed_value = inp.validate_value(param_value.value)
                 if parse_values:
                     param_spec.param.value = parsed_value

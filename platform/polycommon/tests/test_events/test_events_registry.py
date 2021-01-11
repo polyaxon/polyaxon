@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -40,9 +40,6 @@ class TestEventsRegistry(TestCase):
             run.RunUpdatedActorEvent.get_event_subject(),
             "run",
             events,
-        )
-        self._asser_event(
-            run.RunDeletedEvent, run.RunDeletedEvent.get_event_subject(), "run", events
         )
         self._asser_event(
             run.RunViewedActorEvent,
@@ -143,15 +140,18 @@ class TestEventsRegistry(TestCase):
             "run",
             events,
         )
+        self._asser_event(
+            run.RunInvalidatedActorEvent,
+            run.RunInvalidatedActorEvent.get_event_subject(),
+            "run",
+            events,
+        )
         assert events == run.EVENTS
 
     def test_events_actions_runs(self):
         events = set([])
         self._asser_event(
             run.RunCreatedEvent, run.RunCreatedEvent.get_event_action(), None, events
-        )
-        self._asser_event(
-            run.RunDeletedEvent, run.RunDeletedEvent.get_event_action(), None, events
         )
         self._asser_event(
             run.RunStoppedEvent, run.RunStoppedEvent.get_event_action(), None, events
@@ -250,6 +250,12 @@ class TestEventsRegistry(TestCase):
             run.RunSkippedActorEvent,
             run.RunSkippedActorEvent.get_event_action(),
             "skipped",
+            events,
+        )
+        self._asser_event(
+            run.RunInvalidatedActorEvent,
+            run.RunInvalidatedActorEvent.get_event_action(),
+            "invalidated",
             events,
         )
         assert events == run.EVENTS

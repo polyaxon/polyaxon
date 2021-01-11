@@ -48,7 +48,7 @@ The content of `notification-secret.json` should contain all the webhooks that y
 Now you can add your Discord's webhook to the integrations' section:
 
 ```yaml
-notificationConnections:
+connections:
   - name: discord-connection1
     kind: discord
     secret:

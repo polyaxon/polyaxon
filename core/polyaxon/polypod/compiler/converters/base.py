@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ from polyaxon.containers.names import INIT_PREFIX, SIDECAR_PREFIX
 from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_API
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
-from polyaxon.k8s.custom_resources.operation import get_resource_name, get_run_instance
 from polyaxon.polyflow import V1Environment, V1Init, V1Plugins
 from polyaxon.polypod.common.containers import (
     ensure_container_name,
@@ -52,6 +51,7 @@ from polyaxon.polypod.specs.replica import ReplicaSpec
 from polyaxon.schemas.types import V1ConnectionType, V1K8sResourceType
 from polyaxon.services.auth import AuthenticationTypes
 from polyaxon.services.headers import PolyaxonServiceHeaders, PolyaxonServices
+from polyaxon.utils.fqn_utils import get_resource_name, get_run_instance
 from polyaxon.utils.host_utils import get_api_host
 from polyaxon.utils.http_utils import clean_host
 from polyaxon.utils.list_utils import to_list

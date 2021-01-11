@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ import pytest
 
 from marshmallow import ValidationError
 
-from polyaxon.polyflow import V1RunKind
+from polyaxon.polyflow import V1EventKind, V1Hook, V1RunKind
 from polyaxon.polyflow.operations import V1Operation
 from tests.utils import BaseTestCase
 
@@ -308,14 +308,10 @@ class TestV1Operations(BaseTestCase):
         with self.assertRaises(ValidationError):
             V1Operation.from_dict(config_dict)
 
-    def test_op_actions_and_hooks(self):
+    def test_op_and_hooks(self):
         config_dict = {
-            "actions": [
-                {"hubRef": "ref1"},
-                {"hubRef": "ref2", "label": "customLabel", "many": True},
-            ],
             "hooks": [
-                {"trigger": "succeeded", "connection": "connection1"},
+                {"trigger": "succeeded", "connection": "connection1", "hubRef": "ref1"},
                 {"connection": "connection1", "hubRef": "ref2"},
             ],
             "component": {
@@ -331,15 +327,120 @@ class TestV1Operations(BaseTestCase):
         config = V1Operation.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
+    def test_op_and_joins(self):
+        config_dict = {
+            "joins": [
+                {
+                    "sort": 2,
+                    "params": {
+                        "u": {"value": "outputs.value"},
+                    },
+                },
+            ],
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1Operation.from_dict(config_dict)
+
+        config_dict = {
+            "joins": [
+                {
+                    "query": "dummy: query1",
+                    "limit": "foo",
+                },
+            ],
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1Operation.from_dict(config_dict)
+
+        config_dict = {
+            "joins": [
+                {
+                    "query": "dummy: query1",
+                    "sort": "dummy sort1",
+                    "params": {
+                        "u": {"value": "outputs.value"},
+                    },
+                },
+                {
+                    "query": "dummy: query1",
+                    "sort": "-dummy-sort2",
+                    "params": {
+                        "u": {"value": "artifacts"},
+                    },
+                },
+            ],
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        config = V1Operation.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
+    def test_op_and_events(self):
+        config_dict = {
+            "events": [
+                {"kinds": ["some-value"], "ref": "test"},
+            ],
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1Operation.from_dict(config_dict)
+
+        config_dict = {
+            "events": [
+                {"kinds": [V1EventKind.RUN_STATUS_SCHEDULED]},
+            ],
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        with self.assertRaises(ValidationError):
+            V1Operation.from_dict(config_dict)
+
+        config_dict = {
+            "events": [
+                {"kinds": [V1EventKind.RUN_STATUS_SCHEDULED], "ref": "test.r1"},
+            ],
+            "component": {
+                "run": {"kind": V1RunKind.JOB, "container": {"image": "test"}}
+            },
+        }
+        config = V1Operation.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
     def test_op_template(self):
         config_dict = {
-            "actions": [
-                {"hubRef": "ref1"},
-                {"hubRef": "ref2", "label": "customLabel", "many": True},
-            ],
             "hooks": [
-                {"trigger": "succeeded", "connection": "connection1"},
+                {"trigger": "succeeded", "connection": "connection1", "hubRef": "ref1"},
                 {"connection": "connection1", "hubRef": "ref2"},
+            ],
+            "events": [
+                {"kinds": [V1EventKind.RUN_STATUS_SCHEDULED], "ref": "test.r1"},
+                {"kinds": [V1EventKind.RUN_NEW_ARTIFACTS], "ref": "test.r2"},
+            ],
+            "joins": [
+                {
+                    "query": "dummy: query1",
+                    "sort": "dummy sort1",
+                    "params": {
+                        "u": {"value": "outputs.value"},
+                    },
+                },
+                {
+                    "query": "dummy: query1",
+                    "sort": "-dummy-sort2",
+                    "params": {
+                        "u": {"value": "artifacts"},
+                    },
+                },
             ],
             "component": {
                 "run": {
@@ -357,3 +458,19 @@ class TestV1Operations(BaseTestCase):
         }
         config = V1Operation.from_dict(config_dict)
         assert config.to_dict() == config_dict
+
+    def test_from_hook(self):
+        config_dict = {
+            "connection": "test-connection",
+            "trigger": "succeeded",
+            "hubRef": "foo",
+            "conditions": "foo > bar",
+            "params": {"param1": {"value": "foo"}, "param2": {"value": "bar"}},
+            "presets": ["pre1", "pre2"],
+        }
+        hook = V1Hook.from_dict(config_dict)
+        op = V1Operation.from_hook(hook)
+        assert op.run_patch["connections"] == [hook.connection]
+        assert op.hub_ref == hook.hub_ref
+        assert op.params == hook.params
+        assert op.presets == hook.presets

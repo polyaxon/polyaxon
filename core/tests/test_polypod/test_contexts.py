@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -77,6 +77,10 @@ class TestResolveContexts(BaseTestCase):
                 "iteration": None,
                 "created_at": None,
                 "compiled_at": None,
+                "schedule_at": None,
+                "started_at": None,
+                "finished_at": None,
+                "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
             },
@@ -147,6 +151,10 @@ class TestResolveContexts(BaseTestCase):
                 "run_info": "user.project.runs.uuid",
                 "created_at": date_value,
                 "compiled_at": date_value,
+                "schedule_at": None,
+                "started_at": None,
+                "finished_at": None,
+                "duration": None,
                 "cloning_kind": V1CloningKind.COPY,
                 "original_uuid": "uuid-copy",
             },
@@ -213,6 +221,10 @@ class TestResolveContexts(BaseTestCase):
                 "iteration": 12,
                 "created_at": None,
                 "compiled_at": None,
+                "schedule_at": None,
+                "started_at": None,
+                "finished_at": None,
+                "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
             },
@@ -273,6 +285,10 @@ class TestResolveContexts(BaseTestCase):
                 "base_url": "/services/v1/test/user/project/runs/uuid",
                 "created_at": None,
                 "compiled_at": None,
+                "schedule_at": None,
+                "started_at": None,
+                "finished_at": None,
+                "duration": None,
                 "cloning_kind": None,
                 "original_uuid": None,
             },

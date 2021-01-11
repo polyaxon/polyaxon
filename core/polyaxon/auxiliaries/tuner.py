@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ from polyaxon.k8s.k8s_schemas import V1Container
 def get_default_tuner_container(command, bracket_iteration: int = None):
     args = [
         "{{params.matrix.as_arg}}",
-        "{{params.search.as_arg}}",
+        "{{params.join.as_arg}}",
         "{{params.iteration.as_arg}}",
     ]
     if bracket_iteration is not None:

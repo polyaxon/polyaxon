@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 from marshmallow import ValidationError, fields
 from marshmallow.base import FieldABC
 
-from polyaxon.schemas.fields.params import PARAM_REGEX
+from polyaxon.contexts.params import PARAM_REGEX
 
 
 def get_ref_or_obj(container, value):

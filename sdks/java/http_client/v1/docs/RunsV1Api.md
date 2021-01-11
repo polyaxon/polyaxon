@@ -13,28 +13,31 @@ Method | HTTP request | Description
 [**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
 [**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy | Restart run with copy
 [**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-[**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run artifacts lineage
+[**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts | Create bulk run artifacts lineage
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**deleteRun**](RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid} | Delete run
 [**deleteRunArtifact**](RunsV1Api.md#deleteRunArtifact) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Delete run artifact
-[**deleteRunArtifactLineage**](RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
+[**deleteRunArtifactLineage**](RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name} | Delete run artifact lineage
 [**deleteRunArtifacts**](RunsV1Api.md#deleteRunArtifacts) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Delete run artifacts
 [**deleteRuns**](RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**getMultiRunEvents**](RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
 [**getRun**](RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{entity}/runs/{uuid} | Get run
 [**getRunArtifact**](RunsV1Api.md#getRunArtifact) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Get run artifact
-[**getRunArtifactLineage**](RunsV1Api.md#getRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Get run artifacts lineage
+[**getRunArtifactLineage**](RunsV1Api.md#getRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name} | Get run artifacts lineage
 [**getRunArtifacts**](RunsV1Api.md#getRunArtifacts) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Get run artifacts
-[**getRunArtifactsLineage**](RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
-[**getRunArtifactsLineageNames**](RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
+[**getRunArtifactsLineage**](RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts | Get run artifacts lineage
+[**getRunArtifactsLineageNames**](RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names | Get run artifacts lineage names
 [**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+[**getRunConnectionsLineage**](RunsV1Api.md#getRunConnectionsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections | Get run connections lineage
+[**getRunDownstreamLineage**](RunsV1Api.md#getRunDownstreamLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream | Get run downstream lineage
 [**getRunEvents**](RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 [**getRunLogs**](RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
 [**getRunNamespace**](RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/namespace | Get Run namespace
 [**getRunResources**](RunsV1Api.md#getRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 [**getRunSettings**](RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/settings | Get Run settings
 [**getRunStatuses**](RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/statuses | Get run statuses
-[**getRunsArtifactsLineage**](RunsV1Api.md#getRunsArtifactsLineage) | **GET** /api/v1/{owner}/{name}/runs/artifacts_lineage | Get runs artifacts lineage
+[**getRunUpstreamLineage**](RunsV1Api.md#getRunUpstreamLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream | Get run upstream lineage
+[**getRunsArtifactsLineage**](RunsV1Api.md#getRunsArtifactsLineage) | **GET** /api/v1/{owner}/{name}/runs/lineage/artifacts | Get runs artifacts lineage
 [**impersonateToken**](RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/impersonate | Impersonate run token
 [**invalidateRun**](RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/invalidate | Invalidate run
 [**invalidateRuns**](RunsV1Api.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
@@ -86,8 +89,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.approveRun(owner, entity, uuid);
     } catch (ApiException e) {
@@ -106,8 +109,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -234,8 +237,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.archiveRun(owner, entity, uuid);
     } catch (ApiException e) {
@@ -254,8 +257,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -308,8 +311,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.bookmarkRun(owner, entity, uuid);
     } catch (ApiException e) {
@@ -328,8 +331,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -534,8 +537,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-    String entityEntity = "entityEntity_example"; // String | Owner of the namespace
-    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
+    String entityEntity = "entityEntity_example"; // String | Entity: project name, hub name, registry name, ...
+    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the sub-entity
     V1Run body = new V1Run(); // V1Run | Run object
     try {
       V1Run result = apiInstance.copyRun(entityOwner, entityEntity, entityUuid, body);
@@ -556,8 +559,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entityOwner** | **String**| Owner of the namespace |
- **entityEntity** | **String**| Owner of the namespace |
- **entityUuid** | **String**| Uuid identifier of the entity |
+ **entityEntity** | **String**| Entity: project name, hub name, registry name, ... |
+ **entityUuid** | **String**| Uuid identifier of the sub-entity |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -839,8 +842,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.deleteRun(owner, entity, uuid);
     } catch (ApiException e) {
@@ -859,8 +862,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -1306,8 +1309,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       V1Run result = apiInstance.getRun(owner, entity, uuid);
       System.out.println(result);
@@ -1327,8 +1330,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -1627,7 +1630,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineage(owner, entity, uuid, offset, limit, sort, query);
       System.out.println(result);
@@ -1652,7 +1655,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -1710,7 +1713,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineageNames(owner, entity, uuid, offset, limit, sort, query);
       System.out.println(result);
@@ -1735,7 +1738,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -1819,6 +1822,172 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ArtifactTree**](V1ArtifactTree.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+<a name="getRunConnectionsLineage"></a>
+# **getRunConnectionsLineage**
+> V1ListRunConnectionsResponse getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query)
+
+Get run connections lineage
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String entity = "entity_example"; // String | Entity name under namesapce
+    String uuid = "uuid_example"; // String | SubEntity uuid
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search.
+    try {
+      V1ListRunConnectionsResponse result = apiInstance.getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunConnectionsLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **entity** | **String**| Entity name under namesapce |
+ **uuid** | **String**| SubEntity uuid |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
+
+### Return type
+
+[**V1ListRunConnectionsResponse**](V1ListRunConnectionsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+<a name="getRunDownstreamLineage"></a>
+# **getRunDownstreamLineage**
+> V1ListRunEdgesResponse getRunDownstreamLineage(owner, entity, uuid, offset, limit, sort, query)
+
+Get run downstream lineage
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String entity = "entity_example"; // String | Entity name under namesapce
+    String uuid = "uuid_example"; // String | SubEntity uuid
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search.
+    try {
+      V1ListRunEdgesResponse result = apiInstance.getRunDownstreamLineage(owner, entity, uuid, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunDownstreamLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **entity** | **String**| Entity name under namesapce |
+ **uuid** | **String**| SubEntity uuid |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
+
+### Return type
+
+[**V1ListRunEdgesResponse**](V1ListRunEdgesResponse.md)
 
 ### Authorization
 
@@ -2035,8 +2204,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       V1RunSettings result = apiInstance.getRunNamespace(owner, entity, uuid);
       System.out.println(result);
@@ -2056,8 +2225,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -2193,8 +2362,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       V1RunSettings result = apiInstance.getRunSettings(owner, entity, uuid);
       System.out.println(result);
@@ -2214,8 +2383,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -2268,8 +2437,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       V1Status result = apiInstance.getRunStatuses(owner, entity, uuid);
       System.out.println(result);
@@ -2289,12 +2458,95 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
 [**V1Status**](V1Status.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+<a name="getRunUpstreamLineage"></a>
+# **getRunUpstreamLineage**
+> V1ListRunEdgesResponse getRunUpstreamLineage(owner, entity, uuid, offset, limit, sort, query)
+
+Get run upstream lineage
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String entity = "entity_example"; // String | Entity name under namesapce
+    String uuid = "uuid_example"; // String | SubEntity uuid
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search.
+    try {
+      V1ListRunEdgesResponse result = apiInstance.getRunUpstreamLineage(owner, entity, uuid, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunUpstreamLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **entity** | **String**| Entity name under namesapce |
+ **uuid** | **String**| SubEntity uuid |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
+
+### Return type
+
+[**V1ListRunEdgesResponse**](V1ListRunEdgesResponse.md)
 
 ### Authorization
 
@@ -2347,7 +2599,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, name, offset, limit, sort, query);
       System.out.println(result);
@@ -2371,7 +2623,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -2424,8 +2676,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       V1Auth result = apiInstance.impersonateToken(owner, entity, uuid);
       System.out.println(result);
@@ -2445,8 +2697,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -2499,8 +2751,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.invalidateRun(owner, entity, uuid);
     } catch (ApiException e) {
@@ -2519,8 +2771,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -2650,7 +2902,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListRunsResponse result = apiInstance.listArchivedRuns(user, offset, limit, sort, query);
       System.out.println(result);
@@ -2673,7 +2925,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -2729,7 +2981,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListBookmarksResponse result = apiInstance.listBookmarkedRuns(user, offset, limit, sort, query);
       System.out.println(result);
@@ -2752,7 +3004,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -2809,7 +3061,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListRunsResponse result = apiInstance.listRuns(owner, name, offset, limit, sort, query);
       System.out.println(result);
@@ -2833,7 +3085,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -3041,8 +3293,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-    String entityEntity = "entityEntity_example"; // String | Owner of the namespace
-    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
+    String entityEntity = "entityEntity_example"; // String | Entity: project name, hub name, registry name, ...
+    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the sub-entity
     V1Run body = new V1Run(); // V1Run | Run object
     try {
       V1Run result = apiInstance.restartRun(entityOwner, entityEntity, entityUuid, body);
@@ -3063,8 +3315,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entityOwner** | **String**| Owner of the namespace |
- **entityEntity** | **String**| Owner of the namespace |
- **entityUuid** | **String**| Uuid identifier of the entity |
+ **entityEntity** | **String**| Entity: project name, hub name, registry name, ... |
+ **entityUuid** | **String**| Uuid identifier of the sub-entity |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -3118,8 +3370,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.restoreRun(owner, entity, uuid);
     } catch (ApiException e) {
@@ -3138,8 +3390,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -3192,8 +3444,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-    String entityEntity = "entityEntity_example"; // String | Owner of the namespace
-    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
+    String entityEntity = "entityEntity_example"; // String | Entity: project name, hub name, registry name, ...
+    String entityUuid = "entityUuid_example"; // String | Uuid identifier of the sub-entity
     V1Run body = new V1Run(); // V1Run | Run object
     try {
       V1Run result = apiInstance.resumeRun(entityOwner, entityEntity, entityUuid, body);
@@ -3214,8 +3466,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entityOwner** | **String**| Owner of the namespace |
- **entityEntity** | **String**| Owner of the namespace |
- **entityUuid** | **String**| Uuid identifier of the entity |
+ **entityEntity** | **String**| Entity: project name, hub name, registry name, ... |
+ **entityUuid** | **String**| Uuid identifier of the sub-entity |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -3269,8 +3521,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     V1OwnerSubEntityResourceRequestByUid body = new V1OwnerSubEntityResourceRequestByUid(); // V1OwnerSubEntityResourceRequestByUid | 
     try {
       apiInstance.startRunTensorboard(owner, entity, uuid, body);
@@ -3290,8 +3542,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
  **body** | [**V1OwnerSubEntityResourceRequestByUid**](V1OwnerSubEntityResourceRequestByUid.md)|  |
 
 ### Return type
@@ -3345,8 +3597,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.stopRun(owner, entity, uuid);
     } catch (ApiException e) {
@@ -3365,8 +3617,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -3419,8 +3671,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.stopRunTensorboard(owner, entity, uuid);
     } catch (ApiException e) {
@@ -3439,8 +3691,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -3641,8 +3893,8 @@ public class Example {
 
     RunsV1Api apiInstance = new RunsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.unbookmarkRun(owner, entity, uuid);
     } catch (ApiException e) {
@@ -3661,8 +3913,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 

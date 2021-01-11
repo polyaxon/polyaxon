@@ -559,8 +559,8 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ModelRegistryV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-entity = 'entity_example' # str | Owner of the namespace
-name = 'name_example' # str | Component under namesapce
+entity = 'entity_example' # str | Entity: project name, hub name, registry name, ...
+name = 'name_example' # str | Sub-entity name
 
     try:
         # Delete model version
@@ -574,8 +574,8 @@ name = 'name_example' # str | Component under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **entity** | **str**| Owner of the namespace | 
- **name** | **str**| Component under namesapce | 
+ **entity** | **str**| Entity: project name, hub name, registry name, ... | 
+ **name** | **str**| Sub-entity name | 
 
 ### Return type
 
@@ -803,8 +803,8 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ModelRegistryV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-entity = 'entity_example' # str | Owner of the namespace
-name = 'name_example' # str | Component under namesapce
+entity = 'entity_example' # str | Entity: project name, hub name, registry name, ...
+name = 'name_example' # str | Sub-entity name
 
     try:
         # Get model version
@@ -819,8 +819,8 @@ name = 'name_example' # str | Component under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **entity** | **str**| Owner of the namespace | 
- **name** | **str**| Component under namesapce | 
+ **entity** | **str**| Entity: project name, hub name, registry name, ... | 
+ **name** | **str**| Sub-entity name | 
 
 ### Return type
 
@@ -886,8 +886,8 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.ModelRegistryV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-entity = 'entity_example' # str | Owner of the namespace
-name = 'name_example' # str | Component under namesapce
+entity = 'entity_example' # str | Entity: project name, hub name, registry name, ...
+name = 'name_example' # str | Sub-entity name
 
     try:
         # Get model version stages
@@ -902,8 +902,8 @@ name = 'name_example' # str | Component under namesapce
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **entity** | **str**| Owner of the namespace | 
- **name** | **str**| Component under namesapce | 
+ **entity** | **str**| Entity: project name, hub name, registry name, ... | 
+ **name** | **str**| Sub-entity name | 
 
 ### Return type
 
@@ -972,7 +972,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List registry models
@@ -990,7 +990,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -1059,7 +1059,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List registry model names
@@ -1077,7 +1077,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -1147,7 +1147,7 @@ name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List model versions names
@@ -1166,7 +1166,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -1236,7 +1236,7 @@ name = 'name_example' # str | Entity managing the resource
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List model versions
@@ -1255,7 +1255,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 

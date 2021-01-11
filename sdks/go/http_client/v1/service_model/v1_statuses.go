@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,6 +40,9 @@ const (
 	// V1StatusesResuming captures enum value "resuming"
 	V1StatusesResuming V1Statuses = "resuming"
 
+	// V1StatusesOnSchedule captures enum value "on_schedule"
+	V1StatusesOnSchedule V1Statuses = "on_schedule"
+
 	// V1StatusesCompiled captures enum value "compiled"
 	V1StatusesCompiled V1Statuses = "compiled"
 
@@ -51,9 +54,6 @@ const (
 
 	// V1StatusesStarting captures enum value "starting"
 	V1StatusesStarting V1Statuses = "starting"
-
-	// V1StatusesInitializing captures enum value "initializing"
-	V1StatusesInitializing V1Statuses = "initializing"
 
 	// V1StatusesRunning captures enum value "running"
 	V1StatusesRunning V1Statuses = "running"
@@ -100,7 +100,7 @@ var v1StatusesEnum []interface{}
 
 func init() {
 	var res []V1Statuses
-	if err := json.Unmarshal([]byte(`["created","resuming","compiled","queued","scheduled","starting","initializing","running","processing","stopping","failed","stopped","succeeded","skipped","warning","unschedulable","upstream_failed","retrying","unknown","done"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["created","resuming","on_schedule","compiled","queued","scheduled","starting","running","processing","stopping","failed","stopped","succeeded","skipped","warning","unschedulable","upstream_failed","retrying","unknown","done"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

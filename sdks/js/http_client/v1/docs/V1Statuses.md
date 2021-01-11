@@ -7,6 +7,8 @@
 
 * `resuming` (value: `"resuming"`)
 
+* `on_schedule` (value: `"on_schedule"`)
+
 * `compiled` (value: `"compiled"`)
 
 * `queued` (value: `"queued"`)
@@ -14,8 +16,6 @@
 * `scheduled` (value: `"scheduled"`)
 
 * `starting` (value: `"starting"`)
-
-* `initializing` (value: `"initializing"`)
 
 * `running` (value: `"running"`)
 

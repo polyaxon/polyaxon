@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,11 +37,12 @@ class V1Template(BaseConfig, polyaxon_sdk.V1Template):
     that they are not executable without modification.
 
     Oftentimes, a user might create a component or an operation that depends on a connection,
-    if the user decides to share the this specification they will have to face two choices:
+    if the user decides to share this specification they will have to face two choices:
      * Remove the connection, other users will be wondering why the specification does not work.
-     * Leave the connection, other users will only know about the error after they execute the specification.
+     * Leave the connection, other users will only know about
+       the error after they execute the specification.
 
-    By setting the template section, the users signals that this is not executable,
+    By setting the template section, users can signal that this is not executable,
     and if a user runs the specification accidentally,
     they will be shown an error that gets augmented by instruction from the template's description,
     and optionally the fields that need to be modifier.

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 
 from polyaxon.lifecycle import V1Statuses
+from polyaxon.utils.enums_utils import values_to_choices
 
 
 class StatusModel(models.Model):
@@ -27,7 +28,7 @@ class StatusModel(models.Model):
         null=True,
         db_index=True,
         default=V1Statuses.CREATED,
-        choices=V1Statuses.CHOICES,
+        choices=values_to_choices(V1Statuses.allowable_values),
     )
     status_conditions = models.JSONField(
         encoder=DjangoJSONEncoder, blank=True, null=True, default=dict

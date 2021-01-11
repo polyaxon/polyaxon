@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,9 +33,6 @@ import (
 // swagger:model v1Operation
 type V1Operation struct {
 
-	// Optional actions section
-	Actions []*V1Action `json:"actions"`
-
 	// Optional flag to disable cache validation and force run this operation
 	Cache *V1Cache `json:"cache,omitempty"`
 
@@ -54,8 +51,8 @@ type V1Operation struct {
 	// Optional component description override
 	Description string `json:"description,omitempty"`
 
-	// Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
-	Events []string `json:"events"`
+	// Optional events section, must be a valid List of EventTrigger option (Run/Git/Alert/Webhook/Dataset)
+	Events []*V1EventTrigger `json:"events"`
 
 	// Optional hooks section
 	Hooks []*V1Hook `json:"hooks"`
@@ -69,6 +66,9 @@ type V1Operation struct {
 	// Optional flag to mark this specification as preset
 	IsPreset bool `json:"is_preset,omitempty"`
 
+	// Optional dict of joins
+	Joins map[string]V1Join `json:"joins,omitempty"`
+
 	// Optional component kind, should be equal to 'operation'
 	Kind string `json:"kind,omitempty"`
 
@@ -81,7 +81,7 @@ type V1Operation struct {
 	// Optional dict of params
 	Params map[string]V1Param `json:"params,omitempty"`
 
-	// Optional patch startegy, default post_merge
+	// Optional patch strategy, default post_merge
 	PatchStrategy V1PatchStrategy `json:"patch_strategy,omitempty"`
 
 	// path ref
@@ -129,10 +129,6 @@ type V1Operation struct {
 func (m *V1Operation) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateActions(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateCache(formats); err != nil {
 		res = append(res, err)
 	}
@@ -141,7 +137,15 @@ func (m *V1Operation) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateEvents(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateHooks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateJoins(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -172,31 +176,6 @@ func (m *V1Operation) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1Operation) validateActions(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Actions) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Actions); i++ {
-		if swag.IsZero(m.Actions[i]) { // not required
-			continue
-		}
-
-		if m.Actions[i] != nil {
-			if err := m.Actions[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("actions" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -236,6 +215,31 @@ func (m *V1Operation) validateComponent(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Operation) validateEvents(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Events) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Events); i++ {
+		if swag.IsZero(m.Events[i]) { // not required
+			continue
+		}
+
+		if m.Events[i] != nil {
+			if err := m.Events[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("events" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *V1Operation) validateHooks(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Hooks) { // not required
@@ -252,6 +256,28 @@ func (m *V1Operation) validateHooks(formats strfmt.Registry) error {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
 				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Operation) validateJoins(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Joins) { // not required
+		return nil
+	}
+
+	for k := range m.Joins {
+
+		if err := validate.Required("joins"+"."+k, "body", m.Joins[k]); err != nil {
+			return err
+		}
+		if val, ok := m.Joins[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				return err
 			}
 		}

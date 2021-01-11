@@ -29,6 +29,12 @@
       link: /docs/automation/mapping/
     - title: Specification
       link: /docs/automation/mapping/specification/
+  - group: Joins
+    items:
+    - title: Overview
+      link: /docs/automation/joins/
+    - title: Specification
+      link: /docs/automation/joins/specification/
   - group: Pipeline helpers
     items:
     - title: Overview
@@ -49,13 +55,15 @@
       link: /docs/automation/schedules/interval/
     - title: Exact time Schedule
       link: /docs/automation/schedules/datetime/
-  - group: Extensions
+  - group: Hooks
     items:
     - title: Overview
-      link: /docs/automation/extensions/
-    - title: Actions
-      link: /docs/automation/extensions/actions/
-    - title: Hooks
-      link: /docs/automation/extensions/hooks/
-    - title: Events
-      link: /docs/automation/extensions/events/
+      link: /docs/automation/hooks/
+    - title: Specification
+      link: /docs/automation/hooks/specification/
+  - group: Events
+    items:
+    - title: Overview
+      link: /docs/automation/events/
+    - title: Specification
+      link: /docs/automation/events/specification/

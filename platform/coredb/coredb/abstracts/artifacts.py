@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ from coredb.abstracts.diff import DiffModel
 from coredb.abstracts.getter import get_db_model_name
 from coredb.abstracts.state import StateModel
 from polyaxon.polyboard.artifacts import V1ArtifactKind
+from polyaxon.utils.enums_utils import values_to_choices
 
 
 class BaseArtifact(DiffModel, StateModel):
@@ -27,7 +28,7 @@ class BaseArtifact(DiffModel, StateModel):
     kind = models.CharField(
         max_length=12,
         db_index=True,
-        choices=V1ArtifactKind.CHOICES,
+        choices=values_to_choices(V1ArtifactKind.allowable_values),
     )
     path = models.CharField(max_length=256, blank=True, null=True)
     summary = models.JSONField()

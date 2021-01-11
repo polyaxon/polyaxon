@@ -4,10 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**hub_ref** | **String** |  | [optional] 
-**trigger** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
 **connection** | **String** |  | [optional] 
+**trigger** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
+**hub_ref** | **String** |  | [optional] 
+**conditions** | **[Object]** |  | [optional] 
 **params** | [**{String: V1Param}**](V1Param.md) |  | [optional] 
-**run_patch** | [**Object**](.md) |  | [optional] 
+**presets** | **[String]** |  | [optional] 
 
 

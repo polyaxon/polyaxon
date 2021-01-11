@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ class BaseEndpoint(
     # This is a memoization for get_object, to avoid accidentally calling twice.
     _object = None
     _instance_id = None
-    _instance_contenttype = None
+    _instance_uuid = None
     _owner_id = None
 
     def set_owner(self):

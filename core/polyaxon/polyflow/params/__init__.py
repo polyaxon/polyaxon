@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polyflow.params.params import (
-    DAG_ENTITY_REF,
-    ParamSchema,
-    ParamSpec,
-    V1Param,
-    V1ParamSearch,
-)
+from polyaxon.polyflow.params.params import ParamSchema, ParamSpec, V1Param

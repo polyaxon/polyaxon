@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,9 +31,6 @@ import (
 //
 // swagger:model v1Component
 type V1Component struct {
-
-	// Optional actions section
-	Actions []*V1Action `json:"actions"`
 
 	// Optional flag to disable cache validation and force run this component
 	Cache *V1Cache `json:"cache,omitempty"`
@@ -88,10 +85,6 @@ type V1Component struct {
 func (m *V1Component) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateActions(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateCache(formats); err != nil {
 		res = append(res, err)
 	}
@@ -123,31 +116,6 @@ func (m *V1Component) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1Component) validateActions(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Actions) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Actions); i++ {
-		if swag.IsZero(m.Actions[i]) { // not required
-			continue
-		}
-
-		if m.Actions[i] != nil {
-			if err := m.Actions[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("actions" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -109,6 +109,83 @@ def get_fxt_job_with_inputs_and_conditions():
                 "kind": V1RunKind.JOB,
                 "container": {"image": "{{ image }}"},
                 "init": [{"connection": "foo", "git": {"revision": "dev"}}],
+            },
+        },
+    }
+
+
+def get_fxt_job_with_inputs_and_joins():
+    return {
+        "version": 1.1,
+        "kind": "operation",
+        "name": "foo",
+        "description": "a description",
+        "joins": [
+            {
+                "query": "metrics.metric: > {{ metric_level }}",
+                "sort": "-metrics.metric",
+                "limit": "{{ top }}",
+                "params": {
+                    "metrics": {"value": "outputs.metric"},
+                },
+            },
+            {
+                "query": "metrics.metric: < -1",
+                "params": {
+                    "excluded": {"value": "outputs.metric", "contextOnly": True},
+                    "excluded_statuses": {
+                        "value": "globals.status",
+                        "contextOnly": True,
+                    },
+                    "excluded_uuids": {"value": "globals.uuid"},
+                    "run_metrics_events": {
+                        "value": "artifacts.metric1",
+                        "contextOnly": True,
+                    },
+                    "run_outputs": {
+                        "value": "artifacts.outputs",
+                        "contextOnly": True,
+                    },
+                    "files": {
+                        "value": {
+                            "files": ["subpath/file1", "different/subpath/file2"],
+                        },
+                        "toInit": True,
+                    },
+                    "files2": {
+                        "value": {
+                            "files": ["subpath/file21", "different/subpath/file22"],
+                        },
+                        "contextOnly": True,
+                    },
+                },
+            },
+        ],
+        "params": {
+            "top": {"value": 3, "contextOnly": True},
+            "metric_level": {"value": 0, "contextOnly": True},
+            "init_param": {
+                "value": {"url": "https://git.url"},
+                "connection": "git2",
+                "toInit": True,
+            },
+        },
+        "component": {
+            "name": "build-template",
+            "inputs": [
+                {"name": "metrics", "type": "float", "isList": True},
+                {"name": "excluded_uuids", "type": "uuid", "isList": True},
+                {"name": "init_param", "type": "git"},
+                {"name": "files", "type": "artifacts"},
+            ],
+            "tags": ["tag1", "tag2"],
+            "run": {
+                "kind": V1RunKind.JOB,
+                "container": {"image": "test"},
+                "init": [
+                    {"connection": "foo", "git": {"revision": "dev"}},
+                    {"artifacts": {"dirs": "{{run_outputs}}"}},
+                ],
             },
         },
     }

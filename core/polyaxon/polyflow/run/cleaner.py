@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,12 +31,3 @@ class CleanerSchema(JobSchema):
 class V1Cleaner(V1Job):
     SCHEMA = CleanerSchema
     IDENTIFIER = V1RunKind.CLEANER
-    REDUCED_ATTRIBUTES = [
-        "kind",
-        "container",
-        "environment",
-        "init",
-        "sidecars",
-        "connections",
-        "volumes",
-    ]

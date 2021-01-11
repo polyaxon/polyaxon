@@ -48,7 +48,7 @@ tracking.log_mpl_image(figure, name="my-figure", step=12)
 
 ![run-dashboards-matplotlib-static](../../../../content/images/dashboard/runs/dashboards-matplotlib-static.png)
 
-> More info about [tracking api](docs/experimentation/tracking/module/#log_mpl_image)
+> More info about [tracking api](/docs/experimentation/tracking/module/#log_mpl_image)
 
 ### Matplotlib interactive figures
 
@@ -64,7 +64,7 @@ tracking.log_mpl_plotly_chart(figure=figure, name="my-figure", step=12)
 
 ![run-dashboards-matplotlib-interactive](../../../../content/images/dashboard/runs/dashboards-matplotlib-interactive.png)
 
-> More info about [tracking api](docs/experimentation/tracking/module/#log_mpl_plotly_chart)
+> More info about [tracking api](/docs/experimentation/tracking/module/#log_mpl_plotly_chart)
 
 ## Plotly
 
@@ -82,7 +82,7 @@ tracking.log_plotly_chart(figure=figure, name="my-figure", step=12)
 
 ![run-dashboards-plotly](../../../../content/images/dashboard/runs/dashboards-plotly.png)
 
-> More info about [tracking api](docs/experimentation/tracking/module/#log_plotly_chart)
+> More info about [tracking api](/docs/experimentation/tracking/module/#log_plotly_chart)
 
 
 ## Bokeh
@@ -101,7 +101,7 @@ tracking.log_bokeh_chart(figure=figure, name="my-figure", step=12)
 
 ![run-dashboards-bokeh](../../../../content/images/dashboard/runs/dashboards-bokeh.png)
 
-> More info about [tracking api](docs/experimentation/tracking/module/#log_bokeh_chart)
+> More info about [tracking api](/docs/experimentation/tracking/module/#log_bokeh_chart)
 
 ## Altair
 
@@ -119,4 +119,4 @@ tracking.log_altair_chart(figure=figure, name="my-figure", step=12)
 
 ![run-dashboards-altair](../../../../content/images/dashboard/runs/dashboards-altair.png)
 
-> More info about [tracking api](docs/experimentation/tracking/module/#log_altair_chart)
+> More info about [tracking api](/docs/experimentation/tracking/module/#log_altair_chart)

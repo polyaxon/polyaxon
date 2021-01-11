@@ -31,7 +31,6 @@ Every Polyaxon Agent deployment can configure:
 
  * `artifactsStore`
  * `connections`
- * `notificationConnections`
 
 All these configurations follow similar [specification](/docs/setup/connections/specification/).
 
@@ -62,7 +61,6 @@ connections:
     secret:
       name: docker-conf
       mountPath: /kaniko/.docker
-notificationConnections:
   - name: my-slack
     kind: slack
     secret:
@@ -106,11 +104,3 @@ For more details please check the [connection specification](/docs/setup/connect
 ### Default behavior
 
 By default, this catalog is empty and is not required for Polyaxon to function correctly.
-
-## NotificationConnections
-
-You can configure Polyaxon to send notifications to users about event changes in their runs.
-
-The `notificationConnections` catalog is only used for connections used for notifications and uses the same [connection specification](/docs/setup/connections/specification/).
-
-For mode details please check the [notifications section](/docs/setup/connections/notifications/).

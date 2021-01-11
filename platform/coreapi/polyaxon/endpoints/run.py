@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ from polycommon.apis.regex import (
 
 
 class RunEndpoint(ProjectResourceEndpoint):
-    queryset = Run.objects
+    queryset = Run.all.select_related("project")
     lookup_field = UUID_KEY
     lookup_url_kwarg = RUN_UUID_KEY
     CONTEXT_KEYS = (OWNER_NAME_KEY, PROJECT_NAME_KEY, RUN_UUID_KEY)
@@ -49,7 +49,7 @@ class RunEndpoint(ProjectResourceEndpoint):
         self.run = self.get_object()
 
 
-class RunArtifactListEndpoint(RunEndpoint):
+class RunResourceListEndpoint(RunEndpoint):
     AUDITOR_EVENT_TYPES = None
 
     def get_object(self):
@@ -57,7 +57,7 @@ class RunArtifactListEndpoint(RunEndpoint):
             return self._object
 
         self._object = get_object_or_404(
-            Run,
+            Run.all.select_related("project"),
             uuid=self.run_uuid,
             project__name=self.project_name,
         )

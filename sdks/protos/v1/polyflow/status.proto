@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,11 +21,11 @@ package v1;
 enum Statuses {
     created = 0;
     resuming = 1;
-    compiled = 2;
-    queued = 3;
-    scheduled = 4;
-    starting = 5;
-    initializing = 6;
+    on_schedule = 2;
+    compiled = 3;
+    queued = 4;
+    scheduled = 5;
+    starting = 6;
     running = 7;
     processing = 8;
     stopping = 9;

@@ -1,5 +1,5 @@
 {{- /*
-scheduler celery config
+Scheduler celery config
 */}}
 {{- define "config.celery.scheduler" -}}
 {{- if .Values.scheduler.celery.taskTrackStarted }}

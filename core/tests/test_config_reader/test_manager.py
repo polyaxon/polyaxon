@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -201,6 +201,9 @@ class TestConfigManager(BaseTestCase):
         value = self.config.get_float("float_list_key_1", is_list=True)
         self.assertEqual(value, [1.23, 13.3, 4.4, 555.0, 66.0])
 
+        value = self.config.get_float("float_list_key_2", is_list=True)
+        self.assertEqual(value, [1.23, 13.3, 66])
+
         with self.assertRaises(PolyaxonSchemaError):
             self.config.get_float("float_error_key_1")
 
@@ -212,9 +215,6 @@ class TestConfigManager(BaseTestCase):
 
         with self.assertRaises(PolyaxonSchemaError):
             self.config.get_float("float_list_key_1")
-
-        with self.assertRaises(PolyaxonSchemaError):
-            self.config.get_float("float_list_error_key_1", is_list=True)
 
         with self.assertRaises(PolyaxonSchemaError):
             self.config.get_float("float_list_error_key_2", is_list=True)

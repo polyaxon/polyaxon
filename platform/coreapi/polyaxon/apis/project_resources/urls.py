@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,6 +25,10 @@ projects_urlpatterns = [
     re_path(
         projects.URLS_PROJECTS_RUNS_TAG,
         views.ProjectRunsTagView.as_view(),
+    ),
+    re_path(
+        projects.URLS_PROJECTS_RUNS_ARTIFACTS_LINEAGE_V0,
+        views.ProjectRunsArtifactsView.as_view(),
     ),
     re_path(
         projects.URLS_PROJECTS_RUNS_ARTIFACTS_LINEAGE,

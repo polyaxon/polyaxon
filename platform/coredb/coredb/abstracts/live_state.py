@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,7 +42,9 @@ class LiveStateModel(models.Model):
             return False
 
         if update_name:
-            self.name = "del_{}_{}".format(self.name, random.randint(-90, 100))
+            self.name = "del_{}_{}".format(
+                self.name, getattr(self, "uuid", random.randint(-90, 100))
+            )
         self.live_state = live_state.STATE_DELETION_PROGRESSING
         if commit:
             self.save(update_fields=["name", "live_state"])

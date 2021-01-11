@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ from polyaxon import pkg, types
 from polyaxon.config_reader.utils import deep_update
 from polyaxon.containers.names import MAIN_JOB_CONTAINER
 from polyaxon.polyaxonfile import OperationSpecification
-from polyaxon.polyflow import V1Component, V1Operation, V1RunKind
+from polyaxon.polyflow import V1Component, V1EventKind, V1Operation, V1RunKind
 from polyaxon.schemas.patch_strategy import V1PatchStrategy
 from polyaxon.utils.tz_utils import now
 from tests.utils import BaseTestCase
@@ -68,21 +68,14 @@ class TestPatchSpecifications(BaseTestCase):
                     "collectArtifacts": False,
                     "collectResources": False,
                 },
-                "actions": [
-                    {"hubRef": "{}1".format(self.DEFAULT_STR_VALUE)},
-                    {
-                        "hubRef": "{}2".format(self.DEFAULT_STR_VALUE),
-                        "label": "customLabel",
-                        "many": True,
-                    },
-                ],
                 "hooks": [
                     {
+                        "hubRef": "{}1".format(self.DEFAULT_STR_VALUE),
                         "trigger": "succeeded",
                         "connection": "{}1".format(self.DEFAULT_STR_VALUE),
                     },
                     {
-                        "connection": "{}1".format(self.DEFAULT_STR_VALUE),
+                        "connection": "{}2".format(self.DEFAULT_STR_VALUE),
                         "hubRef": "{}2".format(self.DEFAULT_STR_VALUE),
                     },
                 ],
@@ -119,7 +112,35 @@ class TestPatchSpecifications(BaseTestCase):
                     "startAt": self.DEFAULT_DT_VALUE,
                     "endAt": self.DEFAULT_DT_VALUE,
                 },
-                "events": None,
+                "events": [
+                    {
+                        "kinds": [V1EventKind.RUN_STATUS_SCHEDULED],
+                        "ref": "{}1".format(self.DEFAULT_STR_VALUE),
+                    },
+                    {
+                        "kinds": [V1EventKind.RUN_STATUS_SCHEDULED],
+                        "ref": "{}2".format(self.DEFAULT_STR_VALUE),
+                    },
+                ],
+                "joins": [
+                    {
+                        "query": "{}1".format(self.DEFAULT_STR_VALUE),
+                        "sort": "{}1".format(self.DEFAULT_STR_VALUE),
+                        "params": {
+                            "u": {"value": "{}1".format(self.DEFAULT_STR_VALUE)},
+                        },
+                    },
+                    {
+                        "query": "{}2".format(self.DEFAULT_STR_VALUE),
+                        "sort": "{}2".format(self.DEFAULT_STR_VALUE),
+                        "params": {
+                            "v": {
+                                "value": "{}2".format(self.DEFAULT_STR_VALUE),
+                                "contextOnly": True,
+                            },
+                        },
+                    },
+                ],
                 "matrix": {
                     "concurrency": self.DEFAULT_INT_VALUE,
                     "kind": "mapping",
@@ -177,16 +198,9 @@ class TestPatchSpecifications(BaseTestCase):
                     "collectArtifacts": True,
                     "collectResources": True,
                 },
-                "actions": [
-                    {"hubRef": "{}1".format(self.PATCH_STR_VALUE)},
-                    {
-                        "hubRef": "{}2".format(self.PATCH_STR_VALUE),
-                        "label": "customLabel",
-                        "many": True,
-                    },
-                ],
                 "hooks": [
                     {
+                        "hubRef": "{}1".format(self.PATCH_STR_VALUE),
                         "trigger": "succeeded",
                         "connection": "{}1".format(self.PATCH_STR_VALUE),
                     },
@@ -225,7 +239,32 @@ class TestPatchSpecifications(BaseTestCase):
                     },
                 },
                 "schedule": {"kind": "datetime", "startAt": self.PATCH_DT_VALUE},
-                "events": None,
+                "events": [
+                    {
+                        "kinds": [V1EventKind.RUN_STATUS_DONE],
+                        "ref": self.PATCH_STR_VALUE,
+                    },
+                    {
+                        "kinds": [V1EventKind.RUN_STATUS_DONE],
+                        "ref": self.PATCH_STR_VALUE,
+                    },
+                ],
+                "joins": [
+                    {
+                        "query": self.PATCH_STR_VALUE,
+                        "sort": self.PATCH_STR_VALUE,
+                        "params": {
+                            "u": {"value": self.PATCH_STR_VALUE},
+                        },
+                    },
+                    {
+                        "query": self.PATCH_STR_VALUE,
+                        "sort": self.PATCH_STR_VALUE,
+                        "params": {
+                            "x": {"value": self.PATCH_STR_VALUE, "contextOnly": True},
+                        },
+                    },
+                ],
                 "matrix": {
                     "concurrency": self.PATCH_INT_VALUE,
                     "kind": "mapping",
@@ -257,7 +296,6 @@ class TestPatchSpecifications(BaseTestCase):
                 "cache": {},
                 "termination": {},
                 "plugins": {},
-                "actions": [],
                 "hooks": [],
                 "params": {},
                 "runPatch": {
@@ -271,7 +309,8 @@ class TestPatchSpecifications(BaseTestCase):
                     },
                 },
                 "schedule": None,
-                "events": None,
+                "events": [],
+                "joins": [],
                 "matrix": None,
                 "dependencies": [],
                 "trigger": None,
@@ -326,6 +365,7 @@ class TestPatchSpecifications(BaseTestCase):
         assert result_dict.pop("conditions") == operation.conditions
         assert result_dict.pop("skipOnUpstreamSkip") == operation.skip_on_upstream_skip
         assert result_dict.pop("schedule") == operation.schedule.to_dict()
+        assert result_dict.pop("conditions", None) is None
         assert result_dict.pop("matrix") == operation.matrix.to_dict()
         assert result_dict.pop("cache") == operation.cache.to_dict()
         assert result_dict.pop("plugins") == operation.plugins.to_dict()
@@ -481,11 +521,12 @@ class TestPatchSpecifications(BaseTestCase):
         expected.pop("isPreset")
         expected["tags"] = operation.tags + expected["tags"]
         expected["presets"] = operation.presets + expected["presets"]
-        expected["actions"] = [i.to_dict() for i in operation.actions] + expected[
-            "actions"
-        ]
         expected["hooks"] = [i.to_dict() for i in operation.hooks] + expected["hooks"]
         expected["dependencies"] = operation.dependencies + expected["dependencies"]
+        expected["events"] = [i.to_dict() for i in operation.events] + expected[
+            "events"
+        ]
+        expected["joins"] = [i.to_dict() for i in operation.joins] + expected["joins"]
         expected["matrix"]["values"] = (
             operation.matrix.values + expected["matrix"]["values"]
         )
@@ -503,11 +544,12 @@ class TestPatchSpecifications(BaseTestCase):
         expected.pop("isPreset")
         expected["tags"] = operation.tags + expected["tags"]
         expected["presets"] = operation.presets + expected["presets"]
-        expected["actions"] = [i.to_dict() for i in operation.actions] + expected[
-            "actions"
-        ]
         expected["hooks"] = [i.to_dict() for i in operation.hooks] + expected["hooks"]
         expected["dependencies"] = operation.dependencies + expected["dependencies"]
+        expected["events"] = [i.to_dict() for i in operation.events] + expected[
+            "events"
+        ]
+        expected["joins"] = [i.to_dict() for i in operation.joins] + expected["joins"]
         expected["matrix"]["values"] = (
             operation.matrix.values + expected["matrix"]["values"]
         )
@@ -607,13 +649,16 @@ class TestPatchSpecifications(BaseTestCase):
         result_dict = result.to_dict()
         expected["tags"] = preset_dict["tags"] + operation.tags
         expected["presets"] = preset_dict["presets"] + operation.presets
-        expected["actions"] = preset_dict["actions"] + [
-            i.to_dict() for i in operation.actions
-        ]
         expected["hooks"] = preset_dict["hooks"] + [
             i.to_dict() for i in operation.hooks
         ]
         expected["dependencies"] = preset_dict["dependencies"] + operation.dependencies
+        expected["events"] = preset_dict["events"] + [
+            i.to_dict() for i in operation.events
+        ]
+        expected["joins"] = preset_dict["joins"] + [
+            i.to_dict() for i in operation.joins
+        ]
         expected["matrix"]["values"] = (
             preset_dict["matrix"]["values"] + operation.matrix.values
         )
@@ -628,13 +673,16 @@ class TestPatchSpecifications(BaseTestCase):
         result_dict = result.to_dict()
         expected["tags"] = preset_dict["tags"] + operation.tags
         expected["presets"] = preset_dict["presets"] + operation.presets
-        expected["actions"] = preset_dict["actions"] + [
-            i.to_dict() for i in operation.actions
-        ]
         expected["hooks"] = preset_dict["hooks"] + [
             i.to_dict() for i in operation.hooks
         ]
         expected["dependencies"] = preset_dict["dependencies"] + operation.dependencies
+        expected["events"] = preset_dict["events"] + [
+            i.to_dict() for i in operation.events
+        ]
+        expected["joins"] = preset_dict["joins"] + [
+            i.to_dict() for i in operation.joins
+        ]
         expected["matrix"]["values"] = (
             preset_dict["matrix"]["values"] + operation.matrix.values
         )

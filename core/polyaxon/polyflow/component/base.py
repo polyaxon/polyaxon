@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 from marshmallow import fields, validate
 
-from polyaxon.polyflow.actions import ActionSchema
 from polyaxon.polyflow.cache import CacheSchema
 from polyaxon.polyflow.hooks import HookSchema
 from polyaxon.polyflow.plugins import PluginsSchema
@@ -36,7 +35,6 @@ class BaseComponentSchema(BaseCamelSchema):
     cache = fields.Nested(CacheSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     plugins = fields.Nested(PluginsSchema, allow_none=True)
-    actions = fields.List(fields.Nested(ActionSchema), allow_none=True)
     hooks = fields.List(fields.Nested(HookSchema), allow_none=True)
     is_approved = fields.Bool(allow_none=True)
 
@@ -58,7 +56,6 @@ class BaseComponent(BaseConfig):
         "cache",
         "termination",
         "plugins",
-        "actions",
         "hooks",
         "isApproved",
     ]

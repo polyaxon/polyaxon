@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,12 +35,13 @@ DOCKERFILE = "dockerfile"
 GIT = "git"
 IMAGE = "image"
 EVENT = "event"
-ARTIFACTS = "artifacts"
+ARTIFACTS = "artifacts"  # TODO: Param: artifact_event/artifact_asset
 PATH = "path"
 METRIC = "metric"
 METADATA = "metadata"
 DATE = "date"
 DATETIME = "datetime"
+UUID = "uuid"
 
 VALUES = {
     ANY,
@@ -66,6 +67,7 @@ VALUES = {
     METADATA,
     DATE,
     DATETIME,
+    UUID,
 }
 
 LINEAGE_VALUES = {

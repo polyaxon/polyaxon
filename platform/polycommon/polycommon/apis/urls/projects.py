@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,10 @@ URLS_PROJECTS_RUNS_APPROVE = r"^{}/{}/runs/approve/?$".format(
 URLS_PROJECTS_RUNS_DELETE = r"^{}/{}/runs/delete/?$".format(
     OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
 )
-URLS_PROJECTS_RUNS_ARTIFACTS_LINEAGE = r"^{}/{}/runs/artifacts_lineage/?$".format(
+URLS_PROJECTS_RUNS_ARTIFACTS_LINEAGE_V0 = r"^{}/{}/runs/artifacts_lineage/?$".format(
+    OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
+)
+URLS_PROJECTS_RUNS_ARTIFACTS_LINEAGE = r"^{}/{}/runs/lineage/artifacts/?$".format(
     OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
 )
 URLS_PROJECTS_RUNS_LIST = r"^{}/{}/runs/?$".format(

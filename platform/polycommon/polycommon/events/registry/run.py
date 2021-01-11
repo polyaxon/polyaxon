@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ from polycommon.events.registry.attributes import (
 )
 
 RUN_CREATED = "{}.{}".format(event_subjects.RUN, event_actions.CREATED)
-RUN_DELETED = "{}.{}".format(event_subjects.RUN, event_actions.DELETED)
 RUN_STOPPED = "{}.{}".format(event_subjects.RUN, event_actions.STOPPED)
 RUN_SKIPPED = "{}.{}".format(event_subjects.RUN, event_actions.SKIPPED)
 RUN_NEW_STATUS = "{}.{}".format(event_subjects.RUN, event_actions.NEW_STATUS)
@@ -51,6 +50,9 @@ RUN_STOPPED_ACTOR = "{}.{}.{}".format(
 RUN_APPROVED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.APPROVED, event_subjects.ACTOR
 )
+RUN_INVALIDATED_ACTOR = "{}.{}.{}".format(
+    event_subjects.RUN, event_actions.INVALIDATED, event_subjects.ACTOR
+)
 RUN_RESUMED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.RESUMED, event_subjects.ACTOR
 )
@@ -66,7 +68,6 @@ RUN_SKIPPED_ACTOR = "{}.{}.{}".format(
 
 EVENTS = {
     RUN_CREATED,
-    RUN_DELETED,
     RUN_STOPPED,
     RUN_RESUMED,
     RUN_SKIPPED,
@@ -81,6 +82,7 @@ EVENTS = {
     RUN_DELETED_ACTOR,
     RUN_STOPPED_ACTOR,
     RUN_APPROVED_ACTOR,
+    RUN_INVALIDATED_ACTOR,
     RUN_RESUMED_ACTOR,
     RUN_RESTARTED_ACTOR,
     RUN_COPIED_ACTOR,
@@ -88,14 +90,17 @@ EVENTS = {
 }
 
 
-class RunCreatedEvent(Event):
+class RunEvent(Event):
+    entity_uuid = "project.uuid"
+
+
+class RunActorEvent(ActorEvent):
+    entity_uuid = "project.uuid"
+
+
+class RunCreatedEvent(RunEvent):
     event_type = RUN_CREATED
     attributes = PROJECT_RUN_EXECUTOR_ATTRIBUTES
-
-
-class RunDeletedEvent(Event):
-    event_type = RUN_DELETED
-    attributes = (Attribute("uuid", is_uuid=True),)
 
 
 class RunStoppedEvent(Event):
@@ -103,17 +108,17 @@ class RunStoppedEvent(Event):
     attributes = PROJECT_RESOURCE_ATTRIBUTES
 
 
-class RunResumedEvent(Event):
+class RunResumedEvent(RunEvent):
     event_type = RUN_RESUMED
     attributes = PROJECT_RESOURCE_ATTRIBUTES
 
 
-class RunSkippedEvent(Event):
+class RunSkippedEvent(RunEvent):
     event_type = RUN_SKIPPED
     attributes = PROJECT_RESOURCE_ATTRIBUTES
 
 
-class RunNewStatusEvent(Event):
+class RunNewStatusEvent(RunEvent):
     event_type = RUN_NEW_STATUS
     attributes = PROJECT_RESOURCE_ATTRIBUTES + (
         Attribute("status"),
@@ -121,73 +126,78 @@ class RunNewStatusEvent(Event):
     )
 
 
-class RunNewArtifactsEvent(Event):
+class RunNewArtifactsEvent(RunEvent):
     event_type = RUN_NEW_ARTIFACTS
     attributes = PROJECT_RESOURCE_ATTRIBUTES + (Attribute("artifacts", attr_type=list),)
 
 
-class RunSucceededEvent(Event):
+class RunSucceededEvent(RunEvent):
     event_type = RUN_SUCCEEDED
     attributes = PROJECT_RESOURCE_ATTRIBUTES
 
 
-class RunFailedEvent(Event):
+class RunFailedEvent(RunEvent):
     event_type = RUN_FAILED
     attributes = PROJECT_RESOURCE_ATTRIBUTES
 
 
-class RunDoneEvent(Event):
+class RunDoneEvent(RunEvent):
     event_type = RUN_DONE
     attributes = PROJECT_RUN_EXECUTOR_ATTRIBUTES
 
 
-class RunCreatedActorEvent(ActorEvent):
+class RunCreatedActorEvent(RunActorEvent):
     event_type = RUN_CREATED_ACTOR
     actor_id = "user.id"
     actor_name = "user.username"
     attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
 
 
-class RunUpdatedActorEvent(ActorEvent):
+class RunUpdatedActorEvent(RunActorEvent):
     event_type = RUN_UPDATED_ACTOR
     attributes = PROJECT_RESOURCE_OWNER_ATTRIBUTES
 
 
-class RunDeletedActorEvent(ActorEvent):
+class RunDeletedActorEvent(RunActorEvent):
     event_type = RUN_DELETED_ACTOR
     attributes = PROJECT_RESOURCE_OWNER_ATTRIBUTES
 
 
-class RunViewedActorEvent(ActorEvent):
+class RunViewedActorEvent(RunActorEvent):
     event_type = RUN_VIEWED_ACTOR
     attributes = PROJECT_RESOURCE_OWNER_ATTRIBUTES
 
 
-class RunStoppedActorEvent(ActorEvent):
+class RunStoppedActorEvent(RunActorEvent):
     event_type = RUN_STOPPED_ACTOR
     attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
 
 
-class RunApprovedActorEvent(ActorEvent):
+class RunApprovedActorEvent(RunActorEvent):
     event_type = RUN_APPROVED_ACTOR
     attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
 
 
-class RunResumedActorEvent(ActorEvent):
+class RunInvalidatedActorEvent(RunActorEvent):
+    event_type = RUN_INVALIDATED_ACTOR
+    attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
+
+
+class RunResumedActorEvent(RunActorEvent):
     event_type = RUN_RESUMED_ACTOR
     attributes = PROJECT_RUN_EXECUTOR_OWNER_ATTRIBUTES
 
 
-class RunRestartedActorEvent(ActorEvent):
+class RunRestartedActorEvent(RunActorEvent):
     event_type = RUN_RESTARTED_ACTOR
     attributes = PROJECT_RESOURCE_OWNER_ATTRIBUTES
 
 
-class RunCopiedActorEvent(ActorEvent):
+class RunCopiedActorEvent(RunActorEvent):
     event_type = RUN_COPIED_ACTOR
     attributes = PROJECT_RESOURCE_OWNER_ATTRIBUTES
 
 
-class RunSkippedActorEvent(ActorEvent):
+class RunSkippedActorEvent(RunActorEvent):
     event_type = RUN_SKIPPED_ACTOR
     attributes = PROJECT_RESOURCE_OWNER_ATTRIBUTES

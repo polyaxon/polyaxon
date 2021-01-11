@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,10 +68,10 @@ message OwnerSubEntityResourceRequestByUid {
   // Owner of the namespace
   string owner = 1;
 
-  // Owner of the namespace
+  // Entity: project name, hub name, registry name, ...
   string entity = 2;
 
-  // Uuid identifier of the entity
+  // Uuid identifier of the sub-entity
   string uuid = 3;
 }
 
@@ -80,10 +80,10 @@ message OwnerSubEntityResourceRequestByName {
   // Owner of the namespace
   string owner = 1;
 
-  // Owner of the namespace
+  // Entity: project name, hub name, registry name, ...
   string entity = 2;
 
-  // Component under namesapce
+  // Sub-entity name
   string name = 3;
 }
 
@@ -143,7 +143,7 @@ message ResourceListRequest {
   // Sort to order the search
   string sort = 3;
 
-  // Query filter the search search
+  // Query filter the search
   string query = 4;
 }
 
@@ -161,7 +161,7 @@ message UserResourceListRequest {
     // Sort to order the search
     string sort = 4;
 
-    // Query filter the search search
+    // Query filter the search
     string query = 5;
 }
 
@@ -179,7 +179,7 @@ message OwnerResourceListRequest {
     // Sort to order the search
     string sort = 4;
 
-    // Query filter the search search
+    // Query filter the search
     string query = 5;
 }
 
@@ -200,7 +200,7 @@ message OwnerEntityResourceListRequestByName {
      // Sort to order the search
     string sort = 5;
 
-     // Query filter the search search
+     // Query filter the search
     string query = 6;
 }
 
@@ -224,7 +224,7 @@ message OwnerSubEntityResourceListRequestByUid {
      // Sort to order the search
     string sort = 6;
 
-     // Query filter the search search
+     // Query filter the search
     string query = 7;
 }
 
@@ -248,7 +248,7 @@ message OwnerSubEntityResourceListRequestByName {
    // Sort to order the search
   string sort = 6;
 
-   // Query filter the search search
+   // Query filter the search
   string query = 7;
 }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@
 from coredb.api.artifacts import queries as runs_artifacts_queries
 from coredb.api.artifacts.serializers import RunArtifactLightSerializer
 from coredb.api.project_resources import methods
-from coredb.api.project_resources import queries as runs_queries
 from coredb.api.project_resources.serializers import (
     OperationCreateSerializer,
     RunSerializer,
 )
+from coredb.models.runs import Run
+from coredb.queries.runs import DEFAULT_COLUMNS_DEFER
 from coredb.query_managers.artifact import ArtifactQueryManager
 from coredb.query_managers.run import RunQueryManager
 from endpoints.project import ProjectResourceListEndpoint
@@ -61,7 +62,7 @@ class ProjectRunsDeleteView(ProjectResourceListEndpoint, DestroyEndpoint):
 
 
 class ProjectRunsListView(ProjectResourceListEndpoint, ListEndpoint, CreateEndpoint):
-    queryset = runs_queries.runs
+    queryset = Run.all.defer(*DEFAULT_COLUMNS_DEFER)
     filter_backends = (QueryFilter, OrderingFilter)
     query_manager = RunQueryManager
     check_alive = RunQueryManager.CHECK_ALIVE

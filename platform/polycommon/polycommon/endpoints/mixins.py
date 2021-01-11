@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,12 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from rest_framework import status
 from rest_framework.mixins import CreateModelMixin as DJRCreateModelMixin
 from rest_framework.mixins import DestroyModelMixin as DJRDestroyModelMixin
 from rest_framework.mixins import ListModelMixin as DRFListModelMixin
 from rest_framework.mixins import RetrieveModelMixin as DRFRetrieveModelMixin
 from rest_framework.mixins import UpdateModelMixin as DJRUpdateModelMixin
+from rest_framework.response import Response
 
 
 class CreateModelMixin(DJRCreateModelMixin):
@@ -66,6 +67,10 @@ class DestroyModelMixin(DJRDestroyModelMixin):
     """
 
     def destroy(self, request, *args, **kwargs):
-        response = super().destroy(request, *args, **kwargs)
+        instance = self.get_object()
         self.audit(request, *args, **kwargs)
-        return response
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        return super().perform_destroy(instance)

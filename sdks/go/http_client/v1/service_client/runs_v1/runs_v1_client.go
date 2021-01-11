@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -87,6 +87,10 @@ type ClientService interface {
 
 	GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error)
 
+	GetRunConnectionsLineage(params *GetRunConnectionsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunConnectionsLineageOK, *GetRunConnectionsLineageNoContent, error)
+
+	GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunDownstreamLineageOK, *GetRunDownstreamLineageNoContent, error)
+
 	GetRunEvents(params *GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunEventsOK, *GetRunEventsNoContent, error)
 
 	GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunLogsOK, *GetRunLogsNoContent, error)
@@ -98,6 +102,8 @@ type ClientService interface {
 	GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunSettingsOK, *GetRunSettingsNoContent, error)
 
 	GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error)
+
+	GetRunUpstreamLineage(params *GetRunUpstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunUpstreamLineageOK, *GetRunUpstreamLineageNoContent, error)
 
 	GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunsArtifactsLineageOK, *GetRunsArtifactsLineageNoContent, error)
 
@@ -444,7 +450,7 @@ func (a *Client) CreateRunArtifactsLineage(params *CreateRunArtifactsLineagePara
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateRunArtifactsLineage",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -588,7 +594,7 @@ func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteRunArtifactLineage",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -804,7 +810,7 @@ func (a *Client) GetRunArtifactLineage(params *GetRunArtifactLineageParams, auth
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunArtifactLineage",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -876,7 +882,7 @@ func (a *Client) GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, au
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunArtifactsLineage",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -912,7 +918,7 @@ func (a *Client) GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNames
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunArtifactsLineageNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -969,6 +975,78 @@ func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetRunArtifactsTreeDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetRunConnectionsLineage gets run connections lineage
+*/
+func (a *Client) GetRunConnectionsLineage(params *GetRunConnectionsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunConnectionsLineageOK, *GetRunConnectionsLineageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunConnectionsLineageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunConnectionsLineage",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunConnectionsLineageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunConnectionsLineageOK:
+		return value, nil, nil
+	case *GetRunConnectionsLineageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunConnectionsLineageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetRunDownstreamLineage gets run downstream lineage
+*/
+func (a *Client) GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunDownstreamLineageOK, *GetRunDownstreamLineageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunDownstreamLineageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunDownstreamLineage",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunDownstreamLineageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunDownstreamLineageOK:
+		return value, nil, nil
+	case *GetRunDownstreamLineageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunDownstreamLineageDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1189,6 +1267,42 @@ func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.C
 }
 
 /*
+  GetRunUpstreamLineage gets run upstream lineage
+*/
+func (a *Client) GetRunUpstreamLineage(params *GetRunUpstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunUpstreamLineageOK, *GetRunUpstreamLineageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunUpstreamLineageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunUpstreamLineage",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunUpstreamLineageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunUpstreamLineageOK:
+		return value, nil, nil
+	case *GetRunUpstreamLineageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunUpstreamLineageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetRunsArtifactsLineage gets runs artifacts lineage
 */
 func (a *Client) GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunsArtifactsLineageOK, *GetRunsArtifactsLineageNoContent, error) {
@@ -1200,7 +1314,7 @@ func (a *Client) GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRunsArtifactsLineage",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{name}/runs/artifacts_lineage",
+		PathPattern:        "/api/v1/{owner}/{name}/runs/lineage/artifacts",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

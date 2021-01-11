@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -126,6 +126,9 @@ class TestMatrixConfigs(BaseTestCase):
         assert config.is_continuous is False
         assert get_min(config) is None
         assert get_max(config) is None
+
+        config = V1HpPChoice.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
     def test_matrix_range_option(self):
         def assert_equal(config, v1, v2, v3):

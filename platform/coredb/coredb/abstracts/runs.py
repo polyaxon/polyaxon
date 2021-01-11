@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ from coredb.abstracts.tag import TagModel
 from coredb.abstracts.uid import UuidModel
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow import V1CloningKind, V1RunKind
+from polyaxon.utils.enums_utils import values_to_choices
 
 
 class BaseRun(
@@ -51,7 +52,11 @@ class BaseRun(
         default=None,
         validators=[validate_slug],
     )
-    kind = models.CharField(max_length=12, db_index=True, choices=V1RunKind.CHOICES)
+    kind = models.CharField(
+        max_length=12,
+        db_index=True,
+        choices=values_to_choices(V1RunKind.allowable_values),
+    )
     runtime = models.CharField(max_length=12, db_index=True, null=True, blank=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -91,7 +96,7 @@ class BaseRun(
         max_length=12,
         blank=True,
         null=True,
-        choices=V1CloningKind.CHOICES,
+        choices=values_to_choices(V1CloningKind.allowable_values),
     )
     artifacts = models.ManyToManyField(
         get_db_model_name("Artifact"),

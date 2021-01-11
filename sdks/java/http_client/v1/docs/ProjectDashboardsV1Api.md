@@ -119,8 +119,8 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.deleteProjectDashboard(owner, entity, uuid);
     } catch (ApiException e) {
@@ -139,8 +139,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -193,8 +193,8 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       V1Dashboard result = apiInstance.getProjectDashboard(owner, entity, uuid);
       System.out.println(result);
@@ -214,8 +214,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 
@@ -272,7 +272,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListDashboardsResponse result = apiInstance.listProjectDashboardNames(owner, name, offset, limit, sort, query);
       System.out.println(result);
@@ -296,7 +296,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -353,7 +353,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListDashboardsResponse result = apiInstance.listProjectDashboards(owner, name, offset, limit, sort, query);
       System.out.println(result);
@@ -377,7 +377,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -507,8 +507,8 @@ public class Example {
 
     ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api(defaultClient);
     String owner = "owner_example"; // String | Owner of the namespace
-    String entity = "entity_example"; // String | Owner of the namespace
-    String uuid = "uuid_example"; // String | Uuid identifier of the entity
+    String entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+    String uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
     try {
       apiInstance.promoteProjectDashboard(owner, entity, uuid);
     } catch (ApiException e) {
@@ -527,8 +527,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **entity** | **String**| Owner of the namespace |
- **uuid** | **String**| Uuid identifier of the entity |
+ **entity** | **String**| Entity: project name, hub name, registry name, ... |
+ **uuid** | **String**| Uuid identifier of the sub-entity |
 
 ### Return type
 

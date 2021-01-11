@@ -6,8 +6,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**files** | **List&lt;String&gt;** |  |  [optional]
-**dirs** | **List&lt;String&gt;** |  |  [optional]
+**files** | **List&lt;Object&gt;** |  |  [optional]
+**dirs** | **List&lt;Object&gt;** |  |  [optional]
 **workers** | **Integer** |  |  [optional]
 
 

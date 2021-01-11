@@ -225,8 +225,8 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.AgentsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Uuid identifier of the entity
-entity = 'entity_example' # str | Owner of the namespace. (optional)
+uuid = 'uuid_example' # str | Uuid identifier of the sub-entity
+entity = 'entity_example' # str | Entity: project name, hub name, registry name, ... (optional)
 
     try:
         # Delete agent
@@ -240,8 +240,8 @@ entity = 'entity_example' # str | Owner of the namespace. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **uuid** | **str**| Uuid identifier of the entity | 
- **entity** | **str**| Owner of the namespace. | [optional] 
+ **uuid** | **str**| Uuid identifier of the sub-entity | 
+ **entity** | **str**| Entity: project name, hub name, registry name, ... | [optional] 
 
 ### Return type
 
@@ -307,8 +307,8 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = polyaxon_sdk.AgentsV1Api(api_client)
     owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Uuid identifier of the entity
-entity = 'entity_example' # str | Owner of the namespace. (optional)
+uuid = 'uuid_example' # str | Uuid identifier of the sub-entity
+entity = 'entity_example' # str | Entity: project name, hub name, registry name, ... (optional)
 
     try:
         # Get agent
@@ -323,8 +323,8 @@ entity = 'entity_example' # str | Owner of the namespace. (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **uuid** | **str**| Uuid identifier of the entity | 
- **entity** | **str**| Owner of the namespace. | [optional] 
+ **uuid** | **str**| Uuid identifier of the sub-entity | 
+ **entity** | **str**| Entity: project name, hub name, registry name, ... | [optional] 
 
 ### Return type
 
@@ -636,7 +636,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List agents names
@@ -654,7 +654,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -723,7 +723,7 @@ with polyaxon_sdk.ApiClient(configuration) as api_client:
 offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
-query = 'query_example' # str | Query filter the search search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
 
     try:
         # List agents
@@ -741,7 +741,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
- **query** | **str**| Query filter the search search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
 
 ### Return type
 

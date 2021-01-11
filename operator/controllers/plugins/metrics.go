@@ -1,5 +1,5 @@
 /*
-Copyright 2018-2020 Polyaxon, Inc.
+Copyright 2018-2021 Polyaxon, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,9 +29,9 @@ import (
 
 // Metrics exposed by the operator
 type Metrics struct {
-	cli                    client.Client
-	OperationsRunning      *prometheus.GaugeVec
-	OperationsCreated      *prometheus.CounterVec
+	cli                     client.Client
+	OperationsRunning       *prometheus.GaugeVec
+	OperationsCreated       *prometheus.CounterVec
 	OperationsFailedCreated *prometheus.CounterVec
 }
 

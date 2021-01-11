@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from coredb.api.projects import queries as project_queries
-from coredb.api.runs import queries as run_queries
 from coredb.factories.projects import ProjectFactory
 from coredb.factories.runs import RunFactory
 from coredb.factories.users import UserFactory
@@ -25,7 +23,7 @@ from polycommon.test_cases.base import PolyaxonBaseTestSerializer
 
 
 class BaseTestProjectSerializer(PolyaxonBaseTestSerializer):
-    query = project_queries.projects
+    query = Project.all
     model_class = Project
     factory_class = ProjectFactory
 
@@ -34,7 +32,7 @@ class BaseTestProjectSerializer(PolyaxonBaseTestSerializer):
 
 
 class BaseTestRunSerializer(PolyaxonBaseTestSerializer):
-    query = run_queries.single_run
+    query = Run.all
     model_class = Run
     factory_class = RunFactory
 

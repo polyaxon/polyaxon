@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,15 @@
 
 import polyaxon_sdk
 
+from polyaxon.lifecycle import V1Statuses
+
 
 class V1TriggerPolicy(polyaxon_sdk.V1TriggerPolicy):
-    pass
+    trigger_statuses_mapping = {
+        polyaxon_sdk.V1TriggerPolicy.ALL_SUCCEEDED: V1Statuses.SUCCEEDED,
+        polyaxon_sdk.V1TriggerPolicy.ALL_FAILED: V1Statuses.FAILED,
+        polyaxon_sdk.V1TriggerPolicy.ALL_DONE: V1Statuses.DONE,
+        polyaxon_sdk.V1TriggerPolicy.ONE_SUCCEEDED: V1Statuses.SUCCEEDED,
+        polyaxon_sdk.V1TriggerPolicy.ONE_FAILED: V1Statuses.FAILED,
+        polyaxon_sdk.V1TriggerPolicy.ONE_DONE: V1Statuses.DONE,
+    }

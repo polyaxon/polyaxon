@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@ class TestExecutorsSubscriptions(TestCase):
             run.RUN_DELETED_ACTOR,
             run.RUN_DONE,
             run.RUN_NEW_ARTIFACTS,
+            run.RUN_NEW_STATUS,
         }
 
         self._assert_events_subscription(subscribed_events)

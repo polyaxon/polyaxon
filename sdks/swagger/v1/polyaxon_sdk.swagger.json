@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.4.4",
+    "version": "1.5.0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -84,7 +84,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -158,7 +158,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -451,7 +451,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -525,7 +525,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1050,7 +1050,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1175,7 +1175,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1711,14 +1711,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1764,14 +1764,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1852,7 +1852,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1933,7 +1933,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1984,14 +1984,14 @@
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace.",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2037,14 +2037,14 @@
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace.",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2328,7 +2328,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2453,7 +2453,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2742,7 +2742,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2867,7 +2867,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -3443,7 +3443,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -3575,7 +3575,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -3931,7 +3931,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4056,7 +4056,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4225,14 +4225,14 @@
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace.",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4278,14 +4278,14 @@
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace.",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4359,7 +4359,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4433,7 +4433,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4507,7 +4507,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -4632,7 +4632,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -5132,7 +5132,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -5257,7 +5257,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -5435,7 +5435,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -6044,7 +6044,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -6326,14 +6326,14 @@
           },
           {
             "name": "entity.entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "entity.uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -6393,14 +6393,14 @@
           },
           {
             "name": "entity.entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "entity.uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -6460,14 +6460,14 @@
           },
           {
             "name": "entity.entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "entity.uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -6603,7 +6603,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -6677,7 +6677,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -7156,14 +7156,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "name",
-            "description": "Component under namesapce",
+            "description": "Sub-entity name",
             "in": "path",
             "required": true,
             "type": "string"
@@ -7209,14 +7209,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "name",
-            "description": "Component under namesapce",
+            "description": "Sub-entity name",
             "in": "path",
             "required": true,
             "type": "string"
@@ -7267,14 +7267,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "name",
-            "description": "Component under namesapce",
+            "description": "Sub-entity name",
             "in": "path",
             "required": true,
             "type": "string"
@@ -7759,7 +7759,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -7840,7 +7840,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -7967,7 +7967,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -8041,7 +8041,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -8168,7 +8168,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -8242,7 +8242,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -8293,14 +8293,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "name",
-            "description": "Component under namesapce",
+            "description": "Sub-entity name",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8346,14 +8346,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "name",
-            "description": "Component under namesapce",
+            "description": "Sub-entity name",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8404,14 +8404,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "name",
-            "description": "Component under namesapce",
+            "description": "Sub-entity name",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9324,7 +9324,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -9405,7 +9405,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -9456,14 +9456,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9509,14 +9509,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9564,14 +9564,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9622,14 +9622,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9675,14 +9675,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9730,14 +9730,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9785,14 +9785,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9803,7 +9803,175 @@
         ]
       }
     },
-    "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage": {
+    "/api/v1/{owner}/{entity}/runs/{uuid}/bookmark": {
+      "post": {
+        "summary": "Bookmark run",
+        "operationId": "BookmarkRun",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity",
+            "description": "Entity: project name, hub name, registry name, ...",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the sub-entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{entity}/runs/{uuid}/impersonate": {
+      "post": {
+        "summary": "Impersonate run token",
+        "operationId": "ImpersonateToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Auth"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity",
+            "description": "Entity: project name, hub name, registry name, ...",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the sub-entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{entity}/runs/{uuid}/invalidate": {
+      "post": {
+        "summary": "Invalidate run",
+        "operationId": "InvalidateRun",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity",
+            "description": "Entity: project name, hub name, registry name, ...",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the sub-entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts": {
       "get": {
         "summary": "Get run artifacts lineage",
         "operationId": "GetRunArtifactsLineage",
@@ -9880,7 +10048,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -9891,7 +10059,7 @@
         ]
       }
     },
-    "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names": {
+    "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names": {
       "get": {
         "summary": "Get run artifacts lineage names",
         "operationId": "GetRunArtifactsLineageNames",
@@ -9968,7 +10136,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -9979,70 +10147,15 @@
         ]
       }
     },
-    "/api/v1/{owner}/{entity}/runs/{uuid}/bookmark": {
-      "post": {
-        "summary": "Bookmark run",
-        "operationId": "BookmarkRun",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Uuid identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{entity}/runs/{uuid}/impersonate": {
-      "post": {
-        "summary": "Impersonate run token",
-        "operationId": "ImpersonateToken",
+    "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections": {
+      "get": {
+        "summary": "Get run connections lineage",
+        "operationId": "GetRunConnectionsLineage",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Auth"
+              "$ref": "#/definitions/v1ListRunConnectionsResponse"
             }
           },
           "204": {
@@ -10074,16 +10187,46 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity name under namesapce",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "SubEntity uuid",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -10092,13 +10235,16 @@
         ]
       }
     },
-    "/api/v1/{owner}/{entity}/runs/{uuid}/invalidate": {
-      "post": {
-        "summary": "Invalidate run",
-        "operationId": "InvalidateRun",
+    "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream": {
+      "get": {
+        "summary": "Get run downstream lineage",
+        "operationId": "GetRunDownstreamLineage",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRunEdgesResponse"
+            }
           },
           "204": {
             "description": "No content.",
@@ -10129,16 +10275,134 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity name under namesapce",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "SubEntity uuid",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream": {
+      "get": {
+        "summary": "Get run upstream lineage",
+        "operationId": "GetRunUpstreamLineage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRunEdgesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity",
+            "description": "Entity name under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "SubEntity uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -10187,14 +10451,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10242,14 +10506,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10300,14 +10564,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10358,14 +10622,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10413,14 +10677,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10468,14 +10732,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10531,14 +10795,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10586,14 +10850,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10644,14 +10908,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10697,14 +10961,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10752,14 +11016,14 @@
           },
           {
             "name": "entity",
-            "description": "Owner of the namespace",
+            "description": "Entity: project name, hub name, registry name, ...",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
             "type": "string"
@@ -11127,7 +11391,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -11208,7 +11472,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -11337,7 +11601,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -11348,7 +11612,7 @@
         ]
       }
     },
-    "/api/v1/{owner}/{name}/runs/artifacts_lineage": {
+    "/api/v1/{owner}/{name}/runs/lineage/artifacts": {
       "get": {
         "summary": "Get runs artifacts lineage",
         "operationId": "GetRunsArtifactsLineage",
@@ -11418,7 +11682,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -11499,7 +11763,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -11580,7 +11844,7 @@
           },
           {
             "name": "query",
-            "description": "Query filter the search search.",
+            "description": "Query filter the search.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -12534,7 +12798,7 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts": {
       "post": {
         "summary": "Create bulk run artifacts lineage",
         "operationId": "CreateRunArtifactsLineage",
@@ -12598,7 +12862,7 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}": {
       "get": {
         "summary": "Get run artifacts lineage",
         "operationId": "GetRunArtifactLineage",
@@ -14467,35 +14731,6 @@
         }
       }
     },
-    "v1Action": {
-      "type": "object",
-      "properties": {
-        "hub_ref": {
-          "type": "string",
-          "title": "Component name to use, if not provided Polyaxon will check the action name isntead"
-        },
-        "label": {
-          "type": "string",
-          "title": "UI label to use for the button, if not provided it will default to the component's hub reference"
-        },
-        "many": {
-          "type": "string",
-          "title": "A flag to tell if the action should be applied on a single or multiple runs"
-        },
-        "params": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/v1Param"
-          },
-          "title": "Optional dict of params"
-        },
-        "run_patch": {
-          "type": "object",
-          "title": "Optional a run section to override  the content of the run in the template\nshould be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag"
-        }
-      },
-      "title": "Action definition"
-    },
     "v1Affinity": {
       "type": "object",
       "title": "Placeholder for Affinity"
@@ -14678,14 +14913,14 @@
         "files": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "object"
           },
           "title": "Optional files to initialize"
         },
         "dirs": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "object"
           },
           "title": "Optional dirs to initialize"
         },
@@ -14798,7 +15033,7 @@
         "ttl": {
           "type": "integer",
           "format": "int32",
-          "title": "Optional time to live for the cache before it gets invalidated automatically, \nthe TTL is caclculated based on the time the run starts"
+          "title": "Optional time to live for the cache before it gets invalidated automatically,\nthe TTL is caclculated based on the time the run starts"
         },
         "inputs": {
           "type": "array",
@@ -14941,16 +15176,9 @@
         "events": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/v1EventTrigger"
           },
-          "title": "Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
-        },
-        "actions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Action"
-          },
-          "title": "Optional actions section"
+          "title": "Optional events section, must be a valid List of EventTrigger option (Run/Git/Alert/Webhook/Dataset)"
         },
         "hooks": {
           "type": "array",
@@ -14958,10 +15186,6 @@
             "$ref": "#/definitions/v1Hook"
           },
           "title": "Optional hooks section"
-        },
-        "matrix": {
-          "type": "object",
-          "title": "Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
         },
         "dependencies": {
           "type": "array",
@@ -14984,6 +15208,17 @@
         "skip_on_upstream_skip": {
           "type": "boolean",
           "title": "Optional flag to skip this run if upstream was skipped"
+        },
+        "matrix": {
+          "type": "object",
+          "title": "Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
+        },
+        "joins": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Join"
+          },
+          "title": "Optional dict of joins"
         },
         "inputs": {
           "type": "array",
@@ -15012,7 +15247,7 @@
         },
         "run": {
           "type": "object",
-          "title": "Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag"
+          "title": "Run definition, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag"
         }
       },
       "title": "CompiledOperation specification"
@@ -15066,13 +15301,6 @@
         "plugins": {
           "$ref": "#/definitions/v1Plugins",
           "title": "Optional plugins to enable"
-        },
-        "actions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Action"
-          },
-          "title": "Optional actions section"
         },
         "hooks": {
           "type": "array",
@@ -16185,6 +16413,44 @@
       },
       "title": "Image spec definition"
     },
+    "v1EventKind": {
+      "type": "string",
+      "enum": [
+        "run_status_created",
+        "run_status_resuming",
+        "run_status_compiled",
+        "run_status_on_schedule",
+        "run_status_queued",
+        "run_status_scheduled",
+        "run_status_starting",
+        "run_status_running",
+        "run_status_processing",
+        "run_status_stopping",
+        "run_status_failed",
+        "run_status_stopped",
+        "run_status_succeeded",
+        "run_status_skipped",
+        "run_status_warning",
+        "run_status_unschedulable",
+        "run_status_upstream_failed",
+        "run_status_retrying",
+        "run_status_unknown",
+        "run_status_done",
+        "run_approved_actor",
+        "run_invalidated_actor",
+        "run_new_artifacts",
+        "connection_git_commit",
+        "connection_dataset_version",
+        "connection_registry_image",
+        "alert_info",
+        "alert_warning",
+        "alert_critical",
+        "model_version_new_metric",
+        "project_custom_event",
+        "org_custom_event"
+      ],
+      "default": "run_status_created"
+    },
     "v1EventModel": {
       "type": "object",
       "properties": {
@@ -16202,6 +16468,23 @@
         }
       },
       "title": "Model spec definition"
+    },
+    "v1EventTrigger": {
+      "type": "object",
+      "properties": {
+        "kinds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1EventKind"
+          },
+          "title": "The event kinds to subscribe to for the current reference"
+        },
+        "ref": {
+          "type": "string",
+          "title": "Ref corresponds to a reference of an object"
+        }
+      },
+      "title": "Event definition"
     },
     "v1EventType": {
       "type": "object",
@@ -16389,17 +16672,24 @@
     "v1Hook": {
       "type": "object",
       "properties": {
-        "hub_ref": {
+        "connection": {
           "type": "string",
-          "title": "Component name to use, if not provided Polyaxon will check the action name isntead"
+          "title": "Optional connection"
         },
         "trigger": {
           "$ref": "#/definitions/v1Statuses",
           "title": "Optional trigger policy, default done"
         },
-        "connection": {
+        "hub_ref": {
           "type": "string",
-          "title": "Connection to use for this hook"
+          "title": "Component name to use"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional list of condition to check before starting the run, entities should be a valid Condition"
         },
         "params": {
           "type": "object",
@@ -16408,9 +16698,12 @@
           },
           "title": "Optional dict of params"
         },
-        "run_patch": {
-          "type": "object",
-          "title": "Optional a run section to override  the content of the run in the template"
+        "presets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional preset to use for running this operation"
         }
       },
       "title": "Hook definition"
@@ -17109,6 +17402,63 @@
       },
       "title": "Job specification"
     },
+    "v1Join": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "title": "An optional ref to an already saved search"
+        },
+        "query": {
+          "type": "string",
+          "title": "The search query"
+        },
+        "sort": {
+          "type": "string",
+          "title": "The search sort"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "The search limit"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32",
+          "title": "The search offset"
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1JoinParam"
+          },
+          "title": "The params mapping keys to the values to pull from the join"
+        }
+      },
+      "title": "Join specification"
+    },
+    "v1JoinParam": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "title": "The value to pass, if no ref or search is passed then it corresponds to a literal value"
+        },
+        "connection": {
+          "type": "string",
+          "title": "A flag to signal to Polyaxon that this param is used with a connection"
+        },
+        "to_init": {
+          "type": "boolean",
+          "title": "A flag to signal to Polyaxon that this param must be tranformed to an init container"
+        },
+        "context_only": {
+          "type": "boolean",
+          "title": "A flag to signal to Polyaxon that this param should not be validated against io"
+        }
+      },
+      "title": "JoinParam specification"
+    },
     "v1K8sResourceSchema": {
       "type": "object",
       "properties": {
@@ -17559,6 +17909,58 @@
         }
       },
       "title": "Contains list run artifacts"
+    },
+    "v1ListRunConnectionsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RunConnection"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list runs"
+    },
+    "v1ListRunEdgesResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RunEdge"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list run edges"
     },
     "v1ListRunsResponse": {
       "type": "object",
@@ -18129,16 +18531,9 @@
         "events": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/v1EventTrigger"
           },
-          "title": "Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)"
-        },
-        "actions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Action"
-          },
-          "title": "Optional actions section"
+          "title": "Optional events section, must be a valid List of EventTrigger option (Run/Git/Alert/Webhook/Dataset)"
         },
         "hooks": {
           "type": "array",
@@ -18146,10 +18541,6 @@
             "$ref": "#/definitions/v1Hook"
           },
           "title": "Optional hooks section"
-        },
-        "matrix": {
-          "type": "object",
-          "title": "Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
         },
         "dependencies": {
           "type": "array",
@@ -18173,6 +18564,17 @@
           "type": "boolean",
           "title": "Optional flag to skip this run if upstream was skipped"
         },
+        "matrix": {
+          "type": "object",
+          "title": "Optional matrix section, must be a valid matrix option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
+        },
+        "joins": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Join"
+          },
+          "title": "Optional dict of joins"
+        },
         "params": {
           "type": "object",
           "additionalProperties": {
@@ -18186,7 +18588,7 @@
         },
         "patch_strategy": {
           "$ref": "#/definitions/v1PatchStrategy",
-          "title": "Optional patch startegy, default post_merge"
+          "title": "Optional patch strategy, default post_merge"
         },
         "is_preset": {
           "type": "boolean",
@@ -18397,11 +18799,11 @@
         },
         "entity": {
           "type": "string",
-          "title": "Owner of the namespace"
+          "description": "Entity: project name, hub name, registry name, ..."
         },
         "uuid": {
           "type": "string",
-          "title": "Uuid identifier of the entity"
+          "title": "Uuid identifier of the sub-entity"
         }
       },
       "title": "Request data to get/delete sub-entity"
@@ -18417,10 +18819,6 @@
           "type": "string",
           "title": "Ref corresponds to a reference of an object"
         },
-        "search": {
-          "$ref": "#/definitions/v1ParamSearch",
-          "title": "Search corresponds to a valid search that can be resolved"
-        },
         "connection": {
           "type": "string",
           "title": "A flag to signal to Polyaxon that this param is used with a connection"
@@ -18435,30 +18833,6 @@
         }
       },
       "title": "Param specification"
-    },
-    "v1ParamSearch": {
-      "type": "object",
-      "properties": {
-        "query": {
-          "type": "string",
-          "title": "The search query"
-        },
-        "sort": {
-          "type": "string",
-          "title": "The search sort"
-        },
-        "limit": {
-          "type": "integer",
-          "format": "int32",
-          "title": "The search limit"
-        },
-        "offset": {
-          "type": "integer",
-          "format": "int32",
-          "title": "The search offset"
-        }
-      },
-      "title": "Param search specification"
     },
     "v1PasswordChange": {
       "type": "object",
@@ -19147,6 +19521,63 @@
       },
       "title": "Run Artifacts spec definition"
     },
+    "v1RunConnection": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "Uuid"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "kind": {
+          "type": "string",
+          "title": "Kind"
+        }
+      }
+    },
+    "v1RunEdge": {
+      "type": "object",
+      "properties": {
+        "upstream": {
+          "$ref": "#/definitions/v1Run",
+          "title": "Optional uuid of the edge run"
+        },
+        "downstream": {
+          "$ref": "#/definitions/v1Run",
+          "title": "Optional name of the edge run"
+        },
+        "kind": {
+          "$ref": "#/definitions/v1RunEdgeKind",
+          "title": "Optional edge run kind"
+        },
+        "values": {
+          "type": "object",
+          "title": "Optional edge values"
+        },
+        "statuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Statuses"
+          },
+          "title": "Options statuses events"
+        }
+      }
+    },
+    "v1RunEdgeKind": {
+      "type": "string",
+      "enum": [
+        "action",
+        "event",
+        "hook",
+        "dag",
+        "join",
+        "run"
+      ],
+      "default": "action"
+    },
     "v1RunKind": {
       "type": "string",
       "enum": [
@@ -19237,13 +19668,6 @@
         "artifacts_store": {
           "$ref": "#/definitions/v1RunSettingsCatalog",
           "title": "Artifacts Store"
-        },
-        "connections": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1RunSettingsCatalog"
-          },
-          "title": "Connections"
         },
         "hub": {
           "$ref": "#/definitions/v1RunReferenceCatalog",
@@ -19792,11 +20216,11 @@
       "enum": [
         "created",
         "resuming",
+        "on_schedule",
         "compiled",
         "queued",
         "scheduled",
         "starting",
-        "initializing",
         "running",
         "processing",
         "stopping",

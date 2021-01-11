@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
 # limitations under the License.
 from rest_framework.generics import CreateAPIView
 
-from coredb.api.projects import queries
 from coredb.api.projects.serializers import (
     ProjectCreateSerializer,
     ProjectDetailSerializer,
@@ -41,7 +40,14 @@ class ProjectCreateView(BaseEndpoint, CreateAPIView):
 
 
 class ProjectListView(BaseEndpoint, ListEndpoint):
-    queryset = queries.projects.order_by("-updated_at")
+    queryset = Project.all.only(
+        "uuid",
+        "name",
+        "description",
+        "created_at",
+        "updated_at",
+        "tags",
+    ).order_by("-updated_at")
     serializer_class = ProjectSerializer
 
     filter_backends = (QueryFilter, OrderingFilter)
@@ -61,5 +67,5 @@ class ProjectNameListView(BaseEndpoint, ListEndpoint):
 class ProjectDetailView(
     ProjectEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint
 ):
-    queryset = queries.project_detail
+    queryset = Project.all
     serializer_class = ProjectDetailSerializer

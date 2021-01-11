@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -39,9 +38,6 @@ type V1Param struct {
 	// Ref corresponds to a reference of an object
 	Ref string `json:"ref,omitempty"`
 
-	// Search corresponds to a valid search that can be resolved
-	Search *V1ParamSearch `json:"search,omitempty"`
-
 	// A flag to signal to Polyaxon that this param must be tranformed to an init container
 	ToInit bool `json:"to_init,omitempty"`
 
@@ -51,33 +47,6 @@ type V1Param struct {
 
 // Validate validates this v1 param
 func (m *V1Param) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateSearch(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *V1Param) validateSearch(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Search) { // not required
-		return nil
-	}
-
-	if m.Search != nil {
-		if err := m.Search.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("search")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

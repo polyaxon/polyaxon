@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -284,12 +284,77 @@ message RunSettings {
     // Artifacts Store
     RunSettingsCatalog artifacts_store = 4;
 
-    // Connections
-    repeated RunSettingsCatalog connections = 5;
-
     // Component Hub reference
     RunReferenceCatalog hub = 6;
 
     // Model registry reference
     RunReferenceCatalog registry = 7;
+}
+
+
+message RunConnection {
+   // Uuid
+   string uuid = 1;
+
+   // Name
+   string name = 2;
+
+   // Kind
+   string kind = 3;
+}
+// Contains list runs
+message ListRunConnectionsResponse{
+  // Count of the entities
+  int32 count = 1;
+
+  // List of all entities
+  repeated RunConnection results = 2;
+
+  // Previous page
+  string previous = 3;
+
+  // Next page
+  string next = 4;
+}
+
+
+message RunEdge {
+  enum Kind {
+      action = 0;
+      event = 1;
+      hook = 2;
+      dag = 3;
+      join = 4;
+      run = 5;
+  }
+
+  // Optional uuid of the edge run
+  Run upstream = 1;
+
+  // Optional name of the edge run
+  Run downstream = 2;
+
+  // Optional edge run kind
+  Kind kind = 3;
+
+  // Optional edge values
+  google.protobuf.Struct values = 4;
+
+  // Options statuses events
+  repeated Statuses statuses = 5;
+}
+
+// Contains list run edges
+message ListRunEdgesResponse{
+  // Count of the entities
+  int32 count = 1;
+
+  // List of all entities
+  repeated RunEdge results = 2;
+
+  // Previous page
+  string previous = 3;
+
+  // Next page
+  string next = 4;
 }

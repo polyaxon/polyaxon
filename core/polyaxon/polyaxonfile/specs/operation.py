@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ from polyaxon.polyflow import (
     V1CompiledOperation,
     V1Component,
     V1Operation,
+    V1Param,
     validate_run_patch,
 )
 from polyaxon.utils.list_utils import to_list
@@ -50,11 +51,31 @@ class OperationSpecification(BaseSpecification):
                 validate_run_patch(config.run_patch, component.run.kind),
                 strategy=config.patch_strategy,
             )
-        # Gather contexts io
-        config_params = config.params or {}
-        contexts = [
-            V1IO(name=p) for p in config_params if config_params[p].context_only
-        ]
+
+        contexts = []
+
+        def get_context_io(c_name: str, c_io: V1Param, is_list=None):
+            if not c_io.context_only:
+                return
+
+            contexts.append(
+                V1IO(
+                    name=c_name,
+                    to_init=c_io.to_init,
+                    connection=c_io.connection,
+                    is_list=is_list,
+                )
+            )
+
+        # Collect contexts io form params
+        for p in config.params or {}:
+            get_context_io(c_name=p, c_io=config.params[p])
+
+        # Collect contexts io form joins
+        for j in config.joins or []:
+            for p in j.params or {}:
+                get_context_io(c_name=p, c_io=j.params[p], is_list=True)
+
         patch_compiled = V1CompiledOperation(
             name=config.name,
             description=config.description,
@@ -64,11 +85,11 @@ class OperationSpecification(BaseSpecification):
             queue=config.queue,
             cache=config.cache,
             hooks=config.hooks,
-            actions=config.actions,
             events=config.events,
             plugins=config.plugins,
             termination=config.termination,
             matrix=config.matrix,
+            joins=config.joins,
             schedule=config.schedule,
             dependencies=config.dependencies,
             trigger=config.trigger,
@@ -106,11 +127,11 @@ class OperationSpecification(BaseSpecification):
             queue=preset.queue,
             cache=preset.cache,
             hooks=preset.hooks,
-            actions=preset.actions,
             events=preset.events,
             plugins=preset.plugins,
             termination=preset.termination,
             matrix=preset.matrix,
+            joins=preset.joins,
             schedule=preset.schedule,
             dependencies=preset.dependencies,
             trigger=preset.trigger,

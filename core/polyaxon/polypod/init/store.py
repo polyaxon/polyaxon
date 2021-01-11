@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -101,11 +101,17 @@ def get_volume_args(
     base_path_from = store.store_path
 
     def _copy():
-        path_from = os.path.join(base_path_from, p)
-        path_to = os.path.join(mount_path, p)
+        if isinstance(p, (list, tuple)):
+            path_from = os.path.join(base_path_from, p[0])
+            path_to = os.path.join(mount_path, p[1])
+            _p = p[1]
+        else:
+            path_from = os.path.join(base_path_from, p)
+            path_to = os.path.join(mount_path, p)
+            _p = p
 
         # If we are initializing a file we need to create the base folder
-        _p = os.path.split(p)[0]
+        _p = os.path.split(_p)[0]
         base_path_to = os.path.join(mount_path, _p)
         # We need to check that the path exists first
         args.append(get_or_create_args(path=base_path_to))
@@ -223,15 +229,15 @@ def get_store_container(
         if mount_path
         else constants.CONTEXT_VOLUME_ARTIFACTS
     )
-    volume_mount_path = mount_path or (
-        CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
-        if is_default_artifacts_store
-        else CONTEXT_MOUNT_ARTIFACTS
-    )
+    volume_mount_path = mount_path or CONTEXT_MOUNT_ARTIFACTS
     volume_mounts = [
         get_connections_context_mount(name=volume_name, mount_path=volume_mount_path)
     ]
-    mount_path = mount_path or CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
+    mount_path = mount_path or (
+        CONTEXT_MOUNT_ARTIFACTS
+        if is_default_artifacts_store
+        else CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(connection.name)
+    )
 
     return get_base_store_container(
         container=container,

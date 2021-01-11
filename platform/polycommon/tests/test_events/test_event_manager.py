@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ from polycommon.events.registry.run import (
     RunCreatedActorEvent,
     RunCreatedEvent,
     RunDeletedActorEvent,
-    RunDeletedEvent,
+    RunStoppedEvent,
     RunViewedActorEvent,
 )
 
@@ -50,7 +50,7 @@ class TestEventManager(TestCase):
         assert len(self.manager.values) == 1
 
         # Adding new event
-        self.manager.subscribe(RunDeletedEvent)
+        self.manager.subscribe(RunStoppedEvent)
         assert len(self.manager.state) == 2
         assert len(self.manager.items) == 2
         assert len(self.manager.items) == 2
@@ -89,7 +89,7 @@ class TestEventManager(TestCase):
         assert self.manager.user_write_events() == []
         self.manager.subscribe(RunViewedActorEvent)
         assert self.manager.user_write_events() == []
-        self.manager.subscribe(RunDeletedEvent)
+        self.manager.subscribe(RunStoppedEvent)
         assert self.manager.user_write_events() == []
         self.manager.subscribe(RunDeletedActorEvent)
         assert self.manager.user_write_events() == [RunDeletedActorEvent.event_type]
@@ -105,7 +105,7 @@ class TestEventManager(TestCase):
         assert self.manager.user_view_events() == []
         self.manager.subscribe(RunCreatedEvent)
         assert self.manager.user_view_events() == []
-        self.manager.subscribe(RunDeletedEvent)
+        self.manager.subscribe(RunStoppedEvent)
         assert self.manager.user_view_events() == []
         self.manager.subscribe(RunViewedActorEvent)
         assert self.manager.user_view_events() == [RunViewedActorEvent.event_type]

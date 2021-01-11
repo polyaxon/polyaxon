@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ from polycommon.events.registry import run
 
 auditor.subscribe(run.RunCreatedEvent)
 auditor.subscribe(run.RunResumedEvent)
-auditor.subscribe(run.RunDeletedEvent)
 auditor.subscribe(run.RunStoppedEvent)
 auditor.subscribe(run.RunSkippedEvent)
 auditor.subscribe(run.RunNewStatusEvent)
@@ -33,6 +32,7 @@ auditor.subscribe(run.RunDeletedActorEvent)
 auditor.subscribe(run.RunViewedActorEvent)
 auditor.subscribe(run.RunStoppedActorEvent)
 auditor.subscribe(run.RunApprovedActorEvent)
+auditor.subscribe(run.RunInvalidatedActorEvent)
 auditor.subscribe(run.RunResumedActorEvent)
 auditor.subscribe(run.RunRestartedActorEvent)
 auditor.subscribe(run.RunCopiedActorEvent)

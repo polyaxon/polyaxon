@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 # limitations under the License.
 
 NAME = "polyaxon"
-VERSION = "1.4.6"
+VERSION = "1.5.0"
 SCHEMA_VERSION = 1.1
 DESC = "Command Line Interface (CLI) and client to interact with Polyaxon API."
 URL = "https://github.com/polyaxon/polyaxon"

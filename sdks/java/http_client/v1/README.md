@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.4.4
+- API version: 1.5.0
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.4.4</version>
+  <version>1.5.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.4.4"
+compile "org.openapitools:openapi-java-client:1.5.0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.4.4.jar`
+* `target/openapi-java-client-1.5.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -276,28 +276,31 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**collectRunLogs**](docs/RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs | Collect run logs
 *RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy | Restart run with copy
 *RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-*RunsV1Api* | [**createRunArtifactsLineage**](docs/RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run artifacts lineage
+*RunsV1Api* | [**createRunArtifactsLineage**](docs/RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts | Create bulk run artifacts lineage
 *RunsV1Api* | [**createRunStatus**](docs/RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 *RunsV1Api* | [**deleteRun**](docs/RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{entity}/runs/{uuid} | Delete run
 *RunsV1Api* | [**deleteRunArtifact**](docs/RunsV1Api.md#deleteRunArtifact) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Delete run artifact
-*RunsV1Api* | [**deleteRunArtifactLineage**](docs/RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
+*RunsV1Api* | [**deleteRunArtifactLineage**](docs/RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name} | Delete run artifact lineage
 *RunsV1Api* | [**deleteRunArtifacts**](docs/RunsV1Api.md#deleteRunArtifacts) | **DELETE** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Delete run artifacts
 *RunsV1Api* | [**deleteRuns**](docs/RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 *RunsV1Api* | [**getMultiRunEvents**](docs/RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
 *RunsV1Api* | [**getRun**](docs/RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{entity}/runs/{uuid} | Get run
 *RunsV1Api* | [**getRunArtifact**](docs/RunsV1Api.md#getRunArtifact) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Get run artifact
-*RunsV1Api* | [**getRunArtifactLineage**](docs/RunsV1Api.md#getRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Get run artifacts lineage
+*RunsV1Api* | [**getRunArtifactLineage**](docs/RunsV1Api.md#getRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name} | Get run artifacts lineage
 *RunsV1Api* | [**getRunArtifacts**](docs/RunsV1Api.md#getRunArtifacts) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Get run artifacts
-*RunsV1Api* | [**getRunArtifactsLineage**](docs/RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
-*RunsV1Api* | [**getRunArtifactsLineageNames**](docs/RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
+*RunsV1Api* | [**getRunArtifactsLineage**](docs/RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts | Get run artifacts lineage
+*RunsV1Api* | [**getRunArtifactsLineageNames**](docs/RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names | Get run artifacts lineage names
 *RunsV1Api* | [**getRunArtifactsTree**](docs/RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+*RunsV1Api* | [**getRunConnectionsLineage**](docs/RunsV1Api.md#getRunConnectionsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections | Get run connections lineage
+*RunsV1Api* | [**getRunDownstreamLineage**](docs/RunsV1Api.md#getRunDownstreamLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream | Get run downstream lineage
 *RunsV1Api* | [**getRunEvents**](docs/RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 *RunsV1Api* | [**getRunLogs**](docs/RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
 *RunsV1Api* | [**getRunNamespace**](docs/RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/namespace | Get Run namespace
 *RunsV1Api* | [**getRunResources**](docs/RunsV1Api.md#getRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 *RunsV1Api* | [**getRunSettings**](docs/RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/settings | Get Run settings
 *RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/statuses | Get run statuses
-*RunsV1Api* | [**getRunsArtifactsLineage**](docs/RunsV1Api.md#getRunsArtifactsLineage) | **GET** /api/v1/{owner}/{name}/runs/artifacts_lineage | Get runs artifacts lineage
+*RunsV1Api* | [**getRunUpstreamLineage**](docs/RunsV1Api.md#getRunUpstreamLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream | Get run upstream lineage
+*RunsV1Api* | [**getRunsArtifactsLineage**](docs/RunsV1Api.md#getRunsArtifactsLineage) | **GET** /api/v1/{owner}/{name}/runs/lineage/artifacts | Get runs artifacts lineage
 *RunsV1Api* | [**impersonateToken**](docs/RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/impersonate | Impersonate run token
 *RunsV1Api* | [**invalidateRun**](docs/RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{entity}/runs/{uuid}/invalidate | Invalidate run
 *RunsV1Api* | [**invalidateRuns**](docs/RunsV1Api.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
@@ -361,7 +364,6 @@ Class | Method | HTTP request | Description
  - [ProtobufNullValue](docs/ProtobufNullValue.md)
  - [RuntimeError](docs/RuntimeError.md)
  - [SparkDeployMode](docs/SparkDeployMode.md)
- - [V1Action](docs/V1Action.md)
  - [V1Agent](docs/V1Agent.md)
  - [V1AgentStateResponse](docs/V1AgentStateResponse.md)
  - [V1AgentStatusBodyRequest](docs/V1AgentStatusBodyRequest.md)
@@ -414,7 +416,9 @@ Class | Method | HTTP request | Description
  - [V1EventDataframe](docs/V1EventDataframe.md)
  - [V1EventHistogram](docs/V1EventHistogram.md)
  - [V1EventImage](docs/V1EventImage.md)
+ - [V1EventKind](docs/V1EventKind.md)
  - [V1EventModel](docs/V1EventModel.md)
+ - [V1EventTrigger](docs/V1EventTrigger.md)
  - [V1EventType](docs/V1EventType.md)
  - [V1EventVideo](docs/V1EventVideo.md)
  - [V1EventsResponse](docs/V1EventsResponse.md)
@@ -453,6 +457,8 @@ Class | Method | HTTP request | Description
  - [V1IoCond](docs/V1IoCond.md)
  - [V1Iterative](docs/V1Iterative.md)
  - [V1Job](docs/V1Job.md)
+ - [V1Join](docs/V1Join.md)
+ - [V1JoinParam](docs/V1JoinParam.md)
  - [V1K8sResourceSchema](docs/V1K8sResourceSchema.md)
  - [V1K8sResourceType](docs/V1K8sResourceType.md)
  - [V1KFReplica](docs/V1KFReplica.md)
@@ -470,6 +476,8 @@ Class | Method | HTTP request | Description
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListQueuesResponse](docs/V1ListQueuesResponse.md)
  - [V1ListRunArtifactsResponse](docs/V1ListRunArtifactsResponse.md)
+ - [V1ListRunConnectionsResponse](docs/V1ListRunConnectionsResponse.md)
+ - [V1ListRunEdgesResponse](docs/V1ListRunEdgesResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1ListSearchesResponse](docs/V1ListSearchesResponse.md)
  - [V1ListTeamMembersResponse](docs/V1ListTeamMembersResponse.md)
@@ -498,7 +506,6 @@ Class | Method | HTTP request | Description
  - [V1OrganizationMember](docs/V1OrganizationMember.md)
  - [V1OwnerSubEntityResourceRequestByUid](docs/V1OwnerSubEntityResourceRequestByUid.md)
  - [V1Param](docs/V1Param.md)
- - [V1ParamSearch](docs/V1ParamSearch.md)
  - [V1PasswordChange](docs/V1PasswordChange.md)
  - [V1PatchStrategy](docs/V1PatchStrategy.md)
  - [V1PathRef](docs/V1PathRef.md)
@@ -519,6 +526,9 @@ Class | Method | HTTP request | Description
  - [V1Run](docs/V1Run.md)
  - [V1RunArtifact](docs/V1RunArtifact.md)
  - [V1RunArtifacts](docs/V1RunArtifacts.md)
+ - [V1RunConnection](docs/V1RunConnection.md)
+ - [V1RunEdge](docs/V1RunEdge.md)
+ - [V1RunEdgeKind](docs/V1RunEdgeKind.md)
  - [V1RunKind](docs/V1RunKind.md)
  - [V1RunReferenceCatalog](docs/V1RunReferenceCatalog.md)
  - [V1RunSchema](docs/V1RunSchema.md)

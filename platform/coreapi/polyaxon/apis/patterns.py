@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,7 +32,9 @@ api_patterns += [
             namespace="project_resources",
         ),
     ),
-    re_path(r"", include(("apis.artifacts.urls", "artifacts"), namespace="artifacts")),
+    re_path(
+        r"", include(("apis.run_lineage.urls", "run_lineage"), namespace="run_lineage")
+    ),
     re_path(r"", include(("apis.runs.urls", "runs"), namespace="runs")),
     re_path(r"", include(("apis.projects.urls", "projects"), namespace="projects")),
 ]

@@ -1,5 +1,5 @@
 /*
-Copyright 2018-2020 Polyaxon, Inc.
+Copyright 2018-2021 Polyaxon, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -62,8 +62,7 @@ type OperationReconciler struct {
 // +kubebuilder:rbac:groups=networking.istio.io,resources=destinationrules/status,verbs=get;update;patch
 
 // Reconcile logic for OperationReconciler
-func (r *OperationReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
-	ctx := context.Background()
+func (r *OperationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := r.Log.WithValues("operator", req.NamespacedName)
 
 	// Load the instance by name

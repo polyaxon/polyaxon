@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**files** | **[String]** |  | [optional] 
-**dirs** | **[String]** |  | [optional] 
+**files** | **[Object]** |  | [optional] 
+**dirs** | **[Object]** |  | [optional] 
 **workers** | **Number** |  | [optional] 
 
 

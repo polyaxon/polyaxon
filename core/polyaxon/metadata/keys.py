@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,4 +22,9 @@ META_HAS_JOBS = "has_jobs"
 META_HAS_SERVICES = "has_services"
 META_HAS_DAGS = "has_dags"
 META_HAS_MATRICES = "has_matrices"
+META_HAS_HOOKS = "has_hooks"
+META_IS_HOOK = "is_hook"
+META_IS_ACTION = "is_action"
+META_IS_TUNER = "is_tuner"
 META_CONCURRENCY = "concurrency"
+META_HAS_DOWNSTREAM_EVENTS_TRIGGER = "has_downstream_events_trigger"

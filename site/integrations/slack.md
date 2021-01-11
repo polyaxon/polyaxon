@@ -55,7 +55,7 @@ The content of `notification-secret.json` should contain all the webhooks that y
 Now you can add your Slack's webhook to the integrations' section:
 
 ```yaml
-notificationConnections:
+connections:
   - name: slack-connection1
     kind: slack
     secret:

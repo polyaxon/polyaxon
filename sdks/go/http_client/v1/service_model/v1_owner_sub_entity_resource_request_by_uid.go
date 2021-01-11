@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,13 +29,13 @@ import (
 // swagger:model v1OwnerSubEntityResourceRequestByUid
 type V1OwnerSubEntityResourceRequestByUID struct {
 
-	// Owner of the namespace
+	// Entity: project name, hub name, registry name, ...
 	Entity string `json:"entity,omitempty"`
 
 	// Owner of the namespace
 	Owner string `json:"owner,omitempty"`
 
-	// Uuid identifier of the entity
+	// Uuid identifier of the sub-entity
 	UUID string `json:"uuid,omitempty"`
 }
 

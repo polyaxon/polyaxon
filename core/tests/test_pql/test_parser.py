@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,9 +32,6 @@ from tests.utils import BaseTestCase
 class TestParser(BaseTestCase):
     def test_base_parser_raises_for_invalid_expressions(self):
         with self.assertRaises(PQLException):
-            parse_expression("foo:bar:moo")
-
-        with self.assertRaises(PQLException):
             parse_expression("foo")
 
         with self.assertRaises(PQLException):
@@ -53,6 +50,7 @@ class TestParser(BaseTestCase):
             parse_expression(":")
 
     def test_base_parser_passes_for_valid_expressions(self):
+        assert parse_expression("foo:bar:moo") == ("foo", "bar:moo")
         assert parse_expression("foo:bar") == ("foo", "bar")
         assert parse_expression("foo:>=bar") == ("foo", ">=bar")
         assert parse_expression("foo:bar|moo|boo") == ("foo", "bar|moo|boo")
@@ -65,6 +63,15 @@ class TestParser(BaseTestCase):
         assert parse_expression(" foo :bar|moo|boo") == ("foo", "bar|moo|boo")
         assert parse_expression(" foo : bar..moo ") == ("foo", "bar..moo")
         assert parse_expression(" foo : ~bar ") == ("foo", "~bar")
+        assert parse_expression(" foo : some test in the description ") == (
+            "foo",
+            "some test in the description",
+        )
+
+        # Handles datetimes
+        assert parse_expression(
+            " started_at : ~ 2016-10-00 .. 2016-10-01 10:10:00 "
+        ) == ("started_at", "~ 2016-10-00 .. 2016-10-01 10:10:00")
 
     def test_parse_negation_operation(self):
         assert parse_negation_operation("foo") == (False, "foo")
@@ -106,24 +113,51 @@ class TestParser(BaseTestCase):
         assert parse_datetime_operation("foo..bar") == (
             QueryOpSpec("..", False, ["foo", "bar"])
         )
+        assert parse_datetime_operation("2016-10-01 10:10..2016-10-01 10:10:00") == (
+            QueryOpSpec("..", False, ["2016-10-01 10:10", "2016-10-01 10:10:00"])
+        )
         assert parse_datetime_operation(" foo .. bar ") == (
             QueryOpSpec("..", False, ["foo", "bar"])
+        )
+        assert parse_datetime_operation(" 2016-10-00 .. 2016-10-01 10:10:00 ") == (
+            QueryOpSpec("..", False, ["2016-10-00", "2016-10-01 10:10:00"])
         )
         assert parse_datetime_operation("~ foo .. bar ") == (
             QueryOpSpec("..", True, ["foo", "bar"])
         )
+        assert parse_datetime_operation("~ 2016-10-00 .. 2016-10-01 10:10:00 ") == (
+            QueryOpSpec("..", True, ["2016-10-00", "2016-10-01 10:10:00"])
+        )
 
         # Comparison
         assert parse_datetime_operation(">=foo") == (QueryOpSpec(">=", False, "foo"))
+        assert parse_datetime_operation(">=2016-10-01 10:10") == (
+            QueryOpSpec(">=", False, "2016-10-01 10:10")
+        )
         assert parse_datetime_operation(" ~ <= bar ") == (
             QueryOpSpec("<=", True, "bar")
         )
+        assert parse_datetime_operation(" ~ <= 2016-10-01 10:10 ") == (
+            QueryOpSpec("<=", True, "2016-10-01 10:10")
+        )
         assert parse_datetime_operation("~ > bar ") == (QueryOpSpec(">", True, "bar"))
+        assert parse_datetime_operation("~ > 2016-10-01 10:10:00 ") == (
+            QueryOpSpec(">", True, "2016-10-01 10:10:00")
+        )
 
         # Equality
         assert parse_datetime_operation("foo") == (QueryOpSpec("=", False, "foo"))
+        assert parse_datetime_operation("2016-10-01 10:10") == (
+            QueryOpSpec("=", False, "2016-10-01 10:10")
+        )
         assert parse_datetime_operation(" ~  bar ") == (QueryOpSpec("=", True, "bar"))
+        assert parse_datetime_operation(" ~ 2016-10-01 10:10:00") == (
+            QueryOpSpec("=", True, "2016-10-01 10:10:00")
+        )
         assert parse_datetime_operation("~bar") == (QueryOpSpec("=", True, "bar"))
+        assert parse_datetime_operation("~2016-10-01 10:10") == (
+            QueryOpSpec("=", True, "2016-10-01 10:10")
+        )
 
     def test_parse_scalar_operation(self):
         # Raises for not allowed operators

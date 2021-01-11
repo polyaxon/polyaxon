@@ -13,7 +13,6 @@ Name | Type | Description | Notes
 **cache** | [**V1Cache**](V1Cache.md) |  | [optional] 
 **termination** | [**V1Termination**](V1Termination.md) |  | [optional] 
 **plugins** | [**V1Plugins**](V1Plugins.md) |  | [optional] 
-**actions** | [**list[V1Action]**](V1Action.md) |  | [optional] 
 **hooks** | [**list[V1Hook]**](V1Hook.md) |  | [optional] 
 **inputs** | [**list[V1IO]**](V1IO.md) |  | [optional] 
 **outputs** | [**list[V1IO]**](V1IO.md) |  | [optional] 

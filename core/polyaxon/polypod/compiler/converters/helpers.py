@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.k8s.custom_resources.operation import (
+from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
+from polyaxon.polypod.compiler.converters.job import JobConverter
+from polyaxon.polypod.mixins import (
+    CleanerMixin,
+    NotifierMixin,
+    TunerMixin,
+    WatchDogMixin,
+)
+from polyaxon.utils.fqn_utils import (
     get_cleaner_instance,
     get_cleaner_resource_name,
     get_notifier_instance,
@@ -23,14 +31,6 @@ from polyaxon.k8s.custom_resources.operation import (
     get_tuner_resource_name,
     get_watchdog_instance,
     get_watchdog_resource_name,
-)
-from polyaxon.polypod.compiler.converters.base import PlatformConverterMixin
-from polyaxon.polypod.compiler.converters.job import JobConverter
-from polyaxon.polypod.mixins import (
-    CleanerMixin,
-    NotifierMixin,
-    TunerMixin,
-    WatchDogMixin,
 )
 
 

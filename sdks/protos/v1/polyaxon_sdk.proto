@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.4.4";
+        version: "1.5.0";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -331,28 +331,28 @@ service RunsV1 {
   // Get run artifacts lineage
   rpc GetRunArtifactsLineage(OwnerSubEntityResourceListRequestByUid) returns (ListRunArtifactsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage"
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts"
     };
   }
 
   // Get runs artifacts lineage
   rpc GetRunsArtifactsLineage(OwnerEntityResourceListRequestByName) returns (ListRunArtifactsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{name}/runs/artifacts_lineage"
+      get: "/api/v1/{owner}/{name}/runs/lineage/artifacts"
     };
   }
 
   // Get run artifacts lineage names
   rpc GetRunArtifactsLineageNames(OwnerSubEntityResourceListRequestByUid) returns (ListRunArtifactsResponse) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{entity}/runs/{uuid}/artifacts_lineage/names"
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names"
     };
   }
 
   // Create bulk run artifacts lineage
   rpc CreateRunArtifactsLineage(RunArtifactsRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage"
+      post: "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts"
       body: "artifacts"
     };
   }
@@ -360,14 +360,35 @@ service RunsV1 {
   // Delete run artifact lineage
   rpc DeleteRunArtifactLineage(RunArtifactLineageRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
+      delete: "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}"
     };
   }
 
   // Get run artifacts lineage
   rpc GetRunArtifactLineage(RunArtifactLineageRequest) returns (RunArtifact) {
     option (google.api.http) = {
-      get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
+      get: "/api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}"
+    };
+  }
+
+  // Get run connections lineage
+  rpc GetRunConnectionsLineage(OwnerSubEntityResourceListRequestByUid) returns (ListRunConnectionsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections"
+    };
+  }
+
+  // Get run downstream lineage
+  rpc GetRunDownstreamLineage(OwnerSubEntityResourceListRequestByUid) returns (ListRunEdgesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream"
+    };
+  }
+
+  // Get run upstream lineage
+  rpc GetRunUpstreamLineage(OwnerSubEntityResourceListRequestByUid) returns (ListRunEdgesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream"
     };
   }
 

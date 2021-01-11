@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,10 +30,10 @@ import (
 type V1ArtifactsType struct {
 
 	// Optional dirs to initialize
-	Dirs []string `json:"dirs"`
+	Dirs []interface{} `json:"dirs"`
 
 	// Optional files to initialize
-	Files []string `json:"files"`
+	Files []interface{} `json:"files"`
 
 	// Optional number of concurrent threads to use
 	Workers int32 `json:"workers,omitempty"`

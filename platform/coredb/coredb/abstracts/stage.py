@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 
 from polyaxon.lifecycle import V1Stages
+from polyaxon.utils.enums_utils import values_to_choices
 
 
 class StageModel(models.Model):
@@ -27,7 +28,7 @@ class StageModel(models.Model):
         null=True,
         db_index=True,
         default=V1Stages.TESTING,
-        choices=V1Stages.CHOICES,
+        choices=values_to_choices(V1Stages.allowable_values),
     )
     stage_conditions = models.JSONField(
         encoder=DjangoJSONEncoder, blank=True, null=True, default=dict

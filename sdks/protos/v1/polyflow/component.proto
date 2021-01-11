@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 Polyaxon, Inc.
+ * Copyright 2018-2021 Polyaxon, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
-import "v1/polyflow/actions.proto";
 import "v1/polyflow/cache.proto";
 import "v1/polyflow/hooks.proto";
 import "v1/polyflow/io.proto";
@@ -60,24 +59,21 @@ message Component {
     // Optional plugins to enable
     Plugins plugins = 10;
 
-    // Optional actions section
-    repeated Action actions = 11;
-
     // Optional hooks section
-    repeated Hook hooks = 12;
+    repeated Hook hooks = 11;
 
     // Optional inputs definition
-    repeated IO inputs = 13;
+    repeated IO inputs = 12;
 
     // Optional outputs definition
-    repeated IO outputs = 14;
+    repeated IO outputs = 13;
 
     // Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
-    google.protobuf.Struct run = 15;
+    google.protobuf.Struct run = 14;
 
     // Optional flag to mark this specification as template
-    Template template = 16;
+    Template template = 15;
 
     // Optional flag to mark this specification requires approval before running
-    bool is_approved = 17;
+    bool is_approved = 16;
 }

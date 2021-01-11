@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,12 +31,3 @@ class NotifierSchema(JobSchema):
 class V1Notifier(V1Job):
     SCHEMA = NotifierSchema
     IDENTIFIER = V1RunKind.NOTIFIER
-    REDUCED_ATTRIBUTES = [
-        "kind",
-        "container",
-        "environment",
-        "init",
-        "sidecars",
-        "connections",
-        "volumes",
-    ]

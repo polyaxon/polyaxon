@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 # limitations under the License.
 import datetime
 import pytest
+import uuid
 
 from dateutil.tz import tzutc
 
@@ -260,6 +261,11 @@ class TestParser(BaseTestCase):
         value = parser.get_float(key="float_from_int", value=123)
         self.assertEqual(value, 123.0)
 
+        value = parser.get_float(
+            key="float_key_2", value=[1.23, 13.3, 66], is_list=True
+        )
+        self.assertEqual(value, [1.23, 13.3, 66])
+
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_float(key="float_error_key_1", value=None)
 
@@ -288,9 +294,6 @@ class TestParser(BaseTestCase):
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_float(key="float_key_1", value=213, is_list=True)
-
-        with self.assertRaises(PolyaxonSchemaError):
-            parser.get_float(key="float_key_2", value=[1.23, 13.3, 66], is_list=True)
 
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_float(key="float_non_existing_key", value=NO_VALUE_FOUND)
@@ -1058,17 +1061,33 @@ class TestParser(BaseTestCase):
         )
 
         value = datetime.datetime(2010, 12, 12, 0, 0, 0)
-        parsed_url = parser.get_date(key="date_key", value=value)
+        parsed_url = parser.get_datetime(key="date_key", value=value)
         assert parsed_url == value
 
         value = datetime.datetime(2010, 12, 12, 0, 0, 0, tzinfo=tzutc())
-        parsed_url = parser.get_date(key="date_key", value=value)
+        parsed_url = parser.get_datetime(key="date_key", value=value)
         assert parsed_url == value
 
         # Dates are not validate by datetime
         value = "2010-12-12"
         with self.assertRaises(PolyaxonSchemaError):
             parser.get_datetime(key="date_key", value=value)
+
+    def test_parse_uuid(self):
+        value = uuid.uuid4()
+        parsed_uid = parser.get_uuid(key="uuid_key", value=value)
+        assert parsed_uid == value.hex
+
+        parsed_uid = parser.get_uuid(key="uuid_key", value=value.hex)
+        assert parsed_uid == value.hex
+
+        value = "2sd2"
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_uuid(key="uuid_key", value=value)
+
+        value = "2sd2-sdf"
+        with self.assertRaises(PolyaxonSchemaError):
+            parser.get_uuid(key="uuid_key", value=value)
 
     def test_get_dockerfile_init(self):
         value = parser.get_dockerfile_init(
@@ -1401,23 +1420,39 @@ class TestParser(BaseTestCase):
         self.assertEqual(value, V1ArtifactsType(files=["foo", "bar"]))
 
         value = parser.get_artifacts_init(
+            key="dict_key_1", value={"files": [["from-foo", "to-foo"], "bar"]}
+        )
+        self.assertEqual(value, V1ArtifactsType(files=[["from-foo", "to-foo"], "bar"]))
+
+        value = parser.get_artifacts_init(
             key="dict_key_1", value='{"dirs": ["foo", "bar"]}'
         )
         self.assertEqual(value, V1ArtifactsType(dirs=["foo", "bar"]))
 
         value = parser.get_artifacts_init(
+            key="dict_key_1", value='{"dirs": [["from-foo", "to-foo"], "bar"]}'
+        )
+        self.assertEqual(value, V1ArtifactsType(dirs=[["from-foo", "to-foo"], "bar"]))
+
+        value = parser.get_artifacts_init(
             key="dict_list_key_1",
             value=[
-                {"dirs": ["foo", "bar"], "files": ["foo", "bar"]},
-                {"files": ["foo", "bar"]},
+                {
+                    "dirs": [["from-foo", "to-foo"], "bar"],
+                    "files": [["from-foo", "to-foo"], "bar"],
+                },
+                {"files": [["from-foo", "to-foo"], "bar"]},
             ],
             is_list=True,
         )
         self.assertEqual(
             value,
             [
-                V1ArtifactsType(dirs=["foo", "bar"], files=["foo", "bar"]),
-                V1ArtifactsType(files=["foo", "bar"]),
+                V1ArtifactsType(
+                    dirs=[["from-foo", "to-foo"], "bar"],
+                    files=[["from-foo", "to-foo"], "bar"],
+                ),
+                V1ArtifactsType(files=[["from-foo", "to-foo"], "bar"]),
             ],
         )
 

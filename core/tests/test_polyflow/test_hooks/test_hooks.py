@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,6 +37,11 @@ class TestHooksConfigs(BaseTestCase):
 
         # Add connection
         config_dict["connection"] = "test"
+        with self.assertRaises(ValidationError):
+            V1Hook.from_dict(config_dict)
+
+        # Add component ref
+        config_dict["hubRef"] = "comp1"
         config = V1Hook.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
@@ -50,11 +55,6 @@ class TestHooksConfigs(BaseTestCase):
         config = V1Hook.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # Add component ref
-        config_dict["hubRef"] = "comp1"
-        config = V1Hook.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
         # Add params
         config_dict["params"] = "comp1"
         with self.assertRaises(ValidationError):
@@ -64,7 +64,12 @@ class TestHooksConfigs(BaseTestCase):
         config = V1Hook.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # Add run patch
-        config_dict["runPatch"] = {"container": {"args": ["--branch=dev"]}}
+        # Add conditions
+        config_dict["presets"] = ["p1", "p2"]
+        config = V1Hook.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add conditions
+        config_dict["conditions"] = "outputs.loss > 0.1"
         config = V1Hook.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())

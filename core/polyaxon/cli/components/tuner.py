@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,13 +30,13 @@ def tuner():
     help="A string representing the matrix configuration for bayesian optimization.",
 )
 @click.option(
-    "--search", help="A string representing the search to fetch configs and metrics."
+    "--join", help="A string representing the join to fetch configs and metrics."
 )
 @click.option("--iteration", type=int, help="The current iteration.")
-def bayes(matrix, search, iteration):
+def bayes(matrix, join, iteration):
     """Create suggestions based on bayesian optimization."""
     from polyaxon.client import RunClient
-    from polyaxon.polyflow import V1Bayes, V1ParamSearch
+    from polyaxon.polyflow import V1Bayes, V1Join
     from polyaxon.polytune.iteration_lineage import (
         get_iteration_definition,
         handle_iteration,
@@ -47,12 +47,12 @@ def bayes(matrix, search, iteration):
     )
 
     matrix = V1Bayes.read(matrix)
-    search = V1ParamSearch.read(search)
+    join = V1Join.read(join)
     client = RunClient()
     values = get_iteration_definition(
         client=client,
         iteration=iteration,
-        search=search,
+        join=join,
         optimization_metric=matrix.metric.name,
     )
     if not values:
@@ -89,16 +89,16 @@ def bayes(matrix, search, iteration):
     "--matrix", help="A string representing the matrix configuration for hyperband."
 )
 @click.option(
-    "--search", help="A string representing the search to fetch configs and metrics."
+    "--join", help="A string representing the join to fetch configs and metrics."
 )
 @click.option("--iteration", type=int, help="The current hyperband iteration.")
 @click.option(
     "--bracket-iteration", type=int, help="The current hyperband bracket iteration."
 )
-def hyperband(matrix, search, iteration, bracket_iteration):
+def hyperband(matrix, join, iteration, bracket_iteration):
     """Create suggestions based on hyperband."""
     from polyaxon.client import RunClient
-    from polyaxon.polyflow import V1Hyperband, V1ParamSearch
+    from polyaxon.polyflow import V1Hyperband, V1Join
     from polyaxon.polytune.iteration_lineage import (
         get_iteration_definition,
         handle_iteration,
@@ -108,12 +108,12 @@ def hyperband(matrix, search, iteration, bracket_iteration):
 
     matrix = V1Hyperband.read(matrix)
     matrix.set_tuning_params()
-    search = V1ParamSearch.read(search)
+    join = V1Join.read(join)
     client = RunClient()
     values = get_iteration_definition(
         client=client,
         iteration=iteration,
-        search=search,
+        join=join,
         optimization_metric=matrix.metric.name,
         name="in-iteration-{}-{}".format(iteration, bracket_iteration),
     )
@@ -156,13 +156,13 @@ def hyperband(matrix, search, iteration, bracket_iteration):
     "--matrix", help="A string representing the matrix configuration for hyperopt."
 )
 @click.option(
-    "--search", help="A string representing the search to fetch configs and metrics."
+    "--join", help="A string representing the join to fetch configs and metrics."
 )
 @click.option("--iteration", type=int, help="The current iteration.")
-def hyperopt(matrix, search, iteration):
+def hyperopt(matrix, join, iteration):
     """Create suggestions based on hyperopt."""
     from polyaxon.client import RunClient
-    from polyaxon.polyflow import V1Hyperopt, V1ParamSearch
+    from polyaxon.polyflow import V1Hyperopt, V1Join
     from polyaxon.polytune.iteration_lineage import (
         get_iteration_definition,
         handle_iteration,
@@ -171,12 +171,12 @@ def hyperopt(matrix, search, iteration):
     from polyaxon.polytune.search_managers.hyperopt.manager import HyperoptManager
 
     matrix = V1Hyperopt.read(matrix)
-    search = V1ParamSearch.read(search)
+    join = V1Join.read(join)
     client = RunClient()
     values = get_iteration_definition(
         client=client,
         iteration=iteration,
-        search=search,
+        join=join,
         optimization_metric=matrix.metric.name,
     )
     if not values:

@@ -63,7 +63,6 @@ scheduler:
 ```yaml
 artifactsStore: {}
 connections: []
-notificationConnections: []
 ```
 
 You need to configure the connections to authorize for the platform. Please check [connections section](/docs/setup/connections/).

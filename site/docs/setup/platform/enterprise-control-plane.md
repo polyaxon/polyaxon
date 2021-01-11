@@ -110,5 +110,4 @@ Remove all configuration related to connections, each agent will be managing its
 ```yaml
 artifactsStore: {}
 connections: []
-notificationConnections: []
 ```

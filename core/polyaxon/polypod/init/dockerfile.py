@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ from typing import List, Optional
 from polyaxon.auxiliaries import V1PolyaxonInitContainer
 from polyaxon.containers.contexts import (
     CONTEXT_MOUNT_ARTIFACTS,
-    CONTEXT_MOUNT_ARTIFACTS_FORMAT,
+    CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT,
 )
 from polyaxon.containers.names import (
     INIT_DOCKERFILE_CONTAINER_PREFIX,
@@ -70,9 +70,7 @@ def get_dockerfile_init_container(
         args=[
             "--build-context={}".format(dockerfile_args.to_dict(dump=True)),
             "--destination={}".format(mount_path),
-            "--copy-path={}".format(
-                CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path) + "/outputs"
-            ),
+            "--copy-path={}".format(CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path)),
             "--track",
         ],
         env=env,

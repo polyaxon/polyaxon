@@ -90,8 +90,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.QueuesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let entity = "entity_example"; // String | Owner of the namespace
-let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+let uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
 apiInstance.deleteQueue(owner, entity, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -107,8 +107,8 @@ apiInstance.deleteQueue(owner, entity, uuid, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **entity** | **String**| Owner of the namespace | 
- **uuid** | **String**| Uuid identifier of the entity | 
+ **entity** | **String**| Entity: project name, hub name, registry name, ... | 
+ **uuid** | **String**| Uuid identifier of the sub-entity | 
 
 ### Return type
 
@@ -143,8 +143,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 let apiInstance = new PolyaxonSdk.QueuesV1Api();
 let owner = "owner_example"; // String | Owner of the namespace
-let entity = "entity_example"; // String | Owner of the namespace
-let uuid = "uuid_example"; // String | Uuid identifier of the entity
+let entity = "entity_example"; // String | Entity: project name, hub name, registry name, ...
+let uuid = "uuid_example"; // String | Uuid identifier of the sub-entity
 apiInstance.getQueue(owner, entity, uuid, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -160,8 +160,8 @@ apiInstance.getQueue(owner, entity, uuid, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **entity** | **String**| Owner of the namespace | 
- **uuid** | **String**| Uuid identifier of the entity | 
+ **entity** | **String**| Entity: project name, hub name, registry name, ... | 
+ **uuid** | **String**| Uuid identifier of the sub-entity | 
 
 ### Return type
 
@@ -200,7 +200,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listOrganizationQueueNames(owner, opts, (error, data, response) => {
   if (error) {
@@ -220,7 +220,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -259,7 +259,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listOrganizationQueues(owner, opts, (error, data, response) => {
   if (error) {
@@ -279,7 +279,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -319,7 +319,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listQueueNames(owner, name, opts, (error, data, response) => {
   if (error) {
@@ -340,7 +340,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 
@@ -380,7 +380,7 @@ let opts = {
   'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
-  'query': "query_example" // String | Query filter the search search.
+  'query': "query_example" // String | Query filter the search.
 };
 apiInstance.listQueues(owner, name, opts, (error, data, response) => {
   if (error) {
@@ -401,7 +401,7 @@ Name | Type | Description  | Notes
  **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
- **query** | **String**| Query filter the search search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
 
 ### Return type
 

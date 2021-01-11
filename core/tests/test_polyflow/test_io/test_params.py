@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,35 +53,30 @@ class TestV1Params(BaseTestCase):
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is True
         assert config.is_ref is False
-        assert config.is_search is False
 
         config_dict = {"value": 234}
         config = V1Param.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is True
         assert config.is_ref is False
-        assert config.is_search is False
 
         config_dict = {"value": 23.4}
         config = V1Param.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is True
         assert config.is_ref is False
-        assert config.is_search is False
 
         config_dict = {"value": {"key": "value"}}
         config = V1Param.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is True
         assert config.is_ref is False
-        assert config.is_search is False
 
         config_dict = {"value": ["value1", "value2"]}
         config = V1Param.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is True
         assert config.is_ref is False
-        assert config.is_search is False
 
     def test_param_ref(self):
         config_dict = {"value": "outputs", "ref": "ops.A"}
@@ -89,14 +84,12 @@ class TestV1Params(BaseTestCase):
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is False
         assert config.is_ref is True
-        assert config.is_search is False
 
         config_dict = {"value": "outputs.output1", "ref": "ops.A"}
         config = V1Param.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is False
         assert config.is_ref is True
-        assert config.is_search is False
 
         config_dict = {
             "value": "artifact.metric_events",
@@ -106,42 +99,9 @@ class TestV1Params(BaseTestCase):
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is False
         assert config.is_ref is True
-        assert config.is_search is False
 
         config_dict = {"value": "input.param1", "ref": "dag"}
         config = V1Param.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         assert config.is_literal is False
         assert config.is_ref is True
-        assert config.is_search is False
-
-    def test_param_search(self):
-        config_dict = {
-            "value": "outputs",
-            "search": {"query": "metrics.a: < 21", "sort": "-inputs.name1"},
-        }
-        config = V1Param.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-        assert config.is_literal is False
-        assert config.is_ref is False
-        assert config.is_search is True
-
-        config_dict = {
-            "value": "outputs.output1",
-            "search": {"query": "metrics.a: < 21", "sort": "-inputs.name1", "limit": 2},
-        }
-        config = V1Param.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-        assert config.is_literal is False
-        assert config.is_ref is False
-        assert config.is_search is True
-
-        config_dict = {
-            "value": "artifact.metric_events",
-            "search": {"query": "status: succeeded|failed"},
-        }
-        config = V1Param.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-        assert config.is_literal is False
-        assert config.is_ref is False
-        assert config.is_search is True

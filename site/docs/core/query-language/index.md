@@ -1,8 +1,8 @@
 ---
-title: "Polyaxon Query Syntax"
+title: "Polyaxon Query Language"
 sub_link: "query-language"
-meta_title: "Polyaxon Query Syntax Specification - Polyaxon References"
-meta_description: "Polyaxon Query Syntax Specification."
+meta_title: "Polyaxon Query Language Specification - Polyaxon References"
+meta_description: "Polyaxon Query Language Specification."
 visibility: public
 status: published
 is_index: true

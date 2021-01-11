@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,15 +21,15 @@ from marshmallow import fields, validate
 
 from polyaxon.polyflow.io import V1IO, IOSchema
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
-from polyaxon.polyflow.params import ParamSpec, V1Param, ops_params
+from polyaxon.polyflow.params import ParamSpec, ops_params
 from polyaxon.polyflow.run import RunMixin, RunSchema
 
 
 class CompiledOperationSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("compiled_operation"))
-    inputs = fields.Nested(IOSchema, allow_none=True, many=True)
-    outputs = fields.Nested(IOSchema, allow_none=True, many=True)
-    contexts = fields.Nested(IOSchema, allow_none=True, many=True)
+    inputs = fields.List(fields.Nested(IOSchema), allow_none=True)
+    outputs = fields.List(fields.Nested(IOSchema), allow_none=True)
+    contexts = fields.List(fields.Nested(IOSchema), allow_none=True)
     run = fields.Nested(RunSchema, required=True)
 
     @staticmethod
@@ -57,6 +57,7 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
         is_template: bool = True,
         check_runs: bool = False,
         parse_values: bool = False,
+        parse_joins: bool = True,
     ) -> List[ParamSpec]:
         return ops_params.validate_params(
             inputs=self.inputs,
@@ -64,6 +65,7 @@ class V1CompiledOperation(BaseOp, RunMixin, polyaxon_sdk.V1CompiledOperation):
             contexts=self.contexts,
             params=params,
             matrix=self.matrix,
+            joins=self.joins if parse_joins else None,
             context=context,
             is_template=is_template,
             check_runs=check_runs,

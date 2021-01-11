@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,15 +25,13 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // V1CompiledOperation CompiledOperation specification
 //
 // swagger:model v1CompiledOperation
 type V1CompiledOperation struct {
-
-	// Optional actions section
-	Actions []*V1Action `json:"actions"`
 
 	// Optional flag to disable cache validation and force run this component
 	Cache *V1Cache `json:"cache,omitempty"`
@@ -50,8 +48,8 @@ type V1CompiledOperation struct {
 	// Optional component description
 	Description string `json:"description,omitempty"`
 
-	// Optional events section, must be a valid List of Event option (Git/Alert/Webhook/Dataset)
-	Events []string `json:"events"`
+	// Optional events section, must be a valid List of EventTrigger option (Run/Git/Alert/Webhook/Dataset)
+	Events []*V1EventTrigger `json:"events"`
 
 	// Optional hooks section
 	Hooks []*V1Hook `json:"hooks"`
@@ -61,6 +59,9 @@ type V1CompiledOperation struct {
 
 	// Optional flag to mark this specification requires approval before running
 	IsApproved bool `json:"is_approved,omitempty"`
+
+	// Optional dict of joins
+	Joins map[string]V1Join `json:"joins,omitempty"`
 
 	// Optional component kind, should be equal to 'operation'
 	Kind string `json:"kind,omitempty"`
@@ -83,7 +84,7 @@ type V1CompiledOperation struct {
 	// Optional queue to use for running this component
 	Queue string `json:"queue,omitempty"`
 
-	// Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
+	// Run definition, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
 	Run interface{} `json:"run,omitempty"`
 
 	// Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
@@ -109,10 +110,6 @@ type V1CompiledOperation struct {
 func (m *V1CompiledOperation) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateActions(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateCache(formats); err != nil {
 		res = append(res, err)
 	}
@@ -121,11 +118,19 @@ func (m *V1CompiledOperation) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateEvents(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateHooks(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateInputs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateJoins(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -148,31 +153,6 @@ func (m *V1CompiledOperation) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1CompiledOperation) validateActions(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Actions) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Actions); i++ {
-		if swag.IsZero(m.Actions[i]) { // not required
-			continue
-		}
-
-		if m.Actions[i] != nil {
-			if err := m.Actions[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("actions" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -209,6 +189,31 @@ func (m *V1CompiledOperation) validateContexts(formats strfmt.Registry) error {
 			if err := m.Contexts[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("contexts" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) validateEvents(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Events) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Events); i++ {
+		if swag.IsZero(m.Events[i]) { // not required
+			continue
+		}
+
+		if m.Events[i] != nil {
+			if err := m.Events[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("events" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -260,6 +265,28 @@ func (m *V1CompiledOperation) validateInputs(formats strfmt.Registry) error {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("inputs" + "." + strconv.Itoa(i))
 				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) validateJoins(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Joins) { // not required
+		return nil
+	}
+
+	for k := range m.Joins {
+
+		if err := validate.Required("joins"+"."+k, "body", m.Joins[k]); err != nil {
+			return err
+		}
+		if val, ok := m.Joins[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				return err
 			}
 		}

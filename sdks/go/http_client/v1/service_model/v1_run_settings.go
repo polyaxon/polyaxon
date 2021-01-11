@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -37,9 +35,6 @@ type V1RunSettings struct {
 
 	// Artifacts Store
 	ArtifactsStore *V1RunSettingsCatalog `json:"artifacts_store,omitempty"`
-
-	// Connections
-	Connections []*V1RunSettingsCatalog `json:"connections"`
 
 	// Component Hub reference
 	Hub *V1RunReferenceCatalog `json:"hub,omitempty"`
@@ -63,10 +58,6 @@ func (m *V1RunSettings) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateArtifactsStore(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateConnections(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -119,31 +110,6 @@ func (m *V1RunSettings) validateArtifactsStore(formats strfmt.Registry) error {
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *V1RunSettings) validateConnections(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Connections) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Connections); i++ {
-		if swag.IsZero(m.Connections[i]) { // not required
-			continue
-		}
-
-		if m.Connections[i] != nil {
-			if err := m.Connections[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("connections" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

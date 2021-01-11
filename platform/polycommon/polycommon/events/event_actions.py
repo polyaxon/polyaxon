@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,8 +29,10 @@ FAILED = "failed"
 DONE = "done"
 STOPPED = "stopped"
 APPROVED = "approved"
+INVALIDATED = "invalidated"
 SKIPPED = "skipped"
 SETTINGS = "settings"
+BILLING = "billing"
 NEW_STATUS = "new_status"
 NEW_STAGE = "new_stage"
 NEW_ARTIFACTS = "new_artifacts"

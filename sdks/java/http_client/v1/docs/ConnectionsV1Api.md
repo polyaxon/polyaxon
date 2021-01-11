@@ -264,7 +264,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListConnectionsResponse result = apiInstance.listConnectionNames(owner, offset, limit, sort, query);
       System.out.println(result);
@@ -287,7 +287,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 
@@ -343,7 +343,7 @@ public class Example {
     Integer offset = 56; // Integer | Pagination offset.
     Integer limit = 56; // Integer | Limit size.
     String sort = "sort_example"; // String | Sort to order the search.
-    String query = "query_example"; // String | Query filter the search search.
+    String query = "query_example"; // String | Query filter the search.
     try {
       V1ListConnectionsResponse result = apiInstance.listConnections(owner, offset, limit, sort, query);
       System.out.println(result);
@@ -366,7 +366,7 @@ Name | Type | Description  | Notes
  **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
 
 ### Return type
 

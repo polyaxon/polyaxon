@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -201,11 +201,15 @@ class TestJobConverter(BaseTestCase):
             init_connections=[
                 V1Init(
                     connection=store.name,
-                    artifacts=V1ArtifactsType(files=["/foo", "/bar"]),
+                    artifacts=V1ArtifactsType(
+                        files=["/foo", "/bar", ["from-foo", "to-foo"]]
+                    ),
                 ),
                 V1Init(
                     connection=store1.name,
-                    artifacts=V1ArtifactsType(files=["/foo", "/bar"]),
+                    artifacts=V1ArtifactsType(
+                        files=["/foo", "/bar", ["from-foo", "to-foo"]]
+                    ),
                 ),
             ],
             connection_by_names={store.name: store, store1.name: store1},
@@ -226,14 +230,18 @@ class TestJobConverter(BaseTestCase):
             get_store_container(
                 polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
                 connection=store,
-                artifacts=V1ArtifactsType(files=["/foo", "/bar"]),
+                artifacts=V1ArtifactsType(
+                    files=["/foo", "/bar", ["from-foo", "to-foo"]]
+                ),
                 env=self.converter.get_init_service_env_vars(),
                 is_default_artifacts_store=True,
             ),
             get_store_container(
                 polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
                 connection=store1,
-                artifacts=V1ArtifactsType(files=["/foo", "/bar"]),
+                artifacts=V1ArtifactsType(
+                    files=["/foo", "/bar", ["from-foo", "to-foo"]]
+                ),
                 env=self.converter.get_init_service_env_vars(),
             ),
         ]

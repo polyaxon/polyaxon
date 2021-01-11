@@ -22,7 +22,6 @@ matrix:
     loss:
       kind: choice
       value: [MeanSquaredError, AbsoluteDifference]
-
 component:
   inputs:
   - name: lr

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ from datetime import datetime
 from typing import Dict
 
 from polyaxon.containers import contexts
+from polyaxon.contexts import keys as contexts_keys
+from polyaxon.contexts import sections as contexts_sections
 from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyflow import V1CloningKind, V1CompiledOperation, V1Plugins, V1RunKind
 from polyaxon.polypod.compiler.contexts.job import JobContextsManager
@@ -29,6 +31,7 @@ from polyaxon.polypod.compiler.contexts.kubeflow import (
 from polyaxon.polypod.compiler.contexts.service import ServiceContextsManager
 from polyaxon.polypod.specs.contexts import PluginsContextsSpec
 from polyaxon.schemas.types import V1ConnectionType
+from polyaxon.utils.fqn_utils import get_project_instance, get_run_instance
 from polyaxon.utils.path_utils import get_path
 
 CONTEXTS_MANAGERS = {
@@ -55,6 +58,10 @@ def resolve_globals_contexts(
     iteration: int,
     created_at: datetime,
     compiled_at: datetime,
+    schedule_at: datetime = None,
+    started_at: datetime = None,
+    finished_at: datetime = None,
+    duration: int = None,
     plugins: V1Plugins = None,
     artifacts_store: V1ConnectionType = None,
     cloning_kind: V1CloningKind = None,
@@ -62,22 +69,30 @@ def resolve_globals_contexts(
 ) -> Dict:
 
     resolved_contexts = {
-        "globals": {
-            "owner_name": owner_name,
-            "project_name": project_name,
-            "project_unique_name": "{}.{}".format(owner_name, project_name),
-            "project_uuid": project_uuid,
-            "run_info": "{}.{}.runs.{}".format(owner_name, project_name, run_uuid),
-            "name": run_name,
-            "uuid": run_uuid,
-            "namespace": namespace,
-            "iteration": iteration,
-            "context_path": contexts.CONTEXT_ROOT,
-            "artifacts_path": contexts.CONTEXT_MOUNT_ARTIFACTS,
-            "created_at": created_at,
-            "compiled_at": compiled_at,
-            "cloning_kind": cloning_kind,
-            "original_uuid": original_uuid,
+        contexts_sections.GLOBALS: {
+            contexts_keys.OWNER_NAME: owner_name,
+            contexts_keys.PROJECT_NAME: project_name,
+            contexts_keys.PROJECT_UNIQUE_NAME: get_project_instance(
+                owner_name, project_name
+            ),
+            contexts_keys.PROJECT_UUID: project_uuid,
+            contexts_keys.RUN_INFO: get_run_instance(
+                owner_name, project_name, run_uuid
+            ),
+            contexts_keys.NAME: run_name,
+            contexts_keys.UUID: run_uuid,
+            contexts_keys.NAMESPACE: namespace,
+            contexts_keys.ITERATION: iteration,
+            contexts_keys.CONTEXT_PATH: contexts.CONTEXT_ROOT,
+            contexts_keys.ARTIFACTS_PATH: contexts.CONTEXT_MOUNT_ARTIFACTS,
+            contexts_keys.CREATED_AT: created_at,
+            contexts_keys.COMPILED_AT: compiled_at,
+            contexts_keys.SCHEDULE_AT: schedule_at,
+            contexts_keys.STARTED_AT: started_at,
+            contexts_keys.FINISHED_AT: finished_at,
+            contexts_keys.DURATION: duration,
+            contexts_keys.CLONING_KIND: cloning_kind,
+            contexts_keys.ORIGINAL_UUID: original_uuid,
         },
     }
 
@@ -86,13 +101,21 @@ def resolve_globals_contexts(
     if contexts_spec.collect_artifacts:
         run_artifacts_path = contexts.CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(run_path)
         run_outputs_path = contexts.CONTEXT_MOUNT_RUN_OUTPUTS_FORMAT.format(run_path)
-        resolved_contexts["globals"]["run_artifacts_path"] = run_artifacts_path
-        resolved_contexts["globals"]["run_outputs_path"] = run_outputs_path
+        resolved_contexts[contexts_sections.GLOBALS][
+            contexts_keys.RUN_ARTIFACTS_PATH
+        ] = run_artifacts_path
+        resolved_contexts[contexts_sections.GLOBALS][
+            contexts_keys.RUN_OUTPUTS_PATH
+        ] = run_outputs_path
     elif artifacts_store:
         run_artifacts_path = get_path(artifacts_store.store_path, run_path)
         run_outputs_path = get_path(run_artifacts_path, "outputs")
-        resolved_contexts["globals"]["run_artifacts_path"] = run_artifacts_path
-        resolved_contexts["globals"]["run_outputs_path"] = run_outputs_path
+        resolved_contexts[contexts_sections.GLOBALS][
+            contexts_keys.RUN_ARTIFACTS_PATH
+        ] = run_artifacts_path
+        resolved_contexts[contexts_sections.GLOBALS][
+            contexts_keys.RUN_OUTPUTS_PATH
+        ] = run_outputs_path
 
     return resolved_contexts
 
@@ -111,6 +134,10 @@ def resolve_contexts(
     iteration: int,
     created_at: datetime,
     compiled_at: datetime,
+    schedule_at: datetime = None,
+    started_at: datetime = None,
+    finished_at: datetime = None,
+    duration: int = None,
     cloning_kind: V1CloningKind = None,
     original_uuid: str = None,
 ) -> Dict:
@@ -134,6 +161,10 @@ def resolve_contexts(
         iteration=iteration,
         created_at=created_at,
         compiled_at=compiled_at,
+        schedule_at=schedule_at,
+        started_at=started_at,
+        finished_at=finished_at,
+        duration=duration,
         plugins=compiled_operation.plugins,
         artifacts_store=artifacts_store,
         cloning_kind=cloning_kind,

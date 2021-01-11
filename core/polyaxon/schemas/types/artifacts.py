@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,12 +20,13 @@ from marshmallow import fields
 
 from polyaxon.schemas.base import BaseCamelSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.fields.str_or_list import StrOrList
 from polyaxon.schemas.types.base import BaseTypeConfig
 
 
 class ArtifactsTypeSchema(BaseCamelSchema):
-    files = RefOrObject(fields.List(fields.Str(), allow_none=True))
-    dirs = RefOrObject(fields.List(fields.Str(), allow_none=True))
+    files = RefOrObject(fields.List(StrOrList(), allow_none=True))
+    dirs = RefOrObject(fields.List(StrOrList(), allow_none=True))
     workers = RefOrObject(fields.Int(allow_none=True))
 
     @staticmethod

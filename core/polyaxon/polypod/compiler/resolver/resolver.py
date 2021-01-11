@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 from datetime import datetime
 from typing import Dict, Optional
 
-from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyflow import V1CloningKind, V1CompiledOperation
 from polyaxon.polypod.compiler.resolver.base import BaseResolver
 
@@ -38,14 +37,7 @@ def resolve(
     original_uuid: str = None,
 ):
     resolver_cls = resolver_cls or BaseResolver
-    run_kind = compiled_operation.get_run_kind()
-    if run_kind not in resolver_cls.KINDS:
-        raise PolyaxonCompilerError(
-            "Resolver Error. "
-            "Specification with run kind: {} is not supported in this deployment version.".format(
-                run_kind
-            )
-        )
+    resolver_cls.is_kind_supported(compiled_operation)
 
     resolver = resolver_cls(
         run=run,

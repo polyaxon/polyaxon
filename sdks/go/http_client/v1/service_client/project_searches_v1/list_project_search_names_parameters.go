@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Polyaxon, Inc.
+// Copyright 2018-2021 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -96,7 +96,7 @@ type ListProjectSearchNamesParams struct {
 	*/
 	Owner string
 	/*Query
-	  Query filter the search search.
+	  Query filter the search.
 
 	*/
 	Query *string

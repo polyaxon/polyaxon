@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,3 +42,6 @@ CONTEXT_TMP_POLYAXON_PATH = "/tmp/.polyaxon/"
 CONTEXT_USER_POLYAXON_PATH = polyaxon_user_path()
 CONTEXT_ARCHIVE_ROOT = "/tmp/plx/archives"
 CONTEXT_ARTIFACTS_ROOT = "/tmp/plx/artifacts"
+
+
+CONTEXTS_OUTPUTS_SUBPATH_FORMAT = "{}/outputs"

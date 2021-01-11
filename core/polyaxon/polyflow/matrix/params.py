@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -219,6 +219,20 @@ def validate_matrix(values):
         )
 
 
+class BaseHpParamConfig(BaseConfig):
+    @staticmethod
+    def validate_io(io: "V1IO"):  # noqa
+        if io.iotype not in [types.INT, types.FLOAT]:
+            raise ValidationError(
+                "Param `{}` has a an input type `{}` "
+                "and it does not correspond to hyper-param type `int or float`.".format(
+                    io.name,
+                    io.iotype,
+                )
+            )
+        return True
+
+
 class HpChoiceSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("choice"))
     value = fields.List(fields.Raw(), allow_none=True)
@@ -228,7 +242,7 @@ class HpChoiceSchema(BaseCamelSchema):
         return V1HpChoice
 
 
-class V1HpChoice(BaseConfig, polyaxon_sdk.V1HpChoice):
+class V1HpChoice(BaseHpParamConfig, polyaxon_sdk.V1HpChoice):
     """`Choice` picks a value from a of list values.
 
     ```yaml
@@ -296,7 +310,7 @@ class HpPChoiceSchema(BaseCamelSchema):
             validate_pchoice(values=[v[1] for v in data["value"] if v])
 
 
-class V1HpPChoice(BaseConfig, polyaxon_sdk.V1HpPChoice):
+class V1HpPChoice(BaseHpParamConfig, polyaxon_sdk.V1HpPChoice):
     """`PChoice` picks a value with a probability from a list of
     [(value, probability), (value, probability), ...].
 
@@ -345,20 +359,6 @@ class V1HpPChoice(BaseConfig, polyaxon_sdk.V1HpPChoice):
         return False
 
 
-class BaseHParamConfig(BaseConfig):
-    @staticmethod
-    def validate_io(io: "V1IO"):  # noqa
-        if io.iotype not in [types.INT, types.FLOAT]:
-            raise ValidationError(
-                "Param `{}` has a an input type `{}` "
-                "and it does not correspond to hyper-param type `int or float`.".format(
-                    io.name,
-                    io.iotype,
-                )
-            )
-        return True
-
-
 class HpRangeSchema(BaseCamelSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("range"))
     value = Range(allow_none=True)
@@ -368,7 +368,7 @@ class HpRangeSchema(BaseCamelSchema):
         return V1HpRange
 
 
-class V1HpRange(BaseHParamConfig, polyaxon_sdk.V1HpRange):
+class V1HpRange(BaseHpParamConfig, polyaxon_sdk.V1HpRange):
     """`Range` picks a value from a generated list of values using `[start, stop, step]`,
     you can pass values in these forms:
       * [1, 10, 2]
@@ -425,7 +425,7 @@ class HpLinSpaceSchema(BaseCamelSchema):
         return V1HpLinSpace
 
 
-class V1HpLinSpace(BaseHParamConfig, polyaxon_sdk.V1HpLinSpace):
+class V1HpLinSpace(BaseHpParamConfig, polyaxon_sdk.V1HpLinSpace):
     """`LinSpace` picks a value from a generated list of steps from start to stop spaced evenly
     on a linear scale `[start, stop, step]`, you can pass values in these forms:
       * [1, 10, 20]
@@ -482,7 +482,7 @@ class HpLogSpaceSchema(BaseCamelSchema):
         return V1HpLogSpace
 
 
-class V1HpLogSpace(BaseHParamConfig, polyaxon_sdk.V1HpLogSpace):
+class V1HpLogSpace(BaseHpParamConfig, polyaxon_sdk.V1HpLogSpace):
     """`LogSpace` picks a value from a generated list of steps from start to stop spaced evenly
     on a log scale `[start, stop, step]`, you can pass values in these forms:
       * [1, 10, 20]
@@ -539,7 +539,7 @@ class HpGeomSpaceSchema(BaseCamelSchema):
         return V1HpGeomSpace
 
 
-class V1HpGeomSpace(BaseHParamConfig, polyaxon_sdk.V1HpGeomSpace):
+class V1HpGeomSpace(BaseHpParamConfig, polyaxon_sdk.V1HpGeomSpace):
     """`GeomSpace` picks a value from a generated list of steps from start to stop spaced evenly
     on a geometric progression `[start, stop, step]`, you can pass values in these forms:
       * [1, 10, 20]
@@ -596,7 +596,7 @@ class HpUniformSchema(BaseCamelSchema):
         return V1HpUniform
 
 
-class V1HpUniform(BaseHParamConfig, polyaxon_sdk.V1HpUniform):
+class V1HpUniform(BaseHpParamConfig, polyaxon_sdk.V1HpUniform):
     """`Uniform` draws samples from a uniform distribution over the half-open
     interval `[low, high)`, you can pass values in these forms:
       * 0:1
@@ -653,7 +653,7 @@ class HpQUniformSchema(BaseCamelSchema):
         return V1HpQUniform
 
 
-class V1HpQUniform(BaseHParamConfig, polyaxon_sdk.V1HpQUniform):
+class V1HpQUniform(BaseHpParamConfig, polyaxon_sdk.V1HpQUniform):
     """`QUniform` samples from a quantized uniform distribution over `[low, high]`
     (`round(uniform(low, high) / q) * q`),
     you can pass values in these forms:
@@ -712,7 +712,7 @@ class HpLogUniformSchema(BaseCamelSchema):
         return V1HpLogUniform
 
 
-class V1HpLogUniform(BaseHParamConfig, polyaxon_sdk.V1HpLogUniform):
+class V1HpLogUniform(BaseHpParamConfig, polyaxon_sdk.V1HpLogUniform):
     """`LogUniform` samples from a log uniform distribution over`[low, high]`,
     you can pass values in these forms:
       * 0:1
@@ -770,7 +770,7 @@ class HpQLogUniformSchema(BaseCamelSchema):
         return V1HpQLogUniform
 
 
-class V1HpQLogUniform(BaseHParamConfig, polyaxon_sdk.V1HpQLogUniform):
+class V1HpQLogUniform(BaseHpParamConfig, polyaxon_sdk.V1HpQLogUniform):
     """`LogUniform` samples from a log uniform distribution over`[low, high]`,
     you can pass values in these forms:
       * 0:1:0.1
@@ -832,7 +832,7 @@ class HpNormalSchema(BaseCamelSchema):
         return V1HpNormal
 
 
-class V1HpNormal(BaseHParamConfig, polyaxon_sdk.V1HpNormal):
+class V1HpNormal(BaseHpParamConfig, polyaxon_sdk.V1HpNormal):
     """`Normal` draws random samples from a normal (Gaussian) distribution defined by
     `[loc, scale]`, you can pass values in these forms:
       * 0:1
@@ -890,7 +890,7 @@ class HpQNormalSchema(BaseCamelSchema):
         return V1HpQNormal
 
 
-class V1HpQNormal(BaseHParamConfig, polyaxon_sdk.V1HpQNormal):
+class V1HpQNormal(BaseHpParamConfig, polyaxon_sdk.V1HpQNormal):
     """`QNormal` draws random samples from a quantized normal (Gaussian) distribution defined by
     `[loc, scale]`, you can pass values in these forms:
       * 0:1:0.1
@@ -948,7 +948,7 @@ class HpLogNormalSchema(BaseCamelSchema):
         return V1HpLogNormal
 
 
-class V1HpLogNormal(BaseHParamConfig, polyaxon_sdk.V1HpLogNormal):
+class V1HpLogNormal(BaseHpParamConfig, polyaxon_sdk.V1HpLogNormal):
     """`LogNormal` draws random samples from a log normal (Gaussian) distribution defined by
     `[loc, scale]`, you can pass values in these forms:
       * 0:1
@@ -1006,7 +1006,7 @@ class HpQLogNormalSchema(BaseCamelSchema):
         return V1HpQLogNormal
 
 
-class V1HpQLogNormal(BaseHParamConfig, polyaxon_sdk.V1HpQLogNormal):
+class V1HpQLogNormal(BaseHpParamConfig, polyaxon_sdk.V1HpQLogNormal):
     """`QLogNormal` draws random samples from a log normal (Gaussian) distribution defined by
     `[loc, scale]`, you can pass values in these forms:
       * 0:1:0.1

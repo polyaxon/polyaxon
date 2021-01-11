@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,14 @@ from polyaxon import types
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
 from polyaxon.polyaxonfile.specs import BaseSpecification, kinds
 from polyaxon.polyaxonfile.specs.libs.parser import Parser
-from polyaxon.polyflow import ParamSpec, V1CompiledOperation, V1Dag, V1Init, V1Param
+from polyaxon.polyflow import (
+    ParamSpec,
+    V1CompiledOperation,
+    V1Dag,
+    V1Hook,
+    V1Init,
+    V1Param,
+)
 
 
 class CompiledOperationSpecification(BaseSpecification):
@@ -30,12 +37,6 @@ class CompiledOperationSpecification(BaseSpecification):
     _SPEC_KIND = kinds.COMPILED_OPERATION
 
     CONFIG = V1CompiledOperation
-
-    @classmethod
-    def _parse(cls, config, params: Dict[str, ParamSpec]):
-        params = params or {}
-        parsed_data = Parser.parse(config, params)
-        return cls.CONFIG.read(parsed_data)
 
     @staticmethod
     def dict_to_param_spec(contexts: Dict = None, is_context: bool = False):
@@ -61,7 +62,10 @@ class CompiledOperationSpecification(BaseSpecification):
         should_be_resolved: bool = False,
     ) -> Dict[str, ParamSpec]:
         param_spec = config.validate_params(
-            is_template=False, check_runs=True, parse_values=True
+            is_template=False,
+            check_runs=True,
+            parse_values=True,
+            parse_joins=not should_be_resolved,
         )
         if should_be_resolved:
             for p_spec in param_spec:
@@ -85,7 +89,9 @@ class CompiledOperationSpecification(BaseSpecification):
     ) -> V1CompiledOperation:
         if not param_spec:
             param_spec = cls.calculate_context_spec(config=config, contexts=contexts)
-        return cls._parse(config, param_spec)
+
+        parsed_data = Parser.parse_operation(config, param_spec or {})
+        return cls.CONFIG.read(parsed_data)
 
     @staticmethod
     def _apply_dag_context(config: V1CompiledOperation) -> V1CompiledOperation:
@@ -281,3 +287,17 @@ class CompiledOperationSpecification(BaseSpecification):
                 contexts=contexts,
                 param_spec=param_spec,
             )
+
+    @classmethod
+    def apply_hooks_contexts(
+        cls,
+        config: V1CompiledOperation,
+        contexts: Dict = None,
+        param_spec: Dict[str, ParamSpec] = None,
+    ) -> List[V1Hook]:
+        if not param_spec:
+            param_spec = cls.calculate_context_spec(
+                config=config, contexts=contexts, should_be_resolved=True
+            )
+        hooks = Parser.parse_hooks(config, param_spec)
+        return [V1Hook.read(hook) for hook in hooks]

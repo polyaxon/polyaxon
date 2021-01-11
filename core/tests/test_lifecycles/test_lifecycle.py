@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,12 +31,12 @@ class TestStatusesTransition(BaseTestCase):
         assert LifeCycle.PENDING_VALUES == {
             V1Statuses.CREATED,
             V1Statuses.RESUMING,
-            V1Statuses.SCHEDULED,
+            V1Statuses.ON_SCHEDULE,
         }
 
     def test_running_statuses(self):
         assert LifeCycle.RUNNING_VALUES == {
-            V1Statuses.INITIALIZING,
+            V1Statuses.SCHEDULED,
             V1Statuses.PROCESSING,
             V1Statuses.STARTING,
             V1Statuses.RUNNING,

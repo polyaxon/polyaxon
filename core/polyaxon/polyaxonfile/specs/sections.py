@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ class Sections:
     CACHE = "cache"
     PLUGINS = "plugins"
     HOOKS = "hooks"
-    ACTIONS = "actions"
     EVENTS = "events"
     TERMINATION = "termination"
     INPUTS = "inputs"
@@ -42,6 +41,7 @@ class Sections:
     RUN = "run"
     RUN_PATCH = "runPatch"
     MATRIX = "matrix"
+    JOINS = "joins"
     OPERATIONS = "operations"
     COMPONENTS = "components"
     SCHEDULE = "schedule"
@@ -70,11 +70,11 @@ class Sections:
         QUEUE,
         PLUGINS,
         HOOKS,
-        ACTIONS,
         EVENTS,
         TERMINATION,
         CONNECTIONS,
         MATRIX,
+        JOINS,
         OPERATIONS,
         SCHEDULE,
         DEPENDENCIES,
@@ -93,8 +93,20 @@ class Sections:
         RUN_PATCH,
     )
 
-    PARSING_SECTIONS = (PRESETS, QUEUE, CACHE, CONNECTIONS, PLUGINS, TERMINATION)
-    OP_PARSING_SECTIONS = (OPERATIONS, SCHEDULE, DEPENDENCIES, TRIGGER, CONDITIONS)
+    PARSING_SECTIONS = (
+        MATRIX,
+        PRESETS,
+        QUEUE,
+        CACHE,
+        CONNECTIONS,
+        PLUGINS,
+        TERMINATION,
+        SCHEDULE,
+        DEPENDENCIES,
+        TRIGGER,
+        CONDITIONS,
+        PATCH_STRATEGY,
+    )
 
     REQUIRED_SECTIONS = (VERSION, KIND)
 

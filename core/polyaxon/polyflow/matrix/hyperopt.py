@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2018-2020 Polyaxon, Inc.
+# Copyright 2018-2021 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,13 +42,13 @@ class HyperoptSchema(BaseCamelSchema):
         fields.Int(required=True, validate=validate.Range(min=1)), required=True
     )
     seed = RefOrObject(fields.Int(allow_none=True))
-    concurrency = fields.Int(allow_none=True)
+    concurrency = RefOrObject(fields.Int(allow_none=True))
     container = SwaggerField(
         cls=k8s_schemas.V1Container,
         defaults={"name": MAIN_JOB_CONTAINER},
         allow_none=True,
     )
-    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
+    early_stopping = fields.List(fields.Nested(EarlyStoppingSchema), allow_none=True)
 
     @staticmethod
     def schema_config():
