@@ -26,9 +26,9 @@ a [termination](/docs/core/specification/termination/). But oftentimes, you migh
 and apply them to a certain type of operations.
 
 One way to achieve such workflow is to push as many configuration sections as possible to the components, but this is not always possible and it's not recommended,
-either because a component should be generic or the component should be used across different clusters, with different references for queues, nodes, ...
+either because a component should be generic or because the component should be used across different clusters, with different references for queues, nodes, ...
 
-Polyaxon provides a concept called Presets, that you can use to package several information about how to predefine your operations.
+Polyaxon provides a concept called `Presets`, that you can use to package several information about how to predefine your operations.
 
 ## Defining presets
 
@@ -39,7 +39,7 @@ Presets use all sections that the [operation specification](/docs/core/specifica
  * pathRef
  * component
 
-Each preset that you define can also have a `patchStrategy` that applies to how the preset specification will be merged with main operation that you desire to run.
+Each preset that you define can also have a `patchStrategy` that defines how the preset specification will be merged with main operation that you desire to run.
 Polyaxon exposes four patch strategies:
 
  * `replace`: replaces all keys with new values if provided.
@@ -129,7 +129,9 @@ Polyaxon will follow the order of these presets and will patch the main operatio
 
 <blockquote class="commercial">This is part of our commercial offering.</blockquote>
 
-If you have access to Polyaxon Cloud or Polyaxon EE you can also save these presets on the organization level.  
+If you have access to Polyaxon Cloud or Polyaxon EE you can also save these presets on the organization level.
+You can additionally set the a default preset on organization or project level using Polyaxon UI, 
+such preset will be applied to all operations in the organization or project where it's set.    
 
 Users can just reference the presets in their [operations specification](/docs/core/specification/operation/#presets) or using the CLI/Client `polyaxon run ... --presets=preset1,preset2`
 

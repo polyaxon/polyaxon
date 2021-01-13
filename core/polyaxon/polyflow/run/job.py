@@ -162,7 +162,7 @@ class V1Job(BaseConfig, AddInitMixin, polyaxon_sdk.V1Job):
     >>>   volumes:
     >>>     - name: volume1
     >>>       persistentVolumeClaim:
-    >>>       claimName: pvc1
+    >>>         claimName: pvc1
     >>>   ...
     >>>   container:
     >>>     name: myapp-container

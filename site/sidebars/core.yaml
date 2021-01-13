@@ -31,7 +31,7 @@
     items:
     - title: Overview
       link: /docs/core/context/
-    - title: Globas
+    - title: Globals
       link: /docs/core/context/globals/
     - title: Params
       link: /docs/core/context/params/
@@ -97,3 +97,9 @@
       link: /docs/core/scheduling-strategies/presets/
     - title: Resume & restart
       link: /docs/core/scheduling-strategies/resume-restart/
+    - title: Conditional Scheduling
+      link: /docs/core/scheduling-strategies/conditional-scheduling/
+    - title: Manual approval
+      link: /docs/core/scheduling-strategies/manual-approval/
+    - title: Operations Caching
+      link: /docs/core/scheduling-strategies/operations-caching/

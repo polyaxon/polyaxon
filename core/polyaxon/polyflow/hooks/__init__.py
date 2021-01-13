@@ -21,6 +21,7 @@ from marshmallow import fields, validate
 from polyaxon.lifecycle import V1Statuses
 from polyaxon.polyflow.params import ParamSchema
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
+from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
 class HookSchema(BaseCamelSchema):
@@ -30,7 +31,7 @@ class HookSchema(BaseCamelSchema):
     )
     hub_ref = fields.Str(required=True)
     conditions = fields.Str(allow_none=True)
-    presets = fields.List(fields.Str(allow_none=True))
+    presets = RefOrObject(fields.List(fields.Str(allow_none=True)))
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(ParamSchema), allow_none=True
     )

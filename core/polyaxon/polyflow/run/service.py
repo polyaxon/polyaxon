@@ -171,7 +171,7 @@ class V1Service(BaseConfig, AddInitMixin, polyaxon_sdk.V1Service):
      >>>   volumes:
      >>>     - name: volume1
      >>>       persistentVolumeClaim:
-     >>>       claimName: pvc1
+     >>>         claimName: pvc1
      >>>   ...
      >>>   container:
      >>>     name: myapp-container

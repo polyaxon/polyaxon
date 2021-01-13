@@ -58,7 +58,7 @@ Instead of hard-coding an init section like in the previous sections of this qui
 we will initialize this local path with a git integration that we can use to integrate automatically with our polyaxonfiles.
 
 The [init](/docs/core/cli/init/) command accepts both a `git-connection` and `git-url`. If you are using a private git repo, 
-you will need to configure a [git connection](http://localhost:9000/docs/setup/connections/git/) and redeploy Polyaxon first.
+you will need to configure a [git connection](/docs/setup/connections/git/) and redeploy Polyaxon first.
 
 > To initialize the folder with a private repo you need a valid `git-connection`, you can additionally override the default git repo of that connection by providing the `git-url` argument. 
 

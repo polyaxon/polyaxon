@@ -239,7 +239,7 @@ class V1Dask(BaseConfig, polyaxon_sdk.V1Dask):
     >>>   volumes:
     >>>     - name: volume1
     >>>       persistentVolumeClaim:
-    >>>       claimName: pvc1
+    >>>         claimName: pvc1
     >>>   ...
     >>>   container:
     >>>     name: myapp-container

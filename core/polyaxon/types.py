@@ -35,7 +35,7 @@ DOCKERFILE = "dockerfile"
 GIT = "git"
 IMAGE = "image"
 EVENT = "event"
-ARTIFACTS = "artifacts"  # TODO: Param: artifact_event/artifact_asset
+ARTIFACTS = "artifacts"
 PATH = "path"
 METRIC = "metric"
 METADATA = "metadata"
@@ -83,3 +83,22 @@ LINEAGE_VALUES = {
     METRIC,
     METADATA,
 }
+
+COMPATIBLE_TYPES = [
+    [STR, PATH, S3, GCS, WASB],
+    [FLOAT, METRIC],
+]
+
+
+def are_compatible(type1: str, type2: str) -> bool:
+    if type1 == type2:
+        return True
+
+    if type1 == ANY and type2 == ANY:
+        return True
+    # Compatible types
+    for compatible_type in COMPATIBLE_TYPES:
+        if type1 in compatible_type and type2 in compatible_type:
+            return True
+
+    return False

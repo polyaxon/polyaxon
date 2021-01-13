@@ -111,7 +111,7 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
     >>>       all_outputs:
     >>>         value: outputs
     >>>       run_artifact_paths:
-    >>>         value: artifacts
+    >>>         value: artifacts.base
     >>>       uuids:
     >>>         value: globals.uuid
     >>>         contextOnly: true
@@ -197,7 +197,7 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
     ### query
 
     A valid query respecting
-    [Polyaxon Query Language](http://localhost:9000/docs/core/query-language/runs/#query)
+    [Polyaxon Query Language](/docs/core/query-language/runs/#query)
 
     ```yaml
     >>> joins:
@@ -207,7 +207,7 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
     ### sort
 
     A valid sort respecting
-    [Polyaxon Query Language](http://localhost:9000/docs/core/query-language/runs/#sort)
+    [Polyaxon Query Language](/docs/core/query-language/runs/#sort)
 
     ```yaml
     >>> joins:

@@ -153,7 +153,7 @@ class V1KFReplica(BaseConfig, polyaxon_sdk.V1KFReplica):
     >>>   volumes:
     >>>     - name: volume1
     >>>       persistentVolumeClaim:
-    >>>       claimName: pvc1
+    >>>         claimName: pvc1
     >>>   ...
     >>>   container:
     >>>     name: myapp-container

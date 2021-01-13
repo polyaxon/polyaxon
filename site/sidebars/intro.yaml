@@ -25,8 +25,16 @@
       link: /docs/intro/quick-start/deploying-ml-apps/
     - title: Building Containers
       link: /docs/intro/quick-start/building-containers/
+  - group: How-Tos
+    items:
+    - title: Introduction
+      link: /docs/intro/how-tos/
+    - title: Using service accounts
+      link: /docs/intro/how-tos/service-accounts/
+    - title: Mounting volumes manually
+      link: /docs/intro/how-tos/mounting-volumes/
     - title: Handling Termination
-      link: /docs/intro/quick-start/handling-termination/
+      link: /docs/intro/how-tos/handling-termination/
   - group: Features & Architecture
     items:
     - title: Features

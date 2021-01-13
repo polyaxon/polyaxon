@@ -43,3 +43,6 @@ There are several distinct features involved in the scheduling strategies:
  * [Scheduling presets](/docs/core/scheduling-strategies/presets/): A feature for injecting certain information into operations at compilation time to preset configuration
    for node scheduling, queue routing, resources requirements and definition, connections, and access level control.
  * [Resume & Restart](/docs/core/scheduling-strategies/resume-restart/): Scheduling operation by resuming, restarting, and copying previous operation runs.
+ * [Conditional scheduling](/docs/core/scheduling-strategies/conditional-scheduling/): A feature to start operation on nodes or queues based on inputs data or to completely skip scheduling the operation.
+ * [Manual approval](/docs/core/scheduling-strategies/manual-scheduling/): A feature to pause and suspend operations and pipelines and wait for human approval to resume the work.
+ * [Operation cache layer](/docs/core/scheduling-strategies/operations-caching/): A feature to reduce the cost and execution time by avoiding and skipping similar work.

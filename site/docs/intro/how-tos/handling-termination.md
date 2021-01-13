@@ -1,8 +1,8 @@
 ---
-title: "Quick Start: Handling Termination"
-sub_link: "quick-start/handling-termination"
-meta_title: "Handling Termination - Polyaxon quick start tutorial - Core Concepts"
-meta_description: "Handling Termination - Become familiar with the ecosystem of Polyaxon tools with a top-level overview and useful links to get you started."
+title: "Handling failures and termination"
+sub_link: "how-tos/handling-termination"
+meta_title: "Handling failures and termination and ensuring robust scheduling - Core Concepts"
+meta_description: "Handling failures and termination and ensuring robust scheduling."
 visibility: public
 status: published
 tags:
@@ -12,8 +12,9 @@ tags:
 sidebar: "intro"
 ---
 
-Now that we learned how to submit operations, it's important to ensure that ours jobs and services are robust 
-using the [termination section](/docs/core/specification/termination/).
+It's important to ensure that jobs and services are robust and that they respect SLAs.
+  
+Polyaxon exposes a section for handling failure and managing [termination](/docs/core/specification/termination/).
 
 You can set a default termination on the component level and override the values for each operation, 
 or you can only define termination on some operation without setting too much information on the component.

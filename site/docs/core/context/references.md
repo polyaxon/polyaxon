@@ -54,12 +54,15 @@ Each parameter can use the following references:
 
 Each parameter with `ref` can request the following information those references:
 
- * `globals.*`: General context information from the reference.
- * `inputs`: All inputs (key -> value) from the reference.
+ * `globals`: All general context information from the reference as a dictionary.
+ * `globals.*`: Specific general context value from the reference.
+ * `io`: All Inputs/outputs/artifacts information from the reference as a dictionary `{"inputs": {}, "outputs": {}, "artifacts": {}}`.
+ * `inputs`: All inputs (key -> value) from the reference as a dictionary.
  * `inputs.*`: Specific input value from the reference.
- * `outputs`: All outputs (key -> value) from the reference.
+ * `outputs`: All outputs (key -> value) from the reference as a dictionary.
  * `outputs.*`: Specific output value from the reference.
- * `artifacts`: The base path of the run, basically the path defined by `uuid`.
+ * `artifacts`: All artifacts lineage paths as a dictionary.
+ * `artifacts.base`: The base path of the run, basically the path defined by `uuid`.
  * `artifacts.outputs`: The base outputs path of the run, basically the path defined by `uuid/outputs`.
  * `artifacts.*`: Specific path coming logged in the lineage table, e.g. `artifacts.tensorboard`.
  * `{"file": [..., ...], "dirs": [..., ...]}`: An [ArtifactsType](/docs/core/specification/types/#v1artifactstype) definition, this is generally can be used with `toInit` or can be passed to the `init` section. 

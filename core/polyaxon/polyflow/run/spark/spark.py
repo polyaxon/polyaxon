@@ -172,7 +172,7 @@ class V1Spark(BaseConfig, polyaxon_sdk.V1Spark):
     >>>   volumes:
     >>>     - name: volume1
     >>>       persistentVolumeClaim:
-    >>>       claimName: pvc1
+    >>>         claimName: pvc1
     >>>   ...
     ```
 

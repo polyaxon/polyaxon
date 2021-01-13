@@ -399,7 +399,7 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
     >>>   volumes:
     >>>     - name: volume1
     >>>       persistentVolumeClaim:
-    >>>       claimName: pvc1
+    >>>         claimName: pvc1
     >>>   ...
     ```
     ### concurrency
@@ -668,6 +668,9 @@ class V1Dag(BaseConfig, polyaxon_sdk.V1Dag):
             self._context[
                 "ops.{}.{}".format(op_name, contexts_sections.ARTIFACTS)
             ] = V1IO(name="artifacts", iotype=types.STR, value="", is_optional=True)
+            self._context[
+                "ops.{}.{}".format(op_name, contexts_sections.INPUTS_OUTPUTS)
+            ] = V1IO(name="io", iotype=types.STR, value={}, is_optional=True)
 
         for op in self.operations:
             if op.has_hub_reference:
