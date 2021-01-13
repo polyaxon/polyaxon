@@ -43,7 +43,7 @@ class TestInitOutputsStore(BaseTestCase):
         assert get_artifacts_store_args(artifacts_path="/some/path", clean=True) == (
             'if [ ! -d "/some/path" ]; then mkdir -m 0777 -p /some/path; fi; '
             'if [ -d /some/path ] && [ "$(ls -A /some/path)" ]; '
-            "then rm -r /some/path/*; fi;"
+            "then rm -R /some/path/*; fi;"
         )
 
     def test_get_artifacts_path_container_with_none_values(self):

@@ -59,7 +59,7 @@ def cp_copy_args(path_from, path_to, is_file: bool) -> str:
         )
     return (
         'if [ -d {path_from} ] && [ "$(ls -A {path_from})" ]; '
-        "then cp -r {path_from}/* {path_to}; fi;".format(
+        "then cp -R {path_from}/* {path_to}; fi;".format(
             path_from=path_from, path_to=path_to
         )
     )
@@ -110,8 +110,10 @@ def get_volume_args(
             path_to = os.path.join(mount_path, p)
             _p = p
 
-        # If we are initializing a file we need to create the base folder
-        _p = os.path.split(_p)[0]
+        # Create folders
+        if is_file:
+            # If we are initializing a file we need to create the base folder
+            _p = os.path.split(_p)[0]
         base_path_to = os.path.join(mount_path, _p)
         # We need to check that the path exists first
         args.append(get_or_create_args(path=base_path_to))

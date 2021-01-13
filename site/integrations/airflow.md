@@ -58,8 +58,9 @@ class PolyaxonOperator(BaseOperator):
     def execute(self, context):
         client = RunClient(project=self.project_name)
         client.create_from_polyaxonfile(polyaxonfile=self.polyaxonfile)
-        client.wait_for_condition()
-        self.log.info(f"Last status: {client.run_data.status}")
+        if self.watch:
+            client.wait_for_condition()
+            self.log.info(f"Last status: {client.run_data.status}")
 ```
 
 > **Tip**: Polyaxon provides a native [DAG](/docs/automation/) runtime for managing your operations and their dependencies in a simple and efficient way.

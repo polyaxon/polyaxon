@@ -59,6 +59,10 @@ class ParamValueMixin:
     def is_ops_ref(self):
         raise NotImplementedError
 
+    @property
+    def is_dag_ref(self):
+        raise NotImplementedError
+
     def validate(self):
         validate_param_value(
             value=self.value,
@@ -273,7 +277,7 @@ class V1Param(
     >>>     value: 0.001
     ```
 
-    The value could be coming from the [context](/docs/core/specification/context/), for example:
+    The value could be coming from the [context](/docs/core/context/), for example:
 
     ```yaml
     >>> params:

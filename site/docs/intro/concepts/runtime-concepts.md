@@ -25,7 +25,7 @@ Components can process data directly, train a model, or orchestrate external sys
 There are almost no restrictions on what a component can do.
 
 Furthermore, each component receives metadata about its environment and upstream dependencies (if it's defined in a DAG) before it runs,
-it's called the [context](/docs/core/specification/context/), even if it does not receive any explicit data inputs,
+it's called the [context](/docs/core/context/), even if it does not receive any explicit data inputs,
 giving it an opportunity to change its behavior depending on the context it's running inside.
 
 Since Polyaxon runs containers, it is agnostic to the code each component runs and there are no restrictions on what inputs and outputs can be.
@@ -83,7 +83,7 @@ A service can be:
 ### DAG
 
 A `DAG` is a powerful tool to describe dependencies between operations,
-it allows to author a directed acyclic graph of operation with first class support for states and artifacts dependencies.
+it allows to author a directed acyclic graph of operations with first class support for states and artifacts dependencies.
 
 <blockquote class="light">Please refer to <a href="/docs/automation/flow-engine/">automation/flow-engine</a> for more details.</blockquote>
 

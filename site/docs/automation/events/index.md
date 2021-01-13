@@ -20,7 +20,7 @@ sidebar: "automation"
 
 ## Overview
 
-Events allow you to automate and extend certain aspects about Polyaxon's internal behavior and to integrate with external tools and systems.
+Events allow you to automate and extend certain aspects of Polyaxon's internal behavior and to integrate with external tools and systems.
 
 
 ## Use cases

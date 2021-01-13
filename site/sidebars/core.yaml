@@ -7,8 +7,6 @@
       link: /docs/core/specification/component/
     - title: Operation
       link: /docs/core/specification/operation/
-    - title: Context
-      link: /docs/core/specification/context/
     - title: Environment
       link: /docs/core/specification/environment/
     - title: Termination
@@ -29,6 +27,18 @@
       link: /docs/core/specification/types/
     - title: Lifecycle
       link: /docs/core/specification/lifecycle/
+  - group: Context
+    items:
+    - title: Overview
+      link: /docs/core/context/
+    - title: Globas
+      link: /docs/core/context/globals/
+    - title: Params
+      link: /docs/core/context/params/
+    - title: Connections
+      link: /docs/core/context/connections/
+    - title: References
+      link: /docs/core/context/references/
   - group: Python Library
     items:
     - title: Overview

@@ -39,7 +39,7 @@ def get_artifacts_store_args(artifacts_path: str, clean: bool) -> str:
     )
     delete_dir = (
         'if [ -d {path} ] && [ "$(ls -A {path})" ]; '
-        "then rm -r {path}/*; fi;".format(path=artifacts_path)
+        "then rm -R {path}/*; fi;".format(path=artifacts_path)
     )
     if clean:
         return "{} {}".format(get_or_create, delete_dir)

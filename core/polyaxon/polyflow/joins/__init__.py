@@ -60,6 +60,10 @@ class V1JoinParam(BaseConfig, ParamValueMixin, polyaxon_sdk.V1JoinParam):
     def is_ops_ref(self):
         return False
 
+    @property
+    def is_dag_ref(self):
+        return False
+
 
 class JoinSchema(BaseCamelSchema):
     query = fields.Str(required=True)
@@ -80,8 +84,9 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
 
     The result of the join will be a list of values based on the results from executing the search.
 
-    A Join corresponds to a valid search that can be resolved by Polyaxon,
-    the result will be injected to resolve the params referencing the join.
+    A Join corresponds to a valid [query specification](/docs/core/query-language/),
+    the result of the search will be used to resolve
+    the params defined in the join.
 
     ```yaml
     >>> joins:
@@ -156,7 +161,7 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
 
     If a param is based on `contexts`, `inputs`, `outputs`, or `artifacts`
     Polyaxon will turn that param into a list by querying
-    that field from all runs in the search result.
+    that field from all runs in the search result:
 
     ```python
     >>>  {
@@ -165,8 +170,9 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
     >>> }
     ```
 
-    When the params is an artifacts type, all files and dirs will be in a
-    single list prepended with the uuid (run path) of each run in the query result:
+    When the param is of type [ArtifactsType](/docs/core/specification/types/#v1artifactstype),
+    all files and dirs will be concatenated in a single list,
+    each value will be prefixed with the uuid (run path) of each run in the query result:
 
     ```python
     >>>  {
@@ -191,7 +197,7 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
     ### query
 
     A valid query respecting
-    [Polaxyon Query Language](http://localhost:9000/docs/core/query-language/runs/#query)
+    [Polyaxon Query Language](http://localhost:9000/docs/core/query-language/runs/#query)
 
     ```yaml
     >>> joins:
@@ -201,7 +207,7 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
     ### sort
 
     A valid sort respecting
-    [Polaxyon Query Language](http://localhost:9000/docs/core/query-language/runs/#sort)
+    [Polyaxon Query Language](http://localhost:9000/docs/core/query-language/runs/#sort)
 
     ```yaml
     >>> joins:
@@ -226,10 +232,12 @@ class V1Join(BaseConfig, polyaxon_sdk.V1Join):
     >>>   - offset: "100"
     ```
 
+    An optional integer used for pagination.
+
     ### params
 
     Similar to the default [params specification](/docs/core/specification/params/)
-    with the exception that it does not accept a `ref`.
+    with the exception that it does not accept the `ref` key.
     The reference is generated automatically based on the search performed by Polyaxon.
 
     The fields supported: `value`, `context_only`, `connection`, `to_init`

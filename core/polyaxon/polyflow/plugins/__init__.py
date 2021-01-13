@@ -176,7 +176,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
     ```
 
     Sometimes you might want to access the artifacts path in your polyaxonfile,
-    Polyaxon expose a [context](/docs/core/specification/context/) that get resolved during
+    Polyaxon expose a [context](/docs/core//context/) that get resolved during
     the compilation time, you can just use
     "{{run_artifacts_path}}" global variable and it will be resolved automatically.
 
@@ -190,7 +190,7 @@ class V1Plugins(BaseConfig, polyaxon_sdk.V1Plugins):
 
     ```
 
-    For more information about the context, please check [context](/docs/core/specification/context/)
+    For more information about the context, please check [context](/docs/core/context/)
 
     ### collectLogs
 

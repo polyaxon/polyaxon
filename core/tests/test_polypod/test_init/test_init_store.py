@@ -74,7 +74,7 @@ class TestInitStore(BaseTestCase):
             "if [ -f /foo ]; then cp /foo /bar; fi;"
         )
         assert cp_copy_args(path_from="/foo", path_to="/bar", is_file=False) == (
-            'if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -r /foo/* /bar; fi;'
+            'if [ -d /foo ] && [ "$(ls -A /foo)" ]; then cp -R /foo/* /bar; fi;'
         )
 
     def test_files_cp_gcs_args(self):
@@ -155,7 +155,6 @@ class TestInitStore(BaseTestCase):
             schema=V1BucketConnection(bucket="Congs//:foo"),
         )
 
-        base_path = "/path/to/"
         path_to1 = "/path/to/path1"
         path_to2 = "/path/to/path2"
         path_from1 = os.path.join(gcs_store.store_path, "path1")
@@ -164,9 +163,9 @@ class TestInitStore(BaseTestCase):
             gcs_store, "/path/to", artifacts=V1ArtifactsType(dirs=["path1", "path2"])
         ) == " ".join(
             [
-                get_or_create_args(path=base_path),
+                get_or_create_args(path=path_to1),
                 cp_gcs_args(path_from=path_from1, path_to=path_to1, is_file=False),
-                get_or_create_args(path=base_path),
+                get_or_create_args(path=path_to2),
                 cp_gcs_args(path_from=path_from2, path_to=path_to2, is_file=False),
             ]
         )
@@ -204,7 +203,7 @@ class TestInitStore(BaseTestCase):
             [
                 get_or_create_args(path=base_path),
                 cp_wasb_args(path_from=path_from1, path_to=path_to1, is_file=True),
-                get_or_create_args(path=base_path),
+                get_or_create_args(path=path_to2),
                 cp_wasb_args(path_from=path_from2, path_to=path_to2, is_file=False),
             ]
         )
@@ -273,7 +272,6 @@ class TestInitStore(BaseTestCase):
                 mount_path="/tmp", host_path="/tmp", read_only=True
             ),
         )
-        base_path = "/path/to/"
         path_to1 = "/path/to/path1"
         path_to2 = "/path/to/path2"
         path_from1 = os.path.join(host_path_store.store_path, "path1")
@@ -284,9 +282,9 @@ class TestInitStore(BaseTestCase):
             artifacts=V1ArtifactsType(dirs=["path1", "path2"]),
         ) == " ".join(
             [
-                get_or_create_args(path=base_path),
+                get_or_create_args(path=path_to1),
                 cp_copy_args(path_from=path_from1, path_to=path_to1, is_file=False),
-                get_or_create_args(path=base_path),
+                get_or_create_args(path=path_to2),
                 cp_copy_args(path_from=path_from2, path_to=path_to2, is_file=False),
             ]
         )

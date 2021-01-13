@@ -2,7 +2,7 @@
 title: "Joins"
 sub_link: "joins"
 meta_title: "Polyaxon Joins - Polyaxon Automation Reference"
-meta_description: "Joins in Polyaxon allow to filter, aggregate, and annotate inputs/outputs/artifacts from multiple or parallel upstream runs based on query/sort/limit specification."
+meta_description: "Joins in Polyaxon allow to filter, aggregate, and annotate inputs/outputs/artifacts from multiple or parallel upstream runs based on query/sort/limit/offset specification."
 visibility: public
 status: published
 is_index: true
@@ -20,7 +20,7 @@ sidebar: "automation"
 
 ## Overview
 
-Joins in Polyaxon allow to filter, aggregate, and annotate inputs/outputs/artifacts from multiple or parallel upstream runs based on query/sort/limit specification.
+Joins in Polyaxon allow to filter, aggregate, and annotate inputs/outputs/artifacts from multiple or parallel upstream runs based on query/sort/limit/offset specification.
 
 
 ## Use cases

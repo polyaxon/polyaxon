@@ -146,6 +146,18 @@ def get_fxt_job_with_inputs_and_joins():
                         "value": "artifacts.outputs",
                         "contextOnly": True,
                     },
+                    "all_outputs": {
+                        "value": "outputs",
+                        "contextOnly": True,
+                    },
+                    "all_inputs": {
+                        "value": "inputs",
+                        "contextOnly": True,
+                    },
+                    "all_artifacts": {
+                        "value": "artifacts",
+                        "contextOnly": True,
+                    },
                     "files": {
                         "value": {
                             "files": ["subpath/file1", "different/subpath/file2"],

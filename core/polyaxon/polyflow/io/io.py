@@ -135,7 +135,7 @@ class V1IO(BaseConfig, polyaxon_sdk.V1IO):
 
     The final value of an input/output can be resolved
     from [params](/docs/core/specification/params/), or from other values in
-    the [context](/docs/core/specification/context/).
+    the [context](/docs/core/context/).
 
     Examples:
       * A build component may have a git repository as input and a container image as output.
