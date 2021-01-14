@@ -29,7 +29,7 @@ from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Environment, V1Init, V1Plugins
 from polyaxon.polypod.common.containers import (
     ensure_container_name,
-    sanitize_container_command_args,
+    sanitize_container,
 )
 from polyaxon.polypod.common.env_vars import (
     get_base_env_vars,
@@ -275,7 +275,7 @@ class BaseConverter(ConverterAbstract):
         )
         containers = to_list(polyaxon_sidecar_container, check_none=True)
         containers += sidecar_containers
-        return [sanitize_container_command_args(c) for c in containers]
+        return [sanitize_container(c) for c in containers]
 
     def handle_init_connections(
         self,
@@ -456,7 +456,7 @@ class BaseConverter(ConverterAbstract):
             contexts=contexts,
         )
         init_containers = containers + init_containers
-        return [sanitize_container_command_args(c) for c in init_containers]
+        return [sanitize_container(c) for c in init_containers]
 
     def filter_containers_from_init(
         self, init: List[V1Init]

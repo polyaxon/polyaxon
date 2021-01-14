@@ -142,21 +142,20 @@ def get_fxt_job_with_inputs_and_joins():
                         "value": "artifacts.metric1",
                         "contextOnly": True,
                     },
-                    "run_outputs": {
+                    "artifact_paths": {
+                        "value": "artifacts.base",
+                    },
+                    "run_outputs_paths": {
                         "value": "artifacts.outputs",
-                        "contextOnly": True,
                     },
                     "all_outputs": {
                         "value": "outputs",
-                        "contextOnly": True,
                     },
                     "all_inputs": {
                         "value": "inputs",
-                        "contextOnly": True,
                     },
                     "all_artifacts": {
                         "value": "artifacts",
-                        "contextOnly": True,
                     },
                     "files": {
                         "value": {
@@ -189,6 +188,11 @@ def get_fxt_job_with_inputs_and_joins():
                 {"name": "excluded_uuids", "type": "uuid", "isList": True},
                 {"name": "init_param", "type": "git"},
                 {"name": "files", "type": "artifacts"},
+                {"name": "artifact_paths", "type": "path", "isList": True},
+                {"name": "run_outputs_paths", "type": "path", "isList": True},
+                {"name": "all_outputs", "type": "dict", "isList": True},
+                {"name": "all_inputs", "type": "dict", "isList": True},
+                {"name": "all_artifacts", "type": "dict", "isList": True},
             ],
             "tags": ["tag1", "tag2"],
             "run": {

@@ -15,6 +15,8 @@
 # limitations under the License.
 import polyaxon_sdk
 
+from dateutil import parser as dt_parser
+
 from polyaxon.utils.tz_utils import now
 
 
@@ -279,6 +281,12 @@ class ConditionMixin:
 
     def __eq__(self, other):
         return self.type == other.type and self.status == other.status
+
+    @classmethod
+    def get_last_update_time(cls, value):
+        if isinstance(value, str):
+            return dt_parser.parse(value)
+        return value
 
 
 class V1StatusCondition(ConditionMixin, polyaxon_sdk.V1StatusCondition):

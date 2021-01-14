@@ -25262,7 +25262,7 @@ spec:
                       the transition.
                     type: string
                   reason:
-                    description: The reasonfor this container condition.
+                    description: The reason for this container condition.
                     type: string
                   status:
                     description: Status of the condition, one of True, False, Unknown.

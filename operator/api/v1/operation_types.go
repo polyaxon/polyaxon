@@ -141,18 +141,18 @@ func (instance *Operation) logCondition(condType OperationConditionType, status 
 
 // LogStarting sets Operation to statrting
 func (instance *Operation) LogStarting() bool {
-	return instance.logCondition(OperationStarting, corev1.ConditionTrue, "OperationStarted", "Job is starting")
+	return instance.logCondition(OperationStarting, corev1.ConditionTrue, "OperatorController", "Operation is starting")
 }
 
 // LogRunning sets Operation to running
 func (instance *Operation) LogRunning() bool {
-	return instance.logCondition(OperationRunning, corev1.ConditionTrue, "OperationRunning", "Job is running")
+	return instance.logCondition(OperationRunning, corev1.ConditionTrue, "OperatorController", "Operation is running")
 }
 
 // LogWarning sets Operation to succeeded
 func (instance *Operation) LogWarning(reason, message string) bool {
 	if reason == "" {
-		reason = "OperationWarning"
+		reason = "OperatorController"
 	}
 	if message == "" {
 		message = "Underlaying job has an issue"
@@ -162,7 +162,7 @@ func (instance *Operation) LogWarning(reason, message string) bool {
 
 // LogSucceeded sets Operation to succeeded
 func (instance *Operation) LogSucceeded() bool {
-	return instance.logCondition(OperationSucceeded, corev1.ConditionTrue, "OperationSucceeded", "Job has succeeded")
+	return instance.logCondition(OperationSucceeded, corev1.ConditionTrue, "OperatorController", "Operation has succeeded")
 }
 
 // LogFailed sets Operation to failed

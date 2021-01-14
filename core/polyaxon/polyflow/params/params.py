@@ -542,7 +542,9 @@ class ParamSpec(
                 )
             )
 
-        if not types.are_compatible(self.iotype, context[self.param.searchable_ref].iotype):
+        if not types.are_compatible(
+            self.iotype, context[self.param.searchable_ref].iotype
+        ):
             raise ValidationError(
                 "Param `{}` has a an input type `{}` "
                 "and it does not correspond to the type of ref `{}.".format(

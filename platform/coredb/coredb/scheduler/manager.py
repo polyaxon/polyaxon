@@ -130,7 +130,7 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
         condition = V1StatusCondition.get_condition(
             type=V1Statuses.FAILED,
             status="True",
-            reason="PolyaxonRunFailed",
+            reason="SchedulerPrepare",
             message=f"Run compilation error: {e}",
         )
         new_run_status(run=run, condition=condition)
@@ -139,7 +139,7 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.COMPILED,
         status="True",
-        reason="PolyaxonRunCompiler",
+        reason="SchedulerPrepare",
         message="Run is compiled",
         last_update_time=compiled_at,
     )
@@ -175,7 +175,7 @@ def runs_start(run_id: int, run: Optional[BaseRun]):
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.QUEUED,
         status="True",
-        reason="PolyaxonRunQueued",
+        reason="SchedulerStart",
         message="Run is queued",
     )
     new_run_status(run=run, condition=condition)
@@ -186,7 +186,7 @@ def runs_start(run_id: int, run: Optional[BaseRun]):
         cond = V1StatusCondition.get_condition(
             type=V1Statuses.FAILED,
             status="True",
-            reason="PolyaxonRunFailed",
+            reason="SchedulerStart",
             message=message,
         )
         new_run_status(run=run, condition=cond)

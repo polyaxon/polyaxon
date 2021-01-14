@@ -58,7 +58,7 @@ def stop_runs(view, request, actor, *args, **kwargs):
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.STOPPED,
         status="True",
-        reason="PolyaxonRunStopped",
+        reason="EventHandler",
         message="User requested to stop the run.",
     )
     bulk_new_run_status(queryset, condition)
@@ -72,7 +72,7 @@ def stop_runs(view, request, actor, *args, **kwargs):
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.STOPPING,
         status="True",
-        reason="PolyaxonRunStopped",
+        reason="EventHandler",
         message="User requested to stop the run.",
     )
     bulk_new_run_status(runs, condition)

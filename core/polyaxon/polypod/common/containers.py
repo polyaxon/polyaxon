@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from collections.abc import Mapping
 from typing import List
 
 from polyaxon.containers.names import generate_container_name
@@ -57,7 +57,7 @@ def patch_container(
         container.command = command
         container.args = args
 
-    return sanitize_container_command_args(container)
+    return sanitize_container(container)
 
 
 def ensure_container_name(
@@ -84,3 +84,27 @@ def sanitize_container_command_args(
         container.args = [str(c) for c in to_list(container.args, check_none=True) if c]
 
     return container
+
+
+def sanitize_container_env(
+    container: k8s_schemas.V1Container,
+) -> k8s_schemas.V1Container:
+    if container.env:
+        env = []
+        for e in container.env:
+            if e:
+                if isinstance(e, Mapping):
+                    e = {k: str(v) for k, v in e.items()}
+                elif e.value:
+                    e.value = str(e.value)
+                env.append(e)
+
+        container.env = env
+    return container
+
+
+def sanitize_container(
+    container: k8s_schemas.V1Container,
+) -> k8s_schemas.V1Container:
+    container = sanitize_container_command_args(container)
+    return sanitize_container_env(container)

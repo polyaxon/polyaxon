@@ -103,7 +103,7 @@ class TestStatuses(TestCase):
         self.run.refresh_from_db()
         assert len(self.run.status_conditions) == 1
 
-        # Same this condition
+        # Same condition
         new_run_status(
             self.run,
             condition=V1StatusCondition.get_condition(

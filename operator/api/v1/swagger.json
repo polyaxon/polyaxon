@@ -115,7 +115,7 @@
           "type": "string"
         },
         "reason": {
-          "description": "The reasonfor this container condition.",
+          "description": "The reason for this container condition.",
           "type": "string"
         },
         "status": {

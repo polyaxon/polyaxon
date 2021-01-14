@@ -119,16 +119,16 @@ class Agent(BaseAgent):
             self.sync()
 
     def log_agent_running(self):
-        self.log_agent_status(status=V1Statuses.RUNNING, reason="PolyaxonAgentRunning")
+        self.log_agent_status(status=V1Statuses.RUNNING, reason="AgentLogger")
 
     def log_agent_failed(self, message=None):
         self.log_agent_status(
-            status=V1Statuses.FAILED, reason="PolyaxonAgentFailed", message=message
+            status=V1Statuses.FAILED, reason="AgentLogger", message=message
         )
 
     def log_agent_warning(self):
         self.log_agent_status(
             status=V1Statuses.WARNING,
-            reason="PolyaxonAgentWarning",
+            reason="AgentLogger",
             message="The agent was interrupted, please check your deployment.",
         )

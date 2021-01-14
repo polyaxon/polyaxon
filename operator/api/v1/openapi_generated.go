@@ -224,7 +224,7 @@ func schema_polyaxon_operator_api_v1_OperationCondition(ref common.ReferenceCall
 					},
 					"reason": {
 						SchemaProps: spec.SchemaProps{
-							Description: "The reasonfor this container condition.",
+							Description: "The reason for this container condition.",
 							Type:        []string{"string"},
 							Format:      "",
 						},

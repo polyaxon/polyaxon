@@ -67,7 +67,10 @@ def get_entity_value(value: str) -> str:
     else:
         value_parts = value
 
-    return value_parts.split(".")[-1]
+    value_parts = value_parts.split(".")
+    if len(value_parts) < 2:
+        return None
+    return value_parts[-1]
 
 
 class RefMixin:

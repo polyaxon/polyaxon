@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from typing import List
 
 from coredb.abstracts.getter import get_run_model
@@ -39,6 +38,15 @@ def get_run_conditions(entity) -> List[V1StatusCondition]:
     else:
         status_conditions = []
     return [V1StatusCondition.get_condition(**c) for c in status_conditions]
+
+
+def sort_conditions(status_conditions):
+    return sorted(
+        status_conditions,
+        key=lambda x: V1StatusCondition.get_last_update_time(
+            x.get("last_transition_time")
+        ),
+    )
 
 
 def set_entity_status(entity, condition: V1StatusCondition):
