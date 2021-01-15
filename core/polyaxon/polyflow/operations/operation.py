@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Dict
 
 import polyaxon_sdk
 
@@ -21,7 +22,7 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 from polyaxon.polyflow.component.component import ComponentSchema
 from polyaxon.polyflow.hooks import V1Hook
 from polyaxon.polyflow.operations.base import BaseOp, BaseOpSchema
-from polyaxon.polyflow.params import ParamSchema
+from polyaxon.polyflow.params import ParamSchema, V1Param
 from polyaxon.polyflow.references import V1DagRef, V1HubRef, V1PathRef, V1UrlRef
 from polyaxon.polyflow.run.patch import validate_run_patch
 from polyaxon.polyflow.templates import TemplateMixinConfig, TemplateMixinSchema
@@ -132,14 +133,14 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
                   [V1Iterative](/docs/automation/optimization-engine/iterative/)], optional
         joins: List[[V1Join](/docs/automation/joins/)], optional
         dependencies:
-            [dependencies](/docs/automation/flow-engine/specification/#dependencies),
+            [dependencies](/docs/automation/flow-engine/flow-dependencies/#dependencies),
             optional
-        trigger: [trigger](/docs/automation/flow-engine/specification/#trigger),
+        trigger: [trigger](/docs/automation/flow-engine/flow-dependencies/#trigger),
                  optional
-        conditions: [conditions](/docs/automation/flow-engine/specification/#conditions),
+        conditions: [conditions](/docs/core/scheduling-strategies/conditional-scheduling/#conditional-scheduling),  # noqa
                     optional
         skip_on_upstream_skip:
-            [skip_on_upstream_skip](/docs/automation/flow-engine/specification/skiponupstreamskip/),
+            [skip_on_upstream_skip](/docs/automation/flow-engine/flow-dependencies/skiponupstreamskip/),  # noqa
             optional
         run_patch: Dict, optional
         hub_ref: str, optional
@@ -650,13 +651,24 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
         return result
 
     @classmethod
-    def from_hook(cls, hook: V1Hook):
+    def from_hook(cls, hook: V1Hook, inputs: Dict, outputs: Dict, condition: Dict):
         run_patch = None
         if hook.connection:
             run_patch = {"connections": [hook.connection]}
+        params = hook.params
+        # Extend params with
+        if not hook.disable_defaults:
+            params = params or {}
+            if inputs:
+                params["inputs"] = V1Param(value=inputs, context_only=True)
+            if outputs:
+                params["outputs"] = V1Param(value=outputs, context_only=True)
+            if condition:
+                params["condition"] = V1Param(value=condition, context_only=True)
+
         return cls(
             run_patch=run_patch,
             hub_ref=hook.hub_ref,
             presets=hook.presets,
-            params=hook.params,
+            params=params,
         )

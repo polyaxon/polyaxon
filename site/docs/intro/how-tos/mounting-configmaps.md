@@ -18,9 +18,12 @@ While we generally recommend that users should leverage the [connection interfac
 to configure and abstract requesting and mounting configmaps.
 It is sometimes much easier to mount a configmap manually if the configmap will be used temporarily or for testing purposes.
 
+Polyaxon supports similar secrets syntax and mechanisms as Kubernetes Pod specs, 
+which allows access to configmaps as environment variables or volume mounts. For more information, 
+please check [the Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/configmap/).
+
 ## Usage as environment variables
 
-Polyaxon exposes the complete `container` specification.
 In this section, we will demonstrate how to mount configmaps manually as environment variables in a job, but the same steps can be followed to mount configmaps in services or distributed jobs.
 
 ```yaml
@@ -45,7 +48,6 @@ run:
 
 ## Usage as a volume
 
-Polyaxon exposes the complete `container` specification.
 In this section, we will demonstrate how to mount a configmaps manually as volumes in a job, but the same steps can be followed to mount configmaps in services or distributed jobs.
 
 ```yaml

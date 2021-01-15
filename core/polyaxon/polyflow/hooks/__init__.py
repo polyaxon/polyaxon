@@ -35,6 +35,7 @@ class HookSchema(BaseCamelSchema):
     params = fields.Dict(
         keys=fields.Str(), values=fields.Nested(ParamSchema), allow_none=True
     )
+    disable_defaults = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -82,6 +83,7 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
          hub_ref: str, optional
          conditions: str, optional
          presets: List[str], optional
+         disableDefaults: bool, optional
          params: Dict[str, [V1Param](/docs/core/specification/params/)], optional
 
     ## YAML usage
@@ -174,6 +176,22 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
     >>>   presets: [test]
     ```
 
+    ### disableDefaults
+
+    One major difference between hooks and normal operations,
+    is that hooks will be initialized automatically with `inputs`, `outputs`, and `condition` as
+    context only params, to reduce the boilerplate and the need to request usual information
+    required for most notification operations.
+
+    If you do not need these context values or if you decide to request params manually,
+    you can set this field to `false`.
+
+    ```yaml
+    >>> hook:
+    >>>   disableDefaults: true
+    >>>   ...
+    ```
+
     ### params
 
     The [params](/docs/core/specification/params/) to pass if the handler requires extra params,
@@ -199,4 +217,5 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
         "params",
         "conditions",
         "presets",
+        "disableDefaults",
     ]

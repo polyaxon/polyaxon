@@ -89,7 +89,12 @@ class RunResumeView(RunCloneView):
     AUDITOR_EVENT_TYPES = {"POST": RUN_RESUMED_ACTOR}
 
     def clone(self, obj, content):
-        return resume_run(run=obj, user_id=self.request.user.id, content=content)
+        return resume_run(
+            run=obj,
+            user_id=self.request.user.id,
+            content=content,
+            message="Run was resumed by user.",
+        )
 
     def pre_validate(self, obj):
         if not LifeCycle.is_done(obj.status):

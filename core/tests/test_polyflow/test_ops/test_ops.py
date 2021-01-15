@@ -18,7 +18,7 @@ import pytest
 
 from marshmallow import ValidationError
 
-from polyaxon.polyflow import V1EventKind, V1Hook, V1RunKind
+from polyaxon.polyflow import V1EventKind, V1Hook, V1Param, V1RunKind
 from polyaxon.polyflow.operations import V1Operation
 from tests.utils import BaseTestCase
 
@@ -469,8 +469,20 @@ class TestV1Operations(BaseTestCase):
             "presets": ["pre1", "pre2"],
         }
         hook = V1Hook.from_dict(config_dict)
-        op = V1Operation.from_hook(hook)
+
+        op = V1Operation.from_hook(hook, None, None, None)
         assert op.run_patch["connections"] == [hook.connection]
         assert op.hub_ref == hook.hub_ref
         assert op.params == hook.params
+        assert op.presets == hook.presets
+
+        op = V1Operation.from_hook(hook, {"in1": "v1"}, {"out1": "v1"}, {"c1": "v1"})
+        assert op.run_patch["connections"] == [hook.connection]
+        assert op.hub_ref == hook.hub_ref
+        assert op.params == {
+            **hook.params,
+            "inputs": V1Param(value={"in1": "v1"}, context_only=True),
+            "outputs": V1Param(value={"out1": "v1"}, context_only=True),
+            "condition": V1Param(value={"c1": "v1"}, context_only=True),
+        }
         assert op.presets == hook.presets

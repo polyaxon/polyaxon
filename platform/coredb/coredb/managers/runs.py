@@ -65,6 +65,7 @@ def resume_run(
     content: str = None,
     readme: str = None,
     tags: List[str] = None,
+    message=None,
 ) -> BaseRun:
     op_spec = V1Operation.read(run.raw_content)
     compiled_operation, instance = operations.init_run(
@@ -89,7 +90,10 @@ def resume_run(
     new_run_status(
         run,
         condition=V1StatusCondition.get_condition(
-            type=V1Statuses.RESUMING, status=True
+            type=V1Statuses.RESUMING,
+            status=True,
+            reason="ResumeManager",
+            message=message,
         ),
     )
     return run

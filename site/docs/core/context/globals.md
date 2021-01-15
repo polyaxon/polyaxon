@@ -53,7 +53,24 @@ If the Polyaxonfile contains a service runtime, the globals prefix will include 
  * `{{ globals.base_url }}`
  * `{{ globals.ports }}`
 
-## Usage in references
+## Schedules
+
+When an operation is automatically created by a [schedule](/docs/automation/schedules/), the globals prefix will include additionally these information:
+
+ * `{{ globals.schedule_at }}`: Datetime when the operation was supposed to be scheduled. 
+
+## Contexts and references
+
+### Additional values
+
+The context globals includes additional fields when used with a reference: 
+
+ * `{{ globals.status }}`: The last status of the reference operation.
+ * `{{ globals.condition }}`: The last condition of the reference operation.
+ * `{{ globals.finished_at }}`: The datetime when the operation finished.
+ * `{{ globals.duration }}`: The duration of the operation.
+
+### Usage
 
 It's very important to note that when a param uses `globals.*`, it will depend on whether that param is literal or a reference, for example:
 

@@ -27,10 +27,7 @@ from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_API
 from polyaxon.exceptions import PolypodException
 from polyaxon.k8s import k8s_schemas
 from polyaxon.polyflow import V1Environment, V1Init, V1Plugins
-from polyaxon.polypod.common.containers import (
-    ensure_container_name,
-    sanitize_container,
-)
+from polyaxon.polypod.common.containers import ensure_container_name, sanitize_container
 from polyaxon.polypod.common.env_vars import (
     get_base_env_vars,
     get_env_var,

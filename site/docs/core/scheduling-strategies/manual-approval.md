@@ -16,7 +16,7 @@ sidebar: "core"
 
 There are several situations when an operation or a pipeline might require some manual approval to continue.
 
-Polyaxon provides an flag `isApproved: false` to perform human in the loop pattern. This flag can be set:
+Polyaxon provides a flag `isApproved: false` to perform human in the loop pattern. This flag can be set:
  * As default configuration on the [component level](/docs/core/specification/component/#isapproved).
  * On [per operation basis](/docs/core/specification/operation/#isapproved).
  * Via a [preset](/docs/core/scheduling-strategies/presets/).
