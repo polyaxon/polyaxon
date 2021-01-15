@@ -1,5 +1,5 @@
 ---
-title: "Resume & restart"
+title: "Resume & Restart"
 sub_link: "scheduling-strategies/resume-restart"
 meta_title: "Resume, restart, and copy previous operation runs in Polyaxon - scheduling strategies"
 meta_description: "A feature to resume, restart, and copy previous operation runs in Polyaxon."

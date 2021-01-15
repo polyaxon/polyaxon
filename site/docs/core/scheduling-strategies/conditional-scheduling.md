@@ -1,5 +1,5 @@
 ---
-title: "Conditional scheduling"
+title: "Conditional Scheduling"
 sub_link: "scheduling-strategies/conditional-scheduling"
 meta_title: "How to conditionally schedule operations in Polyaxon - scheduling strategies"
 meta_description: "A feature to start operations on nodes or queues based on inputs data or to completely skip scheduling."
@@ -26,7 +26,7 @@ Conditional list of presets based on the value of some parameter value:
 presets: {{ [preset1] if input_param == value_condition else list2 }}
 ```
 
-Parametrized the complete list and resolve it from the context:
+Parametrized list of presets:
 
 ```yaml
 presets: {{ input_param | list }}
@@ -40,13 +40,13 @@ Conditional queue based on the value of some parameter value:
 queue: {{ AGENT_X1/QUEUE_Y1 if input_param == value_condition else AGENT_2/QUEUE_2 }}
 ```
 
-Parametrized agent and/or queue values
+Parametrized agent and/or queue values:
 
 ```yaml
 queue: {{ agent_param }}/{{ queue_param }}
 ```
 
-Parametrized agent and queue
+Parametrized agent and queue:
 
 ```yaml
 queue: {{ fqn_queue_param }}
@@ -55,7 +55,7 @@ queue: {{ fqn_queue_param }}
 
 ## Templating the environment section
 
-Example with `nodeSelector`
+Example with `nodeSelector`:
 
 ```yaml
 environment:
@@ -63,14 +63,14 @@ environment:
     "{{ node_param }}": "node-{{ node_label }}"
 ```
 
-Conditional node name
+Conditional node name:
 
 ```yaml
 environment:
  nodeName: "{{ node_name1 if input_param == value_condition else node_name2 }}"
 ```
 
-Parametrized node name
+Parametrized node name:
 
 ```yaml
 environment:

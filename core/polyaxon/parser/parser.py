@@ -1170,7 +1170,7 @@ def parse_s3_path(s3_path):
 
 
 TYPE_MAPPING = {
-    types.ANY: lambda x: x,
+    types.ANY: lambda key, value, **kwargs: value,
     types.INT: get_int,
     types.FLOAT: get_float,
     types.BOOL: get_boolean,

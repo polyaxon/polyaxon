@@ -1,5 +1,5 @@
 ---
-title: "Concurrency Management"
+title: "Workflow Concurrency Management"
 sub_link: "helpers/concurrency"
 meta_title: "Concurrency - Polyaxon Specification"
 meta_description: "Polyaxon manages concurrency on pipeline level and on queue level."

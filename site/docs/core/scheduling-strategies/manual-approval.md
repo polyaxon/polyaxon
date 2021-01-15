@@ -1,5 +1,5 @@
 ---
-title: "Manual approval"
+title: "Manual Approval"
 sub_link: "scheduling-strategies/manual-approval"
 meta_title: "How to suspend operations and workflows until a user approves them - scheduling strategies"
 meta_description: "A feature to pause and suspend operations and pipelines and wait for human approval to resume the work."

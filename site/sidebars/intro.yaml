@@ -31,8 +31,14 @@
       link: /docs/intro/how-tos/
     - title: Using service accounts
       link: /docs/intro/how-tos/service-accounts/
+    - title: Configuring pod security context
+      link: /docs/intro/how-tos/security-context/
     - title: Mounting volumes manually
       link: /docs/intro/how-tos/mounting-volumes/
+    - title: Mounting secrets manually
+      link: /docs/intro/how-tos/mounting-secrets/
+    - title: Mounting configmaps manually
+      link: /docs/intro/how-tos/mounting-configmaps/
     - title: Handling Termination
       link: /docs/intro/how-tos/handling-termination/
   - group: Features & Architecture

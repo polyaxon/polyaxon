@@ -135,6 +135,15 @@ def runs_prepare(run_id: int, run: Optional[BaseRun], eager: bool = False) -> bo
         )
         new_run_status(run=run, condition=condition)
         return False
+    except Exception as e:
+        condition = V1StatusCondition.get_condition(
+            type=V1Statuses.FAILED,
+            status="True",
+            reason="SchedulerPrepare",
+            message=f"Compiler received an internal error: {e}",
+        )
+        new_run_status(run=run, condition=condition)
+        return False
 
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.COMPILED,

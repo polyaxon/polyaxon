@@ -35,6 +35,8 @@ Hooks can be used to:
 ## Limitation
 
 Compared to DAGs, Hooks have no concurrency management and can only trigger if a final state is met.
+When an operation defines a list of hooks, Polyaxon will fan-out all hooks that validate their trigger and conditions. 
+If you need to manage priority or concurrency, or throttle some hook types, you can assign them to specific queues. 
 
 ## Available events
 

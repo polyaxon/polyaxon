@@ -93,13 +93,17 @@
       link: /docs/core/scheduling-strategies/resources-scheduling/
     - title: Routing with Queues
       link: /docs/core/scheduling-strategies/queue-routing/
+    - title: Concurrency Management
+      link: /docs/core/scheduling-strategies/concurrency-management/
     - title: Scheduling Presets
       link: /docs/core/scheduling-strategies/presets/
-    - title: Resume & restart
+    - title: Resume & Restart
       link: /docs/core/scheduling-strategies/resume-restart/
     - title: Conditional Scheduling
       link: /docs/core/scheduling-strategies/conditional-scheduling/
-    - title: Manual approval
+    - title: Manual Approval
       link: /docs/core/scheduling-strategies/manual-approval/
     - title: Operations Caching
       link: /docs/core/scheduling-strategies/operations-caching/
+    - title: External Scheduling
+      link: /docs/core/scheduling-strategies/external-scheduling/

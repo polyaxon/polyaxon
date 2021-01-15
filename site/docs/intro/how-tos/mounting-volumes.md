@@ -1,8 +1,8 @@
 ---
 title: "How to mount volumes manually"
 sub_link: "how-tos/mounting-volumes"
-meta_title: "A guide on using a custom service for starting operations - Core Concepts"
-meta_description: "All pods managed by Polyaxon use the default service account created during the deployment of Polyaxon CE or Polyaxon Agent, however you can use specific service accounts on per operation level."
+meta_title: "A guide on mounting volumes manually - Core Concepts"
+meta_description: "While we generally recommend that users should leverage the connection interface to configure and abstract requesting and mounting volumes, it's possible to mount volumes manually."
 is_index: true
 visibility: public
 status: published
@@ -44,10 +44,11 @@ run:
       mountPath: /mnt2/vol2/path
 ```
 
-## Moving Volumes to Connections
+## Moving Volumes to connections
 
 If you find yourself defining the same volumes in all operations, or if you have non-Kubernetes experts using Polyaxon, 
-we suggest that you define those volumes as connections, by doing so, users of the cluster will just request those volumes using a single line:
+we suggest that you define those volumes as [connections](/integrations/data-on-pvc/), by doing so, 
+users of the cluster will just request those volumes using a single line:
 
 ```yaml
 kind: component
@@ -57,4 +58,4 @@ run:
   connections: [volume1, volume2]
 ```
 
-Polyaxon will take care of the mechanics of converting those connections to the volumes and mounts.
+Polyaxon will take care of the mechanics of converting those connections to volumes and mounts.

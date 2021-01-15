@@ -5,6 +5,8 @@
       link: /docs/automation/flow-engine/
     - title: Specification
       link: /docs/automation/flow-engine/specification/
+    - title: Flow Dependencies
+      link: /docs/automation/flow-engine/flow-dependencies/
   - group: Optmization Engine
     items:
     - title: Overview
