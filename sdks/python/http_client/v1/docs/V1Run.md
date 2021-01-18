@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **updated_at** | **datetime** |  | [optional] 
 **started_at** | **datetime** |  | [optional] 
 **finished_at** | **datetime** |  | [optional] 
+**wait_time** | **int** |  | [optional] 
 **duration** | **int** |  | [optional] 
 **is_managed** | **bool** |  | [optional] 
 **is_approved** | **bool** |  | [optional] 
@@ -32,8 +33,8 @@ Name | Type | Description | Notes
 **original** | [**V1Cloning**](V1Cloning.md) |  | [optional] 
 **pipeline** | [**V1Pipeline**](V1Pipeline.md) |  | [optional] 
 **status_conditions** | [**list[V1StatusCondition]**](V1StatusCondition.md) |  | [optional] 
-**settings** | [**V1RunSettings**](V1RunSettings.md) |  | [optional] 
 **role** | **str** |  | [optional] 
+**settings** | [**V1RunSettings**](V1RunSettings.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

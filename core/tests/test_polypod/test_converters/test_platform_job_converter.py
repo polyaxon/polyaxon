@@ -65,6 +65,15 @@ class TestJobConverter(BaseTestCase):
             run_uuid="run_uuid",
         )
 
+    def assert_containers(self, results, expected):
+        for c in results:
+            if "default" not in c.name and "auth" not in c.name:
+                c.name = "-".join(c.name.split("-")[:-1])
+        for c in expected:
+            if "default" not in c.name and "auth" not in c.name:
+                c.name = "-".join(c.name.split("-")[:-1])
+        assert results == expected
+
     def test_get_main_env_vars(self):
         env_vars = self.converter.get_main_env_vars()
         assert env_vars == self.converter.get_service_env_vars(
@@ -131,14 +140,17 @@ class TestJobConverter(BaseTestCase):
             init_containers=[],
             polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
         )
-        assert containers == [
-            get_artifacts_path_container(
-                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
-                artifacts_store=store,
-                run_path=self.converter.run_path,
-                auto_resume=True,
-            ),
-        ]
+        self.assert_containers(
+            containers,
+            [
+                get_artifacts_path_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    artifacts_store=store,
+                    run_path=self.converter.run_path,
+                    auto_resume=True,
+                ),
+            ],
+        )
 
         # Use store for init
         containers = self.converter.get_init_containers(
@@ -149,14 +161,17 @@ class TestJobConverter(BaseTestCase):
             init_containers=[],
             polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
         )
-        assert containers == [
-            get_store_container(
-                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
-                connection=store,
-                artifacts=None,
-                env=self.converter.get_init_service_env_vars(),
-            )
-        ]
+        self.assert_containers(
+            containers,
+            [
+                get_store_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    connection=store,
+                    artifacts=None,
+                    env=self.converter.get_init_service_env_vars(),
+                )
+            ],
+        )
 
         # Use store for init and outputs
         containers = self.converter.get_init_containers(
@@ -169,25 +184,28 @@ class TestJobConverter(BaseTestCase):
             init_containers=[],
             polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
         )
-        assert containers == [
-            get_artifacts_path_container(
-                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
-                artifacts_store=store,
-                run_path=self.converter.run_path,
-                auto_resume=True,
-            ),
-            get_store_container(
-                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
-                connection=store,
-                artifacts=None,
-                env=self.converter.get_init_service_env_vars(),
-                is_default_artifacts_store=True,
-            ),
-        ]
+        self.assert_containers(
+            containers,
+            [
+                get_artifacts_path_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    artifacts_store=store,
+                    run_path=self.converter.run_path,
+                    auto_resume=True,
+                ),
+                get_store_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    connection=store,
+                    artifacts=None,
+                    env=self.converter.get_init_service_env_vars(),
+                    is_default_artifacts_store=True,
+                ),
+            ],
+        )
 
         # Add Store
         store1 = V1ConnectionType(
-            name="test_gcs",
+            name="test_s3",
             kind=V1ConnectionKind.S3,
             schema=V1BucketConnection(bucket="s3://foo"),
             secret=None,
@@ -216,35 +234,38 @@ class TestJobConverter(BaseTestCase):
             init_containers=[],
             polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
         )
-        assert containers == [
-            get_auth_context_container(
-                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
-                env=self.converter.get_auth_service_env_vars(),
-            ),
-            get_artifacts_path_container(
-                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
-                artifacts_store=store,
-                run_path=self.converter.run_path,
-                auto_resume=True,
-            ),
-            get_store_container(
-                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
-                connection=store,
-                artifacts=V1ArtifactsType(
-                    files=["/foo", "/bar", ["from-foo", "to-foo"]]
+        self.assert_containers(
+            containers,
+            [
+                get_auth_context_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    env=self.converter.get_auth_service_env_vars(),
                 ),
-                env=self.converter.get_init_service_env_vars(),
-                is_default_artifacts_store=True,
-            ),
-            get_store_container(
-                polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
-                connection=store1,
-                artifacts=V1ArtifactsType(
-                    files=["/foo", "/bar", ["from-foo", "to-foo"]]
+                get_artifacts_path_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    artifacts_store=store,
+                    run_path=self.converter.run_path,
+                    auto_resume=True,
                 ),
-                env=self.converter.get_init_service_env_vars(),
-            ),
-        ]
+                get_store_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    connection=store,
+                    artifacts=V1ArtifactsType(
+                        files=["/foo", "/bar", ["from-foo", "to-foo"]]
+                    ),
+                    env=self.converter.get_init_service_env_vars(),
+                    is_default_artifacts_store=True,
+                ),
+                get_store_container(
+                    polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
+                    connection=store1,
+                    artifacts=V1ArtifactsType(
+                        files=["/foo", "/bar", ["from-foo", "to-foo"]]
+                    ),
+                    env=self.converter.get_init_service_env_vars(),
+                ),
+            ],
+        )
 
     def test_get_init_containers_with_dockerfiles(self):
         dockerfile_args1 = V1DockerfileType(
@@ -269,8 +290,6 @@ class TestJobConverter(BaseTestCase):
             connection_by_names={},
             polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
         )
-        for container in containers:
-            container.name = ""
         expected_containers = [
             get_dockerfile_init_container(
                 dockerfile_args=dockerfile_args1,
@@ -290,10 +309,8 @@ class TestJobConverter(BaseTestCase):
                 run_instance=self.converter.run_instance,
             ),
         ]
-        for container in expected_containers:
-            container.name = ""
 
-        assert expected_containers == containers
+        self.assert_containers(expected_containers, containers)
 
     def test_get_init_containers_with_git_without_connection(self):
         git1 = V1GitConnection(revision="test", url="https://test.com")
@@ -313,7 +330,7 @@ class TestJobConverter(BaseTestCase):
             connection_by_names={},
             polyaxon_init=V1PolyaxonInitContainer(image="foo/foo"),
         )
-        assert containers == [
+        expected_containers = [
             get_git_init_container(
                 connection=V1ConnectionType(
                     name=git1.get_name(), kind=V1ConnectionKind.GIT, schema=git1
@@ -333,6 +350,7 @@ class TestJobConverter(BaseTestCase):
                 contexts=None,
             ),
         ]
+        self.assert_containers(expected_containers, containers)
 
     def test_get_init_containers_with_store_outputs(self):
         store = V1ConnectionType(

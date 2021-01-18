@@ -46,7 +46,7 @@ type V1Run struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
-	// Optional run time of the entity
+	// Optional duration of the entity
 	Duration int32 `json:"duration,omitempty"`
 
 	// Optional last time the entity was started
@@ -130,6 +130,9 @@ type V1Run struct {
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
+
+	// Optional wait time of the entity
+	WaitTime int32 `json:"wait_time,omitempty"`
 }
 
 // Validate validates this v1 run

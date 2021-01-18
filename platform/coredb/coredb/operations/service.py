@@ -214,7 +214,7 @@ class OperationsService(Service):
                 V1StatusCondition.get_condition(
                     type=V1Statuses.CREATED,
                     status="True",
-                    reason=kwargs.pop("reason", "PolyaxonRunCreated"),
+                    reason=kwargs.pop("reason", "OperationServiceInit"),
                     message=kwargs.pop("message", "Run is created"),
                 ).to_dict()
             ],

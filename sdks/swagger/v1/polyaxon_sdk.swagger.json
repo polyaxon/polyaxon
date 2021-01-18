@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -5062,6 +5062,108 @@
             "schema": {
               "$ref": "#/definitions/v1Organization"
             }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/stats": {
+      "get": {
+        "summary": "Get organization stats",
+        "operationId": "GetOrganizationStats",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "kind",
+            "description": "Stats Kind.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aggregate",
+            "description": "Stats aggregate.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "groupby",
+            "description": "Stats group.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "trunc",
+            "description": "Stats trunc.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -10147,6 +10249,94 @@
         ]
       }
     },
+    "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones": {
+      "get": {
+        "summary": "Get run clones lineage",
+        "operationId": "GetRunClonesLineage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRunsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity",
+            "description": "Entity name under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "SubEntity uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections": {
       "get": {
         "summary": "Get run connections lineage",
@@ -10574,6 +10764,122 @@
             "description": "Uuid identifier of the sub-entity",
             "in": "path",
             "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{entity}/runs/{uuid}/stats": {
+      "get": {
+        "summary": "Get run stats",
+        "operationId": "GetRunStats",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity",
+            "description": "Entity name under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "SubEntity uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "kind",
+            "description": "Stats Kind.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aggregate",
+            "description": "Stats aggregate.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "groupby",
+            "description": "Stats group.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "trunc",
+            "description": "Stats trunc.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -11898,6 +12204,115 @@
             "description": "Component under namesapce",
             "in": "path",
             "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{name}/stats": {
+      "get": {
+        "summary": "Get run stats",
+        "operationId": "GetProjectStats",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Entity managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "kind",
+            "description": "Stats Kind.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aggregate",
+            "description": "Stats aggregate.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "groupby",
+            "description": "Stats group.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "trunc",
+            "description": "Stats trunc.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -15199,11 +15614,8 @@
           "title": "Optional trigger policy"
         },
         "conditions": {
-          "type": "array",
-          "items": {
-            "type": "object"
-          },
-          "title": "An optional list of condition to check before starting the run, entities should be a valid Condition"
+          "type": "string",
+          "title": "An optional template containing conditions to check before starting the run"
         },
         "skip_on_upstream_skip": {
           "type": "boolean",
@@ -16685,11 +17097,8 @@
           "title": "Component name to use"
         },
         "conditions": {
-          "type": "array",
-          "items": {
-            "type": "object"
-          },
-          "title": "An optional list of condition to check before starting the run, entities should be a valid Condition"
+          "type": "string",
+          "title": "An optional template containing conditions to check before starting the run"
         },
         "params": {
           "type": "object",
@@ -16703,6 +17112,10 @@
           "items": {
             "type": "string"
           },
+          "title": "Optional preset to use for running this operation"
+        },
+        "disableDefaults": {
+          "type": "boolean",
           "title": "Optional preset to use for running this operation"
         }
       },
@@ -18554,11 +18967,8 @@
           "title": "Optional trigger policy"
         },
         "conditions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "An optional list of condition to check before starting the run, entities should be a valid Condition"
+          "type": "string",
+          "title": "An optional template containing conditions to check before starting the run"
         },
         "skip_on_upstream_skip": {
           "type": "boolean",
@@ -19390,10 +19800,15 @@
           "format": "date-time",
           "title": "Optional last time the entity was started"
         },
+        "wait_time": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Optional wait time of the entity"
+        },
         "duration": {
           "type": "integer",
           "format": "int32",
-          "title": "Optional run time of the entity"
+          "title": "Optional duration of the entity"
         },
         "is_managed": {
           "type": "boolean",
@@ -19463,13 +19878,13 @@
           },
           "title": "The status conditions timeline"
         },
-        "settings": {
-          "$ref": "#/definitions/v1RunSettings",
-          "title": "Optional settings"
-        },
         "role": {
           "type": "string",
           "title": "Current user's role in this (org/teams)/project/runs"
+        },
+        "settings": {
+          "$ref": "#/definitions/v1RunSettings",
+          "title": "Optional settings"
         }
       },
       "title": "Run specification"
@@ -19885,6 +20300,10 @@
         "columns": {
           "type": "string",
           "title": "Search columns"
+        },
+        "pins": {
+          "type": "string",
+          "title": "Search pins"
         }
       },
       "title": "Search spec definition"

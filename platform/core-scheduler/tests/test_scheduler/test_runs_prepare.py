@@ -136,14 +136,15 @@ class TestRunsPrepare(BaseTest):
     def test_prepare_run_of_already_failed_run_mock(
         self, mock_resolve, mock_prepare_run, mock_start_run
     ):
-        spec_run = MagicMock(cache=V1Cache(disable=True))
-        mock_resolve.return_value = (None, spec_run)
-        experiment = RunFactory(
-            project=self.project, user=self.user, raw_content="test", is_managed=True
-        )
-        # We are patching the automatic call and executing prepare manually
-        runs_prepare(run_id=experiment.id)
-        experiment.refresh_from_db()
-        assert experiment.status == V1Statuses.COMPILED
-        assert mock_prepare_run.call_count == 1  # Automatic call from executor
-        assert mock_start_run.call_count == 1
+        with mock.patch("django.db.transaction.on_commit", lambda t: t()):
+            spec_run = MagicMock(cache=V1Cache(disable=True))
+            mock_resolve.return_value = (None, spec_run)
+            experiment = RunFactory(
+                project=self.project, user=self.user, raw_content="test", is_managed=True
+            )
+            # We are patching the automatic call and executing prepare manually
+            runs_prepare(run_id=experiment.id)
+            experiment.refresh_from_db()
+            assert experiment.status == V1Statuses.COMPILED
+            assert mock_prepare_run.call_count == 1  # Automatic call from executor
+            assert mock_start_run.call_count == 1

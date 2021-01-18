@@ -27,6 +27,9 @@ def set_started_at(run: BaseRun) -> bool:
 
     if LifeCycle.is_running(run.status):
         run.started_at = now()
+        # Update wait_time
+        if run.wait_time is None:
+            run.wait_time = (run.started_at - run.created_at).seconds
         return True
 
     return False

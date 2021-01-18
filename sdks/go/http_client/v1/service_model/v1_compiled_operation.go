@@ -36,8 +36,8 @@ type V1CompiledOperation struct {
 	// Optional flag to disable cache validation and force run this component
 	Cache *V1Cache `json:"cache,omitempty"`
 
-	// An optional list of condition to check before starting the run, entities should be a valid Condition
-	Conditions []interface{} `json:"conditions"`
+	// An optional template containing conditions to check before starting the run
+	Conditions string `json:"conditions,omitempty"`
 
 	// Optional outputs definition
 	Contexts []*V1IO `json:"contexts"`

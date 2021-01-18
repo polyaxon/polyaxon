@@ -20,6 +20,7 @@ package v1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
 import "v1/api/agent.proto";
@@ -48,7 +49,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.5.1";
+        version: "1.5.2";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -392,6 +393,20 @@ service RunsV1 {
     };
   }
 
+  // Get run clones lineage
+  rpc GetRunClonesLineage(OwnerSubEntityResourceListRequestByUid) returns (ListRunsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones"
+    };
+  }
+
+  // Get run stats
+  rpc GetRunStats(OwnerSubEntityStatsRequestByUid) returns (google.protobuf.Struct) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/{entity}/runs/{uuid}/stats"
+    };
+  }
+
   // Notify run status
   rpc NotifyRunStatus(EntityNotificationBody) returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -557,6 +572,13 @@ service ProjectsV1 {
   rpc EnableProjectCI(OwnerEntityResourceRequestByName) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/api/v1/{owner}/{name}/ci"
+    };
+  }
+
+  // Get run stats
+  rpc GetProjectStats(OwnerEntityStatsRequest) returns (google.protobuf.Struct) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/{name}/stats"
     };
   }
 
@@ -1646,6 +1668,13 @@ service OrganizationsV1 {
   rpc DeleteOrganization(OwnerResourceRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/api/v1/orgs/{owner}"
+    };
+  }
+
+  // Get organization stats
+  rpc GetOrganizationStats(OwnerStatsRequest) returns (google.protobuf.Struct) {
+    option (google.api.http) = {
+      get: "/api/v1/orgs/{owner}/stats"
     };
   }
 

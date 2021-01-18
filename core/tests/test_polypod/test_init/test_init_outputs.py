@@ -82,7 +82,7 @@ class TestInitOutputsStore(BaseTestCase):
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="default"),
             container_name=generate_container_name(
-                INIT_ARTIFACTS_CONTAINER_PREFIX, "default"
+                INIT_ARTIFACTS_CONTAINER_PREFIX, "default", False
             ),
             polyaxon_init=V1PolyaxonInitContainer(
                 image="init", image_pull_policy="IfNotPresent"
@@ -121,7 +121,7 @@ class TestInitOutputsStore(BaseTestCase):
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="default"),
             container_name=generate_container_name(
-                INIT_ARTIFACTS_CONTAINER_PREFIX, "default"
+                INIT_ARTIFACTS_CONTAINER_PREFIX, "default", False
             ),
             polyaxon_init=V1PolyaxonInitContainer(
                 image="init", image_pull_policy="IfNotPresent"
@@ -160,7 +160,7 @@ class TestInitOutputsStore(BaseTestCase):
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="init"),
             container_name=generate_container_name(
-                INIT_ARTIFACTS_CONTAINER_PREFIX, "default"
+                INIT_ARTIFACTS_CONTAINER_PREFIX, "default", False
             ),
             polyaxon_init=V1PolyaxonInitContainer(
                 image="init", image_pull_policy="IfNotPresent"
@@ -185,7 +185,7 @@ class TestInitOutputsStore(BaseTestCase):
         assert container == get_base_store_container(
             container=k8s_schemas.V1Container(name="init"),
             container_name=generate_container_name(
-                INIT_ARTIFACTS_CONTAINER_PREFIX, "default"
+                INIT_ARTIFACTS_CONTAINER_PREFIX, "default", False
             ),
             polyaxon_init=V1PolyaxonInitContainer(
                 image="init", image_pull_policy="IfNotPresent"

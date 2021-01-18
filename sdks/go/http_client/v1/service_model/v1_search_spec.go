@@ -38,6 +38,9 @@ type V1SearchSpec struct {
 	// Limit size
 	Limit int32 `json:"limit,omitempty"`
 
+	// Search pins
+	Pins string `json:"pins,omitempty"`
+
 	// Search query
 	Query string `json:"query,omitempty"`
 

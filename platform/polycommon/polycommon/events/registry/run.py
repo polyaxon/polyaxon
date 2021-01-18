@@ -65,6 +65,9 @@ RUN_COPIED_ACTOR = "{}.{}.{}".format(
 RUN_SKIPPED_ACTOR = "{}.{}.{}".format(
     event_subjects.RUN, event_actions.SKIPPED, event_subjects.ACTOR
 )
+RUN_STATS_ACTOR = "{}.{}.{}".format(
+    event_subjects.RUN, event_actions.STATS, event_subjects.ACTOR
+)
 
 EVENTS = {
     RUN_CREATED,
@@ -87,6 +90,7 @@ EVENTS = {
     RUN_RESTARTED_ACTOR,
     RUN_COPIED_ACTOR,
     RUN_SKIPPED_ACTOR,
+    RUN_STATS_ACTOR,
 }
 
 
@@ -200,4 +204,9 @@ class RunCopiedActorEvent(RunActorEvent):
 
 class RunSkippedActorEvent(RunActorEvent):
     event_type = RUN_SKIPPED_ACTOR
+    attributes = PROJECT_RESOURCE_OWNER_ATTRIBUTES
+
+
+class RunStatsActorEvent(RunActorEvent):
+    event_type = RUN_STATS_ACTOR
     attributes = PROJECT_RESOURCE_OWNER_ATTRIBUTES

@@ -39,8 +39,8 @@ type V1Operation struct {
 	// component
 	Component *V1Component `json:"component,omitempty"`
 
-	// An optional list of condition to check before starting the run, entities should be a valid Condition
-	Conditions []string `json:"conditions"`
+	// An optional template containing conditions to check before starting the run
+	Conditions string `json:"conditions,omitempty"`
 
 	// dag ref
 	DagRef string `json:"dag_ref,omitempty"`

@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**get_organization_invitation**](OrganizationsV1Api.md#get_organization_invitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 [**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{name} | Get organization member details
 [**get_organization_settings**](OrganizationsV1Api.md#get_organization_settings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
+[**get_organization_stats**](OrganizationsV1Api.md#get_organization_stats) | **GET** /api/v1/orgs/{owner}/stats | Get organization stats
 [**list_organization_member_names**](OrganizationsV1Api.md#list_organization_member_names) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 [**list_organization_members**](OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 [**list_organization_names**](OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/orgs/names | List organizations names
@@ -770,6 +771,101 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Organization**](V1Organization.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_organization_stats**
+> object get_organization_stats(owner, offset=offset, limit=limit, sort=sort, query=query, kind=kind, aggregate=aggregate, groupby=groupby, trunc=trunc)
+
+Get organization stats
+
+### Example
+
+* Api Key Authentication (ApiKey):
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.OrganizationsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
+offset = 56 # int | Pagination offset. (optional)
+limit = 56 # int | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
+kind = 'kind_example' # str | Stats Kind. (optional)
+aggregate = 'aggregate_example' # str | Stats aggregate. (optional)
+groupby = 'groupby_example' # str | Stats group. (optional)
+trunc = 'trunc_example' # str | Stats trunc. (optional)
+
+    try:
+        # Get organization stats
+        api_response = api_instance.get_organization_stats(owner, offset=offset, limit=limit, sort=sort, query=query, kind=kind, aggregate=aggregate, groupby=groupby, trunc=trunc)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling OrganizationsV1Api->get_organization_stats: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
+ **kind** | **str**| Stats Kind. | [optional] 
+ **aggregate** | **str**| Stats aggregate. | [optional] 
+ **groupby** | **str**| Stats group. | [optional] 
+ **trunc** | **str**| Stats trunc. | [optional] 
+
+### Return type
+
+**object**
 
 ### Authorization
 

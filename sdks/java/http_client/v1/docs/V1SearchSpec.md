@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **limit** | **Integer** |  |  [optional]
 **groupby** | **String** |  |  [optional]
 **columns** | **String** |  |  [optional]
+**pins** | **String** |  |  [optional]
 
 
 

@@ -65,14 +65,14 @@ message Agent {
     google.protobuf.Struct settings = 13;
 }
 
- // Request data to create/update agents
- message AgentBodyRequest {
+// Request data to create/update agents
+message AgentBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
     // Agent body
     Agent agent = 2;
- }
+}
 
 
 // Contains list agents

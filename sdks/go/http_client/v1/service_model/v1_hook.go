@@ -31,11 +31,14 @@ import (
 // swagger:model v1Hook
 type V1Hook struct {
 
-	// An optional list of condition to check before starting the run, entities should be a valid Condition
-	Conditions []interface{} `json:"conditions"`
+	// An optional template containing conditions to check before starting the run
+	Conditions string `json:"conditions,omitempty"`
 
 	// Optional connection
 	Connection string `json:"connection,omitempty"`
+
+	// Optional preset to use for running this operation
+	DisableDefaults bool `json:"disableDefaults,omitempty"`
 
 	// Component name to use
 	HubRef string `json:"hub_ref,omitempty"`

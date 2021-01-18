@@ -87,6 +87,8 @@ type ClientService interface {
 
 	GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error)
 
+	GetRunClonesLineage(params *GetRunClonesLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunClonesLineageOK, *GetRunClonesLineageNoContent, error)
+
 	GetRunConnectionsLineage(params *GetRunConnectionsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunConnectionsLineageOK, *GetRunConnectionsLineageNoContent, error)
 
 	GetRunDownstreamLineage(params *GetRunDownstreamLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunDownstreamLineageOK, *GetRunDownstreamLineageNoContent, error)
@@ -100,6 +102,8 @@ type ClientService interface {
 	GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunResourcesOK, *GetRunResourcesNoContent, error)
 
 	GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunSettingsOK, *GetRunSettingsNoContent, error)
+
+	GetRunStats(params *GetRunStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatsOK, *GetRunStatsNoContent, error)
 
 	GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error)
 
@@ -979,6 +983,42 @@ func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo
 }
 
 /*
+  GetRunClonesLineage gets run clones lineage
+*/
+func (a *Client) GetRunClonesLineage(params *GetRunClonesLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunClonesLineageOK, *GetRunClonesLineageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunClonesLineageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunClonesLineage",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunClonesLineageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunClonesLineageOK:
+		return value, nil, nil
+	case *GetRunClonesLineageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunClonesLineageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetRunConnectionsLineage gets run connections lineage
 */
 func (a *Client) GetRunConnectionsLineage(params *GetRunConnectionsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunConnectionsLineageOK, *GetRunConnectionsLineageNoContent, error) {
@@ -1227,6 +1267,42 @@ func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.C
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetRunSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetRunStats gets run stats
+*/
+func (a *Client) GetRunStats(params *GetRunStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatsOK, *GetRunStatsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunStatsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunStats",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{entity}/runs/{uuid}/stats",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunStatsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunStatsOK:
+		return value, nil, nil
+	case *GetRunStatsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunStatsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

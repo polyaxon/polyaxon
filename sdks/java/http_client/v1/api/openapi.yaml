@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.5.1
+  version: 1.5.2
 servers:
 - url: /
 security:
@@ -4911,6 +4911,93 @@ paths:
       - OrganizationsV1
       x-codegen-request-body-name: body
       x-contentType: application/json
+      x-accepts: application/json
+  /api/v1/orgs/{owner}/stats:
+    get:
+      operationId: GetOrganizationStats
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Stats Kind.
+        in: query
+        name: kind
+        schema:
+          type: string
+      - description: Stats aggregate.
+        in: query
+        name: aggregate
+        schema:
+          type: string
+      - description: Stats group.
+        in: query
+        name: groupby
+        schema:
+          type: string
+      - description: Stats trunc.
+        in: query
+        name: trunc
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get organization stats
+      tags:
+      - OrganizationsV1
       x-accepts: application/json
   /api/v1/orgs/{owner}/teams:
     get:
@@ -9887,6 +9974,85 @@ paths:
       tags:
       - RunsV1
       x-accepts: application/json
+  /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones:
+    get:
+      operationId: GetRunClonesLineage
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity name under namesapce
+        in: path
+        name: entity
+        required: true
+        schema:
+          type: string
+      - description: SubEntity uuid
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListRunsResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get run clones lineage
+      tags:
+      - RunsV1
+      x-accepts: application/json
   /api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections:
     get:
       operationId: GetRunConnectionsLineage
@@ -10289,6 +10455,105 @@ paths:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
       summary: Get Run settings
+      tags:
+      - RunsV1
+      x-accepts: application/json
+  /api/v1/{owner}/{entity}/runs/{uuid}/stats:
+    get:
+      operationId: GetRunStats
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity name under namesapce
+        in: path
+        name: entity
+        required: true
+        schema:
+          type: string
+      - description: SubEntity uuid
+        in: path
+        name: uuid
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Stats Kind.
+        in: query
+        name: kind
+        schema:
+          type: string
+      - description: Stats aggregate.
+        in: query
+        name: aggregate
+        schema:
+          type: string
+      - description: Stats group.
+        in: query
+        name: groupby
+        schema:
+          type: string
+      - description: Stats trunc.
+        in: query
+        name: trunc
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get run stats
       tags:
       - RunsV1
       x-accepts: application/json
@@ -11560,6 +11825,99 @@ paths:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
       summary: Get Project settings
+      tags:
+      - ProjectsV1
+      x-accepts: application/json
+  /api/v1/{owner}/{name}/stats:
+    get:
+      operationId: GetProjectStats
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity managing the resource
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Stats Kind.
+        in: query
+        name: kind
+        schema:
+          type: string
+      - description: Stats aggregate.
+        in: query
+        name: aggregate
+        schema:
+          type: string
+      - description: Stats group.
+        in: query
+        name: groupby
+        schema:
+          type: string
+      - description: Stats trunc.
+        in: query
+        name: trunc
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get run stats
       tags:
       - ProjectsV1
       x-accepts: application/json
@@ -14973,18 +15331,15 @@ components:
         - presets
         name: name
         is_approved: true
-        conditions:
-        - '{}'
-        - '{}'
+        conditions: conditions
         hooks:
         - presets:
           - presets
           - presets
+          disableDefaults: true
           hub_ref: hub_ref
           connection: connection
-          conditions:
-          - '{}'
-          - '{}'
+          conditions: conditions
           params:
             key:
               ref: ref
@@ -14995,11 +15350,10 @@ components:
         - presets:
           - presets
           - presets
+          disableDefaults: true
           hub_ref: hub_ref
           connection: connection
-          conditions:
-          - '{}'
-          - '{}'
+          conditions: conditions
           params:
             key:
               ref: ref
@@ -15073,12 +15427,9 @@ components:
         trigger:
           $ref: '#/components/schemas/v1TriggerPolicy'
         conditions:
-          items:
-            properties: {}
-            type: object
-          title: An optional list of condition to check before starting the run, entities
-            should be a valid Condition
-          type: array
+          title: An optional template containing conditions to check before starting
+            the run
+          type: string
         skip_on_upstream_skip:
           title: Optional flag to skip this run if upstream was skipped
           type: boolean
@@ -15226,11 +15577,10 @@ components:
         - presets:
           - presets
           - presets
+          disableDefaults: true
           hub_ref: hub_ref
           connection: connection
-          conditions:
-          - '{}'
-          - '{}'
+          conditions: conditions
           params:
             key:
               ref: ref
@@ -15241,11 +15591,10 @@ components:
         - presets:
           - presets
           - presets
+          disableDefaults: true
           hub_ref: hub_ref
           connection: connection
-          conditions:
-          - '{}'
-          - '{}'
+          conditions: conditions
           params:
             key:
               ref: ref
@@ -15785,11 +16134,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -15800,11 +16148,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -15921,11 +16268,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -15936,11 +16282,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -16025,11 +16370,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -16040,11 +16384,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -16199,11 +16542,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -16214,11 +16556,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -16232,9 +16573,7 @@ components:
           - presets
           name: name
           is_approved: true
-          conditions:
-          - conditions
-          - conditions
+          conditions: conditions
           queue: queue
         - joins:
             key:
@@ -16283,11 +16622,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -16298,11 +16636,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -16457,11 +16794,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -16472,11 +16808,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -16490,9 +16825,7 @@ components:
           - presets
           name: name
           is_approved: true
-          conditions:
-          - conditions
-          - conditions
+          conditions: conditions
           queue: queue
         kind: dag
         volumes:
@@ -17657,11 +17990,10 @@ components:
         presets:
         - presets
         - presets
+        disableDefaults: true
         hub_ref: hub_ref
         connection: connection
-        conditions:
-        - '{}'
-        - '{}'
+        conditions: conditions
         params:
           key:
             ref: ref
@@ -17679,12 +18011,9 @@ components:
           title: Component name to use
           type: string
         conditions:
-          items:
-            properties: {}
-            type: object
-          title: An optional list of condition to check before starting the run, entities
-            should be a valid Condition
-          type: array
+          title: An optional template containing conditions to check before starting
+            the run
+          type: string
         params:
           additionalProperties:
             $ref: '#/components/schemas/v1Param'
@@ -17695,6 +18024,9 @@ components:
             type: string
           title: Optional preset to use for running this operation
           type: array
+        disableDefaults:
+          title: Optional preset to use for running this operation
+          type: boolean
       title: Hook definition
       type: object
     v1HostAlias:
@@ -19573,7 +19905,7 @@ components:
             created_at: 2000-01-23T04:56:07.000+00:00
             uuid: uuid
             content: content
-            duration: 6
+            duration: 1
             updated_at: 2000-01-23T04:56:07.000+00:00
             meta_info: '{}'
             owner: owner
@@ -19598,9 +19930,10 @@ components:
             original:
               name: name
               uuid: uuid
+            wait_time: 6
             schedule_at: 2000-01-23T04:56:07.000+00:00
             bookmarked: true
-            live_state: 1
+            live_state: 5
             readme: readme
             tags:
             - tags
@@ -19635,7 +19968,7 @@ components:
             created_at: 2000-01-23T04:56:07.000+00:00
             uuid: uuid
             content: content
-            duration: 6
+            duration: 1
             updated_at: 2000-01-23T04:56:07.000+00:00
             meta_info: '{}'
             owner: owner
@@ -19660,9 +19993,10 @@ components:
             original:
               name: name
               uuid: uuid
+            wait_time: 6
             schedule_at: 2000-01-23T04:56:07.000+00:00
             bookmarked: true
-            live_state: 1
+            live_state: 5
             readme: readme
             tags:
             - tags
@@ -19699,7 +20033,7 @@ components:
             created_at: 2000-01-23T04:56:07.000+00:00
             uuid: uuid
             content: content
-            duration: 6
+            duration: 1
             updated_at: 2000-01-23T04:56:07.000+00:00
             meta_info: '{}'
             owner: owner
@@ -19724,9 +20058,10 @@ components:
             original:
               name: name
               uuid: uuid
+            wait_time: 6
             schedule_at: 2000-01-23T04:56:07.000+00:00
             bookmarked: true
-            live_state: 1
+            live_state: 5
             readme: readme
             tags:
             - tags
@@ -19761,7 +20096,7 @@ components:
             created_at: 2000-01-23T04:56:07.000+00:00
             uuid: uuid
             content: content
-            duration: 6
+            duration: 1
             updated_at: 2000-01-23T04:56:07.000+00:00
             meta_info: '{}'
             owner: owner
@@ -19786,9 +20121,10 @@ components:
             original:
               name: name
               uuid: uuid
+            wait_time: 6
             schedule_at: 2000-01-23T04:56:07.000+00:00
             bookmarked: true
-            live_state: 1
+            live_state: 5
             readme: readme
             tags:
             - tags
@@ -19848,7 +20184,7 @@ components:
           created_at: 2000-01-23T04:56:07.000+00:00
           uuid: uuid
           content: content
-          duration: 6
+          duration: 1
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
           owner: owner
@@ -19873,9 +20209,10 @@ components:
           original:
             name: name
             uuid: uuid
+          wait_time: 6
           schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
-          live_state: 1
+          live_state: 5
           readme: readme
           tags:
           - tags
@@ -19908,7 +20245,7 @@ components:
           created_at: 2000-01-23T04:56:07.000+00:00
           uuid: uuid
           content: content
-          duration: 6
+          duration: 1
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
           owner: owner
@@ -19933,9 +20270,10 @@ components:
           original:
             name: name
             uuid: uuid
+          wait_time: 6
           schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
-          live_state: 1
+          live_state: 5
           readme: readme
           tags:
           - tags
@@ -19993,6 +20331,7 @@ components:
             columns: columns
             query: query
             limit: 1
+            pins: pins
             sort: sort
             groupby: groupby
           tags:
@@ -20008,6 +20347,7 @@ components:
             columns: columns
             query: query
             limit: 1
+            pins: pins
             sort: sort
             groupby: groupby
           tags:
@@ -20919,11 +21259,10 @@ components:
         - presets:
           - presets
           - presets
+          disableDefaults: true
           hub_ref: hub_ref
           connection: connection
-          conditions:
-          - '{}'
-          - '{}'
+          conditions: conditions
           params:
             key:
               ref: ref
@@ -20934,11 +21273,10 @@ components:
         - presets:
           - presets
           - presets
+          disableDefaults: true
           hub_ref: hub_ref
           connection: connection
-          conditions:
-          - '{}'
-          - '{}'
+          conditions: conditions
           params:
             key:
               ref: ref
@@ -21093,11 +21431,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -21108,11 +21445,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -21126,9 +21462,7 @@ components:
         - presets
         name: name
         is_approved: true
-        conditions:
-        - conditions
-        - conditions
+        conditions: conditions
         queue: queue
       properties:
         version:
@@ -21186,11 +21520,9 @@ components:
         trigger:
           $ref: '#/components/schemas/v1TriggerPolicy'
         conditions:
-          items:
-            type: string
-          title: An optional list of condition to check before starting the run, entities
-            should be a valid Condition
-          type: array
+          title: An optional template containing conditions to check before starting
+            the run
+          type: string
         skip_on_upstream_skip:
           title: Optional flag to skip this run if upstream was skipped
           type: boolean
@@ -22192,7 +22524,7 @@ components:
         created_at: 2000-01-23T04:56:07.000+00:00
         uuid: uuid
         content: content
-        duration: 6
+        duration: 1
         updated_at: 2000-01-23T04:56:07.000+00:00
         meta_info: '{}'
         owner: owner
@@ -22217,9 +22549,10 @@ components:
         original:
           name: name
           uuid: uuid
+        wait_time: 6
         schedule_at: 2000-01-23T04:56:07.000+00:00
         bookmarked: true
-        live_state: 1
+        live_state: 5
         readme: readme
         tags:
         - tags
@@ -22287,9 +22620,13 @@ components:
           format: date-time
           title: Optional last time the entity was started
           type: string
+        wait_time:
+          format: int32
+          title: Optional wait time of the entity
+          type: integer
         duration:
           format: int32
-          title: Optional run time of the entity
+          title: Optional duration of the entity
           type: integer
         is_managed:
           title: Optional flag to tell if this entity is managed by the platform
@@ -22341,11 +22678,11 @@ components:
             $ref: '#/components/schemas/v1StatusCondition'
           title: The status conditions timeline
           type: array
-        settings:
-          $ref: '#/components/schemas/v1RunSettings'
         role:
           title: Current user's role in this (org/teams)/project/runs
           type: string
+        settings:
+          $ref: '#/components/schemas/v1RunSettings'
       title: Run specification
       type: object
     v1RunArtifact:
@@ -22417,7 +22754,7 @@ components:
           created_at: 2000-01-23T04:56:07.000+00:00
           uuid: uuid
           content: content
-          duration: 6
+          duration: 1
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
           owner: owner
@@ -22442,9 +22779,10 @@ components:
           original:
             name: name
             uuid: uuid
+          wait_time: 6
           schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
-          live_state: 1
+          live_state: 5
           readme: readme
           tags:
           - tags
@@ -22479,7 +22817,7 @@ components:
           created_at: 2000-01-23T04:56:07.000+00:00
           uuid: uuid
           content: content
-          duration: 6
+          duration: 1
           updated_at: 2000-01-23T04:56:07.000+00:00
           meta_info: '{}'
           owner: owner
@@ -22504,9 +22842,10 @@ components:
           original:
             name: name
             uuid: uuid
+          wait_time: 6
           schedule_at: 2000-01-23T04:56:07.000+00:00
           bookmarked: true
-          live_state: 1
+          live_state: 5
           readme: readme
           tags:
           - tags
@@ -23286,11 +23625,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -23301,11 +23639,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -23422,11 +23759,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -23437,11 +23773,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -23526,11 +23861,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -23541,11 +23875,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -23700,11 +24033,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -23715,11 +24047,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -23733,9 +24064,7 @@ components:
             - presets
             name: name
             is_approved: true
-            conditions:
-            - conditions
-            - conditions
+            conditions: conditions
             queue: queue
           - joins:
               key:
@@ -23784,11 +24113,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -23799,11 +24127,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -23958,11 +24285,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -23973,11 +24299,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -23991,9 +24316,7 @@ components:
             - presets
             name: name
             is_approved: true
-            conditions:
-            - conditions
-            - conditions
+            conditions: conditions
             queue: queue
           kind: dag
           volumes:
@@ -25192,18 +25515,15 @@ components:
           - presets
           name: name
           is_approved: true
-          conditions:
-          - '{}'
-          - '{}'
+          conditions: conditions
           hooks:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -25214,11 +25534,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -25923,11 +26242,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -25938,11 +26256,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -26059,11 +26376,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -26074,11 +26390,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -26163,11 +26478,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -26178,11 +26492,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -26337,11 +26650,10 @@ components:
                 - presets:
                   - presets
                   - presets
+                  disableDefaults: true
                   hub_ref: hub_ref
                   connection: connection
-                  conditions:
-                  - '{}'
-                  - '{}'
+                  conditions: conditions
                   params:
                     key:
                       ref: ref
@@ -26352,11 +26664,10 @@ components:
                 - presets:
                   - presets
                   - presets
+                  disableDefaults: true
                   hub_ref: hub_ref
                   connection: connection
-                  conditions:
-                  - '{}'
-                  - '{}'
+                  conditions: conditions
                   params:
                     key:
                       ref: ref
@@ -26370,9 +26681,7 @@ components:
               - presets
               name: name
               is_approved: true
-              conditions:
-              - conditions
-              - conditions
+              conditions: conditions
               queue: queue
             - joins:
                 key:
@@ -26421,11 +26730,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -26436,11 +26744,10 @@ components:
               - presets:
                 - presets
                 - presets
+                disableDefaults: true
                 hub_ref: hub_ref
                 connection: connection
-                conditions:
-                - '{}'
-                - '{}'
+                conditions: conditions
                 params:
                   key:
                     ref: ref
@@ -26595,11 +26902,10 @@ components:
                 - presets:
                   - presets
                   - presets
+                  disableDefaults: true
                   hub_ref: hub_ref
                   connection: connection
-                  conditions:
-                  - '{}'
-                  - '{}'
+                  conditions: conditions
                   params:
                     key:
                       ref: ref
@@ -26610,11 +26916,10 @@ components:
                 - presets:
                   - presets
                   - presets
+                  disableDefaults: true
                   hub_ref: hub_ref
                   connection: connection
-                  conditions:
-                  - '{}'
-                  - '{}'
+                  conditions: conditions
                   params:
                     key:
                       ref: ref
@@ -26628,9 +26933,7 @@ components:
               - presets
               name: name
               is_approved: true
-              conditions:
-              - conditions
-              - conditions
+              conditions: conditions
               queue: queue
             kind: dag
             volumes:
@@ -27931,11 +28234,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -27946,11 +28248,10 @@ components:
           - presets:
             - presets
             - presets
+            disableDefaults: true
             hub_ref: hub_ref
             connection: connection
-            conditions:
-            - '{}'
-            - '{}'
+            conditions: conditions
             params:
               key:
                 ref: ref
@@ -28105,11 +28406,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -28120,11 +28420,10 @@ components:
             - presets:
               - presets
               - presets
+              disableDefaults: true
               hub_ref: hub_ref
               connection: connection
-              conditions:
-              - '{}'
-              - '{}'
+              conditions: conditions
               params:
                 key:
                   ref: ref
@@ -28138,9 +28437,7 @@ components:
           - presets
           name: name
           is_approved: true
-          conditions:
-          - conditions
-          - conditions
+          conditions: conditions
           queue: queue
       properties:
         operation_cond:
@@ -28210,6 +28507,7 @@ components:
           columns: columns
           query: query
           limit: 1
+          pins: pins
           sort: sort
           groupby: groupby
         tags:
@@ -28251,6 +28549,7 @@ components:
         columns: columns
         query: query
         limit: 1
+        pins: pins
         sort: sort
         groupby: groupby
       properties:
@@ -28269,6 +28568,9 @@ components:
           type: string
         columns:
           title: Search columns
+          type: string
+        pins:
+          title: Search pins
           type: string
       title: Search spec definition
       type: object

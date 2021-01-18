@@ -28,6 +28,7 @@ Method | HTTP request | Description
 [**get_run_artifacts_lineage**](RunsV1Api.md#get_run_artifacts_lineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts | Get run artifacts lineage
 [**get_run_artifacts_lineage_names**](RunsV1Api.md#get_run_artifacts_lineage_names) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names | Get run artifacts lineage names
 [**get_run_artifacts_tree**](RunsV1Api.md#get_run_artifacts_tree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+[**get_run_clones_lineage**](RunsV1Api.md#get_run_clones_lineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones | Get run clones lineage
 [**get_run_connections_lineage**](RunsV1Api.md#get_run_connections_lineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections | Get run connections lineage
 [**get_run_downstream_lineage**](RunsV1Api.md#get_run_downstream_lineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream | Get run downstream lineage
 [**get_run_events**](RunsV1Api.md#get_run_events) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
@@ -35,6 +36,7 @@ Method | HTTP request | Description
 [**get_run_namespace**](RunsV1Api.md#get_run_namespace) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/namespace | Get Run namespace
 [**get_run_resources**](RunsV1Api.md#get_run_resources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 [**get_run_settings**](RunsV1Api.md#get_run_settings) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/settings | Get Run settings
+[**get_run_stats**](RunsV1Api.md#get_run_stats) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/stats | Get run stats
 [**get_run_statuses**](RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/statuses | Get run statuses
 [**get_run_upstream_lineage**](RunsV1Api.md#get_run_upstream_lineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream | Get run upstream lineage
 [**get_runs_artifacts_lineage**](RunsV1Api.md#get_runs_artifacts_lineage) | **GET** /api/v1/{owner}/{name}/runs/lineage/artifacts | Get runs artifacts lineage
@@ -2025,6 +2027,97 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_run_clones_lineage**
+> V1ListRunsResponse get_run_clones_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+
+Get run clones lineage
+
+### Example
+
+* Api Key Authentication (ApiKey):
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
+entity = 'entity_example' # str | Entity name under namesapce
+uuid = 'uuid_example' # str | SubEntity uuid
+offset = 56 # int | Pagination offset. (optional)
+limit = 56 # int | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
+
+    try:
+        # Get run clones lineage
+        api_response = api_instance.get_run_clones_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_clones_lineage: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **entity** | **str**| Entity name under namesapce | 
+ **uuid** | **str**| SubEntity uuid | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
+
+### Return type
+
+[**V1ListRunsResponse**](V1ListRunsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_run_connections_lineage**
 > V1ListRunConnectionsResponse get_run_connections_lineage(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query)
 
@@ -2627,6 +2720,105 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1RunSettings**](V1RunSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_run_stats**
+> object get_run_stats(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, kind=kind, aggregate=aggregate, groupby=groupby, trunc=trunc)
+
+Get run stats
+
+### Example
+
+* Api Key Authentication (ApiKey):
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with polyaxon_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = polyaxon_sdk.RunsV1Api(api_client)
+    owner = 'owner_example' # str | Owner of the namespace
+entity = 'entity_example' # str | Entity name under namesapce
+uuid = 'uuid_example' # str | SubEntity uuid
+offset = 56 # int | Pagination offset. (optional)
+limit = 56 # int | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search. (optional)
+kind = 'kind_example' # str | Stats Kind. (optional)
+aggregate = 'aggregate_example' # str | Stats aggregate. (optional)
+groupby = 'groupby_example' # str | Stats group. (optional)
+trunc = 'trunc_example' # str | Stats trunc. (optional)
+
+    try:
+        # Get run stats
+        api_response = api_instance.get_run_stats(owner, entity, uuid, offset=offset, limit=limit, sort=sort, query=query, kind=kind, aggregate=aggregate, groupby=groupby, trunc=trunc)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling RunsV1Api->get_run_stats: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **entity** | **str**| Entity name under namesapce | 
+ **uuid** | **str**| SubEntity uuid | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search. | [optional] 
+ **kind** | **str**| Stats Kind. | [optional] 
+ **aggregate** | **str**| Stats aggregate. | [optional] 
+ **groupby** | **str**| Stats group. | [optional] 
+ **trunc** | **str**| Stats trunc. | [optional] 
+
+### Return type
+
+**object**
 
 ### Authorization
 

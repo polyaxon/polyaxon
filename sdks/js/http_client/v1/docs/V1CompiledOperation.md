@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **hooks** | [**[V1Hook]**](V1Hook.md) |  | [optional] 
 **dependencies** | **[String]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 
-**conditions** | **[Object]** |  | [optional] 
+**conditions** | **String** |  | [optional] 
 **skip_on_upstream_skip** | **Boolean** |  | [optional] 
 **matrix** | [**Object**](.md) |  | [optional] 
 **joins** | [**{String: V1Join}**](V1Join.md) |  | [optional] 

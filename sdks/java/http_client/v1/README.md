@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.5.1
+- API version: 1.5.2
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.5.1</version>
+  <version>1.5.2</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.5.1"
+compile "org.openapitools:openapi-java-client:1.5.2"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.5.1.jar`
+* `target/openapi-java-client-1.5.2.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -204,6 +204,7 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**getOrganizationInvitation**](docs/OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 *OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{name} | Get organization member details
 *OrganizationsV1Api* | [**getOrganizationSettings**](docs/OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
+*OrganizationsV1Api* | [**getOrganizationStats**](docs/OrganizationsV1Api.md#getOrganizationStats) | **GET** /api/v1/orgs/{owner}/stats | Get organization stats
 *OrganizationsV1Api* | [**listOrganizationMemberNames**](docs/OrganizationsV1Api.md#listOrganizationMemberNames) | **GET** /api/v1/orgs/{owner}/members/names | Get organization member names
 *OrganizationsV1Api* | [**listOrganizationMembers**](docs/OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
 *OrganizationsV1Api* | [**listOrganizationNames**](docs/OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
@@ -248,6 +249,7 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{name}/ci | Enable project CI
 *ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{name} | Get project
 *ProjectsV1Api* | [**getProjectSettings**](docs/ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{name}/settings | Get Project settings
+*ProjectsV1Api* | [**getProjectStats**](docs/ProjectsV1Api.md#getProjectStats) | **GET** /api/v1/{owner}/{name}/stats | Get run stats
 *ProjectsV1Api* | [**listArchivedProjects**](docs/ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
 *ProjectsV1Api* | [**listBookmarkedProjects**](docs/ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
 *ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
@@ -291,6 +293,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**getRunArtifactsLineage**](docs/RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts | Get run artifacts lineage
 *RunsV1Api* | [**getRunArtifactsLineageNames**](docs/RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names | Get run artifacts lineage names
 *RunsV1Api* | [**getRunArtifactsTree**](docs/RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+*RunsV1Api* | [**getRunClonesLineage**](docs/RunsV1Api.md#getRunClonesLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones | Get run clones lineage
 *RunsV1Api* | [**getRunConnectionsLineage**](docs/RunsV1Api.md#getRunConnectionsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections | Get run connections lineage
 *RunsV1Api* | [**getRunDownstreamLineage**](docs/RunsV1Api.md#getRunDownstreamLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream | Get run downstream lineage
 *RunsV1Api* | [**getRunEvents**](docs/RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
@@ -298,6 +301,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**getRunNamespace**](docs/RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/namespace | Get Run namespace
 *RunsV1Api* | [**getRunResources**](docs/RunsV1Api.md#getRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 *RunsV1Api* | [**getRunSettings**](docs/RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/settings | Get Run settings
+*RunsV1Api* | [**getRunStats**](docs/RunsV1Api.md#getRunStats) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/stats | Get run stats
 *RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/statuses | Get run statuses
 *RunsV1Api* | [**getRunUpstreamLineage**](docs/RunsV1Api.md#getRunUpstreamLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream | Get run upstream lineage
 *RunsV1Api* | [**getRunsArtifactsLineage**](docs/RunsV1Api.md#getRunsArtifactsLineage) | **GET** /api/v1/{owner}/{name}/runs/lineage/artifacts | Get runs artifacts lineage

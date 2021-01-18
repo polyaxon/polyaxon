@@ -42,6 +42,7 @@ class TestRunDetailSerializer(BaseTestRunSerializer):
         "updated_at",
         "started_at",
         "finished_at",
+        "wait_time",
         "duration",
         "status",
         "kind",

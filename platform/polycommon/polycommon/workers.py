@@ -14,16 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polycommon import conf
+from django.db import transaction
+
 from polycommon.celeryp.app import app
 from polycommon.celeryp.polyaxon_task import PolyaxonTask
-from polycommon.options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 
 app.Task = PolyaxonTask  # Custom base class for logging
 
 
 def send(task_name, kwargs=None, **options):
     options["ignore_result"] = options.get("ignore_result", True)
-    if "countdown" not in options:
-        options["countdown"] = conf.get(SCHEDULER_GLOBAL_COUNTDOWN)
-    return app.send_task(task_name, kwargs=kwargs, **options)
+    return transaction.on_commit(
+        lambda: app.send_task(task_name, kwargs=kwargs, **options)
+    )

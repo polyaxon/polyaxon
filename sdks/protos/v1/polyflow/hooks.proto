@@ -18,8 +18,6 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/struct.proto";
-
 import "v1/polyflow/io.proto";
 import "v1/polyflow/patch_strategy.proto";
 import "v1/polyflow/status.proto";
@@ -35,12 +33,15 @@ message Hook {
     // Component name to use
     string hub_ref = 3;
 
-    // An optional list of condition to check before starting the run, entities should be a valid Condition
-    repeated google.protobuf.Struct conditions = 4;
+    // An optional template containing conditions to check before starting the run
+    string conditions = 4;
 
     // Optional dict of params
     map<string, Param> params = 5;
 
     // Optional preset to use for running this operation
     repeated string presets = 6;
+
+    // Optional preset to use for running this operation
+    bool disableDefaults = 7;
 }

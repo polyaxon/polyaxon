@@ -57,6 +57,8 @@ type ClientService interface {
 
 	GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error)
 
+	GetProjectStats(params *GetProjectStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectStatsOK, *GetProjectStatsNoContent, error)
+
 	ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error)
 
 	ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error)
@@ -367,6 +369,42 @@ func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo r
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetProjectSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetProjectStats gets run stats
+*/
+func (a *Client) GetProjectStats(params *GetProjectStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectStatsOK, *GetProjectStatsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetProjectStatsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetProjectStats",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{name}/stats",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetProjectStatsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetProjectStatsOK:
+		return value, nil, nil
+	case *GetProjectStatsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetProjectStatsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

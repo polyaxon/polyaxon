@@ -79,8 +79,8 @@ message Operation {
     // Optional trigger policy
     TriggerPolicy trigger = 15;
 
-    // An optional list of condition to check before starting the run, entities should be a valid Condition
-    repeated string conditions = 16;
+    // An optional template containing conditions to check before starting the run
+    string conditions = 16;
 
     // Optional flag to skip this run if upstream was skipped
     bool skip_on_upstream_skip = 17;

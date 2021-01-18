@@ -183,6 +183,37 @@ message OwnerResourceListRequest {
     string query = 5;
 }
 
+
+// Request stats data with owner namespace
+message OwnerStatsRequest {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Pagination offset
+  int32 offset = 2;
+
+  // Limit size
+  int32 limit = 3;
+
+  // Sort to order the search
+  string sort = 4;
+
+  // Query filter the search
+  string query = 5;
+
+  // Stats Kind
+  string kind = 6;
+
+  // Stats aggregate
+  string aggregate = 7;
+
+  // Stats group
+  string groupby = 8;
+
+  // Stats trunc
+  string trunc = 9;
+}
+
 // Request list data with owner/agent namespace
 message OwnerEntityResourceListRequestByName {
     // Owner of the namespace
@@ -202,6 +233,39 @@ message OwnerEntityResourceListRequestByName {
 
      // Query filter the search
     string query = 6;
+}
+
+// Request stats with owner/entity namespace
+message OwnerEntityStatsRequest {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Entity managing the resource
+  string name = 2;
+
+  // Pagination offset
+  int32 offset = 3;
+
+  // Limit size
+  int32 limit = 4;
+
+   // Sort to order the search
+  string sort = 5;
+
+   // Query filter the search
+  string query = 6;
+
+  // Stats Kind
+  string kind = 7;
+
+  // Stats aggregate
+  string aggregate = 8;
+
+  // Stats group
+  string groupby = 9;
+
+  // Stats trunc
+  string trunc = 10;
 }
 
 // Request list data with owner/project/entity namespace
@@ -250,6 +314,42 @@ message OwnerSubEntityResourceListRequestByName {
 
    // Query filter the search
   string query = 7;
+}
+
+// Request stats with owner/project/entity namespace
+message OwnerSubEntityStatsRequestByUid {
+  // Owner of the namespace
+  string owner = 1;
+
+  // Entity name under namesapce
+  string entity = 2;
+
+  // SubEntity uuid
+  string uuid = 3;
+
+  // Pagination offset
+  int32 offset = 4;
+
+  // Limit size
+  int32 limit = 5;
+
+   // Sort to order the search
+  string sort = 6;
+
+   // Query filter the search
+  string query = 7;
+
+  // Stats Kind
+  string kind = 8;
+
+  // Stats aggregate
+  string aggregate = 9;
+
+  // Stats group
+  string groupby = 10;
+
+  // Stats trunc
+  string trunc = 11;
 }
 
 // Artifact tree response

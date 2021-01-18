@@ -481,8 +481,9 @@ class TestInitStore(BaseTestCase):
             artifacts=None,
         )
         mount_path = CONTEXT_MOUNT_ARTIFACTS_FORMAT.format(store.name)
-        assert container.name == generate_container_name(
-            INIT_ARTIFACTS_CONTAINER_PREFIX, store.name
+        assert (
+            generate_container_name(INIT_ARTIFACTS_CONTAINER_PREFIX, store.name, False)
+            in container.name
         )
         assert container.image == "foo/foo:foo"
         assert container.image_pull_policy == "IfNotPresent"
@@ -522,8 +523,9 @@ class TestInitStore(BaseTestCase):
             artifacts=None,
             mount_path=mount_path,
         )
-        assert container.name == generate_container_name(
-            INIT_ARTIFACTS_CONTAINER_PREFIX, store.name
+        assert (
+            generate_container_name(INIT_ARTIFACTS_CONTAINER_PREFIX, store.name, False)
+            in container.name
         )
         assert container.image == "foo/foo"
         assert container.image_pull_policy == "IfNotPresent"

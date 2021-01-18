@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **hooks** | [**list[V1Hook]**](V1Hook.md) |  | [optional] 
 **dependencies** | **list[str]** |  | [optional] 
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  | [optional] 
-**conditions** | **list[object]** |  | [optional] 
+**conditions** | **str** |  | [optional] 
 **skip_on_upstream_skip** | **bool** |  | [optional] 
 **matrix** | [**object**](.md) |  | [optional] 
 **joins** | [**dict(str, V1Join)**](V1Join.md) |  | [optional] 

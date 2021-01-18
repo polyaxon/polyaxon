@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import copy
 
 from polyaxon.utils.imports import import_string
 from polycommon.auditor.manager import event_manager
@@ -42,9 +43,9 @@ class AuditorService(EventService):
             dumps=False, include_actor_name=True, include_instance_info=True
         )
         if self.workers and self.auditor_events_task:
-
             self.workers.send(
-                self.auditor_events_task, kwargs={"event": serialized_event}
+                self.auditor_events_task,
+                kwargs={"event": copy.deepcopy(serialized_event)},
             )
 
         if self.executor:

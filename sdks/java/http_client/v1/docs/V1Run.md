@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **startedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **finishedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**waitTime** | **Integer** |  |  [optional]
 **duration** | **Integer** |  |  [optional]
 **isManaged** | **Boolean** |  |  [optional]
 **isApproved** | **Boolean** |  |  [optional]
@@ -35,8 +36,8 @@ Name | Type | Description | Notes
 **original** | [**V1Cloning**](V1Cloning.md) |  |  [optional]
 **pipeline** | [**V1Pipeline**](V1Pipeline.md) |  |  [optional]
 **statusConditions** | [**List&lt;V1StatusCondition&gt;**](V1StatusCondition.md) |  |  [optional]
-**settings** | [**V1RunSettings**](V1RunSettings.md) |  |  [optional]
 **role** | **String** |  |  [optional]
+**settings** | [**V1RunSettings**](V1RunSettings.md) |  |  [optional]
 
 
 

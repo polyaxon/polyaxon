@@ -83,10 +83,9 @@ def get_git_init_container(
 ) -> k8s_schemas.V1Container:
     if not connection:
         raise PolypodException("A connection is required to create a repo context.")
+    container_name = generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name)
     if not container:
-        container = k8s_schemas.V1Container(
-            name=generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name),
-        )
+        container = k8s_schemas.V1Container(name=container_name)
 
     volume_name = (
         get_volume_name(mount_path)
@@ -138,7 +137,7 @@ def get_git_init_container(
     )
     return patch_container(
         container=container,
-        name=generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name),
+        name=container_name,
         image=polyaxon_init.get_image(),
         image_pull_policy=polyaxon_init.image_pull_policy,
         command=["polyaxon", "initializer", "git"],

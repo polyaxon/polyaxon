@@ -9,5 +9,6 @@ Name | Type | Description | Notes
 **limit** | **Number** |  | [optional] 
 **groupby** | **String** |  | [optional] 
 **columns** | **String** |  | [optional] 
+**pins** | **String** |  | [optional] 
 
 

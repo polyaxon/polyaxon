@@ -76,7 +76,9 @@ def get_artifacts_path_container(
             )
         )
 
-    container_name = generate_container_name(INIT_ARTIFACTS_CONTAINER_PREFIX, DEFAULT)
+    container_name = generate_container_name(
+        INIT_ARTIFACTS_CONTAINER_PREFIX, DEFAULT, False
+    )
     container = k8s_schemas.V1Container(name=container_name)
 
     return get_base_store_container(

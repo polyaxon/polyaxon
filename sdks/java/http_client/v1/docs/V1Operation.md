@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **hooks** | [**List&lt;V1Hook&gt;**](V1Hook.md) |  |  [optional]
 **dependencies** | **List&lt;String&gt;** |  |  [optional]
 **trigger** | [**V1TriggerPolicy**](V1TriggerPolicy.md) |  |  [optional]
-**conditions** | **List&lt;String&gt;** |  |  [optional]
+**conditions** | **String** |  |  [optional]
 **skipOnUpstreamSkip** | **Boolean** |  |  [optional]
 **matrix** | [**Object**](.md) |  |  [optional]
 **joins** | [**Map&lt;String, V1Join&gt;**](V1Join.md) |  |  [optional]

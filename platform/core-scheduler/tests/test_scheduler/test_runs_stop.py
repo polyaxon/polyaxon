@@ -26,15 +26,16 @@ class TestRunsStop(BaseTest):
     @mock.patch("coredb.scheduler.manager.runs_stop")
     @mock.patch("coredb.scheduler.manager.runs_prepare")
     def test_stop_managed_run(self, runs_prepare, managed_stop):
-        managed_stop.return_value = True
-        experiment = RunFactory(
-            project=self.project, user=self.user, is_managed=True, raw_content="test"
-        )
-        assert runs_prepare.call_count == 1
-        experiment.refresh_from_db()
-        assert experiment.status == V1Statuses.CREATED
-        runs_stop(run_id=experiment.id, update_status=True)
-        assert managed_stop.call_count == 1
+        with mock.patch("django.db.transaction.on_commit", lambda t: t()):
+            managed_stop.return_value = True
+            experiment = RunFactory(
+                project=self.project, user=self.user, is_managed=True, raw_content="test"
+            )
+            assert runs_prepare.call_count == 1
+            experiment.refresh_from_db()
+            assert experiment.status == V1Statuses.CREATED
+            runs_stop(run_id=experiment.id, update_status=True)
+            assert managed_stop.call_count == 1
 
     def test_stop_non_managed_run(self):
         experiment = RunFactory(project=self.project, user=self.user, is_managed=False)

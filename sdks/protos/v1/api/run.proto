@@ -121,62 +121,65 @@ message Run {
     // Optional last time the entity was started
     google.protobuf.Timestamp finished_at = 12;
 
-    // Optional run time of the entity
-    int32 duration = 13;
+    // Optional wait time of the entity
+    int32 wait_time = 13;
+
+    // Optional duration of the entity
+    int32 duration = 14;
 
     // Optional flag to tell if this entity is managed by the platform
-    bool is_managed = 14;
+    bool is_managed = 15;
 
     // Optional flag to tell if this entity requires approval before it should be scheduled
-    bool is_approved = 15;
+    bool is_approved = 16;
 
     // Optional content of the entity's spec
-    string content = 16;
+    string content = 17;
 
     // Optional content of the entity's spec
-    string raw_content = 17;
+    string raw_content = 18;
 
     // Optional latest status of this entity
-    Statuses status = 18;
+    Statuses status = 19;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 19;
+    bool bookmarked = 20;
 
      // Current live state
-     int32 live_state = 20;
+     int32 live_state = 21;
 
      // Markdown description/readme
-     string readme = 21;
+     string readme = 22;
 
     // Optional run meta info
-    google.protobuf.Struct meta_info = 22;
+    google.protobuf.Struct meta_info = 23;
 
     // Optional kind to tell the kind of this run
-    RunKind kind = 23;
+    RunKind kind = 24;
 
     // Optional meta kind to tell the nature of this run
-    RunKind runtime = 24;
+    RunKind runtime = 25;
 
     // Optional inputs of this entity
-    google.protobuf.Struct inputs = 25;
+    google.protobuf.Struct inputs = 26;
 
     // Optional outputs of this entity
-    google.protobuf.Struct outputs = 26;
+    google.protobuf.Struct outputs = 27;
 
     // Optional original run meta information
-    Cloning original = 27;
+    Cloning original = 28;
 
     // Optional pipeline run meta information
-    Pipeline pipeline = 28;
+    Pipeline pipeline = 29;
 
     // The status conditions timeline
-    repeated StatusCondition status_conditions = 29;
-
-    // Optional settings
-    RunSettings settings = 30;
+    repeated StatusCondition status_conditions = 30;
 
     // Current user's role in this (org/teams)/project/runs
     string role = 31;
+
+    // Optional settings
+    RunSettings settings = 33;
 }
 
 // Operation creation

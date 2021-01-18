@@ -92,7 +92,7 @@ class BaseAgent:
                             self.end()
                             return
                         if agent_state.state.full:
-                            index = 0
+                            index = 2
                         self.ping()
                         timeout = self.sleep_interval or get_wait(index)
                         logger.info("Sleeping for {} seconds".format(timeout))

@@ -68,6 +68,7 @@ class RunQueryManager(BaseQueryManager):
         "user",
         "uuid",
         "duration",
+        "wait_time",
         "status",
     )
     FIELDS_ORDERING_PROXY = {

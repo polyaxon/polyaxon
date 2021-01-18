@@ -47,6 +47,7 @@ class RunSerializer(
             "updated_at",
             "started_at",
             "finished_at",
+            "wait_time",
             "duration",
             "kind",
             "runtime",

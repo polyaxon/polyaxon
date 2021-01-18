@@ -14,20 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-STATS_RUN = [
-    "id",
-    "uuid",
-    "name",
-    "kind",
-    "created_at",
-    "updated_at",
-    "started_at",
-    "finished_at",
-    "status",
-    "inputs",
-    "outputs",
-    "tags",
-]
 STATUS_UPDATE_COLUMNS_ONLY = [
     "id",
     "status",
@@ -36,6 +22,7 @@ STATUS_UPDATE_COLUMNS_ONLY = [
     "updated_at",
     "finished_at",
     "duration",
+    "wait_time",
     "meta_info",
 ]
 STATUS_UPDATE_COLUMNS_DEFER = [

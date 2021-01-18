@@ -212,6 +212,7 @@ class TestStatuses(TestCase):
         )
         assert self.run.started_at is None
         assert self.run.finished_at is None
+        assert self.run.wait_time is None
         assert self.run.duration is None
 
         new_run_status(
@@ -223,6 +224,7 @@ class TestStatuses(TestCase):
         self.run.refresh_from_db()
         assert self.run.started_at is None
         assert self.run.finished_at is None
+        assert self.run.wait_time is None
         assert self.run.duration is None
 
         # Set a running status
@@ -236,6 +238,7 @@ class TestStatuses(TestCase):
         self.run.refresh_from_db()
         assert self.run.started_at is not None
         assert self.run.finished_at is None
+        assert self.run.wait_time == (self.run.started_at - self.run.created_at).seconds
         assert self.run.duration is None
         started_at = self.run.started_at
 
@@ -248,6 +251,7 @@ class TestStatuses(TestCase):
         )
         assert self.run.started_at == started_at
         assert self.run.finished_at is None
+        assert self.run.wait_time == (self.run.started_at - self.run.created_at).seconds
         assert self.run.duration is None
         assert len(self.run.status_conditions) == 3
 
@@ -262,6 +266,7 @@ class TestStatuses(TestCase):
         assert self.run.started_at == started_at
         assert self.run.finished_at is not None
         finished_at = self.run.finished_at
+        assert self.run.wait_time == (self.run.started_at - self.run.created_at).seconds
         assert self.run.duration == (self.run.finished_at - self.run.started_at).seconds
         assert len(self.run.status_conditions) == 4
         assert self.run.status_conditions[3]["type"] == V1Statuses.STOPPED
@@ -278,6 +283,7 @@ class TestStatuses(TestCase):
         self.run.refresh_from_db()
         assert self.run.started_at == started_at
         assert self.run.finished_at == finished_at
+        assert self.run.wait_time == (self.run.started_at - self.run.created_at).seconds
         assert self.run.duration == (self.run.finished_at - self.run.started_at).seconds
         assert len(self.run.status_conditions) == 5
         assert self.run.status_conditions[3]["type"] == V1Statuses.STOPPED
@@ -294,6 +300,7 @@ class TestStatuses(TestCase):
         self.run.refresh_from_db()
         assert self.run.started_at == started_at
         assert self.run.finished_at == finished_at
+        assert self.run.wait_time == (self.run.started_at - self.run.created_at).seconds
         assert self.run.duration == (self.run.finished_at - self.run.started_at).seconds
         assert len(self.run.status_conditions) == 6
         assert self.run.status_conditions[3]["type"] == V1Statuses.STOPPED

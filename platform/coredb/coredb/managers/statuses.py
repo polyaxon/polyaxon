@@ -91,6 +91,7 @@ def new_status(
             "started_at",
             "updated_at",
             "finished_at",
+            "wait_time",
             "duration",
         ]
     )
@@ -159,7 +160,7 @@ def new_run_stop_status(run, message):
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.STOPPED,
         status="True",
-        reason="PolyaxonRunStopped",
+        reason="StateManager",
         message=message,
     )
     new_run_status(run=run, condition=condition)
@@ -176,7 +177,7 @@ def new_run_stopping_status(run, message) -> bool:
     condition = V1StatusCondition.get_condition(
         type=V1Statuses.STOPPING,
         status="True",
-        reason="PolyaxonRunStopping",
+        reason="StateManager",
         message=message,
     )
     new_run_status(run=run, condition=condition)

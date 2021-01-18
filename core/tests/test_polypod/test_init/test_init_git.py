@@ -113,8 +113,9 @@ class TestInitGit(BaseTestCase):
             connection=connection,
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
-        assert container.name == generate_container_name(
-            INIT_GIT_CONTAINER_PREFIX, connection.name
+        assert (
+            generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name, False)
+            in container.name
         )
         assert container.image == "foo"
         assert container.image_pull_policy is None
@@ -138,8 +139,9 @@ class TestInitGit(BaseTestCase):
             connection=connection,
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
-        assert container.name == generate_container_name(
-            INIT_GIT_CONTAINER_PREFIX, connection.name
+        assert (
+            generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name, False)
+            in container.name
         )
         assert container.image == "init/init"
         assert container.image_pull_policy == "IfNotPresent"
@@ -172,8 +174,9 @@ class TestInitGit(BaseTestCase):
             mount_path="/somepath",
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
-        assert container.name == generate_container_name(
-            INIT_GIT_CONTAINER_PREFIX, connection.name
+        assert (
+            generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name, False)
+            in container.name
         )
         assert container.image == "init/init"
         assert container.image_pull_policy == "IfNotPresent"
@@ -208,8 +211,9 @@ class TestInitGit(BaseTestCase):
             mount_path="/somepath",
             contexts=PluginsContextsSpec.from_config(V1Plugins(auth=True)),
         )
-        assert container.name == generate_container_name(
-            INIT_GIT_CONTAINER_PREFIX, connection.name
+        assert (
+            generate_container_name(INIT_GIT_CONTAINER_PREFIX, connection.name, False)
+            in container.name
         )
         assert container.image == "init/init"
         assert container.image_pull_policy == "IfNotPresent"

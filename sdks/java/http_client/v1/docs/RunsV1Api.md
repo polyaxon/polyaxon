@@ -28,6 +28,7 @@ Method | HTTP request | Description
 [**getRunArtifactsLineage**](RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts | Get run artifacts lineage
 [**getRunArtifactsLineageNames**](RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names | Get run artifacts lineage names
 [**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+[**getRunClonesLineage**](RunsV1Api.md#getRunClonesLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones | Get run clones lineage
 [**getRunConnectionsLineage**](RunsV1Api.md#getRunConnectionsLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/connections | Get run connections lineage
 [**getRunDownstreamLineage**](RunsV1Api.md#getRunDownstreamLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream | Get run downstream lineage
 [**getRunEvents**](RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
@@ -35,6 +36,7 @@ Method | HTTP request | Description
 [**getRunNamespace**](RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/namespace | Get Run namespace
 [**getRunResources**](RunsV1Api.md#getRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 [**getRunSettings**](RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/settings | Get Run settings
+[**getRunStats**](RunsV1Api.md#getRunStats) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/stats | Get run stats
 [**getRunStatuses**](RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/statuses | Get run statuses
 [**getRunUpstreamLineage**](RunsV1Api.md#getRunUpstreamLineage) | **GET** /api/v1/{owner}/{entity}/runs/{uuid}/lineage/upstream | Get run upstream lineage
 [**getRunsArtifactsLineage**](RunsV1Api.md#getRunsArtifactsLineage) | **GET** /api/v1/{owner}/{name}/runs/lineage/artifacts | Get runs artifacts lineage
@@ -1841,6 +1843,89 @@ Name | Type | Description  | Notes
 **404** | Resource does not exist. |  -  |
 **0** | An unexpected error response. |  -  |
 
+<a name="getRunClonesLineage"></a>
+# **getRunClonesLineage**
+> V1ListRunsResponse getRunClonesLineage(owner, entity, uuid, offset, limit, sort, query)
+
+Get run clones lineage
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String entity = "entity_example"; // String | Entity name under namesapce
+    String uuid = "uuid_example"; // String | SubEntity uuid
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search.
+    try {
+      V1ListRunsResponse result = apiInstance.getRunClonesLineage(owner, entity, uuid, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunClonesLineage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **entity** | **String**| Entity name under namesapce |
+ **uuid** | **String**| SubEntity uuid |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
+
+### Return type
+
+[**V1ListRunsResponse**](V1ListRunsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
 <a name="getRunConnectionsLineage"></a>
 # **getRunConnectionsLineage**
 > V1ListRunConnectionsResponse getRunConnectionsLineage(owner, entity, uuid, offset, limit, sort, query)
@@ -2389,6 +2474,97 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1RunSettings**](V1RunSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+<a name="getRunStats"></a>
+# **getRunStats**
+> Object getRunStats(owner, entity, uuid, offset, limit, sort, query, kind, aggregate, groupby, trunc)
+
+Get run stats
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.RunsV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    RunsV1Api apiInstance = new RunsV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String entity = "entity_example"; // String | Entity name under namesapce
+    String uuid = "uuid_example"; // String | SubEntity uuid
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search.
+    String kind = "kind_example"; // String | Stats Kind.
+    String aggregate = "aggregate_example"; // String | Stats aggregate.
+    String groupby = "groupby_example"; // String | Stats group.
+    String trunc = "trunc_example"; // String | Stats trunc.
+    try {
+      Object result = apiInstance.getRunStats(owner, entity, uuid, offset, limit, sort, query, kind, aggregate, groupby, trunc);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling RunsV1Api#getRunStats");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **entity** | **String**| Entity name under namesapce |
+ **uuid** | **String**| SubEntity uuid |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
+ **kind** | **String**| Stats Kind. | [optional]
+ **aggregate** | **String**| Stats aggregate. | [optional]
+ **groupby** | **String**| Stats group. | [optional]
+ **trunc** | **String**| Stats trunc. | [optional]
+
+### Return type
+
+**Object**
 
 ### Authorization
 

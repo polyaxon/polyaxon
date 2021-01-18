@@ -28,9 +28,16 @@ INIT_PREFIX = "init"
 SIDECAR_PREFIX = "sidecar"
 
 
-def generate_container_name(prefix: str, suffix: str = None) -> str:
+def generate_container_name(
+    prefix: str, suffix: str = None, unique: bool = True
+) -> str:
     import uuid
 
     prefix = prefix or "container"
-    suffix = suffix or uuid.uuid4().hex[:10]
+    unique_prefix = uuid.uuid4().hex[:10]
+    if suffix:
+        if unique:
+            suffix = "{}-{}".format(suffix, unique_prefix)
+    else:
+        suffix = unique_prefix
     return "{}-{}".format(prefix, suffix)

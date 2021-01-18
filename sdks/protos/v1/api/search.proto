@@ -36,6 +36,9 @@ message SearchSpec {
 
     // Search columns
     string columns = 5;
+
+    // Search pins
+    string pins = 6;
 }
 
 // Search specification
