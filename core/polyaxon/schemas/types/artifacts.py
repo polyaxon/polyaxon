@@ -44,8 +44,10 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
 
 
     Args:
-        files: List[str], optional, list of file subpaths
-        dirs: List[str], optional, list of directory subpaths
+        files: Union[List[str], List[[str, str]], optional,
+            list of file subpaths or a list of [path from, path to].
+        dirs: Union[List[str], List[[str, str]], optional,
+            list of directory subpaths or a list of [path from, path to].
         workers: int, optional, number of threads for downloading data from S3/GCS/Azure.
 
     ### YAML usage
@@ -67,6 +69,7 @@ class V1ArtifactsType(BaseTypeConfig, polyaxon_sdk.V1ArtifactsType):
     ```yaml
     >>> params:
     >>>   some-file-names: {value: {files: ["file1", "/path/to/file2"]}}
+    >>>   custom-file-paths: {value: {files: [["file1", "to/this/path/file1"], "/path/to/file2"]}}
     >>>   tensorboard-log-dir: {value: {dirs: ["/tensorboard-logs"]}, connection: "foo", toInit: True}
     >>>   dataset1: {value: {value: {dirs: ["/"]}, connection: "s3-dataset", init: True}
     ```
