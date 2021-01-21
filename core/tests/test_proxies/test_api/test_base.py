@@ -74,7 +74,7 @@ location = /healthz/ {
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors off;
 }
 
 
@@ -85,7 +85,7 @@ location /api/v1/ {
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors off;
 }
 
 
@@ -96,7 +96,7 @@ location /auth/v1/ {
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors off;
 }
 
 
@@ -107,7 +107,7 @@ location /sso/ {
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors off;
 }
 
 
@@ -205,7 +205,7 @@ location = /healthz/ {
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors off;
 }
 
 
@@ -216,7 +216,7 @@ location /api/v1/ {
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors off;
 }
 
 
@@ -227,7 +227,7 @@ location /auth/v1/ {
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors off;
 }
 
 
@@ -238,7 +238,7 @@ location /sso/ {
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors off;
 }
 
 

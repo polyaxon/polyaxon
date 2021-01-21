@@ -50,15 +50,14 @@ hubRef: jupyterlab:tensorflow
 runPatch:
   container:
     resources:
-      cpu:
-        requests: 2
-        limits: 4
-      gpu:
-        requests: 1
-        limits: 1
-      memory:
-        requests: 512
-        limits: 2048
+      requests: 
+        cpu: 200m
+        gpu: 1
+        memory: 512
+      limits:
+        cpu: 1
+        gpu: 1
+        memory: 2048
 ```
 
 ## Stop a notebook

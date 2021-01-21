@@ -9,7 +9,8 @@ require (
 	github.com/go-openapi/strfmt v0.19.11
 	github.com/onsi/ginkgo v1.14.2
 	github.com/onsi/gomega v1.10.4
-	github.com/polyaxon/polyaxon/sdks v0.0.0-20201217174509-04eb3e26fa17
+	github.com/pkg/errors v0.9.1
+	github.com/polyaxon/polyaxon/sdks v0.0.0-20210119183227-186ad6010496
 	github.com/prometheus/client_golang v1.7.1
 	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
 	k8s.io/api v0.19.2

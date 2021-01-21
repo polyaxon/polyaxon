@@ -55,7 +55,7 @@ func (r *OperationReconciler) reconcileVirtualService(ctx context.Context, insta
 		log.V(1).Info("Creating Virtual Service", "namespace", instance.Namespace, "name", instance.Name)
 		err = r.Create(ctx, virtualservice)
 		if err != nil {
-			if updated := instance.LogWarning("Error creating VirtualService", err.Error()); updated {
+			if updated := instance.LogWarning("OperatorCreateVirtualService", err.Error()); updated {
 				log.V(1).Info("Warning unable to create VirtualService")
 				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
 					return statusErr

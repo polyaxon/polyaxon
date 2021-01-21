@@ -18,7 +18,6 @@ package controllers
 
 import (
 	"context"
-	"time"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -33,7 +32,7 @@ import (
 
 // Reconcile logic for Operation
 func (r *OperationReconciler) reconcileServiceOp(ctx context.Context, instance *operationv1.Operation) (ctrl.Result, error) {
-	log := r.Log
+	// log := r.Log
 
 	ports := managers.GetPodPorts(instance.ServiceSpec.Template.Spec, managers.DefaultServicePort)
 	if instance.ServiceSpec.Ports != nil {
@@ -61,8 +60,8 @@ func (r *OperationReconciler) reconcileServiceOp(ctx context.Context, instance *
 		if err := r.handleServiceBackoffLimit(ctx, instance); err != nil {
 			return ctrl.Result{}, err
 		}
-		log.V(1).Info("service has warning", "Reschdule check in", 30)
-		return ctrl.Result{Requeue: true, RequeueAfter: time.Second * time.Duration(30)}, nil
+		// log.V(1).Info("service has warning", "Reschdule check in", 30)
+		// return ctrl.Result{Requeue: true, RequeueAfter: time.Second * time.Duration(30)}, nil
 	}
 
 	return ctrl.Result{}, nil
@@ -99,7 +98,7 @@ func (r *OperationReconciler) reconcileDeployment(ctx context.Context, instance 
 		log.V(1).Info("Creating Service Deployment", "namespace", deployment.Namespace, "name", deployment.Name)
 		err = r.Create(ctx, deployment)
 		if err != nil {
-			if updated := instance.LogWarning("Error creating Deployment", err.Error()); updated {
+			if updated := instance.LogWarning("OperatorCreateDeployment", err.Error()); updated {
 				log.V(1).Info("Warning unable to create Deployment")
 				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
 					return statusErr
@@ -140,6 +139,17 @@ func (r *OperationReconciler) reconcileDeployment(ctx context.Context, instance 
 func (r *OperationReconciler) reconcileDeploymentStatus(instance *operationv1.Operation, deployment appsv1.Deployment) bool {
 	log := r.Log
 
+	// Check the pods
+	podStatus, reason, message := managers.HasUnschedulablePods(r.Client, instance)
+	if podStatus == operationv1.OperationWarning || podStatus == operationv1.OperationFailed {
+		log.V(1).Info("Service has unschedulable pod(s)", "Reason", reason, "message", message)
+		if updated := instance.LogWarning(reason, message); updated {
+			log.V(1).Info("Service Logging Status Warning")
+			return true
+		}
+		return false
+	}
+
 	if len(deployment.Status.Conditions) == 0 {
 		log.V(1).Info("Service No Conditions")
 		return false
@@ -177,7 +187,7 @@ func (r *OperationReconciler) reconcileBaseService(ctx context.Context, instance
 		log.V(1).Info("Creating Service", "namespace", service.Namespace, "name", service.Name)
 		err = r.Create(ctx, service)
 		if err != nil {
-			if updated := instance.LogWarning("Error creating Service", err.Error()); updated {
+			if updated := instance.LogWarning("OperatorCreateService", err.Error()); updated {
 				log.V(1).Info("Warning unable to create Service")
 				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
 					return statusErr

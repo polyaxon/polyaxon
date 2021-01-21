@@ -25,6 +25,8 @@ const (
 	// Namespace is a flag to enable TFJob conroller
 	Namespace = "POLYAXON_K8S_NAMESPACE"
 
+	MaxConcurrentReconciles = "POLYAXON_MAX_CONCURRENT_RECONCILES"
+
 	// TFJobEnabled is a flag to enable TFJob conroller
 	TFJobEnabled = "POLYAXON_TFJOB_ENABLED"
 
@@ -57,6 +59,9 @@ const (
 
 	// ProxyServicesPort port serving services
 	ProxyServicesPort = "POLYAXON_PROXY_SERVICES_PORT"
+
+	// If agent is enabled
+	AgentEnabled = "POLYAXON_K8S_NAMESPACE"
 )
 
 // GetStrEnv returns an environment str variable given by key or return a default value.

@@ -93,13 +93,21 @@ func NewOperationCondition(conditionType OperationConditionType, status corev1.C
 	}
 }
 
+func GetFailureMessage(entityMessage string, status OperationConditionType, reason string, message string) string {
+	newMessage := entityMessage
+	if status == OperationFailed && message != "" {
+		newMessage = newMessage + " (Pod: <reason: " + reason + ", message " + message + ")"
+	}
+	return newMessage
+}
+
 // getOrUpdateOperationCondition get new or updated version of current confition or returns nil if nothing changed
-func getOrUpdateOperationCondition(currentCond *OperationCondition, conditionType OperationConditionType, status corev1.ConditionStatus, reason, message string) *OperationCondition {
+func getOrUpdateOperationCondition(currentCond *OperationCondition, conditionType OperationConditionType, status corev1.ConditionStatus, reason, message string) (*OperationCondition, bool) {
 	newCond := NewOperationCondition(conditionType, status, reason, message)
 
 	// Do nothing if condition doesn't change
-	if currentCond != nil && currentCond.Status == newCond.Status && currentCond.Reason == newCond.Reason {
-		return currentCond
+	if currentCond != nil && currentCond.Type == newCond.Type && currentCond.Status == newCond.Status && currentCond.Reason == newCond.Reason {
+		return &newCond, false
 	}
 
 	// Do not update lastTransitionTime if the status of the condition doesn't change.
@@ -107,7 +115,15 @@ func getOrUpdateOperationCondition(currentCond *OperationCondition, conditionTyp
 		newCond.LastTransitionTime = currentCond.LastTransitionTime
 	}
 
-	return &newCond
+	return &newCond, true
+}
+
+// getLastEntityCondition returns the condition with the specific type form status.conditions
+func getLastEntityCondition(status OperationStatus, condType OperationConditionType) *OperationCondition {
+	if len(status.Conditions) > 0 {
+		return &status.Conditions[len(status.Conditions)-1]
+	}
+	return nil
 }
 
 // getEntityConditionFromStatus returns the condition with the specific type form status.conditions

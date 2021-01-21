@@ -62,7 +62,7 @@ func (r *OperationReconciler) reconcileJob(ctx context.Context, instance *operat
 		log.V(1).Info("Creating Job", "namespace", job.Namespace, "name", job.Name)
 		err = r.Create(ctx, job)
 		if err != nil {
-			if updated := instance.LogWarning("Error creating Job", err.Error()); updated {
+			if updated := instance.LogWarning("OperatprCreateJob", err.Error()); updated {
 				log.V(1).Info("Warning unable to create Job")
 				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
 					return statusErr
@@ -104,6 +104,21 @@ func (r *OperationReconciler) reconcileJobStatus(instance *operationv1.Operation
 	now := metav1.Now()
 	log := r.Log
 
+	// Check the pods
+	podStatus, reason, message := managers.HasUnschedulablePods(r.Client, instance)
+	if podStatus == operationv1.OperationWarning {
+		log.V(1).Info("Job has unschedulable pod(s)", "Reason", reason, "message", message)
+		if updated := instance.LogWarning(reason, message); updated {
+			log.V(1).Info("Job Logging Status Warning")
+			return true
+		}
+		return false
+	}
+
+	if podStatus == operationv1.OperationStarting {
+		return false
+	}
+
 	if len(job.Status.Conditions) == 0 {
 		if job.Status.Failed > 0 {
 			if updated := instance.LogWarning("", ""); updated {
@@ -130,9 +145,10 @@ func (r *OperationReconciler) reconcileJobStatus(instance *operationv1.Operation
 	}
 
 	if job.Status.Failed > 0 && managers.IsJobFailed(newJobCond) {
-		if updated := instance.LogFailed(newJobCond.Reason, newJobCond.Message); updated {
+		newMessage := operationv1.GetFailureMessage(newJobCond.Message, podStatus, reason, message)
+		if updated := instance.LogFailed(newJobCond.Reason, newMessage); updated {
 			instance.Status.CompletionTime = &now
-			log.V(1).Info("Job Logging Status Failed")
+			log.V(1).Info("Job Logging Status Failed", "Message", newMessage, "podStatus", podStatus, "PodMessage", message)
 			return true
 		}
 	}

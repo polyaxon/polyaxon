@@ -49,7 +49,6 @@ def patch_container(
         ports, check_none=True
     )
     container.resources = container.resources or resources
-    container.resources = sanitize_resources(container.resources)
     container.image_pull_policy = container.image_pull_policy or image_pull_policy
     container.image = container.image or image
 
@@ -107,4 +106,5 @@ def sanitize_container(
     container: k8s_schemas.V1Container,
 ) -> k8s_schemas.V1Container:
     container = sanitize_container_command_args(container)
+    container.resources = sanitize_resources(container.resources)
     return sanitize_container_env(container)

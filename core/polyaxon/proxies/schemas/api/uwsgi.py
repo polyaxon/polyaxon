@@ -32,26 +32,27 @@ location {path} {{
     uwsgi_param X-Real-IP			$remote_addr;
     uwsgi_param X-Forwarded-For		$proxy_add_x_forwarded_for;
     uwsgi_param X-Forwarded-Proto	$http_x_forwarded_proto;
-    uwsgi_intercept_errors on;
+    uwsgi_intercept_errors {intercept_errors};
 }}
 """
 
 
-def get_api_config(path: str):
+def get_api_config(path: str, intercept_errors: str = "on"):
     return get_config(
         options=UWSGI_OPTIONS,
         indent=0,
         path=path,
+        intercept_errors=intercept_errors,
     )
 
 
 def get_uwsgi_config():
     config = [
         get_api_config(path="= /"),
-        get_api_config(path="= {}".format(HEALTHZ_LOCATION)),
-        get_api_config(path=API_V1_LOCATION),
-        get_api_config(path=AUTH_V1_LOCATION),
-        get_api_config(path=SSO_V1_LOCATION),
+        get_api_config(path="= {}".format(HEALTHZ_LOCATION), intercept_errors="off"),
+        get_api_config(path=API_V1_LOCATION, intercept_errors="off"),
+        get_api_config(path=AUTH_V1_LOCATION, intercept_errors="off"),
+        get_api_config(path=SSO_V1_LOCATION, intercept_errors="off"),
         get_api_config(path=UI_V1_LOCATION),
     ]
     if settings.PROXIES_CONFIG.ui_admin_enabled:

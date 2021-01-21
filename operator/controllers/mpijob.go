@@ -67,7 +67,7 @@ func (r *OperationReconciler) reconcileMPIJob(ctx context.Context, instance *ope
 		log.V(1).Info("Creating MPIJob", "namespace", instance.Namespace, "name", instance.Name)
 		err = r.Create(ctx, job)
 		if err != nil {
-			if updated := instance.LogWarning("Error creating MPIJob", err.Error()); updated {
+			if updated := instance.LogWarning("OperatorCreateMPIJob", err.Error()); updated {
 				log.V(1).Info("Warning unable to create MPIJob")
 				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
 					return statusErr

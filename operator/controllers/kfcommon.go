@@ -23,12 +23,24 @@ import (
 
 	operationv1 "github.com/polyaxon/polyaxon/operator/api/v1"
 	"github.com/polyaxon/polyaxon/operator/controllers/kfapi"
+	"github.com/polyaxon/polyaxon/operator/controllers/managers"
 )
 
 // Common logic for reconciling job status
 func (r *OperationReconciler) reconcileKFJobStatus(instance *operationv1.Operation, job unstructured.Unstructured) (bool, error) {
 	now := metav1.Now()
 	log := r.Log
+
+	// Check the pods
+	podStatus, reason, message := managers.HasUnschedulablePods(r.Client, instance)
+	if podStatus == operationv1.OperationWarning {
+		log.V(1).Info("Service has unschedulable pod(s)", "Reason", reason, "message", message)
+		if updated := instance.LogWarning(reason, message); updated {
+			log.V(1).Info("Service Logging Status Warning")
+			return true, nil
+		}
+		return false, nil
+	}
 
 	status, ok, unerr := unstructured.NestedFieldCopy(job.Object, "status")
 	if !ok {
@@ -69,10 +81,12 @@ func (r *OperationReconciler) reconcileKFJobStatus(instance *operationv1.Operati
 	}
 
 	if cond.Type == kfapi.JobFailed {
-		instance.LogFailed(cond.Reason, cond.Message)
-		instance.Status.CompletionTime = &now
-		log.V(1).Info("Job Logging Status Failed")
-		return true, nil
+		newMessage := operationv1.GetFailureMessage(cond.Message, podStatus, reason, message)
+		if updated := instance.LogFailed(cond.Reason, newMessage); updated {
+			instance.Status.CompletionTime = &now
+			log.V(1).Info("Job Logging Status Failed", "Message", newMessage, "podStatus", podStatus, "PodMessage", message)
+			return true, nil
+		}
 	}
 
 	if cond.Type == kfapi.JobRestarting {

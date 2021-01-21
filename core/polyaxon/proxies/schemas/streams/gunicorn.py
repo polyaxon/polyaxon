@@ -16,7 +16,7 @@
 
 from polyaxon.proxies.schemas.base import get_config
 
-UWSGI_OPTIONS = """
+GUNICORN_OPTIONS = """
 location / {{
     proxy_pass http://polyaxon;
     proxy_http_version 1.1;
@@ -26,10 +26,10 @@ location / {{
     proxy_set_header Origin "";
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
-    proxy_intercept_errors on;
+    proxy_intercept_errors {intercept_errors};
 }}
 """
 
 
 def get_gunicorn_config():
-    return get_config(options=UWSGI_OPTIONS, indent=0)
+    return get_config(options=GUNICORN_OPTIONS, indent=0, intercept_errors="off")

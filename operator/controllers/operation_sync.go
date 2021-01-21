@@ -58,7 +58,7 @@ func (r *OperationReconciler) getInstanceInfo(instance *operationv1.Operation) (
 }
 
 func (r *OperationReconciler) syncStatus(instance *operationv1.Operation, statusCond operationv1.OperationCondition) error {
-	if !config.GetBoolEnv("POLYAXON_AGENT_ENABLED", true) || !instance.SyncStatuses {
+	if !config.GetBoolEnv(config.AgentEnabled, true) || !instance.SyncStatuses {
 		return nil
 	}
 
@@ -75,7 +75,7 @@ func (r *OperationReconciler) syncStatus(instance *operationv1.Operation, status
 
 func (r *OperationReconciler) notify(instance *operationv1.Operation) error {
 
-	if !config.GetBoolEnv("POLYAXON_AGENT_ENABLED", true) || len(instance.Notifications) == 0 {
+	if !config.GetBoolEnv(config.AgentEnabled, true) || len(instance.Notifications) == 0 {
 		return nil
 	}
 
@@ -118,7 +118,7 @@ func (r *OperationReconciler) notify(instance *operationv1.Operation) error {
 
 func (r *OperationReconciler) collectLogs(instance *operationv1.Operation) error {
 
-	if !config.GetBoolEnv("POLYAXON_AGENT_ENABLED", true) || !instance.CollectLogs {
+	if !config.GetBoolEnv(config.AgentEnabled, true) || !instance.CollectLogs {
 		return nil
 	}
 

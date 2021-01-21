@@ -68,7 +68,7 @@ func (r *OperationReconciler) reconcilePytorchJob(ctx context.Context, instance 
 		log.V(1).Info("Creating PytorchJob", "namespace", instance.Namespace, "name", instance.Name)
 		err = r.Create(ctx, job)
 		if err != nil {
-			if updated := instance.LogWarning("Error creating PytorchJob", err.Error()); updated {
+			if updated := instance.LogWarning("OperatorCreatePytorchJob", err.Error()); updated {
 				log.V(1).Info("Warning unable to create PytorchJob")
 				if statusErr := r.Status().Update(ctx, instance); statusErr != nil {
 					return statusErr

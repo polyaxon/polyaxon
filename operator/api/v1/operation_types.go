@@ -129,9 +129,9 @@ func (instance *Operation) removeCondition(conditionType OperationConditionType)
 }
 
 func (instance *Operation) logCondition(condType OperationConditionType, status corev1.ConditionStatus, reason, message string) bool {
-	currentCond := getEntityConditionFromStatus(instance.Status, condType)
-	cond := getOrUpdateOperationCondition(currentCond, condType, status, reason, message)
-	if cond != nil {
+	currentCond := getLastEntityCondition(instance.Status, condType)
+	cond, isUpdated := getOrUpdateOperationCondition(currentCond, condType, status, reason, message)
+	if isUpdated && cond != nil {
 		instance.removeCondition(condType)
 		instance.Status.Conditions = append(instance.Status.Conditions, *cond)
 		return true
