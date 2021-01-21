@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -63,7 +64,7 @@ type V1Run struct {
 	IsManaged bool `json:"is_managed,omitempty"`
 
 	// Optional kind to tell the kind of this run
-	Kind V1RunKind `json:"kind,omitempty"`
+	Kind *V1RunKind `json:"kind,omitempty"`
 
 	// Current live state
 	LiveState int32 `json:"live_state,omitempty"`
@@ -99,7 +100,7 @@ type V1Run struct {
 	Role string `json:"role,omitempty"`
 
 	// Optional meta kind to tell the nature of this run
-	Runtime V1RunKind `json:"runtime,omitempty"`
+	Runtime *V1RunKind `json:"runtime,omitempty"`
 
 	// Optional last time the entity was started
 	// Format: date-time
@@ -113,7 +114,7 @@ type V1Run struct {
 	StartedAt strfmt.DateTime `json:"started_at,omitempty"`
 
 	// Optional latest status of this entity
-	Status V1Statuses `json:"status,omitempty"`
+	Status *V1Statuses `json:"status,omitempty"`
 
 	// The status conditions timeline
 	StatusConditions []*V1StatusCondition `json:"status_conditions"`
@@ -194,7 +195,6 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validateCreatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreatedAt) { // not required
 		return nil
 	}
@@ -207,7 +207,6 @@ func (m *V1Run) validateCreatedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validateFinishedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.FinishedAt) { // not required
 		return nil
 	}
@@ -220,23 +219,23 @@ func (m *V1Run) validateFinishedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validateKind(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Kind) { // not required
 		return nil
 	}
 
-	if err := m.Kind.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("kind")
+	if m.Kind != nil {
+		if err := m.Kind.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kind")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1Run) validateOriginal(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Original) { // not required
 		return nil
 	}
@@ -254,7 +253,6 @@ func (m *V1Run) validateOriginal(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validatePipeline(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Pipeline) { // not required
 		return nil
 	}
@@ -272,23 +270,23 @@ func (m *V1Run) validatePipeline(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validateRuntime(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Runtime) { // not required
 		return nil
 	}
 
-	if err := m.Runtime.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("runtime")
+	if m.Runtime != nil {
+		if err := m.Runtime.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("runtime")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1Run) validateScheduleAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ScheduleAt) { // not required
 		return nil
 	}
@@ -301,7 +299,6 @@ func (m *V1Run) validateScheduleAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validateSettings(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Settings) { // not required
 		return nil
 	}
@@ -319,7 +316,6 @@ func (m *V1Run) validateSettings(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validateStartedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StartedAt) { // not required
 		return nil
 	}
@@ -332,23 +328,23 @@ func (m *V1Run) validateStartedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validateStatus(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Status) { // not required
 		return nil
 	}
 
-	if err := m.Status.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("status")
+	if m.Status != nil {
+		if err := m.Status.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("status")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1Run) validateStatusConditions(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StatusConditions) { // not required
 		return nil
 	}
@@ -373,13 +369,152 @@ func (m *V1Run) validateStatusConditions(formats strfmt.Registry) error {
 }
 
 func (m *V1Run) validateUpdatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UpdatedAt) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("updated_at", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 run based on the context it is used
+func (m *V1Run) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateKind(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateOriginal(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePipeline(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRuntime(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStatus(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStatusConditions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Run) contextValidateKind(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Kind != nil {
+		if err := m.Kind.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kind")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) contextValidateOriginal(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Original != nil {
+		if err := m.Original.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("original")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) contextValidatePipeline(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Pipeline != nil {
+		if err := m.Pipeline.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("pipeline")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) contextValidateRuntime(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Runtime != nil {
+		if err := m.Runtime.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("runtime")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) contextValidateSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Settings != nil {
+		if err := m.Settings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("settings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) contextValidateStatus(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Status != nil {
+		if err := m.Status.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("status")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) contextValidateStatusConditions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.StatusConditions); i++ {
+
+		if m.StatusConditions[i] != nil {
+			if err := m.StatusConditions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("status_conditions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

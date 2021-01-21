@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateProjectDashboardParams creates a new CreateProjectDashboardParams object
-// with the default values initialized.
+// NewCreateProjectDashboardParams creates a new CreateProjectDashboardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateProjectDashboardParams() *CreateProjectDashboardParams {
-	var ()
 	return &CreateProjectDashboardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateProjectDashboardParamsWithTimeout creates a new CreateProjectDashboardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateProjectDashboardParamsWithTimeout(timeout time.Duration) *CreateProjectDashboardParams {
-	var ()
 	return &CreateProjectDashboardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateProjectDashboardParamsWithContext creates a new CreateProjectDashboardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateProjectDashboardParamsWithContext(ctx context.Context) *CreateProjectDashboardParams {
-	var ()
 	return &CreateProjectDashboardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateProjectDashboardParamsWithHTTPClient creates a new CreateProjectDashboardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateProjectDashboardParamsWithHTTPClient(client *http.Client) *CreateProjectDashboardParams {
-	var ()
 	return &CreateProjectDashboardParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateProjectDashboardParams contains all the parameters to send to the API endpoint
-for the create project dashboard operation typically these are written to a http.Request
+/* CreateProjectDashboardParams contains all the parameters to send to the API endpoint
+   for the create project dashboard operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateProjectDashboardParams struct {
 
-	/*Body
-	  Dashboard body
+	/* Body.
 
+	   Dashboard body
 	*/
 	Body *service_model.V1Dashboard
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
 
+	/* Project.
+
+	   Project under namesapce
 	*/
 	Project string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create project dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateProjectDashboardParams) WithDefaults() *CreateProjectDashboardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create project dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateProjectDashboardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create project dashboard params
@@ -170,7 +186,6 @@ func (o *CreateProjectDashboardParams) WriteToRequest(r runtime.ClientRequest, r
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

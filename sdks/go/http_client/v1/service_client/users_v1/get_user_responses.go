@@ -78,7 +78,7 @@ func NewGetUserOK() *GetUserOK {
 	return &GetUserOK{}
 }
 
-/*GetUserOK handles this case with default header values.
+/* GetUserOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetUserOK struct {
 func (o *GetUserOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users][%d] getUserOK  %+v", 200, o.Payload)
 }
-
 func (o *GetUserOK) GetPayload() *service_model.V1User {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetUserNoContent() *GetUserNoContent {
 	return &GetUserNoContent{}
 }
 
-/*GetUserNoContent handles this case with default header values.
+/* GetUserNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetUserNoContent struct {
 func (o *GetUserNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users][%d] getUserNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetUserNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetUserForbidden() *GetUserForbidden {
 	return &GetUserForbidden{}
 }
 
-/*GetUserForbidden handles this case with default header values.
+/* GetUserForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetUserForbidden struct {
 func (o *GetUserForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users][%d] getUserForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetUserForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetUserNotFound() *GetUserNotFound {
 	return &GetUserNotFound{}
 }
 
-/*GetUserNotFound handles this case with default header values.
+/* GetUserNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetUserNotFound struct {
 func (o *GetUserNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users][%d] getUserNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetUserNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetUserDefault(code int) *GetUserDefault {
 	}
 }
 
-/*GetUserDefault handles this case with default header values.
+/* GetUserDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetUserDefault) Code() int {
 func (o *GetUserDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users][%d] GetUser default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetUserDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

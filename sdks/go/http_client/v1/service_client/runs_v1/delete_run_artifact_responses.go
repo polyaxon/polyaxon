@@ -78,7 +78,7 @@ func NewDeleteRunArtifactOK() *DeleteRunArtifactOK {
 	return &DeleteRunArtifactOK{}
 }
 
-/*DeleteRunArtifactOK handles this case with default header values.
+/* DeleteRunArtifactOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteRunArtifactNoContent() *DeleteRunArtifactNoContent {
 	return &DeleteRunArtifactNoContent{}
 }
 
-/*DeleteRunArtifactNoContent handles this case with default header values.
+/* DeleteRunArtifactNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteRunArtifactNoContent struct {
 func (o *DeleteRunArtifactNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact][%d] deleteRunArtifactNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteRunArtifactNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteRunArtifactForbidden() *DeleteRunArtifactForbidden {
 	return &DeleteRunArtifactForbidden{}
 }
 
-/*DeleteRunArtifactForbidden handles this case with default header values.
+/* DeleteRunArtifactForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteRunArtifactForbidden struct {
 func (o *DeleteRunArtifactForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact][%d] deleteRunArtifactForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteRunArtifactForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteRunArtifactNotFound() *DeleteRunArtifactNotFound {
 	return &DeleteRunArtifactNotFound{}
 }
 
-/*DeleteRunArtifactNotFound handles this case with default header values.
+/* DeleteRunArtifactNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteRunArtifactNotFound struct {
 func (o *DeleteRunArtifactNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact][%d] deleteRunArtifactNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteRunArtifactNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteRunArtifactDefault(code int) *DeleteRunArtifactDefault {
 	}
 }
 
-/*DeleteRunArtifactDefault handles this case with default header values.
+/* DeleteRunArtifactDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteRunArtifactDefault) Code() int {
 func (o *DeleteRunArtifactDefault) Error() string {
 	return fmt.Sprintf("[DELETE /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact][%d] DeleteRunArtifact default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteRunArtifactDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

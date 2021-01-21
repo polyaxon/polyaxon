@@ -78,7 +78,7 @@ func NewUnbookmarkModelRegistryOK() *UnbookmarkModelRegistryOK {
 	return &UnbookmarkModelRegistryOK{}
 }
 
-/*UnbookmarkModelRegistryOK handles this case with default header values.
+/* UnbookmarkModelRegistryOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewUnbookmarkModelRegistryNoContent() *UnbookmarkModelRegistryNoContent {
 	return &UnbookmarkModelRegistryNoContent{}
 }
 
-/*UnbookmarkModelRegistryNoContent handles this case with default header values.
+/* UnbookmarkModelRegistryNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type UnbookmarkModelRegistryNoContent struct {
 func (o *UnbookmarkModelRegistryNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}/unbookmark][%d] unbookmarkModelRegistryNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UnbookmarkModelRegistryNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewUnbookmarkModelRegistryForbidden() *UnbookmarkModelRegistryForbidden {
 	return &UnbookmarkModelRegistryForbidden{}
 }
 
-/*UnbookmarkModelRegistryForbidden handles this case with default header values.
+/* UnbookmarkModelRegistryForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type UnbookmarkModelRegistryForbidden struct {
 func (o *UnbookmarkModelRegistryForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}/unbookmark][%d] unbookmarkModelRegistryForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UnbookmarkModelRegistryForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewUnbookmarkModelRegistryNotFound() *UnbookmarkModelRegistryNotFound {
 	return &UnbookmarkModelRegistryNotFound{}
 }
 
-/*UnbookmarkModelRegistryNotFound handles this case with default header values.
+/* UnbookmarkModelRegistryNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type UnbookmarkModelRegistryNotFound struct {
 func (o *UnbookmarkModelRegistryNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}/unbookmark][%d] unbookmarkModelRegistryNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UnbookmarkModelRegistryNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewUnbookmarkModelRegistryDefault(code int) *UnbookmarkModelRegistryDefault
 	}
 }
 
-/*UnbookmarkModelRegistryDefault handles this case with default header values.
+/* UnbookmarkModelRegistryDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *UnbookmarkModelRegistryDefault) Code() int {
 func (o *UnbookmarkModelRegistryDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}/unbookmark][%d] UnbookmarkModelRegistry default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UnbookmarkModelRegistryDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

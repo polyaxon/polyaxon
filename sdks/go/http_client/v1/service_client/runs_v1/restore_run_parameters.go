@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewRestoreRunParams creates a new RestoreRunParams object
-// with the default values initialized.
+// NewRestoreRunParams creates a new RestoreRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewRestoreRunParams() *RestoreRunParams {
-	var ()
 	return &RestoreRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewRestoreRunParamsWithTimeout creates a new RestoreRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewRestoreRunParamsWithTimeout(timeout time.Duration) *RestoreRunParams {
-	var ()
 	return &RestoreRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewRestoreRunParamsWithContext creates a new RestoreRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewRestoreRunParamsWithContext(ctx context.Context) *RestoreRunParams {
-	var ()
 	return &RestoreRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewRestoreRunParamsWithHTTPClient creates a new RestoreRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewRestoreRunParamsWithHTTPClient(client *http.Client) *RestoreRunParams {
-	var ()
 	return &RestoreRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*RestoreRunParams contains all the parameters to send to the API endpoint
-for the restore run operation typically these are written to a http.Request
+/* RestoreRunParams contains all the parameters to send to the API endpoint
+   for the restore run operation.
+
+   Typically these are written to a http.Request.
 */
 type RestoreRunParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the restore run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RestoreRunParams) WithDefaults() *RestoreRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the restore run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RestoreRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the restore run params

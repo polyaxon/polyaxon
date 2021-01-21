@@ -78,7 +78,7 @@ func NewGetProjectDashboardOK() *GetProjectDashboardOK {
 	return &GetProjectDashboardOK{}
 }
 
-/*GetProjectDashboardOK handles this case with default header values.
+/* GetProjectDashboardOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetProjectDashboardOK struct {
 func (o *GetProjectDashboardOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] getProjectDashboardOK  %+v", 200, o.Payload)
 }
-
 func (o *GetProjectDashboardOK) GetPayload() *service_model.V1Dashboard {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetProjectDashboardNoContent() *GetProjectDashboardNoContent {
 	return &GetProjectDashboardNoContent{}
 }
 
-/*GetProjectDashboardNoContent handles this case with default header values.
+/* GetProjectDashboardNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetProjectDashboardNoContent struct {
 func (o *GetProjectDashboardNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] getProjectDashboardNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetProjectDashboardNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetProjectDashboardForbidden() *GetProjectDashboardForbidden {
 	return &GetProjectDashboardForbidden{}
 }
 
-/*GetProjectDashboardForbidden handles this case with default header values.
+/* GetProjectDashboardForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetProjectDashboardForbidden struct {
 func (o *GetProjectDashboardForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] getProjectDashboardForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetProjectDashboardForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetProjectDashboardNotFound() *GetProjectDashboardNotFound {
 	return &GetProjectDashboardNotFound{}
 }
 
-/*GetProjectDashboardNotFound handles this case with default header values.
+/* GetProjectDashboardNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetProjectDashboardNotFound struct {
 func (o *GetProjectDashboardNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] getProjectDashboardNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetProjectDashboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetProjectDashboardDefault(code int) *GetProjectDashboardDefault {
 	}
 }
 
-/*GetProjectDashboardDefault handles this case with default header values.
+/* GetProjectDashboardDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetProjectDashboardDefault) Code() int {
 func (o *GetProjectDashboardDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/dashboards/{uuid}][%d] GetProjectDashboard default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetProjectDashboardDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

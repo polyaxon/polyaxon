@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteProjectSearchParams creates a new DeleteProjectSearchParams object
-// with the default values initialized.
+// NewDeleteProjectSearchParams creates a new DeleteProjectSearchParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteProjectSearchParams() *DeleteProjectSearchParams {
-	var ()
 	return &DeleteProjectSearchParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteProjectSearchParamsWithTimeout creates a new DeleteProjectSearchParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteProjectSearchParamsWithTimeout(timeout time.Duration) *DeleteProjectSearchParams {
-	var ()
 	return &DeleteProjectSearchParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteProjectSearchParamsWithContext creates a new DeleteProjectSearchParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteProjectSearchParamsWithContext(ctx context.Context) *DeleteProjectSearchParams {
-	var ()
 	return &DeleteProjectSearchParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteProjectSearchParamsWithHTTPClient creates a new DeleteProjectSearchParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteProjectSearchParamsWithHTTPClient(client *http.Client) *DeleteProjectSearchParams {
-	var ()
 	return &DeleteProjectSearchParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteProjectSearchParams contains all the parameters to send to the API endpoint
-for the delete project search operation typically these are written to a http.Request
+/* DeleteProjectSearchParams contains all the parameters to send to the API endpoint
+   for the delete project search operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteProjectSearchParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete project search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteProjectSearchParams) WithDefaults() *DeleteProjectSearchParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete project search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteProjectSearchParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete project search params

@@ -78,7 +78,7 @@ func NewCreateProjectOK() *CreateProjectOK {
 	return &CreateProjectOK{}
 }
 
-/*CreateProjectOK handles this case with default header values.
+/* CreateProjectOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateProjectOK struct {
 func (o *CreateProjectOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateProjectOK) GetPayload() *service_model.V1Project {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateProjectNoContent() *CreateProjectNoContent {
 	return &CreateProjectNoContent{}
 }
 
-/*CreateProjectNoContent handles this case with default header values.
+/* CreateProjectNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateProjectNoContent struct {
 func (o *CreateProjectNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateProjectNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateProjectForbidden() *CreateProjectForbidden {
 	return &CreateProjectForbidden{}
 }
 
-/*CreateProjectForbidden handles this case with default header values.
+/* CreateProjectForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateProjectForbidden struct {
 func (o *CreateProjectForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateProjectForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateProjectNotFound() *CreateProjectNotFound {
 	return &CreateProjectNotFound{}
 }
 
-/*CreateProjectNotFound handles this case with default header values.
+/* CreateProjectNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateProjectNotFound struct {
 func (o *CreateProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateProjectDefault(code int) *CreateProjectDefault {
 	}
 }
 
-/*CreateProjectDefault handles this case with default header values.
+/* CreateProjectDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateProjectDefault) Code() int {
 func (o *CreateProjectDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] CreateProject default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateProjectDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

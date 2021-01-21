@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -31,7 +33,7 @@ import (
 type V1PytorchJob struct {
 
 	// optional clean pod policy section
-	CleanPodPolicy V1CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
+	CleanPodPolicy *V1CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
 
 	// Optional component kind, should be equal to 'pytorch_job'
 	Kind *string `json:"kind,omitempty"`
@@ -66,23 +68,23 @@ func (m *V1PytorchJob) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1PytorchJob) validateCleanPodPolicy(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CleanPodPolicy) { // not required
 		return nil
 	}
 
-	if err := m.CleanPodPolicy.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("cleanPodPolicy")
+	if m.CleanPodPolicy != nil {
+		if err := m.CleanPodPolicy.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cleanPodPolicy")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1PytorchJob) validateMaster(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Master) { // not required
 		return nil
 	}
@@ -100,13 +102,76 @@ func (m *V1PytorchJob) validateMaster(formats strfmt.Registry) error {
 }
 
 func (m *V1PytorchJob) validateWorker(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Worker) { // not required
 		return nil
 	}
 
 	if m.Worker != nil {
 		if err := m.Worker.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("worker")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 pytorch job based on the context it is used
+func (m *V1PytorchJob) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCleanPodPolicy(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateMaster(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateWorker(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1PytorchJob) contextValidateCleanPodPolicy(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CleanPodPolicy != nil {
+		if err := m.CleanPodPolicy.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cleanPodPolicy")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1PytorchJob) contextValidateMaster(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Master != nil {
+		if err := m.Master.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("master")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1PytorchJob) contextValidateWorker(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Worker != nil {
+		if err := m.Worker.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("worker")
 			}

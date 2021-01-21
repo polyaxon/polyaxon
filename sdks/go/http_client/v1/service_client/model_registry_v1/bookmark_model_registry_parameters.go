@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewBookmarkModelRegistryParams creates a new BookmarkModelRegistryParams object
-// with the default values initialized.
+// NewBookmarkModelRegistryParams creates a new BookmarkModelRegistryParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewBookmarkModelRegistryParams() *BookmarkModelRegistryParams {
-	var ()
 	return &BookmarkModelRegistryParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewBookmarkModelRegistryParamsWithTimeout creates a new BookmarkModelRegistryParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewBookmarkModelRegistryParamsWithTimeout(timeout time.Duration) *BookmarkModelRegistryParams {
-	var ()
 	return &BookmarkModelRegistryParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewBookmarkModelRegistryParamsWithContext creates a new BookmarkModelRegistryParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewBookmarkModelRegistryParamsWithContext(ctx context.Context) *BookmarkModelRegistryParams {
-	var ()
 	return &BookmarkModelRegistryParams{
-
 		Context: ctx,
 	}
 }
 
 // NewBookmarkModelRegistryParamsWithHTTPClient creates a new BookmarkModelRegistryParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewBookmarkModelRegistryParamsWithHTTPClient(client *http.Client) *BookmarkModelRegistryParams {
-	var ()
 	return &BookmarkModelRegistryParams{
 		HTTPClient: client,
 	}
 }
 
-/*BookmarkModelRegistryParams contains all the parameters to send to the API endpoint
-for the bookmark model registry operation typically these are written to a http.Request
+/* BookmarkModelRegistryParams contains all the parameters to send to the API endpoint
+   for the bookmark model registry operation.
+
+   Typically these are written to a http.Request.
 */
 type BookmarkModelRegistryParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the bookmark model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *BookmarkModelRegistryParams) WithDefaults() *BookmarkModelRegistryParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the bookmark model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *BookmarkModelRegistryParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the bookmark model registry params

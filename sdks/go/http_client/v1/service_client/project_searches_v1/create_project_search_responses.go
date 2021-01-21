@@ -78,7 +78,7 @@ func NewCreateProjectSearchOK() *CreateProjectSearchOK {
 	return &CreateProjectSearchOK{}
 }
 
-/*CreateProjectSearchOK handles this case with default header values.
+/* CreateProjectSearchOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateProjectSearchOK struct {
 func (o *CreateProjectSearchOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches][%d] createProjectSearchOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateProjectSearchOK) GetPayload() *service_model.V1Search {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateProjectSearchNoContent() *CreateProjectSearchNoContent {
 	return &CreateProjectSearchNoContent{}
 }
 
-/*CreateProjectSearchNoContent handles this case with default header values.
+/* CreateProjectSearchNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateProjectSearchNoContent struct {
 func (o *CreateProjectSearchNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches][%d] createProjectSearchNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateProjectSearchNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateProjectSearchForbidden() *CreateProjectSearchForbidden {
 	return &CreateProjectSearchForbidden{}
 }
 
-/*CreateProjectSearchForbidden handles this case with default header values.
+/* CreateProjectSearchForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateProjectSearchForbidden struct {
 func (o *CreateProjectSearchForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches][%d] createProjectSearchForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateProjectSearchForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateProjectSearchNotFound() *CreateProjectSearchNotFound {
 	return &CreateProjectSearchNotFound{}
 }
 
-/*CreateProjectSearchNotFound handles this case with default header values.
+/* CreateProjectSearchNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateProjectSearchNotFound struct {
 func (o *CreateProjectSearchNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches][%d] createProjectSearchNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateProjectSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateProjectSearchDefault(code int) *CreateProjectSearchDefault {
 	}
 }
 
-/*CreateProjectSearchDefault handles this case with default header values.
+/* CreateProjectSearchDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateProjectSearchDefault) Code() int {
 func (o *CreateProjectSearchDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches][%d] CreateProjectSearch default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateProjectSearchDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

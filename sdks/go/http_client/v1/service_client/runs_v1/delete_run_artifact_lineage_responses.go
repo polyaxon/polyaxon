@@ -78,7 +78,7 @@ func NewDeleteRunArtifactLineageOK() *DeleteRunArtifactLineageOK {
 	return &DeleteRunArtifactLineageOK{}
 }
 
-/*DeleteRunArtifactLineageOK handles this case with default header values.
+/* DeleteRunArtifactLineageOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteRunArtifactLineageNoContent() *DeleteRunArtifactLineageNoContent {
 	return &DeleteRunArtifactLineageNoContent{}
 }
 
-/*DeleteRunArtifactLineageNoContent handles this case with default header values.
+/* DeleteRunArtifactLineageNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteRunArtifactLineageNoContent struct {
 func (o *DeleteRunArtifactLineageNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] deleteRunArtifactLineageNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteRunArtifactLineageNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteRunArtifactLineageForbidden() *DeleteRunArtifactLineageForbidden {
 	return &DeleteRunArtifactLineageForbidden{}
 }
 
-/*DeleteRunArtifactLineageForbidden handles this case with default header values.
+/* DeleteRunArtifactLineageForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteRunArtifactLineageForbidden struct {
 func (o *DeleteRunArtifactLineageForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] deleteRunArtifactLineageForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteRunArtifactLineageForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteRunArtifactLineageNotFound() *DeleteRunArtifactLineageNotFound {
 	return &DeleteRunArtifactLineageNotFound{}
 }
 
-/*DeleteRunArtifactLineageNotFound handles this case with default header values.
+/* DeleteRunArtifactLineageNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteRunArtifactLineageNotFound struct {
 func (o *DeleteRunArtifactLineageNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] deleteRunArtifactLineageNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteRunArtifactLineageNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteRunArtifactLineageDefault(code int) *DeleteRunArtifactLineageDefau
 	}
 }
 
-/*DeleteRunArtifactLineageDefault handles this case with default header values.
+/* DeleteRunArtifactLineageDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteRunArtifactLineageDefault) Code() int {
 func (o *DeleteRunArtifactLineageDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] DeleteRunArtifactLineage default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteRunArtifactLineageDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -32,76 +32,94 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewNotifyRunStatusParams creates a new NotifyRunStatusParams object
-// with the default values initialized.
+// NewNotifyRunStatusParams creates a new NotifyRunStatusParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotifyRunStatusParams() *NotifyRunStatusParams {
-	var ()
 	return &NotifyRunStatusParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotifyRunStatusParamsWithTimeout creates a new NotifyRunStatusParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotifyRunStatusParamsWithTimeout(timeout time.Duration) *NotifyRunStatusParams {
-	var ()
 	return &NotifyRunStatusParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotifyRunStatusParamsWithContext creates a new NotifyRunStatusParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotifyRunStatusParamsWithContext(ctx context.Context) *NotifyRunStatusParams {
-	var ()
 	return &NotifyRunStatusParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotifyRunStatusParamsWithHTTPClient creates a new NotifyRunStatusParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotifyRunStatusParamsWithHTTPClient(client *http.Client) *NotifyRunStatusParams {
-	var ()
 	return &NotifyRunStatusParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotifyRunStatusParams contains all the parameters to send to the API endpoint
-for the notify run status operation typically these are written to a http.Request
+/* NotifyRunStatusParams contains all the parameters to send to the API endpoint
+   for the notify run status operation.
+
+   Typically these are written to a http.Request.
 */
 type NotifyRunStatusParams struct {
 
-	/*Body*/
+	// Body.
 	Body *service_model.V1EntityNotificationBody
-	/*Namespace
-	  Na,espace
 
+	/* Namespace.
+
+	   Na,espace
 	*/
 	Namespace string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notify run status params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotifyRunStatusParams) WithDefaults() *NotifyRunStatusParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notify run status params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotifyRunStatusParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notify run status params
@@ -199,7 +217,6 @@ func (o *NotifyRunStatusParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

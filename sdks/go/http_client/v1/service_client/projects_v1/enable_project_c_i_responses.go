@@ -78,7 +78,7 @@ func NewEnableProjectCIOK() *EnableProjectCIOK {
 	return &EnableProjectCIOK{}
 }
 
-/*EnableProjectCIOK handles this case with default header values.
+/* EnableProjectCIOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewEnableProjectCINoContent() *EnableProjectCINoContent {
 	return &EnableProjectCINoContent{}
 }
 
-/*EnableProjectCINoContent handles this case with default header values.
+/* EnableProjectCINoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type EnableProjectCINoContent struct {
 func (o *EnableProjectCINoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] enableProjectCINoContent  %+v", 204, o.Payload)
 }
-
 func (o *EnableProjectCINoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewEnableProjectCIForbidden() *EnableProjectCIForbidden {
 	return &EnableProjectCIForbidden{}
 }
 
-/*EnableProjectCIForbidden handles this case with default header values.
+/* EnableProjectCIForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type EnableProjectCIForbidden struct {
 func (o *EnableProjectCIForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] enableProjectCIForbidden  %+v", 403, o.Payload)
 }
-
 func (o *EnableProjectCIForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewEnableProjectCINotFound() *EnableProjectCINotFound {
 	return &EnableProjectCINotFound{}
 }
 
-/*EnableProjectCINotFound handles this case with default header values.
+/* EnableProjectCINotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type EnableProjectCINotFound struct {
 func (o *EnableProjectCINotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] enableProjectCINotFound  %+v", 404, o.Payload)
 }
-
 func (o *EnableProjectCINotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewEnableProjectCIDefault(code int) *EnableProjectCIDefault {
 	}
 }
 
-/*EnableProjectCIDefault handles this case with default header values.
+/* EnableProjectCIDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *EnableProjectCIDefault) Code() int {
 func (o *EnableProjectCIDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/ci][%d] EnableProjectCI default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *EnableProjectCIDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

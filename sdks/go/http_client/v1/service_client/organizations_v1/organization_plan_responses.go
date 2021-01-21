@@ -78,7 +78,7 @@ func NewOrganizationPlanOK() *OrganizationPlanOK {
 	return &OrganizationPlanOK{}
 }
 
-/*OrganizationPlanOK handles this case with default header values.
+/* OrganizationPlanOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type OrganizationPlanOK struct {
 func (o *OrganizationPlanOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/plan][%d] organizationPlanOK  %+v", 200, o.Payload)
 }
-
 func (o *OrganizationPlanOK) GetPayload() *service_model.V1Organization {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewOrganizationPlanNoContent() *OrganizationPlanNoContent {
 	return &OrganizationPlanNoContent{}
 }
 
-/*OrganizationPlanNoContent handles this case with default header values.
+/* OrganizationPlanNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type OrganizationPlanNoContent struct {
 func (o *OrganizationPlanNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/plan][%d] organizationPlanNoContent  %+v", 204, o.Payload)
 }
-
 func (o *OrganizationPlanNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewOrganizationPlanForbidden() *OrganizationPlanForbidden {
 	return &OrganizationPlanForbidden{}
 }
 
-/*OrganizationPlanForbidden handles this case with default header values.
+/* OrganizationPlanForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type OrganizationPlanForbidden struct {
 func (o *OrganizationPlanForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/plan][%d] organizationPlanForbidden  %+v", 403, o.Payload)
 }
-
 func (o *OrganizationPlanForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewOrganizationPlanNotFound() *OrganizationPlanNotFound {
 	return &OrganizationPlanNotFound{}
 }
 
-/*OrganizationPlanNotFound handles this case with default header values.
+/* OrganizationPlanNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type OrganizationPlanNotFound struct {
 func (o *OrganizationPlanNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/plan][%d] organizationPlanNotFound  %+v", 404, o.Payload)
 }
-
 func (o *OrganizationPlanNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewOrganizationPlanDefault(code int) *OrganizationPlanDefault {
 	}
 }
 
-/*OrganizationPlanDefault handles this case with default header values.
+/* OrganizationPlanDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *OrganizationPlanDefault) Code() int {
 func (o *OrganizationPlanDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/plan][%d] OrganizationPlan default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *OrganizationPlanDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

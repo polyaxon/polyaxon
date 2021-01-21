@@ -78,7 +78,7 @@ func NewUpdateTokenOK() *UpdateTokenOK {
 	return &UpdateTokenOK{}
 }
 
-/*UpdateTokenOK handles this case with default header values.
+/* UpdateTokenOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateTokenOK struct {
 func (o *UpdateTokenOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users/tokens/{token.uuid}][%d] updateTokenOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateTokenOK) GetPayload() *service_model.V1Token {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateTokenNoContent() *UpdateTokenNoContent {
 	return &UpdateTokenNoContent{}
 }
 
-/*UpdateTokenNoContent handles this case with default header values.
+/* UpdateTokenNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateTokenNoContent struct {
 func (o *UpdateTokenNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users/tokens/{token.uuid}][%d] updateTokenNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateTokenNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateTokenForbidden() *UpdateTokenForbidden {
 	return &UpdateTokenForbidden{}
 }
 
-/*UpdateTokenForbidden handles this case with default header values.
+/* UpdateTokenForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateTokenForbidden struct {
 func (o *UpdateTokenForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users/tokens/{token.uuid}][%d] updateTokenForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateTokenForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateTokenNotFound() *UpdateTokenNotFound {
 	return &UpdateTokenNotFound{}
 }
 
-/*UpdateTokenNotFound handles this case with default header values.
+/* UpdateTokenNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateTokenNotFound struct {
 func (o *UpdateTokenNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users/tokens/{token.uuid}][%d] updateTokenNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateTokenDefault(code int) *UpdateTokenDefault {
 	}
 }
 
-/*UpdateTokenDefault handles this case with default header values.
+/* UpdateTokenDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateTokenDefault) Code() int {
 func (o *UpdateTokenDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users/tokens/{token.uuid}][%d] UpdateToken default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateTokenDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

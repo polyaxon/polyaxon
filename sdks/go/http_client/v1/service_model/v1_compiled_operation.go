@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -100,7 +101,7 @@ type V1CompiledOperation struct {
 	Termination *V1Termination `json:"termination,omitempty"`
 
 	// Optional trigger policy
-	Trigger V1TriggerPolicy `json:"trigger,omitempty"`
+	Trigger *V1TriggerPolicy `json:"trigger,omitempty"`
 
 	// Spec version
 	Version float32 `json:"version,omitempty"`
@@ -157,7 +158,6 @@ func (m *V1CompiledOperation) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validateCache(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Cache) { // not required
 		return nil
 	}
@@ -175,7 +175,6 @@ func (m *V1CompiledOperation) validateCache(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validateContexts(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Contexts) { // not required
 		return nil
 	}
@@ -200,7 +199,6 @@ func (m *V1CompiledOperation) validateContexts(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validateEvents(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Events) { // not required
 		return nil
 	}
@@ -225,7 +223,6 @@ func (m *V1CompiledOperation) validateEvents(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validateHooks(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Hooks) { // not required
 		return nil
 	}
@@ -250,7 +247,6 @@ func (m *V1CompiledOperation) validateHooks(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validateInputs(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Inputs) { // not required
 		return nil
 	}
@@ -275,7 +271,6 @@ func (m *V1CompiledOperation) validateInputs(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validateJoins(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Joins) { // not required
 		return nil
 	}
@@ -297,7 +292,6 @@ func (m *V1CompiledOperation) validateJoins(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validateOutputs(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Outputs) { // not required
 		return nil
 	}
@@ -322,7 +316,6 @@ func (m *V1CompiledOperation) validateOutputs(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validatePlugins(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Plugins) { // not required
 		return nil
 	}
@@ -340,7 +333,6 @@ func (m *V1CompiledOperation) validatePlugins(formats strfmt.Registry) error {
 }
 
 func (m *V1CompiledOperation) validateTermination(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Termination) { // not required
 		return nil
 	}
@@ -358,16 +350,228 @@ func (m *V1CompiledOperation) validateTermination(formats strfmt.Registry) error
 }
 
 func (m *V1CompiledOperation) validateTrigger(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Trigger) { // not required
 		return nil
 	}
 
-	if err := m.Trigger.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("trigger")
+	if m.Trigger != nil {
+		if err := m.Trigger.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("trigger")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 compiled operation based on the context it is used
+func (m *V1CompiledOperation) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCache(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateContexts(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateEvents(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateHooks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateInputs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateJoins(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateOutputs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePlugins(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTermination(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTrigger(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateCache(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Cache != nil {
+		if err := m.Cache.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cache")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateContexts(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Contexts); i++ {
+
+		if m.Contexts[i] != nil {
+			if err := m.Contexts[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("contexts" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateEvents(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Events); i++ {
+
+		if m.Events[i] != nil {
+			if err := m.Events[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("events" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateHooks(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Hooks); i++ {
+
+		if m.Hooks[i] != nil {
+			if err := m.Hooks[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateInputs(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Inputs); i++ {
+
+		if m.Inputs[i] != nil {
+			if err := m.Inputs[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("inputs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateJoins(ctx context.Context, formats strfmt.Registry) error {
+
+	for k := range m.Joins {
+
+		if val, ok := m.Joins[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateOutputs(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Outputs); i++ {
+
+		if m.Outputs[i] != nil {
+			if err := m.Outputs[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("outputs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidatePlugins(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Plugins != nil {
+		if err := m.Plugins.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("plugins")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateTermination(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Termination != nil {
+		if err := m.Termination.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("termination")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1CompiledOperation) contextValidateTrigger(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Trigger != nil {
+		if err := m.Trigger.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("trigger")
+			}
+			return err
+		}
 	}
 
 	return nil

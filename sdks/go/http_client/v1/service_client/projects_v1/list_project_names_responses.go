@@ -78,7 +78,7 @@ func NewListProjectNamesOK() *ListProjectNamesOK {
 	return &ListProjectNamesOK{}
 }
 
-/*ListProjectNamesOK handles this case with default header values.
+/* ListProjectNamesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListProjectNamesOK struct {
 func (o *ListProjectNamesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/projects/names][%d] listProjectNamesOK  %+v", 200, o.Payload)
 }
-
 func (o *ListProjectNamesOK) GetPayload() *service_model.V1ListProjectsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListProjectNamesNoContent() *ListProjectNamesNoContent {
 	return &ListProjectNamesNoContent{}
 }
 
-/*ListProjectNamesNoContent handles this case with default header values.
+/* ListProjectNamesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListProjectNamesNoContent struct {
 func (o *ListProjectNamesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/projects/names][%d] listProjectNamesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListProjectNamesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListProjectNamesForbidden() *ListProjectNamesForbidden {
 	return &ListProjectNamesForbidden{}
 }
 
-/*ListProjectNamesForbidden handles this case with default header values.
+/* ListProjectNamesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListProjectNamesForbidden struct {
 func (o *ListProjectNamesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/projects/names][%d] listProjectNamesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListProjectNamesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListProjectNamesNotFound() *ListProjectNamesNotFound {
 	return &ListProjectNamesNotFound{}
 }
 
-/*ListProjectNamesNotFound handles this case with default header values.
+/* ListProjectNamesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListProjectNamesNotFound struct {
 func (o *ListProjectNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/projects/names][%d] listProjectNamesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListProjectNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListProjectNamesDefault(code int) *ListProjectNamesDefault {
 	}
 }
 
-/*ListProjectNamesDefault handles this case with default header values.
+/* ListProjectNamesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListProjectNamesDefault) Code() int {
 func (o *ListProjectNamesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/projects/names][%d] ListProjectNames default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListProjectNamesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

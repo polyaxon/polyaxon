@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetCompatibilityParams creates a new GetCompatibilityParams object
-// with the default values initialized.
+// NewGetCompatibilityParams creates a new GetCompatibilityParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetCompatibilityParams() *GetCompatibilityParams {
-	var ()
 	return &GetCompatibilityParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetCompatibilityParamsWithTimeout creates a new GetCompatibilityParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetCompatibilityParamsWithTimeout(timeout time.Duration) *GetCompatibilityParams {
-	var ()
 	return &GetCompatibilityParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetCompatibilityParamsWithContext creates a new GetCompatibilityParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetCompatibilityParamsWithContext(ctx context.Context) *GetCompatibilityParams {
-	var ()
 	return &GetCompatibilityParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetCompatibilityParamsWithHTTPClient creates a new GetCompatibilityParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetCompatibilityParamsWithHTTPClient(client *http.Client) *GetCompatibilityParams {
-	var ()
 	return &GetCompatibilityParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetCompatibilityParams contains all the parameters to send to the API endpoint
-for the get compatibility operation typically these are written to a http.Request
+/* GetCompatibilityParams contains all the parameters to send to the API endpoint
+   for the get compatibility operation.
+
+   Typically these are written to a http.Request.
 */
 type GetCompatibilityParams struct {
 
-	/*Service
-	  Service
+	/* Service.
 
+	   Service
 	*/
 	Service string
-	/*UUID
-	  UUid
 
+	/* UUID.
+
+	   UUid
 	*/
 	UUID string
-	/*Version
-	  Version
 
+	/* Version.
+
+	   Version
 	*/
 	Version string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get compatibility params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetCompatibilityParams) WithDefaults() *GetCompatibilityParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get compatibility params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetCompatibilityParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get compatibility params

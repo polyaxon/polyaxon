@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -49,7 +51,7 @@ type V1StageCondition struct {
 	Status string `json:"status,omitempty"`
 
 	// Status type
-	Type V1Stages `json:"type,omitempty"`
+	Type *V1Stages `json:"type,omitempty"`
 }
 
 // Validate validates this v1 stage condition
@@ -75,7 +77,6 @@ func (m *V1StageCondition) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1StageCondition) validateLastTransitionTime(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LastTransitionTime) { // not required
 		return nil
 	}
@@ -88,7 +89,6 @@ func (m *V1StageCondition) validateLastTransitionTime(formats strfmt.Registry) e
 }
 
 func (m *V1StageCondition) validateLastUpdateTime(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LastUpdateTime) { // not required
 		return nil
 	}
@@ -101,16 +101,45 @@ func (m *V1StageCondition) validateLastUpdateTime(formats strfmt.Registry) error
 }
 
 func (m *V1StageCondition) validateType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Type) { // not required
 		return nil
 	}
 
-	if err := m.Type.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("type")
+	if m.Type != nil {
+		if err := m.Type.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("type")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 stage condition based on the context it is used
+func (m *V1StageCondition) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateType(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1StageCondition) contextValidateType(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Type != nil {
+		if err := m.Type.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("type")
+			}
+			return err
+		}
 	}
 
 	return nil

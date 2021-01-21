@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewBookmarkProjectParams creates a new BookmarkProjectParams object
-// with the default values initialized.
+// NewBookmarkProjectParams creates a new BookmarkProjectParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewBookmarkProjectParams() *BookmarkProjectParams {
-	var ()
 	return &BookmarkProjectParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewBookmarkProjectParamsWithTimeout creates a new BookmarkProjectParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewBookmarkProjectParamsWithTimeout(timeout time.Duration) *BookmarkProjectParams {
-	var ()
 	return &BookmarkProjectParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewBookmarkProjectParamsWithContext creates a new BookmarkProjectParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewBookmarkProjectParamsWithContext(ctx context.Context) *BookmarkProjectParams {
-	var ()
 	return &BookmarkProjectParams{
-
 		Context: ctx,
 	}
 }
 
 // NewBookmarkProjectParamsWithHTTPClient creates a new BookmarkProjectParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewBookmarkProjectParamsWithHTTPClient(client *http.Client) *BookmarkProjectParams {
-	var ()
 	return &BookmarkProjectParams{
 		HTTPClient: client,
 	}
 }
 
-/*BookmarkProjectParams contains all the parameters to send to the API endpoint
-for the bookmark project operation typically these are written to a http.Request
+/* BookmarkProjectParams contains all the parameters to send to the API endpoint
+   for the bookmark project operation.
+
+   Typically these are written to a http.Request.
 */
 type BookmarkProjectParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the bookmark project params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *BookmarkProjectParams) WithDefaults() *BookmarkProjectParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the bookmark project params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *BookmarkProjectParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the bookmark project params

@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchProjectSearchParams creates a new PatchProjectSearchParams object
-// with the default values initialized.
+// NewPatchProjectSearchParams creates a new PatchProjectSearchParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchProjectSearchParams() *PatchProjectSearchParams {
-	var ()
 	return &PatchProjectSearchParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchProjectSearchParamsWithTimeout creates a new PatchProjectSearchParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchProjectSearchParamsWithTimeout(timeout time.Duration) *PatchProjectSearchParams {
-	var ()
 	return &PatchProjectSearchParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchProjectSearchParamsWithContext creates a new PatchProjectSearchParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchProjectSearchParamsWithContext(ctx context.Context) *PatchProjectSearchParams {
-	var ()
 	return &PatchProjectSearchParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchProjectSearchParamsWithHTTPClient creates a new PatchProjectSearchParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchProjectSearchParamsWithHTTPClient(client *http.Client) *PatchProjectSearchParams {
-	var ()
 	return &PatchProjectSearchParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchProjectSearchParams contains all the parameters to send to the API endpoint
-for the patch project search operation typically these are written to a http.Request
+/* PatchProjectSearchParams contains all the parameters to send to the API endpoint
+   for the patch project search operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchProjectSearchParams struct {
 
-	/*Body
-	  Search body
+	/* Body.
 
+	   Search body
 	*/
 	Body *service_model.V1Search
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
 
+	/* Project.
+
+	   Project under namesapce
 	*/
 	Project string
-	/*SearchUUID
-	  UUID
 
+	/* SearchUUID.
+
+	   UUID
 	*/
 	SearchUUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch project search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchProjectSearchParams) WithDefaults() *PatchProjectSearchParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch project search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchProjectSearchParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch project search params
@@ -186,7 +203,6 @@ func (o *PatchProjectSearchParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

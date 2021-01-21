@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -42,6 +44,11 @@ type V1FailureEarlyStopping struct {
 
 // Validate validates this v1 failure early stopping
 func (m *V1FailureEarlyStopping) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this v1 failure early stopping based on context it is used
+func (m *V1FailureEarlyStopping) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

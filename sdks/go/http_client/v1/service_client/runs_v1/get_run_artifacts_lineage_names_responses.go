@@ -78,7 +78,7 @@ func NewGetRunArtifactsLineageNamesOK() *GetRunArtifactsLineageNamesOK {
 	return &GetRunArtifactsLineageNamesOK{}
 }
 
-/*GetRunArtifactsLineageNamesOK handles this case with default header values.
+/* GetRunArtifactsLineageNamesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunArtifactsLineageNamesOK struct {
 func (o *GetRunArtifactsLineageNamesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names][%d] getRunArtifactsLineageNamesOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunArtifactsLineageNamesOK) GetPayload() *service_model.V1ListRunArtifactsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunArtifactsLineageNamesNoContent() *GetRunArtifactsLineageNamesNoCon
 	return &GetRunArtifactsLineageNamesNoContent{}
 }
 
-/*GetRunArtifactsLineageNamesNoContent handles this case with default header values.
+/* GetRunArtifactsLineageNamesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunArtifactsLineageNamesNoContent struct {
 func (o *GetRunArtifactsLineageNamesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names][%d] getRunArtifactsLineageNamesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunArtifactsLineageNamesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunArtifactsLineageNamesForbidden() *GetRunArtifactsLineageNamesForbi
 	return &GetRunArtifactsLineageNamesForbidden{}
 }
 
-/*GetRunArtifactsLineageNamesForbidden handles this case with default header values.
+/* GetRunArtifactsLineageNamesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunArtifactsLineageNamesForbidden struct {
 func (o *GetRunArtifactsLineageNamesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names][%d] getRunArtifactsLineageNamesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunArtifactsLineageNamesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunArtifactsLineageNamesNotFound() *GetRunArtifactsLineageNamesNotFou
 	return &GetRunArtifactsLineageNamesNotFound{}
 }
 
-/*GetRunArtifactsLineageNamesNotFound handles this case with default header values.
+/* GetRunArtifactsLineageNamesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunArtifactsLineageNamesNotFound struct {
 func (o *GetRunArtifactsLineageNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names][%d] getRunArtifactsLineageNamesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunArtifactsLineageNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunArtifactsLineageNamesDefault(code int) *GetRunArtifactsLineageName
 	}
 }
 
-/*GetRunArtifactsLineageNamesDefault handles this case with default header values.
+/* GetRunArtifactsLineageNamesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunArtifactsLineageNamesDefault) Code() int {
 func (o *GetRunArtifactsLineageNamesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/artifacts/names][%d] GetRunArtifactsLineageNames default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunArtifactsLineageNamesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

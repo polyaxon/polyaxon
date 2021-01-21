@@ -78,7 +78,7 @@ func NewGetProjectOK() *GetProjectOK {
 	return &GetProjectOK{}
 }
 
-/*GetProjectOK handles this case with default header values.
+/* GetProjectOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetProjectOK struct {
 func (o *GetProjectOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] getProjectOK  %+v", 200, o.Payload)
 }
-
 func (o *GetProjectOK) GetPayload() *service_model.V1Project {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetProjectNoContent() *GetProjectNoContent {
 	return &GetProjectNoContent{}
 }
 
-/*GetProjectNoContent handles this case with default header values.
+/* GetProjectNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetProjectNoContent struct {
 func (o *GetProjectNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] getProjectNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetProjectNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetProjectForbidden() *GetProjectForbidden {
 	return &GetProjectForbidden{}
 }
 
-/*GetProjectForbidden handles this case with default header values.
+/* GetProjectForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetProjectForbidden struct {
 func (o *GetProjectForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] getProjectForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetProjectForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetProjectNotFound() *GetProjectNotFound {
 	return &GetProjectNotFound{}
 }
 
-/*GetProjectNotFound handles this case with default header values.
+/* GetProjectNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetProjectNotFound struct {
 func (o *GetProjectNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] getProjectNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetProjectDefault(code int) *GetProjectDefault {
 	}
 }
 
-/*GetProjectDefault handles this case with default header values.
+/* GetProjectDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetProjectDefault) Code() int {
 func (o *GetProjectDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}][%d] GetProject default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetProjectDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

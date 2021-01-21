@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -33,7 +34,7 @@ import (
 type V1EventTrigger struct {
 
 	// The event kinds to subscribe to for the current reference
-	Kinds []V1EventKind `json:"kinds"`
+	Kinds []*V1EventKind `json:"kinds"`
 
 	// Ref corresponds to a reference of an object
 	Ref string `json:"ref,omitempty"`
@@ -54,18 +55,54 @@ func (m *V1EventTrigger) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1EventTrigger) validateKinds(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Kinds) { // not required
 		return nil
 	}
 
 	for i := 0; i < len(m.Kinds); i++ {
+		if swag.IsZero(m.Kinds[i]) { // not required
+			continue
+		}
 
-		if err := m.Kinds[i].Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("kinds" + "." + strconv.Itoa(i))
+		if m.Kinds[i] != nil {
+			if err := m.Kinds[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("kinds" + "." + strconv.Itoa(i))
+				}
+				return err
 			}
-			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 event trigger based on the context it is used
+func (m *V1EventTrigger) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateKinds(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1EventTrigger) contextValidateKinds(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Kinds); i++ {
+
+		if m.Kinds[i] != nil {
+			if err := m.Kinds[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("kinds" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
 		}
 
 	}

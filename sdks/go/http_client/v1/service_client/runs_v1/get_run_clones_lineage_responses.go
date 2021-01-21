@@ -78,7 +78,7 @@ func NewGetRunClonesLineageOK() *GetRunClonesLineageOK {
 	return &GetRunClonesLineageOK{}
 }
 
-/*GetRunClonesLineageOK handles this case with default header values.
+/* GetRunClonesLineageOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunClonesLineageOK struct {
 func (o *GetRunClonesLineageOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones][%d] getRunClonesLineageOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunClonesLineageOK) GetPayload() *service_model.V1ListRunsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunClonesLineageNoContent() *GetRunClonesLineageNoContent {
 	return &GetRunClonesLineageNoContent{}
 }
 
-/*GetRunClonesLineageNoContent handles this case with default header values.
+/* GetRunClonesLineageNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunClonesLineageNoContent struct {
 func (o *GetRunClonesLineageNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones][%d] getRunClonesLineageNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunClonesLineageNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunClonesLineageForbidden() *GetRunClonesLineageForbidden {
 	return &GetRunClonesLineageForbidden{}
 }
 
-/*GetRunClonesLineageForbidden handles this case with default header values.
+/* GetRunClonesLineageForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunClonesLineageForbidden struct {
 func (o *GetRunClonesLineageForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones][%d] getRunClonesLineageForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunClonesLineageForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunClonesLineageNotFound() *GetRunClonesLineageNotFound {
 	return &GetRunClonesLineageNotFound{}
 }
 
-/*GetRunClonesLineageNotFound handles this case with default header values.
+/* GetRunClonesLineageNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunClonesLineageNotFound struct {
 func (o *GetRunClonesLineageNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones][%d] getRunClonesLineageNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunClonesLineageNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunClonesLineageDefault(code int) *GetRunClonesLineageDefault {
 	}
 }
 
-/*GetRunClonesLineageDefault handles this case with default header values.
+/* GetRunClonesLineageDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunClonesLineageDefault) Code() int {
 func (o *GetRunClonesLineageDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/clones][%d] GetRunClonesLineage default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunClonesLineageDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetComponentHubParams creates a new GetComponentHubParams object
-// with the default values initialized.
+// NewGetComponentHubParams creates a new GetComponentHubParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetComponentHubParams() *GetComponentHubParams {
-	var ()
 	return &GetComponentHubParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetComponentHubParamsWithTimeout creates a new GetComponentHubParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetComponentHubParamsWithTimeout(timeout time.Duration) *GetComponentHubParams {
-	var ()
 	return &GetComponentHubParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetComponentHubParamsWithContext creates a new GetComponentHubParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetComponentHubParamsWithContext(ctx context.Context) *GetComponentHubParams {
-	var ()
 	return &GetComponentHubParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetComponentHubParamsWithHTTPClient creates a new GetComponentHubParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetComponentHubParamsWithHTTPClient(client *http.Client) *GetComponentHubParams {
-	var ()
 	return &GetComponentHubParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetComponentHubParams contains all the parameters to send to the API endpoint
-for the get component hub operation typically these are written to a http.Request
+/* GetComponentHubParams contains all the parameters to send to the API endpoint
+   for the get component hub operation.
+
+   Typically these are written to a http.Request.
 */
 type GetComponentHubParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get component hub params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetComponentHubParams) WithDefaults() *GetComponentHubParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get component hub params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetComponentHubParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get component hub params

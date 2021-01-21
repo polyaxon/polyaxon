@@ -78,7 +78,7 @@ func NewArchiveComponentHubOK() *ArchiveComponentHubOK {
 	return &ArchiveComponentHubOK{}
 }
 
-/*ArchiveComponentHubOK handles this case with default header values.
+/* ArchiveComponentHubOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewArchiveComponentHubNoContent() *ArchiveComponentHubNoContent {
 	return &ArchiveComponentHubNoContent{}
 }
 
-/*ArchiveComponentHubNoContent handles this case with default header values.
+/* ArchiveComponentHubNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type ArchiveComponentHubNoContent struct {
 func (o *ArchiveComponentHubNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/archive][%d] archiveComponentHubNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ArchiveComponentHubNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewArchiveComponentHubForbidden() *ArchiveComponentHubForbidden {
 	return &ArchiveComponentHubForbidden{}
 }
 
-/*ArchiveComponentHubForbidden handles this case with default header values.
+/* ArchiveComponentHubForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type ArchiveComponentHubForbidden struct {
 func (o *ArchiveComponentHubForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/archive][%d] archiveComponentHubForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ArchiveComponentHubForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewArchiveComponentHubNotFound() *ArchiveComponentHubNotFound {
 	return &ArchiveComponentHubNotFound{}
 }
 
-/*ArchiveComponentHubNotFound handles this case with default header values.
+/* ArchiveComponentHubNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type ArchiveComponentHubNotFound struct {
 func (o *ArchiveComponentHubNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/archive][%d] archiveComponentHubNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ArchiveComponentHubNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewArchiveComponentHubDefault(code int) *ArchiveComponentHubDefault {
 	}
 }
 
-/*ArchiveComponentHubDefault handles this case with default header values.
+/* ArchiveComponentHubDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *ArchiveComponentHubDefault) Code() int {
 func (o *ArchiveComponentHubDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/archive][%d] ArchiveComponentHub default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ArchiveComponentHubDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -32,56 +32,70 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateOrganizationParams creates a new CreateOrganizationParams object
-// with the default values initialized.
+// NewCreateOrganizationParams creates a new CreateOrganizationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateOrganizationParams() *CreateOrganizationParams {
-	var ()
 	return &CreateOrganizationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateOrganizationParamsWithTimeout creates a new CreateOrganizationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateOrganizationParamsWithTimeout(timeout time.Duration) *CreateOrganizationParams {
-	var ()
 	return &CreateOrganizationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateOrganizationParamsWithContext creates a new CreateOrganizationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateOrganizationParamsWithContext(ctx context.Context) *CreateOrganizationParams {
-	var ()
 	return &CreateOrganizationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateOrganizationParamsWithHTTPClient creates a new CreateOrganizationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateOrganizationParamsWithHTTPClient(client *http.Client) *CreateOrganizationParams {
-	var ()
 	return &CreateOrganizationParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateOrganizationParams contains all the parameters to send to the API endpoint
-for the create organization operation typically these are written to a http.Request
+/* CreateOrganizationParams contains all the parameters to send to the API endpoint
+   for the create organization operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateOrganizationParams struct {
 
-	/*Body*/
+	// Body.
 	Body *service_model.V1Organization
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create organization params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateOrganizationParams) WithDefaults() *CreateOrganizationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create organization params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateOrganizationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create organization params
@@ -135,7 +149,6 @@ func (o *CreateOrganizationParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

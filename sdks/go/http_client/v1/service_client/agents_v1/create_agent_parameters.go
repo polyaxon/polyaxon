@@ -32,64 +32,79 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateAgentParams creates a new CreateAgentParams object
-// with the default values initialized.
+// NewCreateAgentParams creates a new CreateAgentParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateAgentParams() *CreateAgentParams {
-	var ()
 	return &CreateAgentParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateAgentParamsWithTimeout creates a new CreateAgentParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateAgentParamsWithTimeout(timeout time.Duration) *CreateAgentParams {
-	var ()
 	return &CreateAgentParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateAgentParamsWithContext creates a new CreateAgentParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateAgentParamsWithContext(ctx context.Context) *CreateAgentParams {
-	var ()
 	return &CreateAgentParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateAgentParamsWithHTTPClient creates a new CreateAgentParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateAgentParamsWithHTTPClient(client *http.Client) *CreateAgentParams {
-	var ()
 	return &CreateAgentParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateAgentParams contains all the parameters to send to the API endpoint
-for the create agent operation typically these are written to a http.Request
+/* CreateAgentParams contains all the parameters to send to the API endpoint
+   for the create agent operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateAgentParams struct {
 
-	/*Body
-	  Agent body
+	/* Body.
 
+	   Agent body
 	*/
 	Body *service_model.V1Agent
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create agent params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateAgentParams) WithDefaults() *CreateAgentParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create agent params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateAgentParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create agent params
@@ -154,7 +169,6 @@ func (o *CreateAgentParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

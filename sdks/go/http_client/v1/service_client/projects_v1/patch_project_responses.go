@@ -78,7 +78,7 @@ func NewPatchProjectOK() *PatchProjectOK {
 	return &PatchProjectOK{}
 }
 
-/*PatchProjectOK handles this case with default header values.
+/* PatchProjectOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchProjectOK struct {
 func (o *PatchProjectOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchProjectOK) GetPayload() *service_model.V1Project {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchProjectNoContent() *PatchProjectNoContent {
 	return &PatchProjectNoContent{}
 }
 
-/*PatchProjectNoContent handles this case with default header values.
+/* PatchProjectNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchProjectNoContent struct {
 func (o *PatchProjectNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchProjectNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchProjectForbidden() *PatchProjectForbidden {
 	return &PatchProjectForbidden{}
 }
 
-/*PatchProjectForbidden handles this case with default header values.
+/* PatchProjectForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchProjectForbidden struct {
 func (o *PatchProjectForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchProjectForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchProjectNotFound() *PatchProjectNotFound {
 	return &PatchProjectNotFound{}
 }
 
-/*PatchProjectNotFound handles this case with default header values.
+/* PatchProjectNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchProjectNotFound struct {
 func (o *PatchProjectNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchProjectDefault(code int) *PatchProjectDefault {
 	}
 }
 
-/*PatchProjectDefault handles this case with default header values.
+/* PatchProjectDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchProjectDefault) Code() int {
 func (o *PatchProjectDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] PatchProject default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchProjectDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

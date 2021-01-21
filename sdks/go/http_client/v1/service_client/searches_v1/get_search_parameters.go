@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetSearchParams creates a new GetSearchParams object
-// with the default values initialized.
+// NewGetSearchParams creates a new GetSearchParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetSearchParams() *GetSearchParams {
-	var ()
 	return &GetSearchParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetSearchParamsWithTimeout creates a new GetSearchParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetSearchParamsWithTimeout(timeout time.Duration) *GetSearchParams {
-	var ()
 	return &GetSearchParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetSearchParamsWithContext creates a new GetSearchParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetSearchParamsWithContext(ctx context.Context) *GetSearchParams {
-	var ()
 	return &GetSearchParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetSearchParamsWithHTTPClient creates a new GetSearchParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetSearchParamsWithHTTPClient(client *http.Client) *GetSearchParams {
-	var ()
 	return &GetSearchParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetSearchParams contains all the parameters to send to the API endpoint
-for the get search operation typically these are written to a http.Request
+/* GetSearchParams contains all the parameters to send to the API endpoint
+   for the get search operation.
+
+   Typically these are written to a http.Request.
 */
 type GetSearchParams struct {
 
-	/*Owner
-	  Owner of the namespace
+	/* Owner.
 
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetSearchParams) WithDefaults() *GetSearchParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetSearchParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get search params

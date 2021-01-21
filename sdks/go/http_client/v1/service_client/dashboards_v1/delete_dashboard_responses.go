@@ -78,7 +78,7 @@ func NewDeleteDashboardOK() *DeleteDashboardOK {
 	return &DeleteDashboardOK{}
 }
 
-/*DeleteDashboardOK handles this case with default header values.
+/* DeleteDashboardOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteDashboardNoContent() *DeleteDashboardNoContent {
 	return &DeleteDashboardNoContent{}
 }
 
-/*DeleteDashboardNoContent handles this case with default header values.
+/* DeleteDashboardNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteDashboardNoContent struct {
 func (o *DeleteDashboardNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/dashboards/{uuid}][%d] deleteDashboardNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteDashboardNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteDashboardForbidden() *DeleteDashboardForbidden {
 	return &DeleteDashboardForbidden{}
 }
 
-/*DeleteDashboardForbidden handles this case with default header values.
+/* DeleteDashboardForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteDashboardForbidden struct {
 func (o *DeleteDashboardForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/dashboards/{uuid}][%d] deleteDashboardForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteDashboardForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteDashboardNotFound() *DeleteDashboardNotFound {
 	return &DeleteDashboardNotFound{}
 }
 
-/*DeleteDashboardNotFound handles this case with default header values.
+/* DeleteDashboardNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteDashboardNotFound struct {
 func (o *DeleteDashboardNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/dashboards/{uuid}][%d] deleteDashboardNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteDashboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteDashboardDefault(code int) *DeleteDashboardDefault {
 	}
 }
 
-/*DeleteDashboardDefault handles this case with default header values.
+/* DeleteDashboardDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteDashboardDefault) Code() int {
 func (o *DeleteDashboardDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/dashboards/{uuid}][%d] DeleteDashboard default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteDashboardDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -31,84 +31,107 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewListProjectDashboardNamesParams creates a new ListProjectDashboardNamesParams object
-// with the default values initialized.
+// NewListProjectDashboardNamesParams creates a new ListProjectDashboardNamesParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewListProjectDashboardNamesParams() *ListProjectDashboardNamesParams {
-	var ()
 	return &ListProjectDashboardNamesParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewListProjectDashboardNamesParamsWithTimeout creates a new ListProjectDashboardNamesParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewListProjectDashboardNamesParamsWithTimeout(timeout time.Duration) *ListProjectDashboardNamesParams {
-	var ()
 	return &ListProjectDashboardNamesParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewListProjectDashboardNamesParamsWithContext creates a new ListProjectDashboardNamesParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewListProjectDashboardNamesParamsWithContext(ctx context.Context) *ListProjectDashboardNamesParams {
-	var ()
 	return &ListProjectDashboardNamesParams{
-
 		Context: ctx,
 	}
 }
 
 // NewListProjectDashboardNamesParamsWithHTTPClient creates a new ListProjectDashboardNamesParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewListProjectDashboardNamesParamsWithHTTPClient(client *http.Client) *ListProjectDashboardNamesParams {
-	var ()
 	return &ListProjectDashboardNamesParams{
 		HTTPClient: client,
 	}
 }
 
-/*ListProjectDashboardNamesParams contains all the parameters to send to the API endpoint
-for the list project dashboard names operation typically these are written to a http.Request
+/* ListProjectDashboardNamesParams contains all the parameters to send to the API endpoint
+   for the list project dashboard names operation.
+
+   Typically these are written to a http.Request.
 */
 type ListProjectDashboardNamesParams struct {
 
-	/*Limit
-	  Limit size.
+	/* Limit.
 
+	   Limit size.
+
+	   Format: int32
 	*/
 	Limit *int32
-	/*Name
-	  Entity managing the resource
 
+	/* Name.
+
+	   Entity managing the resource
 	*/
 	Name string
-	/*Offset
-	  Pagination offset.
 
+	/* Offset.
+
+	   Pagination offset.
+
+	   Format: int32
 	*/
 	Offset *int32
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Query
-	  Query filter the search.
 
+	/* Query.
+
+	   Query filter the search.
 	*/
 	Query *string
-	/*Sort
-	  Sort to order the search.
 
+	/* Sort.
+
+	   Sort to order the search.
 	*/
 	Sort *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the list project dashboard names params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ListProjectDashboardNamesParams) WithDefaults() *ListProjectDashboardNamesParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the list project dashboard names params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ListProjectDashboardNamesParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the list project dashboard names params
@@ -222,16 +245,17 @@ func (o *ListProjectDashboardNamesParams) WriteToRequest(r runtime.ClientRequest
 
 		// query param limit
 		var qrLimit int32
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := swag.FormatInt32(qrLimit)
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param name
@@ -243,16 +267,17 @@ func (o *ListProjectDashboardNamesParams) WriteToRequest(r runtime.ClientRequest
 
 		// query param offset
 		var qrOffset int32
+
 		if o.Offset != nil {
 			qrOffset = *o.Offset
 		}
 		qOffset := swag.FormatInt32(qrOffset)
 		if qOffset != "" {
+
 			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner
@@ -264,32 +289,34 @@ func (o *ListProjectDashboardNamesParams) WriteToRequest(r runtime.ClientRequest
 
 		// query param query
 		var qrQuery string
+
 		if o.Query != nil {
 			qrQuery = *o.Query
 		}
 		qQuery := qrQuery
 		if qQuery != "" {
+
 			if err := r.SetQueryParam("query", qQuery); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Sort != nil {
 
 		// query param sort
 		var qrSort string
+
 		if o.Sort != nil {
 			qrSort = *o.Sort
 		}
 		qSort := qrSort
 		if qSort != "" {
+
 			if err := r.SetQueryParam("sort", qSort); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

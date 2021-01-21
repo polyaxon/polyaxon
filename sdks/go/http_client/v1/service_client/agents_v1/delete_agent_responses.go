@@ -78,7 +78,7 @@ func NewDeleteAgentOK() *DeleteAgentOK {
 	return &DeleteAgentOK{}
 }
 
-/*DeleteAgentOK handles this case with default header values.
+/* DeleteAgentOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteAgentNoContent() *DeleteAgentNoContent {
 	return &DeleteAgentNoContent{}
 }
 
-/*DeleteAgentNoContent handles this case with default header values.
+/* DeleteAgentNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteAgentNoContent struct {
 func (o *DeleteAgentNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteAgentNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteAgentForbidden() *DeleteAgentForbidden {
 	return &DeleteAgentForbidden{}
 }
 
-/*DeleteAgentForbidden handles this case with default header values.
+/* DeleteAgentForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteAgentForbidden struct {
 func (o *DeleteAgentForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteAgentForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteAgentNotFound() *DeleteAgentNotFound {
 	return &DeleteAgentNotFound{}
 }
 
-/*DeleteAgentNotFound handles this case with default header values.
+/* DeleteAgentNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteAgentNotFound struct {
 func (o *DeleteAgentNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteAgentNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteAgentDefault(code int) *DeleteAgentDefault {
 	}
 }
 
-/*DeleteAgentDefault handles this case with default header values.
+/* DeleteAgentDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteAgentDefault) Code() int {
 func (o *DeleteAgentDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] DeleteAgent default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteAgentDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

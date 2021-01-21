@@ -78,7 +78,7 @@ func NewUpdateComponentHubOK() *UpdateComponentHubOK {
 	return &UpdateComponentHubOK{}
 }
 
-/*UpdateComponentHubOK handles this case with default header values.
+/* UpdateComponentHubOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateComponentHubOK struct {
 func (o *UpdateComponentHubOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] updateComponentHubOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateComponentHubOK) GetPayload() *service_model.V1ComponentHub {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateComponentHubNoContent() *UpdateComponentHubNoContent {
 	return &UpdateComponentHubNoContent{}
 }
 
-/*UpdateComponentHubNoContent handles this case with default header values.
+/* UpdateComponentHubNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateComponentHubNoContent struct {
 func (o *UpdateComponentHubNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] updateComponentHubNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateComponentHubNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateComponentHubForbidden() *UpdateComponentHubForbidden {
 	return &UpdateComponentHubForbidden{}
 }
 
-/*UpdateComponentHubForbidden handles this case with default header values.
+/* UpdateComponentHubForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateComponentHubForbidden struct {
 func (o *UpdateComponentHubForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] updateComponentHubForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateComponentHubForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateComponentHubNotFound() *UpdateComponentHubNotFound {
 	return &UpdateComponentHubNotFound{}
 }
 
-/*UpdateComponentHubNotFound handles this case with default header values.
+/* UpdateComponentHubNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateComponentHubNotFound struct {
 func (o *UpdateComponentHubNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] updateComponentHubNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateComponentHubNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateComponentHubDefault(code int) *UpdateComponentHubDefault {
 	}
 }
 
-/*UpdateComponentHubDefault handles this case with default header values.
+/* UpdateComponentHubDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateComponentHubDefault) Code() int {
 func (o *UpdateComponentHubDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component.name}][%d] UpdateComponentHub default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateComponentHubDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

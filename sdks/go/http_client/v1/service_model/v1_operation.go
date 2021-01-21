@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -82,7 +83,7 @@ type V1Operation struct {
 	Params map[string]V1Param `json:"params,omitempty"`
 
 	// Optional patch strategy, default post_merge
-	PatchStrategy V1PatchStrategy `json:"patch_strategy,omitempty"`
+	PatchStrategy *V1PatchStrategy `json:"patch_strategy,omitempty"`
 
 	// path ref
 	PathRef string `json:"path_ref,omitempty"`
@@ -116,7 +117,7 @@ type V1Operation struct {
 	Termination *V1Termination `json:"termination,omitempty"`
 
 	// Optional trigger policy
-	Trigger V1TriggerPolicy `json:"trigger,omitempty"`
+	Trigger *V1TriggerPolicy `json:"trigger,omitempty"`
 
 	// url ref
 	URLRef string `json:"url_ref,omitempty"`
@@ -180,7 +181,6 @@ func (m *V1Operation) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateCache(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Cache) { // not required
 		return nil
 	}
@@ -198,7 +198,6 @@ func (m *V1Operation) validateCache(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateComponent(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Component) { // not required
 		return nil
 	}
@@ -216,7 +215,6 @@ func (m *V1Operation) validateComponent(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateEvents(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Events) { // not required
 		return nil
 	}
@@ -241,7 +239,6 @@ func (m *V1Operation) validateEvents(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateHooks(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Hooks) { // not required
 		return nil
 	}
@@ -266,7 +263,6 @@ func (m *V1Operation) validateHooks(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateJoins(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Joins) { // not required
 		return nil
 	}
@@ -288,7 +284,6 @@ func (m *V1Operation) validateJoins(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateParams(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Params) { // not required
 		return nil
 	}
@@ -310,23 +305,23 @@ func (m *V1Operation) validateParams(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validatePatchStrategy(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.PatchStrategy) { // not required
 		return nil
 	}
 
-	if err := m.PatchStrategy.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("patch_strategy")
+	if m.PatchStrategy != nil {
+		if err := m.PatchStrategy.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("patch_strategy")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1Operation) validatePlugins(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Plugins) { // not required
 		return nil
 	}
@@ -344,7 +339,6 @@ func (m *V1Operation) validatePlugins(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateTemplate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Template) { // not required
 		return nil
 	}
@@ -362,7 +356,6 @@ func (m *V1Operation) validateTemplate(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateTermination(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Termination) { // not required
 		return nil
 	}
@@ -380,16 +373,235 @@ func (m *V1Operation) validateTermination(formats strfmt.Registry) error {
 }
 
 func (m *V1Operation) validateTrigger(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Trigger) { // not required
 		return nil
 	}
 
-	if err := m.Trigger.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("trigger")
+	if m.Trigger != nil {
+		if err := m.Trigger.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("trigger")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 operation based on the context it is used
+func (m *V1Operation) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCache(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateComponent(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateEvents(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateHooks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateJoins(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePatchStrategy(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePlugins(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTemplate(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTermination(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTrigger(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Operation) contextValidateCache(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Cache != nil {
+		if err := m.Cache.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cache")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidateComponent(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Component != nil {
+		if err := m.Component.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("component")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidateEvents(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Events); i++ {
+
+		if m.Events[i] != nil {
+			if err := m.Events[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("events" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidateHooks(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Hooks); i++ {
+
+		if m.Hooks[i] != nil {
+			if err := m.Hooks[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidateJoins(ctx context.Context, formats strfmt.Registry) error {
+
+	for k := range m.Joins {
+
+		if val, ok := m.Joins[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidateParams(ctx context.Context, formats strfmt.Registry) error {
+
+	for k := range m.Params {
+
+		if val, ok := m.Params[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidatePatchStrategy(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.PatchStrategy != nil {
+		if err := m.PatchStrategy.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("patch_strategy")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidatePlugins(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Plugins != nil {
+		if err := m.Plugins.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("plugins")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidateTemplate(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Template != nil {
+		if err := m.Template.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("template")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidateTermination(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Termination != nil {
+		if err := m.Termination.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("termination")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Operation) contextValidateTrigger(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Trigger != nil {
+		if err := m.Trigger.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("trigger")
+			}
+			return err
+		}
 	}
 
 	return nil

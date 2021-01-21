@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -83,7 +85,6 @@ func (m *V1Hyperband) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Hyperband) validateMetric(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Metric) { // not required
 		return nil
 	}
@@ -101,13 +102,58 @@ func (m *V1Hyperband) validateMetric(formats strfmt.Registry) error {
 }
 
 func (m *V1Hyperband) validateResource(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Resource) { // not required
 		return nil
 	}
 
 	if m.Resource != nil {
 		if err := m.Resource.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("resource")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 hyperband based on the context it is used
+func (m *V1Hyperband) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateMetric(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateResource(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Hyperband) contextValidateMetric(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Metric != nil {
+		if err := m.Metric.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("metric")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Hyperband) contextValidateResource(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Resource != nil {
+		if err := m.Resource.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resource")
 			}

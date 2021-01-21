@@ -31,104 +31,131 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewGetOrganizationSettingsParams creates a new GetOrganizationSettingsParams object
-// with the default values initialized.
+// NewGetOrganizationSettingsParams creates a new GetOrganizationSettingsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetOrganizationSettingsParams() *GetOrganizationSettingsParams {
-	var ()
 	return &GetOrganizationSettingsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetOrganizationSettingsParamsWithTimeout creates a new GetOrganizationSettingsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetOrganizationSettingsParamsWithTimeout(timeout time.Duration) *GetOrganizationSettingsParams {
-	var ()
 	return &GetOrganizationSettingsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetOrganizationSettingsParamsWithContext creates a new GetOrganizationSettingsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetOrganizationSettingsParamsWithContext(ctx context.Context) *GetOrganizationSettingsParams {
-	var ()
 	return &GetOrganizationSettingsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetOrganizationSettingsParamsWithHTTPClient creates a new GetOrganizationSettingsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetOrganizationSettingsParamsWithHTTPClient(client *http.Client) *GetOrganizationSettingsParams {
-	var ()
 	return &GetOrganizationSettingsParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetOrganizationSettingsParams contains all the parameters to send to the API endpoint
-for the get organization settings operation typically these are written to a http.Request
+/* GetOrganizationSettingsParams contains all the parameters to send to the API endpoint
+   for the get organization settings operation.
+
+   Typically these are written to a http.Request.
 */
 type GetOrganizationSettingsParams struct {
 
-	/*OrganizationCreatedAt
-	  Optional time when the entity was created.
+	/* OrganizationCreatedAt.
 
+	   Optional time when the entity was created.
+
+	   Format: date-time
 	*/
 	OrganizationCreatedAt *strfmt.DateTime
-	/*OrganizationIsPublic
-	  Optional flag to tell if this organization is public.
 
+	/* OrganizationIsPublic.
+
+	   Optional flag to tell if this organization is public.
 	*/
 	OrganizationIsPublic *bool
-	/*OrganizationName
-	  Name.
 
+	/* OrganizationName.
+
+	   Name.
 	*/
 	OrganizationName *string
-	/*OrganizationPreset
-	  Default preset.
 
+	/* OrganizationPreset.
+
+	   Default preset.
 	*/
 	OrganizationPreset *string
-	/*OrganizationQueue
-	  Default queue.
 
+	/* OrganizationQueue.
+
+	   Default queue.
 	*/
 	OrganizationQueue *string
-	/*OrganizationRole
-	  Current user's role in this org.
 
+	/* OrganizationRole.
+
+	   Current user's role in this org.
 	*/
 	OrganizationRole *string
-	/*OrganizationUpdatedAt
-	  Optional last time the entity was updated.
 
+	/* OrganizationUpdatedAt.
+
+	   Optional last time the entity was updated.
+
+	   Format: date-time
 	*/
 	OrganizationUpdatedAt *strfmt.DateTime
-	/*OrganizationUser
-	  User.
 
+	/* OrganizationUser.
+
+	   User.
 	*/
 	OrganizationUser *string
-	/*OrganizationUserEmail
-	  Read-only User email.
 
+	/* OrganizationUserEmail.
+
+	   Read-only User email.
 	*/
 	OrganizationUserEmail *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get organization settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetOrganizationSettingsParams) WithDefaults() *GetOrganizationSettingsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get organization settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetOrganizationSettingsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get organization settings params
@@ -286,144 +313,153 @@ func (o *GetOrganizationSettingsParams) WriteToRequest(r runtime.ClientRequest, 
 
 		// query param organization.created_at
 		var qrOrganizationCreatedAt strfmt.DateTime
+
 		if o.OrganizationCreatedAt != nil {
 			qrOrganizationCreatedAt = *o.OrganizationCreatedAt
 		}
 		qOrganizationCreatedAt := qrOrganizationCreatedAt.String()
 		if qOrganizationCreatedAt != "" {
+
 			if err := r.SetQueryParam("organization.created_at", qOrganizationCreatedAt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrganizationIsPublic != nil {
 
 		// query param organization.is_public
 		var qrOrganizationIsPublic bool
+
 		if o.OrganizationIsPublic != nil {
 			qrOrganizationIsPublic = *o.OrganizationIsPublic
 		}
 		qOrganizationIsPublic := swag.FormatBool(qrOrganizationIsPublic)
 		if qOrganizationIsPublic != "" {
+
 			if err := r.SetQueryParam("organization.is_public", qOrganizationIsPublic); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrganizationName != nil {
 
 		// query param organization.name
 		var qrOrganizationName string
+
 		if o.OrganizationName != nil {
 			qrOrganizationName = *o.OrganizationName
 		}
 		qOrganizationName := qrOrganizationName
 		if qOrganizationName != "" {
+
 			if err := r.SetQueryParam("organization.name", qOrganizationName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrganizationPreset != nil {
 
 		// query param organization.preset
 		var qrOrganizationPreset string
+
 		if o.OrganizationPreset != nil {
 			qrOrganizationPreset = *o.OrganizationPreset
 		}
 		qOrganizationPreset := qrOrganizationPreset
 		if qOrganizationPreset != "" {
+
 			if err := r.SetQueryParam("organization.preset", qOrganizationPreset); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrganizationQueue != nil {
 
 		// query param organization.queue
 		var qrOrganizationQueue string
+
 		if o.OrganizationQueue != nil {
 			qrOrganizationQueue = *o.OrganizationQueue
 		}
 		qOrganizationQueue := qrOrganizationQueue
 		if qOrganizationQueue != "" {
+
 			if err := r.SetQueryParam("organization.queue", qOrganizationQueue); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrganizationRole != nil {
 
 		// query param organization.role
 		var qrOrganizationRole string
+
 		if o.OrganizationRole != nil {
 			qrOrganizationRole = *o.OrganizationRole
 		}
 		qOrganizationRole := qrOrganizationRole
 		if qOrganizationRole != "" {
+
 			if err := r.SetQueryParam("organization.role", qOrganizationRole); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrganizationUpdatedAt != nil {
 
 		// query param organization.updated_at
 		var qrOrganizationUpdatedAt strfmt.DateTime
+
 		if o.OrganizationUpdatedAt != nil {
 			qrOrganizationUpdatedAt = *o.OrganizationUpdatedAt
 		}
 		qOrganizationUpdatedAt := qrOrganizationUpdatedAt.String()
 		if qOrganizationUpdatedAt != "" {
+
 			if err := r.SetQueryParam("organization.updated_at", qOrganizationUpdatedAt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrganizationUser != nil {
 
 		// query param organization.user
 		var qrOrganizationUser string
+
 		if o.OrganizationUser != nil {
 			qrOrganizationUser = *o.OrganizationUser
 		}
 		qOrganizationUser := qrOrganizationUser
 		if qOrganizationUser != "" {
+
 			if err := r.SetQueryParam("organization.user", qOrganizationUser); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrganizationUserEmail != nil {
 
 		// query param organization.user_email
 		var qrOrganizationUserEmail string
+
 		if o.OrganizationUserEmail != nil {
 			qrOrganizationUserEmail = *o.OrganizationUserEmail
 		}
 		qOrganizationUserEmail := qrOrganizationUserEmail
 		if qOrganizationUserEmail != "" {
+
 			if err := r.SetQueryParam("organization.user_email", qOrganizationUserEmail); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner

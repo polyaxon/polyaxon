@@ -78,7 +78,7 @@ func NewGetLogHandlerOK() *GetLogHandlerOK {
 	return &GetLogHandlerOK{}
 }
 
-/*GetLogHandlerOK handles this case with default header values.
+/* GetLogHandlerOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetLogHandlerOK struct {
 func (o *GetLogHandlerOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/log_handler][%d] getLogHandlerOK  %+v", 200, o.Payload)
 }
-
 func (o *GetLogHandlerOK) GetPayload() *service_model.V1LogHandler {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetLogHandlerNoContent() *GetLogHandlerNoContent {
 	return &GetLogHandlerNoContent{}
 }
 
-/*GetLogHandlerNoContent handles this case with default header values.
+/* GetLogHandlerNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetLogHandlerNoContent struct {
 func (o *GetLogHandlerNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/log_handler][%d] getLogHandlerNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetLogHandlerNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetLogHandlerForbidden() *GetLogHandlerForbidden {
 	return &GetLogHandlerForbidden{}
 }
 
-/*GetLogHandlerForbidden handles this case with default header values.
+/* GetLogHandlerForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetLogHandlerForbidden struct {
 func (o *GetLogHandlerForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/log_handler][%d] getLogHandlerForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetLogHandlerForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetLogHandlerNotFound() *GetLogHandlerNotFound {
 	return &GetLogHandlerNotFound{}
 }
 
-/*GetLogHandlerNotFound handles this case with default header values.
+/* GetLogHandlerNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetLogHandlerNotFound struct {
 func (o *GetLogHandlerNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/log_handler][%d] getLogHandlerNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetLogHandlerNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetLogHandlerDefault(code int) *GetLogHandlerDefault {
 	}
 }
 
-/*GetLogHandlerDefault handles this case with default header values.
+/* GetLogHandlerDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetLogHandlerDefault) Code() int {
 func (o *GetLogHandlerDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/log_handler][%d] GetLogHandler default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetLogHandlerDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

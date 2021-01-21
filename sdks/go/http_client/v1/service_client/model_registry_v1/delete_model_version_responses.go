@@ -78,7 +78,7 @@ func NewDeleteModelVersionOK() *DeleteModelVersionOK {
 	return &DeleteModelVersionOK{}
 }
 
-/*DeleteModelVersionOK handles this case with default header values.
+/* DeleteModelVersionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteModelVersionNoContent() *DeleteModelVersionNoContent {
 	return &DeleteModelVersionNoContent{}
 }
 
-/*DeleteModelVersionNoContent handles this case with default header values.
+/* DeleteModelVersionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteModelVersionNoContent struct {
 func (o *DeleteModelVersionNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{entity}/versions/{name}][%d] deleteModelVersionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteModelVersionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteModelVersionForbidden() *DeleteModelVersionForbidden {
 	return &DeleteModelVersionForbidden{}
 }
 
-/*DeleteModelVersionForbidden handles this case with default header values.
+/* DeleteModelVersionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteModelVersionForbidden struct {
 func (o *DeleteModelVersionForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{entity}/versions/{name}][%d] deleteModelVersionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteModelVersionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteModelVersionNotFound() *DeleteModelVersionNotFound {
 	return &DeleteModelVersionNotFound{}
 }
 
-/*DeleteModelVersionNotFound handles this case with default header values.
+/* DeleteModelVersionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteModelVersionNotFound struct {
 func (o *DeleteModelVersionNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{entity}/versions/{name}][%d] deleteModelVersionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteModelVersionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteModelVersionDefault(code int) *DeleteModelVersionDefault {
 	}
 }
 
-/*DeleteModelVersionDefault handles this case with default header values.
+/* DeleteModelVersionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteModelVersionDefault) Code() int {
 func (o *DeleteModelVersionDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{entity}/versions/{name}][%d] DeleteModelVersion default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteModelVersionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewRestoreProjectOK() *RestoreProjectOK {
 	return &RestoreProjectOK{}
 }
 
-/*RestoreProjectOK handles this case with default header values.
+/* RestoreProjectOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewRestoreProjectNoContent() *RestoreProjectNoContent {
 	return &RestoreProjectNoContent{}
 }
 
-/*RestoreProjectNoContent handles this case with default header values.
+/* RestoreProjectNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type RestoreProjectNoContent struct {
 func (o *RestoreProjectNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] restoreProjectNoContent  %+v", 204, o.Payload)
 }
-
 func (o *RestoreProjectNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewRestoreProjectForbidden() *RestoreProjectForbidden {
 	return &RestoreProjectForbidden{}
 }
 
-/*RestoreProjectForbidden handles this case with default header values.
+/* RestoreProjectForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type RestoreProjectForbidden struct {
 func (o *RestoreProjectForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] restoreProjectForbidden  %+v", 403, o.Payload)
 }
-
 func (o *RestoreProjectForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewRestoreProjectNotFound() *RestoreProjectNotFound {
 	return &RestoreProjectNotFound{}
 }
 
-/*RestoreProjectNotFound handles this case with default header values.
+/* RestoreProjectNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type RestoreProjectNotFound struct {
 func (o *RestoreProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] restoreProjectNotFound  %+v", 404, o.Payload)
 }
-
 func (o *RestoreProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewRestoreProjectDefault(code int) *RestoreProjectDefault {
 	}
 }
 
-/*RestoreProjectDefault handles this case with default header values.
+/* RestoreProjectDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *RestoreProjectDefault) Code() int {
 func (o *RestoreProjectDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/restore][%d] RestoreProject default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *RestoreProjectDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

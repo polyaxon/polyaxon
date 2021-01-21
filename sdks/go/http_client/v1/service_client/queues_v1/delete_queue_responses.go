@@ -78,7 +78,7 @@ func NewDeleteQueueOK() *DeleteQueueOK {
 	return &DeleteQueueOK{}
 }
 
-/*DeleteQueueOK handles this case with default header values.
+/* DeleteQueueOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteQueueNoContent() *DeleteQueueNoContent {
 	return &DeleteQueueNoContent{}
 }
 
-/*DeleteQueueNoContent handles this case with default header values.
+/* DeleteQueueNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteQueueNoContent struct {
 func (o *DeleteQueueNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] deleteQueueNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteQueueNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteQueueForbidden() *DeleteQueueForbidden {
 	return &DeleteQueueForbidden{}
 }
 
-/*DeleteQueueForbidden handles this case with default header values.
+/* DeleteQueueForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteQueueForbidden struct {
 func (o *DeleteQueueForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] deleteQueueForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteQueueForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteQueueNotFound() *DeleteQueueNotFound {
 	return &DeleteQueueNotFound{}
 }
 
-/*DeleteQueueNotFound handles this case with default header values.
+/* DeleteQueueNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteQueueNotFound struct {
 func (o *DeleteQueueNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] deleteQueueNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteQueueNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteQueueDefault(code int) *DeleteQueueDefault {
 	}
 }
 
-/*DeleteQueueDefault handles this case with default header values.
+/* DeleteQueueDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteQueueDefault) Code() int {
 func (o *DeleteQueueDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] DeleteQueue default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteQueueDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

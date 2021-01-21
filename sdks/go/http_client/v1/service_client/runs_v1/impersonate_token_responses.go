@@ -78,7 +78,7 @@ func NewImpersonateTokenOK() *ImpersonateTokenOK {
 	return &ImpersonateTokenOK{}
 }
 
-/*ImpersonateTokenOK handles this case with default header values.
+/* ImpersonateTokenOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ImpersonateTokenOK struct {
 func (o *ImpersonateTokenOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] impersonateTokenOK  %+v", 200, o.Payload)
 }
-
 func (o *ImpersonateTokenOK) GetPayload() *service_model.V1Auth {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewImpersonateTokenNoContent() *ImpersonateTokenNoContent {
 	return &ImpersonateTokenNoContent{}
 }
 
-/*ImpersonateTokenNoContent handles this case with default header values.
+/* ImpersonateTokenNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ImpersonateTokenNoContent struct {
 func (o *ImpersonateTokenNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] impersonateTokenNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ImpersonateTokenNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewImpersonateTokenForbidden() *ImpersonateTokenForbidden {
 	return &ImpersonateTokenForbidden{}
 }
 
-/*ImpersonateTokenForbidden handles this case with default header values.
+/* ImpersonateTokenForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ImpersonateTokenForbidden struct {
 func (o *ImpersonateTokenForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] impersonateTokenForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ImpersonateTokenForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewImpersonateTokenNotFound() *ImpersonateTokenNotFound {
 	return &ImpersonateTokenNotFound{}
 }
 
-/*ImpersonateTokenNotFound handles this case with default header values.
+/* ImpersonateTokenNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ImpersonateTokenNotFound struct {
 func (o *ImpersonateTokenNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] impersonateTokenNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ImpersonateTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewImpersonateTokenDefault(code int) *ImpersonateTokenDefault {
 	}
 }
 
-/*ImpersonateTokenDefault handles this case with default header values.
+/* ImpersonateTokenDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ImpersonateTokenDefault) Code() int {
 func (o *ImpersonateTokenDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/impersonate][%d] ImpersonateToken default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ImpersonateTokenDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

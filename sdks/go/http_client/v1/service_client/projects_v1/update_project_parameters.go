@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateProjectParams creates a new UpdateProjectParams object
-// with the default values initialized.
+// NewUpdateProjectParams creates a new UpdateProjectParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateProjectParams() *UpdateProjectParams {
-	var ()
 	return &UpdateProjectParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateProjectParamsWithTimeout creates a new UpdateProjectParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateProjectParamsWithTimeout(timeout time.Duration) *UpdateProjectParams {
-	var ()
 	return &UpdateProjectParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateProjectParamsWithContext creates a new UpdateProjectParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateProjectParamsWithContext(ctx context.Context) *UpdateProjectParams {
-	var ()
 	return &UpdateProjectParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateProjectParamsWithHTTPClient creates a new UpdateProjectParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateProjectParamsWithHTTPClient(client *http.Client) *UpdateProjectParams {
-	var ()
 	return &UpdateProjectParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateProjectParams contains all the parameters to send to the API endpoint
-for the update project operation typically these are written to a http.Request
+/* UpdateProjectParams contains all the parameters to send to the API endpoint
+   for the update project operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateProjectParams struct {
 
-	/*Body
-	  Project body
+	/* Body.
 
+	   Project body
 	*/
 	Body *service_model.V1Project
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*ProjectName
-	  Required name
 
+	/* ProjectName.
+
+	   Required name
 	*/
 	ProjectName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update project params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateProjectParams) WithDefaults() *UpdateProjectParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update project params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateProjectParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update project params
@@ -170,7 +186,6 @@ func (o *UpdateProjectParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

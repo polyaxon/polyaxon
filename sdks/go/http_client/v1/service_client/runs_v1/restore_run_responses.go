@@ -78,7 +78,7 @@ func NewRestoreRunOK() *RestoreRunOK {
 	return &RestoreRunOK{}
 }
 
-/*RestoreRunOK handles this case with default header values.
+/* RestoreRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewRestoreRunNoContent() *RestoreRunNoContent {
 	return &RestoreRunNoContent{}
 }
 
-/*RestoreRunNoContent handles this case with default header values.
+/* RestoreRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type RestoreRunNoContent struct {
 func (o *RestoreRunNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] restoreRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *RestoreRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewRestoreRunForbidden() *RestoreRunForbidden {
 	return &RestoreRunForbidden{}
 }
 
-/*RestoreRunForbidden handles this case with default header values.
+/* RestoreRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type RestoreRunForbidden struct {
 func (o *RestoreRunForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] restoreRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *RestoreRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewRestoreRunNotFound() *RestoreRunNotFound {
 	return &RestoreRunNotFound{}
 }
 
-/*RestoreRunNotFound handles this case with default header values.
+/* RestoreRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type RestoreRunNotFound struct {
 func (o *RestoreRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] restoreRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *RestoreRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewRestoreRunDefault(code int) *RestoreRunDefault {
 	}
 }
 
-/*RestoreRunDefault handles this case with default header values.
+/* RestoreRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *RestoreRunDefault) Code() int {
 func (o *RestoreRunDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/restore][%d] RestoreRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *RestoreRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

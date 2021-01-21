@@ -78,7 +78,7 @@ func NewChangePasswordOK() *ChangePasswordOK {
 	return &ChangePasswordOK{}
 }
 
-/*ChangePasswordOK handles this case with default header values.
+/* ChangePasswordOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewChangePasswordNoContent() *ChangePasswordNoContent {
 	return &ChangePasswordNoContent{}
 }
 
-/*ChangePasswordNoContent handles this case with default header values.
+/* ChangePasswordNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type ChangePasswordNoContent struct {
 func (o *ChangePasswordNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/change-password][%d] changePasswordNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ChangePasswordNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewChangePasswordForbidden() *ChangePasswordForbidden {
 	return &ChangePasswordForbidden{}
 }
 
-/*ChangePasswordForbidden handles this case with default header values.
+/* ChangePasswordForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type ChangePasswordForbidden struct {
 func (o *ChangePasswordForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/change-password][%d] changePasswordForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ChangePasswordForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewChangePasswordNotFound() *ChangePasswordNotFound {
 	return &ChangePasswordNotFound{}
 }
 
-/*ChangePasswordNotFound handles this case with default header values.
+/* ChangePasswordNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type ChangePasswordNotFound struct {
 func (o *ChangePasswordNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/change-password][%d] changePasswordNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ChangePasswordNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewChangePasswordDefault(code int) *ChangePasswordDefault {
 	}
 }
 
-/*ChangePasswordDefault handles this case with default header values.
+/* ChangePasswordDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *ChangePasswordDefault) Code() int {
 func (o *ChangePasswordDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/change-password][%d] ChangePassword default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ChangePasswordDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

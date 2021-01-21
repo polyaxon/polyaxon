@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchOrganizationInvitationParams creates a new PatchOrganizationInvitationParams object
-// with the default values initialized.
+// NewPatchOrganizationInvitationParams creates a new PatchOrganizationInvitationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchOrganizationInvitationParams() *PatchOrganizationInvitationParams {
-	var ()
 	return &PatchOrganizationInvitationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchOrganizationInvitationParamsWithTimeout creates a new PatchOrganizationInvitationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchOrganizationInvitationParamsWithTimeout(timeout time.Duration) *PatchOrganizationInvitationParams {
-	var ()
 	return &PatchOrganizationInvitationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchOrganizationInvitationParamsWithContext creates a new PatchOrganizationInvitationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchOrganizationInvitationParamsWithContext(ctx context.Context) *PatchOrganizationInvitationParams {
-	var ()
 	return &PatchOrganizationInvitationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchOrganizationInvitationParamsWithHTTPClient creates a new PatchOrganizationInvitationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchOrganizationInvitationParamsWithHTTPClient(client *http.Client) *PatchOrganizationInvitationParams {
-	var ()
 	return &PatchOrganizationInvitationParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchOrganizationInvitationParams contains all the parameters to send to the API endpoint
-for the patch organization invitation operation typically these are written to a http.Request
+/* PatchOrganizationInvitationParams contains all the parameters to send to the API endpoint
+   for the patch organization invitation operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchOrganizationInvitationParams struct {
 
-	/*Body
-	  Organization body
+	/* Body.
 
+	   Organization body
 	*/
 	Body *service_model.V1OrganizationMember
-	/*Email
-	  Optional email.
 
+	/* Email.
+
+	   Optional email.
 	*/
 	Email *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch organization invitation params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchOrganizationInvitationParams) WithDefaults() *PatchOrganizationInvitationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch organization invitation params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchOrganizationInvitationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch organization invitation params
@@ -170,7 +186,6 @@ func (o *PatchOrganizationInvitationParams) WriteToRequest(r runtime.ClientReque
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
@@ -181,16 +196,17 @@ func (o *PatchOrganizationInvitationParams) WriteToRequest(r runtime.ClientReque
 
 		// query param email
 		var qrEmail string
+
 		if o.Email != nil {
 			qrEmail = *o.Email
 		}
 		qEmail := qrEmail
 		if qEmail != "" {
+
 			if err := r.SetQueryParam("email", qEmail); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner

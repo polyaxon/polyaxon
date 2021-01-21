@@ -32,64 +32,79 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateConnectionParams creates a new CreateConnectionParams object
-// with the default values initialized.
+// NewCreateConnectionParams creates a new CreateConnectionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateConnectionParams() *CreateConnectionParams {
-	var ()
 	return &CreateConnectionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateConnectionParamsWithTimeout creates a new CreateConnectionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateConnectionParamsWithTimeout(timeout time.Duration) *CreateConnectionParams {
-	var ()
 	return &CreateConnectionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateConnectionParamsWithContext creates a new CreateConnectionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateConnectionParamsWithContext(ctx context.Context) *CreateConnectionParams {
-	var ()
 	return &CreateConnectionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateConnectionParamsWithHTTPClient creates a new CreateConnectionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateConnectionParamsWithHTTPClient(client *http.Client) *CreateConnectionParams {
-	var ()
 	return &CreateConnectionParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateConnectionParams contains all the parameters to send to the API endpoint
-for the create connection operation typically these are written to a http.Request
+/* CreateConnectionParams contains all the parameters to send to the API endpoint
+   for the create connection operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateConnectionParams struct {
 
-	/*Body
-	  Connection body
+	/* Body.
 
+	   Connection body
 	*/
 	Body *service_model.V1ConnectionResponse
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create connection params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateConnectionParams) WithDefaults() *CreateConnectionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create connection params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateConnectionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create connection params
@@ -154,7 +169,6 @@ func (o *CreateConnectionParams) WriteToRequest(r runtime.ClientRequest, reg str
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

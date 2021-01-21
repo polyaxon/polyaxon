@@ -78,7 +78,7 @@ func NewCreateQueueOK() *CreateQueueOK {
 	return &CreateQueueOK{}
 }
 
-/*CreateQueueOK handles this case with default header values.
+/* CreateQueueOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateQueueOK struct {
 func (o *CreateQueueOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateQueueOK) GetPayload() *service_model.V1Queue {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateQueueNoContent() *CreateQueueNoContent {
 	return &CreateQueueNoContent{}
 }
 
-/*CreateQueueNoContent handles this case with default header values.
+/* CreateQueueNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateQueueNoContent struct {
 func (o *CreateQueueNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateQueueNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateQueueForbidden() *CreateQueueForbidden {
 	return &CreateQueueForbidden{}
 }
 
-/*CreateQueueForbidden handles this case with default header values.
+/* CreateQueueForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateQueueForbidden struct {
 func (o *CreateQueueForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateQueueForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateQueueNotFound() *CreateQueueNotFound {
 	return &CreateQueueNotFound{}
 }
 
-/*CreateQueueNotFound handles this case with default header values.
+/* CreateQueueNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateQueueNotFound struct {
 func (o *CreateQueueNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateQueueNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateQueueDefault(code int) *CreateQueueDefault {
 	}
 }
 
-/*CreateQueueDefault handles this case with default header values.
+/* CreateQueueDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateQueueDefault) Code() int {
 func (o *CreateQueueDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] CreateQueue default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateQueueDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -30,76 +30,94 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewCollectRunLogsParams creates a new CollectRunLogsParams object
-// with the default values initialized.
+// NewCollectRunLogsParams creates a new CollectRunLogsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCollectRunLogsParams() *CollectRunLogsParams {
-	var ()
 	return &CollectRunLogsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCollectRunLogsParamsWithTimeout creates a new CollectRunLogsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCollectRunLogsParamsWithTimeout(timeout time.Duration) *CollectRunLogsParams {
-	var ()
 	return &CollectRunLogsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCollectRunLogsParamsWithContext creates a new CollectRunLogsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCollectRunLogsParamsWithContext(ctx context.Context) *CollectRunLogsParams {
-	var ()
 	return &CollectRunLogsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCollectRunLogsParamsWithHTTPClient creates a new CollectRunLogsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCollectRunLogsParamsWithHTTPClient(client *http.Client) *CollectRunLogsParams {
-	var ()
 	return &CollectRunLogsParams{
 		HTTPClient: client,
 	}
 }
 
-/*CollectRunLogsParams contains all the parameters to send to the API endpoint
-for the collect run logs operation typically these are written to a http.Request
+/* CollectRunLogsParams contains all the parameters to send to the API endpoint
+   for the collect run logs operation.
+
+   Typically these are written to a http.Request.
 */
 type CollectRunLogsParams struct {
 
-	/*Kind
-	  Kind of the entity
+	/* Kind.
 
+	   Kind of the entity
 	*/
 	Kind string
-	/*Namespace*/
-	Namespace string
-	/*Owner
-	  Owner of the namespace
 
+	// Namespace.
+	Namespace string
+
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the collect run logs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CollectRunLogsParams) WithDefaults() *CollectRunLogsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the collect run logs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CollectRunLogsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the collect run logs params

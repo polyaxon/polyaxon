@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -56,7 +58,6 @@ func (m *V1OperationCond) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1OperationCond) validateIoConidtion(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.IoConidtion) { // not required
 		return nil
 	}
@@ -74,13 +75,58 @@ func (m *V1OperationCond) validateIoConidtion(formats strfmt.Registry) error {
 }
 
 func (m *V1OperationCond) validateStatusCondition(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StatusCondition) { // not required
 		return nil
 	}
 
 	if m.StatusCondition != nil {
 		if err := m.StatusCondition.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("status_condition")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 operation cond based on the context it is used
+func (m *V1OperationCond) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateIoConidtion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStatusCondition(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1OperationCond) contextValidateIoConidtion(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.IoConidtion != nil {
+		if err := m.IoConidtion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("io_conidtion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1OperationCond) contextValidateStatusCondition(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.StatusCondition != nil {
+		if err := m.StatusCondition.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("status_condition")
 			}

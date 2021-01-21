@@ -78,7 +78,7 @@ func NewUnbookmarkComponentHubOK() *UnbookmarkComponentHubOK {
 	return &UnbookmarkComponentHubOK{}
 }
 
-/*UnbookmarkComponentHubOK handles this case with default header values.
+/* UnbookmarkComponentHubOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewUnbookmarkComponentHubNoContent() *UnbookmarkComponentHubNoContent {
 	return &UnbookmarkComponentHubNoContent{}
 }
 
-/*UnbookmarkComponentHubNoContent handles this case with default header values.
+/* UnbookmarkComponentHubNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type UnbookmarkComponentHubNoContent struct {
 func (o *UnbookmarkComponentHubNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}/unbookmark][%d] unbookmarkComponentHubNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UnbookmarkComponentHubNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewUnbookmarkComponentHubForbidden() *UnbookmarkComponentHubForbidden {
 	return &UnbookmarkComponentHubForbidden{}
 }
 
-/*UnbookmarkComponentHubForbidden handles this case with default header values.
+/* UnbookmarkComponentHubForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type UnbookmarkComponentHubForbidden struct {
 func (o *UnbookmarkComponentHubForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}/unbookmark][%d] unbookmarkComponentHubForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UnbookmarkComponentHubForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewUnbookmarkComponentHubNotFound() *UnbookmarkComponentHubNotFound {
 	return &UnbookmarkComponentHubNotFound{}
 }
 
-/*UnbookmarkComponentHubNotFound handles this case with default header values.
+/* UnbookmarkComponentHubNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type UnbookmarkComponentHubNotFound struct {
 func (o *UnbookmarkComponentHubNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}/unbookmark][%d] unbookmarkComponentHubNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UnbookmarkComponentHubNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewUnbookmarkComponentHubDefault(code int) *UnbookmarkComponentHubDefault {
 	}
 }
 
-/*UnbookmarkComponentHubDefault handles this case with default header values.
+/* UnbookmarkComponentHubDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *UnbookmarkComponentHubDefault) Code() int {
 func (o *UnbookmarkComponentHubDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}/unbookmark][%d] UnbookmarkComponentHub default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UnbookmarkComponentHubDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

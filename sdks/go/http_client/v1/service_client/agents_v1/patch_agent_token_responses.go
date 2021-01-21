@@ -78,7 +78,7 @@ func NewPatchAgentTokenOK() *PatchAgentTokenOK {
 	return &PatchAgentTokenOK{}
 }
 
-/*PatchAgentTokenOK handles this case with default header values.
+/* PatchAgentTokenOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchAgentTokenOK struct {
 func (o *PatchAgentTokenOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/token][%d] patchAgentTokenOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchAgentTokenOK) GetPayload() *service_model.V1Token {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchAgentTokenNoContent() *PatchAgentTokenNoContent {
 	return &PatchAgentTokenNoContent{}
 }
 
-/*PatchAgentTokenNoContent handles this case with default header values.
+/* PatchAgentTokenNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchAgentTokenNoContent struct {
 func (o *PatchAgentTokenNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/token][%d] patchAgentTokenNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchAgentTokenNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchAgentTokenForbidden() *PatchAgentTokenForbidden {
 	return &PatchAgentTokenForbidden{}
 }
 
-/*PatchAgentTokenForbidden handles this case with default header values.
+/* PatchAgentTokenForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchAgentTokenForbidden struct {
 func (o *PatchAgentTokenForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/token][%d] patchAgentTokenForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchAgentTokenForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchAgentTokenNotFound() *PatchAgentTokenNotFound {
 	return &PatchAgentTokenNotFound{}
 }
 
-/*PatchAgentTokenNotFound handles this case with default header values.
+/* PatchAgentTokenNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchAgentTokenNotFound struct {
 func (o *PatchAgentTokenNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/token][%d] patchAgentTokenNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchAgentTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchAgentTokenDefault(code int) *PatchAgentTokenDefault {
 	}
 }
 
-/*PatchAgentTokenDefault handles this case with default header values.
+/* PatchAgentTokenDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchAgentTokenDefault) Code() int {
 func (o *PatchAgentTokenDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/token][%d] PatchAgentToken default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchAgentTokenDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

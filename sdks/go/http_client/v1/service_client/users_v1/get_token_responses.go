@@ -78,7 +78,7 @@ func NewGetTokenOK() *GetTokenOK {
 	return &GetTokenOK{}
 }
 
-/*GetTokenOK handles this case with default header values.
+/* GetTokenOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetTokenOK struct {
 func (o *GetTokenOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens/{uuid}][%d] getTokenOK  %+v", 200, o.Payload)
 }
-
 func (o *GetTokenOK) GetPayload() *service_model.V1Token {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetTokenNoContent() *GetTokenNoContent {
 	return &GetTokenNoContent{}
 }
 
-/*GetTokenNoContent handles this case with default header values.
+/* GetTokenNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetTokenNoContent struct {
 func (o *GetTokenNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens/{uuid}][%d] getTokenNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetTokenNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetTokenForbidden() *GetTokenForbidden {
 	return &GetTokenForbidden{}
 }
 
-/*GetTokenForbidden handles this case with default header values.
+/* GetTokenForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetTokenForbidden struct {
 func (o *GetTokenForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens/{uuid}][%d] getTokenForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetTokenForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetTokenNotFound() *GetTokenNotFound {
 	return &GetTokenNotFound{}
 }
 
-/*GetTokenNotFound handles this case with default header values.
+/* GetTokenNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetTokenNotFound struct {
 func (o *GetTokenNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens/{uuid}][%d] getTokenNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetTokenDefault(code int) *GetTokenDefault {
 	}
 }
 
-/*GetTokenDefault handles this case with default header values.
+/* GetTokenDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetTokenDefault) Code() int {
 func (o *GetTokenDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens/{uuid}][%d] GetToken default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetTokenDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

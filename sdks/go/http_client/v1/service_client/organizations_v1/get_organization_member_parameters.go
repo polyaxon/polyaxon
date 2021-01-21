@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetOrganizationMemberParams creates a new GetOrganizationMemberParams object
-// with the default values initialized.
+// NewGetOrganizationMemberParams creates a new GetOrganizationMemberParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetOrganizationMemberParams() *GetOrganizationMemberParams {
-	var ()
 	return &GetOrganizationMemberParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetOrganizationMemberParamsWithTimeout creates a new GetOrganizationMemberParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetOrganizationMemberParamsWithTimeout(timeout time.Duration) *GetOrganizationMemberParams {
-	var ()
 	return &GetOrganizationMemberParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetOrganizationMemberParamsWithContext creates a new GetOrganizationMemberParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetOrganizationMemberParamsWithContext(ctx context.Context) *GetOrganizationMemberParams {
-	var ()
 	return &GetOrganizationMemberParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetOrganizationMemberParamsWithHTTPClient creates a new GetOrganizationMemberParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetOrganizationMemberParamsWithHTTPClient(client *http.Client) *GetOrganizationMemberParams {
-	var ()
 	return &GetOrganizationMemberParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetOrganizationMemberParams contains all the parameters to send to the API endpoint
-for the get organization member operation typically these are written to a http.Request
+/* GetOrganizationMemberParams contains all the parameters to send to the API endpoint
+   for the get organization member operation.
+
+   Typically these are written to a http.Request.
 */
 type GetOrganizationMemberParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get organization member params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetOrganizationMemberParams) WithDefaults() *GetOrganizationMemberParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get organization member params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetOrganizationMemberParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get organization member params

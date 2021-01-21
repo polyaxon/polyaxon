@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -80,7 +82,6 @@ func (m *V1RunSettings) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1RunSettings) validateAgent(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Agent) { // not required
 		return nil
 	}
@@ -98,7 +99,6 @@ func (m *V1RunSettings) validateAgent(formats strfmt.Registry) error {
 }
 
 func (m *V1RunSettings) validateArtifactsStore(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ArtifactsStore) { // not required
 		return nil
 	}
@@ -116,7 +116,6 @@ func (m *V1RunSettings) validateArtifactsStore(formats strfmt.Registry) error {
 }
 
 func (m *V1RunSettings) validateHub(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Hub) { // not required
 		return nil
 	}
@@ -134,7 +133,6 @@ func (m *V1RunSettings) validateHub(formats strfmt.Registry) error {
 }
 
 func (m *V1RunSettings) validateQueue(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Queue) { // not required
 		return nil
 	}
@@ -152,13 +150,112 @@ func (m *V1RunSettings) validateQueue(formats strfmt.Registry) error {
 }
 
 func (m *V1RunSettings) validateRegistry(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Registry) { // not required
 		return nil
 	}
 
 	if m.Registry != nil {
 		if err := m.Registry.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("registry")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 run settings based on the context it is used
+func (m *V1RunSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAgent(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateArtifactsStore(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateHub(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateQueue(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRegistry(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1RunSettings) contextValidateAgent(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Agent != nil {
+		if err := m.Agent.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("agent")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSettings) contextValidateArtifactsStore(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ArtifactsStore != nil {
+		if err := m.ArtifactsStore.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("artifacts_store")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSettings) contextValidateHub(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Hub != nil {
+		if err := m.Hub.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("hub")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSettings) contextValidateQueue(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Queue != nil {
+		if err := m.Queue.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("queue")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSettings) contextValidateRegistry(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Registry != nil {
+		if err := m.Registry.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("registry")
 			}

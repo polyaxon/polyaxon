@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -34,7 +36,7 @@ type V1OptimizationMetric struct {
 	Name string `json:"name,omitempty"`
 
 	// Optimization to use fot the metric
-	Optimization V1Optimization `json:"optimization,omitempty"`
+	Optimization *V1Optimization `json:"optimization,omitempty"`
 }
 
 // Validate validates this v1 optimization metric
@@ -52,16 +54,45 @@ func (m *V1OptimizationMetric) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1OptimizationMetric) validateOptimization(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Optimization) { // not required
 		return nil
 	}
 
-	if err := m.Optimization.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("optimization")
+	if m.Optimization != nil {
+		if err := m.Optimization.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("optimization")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 optimization metric based on the context it is used
+func (m *V1OptimizationMetric) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateOptimization(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1OptimizationMetric) contextValidateOptimization(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Optimization != nil {
+		if err := m.Optimization.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("optimization")
+			}
+			return err
+		}
 	}
 
 	return nil

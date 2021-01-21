@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetModelVersionParams creates a new GetModelVersionParams object
-// with the default values initialized.
+// NewGetModelVersionParams creates a new GetModelVersionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetModelVersionParams() *GetModelVersionParams {
-	var ()
 	return &GetModelVersionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetModelVersionParamsWithTimeout creates a new GetModelVersionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetModelVersionParamsWithTimeout(timeout time.Duration) *GetModelVersionParams {
-	var ()
 	return &GetModelVersionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetModelVersionParamsWithContext creates a new GetModelVersionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetModelVersionParamsWithContext(ctx context.Context) *GetModelVersionParams {
-	var ()
 	return &GetModelVersionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetModelVersionParamsWithHTTPClient creates a new GetModelVersionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetModelVersionParamsWithHTTPClient(client *http.Client) *GetModelVersionParams {
-	var ()
 	return &GetModelVersionParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetModelVersionParams contains all the parameters to send to the API endpoint
-for the get model version operation typically these are written to a http.Request
+/* GetModelVersionParams contains all the parameters to send to the API endpoint
+   for the get model version operation.
+
+   Typically these are written to a http.Request.
 */
 type GetModelVersionParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Name
-	  Sub-entity name
 
+	/* Name.
+
+	   Sub-entity name
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetModelVersionParams) WithDefaults() *GetModelVersionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetModelVersionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get model version params

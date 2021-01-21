@@ -78,7 +78,7 @@ func NewGetComponentVersionStagesOK() *GetComponentVersionStagesOK {
 	return &GetComponentVersionStagesOK{}
 }
 
-/*GetComponentVersionStagesOK handles this case with default header values.
+/* GetComponentVersionStagesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetComponentVersionStagesOK struct {
 func (o *GetComponentVersionStagesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{entity}/versions/{name}/stages][%d] getComponentVersionStagesOK  %+v", 200, o.Payload)
 }
-
 func (o *GetComponentVersionStagesOK) GetPayload() *service_model.V1Stage {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetComponentVersionStagesNoContent() *GetComponentVersionStagesNoContent
 	return &GetComponentVersionStagesNoContent{}
 }
 
-/*GetComponentVersionStagesNoContent handles this case with default header values.
+/* GetComponentVersionStagesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetComponentVersionStagesNoContent struct {
 func (o *GetComponentVersionStagesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{entity}/versions/{name}/stages][%d] getComponentVersionStagesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetComponentVersionStagesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetComponentVersionStagesForbidden() *GetComponentVersionStagesForbidden
 	return &GetComponentVersionStagesForbidden{}
 }
 
-/*GetComponentVersionStagesForbidden handles this case with default header values.
+/* GetComponentVersionStagesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetComponentVersionStagesForbidden struct {
 func (o *GetComponentVersionStagesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{entity}/versions/{name}/stages][%d] getComponentVersionStagesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetComponentVersionStagesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetComponentVersionStagesNotFound() *GetComponentVersionStagesNotFound {
 	return &GetComponentVersionStagesNotFound{}
 }
 
-/*GetComponentVersionStagesNotFound handles this case with default header values.
+/* GetComponentVersionStagesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetComponentVersionStagesNotFound struct {
 func (o *GetComponentVersionStagesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{entity}/versions/{name}/stages][%d] getComponentVersionStagesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetComponentVersionStagesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetComponentVersionStagesDefault(code int) *GetComponentVersionStagesDef
 	}
 }
 
-/*GetComponentVersionStagesDefault handles this case with default header values.
+/* GetComponentVersionStagesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetComponentVersionStagesDefault) Code() int {
 func (o *GetComponentVersionStagesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/{entity}/versions/{name}/stages][%d] GetComponentVersionStages default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetComponentVersionStagesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

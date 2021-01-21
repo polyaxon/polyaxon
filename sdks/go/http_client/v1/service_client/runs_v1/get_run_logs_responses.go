@@ -78,7 +78,7 @@ func NewGetRunLogsOK() *GetRunLogsOK {
 	return &GetRunLogsOK{}
 }
 
-/*GetRunLogsOK handles this case with default header values.
+/* GetRunLogsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunLogsOK struct {
 func (o *GetRunLogsOK) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs][%d] getRunLogsOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunLogsOK) GetPayload() *service_model.V1Logs {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunLogsNoContent() *GetRunLogsNoContent {
 	return &GetRunLogsNoContent{}
 }
 
-/*GetRunLogsNoContent handles this case with default header values.
+/* GetRunLogsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunLogsNoContent struct {
 func (o *GetRunLogsNoContent) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs][%d] getRunLogsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunLogsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunLogsForbidden() *GetRunLogsForbidden {
 	return &GetRunLogsForbidden{}
 }
 
-/*GetRunLogsForbidden handles this case with default header values.
+/* GetRunLogsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunLogsForbidden struct {
 func (o *GetRunLogsForbidden) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs][%d] getRunLogsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunLogsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunLogsNotFound() *GetRunLogsNotFound {
 	return &GetRunLogsNotFound{}
 }
 
-/*GetRunLogsNotFound handles this case with default header values.
+/* GetRunLogsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunLogsNotFound struct {
 func (o *GetRunLogsNotFound) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs][%d] getRunLogsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunLogsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunLogsDefault(code int) *GetRunLogsDefault {
 	}
 }
 
-/*GetRunLogsDefault handles this case with default header values.
+/* GetRunLogsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunLogsDefault) Code() int {
 func (o *GetRunLogsDefault) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs][%d] GetRunLogs default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunLogsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

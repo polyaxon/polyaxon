@@ -78,7 +78,7 @@ func NewNotifyRunStatusOK() *NotifyRunStatusOK {
 	return &NotifyRunStatusOK{}
 }
 
-/*NotifyRunStatusOK handles this case with default header values.
+/* NotifyRunStatusOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewNotifyRunStatusNoContent() *NotifyRunStatusNoContent {
 	return &NotifyRunStatusNoContent{}
 }
 
-/*NotifyRunStatusNoContent handles this case with default header values.
+/* NotifyRunStatusNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type NotifyRunStatusNoContent struct {
 func (o *NotifyRunStatusNoContent) Error() string {
 	return fmt.Sprintf("[POST /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify][%d] notifyRunStatusNoContent  %+v", 204, o.Payload)
 }
-
 func (o *NotifyRunStatusNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewNotifyRunStatusForbidden() *NotifyRunStatusForbidden {
 	return &NotifyRunStatusForbidden{}
 }
 
-/*NotifyRunStatusForbidden handles this case with default header values.
+/* NotifyRunStatusForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type NotifyRunStatusForbidden struct {
 func (o *NotifyRunStatusForbidden) Error() string {
 	return fmt.Sprintf("[POST /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify][%d] notifyRunStatusForbidden  %+v", 403, o.Payload)
 }
-
 func (o *NotifyRunStatusForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewNotifyRunStatusNotFound() *NotifyRunStatusNotFound {
 	return &NotifyRunStatusNotFound{}
 }
 
-/*NotifyRunStatusNotFound handles this case with default header values.
+/* NotifyRunStatusNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type NotifyRunStatusNotFound struct {
 func (o *NotifyRunStatusNotFound) Error() string {
 	return fmt.Sprintf("[POST /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify][%d] notifyRunStatusNotFound  %+v", 404, o.Payload)
 }
-
 func (o *NotifyRunStatusNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewNotifyRunStatusDefault(code int) *NotifyRunStatusDefault {
 	}
 }
 
-/*NotifyRunStatusDefault handles this case with default header values.
+/* NotifyRunStatusDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *NotifyRunStatusDefault) Code() int {
 func (o *NotifyRunStatusDefault) Error() string {
 	return fmt.Sprintf("[POST /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify][%d] NotifyRunStatus default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *NotifyRunStatusDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

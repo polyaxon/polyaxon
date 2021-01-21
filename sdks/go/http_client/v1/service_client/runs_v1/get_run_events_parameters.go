@@ -31,94 +31,115 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewGetRunEventsParams creates a new GetRunEventsParams object
-// with the default values initialized.
+// NewGetRunEventsParams creates a new GetRunEventsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetRunEventsParams() *GetRunEventsParams {
-	var ()
 	return &GetRunEventsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetRunEventsParamsWithTimeout creates a new GetRunEventsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetRunEventsParamsWithTimeout(timeout time.Duration) *GetRunEventsParams {
-	var ()
 	return &GetRunEventsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetRunEventsParamsWithContext creates a new GetRunEventsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetRunEventsParamsWithContext(ctx context.Context) *GetRunEventsParams {
-	var ()
 	return &GetRunEventsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetRunEventsParamsWithHTTPClient creates a new GetRunEventsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetRunEventsParamsWithHTTPClient(client *http.Client) *GetRunEventsParams {
-	var ()
 	return &GetRunEventsParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetRunEventsParams contains all the parameters to send to the API endpoint
-for the get run events operation typically these are written to a http.Request
+/* GetRunEventsParams contains all the parameters to send to the API endpoint
+   for the get run events operation.
+
+   Typically these are written to a http.Request.
 */
 type GetRunEventsParams struct {
 
-	/*Force
-	  Force query param.
+	/* Force.
 
+	   Force query param.
 	*/
 	Force *bool
-	/*Kind
-	  The artifact kind
 
+	/* Kind.
+
+	   The artifact kind
 	*/
 	Kind string
-	/*Names
-	  Names query param.
 
+	/* Names.
+
+	   Names query param.
 	*/
 	Names *string
-	/*Namespace
-	  namespace
 
+	/* Namespace.
+
+	   namespace
 	*/
 	Namespace string
-	/*Orient
-	  Orient query param.
 
+	/* Orient.
+
+	   Orient query param.
 	*/
 	Orient *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get run events params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunEventsParams) WithDefaults() *GetRunEventsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get run events params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunEventsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get run events params
@@ -254,16 +275,17 @@ func (o *GetRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 
 		// query param force
 		var qrForce bool
+
 		if o.Force != nil {
 			qrForce = *o.Force
 		}
 		qForce := swag.FormatBool(qrForce)
 		if qForce != "" {
+
 			if err := r.SetQueryParam("force", qForce); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param kind
@@ -275,16 +297,17 @@ func (o *GetRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 
 		// query param names
 		var qrNames string
+
 		if o.Names != nil {
 			qrNames = *o.Names
 		}
 		qNames := qrNames
 		if qNames != "" {
+
 			if err := r.SetQueryParam("names", qNames); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param namespace
@@ -296,16 +319,17 @@ func (o *GetRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 
 		// query param orient
 		var qrOrient string
+
 		if o.Orient != nil {
 			qrOrient = *o.Orient
 		}
 		qOrient := qrOrient
 		if qOrient != "" {
+
 			if err := r.SetQueryParam("orient", qOrient); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner

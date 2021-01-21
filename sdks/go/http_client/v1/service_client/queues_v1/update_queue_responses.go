@@ -78,7 +78,7 @@ func NewUpdateQueueOK() *UpdateQueueOK {
 	return &UpdateQueueOK{}
 }
 
-/*UpdateQueueOK handles this case with default header values.
+/* UpdateQueueOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateQueueOK struct {
 func (o *UpdateQueueOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] updateQueueOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateQueueOK) GetPayload() *service_model.V1Queue {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateQueueNoContent() *UpdateQueueNoContent {
 	return &UpdateQueueNoContent{}
 }
 
-/*UpdateQueueNoContent handles this case with default header values.
+/* UpdateQueueNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateQueueNoContent struct {
 func (o *UpdateQueueNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] updateQueueNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateQueueNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateQueueForbidden() *UpdateQueueForbidden {
 	return &UpdateQueueForbidden{}
 }
 
-/*UpdateQueueForbidden handles this case with default header values.
+/* UpdateQueueForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateQueueForbidden struct {
 func (o *UpdateQueueForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] updateQueueForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateQueueForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateQueueNotFound() *UpdateQueueNotFound {
 	return &UpdateQueueNotFound{}
 }
 
-/*UpdateQueueNotFound handles this case with default header values.
+/* UpdateQueueNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateQueueNotFound struct {
 func (o *UpdateQueueNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] updateQueueNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateQueueNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateQueueDefault(code int) *UpdateQueueDefault {
 	}
 }
 
-/*UpdateQueueDefault handles this case with default header values.
+/* UpdateQueueDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateQueueDefault) Code() int {
 func (o *UpdateQueueDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] UpdateQueue default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateQueueDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

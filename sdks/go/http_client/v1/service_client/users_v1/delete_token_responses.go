@@ -78,7 +78,7 @@ func NewDeleteTokenOK() *DeleteTokenOK {
 	return &DeleteTokenOK{}
 }
 
-/*DeleteTokenOK handles this case with default header values.
+/* DeleteTokenOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteTokenNoContent() *DeleteTokenNoContent {
 	return &DeleteTokenNoContent{}
 }
 
-/*DeleteTokenNoContent handles this case with default header values.
+/* DeleteTokenNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteTokenNoContent struct {
 func (o *DeleteTokenNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/users/tokens/{uuid}][%d] deleteTokenNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteTokenNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteTokenForbidden() *DeleteTokenForbidden {
 	return &DeleteTokenForbidden{}
 }
 
-/*DeleteTokenForbidden handles this case with default header values.
+/* DeleteTokenForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteTokenForbidden struct {
 func (o *DeleteTokenForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/users/tokens/{uuid}][%d] deleteTokenForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteTokenForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteTokenNotFound() *DeleteTokenNotFound {
 	return &DeleteTokenNotFound{}
 }
 
-/*DeleteTokenNotFound handles this case with default header values.
+/* DeleteTokenNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteTokenNotFound struct {
 func (o *DeleteTokenNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/users/tokens/{uuid}][%d] deleteTokenNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteTokenDefault(code int) *DeleteTokenDefault {
 	}
 }
 
-/*DeleteTokenDefault handles this case with default header values.
+/* DeleteTokenDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteTokenDefault) Code() int {
 func (o *DeleteTokenDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/users/tokens/{uuid}][%d] DeleteToken default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteTokenDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

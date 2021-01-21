@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewDeleteRunsParams creates a new DeleteRunsParams object
-// with the default values initialized.
+// NewDeleteRunsParams creates a new DeleteRunsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteRunsParams() *DeleteRunsParams {
-	var ()
 	return &DeleteRunsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteRunsParamsWithTimeout creates a new DeleteRunsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteRunsParamsWithTimeout(timeout time.Duration) *DeleteRunsParams {
-	var ()
 	return &DeleteRunsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteRunsParamsWithContext creates a new DeleteRunsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteRunsParamsWithContext(ctx context.Context) *DeleteRunsParams {
-	var ()
 	return &DeleteRunsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteRunsParamsWithHTTPClient creates a new DeleteRunsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteRunsParamsWithHTTPClient(client *http.Client) *DeleteRunsParams {
-	var ()
 	return &DeleteRunsParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteRunsParams contains all the parameters to send to the API endpoint
-for the delete runs operation typically these are written to a http.Request
+/* DeleteRunsParams contains all the parameters to send to the API endpoint
+   for the delete runs operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteRunsParams struct {
 
-	/*Body
-	  Uuids of the entities
+	/* Body.
 
+	   Uuids of the entities
 	*/
 	Body *service_model.V1Uuids
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
 
+	/* Project.
+
+	   Project under namesapce
 	*/
 	Project string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete runs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteRunsParams) WithDefaults() *DeleteRunsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete runs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteRunsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete runs params
@@ -170,7 +186,6 @@ func (o *DeleteRunsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

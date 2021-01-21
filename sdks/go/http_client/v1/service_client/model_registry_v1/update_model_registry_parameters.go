@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateModelRegistryParams creates a new UpdateModelRegistryParams object
-// with the default values initialized.
+// NewUpdateModelRegistryParams creates a new UpdateModelRegistryParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateModelRegistryParams() *UpdateModelRegistryParams {
-	var ()
 	return &UpdateModelRegistryParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateModelRegistryParamsWithTimeout creates a new UpdateModelRegistryParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateModelRegistryParamsWithTimeout(timeout time.Duration) *UpdateModelRegistryParams {
-	var ()
 	return &UpdateModelRegistryParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateModelRegistryParamsWithContext creates a new UpdateModelRegistryParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateModelRegistryParamsWithContext(ctx context.Context) *UpdateModelRegistryParams {
-	var ()
 	return &UpdateModelRegistryParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateModelRegistryParamsWithHTTPClient creates a new UpdateModelRegistryParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateModelRegistryParamsWithHTTPClient(client *http.Client) *UpdateModelRegistryParams {
-	var ()
 	return &UpdateModelRegistryParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateModelRegistryParams contains all the parameters to send to the API endpoint
-for the update model registry operation typically these are written to a http.Request
+/* UpdateModelRegistryParams contains all the parameters to send to the API endpoint
+   for the update model registry operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateModelRegistryParams struct {
 
-	/*Body
-	  Model body
+	/* Body.
 
+	   Model body
 	*/
 	Body *service_model.V1ModelRegistry
-	/*ModelName
-	  Optional component name, should be a valid fully qualified value: name[:version]
 
+	/* ModelName.
+
+	   Optional component name, should be a valid fully qualified value: name[:version]
 	*/
 	ModelName string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateModelRegistryParams) WithDefaults() *UpdateModelRegistryParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateModelRegistryParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update model registry params
@@ -170,7 +186,6 @@ func (o *UpdateModelRegistryParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -31,7 +33,7 @@ import (
 type V1EventType struct {
 
 	// Type of the event
-	Kind V1ArtifactKind `json:"kind,omitempty"`
+	Kind *V1ArtifactKind `json:"kind,omitempty"`
 
 	// Name of the event
 	Name string `json:"name,omitempty"`
@@ -52,16 +54,45 @@ func (m *V1EventType) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1EventType) validateKind(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Kind) { // not required
 		return nil
 	}
 
-	if err := m.Kind.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("kind")
+	if m.Kind != nil {
+		if err := m.Kind.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kind")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 event type based on the context it is used
+func (m *V1EventType) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateKind(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1EventType) contextValidateKind(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Kind != nil {
+		if err := m.Kind.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kind")
+			}
+			return err
+		}
 	}
 
 	return nil

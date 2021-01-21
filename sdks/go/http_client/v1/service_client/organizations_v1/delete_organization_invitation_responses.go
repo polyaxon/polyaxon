@@ -78,7 +78,7 @@ func NewDeleteOrganizationInvitationOK() *DeleteOrganizationInvitationOK {
 	return &DeleteOrganizationInvitationOK{}
 }
 
-/*DeleteOrganizationInvitationOK handles this case with default header values.
+/* DeleteOrganizationInvitationOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteOrganizationInvitationNoContent() *DeleteOrganizationInvitationNoC
 	return &DeleteOrganizationInvitationNoContent{}
 }
 
-/*DeleteOrganizationInvitationNoContent handles this case with default header values.
+/* DeleteOrganizationInvitationNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteOrganizationInvitationNoContent struct {
 func (o *DeleteOrganizationInvitationNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/invitations][%d] deleteOrganizationInvitationNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteOrganizationInvitationNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteOrganizationInvitationForbidden() *DeleteOrganizationInvitationFor
 	return &DeleteOrganizationInvitationForbidden{}
 }
 
-/*DeleteOrganizationInvitationForbidden handles this case with default header values.
+/* DeleteOrganizationInvitationForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteOrganizationInvitationForbidden struct {
 func (o *DeleteOrganizationInvitationForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/invitations][%d] deleteOrganizationInvitationForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteOrganizationInvitationForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteOrganizationInvitationNotFound() *DeleteOrganizationInvitationNotF
 	return &DeleteOrganizationInvitationNotFound{}
 }
 
-/*DeleteOrganizationInvitationNotFound handles this case with default header values.
+/* DeleteOrganizationInvitationNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteOrganizationInvitationNotFound struct {
 func (o *DeleteOrganizationInvitationNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/invitations][%d] deleteOrganizationInvitationNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteOrganizationInvitationNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteOrganizationInvitationDefault(code int) *DeleteOrganizationInvitat
 	}
 }
 
-/*DeleteOrganizationInvitationDefault handles this case with default header values.
+/* DeleteOrganizationInvitationDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteOrganizationInvitationDefault) Code() int {
 func (o *DeleteOrganizationInvitationDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/invitations][%d] DeleteOrganizationInvitation default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteOrganizationInvitationDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

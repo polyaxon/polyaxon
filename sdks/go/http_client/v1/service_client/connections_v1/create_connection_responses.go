@@ -78,7 +78,7 @@ func NewCreateConnectionOK() *CreateConnectionOK {
 	return &CreateConnectionOK{}
 }
 
-/*CreateConnectionOK handles this case with default header values.
+/* CreateConnectionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateConnectionOK struct {
 func (o *CreateConnectionOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/connections][%d] createConnectionOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateConnectionOK) GetPayload() *service_model.V1ConnectionResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateConnectionNoContent() *CreateConnectionNoContent {
 	return &CreateConnectionNoContent{}
 }
 
-/*CreateConnectionNoContent handles this case with default header values.
+/* CreateConnectionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateConnectionNoContent struct {
 func (o *CreateConnectionNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/connections][%d] createConnectionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateConnectionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateConnectionForbidden() *CreateConnectionForbidden {
 	return &CreateConnectionForbidden{}
 }
 
-/*CreateConnectionForbidden handles this case with default header values.
+/* CreateConnectionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateConnectionForbidden struct {
 func (o *CreateConnectionForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/connections][%d] createConnectionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateConnectionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateConnectionNotFound() *CreateConnectionNotFound {
 	return &CreateConnectionNotFound{}
 }
 
-/*CreateConnectionNotFound handles this case with default header values.
+/* CreateConnectionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateConnectionNotFound struct {
 func (o *CreateConnectionNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/connections][%d] createConnectionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateConnectionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateConnectionDefault(code int) *CreateConnectionDefault {
 	}
 }
 
-/*CreateConnectionDefault handles this case with default header values.
+/* CreateConnectionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateConnectionDefault) Code() int {
 func (o *CreateConnectionDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/connections][%d] CreateConnection default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateConnectionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

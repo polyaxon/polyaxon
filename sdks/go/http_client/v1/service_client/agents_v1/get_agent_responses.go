@@ -78,7 +78,7 @@ func NewGetAgentOK() *GetAgentOK {
 	return &GetAgentOK{}
 }
 
-/*GetAgentOK handles this case with default header values.
+/* GetAgentOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetAgentOK struct {
 func (o *GetAgentOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] getAgentOK  %+v", 200, o.Payload)
 }
-
 func (o *GetAgentOK) GetPayload() *service_model.V1Agent {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetAgentNoContent() *GetAgentNoContent {
 	return &GetAgentNoContent{}
 }
 
-/*GetAgentNoContent handles this case with default header values.
+/* GetAgentNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetAgentNoContent struct {
 func (o *GetAgentNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] getAgentNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetAgentNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetAgentForbidden() *GetAgentForbidden {
 	return &GetAgentForbidden{}
 }
 
-/*GetAgentForbidden handles this case with default header values.
+/* GetAgentForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetAgentForbidden struct {
 func (o *GetAgentForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] getAgentForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetAgentForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetAgentNotFound() *GetAgentNotFound {
 	return &GetAgentNotFound{}
 }
 
-/*GetAgentNotFound handles this case with default header values.
+/* GetAgentNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetAgentNotFound struct {
 func (o *GetAgentNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] getAgentNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetAgentNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetAgentDefault(code int) *GetAgentDefault {
 	}
 }
 
-/*GetAgentDefault handles this case with default header values.
+/* GetAgentDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetAgentDefault) Code() int {
 func (o *GetAgentDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] GetAgent default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetAgentDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

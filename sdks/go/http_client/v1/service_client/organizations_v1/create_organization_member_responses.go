@@ -78,7 +78,7 @@ func NewCreateOrganizationMemberOK() *CreateOrganizationMemberOK {
 	return &CreateOrganizationMemberOK{}
 }
 
-/*CreateOrganizationMemberOK handles this case with default header values.
+/* CreateOrganizationMemberOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateOrganizationMemberOK struct {
 func (o *CreateOrganizationMemberOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] createOrganizationMemberOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateOrganizationMemberOK) GetPayload() *service_model.V1OrganizationMember {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateOrganizationMemberNoContent() *CreateOrganizationMemberNoContent {
 	return &CreateOrganizationMemberNoContent{}
 }
 
-/*CreateOrganizationMemberNoContent handles this case with default header values.
+/* CreateOrganizationMemberNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateOrganizationMemberNoContent struct {
 func (o *CreateOrganizationMemberNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] createOrganizationMemberNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateOrganizationMemberNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateOrganizationMemberForbidden() *CreateOrganizationMemberForbidden {
 	return &CreateOrganizationMemberForbidden{}
 }
 
-/*CreateOrganizationMemberForbidden handles this case with default header values.
+/* CreateOrganizationMemberForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateOrganizationMemberForbidden struct {
 func (o *CreateOrganizationMemberForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] createOrganizationMemberForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateOrganizationMemberForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateOrganizationMemberNotFound() *CreateOrganizationMemberNotFound {
 	return &CreateOrganizationMemberNotFound{}
 }
 
-/*CreateOrganizationMemberNotFound handles this case with default header values.
+/* CreateOrganizationMemberNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateOrganizationMemberNotFound struct {
 func (o *CreateOrganizationMemberNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] createOrganizationMemberNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateOrganizationMemberNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateOrganizationMemberDefault(code int) *CreateOrganizationMemberDefau
 	}
 }
 
-/*CreateOrganizationMemberDefault handles this case with default header values.
+/* CreateOrganizationMemberDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateOrganizationMemberDefault) Code() int {
 func (o *CreateOrganizationMemberDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] CreateOrganizationMember default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateOrganizationMemberDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

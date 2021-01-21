@@ -78,7 +78,7 @@ func NewGetCompatibilityOK() *GetCompatibilityOK {
 	return &GetCompatibilityOK{}
 }
 
-/*GetCompatibilityOK handles this case with default header values.
+/* GetCompatibilityOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetCompatibilityOK struct {
 func (o *GetCompatibilityOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/compatibility/{uuid}/{version}/{service}][%d] getCompatibilityOK  %+v", 200, o.Payload)
 }
-
 func (o *GetCompatibilityOK) GetPayload() *service_model.V1Compatibility {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetCompatibilityNoContent() *GetCompatibilityNoContent {
 	return &GetCompatibilityNoContent{}
 }
 
-/*GetCompatibilityNoContent handles this case with default header values.
+/* GetCompatibilityNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetCompatibilityNoContent struct {
 func (o *GetCompatibilityNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/compatibility/{uuid}/{version}/{service}][%d] getCompatibilityNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetCompatibilityNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetCompatibilityForbidden() *GetCompatibilityForbidden {
 	return &GetCompatibilityForbidden{}
 }
 
-/*GetCompatibilityForbidden handles this case with default header values.
+/* GetCompatibilityForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetCompatibilityForbidden struct {
 func (o *GetCompatibilityForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/compatibility/{uuid}/{version}/{service}][%d] getCompatibilityForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetCompatibilityForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetCompatibilityNotFound() *GetCompatibilityNotFound {
 	return &GetCompatibilityNotFound{}
 }
 
-/*GetCompatibilityNotFound handles this case with default header values.
+/* GetCompatibilityNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetCompatibilityNotFound struct {
 func (o *GetCompatibilityNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/compatibility/{uuid}/{version}/{service}][%d] getCompatibilityNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetCompatibilityNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetCompatibilityDefault(code int) *GetCompatibilityDefault {
 	}
 }
 
-/*GetCompatibilityDefault handles this case with default header values.
+/* GetCompatibilityDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetCompatibilityDefault) Code() int {
 func (o *GetCompatibilityDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/compatibility/{uuid}/{version}/{service}][%d] GetCompatibility default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetCompatibilityDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewDeleteRunOK() *DeleteRunOK {
 	return &DeleteRunOK{}
 }
 
-/*DeleteRunOK handles this case with default header values.
+/* DeleteRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteRunNoContent() *DeleteRunNoContent {
 	return &DeleteRunNoContent{}
 }
 
-/*DeleteRunNoContent handles this case with default header values.
+/* DeleteRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteRunNoContent struct {
 func (o *DeleteRunNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] deleteRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteRunForbidden() *DeleteRunForbidden {
 	return &DeleteRunForbidden{}
 }
 
-/*DeleteRunForbidden handles this case with default header values.
+/* DeleteRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteRunForbidden struct {
 func (o *DeleteRunForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] deleteRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteRunNotFound() *DeleteRunNotFound {
 	return &DeleteRunNotFound{}
 }
 
-/*DeleteRunNotFound handles this case with default header values.
+/* DeleteRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteRunNotFound struct {
 func (o *DeleteRunNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] deleteRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteRunDefault(code int) *DeleteRunDefault {
 	}
 }
 
-/*DeleteRunDefault handles this case with default header values.
+/* DeleteRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteRunDefault) Code() int {
 func (o *DeleteRunDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}][%d] DeleteRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewUpdateOrganizationInvitationOK() *UpdateOrganizationInvitationOK {
 	return &UpdateOrganizationInvitationOK{}
 }
 
-/*UpdateOrganizationInvitationOK handles this case with default header values.
+/* UpdateOrganizationInvitationOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateOrganizationInvitationOK struct {
 func (o *UpdateOrganizationInvitationOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/invitations][%d] updateOrganizationInvitationOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateOrganizationInvitationOK) GetPayload() *service_model.V1OrganizationMember {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateOrganizationInvitationNoContent() *UpdateOrganizationInvitationNoC
 	return &UpdateOrganizationInvitationNoContent{}
 }
 
-/*UpdateOrganizationInvitationNoContent handles this case with default header values.
+/* UpdateOrganizationInvitationNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateOrganizationInvitationNoContent struct {
 func (o *UpdateOrganizationInvitationNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/invitations][%d] updateOrganizationInvitationNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateOrganizationInvitationNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateOrganizationInvitationForbidden() *UpdateOrganizationInvitationFor
 	return &UpdateOrganizationInvitationForbidden{}
 }
 
-/*UpdateOrganizationInvitationForbidden handles this case with default header values.
+/* UpdateOrganizationInvitationForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateOrganizationInvitationForbidden struct {
 func (o *UpdateOrganizationInvitationForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/invitations][%d] updateOrganizationInvitationForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateOrganizationInvitationForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateOrganizationInvitationNotFound() *UpdateOrganizationInvitationNotF
 	return &UpdateOrganizationInvitationNotFound{}
 }
 
-/*UpdateOrganizationInvitationNotFound handles this case with default header values.
+/* UpdateOrganizationInvitationNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateOrganizationInvitationNotFound struct {
 func (o *UpdateOrganizationInvitationNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/invitations][%d] updateOrganizationInvitationNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateOrganizationInvitationNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateOrganizationInvitationDefault(code int) *UpdateOrganizationInvitat
 	}
 }
 
-/*UpdateOrganizationInvitationDefault handles this case with default header values.
+/* UpdateOrganizationInvitationDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateOrganizationInvitationDefault) Code() int {
 func (o *UpdateOrganizationInvitationDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/invitations][%d] UpdateOrganizationInvitation default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateOrganizationInvitationDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

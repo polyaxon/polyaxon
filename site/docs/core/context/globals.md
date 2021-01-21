@@ -97,7 +97,7 @@ At first, you might think might that all these params will have the same value, 
  * If an operation is running in the context of a DAG, the value of `param3` will be the `uuid` of the pipeline managing the execution graph.
  * If an operation is running in the context of a DAG, the value of `param4` will be the `uuid` of the upstream operation that the current operation depends on.
 
-> **Note**: For more details about references, please check [context references section](/docs/context/globals/references/) for more details. 
+> **Note**: For more details about references, please check [context references section](/docs/core/context/globals/references/) for more details. 
 
 ## Distributed jobs
 

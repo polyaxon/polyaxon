@@ -78,7 +78,7 @@ func NewSyncAgentOK() *SyncAgentOK {
 	return &SyncAgentOK{}
 }
 
-/*SyncAgentOK handles this case with default header values.
+/* SyncAgentOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewSyncAgentNoContent() *SyncAgentNoContent {
 	return &SyncAgentNoContent{}
 }
 
-/*SyncAgentNoContent handles this case with default header values.
+/* SyncAgentNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type SyncAgentNoContent struct {
 func (o *SyncAgentNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}/sync][%d] syncAgentNoContent  %+v", 204, o.Payload)
 }
-
 func (o *SyncAgentNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewSyncAgentForbidden() *SyncAgentForbidden {
 	return &SyncAgentForbidden{}
 }
 
-/*SyncAgentForbidden handles this case with default header values.
+/* SyncAgentForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type SyncAgentForbidden struct {
 func (o *SyncAgentForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}/sync][%d] syncAgentForbidden  %+v", 403, o.Payload)
 }
-
 func (o *SyncAgentForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewSyncAgentNotFound() *SyncAgentNotFound {
 	return &SyncAgentNotFound{}
 }
 
-/*SyncAgentNotFound handles this case with default header values.
+/* SyncAgentNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type SyncAgentNotFound struct {
 func (o *SyncAgentNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}/sync][%d] syncAgentNotFound  %+v", 404, o.Payload)
 }
-
 func (o *SyncAgentNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewSyncAgentDefault(code int) *SyncAgentDefault {
 	}
 }
 
-/*SyncAgentDefault handles this case with default header values.
+/* SyncAgentDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *SyncAgentDefault) Code() int {
 func (o *SyncAgentDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}/sync][%d] SyncAgent default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *SyncAgentDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

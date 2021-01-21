@@ -78,7 +78,7 @@ func NewPatchDashboardOK() *PatchDashboardOK {
 	return &PatchDashboardOK{}
 }
 
-/*PatchDashboardOK handles this case with default header values.
+/* PatchDashboardOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchDashboardOK struct {
 func (o *PatchDashboardOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] patchDashboardOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchDashboardOK) GetPayload() *service_model.V1Dashboard {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchDashboardNoContent() *PatchDashboardNoContent {
 	return &PatchDashboardNoContent{}
 }
 
-/*PatchDashboardNoContent handles this case with default header values.
+/* PatchDashboardNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchDashboardNoContent struct {
 func (o *PatchDashboardNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] patchDashboardNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchDashboardNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchDashboardForbidden() *PatchDashboardForbidden {
 	return &PatchDashboardForbidden{}
 }
 
-/*PatchDashboardForbidden handles this case with default header values.
+/* PatchDashboardForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchDashboardForbidden struct {
 func (o *PatchDashboardForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] patchDashboardForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchDashboardForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchDashboardNotFound() *PatchDashboardNotFound {
 	return &PatchDashboardNotFound{}
 }
 
-/*PatchDashboardNotFound handles this case with default header values.
+/* PatchDashboardNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchDashboardNotFound struct {
 func (o *PatchDashboardNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] patchDashboardNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchDashboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchDashboardDefault(code int) *PatchDashboardDefault {
 	}
 }
 
-/*PatchDashboardDefault handles this case with default header values.
+/* PatchDashboardDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchDashboardDefault) Code() int {
 func (o *PatchDashboardDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] PatchDashboard default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchDashboardDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

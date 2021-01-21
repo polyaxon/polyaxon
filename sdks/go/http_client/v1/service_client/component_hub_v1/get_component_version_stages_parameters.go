@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetComponentVersionStagesParams creates a new GetComponentVersionStagesParams object
-// with the default values initialized.
+// NewGetComponentVersionStagesParams creates a new GetComponentVersionStagesParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetComponentVersionStagesParams() *GetComponentVersionStagesParams {
-	var ()
 	return &GetComponentVersionStagesParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetComponentVersionStagesParamsWithTimeout creates a new GetComponentVersionStagesParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetComponentVersionStagesParamsWithTimeout(timeout time.Duration) *GetComponentVersionStagesParams {
-	var ()
 	return &GetComponentVersionStagesParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetComponentVersionStagesParamsWithContext creates a new GetComponentVersionStagesParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetComponentVersionStagesParamsWithContext(ctx context.Context) *GetComponentVersionStagesParams {
-	var ()
 	return &GetComponentVersionStagesParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetComponentVersionStagesParamsWithHTTPClient creates a new GetComponentVersionStagesParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetComponentVersionStagesParamsWithHTTPClient(client *http.Client) *GetComponentVersionStagesParams {
-	var ()
 	return &GetComponentVersionStagesParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetComponentVersionStagesParams contains all the parameters to send to the API endpoint
-for the get component version stages operation typically these are written to a http.Request
+/* GetComponentVersionStagesParams contains all the parameters to send to the API endpoint
+   for the get component version stages operation.
+
+   Typically these are written to a http.Request.
 */
 type GetComponentVersionStagesParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Name
-	  Sub-entity name
 
+	/* Name.
+
+	   Sub-entity name
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get component version stages params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetComponentVersionStagesParams) WithDefaults() *GetComponentVersionStagesParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get component version stages params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetComponentVersionStagesParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get component version stages params

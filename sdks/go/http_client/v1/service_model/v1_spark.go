@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -37,7 +39,7 @@ type V1Spark struct {
 	Connections []string `json:"connections"`
 
 	// Mode is the deployment mode of the Spark application.
-	DeployMode SparkDeployMode `json:"deploy_mode,omitempty"`
+	DeployMode *SparkDeployMode `json:"deploy_mode,omitempty"`
 
 	// Optional spark driver definition
 	Driver *V1SparkReplica `json:"driver,omitempty"`
@@ -80,7 +82,7 @@ type V1Spark struct {
 	SparkVersion string `json:"spark_version,omitempty"`
 
 	// Type tells the type of the Spark application.
-	Type V1SparkType `json:"type,omitempty"`
+	Type *V1SparkType `json:"type,omitempty"`
 
 	// Volumes is a list of volumes that can be mounted.
 	Volumes []V1Volume `json:"volumes"`
@@ -113,23 +115,23 @@ func (m *V1Spark) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Spark) validateDeployMode(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.DeployMode) { // not required
 		return nil
 	}
 
-	if err := m.DeployMode.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("deploy_mode")
+	if m.DeployMode != nil {
+		if err := m.DeployMode.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deploy_mode")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1Spark) validateDriver(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Driver) { // not required
 		return nil
 	}
@@ -147,7 +149,6 @@ func (m *V1Spark) validateDriver(formats strfmt.Registry) error {
 }
 
 func (m *V1Spark) validateExecutor(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Executor) { // not required
 		return nil
 	}
@@ -165,16 +166,99 @@ func (m *V1Spark) validateExecutor(formats strfmt.Registry) error {
 }
 
 func (m *V1Spark) validateType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Type) { // not required
 		return nil
 	}
 
-	if err := m.Type.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("type")
+	if m.Type != nil {
+		if err := m.Type.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("type")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 spark based on the context it is used
+func (m *V1Spark) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDeployMode(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateDriver(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateExecutor(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateType(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Spark) contextValidateDeployMode(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.DeployMode != nil {
+		if err := m.DeployMode.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deploy_mode")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Spark) contextValidateDriver(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Driver != nil {
+		if err := m.Driver.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("driver")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Spark) contextValidateExecutor(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Executor != nil {
+		if err := m.Executor.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("executor")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Spark) contextValidateType(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Type != nil {
+		if err := m.Type.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("type")
+			}
+			return err
+		}
 	}
 
 	return nil

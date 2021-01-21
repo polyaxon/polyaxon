@@ -78,7 +78,7 @@ func NewListModelRegistryNamesOK() *ListModelRegistryNamesOK {
 	return &ListModelRegistryNamesOK{}
 }
 
-/*ListModelRegistryNamesOK handles this case with default header values.
+/* ListModelRegistryNamesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListModelRegistryNamesOK struct {
 func (o *ListModelRegistryNamesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] listModelRegistryNamesOK  %+v", 200, o.Payload)
 }
-
 func (o *ListModelRegistryNamesOK) GetPayload() *service_model.V1ListModelRegistriesResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListModelRegistryNamesNoContent() *ListModelRegistryNamesNoContent {
 	return &ListModelRegistryNamesNoContent{}
 }
 
-/*ListModelRegistryNamesNoContent handles this case with default header values.
+/* ListModelRegistryNamesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListModelRegistryNamesNoContent struct {
 func (o *ListModelRegistryNamesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] listModelRegistryNamesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListModelRegistryNamesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListModelRegistryNamesForbidden() *ListModelRegistryNamesForbidden {
 	return &ListModelRegistryNamesForbidden{}
 }
 
-/*ListModelRegistryNamesForbidden handles this case with default header values.
+/* ListModelRegistryNamesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListModelRegistryNamesForbidden struct {
 func (o *ListModelRegistryNamesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] listModelRegistryNamesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListModelRegistryNamesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListModelRegistryNamesNotFound() *ListModelRegistryNamesNotFound {
 	return &ListModelRegistryNamesNotFound{}
 }
 
-/*ListModelRegistryNamesNotFound handles this case with default header values.
+/* ListModelRegistryNamesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListModelRegistryNamesNotFound struct {
 func (o *ListModelRegistryNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] listModelRegistryNamesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListModelRegistryNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListModelRegistryNamesDefault(code int) *ListModelRegistryNamesDefault {
 	}
 }
 
-/*ListModelRegistryNamesDefault handles this case with default header values.
+/* ListModelRegistryNamesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListModelRegistryNamesDefault) Code() int {
 func (o *ListModelRegistryNamesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/names][%d] ListModelRegistryNames default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListModelRegistryNamesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

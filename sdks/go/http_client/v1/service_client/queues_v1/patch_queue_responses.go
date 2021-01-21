@@ -78,7 +78,7 @@ func NewPatchQueueOK() *PatchQueueOK {
 	return &PatchQueueOK{}
 }
 
-/*PatchQueueOK handles this case with default header values.
+/* PatchQueueOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchQueueOK struct {
 func (o *PatchQueueOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] patchQueueOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchQueueOK) GetPayload() *service_model.V1Queue {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchQueueNoContent() *PatchQueueNoContent {
 	return &PatchQueueNoContent{}
 }
 
-/*PatchQueueNoContent handles this case with default header values.
+/* PatchQueueNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchQueueNoContent struct {
 func (o *PatchQueueNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] patchQueueNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchQueueNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchQueueForbidden() *PatchQueueForbidden {
 	return &PatchQueueForbidden{}
 }
 
-/*PatchQueueForbidden handles this case with default header values.
+/* PatchQueueForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchQueueForbidden struct {
 func (o *PatchQueueForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] patchQueueForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchQueueForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchQueueNotFound() *PatchQueueNotFound {
 	return &PatchQueueNotFound{}
 }
 
-/*PatchQueueNotFound handles this case with default header values.
+/* PatchQueueNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchQueueNotFound struct {
 func (o *PatchQueueNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] patchQueueNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchQueueNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchQueueDefault(code int) *PatchQueueDefault {
 	}
 }
 
-/*PatchQueueDefault handles this case with default header values.
+/* PatchQueueDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchQueueDefault) Code() int {
 func (o *PatchQueueDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent}/queues/{queue.uuid}][%d] PatchQueue default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchQueueDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

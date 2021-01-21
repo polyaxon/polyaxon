@@ -59,7 +59,6 @@ func (o *UploadRunArtifactReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return nil, result
-
 	default:
 		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
@@ -70,7 +69,7 @@ func NewUploadRunArtifactOK() *UploadRunArtifactOK {
 	return &UploadRunArtifactOK{}
 }
 
-/*UploadRunArtifactOK handles this case with default header values.
+/* UploadRunArtifactOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -91,7 +90,7 @@ func NewUploadRunArtifactNoContent() *UploadRunArtifactNoContent {
 	return &UploadRunArtifactNoContent{}
 }
 
-/*UploadRunArtifactNoContent handles this case with default header values.
+/* UploadRunArtifactNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -102,7 +101,6 @@ type UploadRunArtifactNoContent struct {
 func (o *UploadRunArtifactNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload][%d] uploadRunArtifactNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UploadRunArtifactNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -122,7 +120,7 @@ func NewUploadRunArtifactForbidden() *UploadRunArtifactForbidden {
 	return &UploadRunArtifactForbidden{}
 }
 
-/*UploadRunArtifactForbidden handles this case with default header values.
+/* UploadRunArtifactForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -133,7 +131,6 @@ type UploadRunArtifactForbidden struct {
 func (o *UploadRunArtifactForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload][%d] uploadRunArtifactForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UploadRunArtifactForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -153,7 +150,7 @@ func NewUploadRunArtifactNotFound() *UploadRunArtifactNotFound {
 	return &UploadRunArtifactNotFound{}
 }
 
-/*UploadRunArtifactNotFound handles this case with default header values.
+/* UploadRunArtifactNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -164,7 +161,6 @@ type UploadRunArtifactNotFound struct {
 func (o *UploadRunArtifactNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload][%d] uploadRunArtifactNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UploadRunArtifactNotFound) GetPayload() interface{} {
 	return o.Payload
 }

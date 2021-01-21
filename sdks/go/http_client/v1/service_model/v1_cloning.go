@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -31,7 +33,7 @@ import (
 type V1Cloning struct {
 
 	// Optional if this run was restarted/copied/resumed/cached
-	Kind V1CloningKind `json:"kind,omitempty"`
+	Kind *V1CloningKind `json:"kind,omitempty"`
 
 	// Optional name of the original run
 	Name string `json:"name,omitempty"`
@@ -55,16 +57,45 @@ func (m *V1Cloning) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Cloning) validateKind(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Kind) { // not required
 		return nil
 	}
 
-	if err := m.Kind.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("kind")
+	if m.Kind != nil {
+		if err := m.Kind.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kind")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 cloning based on the context it is used
+func (m *V1Cloning) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateKind(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Cloning) contextValidateKind(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Kind != nil {
+		if err := m.Kind.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kind")
+			}
+			return err
+		}
 	}
 
 	return nil

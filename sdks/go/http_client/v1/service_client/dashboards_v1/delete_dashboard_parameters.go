@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteDashboardParams creates a new DeleteDashboardParams object
-// with the default values initialized.
+// NewDeleteDashboardParams creates a new DeleteDashboardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteDashboardParams() *DeleteDashboardParams {
-	var ()
 	return &DeleteDashboardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteDashboardParamsWithTimeout creates a new DeleteDashboardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteDashboardParamsWithTimeout(timeout time.Duration) *DeleteDashboardParams {
-	var ()
 	return &DeleteDashboardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteDashboardParamsWithContext creates a new DeleteDashboardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteDashboardParamsWithContext(ctx context.Context) *DeleteDashboardParams {
-	var ()
 	return &DeleteDashboardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteDashboardParamsWithHTTPClient creates a new DeleteDashboardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteDashboardParamsWithHTTPClient(client *http.Client) *DeleteDashboardParams {
-	var ()
 	return &DeleteDashboardParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteDashboardParams contains all the parameters to send to the API endpoint
-for the delete dashboard operation typically these are written to a http.Request
+/* DeleteDashboardParams contains all the parameters to send to the API endpoint
+   for the delete dashboard operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteDashboardParams struct {
 
-	/*Owner
-	  Owner of the namespace
+	/* Owner.
 
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteDashboardParams) WithDefaults() *DeleteDashboardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteDashboardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete dashboard params

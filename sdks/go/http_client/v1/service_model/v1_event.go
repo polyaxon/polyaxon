@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -126,7 +128,6 @@ func (m *V1Event) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateArtifact(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Artifact) { // not required
 		return nil
 	}
@@ -144,7 +145,6 @@ func (m *V1Event) validateArtifact(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateAudio(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Audio) { // not required
 		return nil
 	}
@@ -162,7 +162,6 @@ func (m *V1Event) validateAudio(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateChart(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Chart) { // not required
 		return nil
 	}
@@ -180,7 +179,6 @@ func (m *V1Event) validateChart(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateCurve(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Curve) { // not required
 		return nil
 	}
@@ -198,7 +196,6 @@ func (m *V1Event) validateCurve(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateDataframe(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Dataframe) { // not required
 		return nil
 	}
@@ -216,7 +213,6 @@ func (m *V1Event) validateDataframe(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateHistogram(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Histogram) { // not required
 		return nil
 	}
@@ -234,7 +230,6 @@ func (m *V1Event) validateHistogram(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateImage(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Image) { // not required
 		return nil
 	}
@@ -252,7 +247,6 @@ func (m *V1Event) validateImage(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateModel(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Model) { // not required
 		return nil
 	}
@@ -270,7 +264,6 @@ func (m *V1Event) validateModel(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -283,13 +276,184 @@ func (m *V1Event) validateTimestamp(formats strfmt.Registry) error {
 }
 
 func (m *V1Event) validateVideo(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Video) { // not required
 		return nil
 	}
 
 	if m.Video != nil {
 		if err := m.Video.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("video")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 event based on the context it is used
+func (m *V1Event) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateArtifact(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateAudio(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateChart(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateCurve(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateDataframe(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateHistogram(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateImage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateModel(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateVideo(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Event) contextValidateArtifact(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Artifact != nil {
+		if err := m.Artifact.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("artifact")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) contextValidateAudio(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Audio != nil {
+		if err := m.Audio.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("audio")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) contextValidateChart(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Chart != nil {
+		if err := m.Chart.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("chart")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) contextValidateCurve(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Curve != nil {
+		if err := m.Curve.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("curve")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) contextValidateDataframe(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Dataframe != nil {
+		if err := m.Dataframe.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dataframe")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) contextValidateHistogram(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Histogram != nil {
+		if err := m.Histogram.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("histogram")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) contextValidateImage(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Image != nil {
+		if err := m.Image.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("image")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) contextValidateModel(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Model != nil {
+		if err := m.Model.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("model")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Event) contextValidateVideo(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Video != nil {
+		if err := m.Video.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("video")
 			}

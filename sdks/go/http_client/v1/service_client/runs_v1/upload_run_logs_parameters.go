@@ -31,84 +31,103 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewUploadRunLogsParams creates a new UploadRunLogsParams object
-// with the default values initialized.
+// NewUploadRunLogsParams creates a new UploadRunLogsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUploadRunLogsParams() *UploadRunLogsParams {
-	var ()
 	return &UploadRunLogsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUploadRunLogsParamsWithTimeout creates a new UploadRunLogsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUploadRunLogsParamsWithTimeout(timeout time.Duration) *UploadRunLogsParams {
-	var ()
 	return &UploadRunLogsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUploadRunLogsParamsWithContext creates a new UploadRunLogsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUploadRunLogsParamsWithContext(ctx context.Context) *UploadRunLogsParams {
-	var ()
 	return &UploadRunLogsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUploadRunLogsParamsWithHTTPClient creates a new UploadRunLogsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUploadRunLogsParamsWithHTTPClient(client *http.Client) *UploadRunLogsParams {
-	var ()
 	return &UploadRunLogsParams{
 		HTTPClient: client,
 	}
 }
 
-/*UploadRunLogsParams contains all the parameters to send to the API endpoint
-for the upload run logs operation typically these are written to a http.Request
+/* UploadRunLogsParams contains all the parameters to send to the API endpoint
+   for the upload run logs operation.
+
+   Typically these are written to a http.Request.
 */
 type UploadRunLogsParams struct {
 
-	/*Overwrite
-	  File path query params.
+	/* Overwrite.
 
+	   File path query params.
 	*/
 	Overwrite *bool
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Path
-	  File path query params.
 
+	/* Path.
+
+	   File path query params.
 	*/
 	Path *string
-	/*Project
-	  Project having access to the store
 
+	/* Project.
+
+	   Project having access to the store
 	*/
 	Project string
-	/*Uploadfile
-	  The file to upload.
 
+	/* Uploadfile.
+
+	   The file to upload.
 	*/
 	Uploadfile runtime.NamedReadCloser
-	/*UUID
-	  Unique integer identifier of the entity
 
+	/* UUID.
+
+	   Unique integer identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the upload run logs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UploadRunLogsParams) WithDefaults() *UploadRunLogsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the upload run logs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UploadRunLogsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the upload run logs params
@@ -222,16 +241,17 @@ func (o *UploadRunLogsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 
 		// query param overwrite
 		var qrOverwrite bool
+
 		if o.Overwrite != nil {
 			qrOverwrite = *o.Overwrite
 		}
 		qOverwrite := swag.FormatBool(qrOverwrite)
 		if qOverwrite != "" {
+
 			if err := r.SetQueryParam("overwrite", qOverwrite); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner
@@ -243,23 +263,23 @@ func (o *UploadRunLogsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 
 		// query param path
 		var qrPath string
+
 		if o.Path != nil {
 			qrPath = *o.Path
 		}
 		qPath := qrPath
 		if qPath != "" {
+
 			if err := r.SetQueryParam("path", qPath); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param project
 	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
 	}
-
 	// form file param uploadfile
 	if err := r.SetFileParam("uploadfile", o.Uploadfile); err != nil {
 		return err

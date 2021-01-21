@@ -78,7 +78,7 @@ func NewPromoteProjectSearchOK() *PromoteProjectSearchOK {
 	return &PromoteProjectSearchOK{}
 }
 
-/*PromoteProjectSearchOK handles this case with default header values.
+/* PromoteProjectSearchOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewPromoteProjectSearchNoContent() *PromoteProjectSearchNoContent {
 	return &PromoteProjectSearchNoContent{}
 }
 
-/*PromoteProjectSearchNoContent handles this case with default header values.
+/* PromoteProjectSearchNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type PromoteProjectSearchNoContent struct {
 func (o *PromoteProjectSearchNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] promoteProjectSearchNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PromoteProjectSearchNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewPromoteProjectSearchForbidden() *PromoteProjectSearchForbidden {
 	return &PromoteProjectSearchForbidden{}
 }
 
-/*PromoteProjectSearchForbidden handles this case with default header values.
+/* PromoteProjectSearchForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type PromoteProjectSearchForbidden struct {
 func (o *PromoteProjectSearchForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] promoteProjectSearchForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PromoteProjectSearchForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewPromoteProjectSearchNotFound() *PromoteProjectSearchNotFound {
 	return &PromoteProjectSearchNotFound{}
 }
 
-/*PromoteProjectSearchNotFound handles this case with default header values.
+/* PromoteProjectSearchNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type PromoteProjectSearchNotFound struct {
 func (o *PromoteProjectSearchNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] promoteProjectSearchNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PromoteProjectSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewPromoteProjectSearchDefault(code int) *PromoteProjectSearchDefault {
 	}
 }
 
-/*PromoteProjectSearchDefault handles this case with default header values.
+/* PromoteProjectSearchDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *PromoteProjectSearchDefault) Code() int {
 func (o *PromoteProjectSearchDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/searches/{uuid}/promote][%d] PromoteProjectSearch default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PromoteProjectSearchDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

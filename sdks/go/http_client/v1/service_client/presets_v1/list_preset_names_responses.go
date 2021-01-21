@@ -78,7 +78,7 @@ func NewListPresetNamesOK() *ListPresetNamesOK {
 	return &ListPresetNamesOK{}
 }
 
-/*ListPresetNamesOK handles this case with default header values.
+/* ListPresetNamesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListPresetNamesOK struct {
 func (o *ListPresetNamesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/names][%d] listPresetNamesOK  %+v", 200, o.Payload)
 }
-
 func (o *ListPresetNamesOK) GetPayload() *service_model.V1ListPresetsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListPresetNamesNoContent() *ListPresetNamesNoContent {
 	return &ListPresetNamesNoContent{}
 }
 
-/*ListPresetNamesNoContent handles this case with default header values.
+/* ListPresetNamesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListPresetNamesNoContent struct {
 func (o *ListPresetNamesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/names][%d] listPresetNamesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListPresetNamesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListPresetNamesForbidden() *ListPresetNamesForbidden {
 	return &ListPresetNamesForbidden{}
 }
 
-/*ListPresetNamesForbidden handles this case with default header values.
+/* ListPresetNamesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListPresetNamesForbidden struct {
 func (o *ListPresetNamesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/names][%d] listPresetNamesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListPresetNamesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListPresetNamesNotFound() *ListPresetNamesNotFound {
 	return &ListPresetNamesNotFound{}
 }
 
-/*ListPresetNamesNotFound handles this case with default header values.
+/* ListPresetNamesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListPresetNamesNotFound struct {
 func (o *ListPresetNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/names][%d] listPresetNamesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListPresetNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListPresetNamesDefault(code int) *ListPresetNamesDefault {
 	}
 }
 
-/*ListPresetNamesDefault handles this case with default header values.
+/* ListPresetNamesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListPresetNamesDefault) Code() int {
 func (o *ListPresetNamesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/names][%d] ListPresetNames default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListPresetNamesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

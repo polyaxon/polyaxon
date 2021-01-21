@@ -78,7 +78,7 @@ func NewUpdateProjectDashboardOK() *UpdateProjectDashboardOK {
 	return &UpdateProjectDashboardOK{}
 }
 
-/*UpdateProjectDashboardOK handles this case with default header values.
+/* UpdateProjectDashboardOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateProjectDashboardOK struct {
 func (o *UpdateProjectDashboardOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}][%d] updateProjectDashboardOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateProjectDashboardOK) GetPayload() *service_model.V1Dashboard {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateProjectDashboardNoContent() *UpdateProjectDashboardNoContent {
 	return &UpdateProjectDashboardNoContent{}
 }
 
-/*UpdateProjectDashboardNoContent handles this case with default header values.
+/* UpdateProjectDashboardNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateProjectDashboardNoContent struct {
 func (o *UpdateProjectDashboardNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}][%d] updateProjectDashboardNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateProjectDashboardNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateProjectDashboardForbidden() *UpdateProjectDashboardForbidden {
 	return &UpdateProjectDashboardForbidden{}
 }
 
-/*UpdateProjectDashboardForbidden handles this case with default header values.
+/* UpdateProjectDashboardForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateProjectDashboardForbidden struct {
 func (o *UpdateProjectDashboardForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}][%d] updateProjectDashboardForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateProjectDashboardForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateProjectDashboardNotFound() *UpdateProjectDashboardNotFound {
 	return &UpdateProjectDashboardNotFound{}
 }
 
-/*UpdateProjectDashboardNotFound handles this case with default header values.
+/* UpdateProjectDashboardNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateProjectDashboardNotFound struct {
 func (o *UpdateProjectDashboardNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}][%d] updateProjectDashboardNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateProjectDashboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateProjectDashboardDefault(code int) *UpdateProjectDashboardDefault {
 	}
 }
 
-/*UpdateProjectDashboardDefault handles this case with default header values.
+/* UpdateProjectDashboardDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateProjectDashboardDefault) Code() int {
 func (o *UpdateProjectDashboardDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}][%d] UpdateProjectDashboard default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateProjectDashboardDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

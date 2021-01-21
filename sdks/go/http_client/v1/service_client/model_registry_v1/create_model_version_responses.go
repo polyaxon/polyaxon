@@ -78,7 +78,7 @@ func NewCreateModelVersionOK() *CreateModelVersionOK {
 	return &CreateModelVersionOK{}
 }
 
-/*CreateModelVersionOK handles this case with default header values.
+/* CreateModelVersionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateModelVersionOK struct {
 func (o *CreateModelVersionOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{model}/versions][%d] createModelVersionOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateModelVersionOK) GetPayload() *service_model.V1ModelVersion {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateModelVersionNoContent() *CreateModelVersionNoContent {
 	return &CreateModelVersionNoContent{}
 }
 
-/*CreateModelVersionNoContent handles this case with default header values.
+/* CreateModelVersionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateModelVersionNoContent struct {
 func (o *CreateModelVersionNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{model}/versions][%d] createModelVersionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateModelVersionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateModelVersionForbidden() *CreateModelVersionForbidden {
 	return &CreateModelVersionForbidden{}
 }
 
-/*CreateModelVersionForbidden handles this case with default header values.
+/* CreateModelVersionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateModelVersionForbidden struct {
 func (o *CreateModelVersionForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{model}/versions][%d] createModelVersionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateModelVersionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateModelVersionNotFound() *CreateModelVersionNotFound {
 	return &CreateModelVersionNotFound{}
 }
 
-/*CreateModelVersionNotFound handles this case with default header values.
+/* CreateModelVersionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateModelVersionNotFound struct {
 func (o *CreateModelVersionNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{model}/versions][%d] createModelVersionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateModelVersionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateModelVersionDefault(code int) *CreateModelVersionDefault {
 	}
 }
 
-/*CreateModelVersionDefault handles this case with default header values.
+/* CreateModelVersionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateModelVersionDefault) Code() int {
 func (o *CreateModelVersionDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{model}/versions][%d] CreateModelVersion default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateModelVersionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

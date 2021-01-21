@@ -78,7 +78,7 @@ func NewListArchivedRunsOK() *ListArchivedRunsOK {
 	return &ListArchivedRunsOK{}
 }
 
-/*ListArchivedRunsOK handles this case with default header values.
+/* ListArchivedRunsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListArchivedRunsOK struct {
 func (o *ListArchivedRunsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/runs][%d] listArchivedRunsOK  %+v", 200, o.Payload)
 }
-
 func (o *ListArchivedRunsOK) GetPayload() *service_model.V1ListRunsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListArchivedRunsNoContent() *ListArchivedRunsNoContent {
 	return &ListArchivedRunsNoContent{}
 }
 
-/*ListArchivedRunsNoContent handles this case with default header values.
+/* ListArchivedRunsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListArchivedRunsNoContent struct {
 func (o *ListArchivedRunsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/runs][%d] listArchivedRunsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListArchivedRunsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListArchivedRunsForbidden() *ListArchivedRunsForbidden {
 	return &ListArchivedRunsForbidden{}
 }
 
-/*ListArchivedRunsForbidden handles this case with default header values.
+/* ListArchivedRunsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListArchivedRunsForbidden struct {
 func (o *ListArchivedRunsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/runs][%d] listArchivedRunsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListArchivedRunsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListArchivedRunsNotFound() *ListArchivedRunsNotFound {
 	return &ListArchivedRunsNotFound{}
 }
 
-/*ListArchivedRunsNotFound handles this case with default header values.
+/* ListArchivedRunsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListArchivedRunsNotFound struct {
 func (o *ListArchivedRunsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/runs][%d] listArchivedRunsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListArchivedRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListArchivedRunsDefault(code int) *ListArchivedRunsDefault {
 	}
 }
 
-/*ListArchivedRunsDefault handles this case with default header values.
+/* ListArchivedRunsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListArchivedRunsDefault) Code() int {
 func (o *ListArchivedRunsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/runs][%d] ListArchivedRuns default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListArchivedRunsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

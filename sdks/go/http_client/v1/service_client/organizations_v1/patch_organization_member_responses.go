@@ -78,7 +78,7 @@ func NewPatchOrganizationMemberOK() *PatchOrganizationMemberOK {
 	return &PatchOrganizationMemberOK{}
 }
 
-/*PatchOrganizationMemberOK handles this case with default header values.
+/* PatchOrganizationMemberOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchOrganizationMemberOK struct {
 func (o *PatchOrganizationMemberOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/members/{member.user}][%d] patchOrganizationMemberOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchOrganizationMemberOK) GetPayload() *service_model.V1OrganizationMember {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchOrganizationMemberNoContent() *PatchOrganizationMemberNoContent {
 	return &PatchOrganizationMemberNoContent{}
 }
 
-/*PatchOrganizationMemberNoContent handles this case with default header values.
+/* PatchOrganizationMemberNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchOrganizationMemberNoContent struct {
 func (o *PatchOrganizationMemberNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/members/{member.user}][%d] patchOrganizationMemberNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchOrganizationMemberNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchOrganizationMemberForbidden() *PatchOrganizationMemberForbidden {
 	return &PatchOrganizationMemberForbidden{}
 }
 
-/*PatchOrganizationMemberForbidden handles this case with default header values.
+/* PatchOrganizationMemberForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchOrganizationMemberForbidden struct {
 func (o *PatchOrganizationMemberForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/members/{member.user}][%d] patchOrganizationMemberForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchOrganizationMemberForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchOrganizationMemberNotFound() *PatchOrganizationMemberNotFound {
 	return &PatchOrganizationMemberNotFound{}
 }
 
-/*PatchOrganizationMemberNotFound handles this case with default header values.
+/* PatchOrganizationMemberNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchOrganizationMemberNotFound struct {
 func (o *PatchOrganizationMemberNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/members/{member.user}][%d] patchOrganizationMemberNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchOrganizationMemberNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchOrganizationMemberDefault(code int) *PatchOrganizationMemberDefault
 	}
 }
 
-/*PatchOrganizationMemberDefault handles this case with default header values.
+/* PatchOrganizationMemberDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchOrganizationMemberDefault) Code() int {
 func (o *PatchOrganizationMemberDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/members/{member.user}][%d] PatchOrganizationMember default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchOrganizationMemberDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

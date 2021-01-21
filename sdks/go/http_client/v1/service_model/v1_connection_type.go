@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -37,7 +39,7 @@ type V1ConnectionType struct {
 	Description string `json:"description,omitempty"`
 
 	// Connection kind
-	Kind V1ConnectionKind `json:"kind,omitempty"`
+	Kind *V1ConnectionKind `json:"kind,omitempty"`
 
 	// Connection name
 	Name string `json:"name,omitempty"`
@@ -75,7 +77,6 @@ func (m *V1ConnectionType) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1ConnectionType) validateConfigMap(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ConfigMap) { // not required
 		return nil
 	}
@@ -93,29 +94,93 @@ func (m *V1ConnectionType) validateConfigMap(formats strfmt.Registry) error {
 }
 
 func (m *V1ConnectionType) validateKind(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Kind) { // not required
 		return nil
 	}
 
-	if err := m.Kind.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("kind")
+	if m.Kind != nil {
+		if err := m.Kind.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kind")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1ConnectionType) validateSecret(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Secret) { // not required
 		return nil
 	}
 
 	if m.Secret != nil {
 		if err := m.Secret.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("secret")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 connection type based on the context it is used
+func (m *V1ConnectionType) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateConfigMap(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateKind(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSecret(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1ConnectionType) contextValidateConfigMap(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ConfigMap != nil {
+		if err := m.ConfigMap.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("config_map")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1ConnectionType) contextValidateKind(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Kind != nil {
+		if err := m.Kind.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kind")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1ConnectionType) contextValidateSecret(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Secret != nil {
+		if err := m.Secret.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("secret")
 			}

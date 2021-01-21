@@ -18,7 +18,7 @@ sidebar: "core"
 ## Overview
 
 Params provide values to the inputs and outputs definition, and can provide context only values as well.
-The information provided in the params is injected after the [globals context information](/docs/context/globals/), which can be accessed without prefix or using the `params.*` prefix.   
+The information provided in the params is injected after the [globals context information](/docs/core/context/globals/), which can be accessed without prefix or using the `params.*` prefix.   
 
 ## Top level access
 

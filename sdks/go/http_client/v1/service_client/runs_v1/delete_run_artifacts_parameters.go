@@ -30,79 +30,97 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteRunArtifactsParams creates a new DeleteRunArtifactsParams object
-// with the default values initialized.
+// NewDeleteRunArtifactsParams creates a new DeleteRunArtifactsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteRunArtifactsParams() *DeleteRunArtifactsParams {
-	var ()
 	return &DeleteRunArtifactsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteRunArtifactsParamsWithTimeout creates a new DeleteRunArtifactsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteRunArtifactsParamsWithTimeout(timeout time.Duration) *DeleteRunArtifactsParams {
-	var ()
 	return &DeleteRunArtifactsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteRunArtifactsParamsWithContext creates a new DeleteRunArtifactsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteRunArtifactsParamsWithContext(ctx context.Context) *DeleteRunArtifactsParams {
-	var ()
 	return &DeleteRunArtifactsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteRunArtifactsParamsWithHTTPClient creates a new DeleteRunArtifactsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteRunArtifactsParamsWithHTTPClient(client *http.Client) *DeleteRunArtifactsParams {
-	var ()
 	return &DeleteRunArtifactsParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteRunArtifactsParams contains all the parameters to send to the API endpoint
-for the delete run artifacts operation typically these are written to a http.Request
+/* DeleteRunArtifactsParams contains all the parameters to send to the API endpoint
+   for the delete run artifacts operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteRunArtifactsParams struct {
 
-	/*Namespace
-	  namespace
+	/* Namespace.
 
+	   namespace
 	*/
 	Namespace string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Path
-	  Path query param.
 
+	/* Path.
+
+	   Path query param.
 	*/
 	Path *string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete run artifacts params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteRunArtifactsParams) WithDefaults() *DeleteRunArtifactsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete run artifacts params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteRunArtifactsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete run artifacts params
@@ -215,16 +233,17 @@ func (o *DeleteRunArtifactsParams) WriteToRequest(r runtime.ClientRequest, reg s
 
 		// query param path
 		var qrPath string
+
 		if o.Path != nil {
 			qrPath = *o.Path
 		}
 		qPath := qrPath
 		if qPath != "" {
+
 			if err := r.SetQueryParam("path", qPath); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param project

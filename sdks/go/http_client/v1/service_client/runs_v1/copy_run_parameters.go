@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCopyRunParams creates a new CopyRunParams object
-// with the default values initialized.
+// NewCopyRunParams creates a new CopyRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCopyRunParams() *CopyRunParams {
-	var ()
 	return &CopyRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCopyRunParamsWithTimeout creates a new CopyRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCopyRunParamsWithTimeout(timeout time.Duration) *CopyRunParams {
-	var ()
 	return &CopyRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCopyRunParamsWithContext creates a new CopyRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCopyRunParamsWithContext(ctx context.Context) *CopyRunParams {
-	var ()
 	return &CopyRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCopyRunParamsWithHTTPClient creates a new CopyRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCopyRunParamsWithHTTPClient(client *http.Client) *CopyRunParams {
-	var ()
 	return &CopyRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*CopyRunParams contains all the parameters to send to the API endpoint
-for the copy run operation typically these are written to a http.Request
+/* CopyRunParams contains all the parameters to send to the API endpoint
+   for the copy run operation.
+
+   Typically these are written to a http.Request.
 */
 type CopyRunParams struct {
 
-	/*Body
-	  Run object
+	/* Body.
 
+	   Run object
 	*/
 	Body *service_model.V1Run
-	/*EntityEntity
-	  Entity: project name, hub name, registry name, ...
 
+	/* EntityEntity.
+
+	   Entity: project name, hub name, registry name, ...
 	*/
 	EntityEntity string
-	/*EntityOwner
-	  Owner of the namespace
 
+	/* EntityOwner.
+
+	   Owner of the namespace
 	*/
 	EntityOwner string
-	/*EntityUUID
-	  Uuid identifier of the sub-entity
 
+	/* EntityUUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	EntityUUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the copy run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CopyRunParams) WithDefaults() *CopyRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the copy run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CopyRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the copy run params
@@ -186,7 +203,6 @@ func (o *CopyRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regis
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

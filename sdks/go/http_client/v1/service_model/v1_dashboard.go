@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -58,7 +60,7 @@ type V1Dashboard struct {
 	UUID string `json:"uuid,omitempty"`
 
 	// Optional dashboard level
-	View DashboardView `json:"view,omitempty"`
+	View *DashboardView `json:"view,omitempty"`
 }
 
 // Validate validates this v1 dashboard
@@ -84,7 +86,6 @@ func (m *V1Dashboard) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Dashboard) validateCreatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreatedAt) { // not required
 		return nil
 	}
@@ -97,7 +98,6 @@ func (m *V1Dashboard) validateCreatedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Dashboard) validateUpdatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UpdatedAt) { // not required
 		return nil
 	}
@@ -110,16 +110,45 @@ func (m *V1Dashboard) validateUpdatedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Dashboard) validateView(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.View) { // not required
 		return nil
 	}
 
-	if err := m.View.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("view")
+	if m.View != nil {
+		if err := m.View.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("view")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 dashboard based on the context it is used
+func (m *V1Dashboard) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateView(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Dashboard) contextValidateView(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.View != nil {
+		if err := m.View.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("view")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -78,7 +78,7 @@ func NewUpdateTeamOK() *UpdateTeamOK {
 	return &UpdateTeamOK{}
 }
 
-/*UpdateTeamOK handles this case with default header values.
+/* UpdateTeamOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateTeamOK struct {
 func (o *UpdateTeamOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] updateTeamOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateTeamOK) GetPayload() *service_model.V1Team {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateTeamNoContent() *UpdateTeamNoContent {
 	return &UpdateTeamNoContent{}
 }
 
-/*UpdateTeamNoContent handles this case with default header values.
+/* UpdateTeamNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateTeamNoContent struct {
 func (o *UpdateTeamNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] updateTeamNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateTeamNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateTeamForbidden() *UpdateTeamForbidden {
 	return &UpdateTeamForbidden{}
 }
 
-/*UpdateTeamForbidden handles this case with default header values.
+/* UpdateTeamForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateTeamForbidden struct {
 func (o *UpdateTeamForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] updateTeamForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateTeamForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateTeamNotFound() *UpdateTeamNotFound {
 	return &UpdateTeamNotFound{}
 }
 
-/*UpdateTeamNotFound handles this case with default header values.
+/* UpdateTeamNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateTeamNotFound struct {
 func (o *UpdateTeamNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] updateTeamNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateTeamNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateTeamDefault(code int) *UpdateTeamDefault {
 	}
 }
 
-/*UpdateTeamDefault handles this case with default header values.
+/* UpdateTeamDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateTeamDefault) Code() int {
 func (o *UpdateTeamDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] UpdateTeam default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateTeamDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

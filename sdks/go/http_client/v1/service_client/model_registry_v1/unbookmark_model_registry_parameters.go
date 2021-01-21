@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewUnbookmarkModelRegistryParams creates a new UnbookmarkModelRegistryParams object
-// with the default values initialized.
+// NewUnbookmarkModelRegistryParams creates a new UnbookmarkModelRegistryParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUnbookmarkModelRegistryParams() *UnbookmarkModelRegistryParams {
-	var ()
 	return &UnbookmarkModelRegistryParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUnbookmarkModelRegistryParamsWithTimeout creates a new UnbookmarkModelRegistryParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUnbookmarkModelRegistryParamsWithTimeout(timeout time.Duration) *UnbookmarkModelRegistryParams {
-	var ()
 	return &UnbookmarkModelRegistryParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUnbookmarkModelRegistryParamsWithContext creates a new UnbookmarkModelRegistryParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUnbookmarkModelRegistryParamsWithContext(ctx context.Context) *UnbookmarkModelRegistryParams {
-	var ()
 	return &UnbookmarkModelRegistryParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUnbookmarkModelRegistryParamsWithHTTPClient creates a new UnbookmarkModelRegistryParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUnbookmarkModelRegistryParamsWithHTTPClient(client *http.Client) *UnbookmarkModelRegistryParams {
-	var ()
 	return &UnbookmarkModelRegistryParams{
 		HTTPClient: client,
 	}
 }
 
-/*UnbookmarkModelRegistryParams contains all the parameters to send to the API endpoint
-for the unbookmark model registry operation typically these are written to a http.Request
+/* UnbookmarkModelRegistryParams contains all the parameters to send to the API endpoint
+   for the unbookmark model registry operation.
+
+   Typically these are written to a http.Request.
 */
 type UnbookmarkModelRegistryParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the unbookmark model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UnbookmarkModelRegistryParams) WithDefaults() *UnbookmarkModelRegistryParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the unbookmark model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UnbookmarkModelRegistryParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the unbookmark model registry params

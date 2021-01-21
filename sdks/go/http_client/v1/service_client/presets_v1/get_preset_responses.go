@@ -78,7 +78,7 @@ func NewGetPresetOK() *GetPresetOK {
 	return &GetPresetOK{}
 }
 
-/*GetPresetOK handles this case with default header values.
+/* GetPresetOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetPresetOK struct {
 func (o *GetPresetOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/{uuid}][%d] getPresetOK  %+v", 200, o.Payload)
 }
-
 func (o *GetPresetOK) GetPayload() *service_model.V1Preset {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetPresetNoContent() *GetPresetNoContent {
 	return &GetPresetNoContent{}
 }
 
-/*GetPresetNoContent handles this case with default header values.
+/* GetPresetNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetPresetNoContent struct {
 func (o *GetPresetNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/{uuid}][%d] getPresetNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetPresetNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetPresetForbidden() *GetPresetForbidden {
 	return &GetPresetForbidden{}
 }
 
-/*GetPresetForbidden handles this case with default header values.
+/* GetPresetForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetPresetForbidden struct {
 func (o *GetPresetForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/{uuid}][%d] getPresetForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetPresetForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetPresetNotFound() *GetPresetNotFound {
 	return &GetPresetNotFound{}
 }
 
-/*GetPresetNotFound handles this case with default header values.
+/* GetPresetNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetPresetNotFound struct {
 func (o *GetPresetNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/{uuid}][%d] getPresetNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetPresetNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetPresetDefault(code int) *GetPresetDefault {
 	}
 }
 
-/*GetPresetDefault handles this case with default header values.
+/* GetPresetDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetPresetDefault) Code() int {
 func (o *GetPresetDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets/{uuid}][%d] GetPreset default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetPresetDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

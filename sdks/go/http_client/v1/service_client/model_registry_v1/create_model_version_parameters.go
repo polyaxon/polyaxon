@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateModelVersionParams creates a new CreateModelVersionParams object
-// with the default values initialized.
+// NewCreateModelVersionParams creates a new CreateModelVersionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateModelVersionParams() *CreateModelVersionParams {
-	var ()
 	return &CreateModelVersionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateModelVersionParamsWithTimeout creates a new CreateModelVersionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateModelVersionParamsWithTimeout(timeout time.Duration) *CreateModelVersionParams {
-	var ()
 	return &CreateModelVersionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateModelVersionParamsWithContext creates a new CreateModelVersionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateModelVersionParamsWithContext(ctx context.Context) *CreateModelVersionParams {
-	var ()
 	return &CreateModelVersionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateModelVersionParamsWithHTTPClient creates a new CreateModelVersionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateModelVersionParamsWithHTTPClient(client *http.Client) *CreateModelVersionParams {
-	var ()
 	return &CreateModelVersionParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateModelVersionParams contains all the parameters to send to the API endpoint
-for the create model version operation typically these are written to a http.Request
+/* CreateModelVersionParams contains all the parameters to send to the API endpoint
+   for the create model version operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateModelVersionParams struct {
 
-	/*Body
-	  Model version body
+	/* Body.
 
+	   Model version body
 	*/
 	Body *service_model.V1ModelVersion
-	/*Model
-	  Model name
 
+	/* Model.
+
+	   Model name
 	*/
 	Model string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateModelVersionParams) WithDefaults() *CreateModelVersionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateModelVersionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create model version params
@@ -170,7 +186,6 @@ func (o *CreateModelVersionParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

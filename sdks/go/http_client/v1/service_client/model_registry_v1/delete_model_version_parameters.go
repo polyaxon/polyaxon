@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteModelVersionParams creates a new DeleteModelVersionParams object
-// with the default values initialized.
+// NewDeleteModelVersionParams creates a new DeleteModelVersionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteModelVersionParams() *DeleteModelVersionParams {
-	var ()
 	return &DeleteModelVersionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteModelVersionParamsWithTimeout creates a new DeleteModelVersionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteModelVersionParamsWithTimeout(timeout time.Duration) *DeleteModelVersionParams {
-	var ()
 	return &DeleteModelVersionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteModelVersionParamsWithContext creates a new DeleteModelVersionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteModelVersionParamsWithContext(ctx context.Context) *DeleteModelVersionParams {
-	var ()
 	return &DeleteModelVersionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteModelVersionParamsWithHTTPClient creates a new DeleteModelVersionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteModelVersionParamsWithHTTPClient(client *http.Client) *DeleteModelVersionParams {
-	var ()
 	return &DeleteModelVersionParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteModelVersionParams contains all the parameters to send to the API endpoint
-for the delete model version operation typically these are written to a http.Request
+/* DeleteModelVersionParams contains all the parameters to send to the API endpoint
+   for the delete model version operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteModelVersionParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Name
-	  Sub-entity name
 
+	/* Name.
+
+	   Sub-entity name
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteModelVersionParams) WithDefaults() *DeleteModelVersionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteModelVersionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete model version params

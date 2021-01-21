@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetAgentTokenParams creates a new GetAgentTokenParams object
-// with the default values initialized.
+// NewGetAgentTokenParams creates a new GetAgentTokenParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetAgentTokenParams() *GetAgentTokenParams {
-	var ()
 	return &GetAgentTokenParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetAgentTokenParamsWithTimeout creates a new GetAgentTokenParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetAgentTokenParamsWithTimeout(timeout time.Duration) *GetAgentTokenParams {
-	var ()
 	return &GetAgentTokenParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetAgentTokenParamsWithContext creates a new GetAgentTokenParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetAgentTokenParamsWithContext(ctx context.Context) *GetAgentTokenParams {
-	var ()
 	return &GetAgentTokenParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetAgentTokenParamsWithHTTPClient creates a new GetAgentTokenParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetAgentTokenParamsWithHTTPClient(client *http.Client) *GetAgentTokenParams {
-	var ()
 	return &GetAgentTokenParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetAgentTokenParams contains all the parameters to send to the API endpoint
-for the get agent token operation typically these are written to a http.Request
+/* GetAgentTokenParams contains all the parameters to send to the API endpoint
+   for the get agent token operation.
+
+   Typically these are written to a http.Request.
 */
 type GetAgentTokenParams struct {
 
-	/*Owner
-	  Owner of the namespace
+	/* Owner.
 
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get agent token params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetAgentTokenParams) WithDefaults() *GetAgentTokenParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get agent token params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetAgentTokenParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get agent token params

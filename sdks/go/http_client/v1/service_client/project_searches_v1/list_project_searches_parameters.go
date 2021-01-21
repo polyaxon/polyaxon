@@ -31,84 +31,107 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewListProjectSearchesParams creates a new ListProjectSearchesParams object
-// with the default values initialized.
+// NewListProjectSearchesParams creates a new ListProjectSearchesParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewListProjectSearchesParams() *ListProjectSearchesParams {
-	var ()
 	return &ListProjectSearchesParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewListProjectSearchesParamsWithTimeout creates a new ListProjectSearchesParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewListProjectSearchesParamsWithTimeout(timeout time.Duration) *ListProjectSearchesParams {
-	var ()
 	return &ListProjectSearchesParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewListProjectSearchesParamsWithContext creates a new ListProjectSearchesParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewListProjectSearchesParamsWithContext(ctx context.Context) *ListProjectSearchesParams {
-	var ()
 	return &ListProjectSearchesParams{
-
 		Context: ctx,
 	}
 }
 
 // NewListProjectSearchesParamsWithHTTPClient creates a new ListProjectSearchesParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewListProjectSearchesParamsWithHTTPClient(client *http.Client) *ListProjectSearchesParams {
-	var ()
 	return &ListProjectSearchesParams{
 		HTTPClient: client,
 	}
 }
 
-/*ListProjectSearchesParams contains all the parameters to send to the API endpoint
-for the list project searches operation typically these are written to a http.Request
+/* ListProjectSearchesParams contains all the parameters to send to the API endpoint
+   for the list project searches operation.
+
+   Typically these are written to a http.Request.
 */
 type ListProjectSearchesParams struct {
 
-	/*Limit
-	  Limit size.
+	/* Limit.
 
+	   Limit size.
+
+	   Format: int32
 	*/
 	Limit *int32
-	/*Name
-	  Entity managing the resource
 
+	/* Name.
+
+	   Entity managing the resource
 	*/
 	Name string
-	/*Offset
-	  Pagination offset.
 
+	/* Offset.
+
+	   Pagination offset.
+
+	   Format: int32
 	*/
 	Offset *int32
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Query
-	  Query filter the search.
 
+	/* Query.
+
+	   Query filter the search.
 	*/
 	Query *string
-	/*Sort
-	  Sort to order the search.
 
+	/* Sort.
+
+	   Sort to order the search.
 	*/
 	Sort *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the list project searches params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ListProjectSearchesParams) WithDefaults() *ListProjectSearchesParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the list project searches params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ListProjectSearchesParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the list project searches params
@@ -222,16 +245,17 @@ func (o *ListProjectSearchesParams) WriteToRequest(r runtime.ClientRequest, reg 
 
 		// query param limit
 		var qrLimit int32
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := swag.FormatInt32(qrLimit)
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param name
@@ -243,16 +267,17 @@ func (o *ListProjectSearchesParams) WriteToRequest(r runtime.ClientRequest, reg 
 
 		// query param offset
 		var qrOffset int32
+
 		if o.Offset != nil {
 			qrOffset = *o.Offset
 		}
 		qOffset := swag.FormatInt32(qrOffset)
 		if qOffset != "" {
+
 			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner
@@ -264,32 +289,34 @@ func (o *ListProjectSearchesParams) WriteToRequest(r runtime.ClientRequest, reg 
 
 		// query param query
 		var qrQuery string
+
 		if o.Query != nil {
 			qrQuery = *o.Query
 		}
 		qQuery := qrQuery
 		if qQuery != "" {
+
 			if err := r.SetQueryParam("query", qQuery); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Sort != nil {
 
 		// query param sort
 		var qrSort string
+
 		if o.Sort != nil {
 			qrSort = *o.Sort
 		}
 		qSort := qrSort
 		if qSort != "" {
+
 			if err := r.SetQueryParam("sort", qSort); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

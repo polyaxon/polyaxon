@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchProjectSettingsParams creates a new PatchProjectSettingsParams object
-// with the default values initialized.
+// NewPatchProjectSettingsParams creates a new PatchProjectSettingsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchProjectSettingsParams() *PatchProjectSettingsParams {
-	var ()
 	return &PatchProjectSettingsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchProjectSettingsParamsWithTimeout creates a new PatchProjectSettingsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchProjectSettingsParamsWithTimeout(timeout time.Duration) *PatchProjectSettingsParams {
-	var ()
 	return &PatchProjectSettingsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchProjectSettingsParamsWithContext creates a new PatchProjectSettingsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchProjectSettingsParamsWithContext(ctx context.Context) *PatchProjectSettingsParams {
-	var ()
 	return &PatchProjectSettingsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchProjectSettingsParamsWithHTTPClient creates a new PatchProjectSettingsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchProjectSettingsParamsWithHTTPClient(client *http.Client) *PatchProjectSettingsParams {
-	var ()
 	return &PatchProjectSettingsParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchProjectSettingsParams contains all the parameters to send to the API endpoint
-for the patch project settings operation typically these are written to a http.Request
+/* PatchProjectSettingsParams contains all the parameters to send to the API endpoint
+   for the patch project settings operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchProjectSettingsParams struct {
 
-	/*Body
-	  Project settings body
+	/* Body.
 
+	   Project settings body
 	*/
 	Body *service_model.V1ProjectSettings
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project name
 
+	/* Project.
+
+	   Project name
 	*/
 	Project string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch project settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchProjectSettingsParams) WithDefaults() *PatchProjectSettingsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch project settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchProjectSettingsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch project settings params
@@ -170,7 +186,6 @@ func (o *PatchProjectSettingsParams) WriteToRequest(r runtime.ClientRequest, reg
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

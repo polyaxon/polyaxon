@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewArchiveModelRegistryParams creates a new ArchiveModelRegistryParams object
-// with the default values initialized.
+// NewArchiveModelRegistryParams creates a new ArchiveModelRegistryParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewArchiveModelRegistryParams() *ArchiveModelRegistryParams {
-	var ()
 	return &ArchiveModelRegistryParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewArchiveModelRegistryParamsWithTimeout creates a new ArchiveModelRegistryParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewArchiveModelRegistryParamsWithTimeout(timeout time.Duration) *ArchiveModelRegistryParams {
-	var ()
 	return &ArchiveModelRegistryParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewArchiveModelRegistryParamsWithContext creates a new ArchiveModelRegistryParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewArchiveModelRegistryParamsWithContext(ctx context.Context) *ArchiveModelRegistryParams {
-	var ()
 	return &ArchiveModelRegistryParams{
-
 		Context: ctx,
 	}
 }
 
 // NewArchiveModelRegistryParamsWithHTTPClient creates a new ArchiveModelRegistryParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewArchiveModelRegistryParamsWithHTTPClient(client *http.Client) *ArchiveModelRegistryParams {
-	var ()
 	return &ArchiveModelRegistryParams{
 		HTTPClient: client,
 	}
 }
 
-/*ArchiveModelRegistryParams contains all the parameters to send to the API endpoint
-for the archive model registry operation typically these are written to a http.Request
+/* ArchiveModelRegistryParams contains all the parameters to send to the API endpoint
+   for the archive model registry operation.
+
+   Typically these are written to a http.Request.
 */
 type ArchiveModelRegistryParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the archive model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ArchiveModelRegistryParams) WithDefaults() *ArchiveModelRegistryParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the archive model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ArchiveModelRegistryParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the archive model registry params

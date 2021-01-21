@@ -78,7 +78,7 @@ func NewCopyRunOK() *CopyRunOK {
 	return &CopyRunOK{}
 }
 
-/*CopyRunOK handles this case with default header values.
+/* CopyRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CopyRunOK struct {
 func (o *CopyRunOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] copyRunOK  %+v", 200, o.Payload)
 }
-
 func (o *CopyRunOK) GetPayload() *service_model.V1Run {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCopyRunNoContent() *CopyRunNoContent {
 	return &CopyRunNoContent{}
 }
 
-/*CopyRunNoContent handles this case with default header values.
+/* CopyRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CopyRunNoContent struct {
 func (o *CopyRunNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] copyRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CopyRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCopyRunForbidden() *CopyRunForbidden {
 	return &CopyRunForbidden{}
 }
 
-/*CopyRunForbidden handles this case with default header values.
+/* CopyRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CopyRunForbidden struct {
 func (o *CopyRunForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] copyRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CopyRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCopyRunNotFound() *CopyRunNotFound {
 	return &CopyRunNotFound{}
 }
 
-/*CopyRunNotFound handles this case with default header values.
+/* CopyRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CopyRunNotFound struct {
 func (o *CopyRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] copyRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CopyRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCopyRunDefault(code int) *CopyRunDefault {
 	}
 }
 
-/*CopyRunDefault handles this case with default header values.
+/* CopyRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CopyRunDefault) Code() int {
 func (o *CopyRunDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/copy][%d] CopyRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CopyRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

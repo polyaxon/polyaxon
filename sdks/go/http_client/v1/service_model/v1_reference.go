@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -70,7 +72,6 @@ func (m *V1Reference) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Reference) validateDagReference(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.DagReference) { // not required
 		return nil
 	}
@@ -88,7 +89,6 @@ func (m *V1Reference) validateDagReference(formats strfmt.Registry) error {
 }
 
 func (m *V1Reference) validateHubReference(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.HubReference) { // not required
 		return nil
 	}
@@ -106,7 +106,6 @@ func (m *V1Reference) validateHubReference(formats strfmt.Registry) error {
 }
 
 func (m *V1Reference) validatePathReference(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.PathReference) { // not required
 		return nil
 	}
@@ -124,13 +123,94 @@ func (m *V1Reference) validatePathReference(formats strfmt.Registry) error {
 }
 
 func (m *V1Reference) validateURLReference(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.URLReference) { // not required
 		return nil
 	}
 
 	if m.URLReference != nil {
 		if err := m.URLReference.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("url_reference")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 reference based on the context it is used
+func (m *V1Reference) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDagReference(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateHubReference(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePathReference(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateURLReference(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Reference) contextValidateDagReference(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.DagReference != nil {
+		if err := m.DagReference.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dag_reference")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Reference) contextValidateHubReference(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.HubReference != nil {
+		if err := m.HubReference.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("hub_reference")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Reference) contextValidatePathReference(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.PathReference != nil {
+		if err := m.PathReference.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("path_reference")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Reference) contextValidateURLReference(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.URLReference != nil {
+		if err := m.URLReference.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("url_reference")
 			}

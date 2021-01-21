@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewSyncAgentParams creates a new SyncAgentParams object
-// with the default values initialized.
+// NewSyncAgentParams creates a new SyncAgentParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSyncAgentParams() *SyncAgentParams {
-	var ()
 	return &SyncAgentParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSyncAgentParamsWithTimeout creates a new SyncAgentParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSyncAgentParamsWithTimeout(timeout time.Duration) *SyncAgentParams {
-	var ()
 	return &SyncAgentParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSyncAgentParamsWithContext creates a new SyncAgentParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSyncAgentParamsWithContext(ctx context.Context) *SyncAgentParams {
-	var ()
 	return &SyncAgentParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSyncAgentParamsWithHTTPClient creates a new SyncAgentParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSyncAgentParamsWithHTTPClient(client *http.Client) *SyncAgentParams {
-	var ()
 	return &SyncAgentParams{
 		HTTPClient: client,
 	}
 }
 
-/*SyncAgentParams contains all the parameters to send to the API endpoint
-for the sync agent operation typically these are written to a http.Request
+/* SyncAgentParams contains all the parameters to send to the API endpoint
+   for the sync agent operation.
+
+   Typically these are written to a http.Request.
 */
 type SyncAgentParams struct {
 
-	/*AgentUUID
-	  UUID
+	/* AgentUUID.
 
+	   UUID
 	*/
 	AgentUUID string
-	/*Body
-	  Agent body
 
+	/* Body.
+
+	   Agent body
 	*/
 	Body *service_model.V1Agent
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the sync agent params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SyncAgentParams) WithDefaults() *SyncAgentParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the sync agent params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SyncAgentParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the sync agent params
@@ -175,7 +191,6 @@ func (o *SyncAgentParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 	if err := r.SetPathParam("agent.uuid", o.AgentUUID); err != nil {
 		return err
 	}
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

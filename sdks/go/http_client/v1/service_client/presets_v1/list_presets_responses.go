@@ -78,7 +78,7 @@ func NewListPresetsOK() *ListPresetsOK {
 	return &ListPresetsOK{}
 }
 
-/*ListPresetsOK handles this case with default header values.
+/* ListPresetsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListPresetsOK struct {
 func (o *ListPresetsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets][%d] listPresetsOK  %+v", 200, o.Payload)
 }
-
 func (o *ListPresetsOK) GetPayload() *service_model.V1ListPresetsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListPresetsNoContent() *ListPresetsNoContent {
 	return &ListPresetsNoContent{}
 }
 
-/*ListPresetsNoContent handles this case with default header values.
+/* ListPresetsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListPresetsNoContent struct {
 func (o *ListPresetsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets][%d] listPresetsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListPresetsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListPresetsForbidden() *ListPresetsForbidden {
 	return &ListPresetsForbidden{}
 }
 
-/*ListPresetsForbidden handles this case with default header values.
+/* ListPresetsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListPresetsForbidden struct {
 func (o *ListPresetsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets][%d] listPresetsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListPresetsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListPresetsNotFound() *ListPresetsNotFound {
 	return &ListPresetsNotFound{}
 }
 
-/*ListPresetsNotFound handles this case with default header values.
+/* ListPresetsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListPresetsNotFound struct {
 func (o *ListPresetsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets][%d] listPresetsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListPresetsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListPresetsDefault(code int) *ListPresetsDefault {
 	}
 }
 
-/*ListPresetsDefault handles this case with default header values.
+/* ListPresetsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListPresetsDefault) Code() int {
 func (o *ListPresetsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/presets][%d] ListPresets default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListPresetsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

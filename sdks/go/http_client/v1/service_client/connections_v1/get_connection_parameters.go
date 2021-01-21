@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetConnectionParams creates a new GetConnectionParams object
-// with the default values initialized.
+// NewGetConnectionParams creates a new GetConnectionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetConnectionParams() *GetConnectionParams {
-	var ()
 	return &GetConnectionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetConnectionParamsWithTimeout creates a new GetConnectionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetConnectionParamsWithTimeout(timeout time.Duration) *GetConnectionParams {
-	var ()
 	return &GetConnectionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetConnectionParamsWithContext creates a new GetConnectionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetConnectionParamsWithContext(ctx context.Context) *GetConnectionParams {
-	var ()
 	return &GetConnectionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetConnectionParamsWithHTTPClient creates a new GetConnectionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetConnectionParamsWithHTTPClient(client *http.Client) *GetConnectionParams {
-	var ()
 	return &GetConnectionParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetConnectionParams contains all the parameters to send to the API endpoint
-for the get connection operation typically these are written to a http.Request
+/* GetConnectionParams contains all the parameters to send to the API endpoint
+   for the get connection operation.
+
+   Typically these are written to a http.Request.
 */
 type GetConnectionParams struct {
 
-	/*Owner
-	  Owner of the namespace
+	/* Owner.
 
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get connection params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetConnectionParams) WithDefaults() *GetConnectionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get connection params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetConnectionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get connection params

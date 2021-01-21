@@ -78,7 +78,7 @@ func NewGetOrganizationStatsOK() *GetOrganizationStatsOK {
 	return &GetOrganizationStatsOK{}
 }
 
-/*GetOrganizationStatsOK handles this case with default header values.
+/* GetOrganizationStatsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetOrganizationStatsOK struct {
 func (o *GetOrganizationStatsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/stats][%d] getOrganizationStatsOK  %+v", 200, o.Payload)
 }
-
 func (o *GetOrganizationStatsOK) GetPayload() interface{} {
 	return o.Payload
 }
@@ -109,7 +108,7 @@ func NewGetOrganizationStatsNoContent() *GetOrganizationStatsNoContent {
 	return &GetOrganizationStatsNoContent{}
 }
 
-/*GetOrganizationStatsNoContent handles this case with default header values.
+/* GetOrganizationStatsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -120,7 +119,6 @@ type GetOrganizationStatsNoContent struct {
 func (o *GetOrganizationStatsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/stats][%d] getOrganizationStatsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetOrganizationStatsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -140,7 +138,7 @@ func NewGetOrganizationStatsForbidden() *GetOrganizationStatsForbidden {
 	return &GetOrganizationStatsForbidden{}
 }
 
-/*GetOrganizationStatsForbidden handles this case with default header values.
+/* GetOrganizationStatsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -151,7 +149,6 @@ type GetOrganizationStatsForbidden struct {
 func (o *GetOrganizationStatsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/stats][%d] getOrganizationStatsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetOrganizationStatsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -171,7 +168,7 @@ func NewGetOrganizationStatsNotFound() *GetOrganizationStatsNotFound {
 	return &GetOrganizationStatsNotFound{}
 }
 
-/*GetOrganizationStatsNotFound handles this case with default header values.
+/* GetOrganizationStatsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -182,7 +179,6 @@ type GetOrganizationStatsNotFound struct {
 func (o *GetOrganizationStatsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/stats][%d] getOrganizationStatsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetOrganizationStatsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -204,7 +200,7 @@ func NewGetOrganizationStatsDefault(code int) *GetOrganizationStatsDefault {
 	}
 }
 
-/*GetOrganizationStatsDefault handles this case with default header values.
+/* GetOrganizationStatsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -222,7 +218,6 @@ func (o *GetOrganizationStatsDefault) Code() int {
 func (o *GetOrganizationStatsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/stats][%d] GetOrganizationStats default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetOrganizationStatsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

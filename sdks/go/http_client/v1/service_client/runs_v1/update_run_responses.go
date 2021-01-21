@@ -78,7 +78,7 @@ func NewUpdateRunOK() *UpdateRunOK {
 	return &UpdateRunOK{}
 }
 
-/*UpdateRunOK handles this case with default header values.
+/* UpdateRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateRunOK struct {
 func (o *UpdateRunOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/runs/{run.uuid}][%d] updateRunOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateRunOK) GetPayload() *service_model.V1Run {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateRunNoContent() *UpdateRunNoContent {
 	return &UpdateRunNoContent{}
 }
 
-/*UpdateRunNoContent handles this case with default header values.
+/* UpdateRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateRunNoContent struct {
 func (o *UpdateRunNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/runs/{run.uuid}][%d] updateRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateRunForbidden() *UpdateRunForbidden {
 	return &UpdateRunForbidden{}
 }
 
-/*UpdateRunForbidden handles this case with default header values.
+/* UpdateRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateRunForbidden struct {
 func (o *UpdateRunForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/runs/{run.uuid}][%d] updateRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateRunNotFound() *UpdateRunNotFound {
 	return &UpdateRunNotFound{}
 }
 
-/*UpdateRunNotFound handles this case with default header values.
+/* UpdateRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateRunNotFound struct {
 func (o *UpdateRunNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/runs/{run.uuid}][%d] updateRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateRunDefault(code int) *UpdateRunDefault {
 	}
 }
 
-/*UpdateRunDefault handles this case with default header values.
+/* UpdateRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateRunDefault) Code() int {
 func (o *UpdateRunDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/runs/{run.uuid}][%d] UpdateRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

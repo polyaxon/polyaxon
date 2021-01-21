@@ -32,64 +32,79 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateOrganizationSettingsParams creates a new UpdateOrganizationSettingsParams object
-// with the default values initialized.
+// NewUpdateOrganizationSettingsParams creates a new UpdateOrganizationSettingsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateOrganizationSettingsParams() *UpdateOrganizationSettingsParams {
-	var ()
 	return &UpdateOrganizationSettingsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateOrganizationSettingsParamsWithTimeout creates a new UpdateOrganizationSettingsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateOrganizationSettingsParamsWithTimeout(timeout time.Duration) *UpdateOrganizationSettingsParams {
-	var ()
 	return &UpdateOrganizationSettingsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateOrganizationSettingsParamsWithContext creates a new UpdateOrganizationSettingsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateOrganizationSettingsParamsWithContext(ctx context.Context) *UpdateOrganizationSettingsParams {
-	var ()
 	return &UpdateOrganizationSettingsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateOrganizationSettingsParamsWithHTTPClient creates a new UpdateOrganizationSettingsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateOrganizationSettingsParamsWithHTTPClient(client *http.Client) *UpdateOrganizationSettingsParams {
-	var ()
 	return &UpdateOrganizationSettingsParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateOrganizationSettingsParams contains all the parameters to send to the API endpoint
-for the update organization settings operation typically these are written to a http.Request
+/* UpdateOrganizationSettingsParams contains all the parameters to send to the API endpoint
+   for the update organization settings operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateOrganizationSettingsParams struct {
 
-	/*Body
-	  Organization body
+	/* Body.
 
+	   Organization body
 	*/
 	Body *service_model.V1Organization
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update organization settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateOrganizationSettingsParams) WithDefaults() *UpdateOrganizationSettingsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update organization settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateOrganizationSettingsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update organization settings params
@@ -154,7 +169,6 @@ func (o *UpdateOrganizationSettingsParams) WriteToRequest(r runtime.ClientReques
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

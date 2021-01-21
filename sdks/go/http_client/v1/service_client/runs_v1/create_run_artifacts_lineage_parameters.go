@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateRunArtifactsLineageParams creates a new CreateRunArtifactsLineageParams object
-// with the default values initialized.
+// NewCreateRunArtifactsLineageParams creates a new CreateRunArtifactsLineageParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateRunArtifactsLineageParams() *CreateRunArtifactsLineageParams {
-	var ()
 	return &CreateRunArtifactsLineageParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateRunArtifactsLineageParamsWithTimeout creates a new CreateRunArtifactsLineageParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateRunArtifactsLineageParamsWithTimeout(timeout time.Duration) *CreateRunArtifactsLineageParams {
-	var ()
 	return &CreateRunArtifactsLineageParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateRunArtifactsLineageParamsWithContext creates a new CreateRunArtifactsLineageParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateRunArtifactsLineageParamsWithContext(ctx context.Context) *CreateRunArtifactsLineageParams {
-	var ()
 	return &CreateRunArtifactsLineageParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateRunArtifactsLineageParamsWithHTTPClient creates a new CreateRunArtifactsLineageParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateRunArtifactsLineageParamsWithHTTPClient(client *http.Client) *CreateRunArtifactsLineageParams {
-	var ()
 	return &CreateRunArtifactsLineageParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateRunArtifactsLineageParams contains all the parameters to send to the API endpoint
-for the create run artifacts lineage operation typically these are written to a http.Request
+/* CreateRunArtifactsLineageParams contains all the parameters to send to the API endpoint
+   for the create run artifacts lineage operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateRunArtifactsLineageParams struct {
 
-	/*Body
-	  Run Artifacts
+	/* Body.
 
+	   Run Artifacts
 	*/
 	Body *service_model.V1RunArtifacts
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create run artifacts lineage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateRunArtifactsLineageParams) WithDefaults() *CreateRunArtifactsLineageParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create run artifacts lineage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateRunArtifactsLineageParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create run artifacts lineage params
@@ -186,7 +203,6 @@ func (o *CreateRunArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

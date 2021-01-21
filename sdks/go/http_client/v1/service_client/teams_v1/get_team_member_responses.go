@@ -78,7 +78,7 @@ func NewGetTeamMemberOK() *GetTeamMemberOK {
 	return &GetTeamMemberOK{}
 }
 
-/*GetTeamMemberOK handles this case with default header values.
+/* GetTeamMemberOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetTeamMemberOK struct {
 func (o *GetTeamMemberOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] getTeamMemberOK  %+v", 200, o.Payload)
 }
-
 func (o *GetTeamMemberOK) GetPayload() *service_model.V1TeamMember {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetTeamMemberNoContent() *GetTeamMemberNoContent {
 	return &GetTeamMemberNoContent{}
 }
 
-/*GetTeamMemberNoContent handles this case with default header values.
+/* GetTeamMemberNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetTeamMemberNoContent struct {
 func (o *GetTeamMemberNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] getTeamMemberNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetTeamMemberNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetTeamMemberForbidden() *GetTeamMemberForbidden {
 	return &GetTeamMemberForbidden{}
 }
 
-/*GetTeamMemberForbidden handles this case with default header values.
+/* GetTeamMemberForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetTeamMemberForbidden struct {
 func (o *GetTeamMemberForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] getTeamMemberForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetTeamMemberForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetTeamMemberNotFound() *GetTeamMemberNotFound {
 	return &GetTeamMemberNotFound{}
 }
 
-/*GetTeamMemberNotFound handles this case with default header values.
+/* GetTeamMemberNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetTeamMemberNotFound struct {
 func (o *GetTeamMemberNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] getTeamMemberNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetTeamMemberNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetTeamMemberDefault(code int) *GetTeamMemberDefault {
 	}
 }
 
-/*GetTeamMemberDefault handles this case with default header values.
+/* GetTeamMemberDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetTeamMemberDefault) Code() int {
 func (o *GetTeamMemberDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] GetTeamMember default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetTeamMemberDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

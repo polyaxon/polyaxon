@@ -78,7 +78,7 @@ func NewTagRunsOK() *TagRunsOK {
 	return &TagRunsOK{}
 }
 
-/*TagRunsOK handles this case with default header values.
+/* TagRunsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewTagRunsNoContent() *TagRunsNoContent {
 	return &TagRunsNoContent{}
 }
 
-/*TagRunsNoContent handles this case with default header values.
+/* TagRunsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type TagRunsNoContent struct {
 func (o *TagRunsNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/tag][%d] tagRunsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *TagRunsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewTagRunsForbidden() *TagRunsForbidden {
 	return &TagRunsForbidden{}
 }
 
-/*TagRunsForbidden handles this case with default header values.
+/* TagRunsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type TagRunsForbidden struct {
 func (o *TagRunsForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/tag][%d] tagRunsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *TagRunsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewTagRunsNotFound() *TagRunsNotFound {
 	return &TagRunsNotFound{}
 }
 
-/*TagRunsNotFound handles this case with default header values.
+/* TagRunsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type TagRunsNotFound struct {
 func (o *TagRunsNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/tag][%d] tagRunsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *TagRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewTagRunsDefault(code int) *TagRunsDefault {
 	}
 }
 
-/*TagRunsDefault handles this case with default header values.
+/* TagRunsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *TagRunsDefault) Code() int {
 func (o *TagRunsDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/tag][%d] TagRuns default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *TagRunsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

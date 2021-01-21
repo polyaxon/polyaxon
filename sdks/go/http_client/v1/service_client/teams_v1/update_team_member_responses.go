@@ -78,7 +78,7 @@ func NewUpdateTeamMemberOK() *UpdateTeamMemberOK {
 	return &UpdateTeamMemberOK{}
 }
 
-/*UpdateTeamMemberOK handles this case with default header values.
+/* UpdateTeamMemberOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateTeamMemberOK struct {
 func (o *UpdateTeamMemberOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team}/members/{member.user}][%d] updateTeamMemberOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateTeamMemberOK) GetPayload() *service_model.V1TeamMember {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateTeamMemberNoContent() *UpdateTeamMemberNoContent {
 	return &UpdateTeamMemberNoContent{}
 }
 
-/*UpdateTeamMemberNoContent handles this case with default header values.
+/* UpdateTeamMemberNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateTeamMemberNoContent struct {
 func (o *UpdateTeamMemberNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team}/members/{member.user}][%d] updateTeamMemberNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateTeamMemberNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateTeamMemberForbidden() *UpdateTeamMemberForbidden {
 	return &UpdateTeamMemberForbidden{}
 }
 
-/*UpdateTeamMemberForbidden handles this case with default header values.
+/* UpdateTeamMemberForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateTeamMemberForbidden struct {
 func (o *UpdateTeamMemberForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team}/members/{member.user}][%d] updateTeamMemberForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateTeamMemberForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateTeamMemberNotFound() *UpdateTeamMemberNotFound {
 	return &UpdateTeamMemberNotFound{}
 }
 
-/*UpdateTeamMemberNotFound handles this case with default header values.
+/* UpdateTeamMemberNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateTeamMemberNotFound struct {
 func (o *UpdateTeamMemberNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team}/members/{member.user}][%d] updateTeamMemberNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateTeamMemberNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateTeamMemberDefault(code int) *UpdateTeamMemberDefault {
 	}
 }
 
-/*UpdateTeamMemberDefault handles this case with default header values.
+/* UpdateTeamMemberDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateTeamMemberDefault) Code() int {
 func (o *UpdateTeamMemberDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team}/members/{member.user}][%d] UpdateTeamMember default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateTeamMemberDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

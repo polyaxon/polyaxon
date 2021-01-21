@@ -78,7 +78,7 @@ func NewBookmarkModelRegistryOK() *BookmarkModelRegistryOK {
 	return &BookmarkModelRegistryOK{}
 }
 
-/*BookmarkModelRegistryOK handles this case with default header values.
+/* BookmarkModelRegistryOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewBookmarkModelRegistryNoContent() *BookmarkModelRegistryNoContent {
 	return &BookmarkModelRegistryNoContent{}
 }
 
-/*BookmarkModelRegistryNoContent handles this case with default header values.
+/* BookmarkModelRegistryNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type BookmarkModelRegistryNoContent struct {
 func (o *BookmarkModelRegistryNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/bookmark][%d] bookmarkModelRegistryNoContent  %+v", 204, o.Payload)
 }
-
 func (o *BookmarkModelRegistryNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewBookmarkModelRegistryForbidden() *BookmarkModelRegistryForbidden {
 	return &BookmarkModelRegistryForbidden{}
 }
 
-/*BookmarkModelRegistryForbidden handles this case with default header values.
+/* BookmarkModelRegistryForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type BookmarkModelRegistryForbidden struct {
 func (o *BookmarkModelRegistryForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/bookmark][%d] bookmarkModelRegistryForbidden  %+v", 403, o.Payload)
 }
-
 func (o *BookmarkModelRegistryForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewBookmarkModelRegistryNotFound() *BookmarkModelRegistryNotFound {
 	return &BookmarkModelRegistryNotFound{}
 }
 
-/*BookmarkModelRegistryNotFound handles this case with default header values.
+/* BookmarkModelRegistryNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type BookmarkModelRegistryNotFound struct {
 func (o *BookmarkModelRegistryNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/bookmark][%d] bookmarkModelRegistryNotFound  %+v", 404, o.Payload)
 }
-
 func (o *BookmarkModelRegistryNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewBookmarkModelRegistryDefault(code int) *BookmarkModelRegistryDefault {
 	}
 }
 
-/*BookmarkModelRegistryDefault handles this case with default header values.
+/* BookmarkModelRegistryDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *BookmarkModelRegistryDefault) Code() int {
 func (o *BookmarkModelRegistryDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/bookmark][%d] BookmarkModelRegistry default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *BookmarkModelRegistryDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

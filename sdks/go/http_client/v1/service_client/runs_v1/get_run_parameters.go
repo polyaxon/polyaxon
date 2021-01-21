@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetRunParams creates a new GetRunParams object
-// with the default values initialized.
+// NewGetRunParams creates a new GetRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetRunParams() *GetRunParams {
-	var ()
 	return &GetRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetRunParamsWithTimeout creates a new GetRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetRunParamsWithTimeout(timeout time.Duration) *GetRunParams {
-	var ()
 	return &GetRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetRunParamsWithContext creates a new GetRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetRunParamsWithContext(ctx context.Context) *GetRunParams {
-	var ()
 	return &GetRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetRunParamsWithHTTPClient creates a new GetRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetRunParamsWithHTTPClient(client *http.Client) *GetRunParams {
-	var ()
 	return &GetRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetRunParams contains all the parameters to send to the API endpoint
-for the get run operation typically these are written to a http.Request
+/* GetRunParams contains all the parameters to send to the API endpoint
+   for the get run operation.
+
+   Typically these are written to a http.Request.
 */
 type GetRunParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunParams) WithDefaults() *GetRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get run params

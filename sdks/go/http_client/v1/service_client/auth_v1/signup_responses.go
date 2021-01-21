@@ -78,7 +78,7 @@ func NewSignupOK() *SignupOK {
 	return &SignupOK{}
 }
 
-/*SignupOK handles this case with default header values.
+/* SignupOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type SignupOK struct {
 func (o *SignupOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/signup][%d] signupOK  %+v", 200, o.Payload)
 }
-
 func (o *SignupOK) GetPayload() *service_model.V1Auth {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewSignupNoContent() *SignupNoContent {
 	return &SignupNoContent{}
 }
 
-/*SignupNoContent handles this case with default header values.
+/* SignupNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type SignupNoContent struct {
 func (o *SignupNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/signup][%d] signupNoContent  %+v", 204, o.Payload)
 }
-
 func (o *SignupNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewSignupForbidden() *SignupForbidden {
 	return &SignupForbidden{}
 }
 
-/*SignupForbidden handles this case with default header values.
+/* SignupForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type SignupForbidden struct {
 func (o *SignupForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/signup][%d] signupForbidden  %+v", 403, o.Payload)
 }
-
 func (o *SignupForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewSignupNotFound() *SignupNotFound {
 	return &SignupNotFound{}
 }
 
-/*SignupNotFound handles this case with default header values.
+/* SignupNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type SignupNotFound struct {
 func (o *SignupNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/signup][%d] signupNotFound  %+v", 404, o.Payload)
 }
-
 func (o *SignupNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewSignupDefault(code int) *SignupDefault {
 	}
 }
 
-/*SignupDefault handles this case with default header values.
+/* SignupDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *SignupDefault) Code() int {
 func (o *SignupDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/signup][%d] Signup default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *SignupDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

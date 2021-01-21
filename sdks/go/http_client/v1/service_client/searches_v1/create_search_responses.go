@@ -78,7 +78,7 @@ func NewCreateSearchOK() *CreateSearchOK {
 	return &CreateSearchOK{}
 }
 
-/*CreateSearchOK handles this case with default header values.
+/* CreateSearchOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateSearchOK struct {
 func (o *CreateSearchOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/searches][%d] createSearchOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateSearchOK) GetPayload() *service_model.V1Search {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateSearchNoContent() *CreateSearchNoContent {
 	return &CreateSearchNoContent{}
 }
 
-/*CreateSearchNoContent handles this case with default header values.
+/* CreateSearchNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateSearchNoContent struct {
 func (o *CreateSearchNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/searches][%d] createSearchNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateSearchNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateSearchForbidden() *CreateSearchForbidden {
 	return &CreateSearchForbidden{}
 }
 
-/*CreateSearchForbidden handles this case with default header values.
+/* CreateSearchForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateSearchForbidden struct {
 func (o *CreateSearchForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/searches][%d] createSearchForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateSearchForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateSearchNotFound() *CreateSearchNotFound {
 	return &CreateSearchNotFound{}
 }
 
-/*CreateSearchNotFound handles this case with default header values.
+/* CreateSearchNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateSearchNotFound struct {
 func (o *CreateSearchNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/searches][%d] createSearchNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateSearchDefault(code int) *CreateSearchDefault {
 	}
 }
 
-/*CreateSearchDefault handles this case with default header values.
+/* CreateSearchDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateSearchDefault) Code() int {
 func (o *CreateSearchDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/searches][%d] CreateSearch default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateSearchDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

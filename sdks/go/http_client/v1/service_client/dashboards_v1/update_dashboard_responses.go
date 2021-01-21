@@ -78,7 +78,7 @@ func NewUpdateDashboardOK() *UpdateDashboardOK {
 	return &UpdateDashboardOK{}
 }
 
-/*UpdateDashboardOK handles this case with default header values.
+/* UpdateDashboardOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateDashboardOK struct {
 func (o *UpdateDashboardOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] updateDashboardOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateDashboardOK) GetPayload() *service_model.V1Dashboard {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateDashboardNoContent() *UpdateDashboardNoContent {
 	return &UpdateDashboardNoContent{}
 }
 
-/*UpdateDashboardNoContent handles this case with default header values.
+/* UpdateDashboardNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateDashboardNoContent struct {
 func (o *UpdateDashboardNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] updateDashboardNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateDashboardNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateDashboardForbidden() *UpdateDashboardForbidden {
 	return &UpdateDashboardForbidden{}
 }
 
-/*UpdateDashboardForbidden handles this case with default header values.
+/* UpdateDashboardForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateDashboardForbidden struct {
 func (o *UpdateDashboardForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] updateDashboardForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateDashboardForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateDashboardNotFound() *UpdateDashboardNotFound {
 	return &UpdateDashboardNotFound{}
 }
 
-/*UpdateDashboardNotFound handles this case with default header values.
+/* UpdateDashboardNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateDashboardNotFound struct {
 func (o *UpdateDashboardNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] updateDashboardNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateDashboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateDashboardDefault(code int) *UpdateDashboardDefault {
 	}
 }
 
-/*UpdateDashboardDefault handles this case with default header values.
+/* UpdateDashboardDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateDashboardDefault) Code() int {
 func (o *UpdateDashboardDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/dashboards/{dashboard.uuid}][%d] UpdateDashboard default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateDashboardDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

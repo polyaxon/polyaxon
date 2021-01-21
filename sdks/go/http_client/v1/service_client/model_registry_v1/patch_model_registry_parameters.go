@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchModelRegistryParams creates a new PatchModelRegistryParams object
-// with the default values initialized.
+// NewPatchModelRegistryParams creates a new PatchModelRegistryParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchModelRegistryParams() *PatchModelRegistryParams {
-	var ()
 	return &PatchModelRegistryParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchModelRegistryParamsWithTimeout creates a new PatchModelRegistryParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchModelRegistryParamsWithTimeout(timeout time.Duration) *PatchModelRegistryParams {
-	var ()
 	return &PatchModelRegistryParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchModelRegistryParamsWithContext creates a new PatchModelRegistryParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchModelRegistryParamsWithContext(ctx context.Context) *PatchModelRegistryParams {
-	var ()
 	return &PatchModelRegistryParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchModelRegistryParamsWithHTTPClient creates a new PatchModelRegistryParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchModelRegistryParamsWithHTTPClient(client *http.Client) *PatchModelRegistryParams {
-	var ()
 	return &PatchModelRegistryParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchModelRegistryParams contains all the parameters to send to the API endpoint
-for the patch model registry operation typically these are written to a http.Request
+/* PatchModelRegistryParams contains all the parameters to send to the API endpoint
+   for the patch model registry operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchModelRegistryParams struct {
 
-	/*Body
-	  Model body
+	/* Body.
 
+	   Model body
 	*/
 	Body *service_model.V1ModelRegistry
-	/*ModelName
-	  Optional component name, should be a valid fully qualified value: name[:version]
 
+	/* ModelName.
+
+	   Optional component name, should be a valid fully qualified value: name[:version]
 	*/
 	ModelName string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchModelRegistryParams) WithDefaults() *PatchModelRegistryParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchModelRegistryParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch model registry params
@@ -170,7 +186,6 @@ func (o *PatchModelRegistryParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

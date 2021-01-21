@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdatePresetParams creates a new UpdatePresetParams object
-// with the default values initialized.
+// NewUpdatePresetParams creates a new UpdatePresetParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdatePresetParams() *UpdatePresetParams {
-	var ()
 	return &UpdatePresetParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdatePresetParamsWithTimeout creates a new UpdatePresetParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdatePresetParamsWithTimeout(timeout time.Duration) *UpdatePresetParams {
-	var ()
 	return &UpdatePresetParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdatePresetParamsWithContext creates a new UpdatePresetParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdatePresetParamsWithContext(ctx context.Context) *UpdatePresetParams {
-	var ()
 	return &UpdatePresetParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdatePresetParamsWithHTTPClient creates a new UpdatePresetParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdatePresetParamsWithHTTPClient(client *http.Client) *UpdatePresetParams {
-	var ()
 	return &UpdatePresetParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdatePresetParams contains all the parameters to send to the API endpoint
-for the update preset operation typically these are written to a http.Request
+/* UpdatePresetParams contains all the parameters to send to the API endpoint
+   for the update preset operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdatePresetParams struct {
 
-	/*Body
-	  Preset body
+	/* Body.
 
+	   Preset body
 	*/
 	Body *service_model.V1Preset
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*PresetUUID
-	  UUID
 
+	/* PresetUUID.
+
+	   UUID
 	*/
 	PresetUUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update preset params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdatePresetParams) WithDefaults() *UpdatePresetParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update preset params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdatePresetParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update preset params
@@ -170,7 +186,6 @@ func (o *UpdatePresetParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

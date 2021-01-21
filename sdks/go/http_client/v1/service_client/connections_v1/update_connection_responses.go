@@ -78,7 +78,7 @@ func NewUpdateConnectionOK() *UpdateConnectionOK {
 	return &UpdateConnectionOK{}
 }
 
-/*UpdateConnectionOK handles this case with default header values.
+/* UpdateConnectionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateConnectionOK struct {
 func (o *UpdateConnectionOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] updateConnectionOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateConnectionOK) GetPayload() *service_model.V1ConnectionResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateConnectionNoContent() *UpdateConnectionNoContent {
 	return &UpdateConnectionNoContent{}
 }
 
-/*UpdateConnectionNoContent handles this case with default header values.
+/* UpdateConnectionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateConnectionNoContent struct {
 func (o *UpdateConnectionNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] updateConnectionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateConnectionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateConnectionForbidden() *UpdateConnectionForbidden {
 	return &UpdateConnectionForbidden{}
 }
 
-/*UpdateConnectionForbidden handles this case with default header values.
+/* UpdateConnectionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateConnectionForbidden struct {
 func (o *UpdateConnectionForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] updateConnectionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateConnectionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateConnectionNotFound() *UpdateConnectionNotFound {
 	return &UpdateConnectionNotFound{}
 }
 
-/*UpdateConnectionNotFound handles this case with default header values.
+/* UpdateConnectionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateConnectionNotFound struct {
 func (o *UpdateConnectionNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] updateConnectionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateConnectionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateConnectionDefault(code int) *UpdateConnectionDefault {
 	}
 }
 
-/*UpdateConnectionDefault handles this case with default header values.
+/* UpdateConnectionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateConnectionDefault) Code() int {
 func (o *UpdateConnectionDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] UpdateConnection default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateConnectionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

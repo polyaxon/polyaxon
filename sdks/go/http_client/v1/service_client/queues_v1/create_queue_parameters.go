@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateQueueParams creates a new CreateQueueParams object
-// with the default values initialized.
+// NewCreateQueueParams creates a new CreateQueueParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateQueueParams() *CreateQueueParams {
-	var ()
 	return &CreateQueueParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateQueueParamsWithTimeout creates a new CreateQueueParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateQueueParamsWithTimeout(timeout time.Duration) *CreateQueueParams {
-	var ()
 	return &CreateQueueParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateQueueParamsWithContext creates a new CreateQueueParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateQueueParamsWithContext(ctx context.Context) *CreateQueueParams {
-	var ()
 	return &CreateQueueParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateQueueParamsWithHTTPClient creates a new CreateQueueParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateQueueParamsWithHTTPClient(client *http.Client) *CreateQueueParams {
-	var ()
 	return &CreateQueueParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateQueueParams contains all the parameters to send to the API endpoint
-for the create queue operation typically these are written to a http.Request
+/* CreateQueueParams contains all the parameters to send to the API endpoint
+   for the create queue operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateQueueParams struct {
 
-	/*Agent
-	  Agent that consumes the queue
+	/* Agent.
 
+	   Agent that consumes the queue
 	*/
 	Agent string
-	/*Body
-	  Queue body
 
+	/* Body.
+
+	   Queue body
 	*/
 	Body *service_model.V1Queue
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create queue params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateQueueParams) WithDefaults() *CreateQueueParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create queue params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateQueueParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create queue params
@@ -175,7 +191,6 @@ func (o *CreateQueueParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 	if err := r.SetPathParam("agent", o.Agent); err != nil {
 		return err
 	}
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

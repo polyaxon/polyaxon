@@ -78,7 +78,7 @@ func NewCreateTokenOK() *CreateTokenOK {
 	return &CreateTokenOK{}
 }
 
-/*CreateTokenOK handles this case with default header values.
+/* CreateTokenOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateTokenOK struct {
 func (o *CreateTokenOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/users/tokens][%d] createTokenOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateTokenOK) GetPayload() *service_model.V1Token {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateTokenNoContent() *CreateTokenNoContent {
 	return &CreateTokenNoContent{}
 }
 
-/*CreateTokenNoContent handles this case with default header values.
+/* CreateTokenNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateTokenNoContent struct {
 func (o *CreateTokenNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/users/tokens][%d] createTokenNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateTokenNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateTokenForbidden() *CreateTokenForbidden {
 	return &CreateTokenForbidden{}
 }
 
-/*CreateTokenForbidden handles this case with default header values.
+/* CreateTokenForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateTokenForbidden struct {
 func (o *CreateTokenForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/users/tokens][%d] createTokenForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateTokenForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateTokenNotFound() *CreateTokenNotFound {
 	return &CreateTokenNotFound{}
 }
 
-/*CreateTokenNotFound handles this case with default header values.
+/* CreateTokenNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateTokenNotFound struct {
 func (o *CreateTokenNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/users/tokens][%d] createTokenNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateTokenDefault(code int) *CreateTokenDefault {
 	}
 }
 
-/*CreateTokenDefault handles this case with default header values.
+/* CreateTokenDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateTokenDefault) Code() int {
 func (o *CreateTokenDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/users/tokens][%d] CreateToken default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateTokenDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

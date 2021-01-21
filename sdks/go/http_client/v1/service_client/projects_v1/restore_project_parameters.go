@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewRestoreProjectParams creates a new RestoreProjectParams object
-// with the default values initialized.
+// NewRestoreProjectParams creates a new RestoreProjectParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewRestoreProjectParams() *RestoreProjectParams {
-	var ()
 	return &RestoreProjectParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewRestoreProjectParamsWithTimeout creates a new RestoreProjectParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewRestoreProjectParamsWithTimeout(timeout time.Duration) *RestoreProjectParams {
-	var ()
 	return &RestoreProjectParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewRestoreProjectParamsWithContext creates a new RestoreProjectParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewRestoreProjectParamsWithContext(ctx context.Context) *RestoreProjectParams {
-	var ()
 	return &RestoreProjectParams{
-
 		Context: ctx,
 	}
 }
 
 // NewRestoreProjectParamsWithHTTPClient creates a new RestoreProjectParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewRestoreProjectParamsWithHTTPClient(client *http.Client) *RestoreProjectParams {
-	var ()
 	return &RestoreProjectParams{
 		HTTPClient: client,
 	}
 }
 
-/*RestoreProjectParams contains all the parameters to send to the API endpoint
-for the restore project operation typically these are written to a http.Request
+/* RestoreProjectParams contains all the parameters to send to the API endpoint
+   for the restore project operation.
+
+   Typically these are written to a http.Request.
 */
 type RestoreProjectParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the restore project params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RestoreProjectParams) WithDefaults() *RestoreProjectParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the restore project params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RestoreProjectParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the restore project params

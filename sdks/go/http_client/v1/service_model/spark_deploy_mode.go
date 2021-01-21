@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -76,5 +77,10 @@ func (m SparkDeployMode) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// ContextValidate validates this spark deploy mode based on context it is used
+func (m SparkDeployMode) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

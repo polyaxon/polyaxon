@@ -78,7 +78,7 @@ func NewPatchRunOK() *PatchRunOK {
 	return &PatchRunOK{}
 }
 
-/*PatchRunOK handles this case with default header values.
+/* PatchRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchRunOK struct {
 func (o *PatchRunOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/runs/{run.uuid}][%d] patchRunOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchRunOK) GetPayload() *service_model.V1Run {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchRunNoContent() *PatchRunNoContent {
 	return &PatchRunNoContent{}
 }
 
-/*PatchRunNoContent handles this case with default header values.
+/* PatchRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchRunNoContent struct {
 func (o *PatchRunNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/runs/{run.uuid}][%d] patchRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchRunForbidden() *PatchRunForbidden {
 	return &PatchRunForbidden{}
 }
 
-/*PatchRunForbidden handles this case with default header values.
+/* PatchRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchRunForbidden struct {
 func (o *PatchRunForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/runs/{run.uuid}][%d] patchRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchRunNotFound() *PatchRunNotFound {
 	return &PatchRunNotFound{}
 }
 
-/*PatchRunNotFound handles this case with default header values.
+/* PatchRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchRunNotFound struct {
 func (o *PatchRunNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/runs/{run.uuid}][%d] patchRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchRunDefault(code int) *PatchRunDefault {
 	}
 }
 
-/*PatchRunDefault handles this case with default header values.
+/* PatchRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchRunDefault) Code() int {
 func (o *PatchRunDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/runs/{run.uuid}][%d] PatchRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

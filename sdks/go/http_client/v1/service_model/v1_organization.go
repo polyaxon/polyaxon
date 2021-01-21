@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -89,7 +91,6 @@ func (m *V1Organization) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Organization) validateCreatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreatedAt) { // not required
 		return nil
 	}
@@ -102,7 +103,6 @@ func (m *V1Organization) validateCreatedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Organization) validateUpdatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UpdatedAt) { // not required
 		return nil
 	}
@@ -111,6 +111,11 @@ func (m *V1Organization) validateUpdatedAt(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this v1 organization based on context it is used
+func (m *V1Organization) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,7 +52,7 @@ type V1Hook struct {
 	Presets []string `json:"presets"`
 
 	// Optional trigger policy, default done
-	Trigger V1Statuses `json:"trigger,omitempty"`
+	Trigger *V1Statuses `json:"trigger,omitempty"`
 }
 
 // Validate validates this v1 hook
@@ -72,7 +74,6 @@ func (m *V1Hook) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Hook) validateParams(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Params) { // not required
 		return nil
 	}
@@ -94,16 +95,64 @@ func (m *V1Hook) validateParams(formats strfmt.Registry) error {
 }
 
 func (m *V1Hook) validateTrigger(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Trigger) { // not required
 		return nil
 	}
 
-	if err := m.Trigger.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("trigger")
+	if m.Trigger != nil {
+		if err := m.Trigger.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("trigger")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 hook based on the context it is used
+func (m *V1Hook) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTrigger(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Hook) contextValidateParams(ctx context.Context, formats strfmt.Registry) error {
+
+	for k := range m.Params {
+
+		if val, ok := m.Params[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Hook) contextValidateTrigger(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Trigger != nil {
+		if err := m.Trigger.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("trigger")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -80,7 +81,6 @@ func (m *V1Service) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Service) validateEnvironment(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Environment) { // not required
 		return nil
 	}
@@ -98,7 +98,6 @@ func (m *V1Service) validateEnvironment(formats strfmt.Registry) error {
 }
 
 func (m *V1Service) validateInit(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Init) { // not required
 		return nil
 	}
@@ -110,6 +109,56 @@ func (m *V1Service) validateInit(formats strfmt.Registry) error {
 
 		if m.Init[i] != nil {
 			if err := m.Init[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("init" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 service based on the context it is used
+func (m *V1Service) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateEnvironment(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateInit(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Service) contextValidateEnvironment(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Environment != nil {
+		if err := m.Environment.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("environment")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Service) contextValidateInit(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Init); i++ {
+
+		if m.Init[i] != nil {
+			if err := m.Init[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("init" + "." + strconv.Itoa(i))
 				}

@@ -78,7 +78,7 @@ func NewArchiveModelRegistryOK() *ArchiveModelRegistryOK {
 	return &ArchiveModelRegistryOK{}
 }
 
-/*ArchiveModelRegistryOK handles this case with default header values.
+/* ArchiveModelRegistryOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewArchiveModelRegistryNoContent() *ArchiveModelRegistryNoContent {
 	return &ArchiveModelRegistryNoContent{}
 }
 
-/*ArchiveModelRegistryNoContent handles this case with default header values.
+/* ArchiveModelRegistryNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type ArchiveModelRegistryNoContent struct {
 func (o *ArchiveModelRegistryNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/archive][%d] archiveModelRegistryNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ArchiveModelRegistryNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewArchiveModelRegistryForbidden() *ArchiveModelRegistryForbidden {
 	return &ArchiveModelRegistryForbidden{}
 }
 
-/*ArchiveModelRegistryForbidden handles this case with default header values.
+/* ArchiveModelRegistryForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type ArchiveModelRegistryForbidden struct {
 func (o *ArchiveModelRegistryForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/archive][%d] archiveModelRegistryForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ArchiveModelRegistryForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewArchiveModelRegistryNotFound() *ArchiveModelRegistryNotFound {
 	return &ArchiveModelRegistryNotFound{}
 }
 
-/*ArchiveModelRegistryNotFound handles this case with default header values.
+/* ArchiveModelRegistryNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type ArchiveModelRegistryNotFound struct {
 func (o *ArchiveModelRegistryNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/archive][%d] archiveModelRegistryNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ArchiveModelRegistryNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewArchiveModelRegistryDefault(code int) *ArchiveModelRegistryDefault {
 	}
 }
 
-/*ArchiveModelRegistryDefault handles this case with default header values.
+/* ArchiveModelRegistryDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *ArchiveModelRegistryDefault) Code() int {
 func (o *ArchiveModelRegistryDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/archive][%d] ArchiveModelRegistry default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ArchiveModelRegistryDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

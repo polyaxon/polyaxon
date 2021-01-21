@@ -32,56 +32,70 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewResetPasswordConfirmParams creates a new ResetPasswordConfirmParams object
-// with the default values initialized.
+// NewResetPasswordConfirmParams creates a new ResetPasswordConfirmParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewResetPasswordConfirmParams() *ResetPasswordConfirmParams {
-	var ()
 	return &ResetPasswordConfirmParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewResetPasswordConfirmParamsWithTimeout creates a new ResetPasswordConfirmParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewResetPasswordConfirmParamsWithTimeout(timeout time.Duration) *ResetPasswordConfirmParams {
-	var ()
 	return &ResetPasswordConfirmParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewResetPasswordConfirmParamsWithContext creates a new ResetPasswordConfirmParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewResetPasswordConfirmParamsWithContext(ctx context.Context) *ResetPasswordConfirmParams {
-	var ()
 	return &ResetPasswordConfirmParams{
-
 		Context: ctx,
 	}
 }
 
 // NewResetPasswordConfirmParamsWithHTTPClient creates a new ResetPasswordConfirmParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewResetPasswordConfirmParamsWithHTTPClient(client *http.Client) *ResetPasswordConfirmParams {
-	var ()
 	return &ResetPasswordConfirmParams{
 		HTTPClient: client,
 	}
 }
 
-/*ResetPasswordConfirmParams contains all the parameters to send to the API endpoint
-for the reset password confirm operation typically these are written to a http.Request
+/* ResetPasswordConfirmParams contains all the parameters to send to the API endpoint
+   for the reset password confirm operation.
+
+   Typically these are written to a http.Request.
 */
 type ResetPasswordConfirmParams struct {
 
-	/*Body*/
+	// Body.
 	Body *service_model.V1PasswordChange
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the reset password confirm params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ResetPasswordConfirmParams) WithDefaults() *ResetPasswordConfirmParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the reset password confirm params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ResetPasswordConfirmParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the reset password confirm params
@@ -135,7 +149,6 @@ func (o *ResetPasswordConfirmParams) WriteToRequest(r runtime.ClientRequest, reg
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

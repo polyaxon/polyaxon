@@ -78,7 +78,7 @@ func NewUpdateOrganizationSettingsOK() *UpdateOrganizationSettingsOK {
 	return &UpdateOrganizationSettingsOK{}
 }
 
-/*UpdateOrganizationSettingsOK handles this case with default header values.
+/* UpdateOrganizationSettingsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateOrganizationSettingsOK struct {
 func (o *UpdateOrganizationSettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/settings][%d] updateOrganizationSettingsOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateOrganizationSettingsOK) GetPayload() *service_model.V1Organization {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateOrganizationSettingsNoContent() *UpdateOrganizationSettingsNoConte
 	return &UpdateOrganizationSettingsNoContent{}
 }
 
-/*UpdateOrganizationSettingsNoContent handles this case with default header values.
+/* UpdateOrganizationSettingsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateOrganizationSettingsNoContent struct {
 func (o *UpdateOrganizationSettingsNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/settings][%d] updateOrganizationSettingsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateOrganizationSettingsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateOrganizationSettingsForbidden() *UpdateOrganizationSettingsForbidd
 	return &UpdateOrganizationSettingsForbidden{}
 }
 
-/*UpdateOrganizationSettingsForbidden handles this case with default header values.
+/* UpdateOrganizationSettingsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateOrganizationSettingsForbidden struct {
 func (o *UpdateOrganizationSettingsForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/settings][%d] updateOrganizationSettingsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateOrganizationSettingsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateOrganizationSettingsNotFound() *UpdateOrganizationSettingsNotFound
 	return &UpdateOrganizationSettingsNotFound{}
 }
 
-/*UpdateOrganizationSettingsNotFound handles this case with default header values.
+/* UpdateOrganizationSettingsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateOrganizationSettingsNotFound struct {
 func (o *UpdateOrganizationSettingsNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/settings][%d] updateOrganizationSettingsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateOrganizationSettingsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateOrganizationSettingsDefault(code int) *UpdateOrganizationSettingsD
 	}
 }
 
-/*UpdateOrganizationSettingsDefault handles this case with default header values.
+/* UpdateOrganizationSettingsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateOrganizationSettingsDefault) Code() int {
 func (o *UpdateOrganizationSettingsDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/settings][%d] UpdateOrganizationSettings default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateOrganizationSettingsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

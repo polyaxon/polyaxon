@@ -78,7 +78,7 @@ func NewDeleteSearchOK() *DeleteSearchOK {
 	return &DeleteSearchOK{}
 }
 
-/*DeleteSearchOK handles this case with default header values.
+/* DeleteSearchOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteSearchNoContent() *DeleteSearchNoContent {
 	return &DeleteSearchNoContent{}
 }
 
-/*DeleteSearchNoContent handles this case with default header values.
+/* DeleteSearchNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteSearchNoContent struct {
 func (o *DeleteSearchNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/searches/{uuid}][%d] deleteSearchNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteSearchNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteSearchForbidden() *DeleteSearchForbidden {
 	return &DeleteSearchForbidden{}
 }
 
-/*DeleteSearchForbidden handles this case with default header values.
+/* DeleteSearchForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteSearchForbidden struct {
 func (o *DeleteSearchForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/searches/{uuid}][%d] deleteSearchForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteSearchForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteSearchNotFound() *DeleteSearchNotFound {
 	return &DeleteSearchNotFound{}
 }
 
-/*DeleteSearchNotFound handles this case with default header values.
+/* DeleteSearchNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteSearchNotFound struct {
 func (o *DeleteSearchNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/searches/{uuid}][%d] deleteSearchNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteSearchDefault(code int) *DeleteSearchDefault {
 	}
 }
 
-/*DeleteSearchDefault handles this case with default header values.
+/* DeleteSearchDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteSearchDefault) Code() int {
 func (o *DeleteSearchDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/searches/{uuid}][%d] DeleteSearch default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteSearchDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

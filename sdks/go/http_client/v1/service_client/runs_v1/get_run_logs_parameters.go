@@ -31,86 +31,108 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewGetRunLogsParams creates a new GetRunLogsParams object
-// with the default values initialized.
+// NewGetRunLogsParams creates a new GetRunLogsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetRunLogsParams() *GetRunLogsParams {
-	var ()
 	return &GetRunLogsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetRunLogsParamsWithTimeout creates a new GetRunLogsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetRunLogsParamsWithTimeout(timeout time.Duration) *GetRunLogsParams {
-	var ()
 	return &GetRunLogsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetRunLogsParamsWithContext creates a new GetRunLogsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetRunLogsParamsWithContext(ctx context.Context) *GetRunLogsParams {
-	var ()
 	return &GetRunLogsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetRunLogsParamsWithHTTPClient creates a new GetRunLogsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetRunLogsParamsWithHTTPClient(client *http.Client) *GetRunLogsParams {
-	var ()
 	return &GetRunLogsParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetRunLogsParams contains all the parameters to send to the API endpoint
-for the get run logs operation typically these are written to a http.Request
+/* GetRunLogsParams contains all the parameters to send to the API endpoint
+   for the get run logs operation.
+
+   Typically these are written to a http.Request.
 */
 type GetRunLogsParams struct {
 
-	/*Force
-	  Force query param.
+	/* Force.
 
+	   Force query param.
 	*/
 	Force *bool
-	/*LastFile
-	  last file.
 
+	/* LastFile.
+
+	   last file.
 	*/
 	LastFile *string
-	/*LastTime
-	  last time.
 
+	/* LastTime.
+
+	   last time.
+
+	   Format: date-time
 	*/
 	LastTime *strfmt.DateTime
-	/*Namespace*/
-	Namespace string
-	/*Owner
-	  Owner of the namespace
 
+	// Namespace.
+	Namespace string
+
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get run logs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunLogsParams) WithDefaults() *GetRunLogsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get run logs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunLogsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get run logs params
@@ -235,48 +257,51 @@ func (o *GetRunLogsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 
 		// query param force
 		var qrForce bool
+
 		if o.Force != nil {
 			qrForce = *o.Force
 		}
 		qForce := swag.FormatBool(qrForce)
 		if qForce != "" {
+
 			if err := r.SetQueryParam("force", qForce); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.LastFile != nil {
 
 		// query param last_file
 		var qrLastFile string
+
 		if o.LastFile != nil {
 			qrLastFile = *o.LastFile
 		}
 		qLastFile := qrLastFile
 		if qLastFile != "" {
+
 			if err := r.SetQueryParam("last_file", qLastFile); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.LastTime != nil {
 
 		// query param last_time
 		var qrLastTime strfmt.DateTime
+
 		if o.LastTime != nil {
 			qrLastTime = *o.LastTime
 		}
 		qLastTime := qrLastTime.String()
 		if qLastTime != "" {
+
 			if err := r.SetQueryParam("last_time", qLastTime); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param namespace

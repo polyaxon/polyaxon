@@ -31,89 +31,109 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewGetRunResourcesParams creates a new GetRunResourcesParams object
-// with the default values initialized.
+// NewGetRunResourcesParams creates a new GetRunResourcesParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetRunResourcesParams() *GetRunResourcesParams {
-	var ()
 	return &GetRunResourcesParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetRunResourcesParamsWithTimeout creates a new GetRunResourcesParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetRunResourcesParamsWithTimeout(timeout time.Duration) *GetRunResourcesParams {
-	var ()
 	return &GetRunResourcesParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetRunResourcesParamsWithContext creates a new GetRunResourcesParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetRunResourcesParamsWithContext(ctx context.Context) *GetRunResourcesParams {
-	var ()
 	return &GetRunResourcesParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetRunResourcesParamsWithHTTPClient creates a new GetRunResourcesParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetRunResourcesParamsWithHTTPClient(client *http.Client) *GetRunResourcesParams {
-	var ()
 	return &GetRunResourcesParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetRunResourcesParams contains all the parameters to send to the API endpoint
-for the get run resources operation typically these are written to a http.Request
+/* GetRunResourcesParams contains all the parameters to send to the API endpoint
+   for the get run resources operation.
+
+   Typically these are written to a http.Request.
 */
 type GetRunResourcesParams struct {
 
-	/*Force
-	  Force query param.
+	/* Force.
 
+	   Force query param.
 	*/
 	Force *bool
-	/*Names
-	  Names query param.
 
+	/* Names.
+
+	   Names query param.
 	*/
 	Names *string
-	/*Namespace
-	  namespace
 
+	/* Namespace.
+
+	   namespace
 	*/
 	Namespace string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*Tail
-	  Query param flag to tail the values.
 
+	/* Tail.
+
+	   Query param flag to tail the values.
 	*/
 	Tail *bool
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get run resources params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunResourcesParams) WithDefaults() *GetRunResourcesParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get run resources params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunResourcesParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get run resources params
@@ -238,32 +258,34 @@ func (o *GetRunResourcesParams) WriteToRequest(r runtime.ClientRequest, reg strf
 
 		// query param force
 		var qrForce bool
+
 		if o.Force != nil {
 			qrForce = *o.Force
 		}
 		qForce := swag.FormatBool(qrForce)
 		if qForce != "" {
+
 			if err := r.SetQueryParam("force", qForce); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Names != nil {
 
 		// query param names
 		var qrNames string
+
 		if o.Names != nil {
 			qrNames = *o.Names
 		}
 		qNames := qrNames
 		if qNames != "" {
+
 			if err := r.SetQueryParam("names", qNames); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param namespace
@@ -285,16 +307,17 @@ func (o *GetRunResourcesParams) WriteToRequest(r runtime.ClientRequest, reg strf
 
 		// query param tail
 		var qrTail bool
+
 		if o.Tail != nil {
 			qrTail = *o.Tail
 		}
 		qTail := swag.FormatBool(qrTail)
 		if qTail != "" {
+
 			if err := r.SetQueryParam("tail", qTail); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param uuid

@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchRunParams creates a new PatchRunParams object
-// with the default values initialized.
+// NewPatchRunParams creates a new PatchRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchRunParams() *PatchRunParams {
-	var ()
 	return &PatchRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchRunParamsWithTimeout creates a new PatchRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchRunParamsWithTimeout(timeout time.Duration) *PatchRunParams {
-	var ()
 	return &PatchRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchRunParamsWithContext creates a new PatchRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchRunParamsWithContext(ctx context.Context) *PatchRunParams {
-	var ()
 	return &PatchRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchRunParamsWithHTTPClient creates a new PatchRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchRunParamsWithHTTPClient(client *http.Client) *PatchRunParams {
-	var ()
 	return &PatchRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchRunParams contains all the parameters to send to the API endpoint
-for the patch run operation typically these are written to a http.Request
+/* PatchRunParams contains all the parameters to send to the API endpoint
+   for the patch run operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchRunParams struct {
 
-	/*Body
-	  Run object
+	/* Body.
 
+	   Run object
 	*/
 	Body *service_model.V1Run
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*RunUUID
-	  UUID
 
+	/* RunUUID.
+
+	   UUID
 	*/
 	RunUUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchRunParams) WithDefaults() *PatchRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch run params
@@ -186,7 +203,6 @@ func (o *PatchRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regi
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

@@ -78,7 +78,7 @@ func NewResetPasswordOK() *ResetPasswordOK {
 	return &ResetPasswordOK{}
 }
 
-/*ResetPasswordOK handles this case with default header values.
+/* ResetPasswordOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewResetPasswordNoContent() *ResetPasswordNoContent {
 	return &ResetPasswordNoContent{}
 }
 
-/*ResetPasswordNoContent handles this case with default header values.
+/* ResetPasswordNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type ResetPasswordNoContent struct {
 func (o *ResetPasswordNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password][%d] resetPasswordNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ResetPasswordNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewResetPasswordForbidden() *ResetPasswordForbidden {
 	return &ResetPasswordForbidden{}
 }
 
-/*ResetPasswordForbidden handles this case with default header values.
+/* ResetPasswordForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type ResetPasswordForbidden struct {
 func (o *ResetPasswordForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password][%d] resetPasswordForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ResetPasswordForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewResetPasswordNotFound() *ResetPasswordNotFound {
 	return &ResetPasswordNotFound{}
 }
 
-/*ResetPasswordNotFound handles this case with default header values.
+/* ResetPasswordNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type ResetPasswordNotFound struct {
 func (o *ResetPasswordNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password][%d] resetPasswordNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ResetPasswordNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewResetPasswordDefault(code int) *ResetPasswordDefault {
 	}
 }
 
-/*ResetPasswordDefault handles this case with default header values.
+/* ResetPasswordDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *ResetPasswordDefault) Code() int {
 func (o *ResetPasswordDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password][%d] ResetPassword default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ResetPasswordDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

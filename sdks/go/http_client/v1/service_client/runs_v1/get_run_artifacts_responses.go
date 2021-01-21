@@ -59,7 +59,6 @@ func (o *GetRunArtifactsReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return nil, result
-
 	default:
 		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
@@ -70,7 +69,7 @@ func NewGetRunArtifactsOK() *GetRunArtifactsOK {
 	return &GetRunArtifactsOK{}
 }
 
-/*GetRunArtifactsOK handles this case with default header values.
+/* GetRunArtifactsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -81,7 +80,6 @@ type GetRunArtifactsOK struct {
 func (o *GetRunArtifactsOK) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts][%d] getRunArtifactsOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunArtifactsOK) GetPayload() string {
 	return o.Payload
 }
@@ -101,7 +99,7 @@ func NewGetRunArtifactsNoContent() *GetRunArtifactsNoContent {
 	return &GetRunArtifactsNoContent{}
 }
 
-/*GetRunArtifactsNoContent handles this case with default header values.
+/* GetRunArtifactsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -112,7 +110,6 @@ type GetRunArtifactsNoContent struct {
 func (o *GetRunArtifactsNoContent) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts][%d] getRunArtifactsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunArtifactsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -132,7 +129,7 @@ func NewGetRunArtifactsForbidden() *GetRunArtifactsForbidden {
 	return &GetRunArtifactsForbidden{}
 }
 
-/*GetRunArtifactsForbidden handles this case with default header values.
+/* GetRunArtifactsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -143,7 +140,6 @@ type GetRunArtifactsForbidden struct {
 func (o *GetRunArtifactsForbidden) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts][%d] getRunArtifactsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunArtifactsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -163,7 +159,7 @@ func NewGetRunArtifactsNotFound() *GetRunArtifactsNotFound {
 	return &GetRunArtifactsNotFound{}
 }
 
-/*GetRunArtifactsNotFound handles this case with default header values.
+/* GetRunArtifactsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -174,7 +170,6 @@ type GetRunArtifactsNotFound struct {
 func (o *GetRunArtifactsNotFound) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts][%d] getRunArtifactsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunArtifactsNotFound) GetPayload() interface{} {
 	return o.Payload
 }

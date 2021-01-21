@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteQueueParams creates a new DeleteQueueParams object
-// with the default values initialized.
+// NewDeleteQueueParams creates a new DeleteQueueParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteQueueParams() *DeleteQueueParams {
-	var ()
 	return &DeleteQueueParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteQueueParamsWithTimeout creates a new DeleteQueueParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteQueueParamsWithTimeout(timeout time.Duration) *DeleteQueueParams {
-	var ()
 	return &DeleteQueueParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteQueueParamsWithContext creates a new DeleteQueueParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteQueueParamsWithContext(ctx context.Context) *DeleteQueueParams {
-	var ()
 	return &DeleteQueueParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteQueueParamsWithHTTPClient creates a new DeleteQueueParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteQueueParamsWithHTTPClient(client *http.Client) *DeleteQueueParams {
-	var ()
 	return &DeleteQueueParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteQueueParams contains all the parameters to send to the API endpoint
-for the delete queue operation typically these are written to a http.Request
+/* DeleteQueueParams contains all the parameters to send to the API endpoint
+   for the delete queue operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteQueueParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete queue params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteQueueParams) WithDefaults() *DeleteQueueParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete queue params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteQueueParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete queue params

@@ -78,7 +78,7 @@ func NewDeletePresetOK() *DeletePresetOK {
 	return &DeletePresetOK{}
 }
 
-/*DeletePresetOK handles this case with default header values.
+/* DeletePresetOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeletePresetNoContent() *DeletePresetNoContent {
 	return &DeletePresetNoContent{}
 }
 
-/*DeletePresetNoContent handles this case with default header values.
+/* DeletePresetNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeletePresetNoContent struct {
 func (o *DeletePresetNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/presets/{uuid}][%d] deletePresetNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeletePresetNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeletePresetForbidden() *DeletePresetForbidden {
 	return &DeletePresetForbidden{}
 }
 
-/*DeletePresetForbidden handles this case with default header values.
+/* DeletePresetForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeletePresetForbidden struct {
 func (o *DeletePresetForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/presets/{uuid}][%d] deletePresetForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeletePresetForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeletePresetNotFound() *DeletePresetNotFound {
 	return &DeletePresetNotFound{}
 }
 
-/*DeletePresetNotFound handles this case with default header values.
+/* DeletePresetNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeletePresetNotFound struct {
 func (o *DeletePresetNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/presets/{uuid}][%d] deletePresetNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeletePresetNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeletePresetDefault(code int) *DeletePresetDefault {
 	}
 }
 
-/*DeletePresetDefault handles this case with default header values.
+/* DeletePresetDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeletePresetDefault) Code() int {
 func (o *DeletePresetDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/presets/{uuid}][%d] DeletePreset default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeletePresetDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

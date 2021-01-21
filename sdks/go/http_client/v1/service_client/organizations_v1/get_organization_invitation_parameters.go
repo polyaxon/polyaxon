@@ -30,89 +30,113 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetOrganizationInvitationParams creates a new GetOrganizationInvitationParams object
-// with the default values initialized.
+// NewGetOrganizationInvitationParams creates a new GetOrganizationInvitationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetOrganizationInvitationParams() *GetOrganizationInvitationParams {
-	var ()
 	return &GetOrganizationInvitationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetOrganizationInvitationParamsWithTimeout creates a new GetOrganizationInvitationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetOrganizationInvitationParamsWithTimeout(timeout time.Duration) *GetOrganizationInvitationParams {
-	var ()
 	return &GetOrganizationInvitationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetOrganizationInvitationParamsWithContext creates a new GetOrganizationInvitationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetOrganizationInvitationParamsWithContext(ctx context.Context) *GetOrganizationInvitationParams {
-	var ()
 	return &GetOrganizationInvitationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetOrganizationInvitationParamsWithHTTPClient creates a new GetOrganizationInvitationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetOrganizationInvitationParamsWithHTTPClient(client *http.Client) *GetOrganizationInvitationParams {
-	var ()
 	return &GetOrganizationInvitationParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetOrganizationInvitationParams contains all the parameters to send to the API endpoint
-for the get organization invitation operation typically these are written to a http.Request
+/* GetOrganizationInvitationParams contains all the parameters to send to the API endpoint
+   for the get organization invitation operation.
+
+   Typically these are written to a http.Request.
 */
 type GetOrganizationInvitationParams struct {
 
-	/*Email
-	  Optional email.
+	/* Email.
 
+	   Optional email.
 	*/
 	Email *string
-	/*MemberCreatedAt
-	  Optional time when the entity was created.
 
+	/* MemberCreatedAt.
+
+	   Optional time when the entity was created.
+
+	   Format: date-time
 	*/
 	MemberCreatedAt *strfmt.DateTime
-	/*MemberRole
-	  Role.
 
+	/* MemberRole.
+
+	   Role.
 	*/
 	MemberRole *string
-	/*MemberUpdatedAt
-	  Optional last time the entity was updated.
 
+	/* MemberUpdatedAt.
+
+	   Optional last time the entity was updated.
+
+	   Format: date-time
 	*/
 	MemberUpdatedAt *strfmt.DateTime
-	/*MemberUser
-	  User.
 
+	/* MemberUser.
+
+	   User.
 	*/
 	MemberUser *string
-	/*MemberUserEmail
-	  Read-only User email.
 
+	/* MemberUserEmail.
+
+	   Read-only User email.
 	*/
 	MemberUserEmail *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get organization invitation params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetOrganizationInvitationParams) WithDefaults() *GetOrganizationInvitationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get organization invitation params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetOrganizationInvitationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get organization invitation params
@@ -237,96 +261,102 @@ func (o *GetOrganizationInvitationParams) WriteToRequest(r runtime.ClientRequest
 
 		// query param email
 		var qrEmail string
+
 		if o.Email != nil {
 			qrEmail = *o.Email
 		}
 		qEmail := qrEmail
 		if qEmail != "" {
+
 			if err := r.SetQueryParam("email", qEmail); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.MemberCreatedAt != nil {
 
 		// query param member.created_at
 		var qrMemberCreatedAt strfmt.DateTime
+
 		if o.MemberCreatedAt != nil {
 			qrMemberCreatedAt = *o.MemberCreatedAt
 		}
 		qMemberCreatedAt := qrMemberCreatedAt.String()
 		if qMemberCreatedAt != "" {
+
 			if err := r.SetQueryParam("member.created_at", qMemberCreatedAt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.MemberRole != nil {
 
 		// query param member.role
 		var qrMemberRole string
+
 		if o.MemberRole != nil {
 			qrMemberRole = *o.MemberRole
 		}
 		qMemberRole := qrMemberRole
 		if qMemberRole != "" {
+
 			if err := r.SetQueryParam("member.role", qMemberRole); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.MemberUpdatedAt != nil {
 
 		// query param member.updated_at
 		var qrMemberUpdatedAt strfmt.DateTime
+
 		if o.MemberUpdatedAt != nil {
 			qrMemberUpdatedAt = *o.MemberUpdatedAt
 		}
 		qMemberUpdatedAt := qrMemberUpdatedAt.String()
 		if qMemberUpdatedAt != "" {
+
 			if err := r.SetQueryParam("member.updated_at", qMemberUpdatedAt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.MemberUser != nil {
 
 		// query param member.user
 		var qrMemberUser string
+
 		if o.MemberUser != nil {
 			qrMemberUser = *o.MemberUser
 		}
 		qMemberUser := qrMemberUser
 		if qMemberUser != "" {
+
 			if err := r.SetQueryParam("member.user", qMemberUser); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.MemberUserEmail != nil {
 
 		// query param member.user_email
 		var qrMemberUserEmail string
+
 		if o.MemberUserEmail != nil {
 			qrMemberUserEmail = *o.MemberUserEmail
 		}
 		qMemberUserEmail := qrMemberUserEmail
 		if qMemberUserEmail != "" {
+
 			if err := r.SetQueryParam("member.user_email", qMemberUserEmail); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner

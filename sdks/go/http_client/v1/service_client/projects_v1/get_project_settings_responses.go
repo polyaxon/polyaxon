@@ -78,7 +78,7 @@ func NewGetProjectSettingsOK() *GetProjectSettingsOK {
 	return &GetProjectSettingsOK{}
 }
 
-/*GetProjectSettingsOK handles this case with default header values.
+/* GetProjectSettingsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetProjectSettingsOK struct {
 func (o *GetProjectSettingsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] getProjectSettingsOK  %+v", 200, o.Payload)
 }
-
 func (o *GetProjectSettingsOK) GetPayload() *service_model.V1ProjectSettings {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetProjectSettingsNoContent() *GetProjectSettingsNoContent {
 	return &GetProjectSettingsNoContent{}
 }
 
-/*GetProjectSettingsNoContent handles this case with default header values.
+/* GetProjectSettingsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetProjectSettingsNoContent struct {
 func (o *GetProjectSettingsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] getProjectSettingsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetProjectSettingsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetProjectSettingsForbidden() *GetProjectSettingsForbidden {
 	return &GetProjectSettingsForbidden{}
 }
 
-/*GetProjectSettingsForbidden handles this case with default header values.
+/* GetProjectSettingsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetProjectSettingsForbidden struct {
 func (o *GetProjectSettingsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] getProjectSettingsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetProjectSettingsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetProjectSettingsNotFound() *GetProjectSettingsNotFound {
 	return &GetProjectSettingsNotFound{}
 }
 
-/*GetProjectSettingsNotFound handles this case with default header values.
+/* GetProjectSettingsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetProjectSettingsNotFound struct {
 func (o *GetProjectSettingsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] getProjectSettingsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetProjectSettingsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetProjectSettingsDefault(code int) *GetProjectSettingsDefault {
 	}
 }
 
-/*GetProjectSettingsDefault handles this case with default header values.
+/* GetProjectSettingsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetProjectSettingsDefault) Code() int {
 func (o *GetProjectSettingsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{name}/settings][%d] GetProjectSettings default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetProjectSettingsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

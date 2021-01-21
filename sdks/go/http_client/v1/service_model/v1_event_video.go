@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -53,6 +55,11 @@ type V1EventVideo struct {
 
 // Validate validates this v1 event video
 func (m *V1EventVideo) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this v1 event video based on context it is used
+func (m *V1EventVideo) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

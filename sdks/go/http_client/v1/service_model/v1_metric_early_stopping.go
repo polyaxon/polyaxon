@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -38,7 +40,7 @@ type V1MetricEarlyStopping struct {
 	Metric string `json:"metric,omitempty"`
 
 	// Optimization to do: maximize or minimize.
-	Optimization V1Optimization `json:"optimization,omitempty"`
+	Optimization *V1Optimization `json:"optimization,omitempty"`
 
 	// Policy to use, should be one of the stopping policies:
 	// MedianStoppingPolicy, AverageStoppingPolicy, TruncationStoppingPolicy
@@ -63,16 +65,45 @@ func (m *V1MetricEarlyStopping) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1MetricEarlyStopping) validateOptimization(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Optimization) { // not required
 		return nil
 	}
 
-	if err := m.Optimization.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("optimization")
+	if m.Optimization != nil {
+		if err := m.Optimization.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("optimization")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 metric early stopping based on the context it is used
+func (m *V1MetricEarlyStopping) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateOptimization(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1MetricEarlyStopping) contextValidateOptimization(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Optimization != nil {
+		if err := m.Optimization.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("optimization")
+			}
+			return err
+		}
 	}
 
 	return nil

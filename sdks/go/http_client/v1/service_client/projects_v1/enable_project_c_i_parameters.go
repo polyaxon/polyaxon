@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewEnableProjectCIParams creates a new EnableProjectCIParams object
-// with the default values initialized.
+// NewEnableProjectCIParams creates a new EnableProjectCIParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewEnableProjectCIParams() *EnableProjectCIParams {
-	var ()
 	return &EnableProjectCIParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewEnableProjectCIParamsWithTimeout creates a new EnableProjectCIParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewEnableProjectCIParamsWithTimeout(timeout time.Duration) *EnableProjectCIParams {
-	var ()
 	return &EnableProjectCIParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewEnableProjectCIParamsWithContext creates a new EnableProjectCIParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewEnableProjectCIParamsWithContext(ctx context.Context) *EnableProjectCIParams {
-	var ()
 	return &EnableProjectCIParams{
-
 		Context: ctx,
 	}
 }
 
 // NewEnableProjectCIParamsWithHTTPClient creates a new EnableProjectCIParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewEnableProjectCIParamsWithHTTPClient(client *http.Client) *EnableProjectCIParams {
-	var ()
 	return &EnableProjectCIParams{
 		HTTPClient: client,
 	}
 }
 
-/*EnableProjectCIParams contains all the parameters to send to the API endpoint
-for the enable project c i operation typically these are written to a http.Request
+/* EnableProjectCIParams contains all the parameters to send to the API endpoint
+   for the enable project c i operation.
+
+   Typically these are written to a http.Request.
 */
 type EnableProjectCIParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the enable project c i params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *EnableProjectCIParams) WithDefaults() *EnableProjectCIParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the enable project c i params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *EnableProjectCIParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the enable project c i params

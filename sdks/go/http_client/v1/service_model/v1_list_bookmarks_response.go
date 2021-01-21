@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -44,6 +46,11 @@ type V1ListBookmarksResponse struct {
 
 // Validate validates this v1 list bookmarks response
 func (m *V1ListBookmarksResponse) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this v1 list bookmarks response based on context it is used
+func (m *V1ListBookmarksResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -78,7 +78,7 @@ func NewGetRunArtifactLineageOK() *GetRunArtifactLineageOK {
 	return &GetRunArtifactLineageOK{}
 }
 
-/*GetRunArtifactLineageOK handles this case with default header values.
+/* GetRunArtifactLineageOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunArtifactLineageOK struct {
 func (o *GetRunArtifactLineageOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] getRunArtifactLineageOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunArtifactLineageOK) GetPayload() *service_model.V1RunArtifact {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunArtifactLineageNoContent() *GetRunArtifactLineageNoContent {
 	return &GetRunArtifactLineageNoContent{}
 }
 
-/*GetRunArtifactLineageNoContent handles this case with default header values.
+/* GetRunArtifactLineageNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunArtifactLineageNoContent struct {
 func (o *GetRunArtifactLineageNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] getRunArtifactLineageNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunArtifactLineageNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunArtifactLineageForbidden() *GetRunArtifactLineageForbidden {
 	return &GetRunArtifactLineageForbidden{}
 }
 
-/*GetRunArtifactLineageForbidden handles this case with default header values.
+/* GetRunArtifactLineageForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunArtifactLineageForbidden struct {
 func (o *GetRunArtifactLineageForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] getRunArtifactLineageForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunArtifactLineageForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunArtifactLineageNotFound() *GetRunArtifactLineageNotFound {
 	return &GetRunArtifactLineageNotFound{}
 }
 
-/*GetRunArtifactLineageNotFound handles this case with default header values.
+/* GetRunArtifactLineageNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunArtifactLineageNotFound struct {
 func (o *GetRunArtifactLineageNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] getRunArtifactLineageNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunArtifactLineageNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunArtifactLineageDefault(code int) *GetRunArtifactLineageDefault {
 	}
 }
 
-/*GetRunArtifactLineageDefault handles this case with default header values.
+/* GetRunArtifactLineageDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunArtifactLineageDefault) Code() int {
 func (o *GetRunArtifactLineageDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts/{name}][%d] GetRunArtifactLineage default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunArtifactLineageDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

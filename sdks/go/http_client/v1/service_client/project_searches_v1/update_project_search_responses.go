@@ -78,7 +78,7 @@ func NewUpdateProjectSearchOK() *UpdateProjectSearchOK {
 	return &UpdateProjectSearchOK{}
 }
 
-/*UpdateProjectSearchOK handles this case with default header values.
+/* UpdateProjectSearchOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateProjectSearchOK struct {
 func (o *UpdateProjectSearchOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/searches/{search.uuid}][%d] updateProjectSearchOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateProjectSearchOK) GetPayload() *service_model.V1Search {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateProjectSearchNoContent() *UpdateProjectSearchNoContent {
 	return &UpdateProjectSearchNoContent{}
 }
 
-/*UpdateProjectSearchNoContent handles this case with default header values.
+/* UpdateProjectSearchNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateProjectSearchNoContent struct {
 func (o *UpdateProjectSearchNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/searches/{search.uuid}][%d] updateProjectSearchNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateProjectSearchNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateProjectSearchForbidden() *UpdateProjectSearchForbidden {
 	return &UpdateProjectSearchForbidden{}
 }
 
-/*UpdateProjectSearchForbidden handles this case with default header values.
+/* UpdateProjectSearchForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateProjectSearchForbidden struct {
 func (o *UpdateProjectSearchForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/searches/{search.uuid}][%d] updateProjectSearchForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateProjectSearchForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateProjectSearchNotFound() *UpdateProjectSearchNotFound {
 	return &UpdateProjectSearchNotFound{}
 }
 
-/*UpdateProjectSearchNotFound handles this case with default header values.
+/* UpdateProjectSearchNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateProjectSearchNotFound struct {
 func (o *UpdateProjectSearchNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/searches/{search.uuid}][%d] updateProjectSearchNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateProjectSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateProjectSearchDefault(code int) *UpdateProjectSearchDefault {
 	}
 }
 
-/*UpdateProjectSearchDefault handles this case with default header values.
+/* UpdateProjectSearchDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateProjectSearchDefault) Code() int {
 func (o *UpdateProjectSearchDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/searches/{search.uuid}][%d] UpdateProjectSearch default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateProjectSearchDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

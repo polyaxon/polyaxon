@@ -78,7 +78,7 @@ func NewUpdateModelVersionOK() *UpdateModelVersionOK {
 	return &UpdateModelVersionOK{}
 }
 
-/*UpdateModelVersionOK handles this case with default header values.
+/* UpdateModelVersionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateModelVersionOK struct {
 func (o *UpdateModelVersionOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] updateModelVersionOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateModelVersionOK) GetPayload() *service_model.V1ModelVersion {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateModelVersionNoContent() *UpdateModelVersionNoContent {
 	return &UpdateModelVersionNoContent{}
 }
 
-/*UpdateModelVersionNoContent handles this case with default header values.
+/* UpdateModelVersionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateModelVersionNoContent struct {
 func (o *UpdateModelVersionNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] updateModelVersionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateModelVersionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateModelVersionForbidden() *UpdateModelVersionForbidden {
 	return &UpdateModelVersionForbidden{}
 }
 
-/*UpdateModelVersionForbidden handles this case with default header values.
+/* UpdateModelVersionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateModelVersionForbidden struct {
 func (o *UpdateModelVersionForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] updateModelVersionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateModelVersionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateModelVersionNotFound() *UpdateModelVersionNotFound {
 	return &UpdateModelVersionNotFound{}
 }
 
-/*UpdateModelVersionNotFound handles this case with default header values.
+/* UpdateModelVersionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateModelVersionNotFound struct {
 func (o *UpdateModelVersionNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] updateModelVersionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateModelVersionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateModelVersionDefault(code int) *UpdateModelVersionDefault {
 	}
 }
 
-/*UpdateModelVersionDefault handles this case with default header values.
+/* UpdateModelVersionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateModelVersionDefault) Code() int {
 func (o *UpdateModelVersionDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] UpdateModelVersion default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateModelVersionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

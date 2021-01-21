@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -77,7 +79,6 @@ func (m *V1EarlyStopping) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1EarlyStopping) validateDiff(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Diff) { // not required
 		return nil
 	}
@@ -95,7 +96,6 @@ func (m *V1EarlyStopping) validateDiff(formats strfmt.Registry) error {
 }
 
 func (m *V1EarlyStopping) validateFailure(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Failure) { // not required
 		return nil
 	}
@@ -113,7 +113,6 @@ func (m *V1EarlyStopping) validateFailure(formats strfmt.Registry) error {
 }
 
 func (m *V1EarlyStopping) validateMedian(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Median) { // not required
 		return nil
 	}
@@ -131,7 +130,6 @@ func (m *V1EarlyStopping) validateMedian(formats strfmt.Registry) error {
 }
 
 func (m *V1EarlyStopping) validateMetric(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Metric) { // not required
 		return nil
 	}
@@ -149,13 +147,112 @@ func (m *V1EarlyStopping) validateMetric(formats strfmt.Registry) error {
 }
 
 func (m *V1EarlyStopping) validateTruncation(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Truncation) { // not required
 		return nil
 	}
 
 	if m.Truncation != nil {
 		if err := m.Truncation.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("truncation")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 early stopping based on the context it is used
+func (m *V1EarlyStopping) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDiff(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateFailure(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateMedian(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateMetric(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTruncation(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1EarlyStopping) contextValidateDiff(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Diff != nil {
+		if err := m.Diff.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("diff")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1EarlyStopping) contextValidateFailure(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Failure != nil {
+		if err := m.Failure.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("failure")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1EarlyStopping) contextValidateMedian(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Median != nil {
+		if err := m.Median.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("median")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1EarlyStopping) contextValidateMetric(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Metric != nil {
+		if err := m.Metric.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("metric")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1EarlyStopping) contextValidateTruncation(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Truncation != nil {
+		if err := m.Truncation.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("truncation")
 			}

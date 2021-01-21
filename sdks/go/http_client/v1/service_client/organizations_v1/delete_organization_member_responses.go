@@ -78,7 +78,7 @@ func NewDeleteOrganizationMemberOK() *DeleteOrganizationMemberOK {
 	return &DeleteOrganizationMemberOK{}
 }
 
-/*DeleteOrganizationMemberOK handles this case with default header values.
+/* DeleteOrganizationMemberOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteOrganizationMemberNoContent() *DeleteOrganizationMemberNoContent {
 	return &DeleteOrganizationMemberNoContent{}
 }
 
-/*DeleteOrganizationMemberNoContent handles this case with default header values.
+/* DeleteOrganizationMemberNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteOrganizationMemberNoContent struct {
 func (o *DeleteOrganizationMemberNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/members/{name}][%d] deleteOrganizationMemberNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteOrganizationMemberNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteOrganizationMemberForbidden() *DeleteOrganizationMemberForbidden {
 	return &DeleteOrganizationMemberForbidden{}
 }
 
-/*DeleteOrganizationMemberForbidden handles this case with default header values.
+/* DeleteOrganizationMemberForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteOrganizationMemberForbidden struct {
 func (o *DeleteOrganizationMemberForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/members/{name}][%d] deleteOrganizationMemberForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteOrganizationMemberForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteOrganizationMemberNotFound() *DeleteOrganizationMemberNotFound {
 	return &DeleteOrganizationMemberNotFound{}
 }
 
-/*DeleteOrganizationMemberNotFound handles this case with default header values.
+/* DeleteOrganizationMemberNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteOrganizationMemberNotFound struct {
 func (o *DeleteOrganizationMemberNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/members/{name}][%d] deleteOrganizationMemberNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteOrganizationMemberNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteOrganizationMemberDefault(code int) *DeleteOrganizationMemberDefau
 	}
 }
 
-/*DeleteOrganizationMemberDefault handles this case with default header values.
+/* DeleteOrganizationMemberDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteOrganizationMemberDefault) Code() int {
 func (o *DeleteOrganizationMemberDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/members/{name}][%d] DeleteOrganizationMember default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteOrganizationMemberDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

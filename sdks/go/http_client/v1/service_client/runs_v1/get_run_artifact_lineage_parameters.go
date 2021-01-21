@@ -30,79 +30,97 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetRunArtifactLineageParams creates a new GetRunArtifactLineageParams object
-// with the default values initialized.
+// NewGetRunArtifactLineageParams creates a new GetRunArtifactLineageParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetRunArtifactLineageParams() *GetRunArtifactLineageParams {
-	var ()
 	return &GetRunArtifactLineageParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetRunArtifactLineageParamsWithTimeout creates a new GetRunArtifactLineageParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetRunArtifactLineageParamsWithTimeout(timeout time.Duration) *GetRunArtifactLineageParams {
-	var ()
 	return &GetRunArtifactLineageParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetRunArtifactLineageParamsWithContext creates a new GetRunArtifactLineageParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetRunArtifactLineageParamsWithContext(ctx context.Context) *GetRunArtifactLineageParams {
-	var ()
 	return &GetRunArtifactLineageParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetRunArtifactLineageParamsWithHTTPClient creates a new GetRunArtifactLineageParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetRunArtifactLineageParamsWithHTTPClient(client *http.Client) *GetRunArtifactLineageParams {
-	var ()
 	return &GetRunArtifactLineageParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetRunArtifactLineageParams contains all the parameters to send to the API endpoint
-for the get run artifact lineage operation typically these are written to a http.Request
+/* GetRunArtifactLineageParams contains all the parameters to send to the API endpoint
+   for the get run artifact lineage operation.
+
+   Typically these are written to a http.Request.
 */
 type GetRunArtifactLineageParams struct {
 
-	/*Name
-	  Artifact name
+	/* Name.
 
+	   Artifact name
 	*/
 	Name string
-	/*Namespace
-	  namespace.
 
+	/* Namespace.
+
+	   namespace.
 	*/
 	Namespace *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get run artifact lineage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunArtifactLineageParams) WithDefaults() *GetRunArtifactLineageParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get run artifact lineage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunArtifactLineageParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get run artifact lineage params
@@ -210,16 +228,17 @@ func (o *GetRunArtifactLineageParams) WriteToRequest(r runtime.ClientRequest, re
 
 		// query param namespace
 		var qrNamespace string
+
 		if o.Namespace != nil {
 			qrNamespace = *o.Namespace
 		}
 		qNamespace := qrNamespace
 		if qNamespace != "" {
+
 			if err := r.SetQueryParam("namespace", qNamespace); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner

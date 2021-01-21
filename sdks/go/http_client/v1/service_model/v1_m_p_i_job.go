@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -31,7 +33,7 @@ import (
 type V1MPIJob struct {
 
 	// optional clean pod policy section
-	CleanPodPolicy V1CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
+	CleanPodPolicy *V1CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
 
 	// Optional component kind, should be equal to 'mpi_job'
 	Kind *string `json:"kind,omitempty"`
@@ -69,23 +71,23 @@ func (m *V1MPIJob) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1MPIJob) validateCleanPodPolicy(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CleanPodPolicy) { // not required
 		return nil
 	}
 
-	if err := m.CleanPodPolicy.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("cleanPodPolicy")
+	if m.CleanPodPolicy != nil {
+		if err := m.CleanPodPolicy.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cleanPodPolicy")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1MPIJob) validateLauncher(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Launcher) { // not required
 		return nil
 	}
@@ -103,13 +105,76 @@ func (m *V1MPIJob) validateLauncher(formats strfmt.Registry) error {
 }
 
 func (m *V1MPIJob) validateWorker(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Worker) { // not required
 		return nil
 	}
 
 	if m.Worker != nil {
 		if err := m.Worker.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("worker")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 m p i job based on the context it is used
+func (m *V1MPIJob) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCleanPodPolicy(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateLauncher(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateWorker(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1MPIJob) contextValidateCleanPodPolicy(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CleanPodPolicy != nil {
+		if err := m.CleanPodPolicy.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cleanPodPolicy")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1MPIJob) contextValidateLauncher(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Launcher != nil {
+		if err := m.Launcher.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("launcher")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1MPIJob) contextValidateWorker(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Worker != nil {
+		if err := m.Worker.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("worker")
 			}

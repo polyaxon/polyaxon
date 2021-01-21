@@ -78,7 +78,7 @@ func NewDeleteComponentVersionOK() *DeleteComponentVersionOK {
 	return &DeleteComponentVersionOK{}
 }
 
-/*DeleteComponentVersionOK handles this case with default header values.
+/* DeleteComponentVersionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteComponentVersionNoContent() *DeleteComponentVersionNoContent {
 	return &DeleteComponentVersionNoContent{}
 }
 
-/*DeleteComponentVersionNoContent handles this case with default header values.
+/* DeleteComponentVersionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteComponentVersionNoContent struct {
 func (o *DeleteComponentVersionNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{entity}/versions/{name}][%d] deleteComponentVersionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteComponentVersionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteComponentVersionForbidden() *DeleteComponentVersionForbidden {
 	return &DeleteComponentVersionForbidden{}
 }
 
-/*DeleteComponentVersionForbidden handles this case with default header values.
+/* DeleteComponentVersionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteComponentVersionForbidden struct {
 func (o *DeleteComponentVersionForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{entity}/versions/{name}][%d] deleteComponentVersionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteComponentVersionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteComponentVersionNotFound() *DeleteComponentVersionNotFound {
 	return &DeleteComponentVersionNotFound{}
 }
 
-/*DeleteComponentVersionNotFound handles this case with default header values.
+/* DeleteComponentVersionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteComponentVersionNotFound struct {
 func (o *DeleteComponentVersionNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{entity}/versions/{name}][%d] deleteComponentVersionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteComponentVersionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteComponentVersionDefault(code int) *DeleteComponentVersionDefault {
 	}
 }
 
-/*DeleteComponentVersionDefault handles this case with default header values.
+/* DeleteComponentVersionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteComponentVersionDefault) Code() int {
 func (o *DeleteComponentVersionDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{entity}/versions/{name}][%d] DeleteComponentVersion default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteComponentVersionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

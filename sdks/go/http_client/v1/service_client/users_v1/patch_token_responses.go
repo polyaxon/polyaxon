@@ -78,7 +78,7 @@ func NewPatchTokenOK() *PatchTokenOK {
 	return &PatchTokenOK{}
 }
 
-/*PatchTokenOK handles this case with default header values.
+/* PatchTokenOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchTokenOK struct {
 func (o *PatchTokenOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users/tokens/{token.uuid}][%d] patchTokenOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchTokenOK) GetPayload() *service_model.V1Token {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchTokenNoContent() *PatchTokenNoContent {
 	return &PatchTokenNoContent{}
 }
 
-/*PatchTokenNoContent handles this case with default header values.
+/* PatchTokenNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchTokenNoContent struct {
 func (o *PatchTokenNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users/tokens/{token.uuid}][%d] patchTokenNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchTokenNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchTokenForbidden() *PatchTokenForbidden {
 	return &PatchTokenForbidden{}
 }
 
-/*PatchTokenForbidden handles this case with default header values.
+/* PatchTokenForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchTokenForbidden struct {
 func (o *PatchTokenForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users/tokens/{token.uuid}][%d] patchTokenForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchTokenForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchTokenNotFound() *PatchTokenNotFound {
 	return &PatchTokenNotFound{}
 }
 
-/*PatchTokenNotFound handles this case with default header values.
+/* PatchTokenNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchTokenNotFound struct {
 func (o *PatchTokenNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users/tokens/{token.uuid}][%d] patchTokenNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchTokenDefault(code int) *PatchTokenDefault {
 	}
 }
 
-/*PatchTokenDefault handles this case with default header values.
+/* PatchTokenDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchTokenDefault) Code() int {
 func (o *PatchTokenDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users/tokens/{token.uuid}][%d] PatchToken default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchTokenDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

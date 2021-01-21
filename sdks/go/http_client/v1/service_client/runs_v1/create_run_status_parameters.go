@@ -32,71 +32,88 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateRunStatusParams creates a new CreateRunStatusParams object
-// with the default values initialized.
+// NewCreateRunStatusParams creates a new CreateRunStatusParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateRunStatusParams() *CreateRunStatusParams {
-	var ()
 	return &CreateRunStatusParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateRunStatusParamsWithTimeout creates a new CreateRunStatusParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateRunStatusParamsWithTimeout(timeout time.Duration) *CreateRunStatusParams {
-	var ()
 	return &CreateRunStatusParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateRunStatusParamsWithContext creates a new CreateRunStatusParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateRunStatusParamsWithContext(ctx context.Context) *CreateRunStatusParams {
-	var ()
 	return &CreateRunStatusParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateRunStatusParamsWithHTTPClient creates a new CreateRunStatusParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateRunStatusParamsWithHTTPClient(client *http.Client) *CreateRunStatusParams {
-	var ()
 	return &CreateRunStatusParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateRunStatusParams contains all the parameters to send to the API endpoint
-for the create run status operation typically these are written to a http.Request
+/* CreateRunStatusParams contains all the parameters to send to the API endpoint
+   for the create run status operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateRunStatusParams struct {
 
-	/*Body*/
+	// Body.
 	Body *service_model.V1EntityStatusBodyRequest
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create run status params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateRunStatusParams) WithDefaults() *CreateRunStatusParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create run status params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateRunStatusParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create run status params
@@ -183,7 +200,6 @@ func (o *CreateRunStatusParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

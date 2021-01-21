@@ -78,7 +78,7 @@ func NewCollectRunLogsOK() *CollectRunLogsOK {
 	return &CollectRunLogsOK{}
 }
 
-/*CollectRunLogsOK handles this case with default header values.
+/* CollectRunLogsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewCollectRunLogsNoContent() *CollectRunLogsNoContent {
 	return &CollectRunLogsNoContent{}
 }
 
-/*CollectRunLogsNoContent handles this case with default header values.
+/* CollectRunLogsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type CollectRunLogsNoContent struct {
 func (o *CollectRunLogsNoContent) Error() string {
 	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] collectRunLogsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CollectRunLogsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewCollectRunLogsForbidden() *CollectRunLogsForbidden {
 	return &CollectRunLogsForbidden{}
 }
 
-/*CollectRunLogsForbidden handles this case with default header values.
+/* CollectRunLogsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type CollectRunLogsForbidden struct {
 func (o *CollectRunLogsForbidden) Error() string {
 	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] collectRunLogsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CollectRunLogsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewCollectRunLogsNotFound() *CollectRunLogsNotFound {
 	return &CollectRunLogsNotFound{}
 }
 
-/*CollectRunLogsNotFound handles this case with default header values.
+/* CollectRunLogsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type CollectRunLogsNotFound struct {
 func (o *CollectRunLogsNotFound) Error() string {
 	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] collectRunLogsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CollectRunLogsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewCollectRunLogsDefault(code int) *CollectRunLogsDefault {
 	}
 }
 
-/*CollectRunLogsDefault handles this case with default header values.
+/* CollectRunLogsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *CollectRunLogsDefault) Code() int {
 func (o *CollectRunLogsDefault) Error() string {
 	return fmt.Sprintf("[POST /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/{kind}/logs][%d] CollectRunLogs default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CollectRunLogsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

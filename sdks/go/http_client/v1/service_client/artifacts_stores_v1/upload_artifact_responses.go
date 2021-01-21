@@ -59,7 +59,6 @@ func (o *UploadArtifactReader) ReadResponse(response runtime.ClientResponse, con
 			return nil, err
 		}
 		return nil, result
-
 	default:
 		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
@@ -70,7 +69,7 @@ func NewUploadArtifactOK() *UploadArtifactOK {
 	return &UploadArtifactOK{}
 }
 
-/*UploadArtifactOK handles this case with default header values.
+/* UploadArtifactOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -91,7 +90,7 @@ func NewUploadArtifactNoContent() *UploadArtifactNoContent {
 	return &UploadArtifactNoContent{}
 }
 
-/*UploadArtifactNoContent handles this case with default header values.
+/* UploadArtifactNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -102,7 +101,6 @@ type UploadArtifactNoContent struct {
 func (o *UploadArtifactNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts/{uuid}/upload][%d] uploadArtifactNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UploadArtifactNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -122,7 +120,7 @@ func NewUploadArtifactForbidden() *UploadArtifactForbidden {
 	return &UploadArtifactForbidden{}
 }
 
-/*UploadArtifactForbidden handles this case with default header values.
+/* UploadArtifactForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -133,7 +131,6 @@ type UploadArtifactForbidden struct {
 func (o *UploadArtifactForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts/{uuid}/upload][%d] uploadArtifactForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UploadArtifactForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -153,7 +150,7 @@ func NewUploadArtifactNotFound() *UploadArtifactNotFound {
 	return &UploadArtifactNotFound{}
 }
 
-/*UploadArtifactNotFound handles this case with default header values.
+/* UploadArtifactNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -164,7 +161,6 @@ type UploadArtifactNotFound struct {
 func (o *UploadArtifactNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts/{uuid}/upload][%d] uploadArtifactNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UploadArtifactNotFound) GetPayload() interface{} {
 	return o.Payload
 }

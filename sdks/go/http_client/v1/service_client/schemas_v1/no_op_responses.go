@@ -78,7 +78,7 @@ func NewNoOpOK() *NoOpOK {
 	return &NoOpOK{}
 }
 
-/*NoOpOK handles this case with default header values.
+/* NoOpOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type NoOpOK struct {
 func (o *NoOpOK) Error() string {
 	return fmt.Sprintf("[GET /schemas][%d] noOpOK  %+v", 200, o.Payload)
 }
-
 func (o *NoOpOK) GetPayload() *service_model.V1Schemas {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewNoOpNoContent() *NoOpNoContent {
 	return &NoOpNoContent{}
 }
 
-/*NoOpNoContent handles this case with default header values.
+/* NoOpNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type NoOpNoContent struct {
 func (o *NoOpNoContent) Error() string {
 	return fmt.Sprintf("[GET /schemas][%d] noOpNoContent  %+v", 204, o.Payload)
 }
-
 func (o *NoOpNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewNoOpForbidden() *NoOpForbidden {
 	return &NoOpForbidden{}
 }
 
-/*NoOpForbidden handles this case with default header values.
+/* NoOpForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type NoOpForbidden struct {
 func (o *NoOpForbidden) Error() string {
 	return fmt.Sprintf("[GET /schemas][%d] noOpForbidden  %+v", 403, o.Payload)
 }
-
 func (o *NoOpForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewNoOpNotFound() *NoOpNotFound {
 	return &NoOpNotFound{}
 }
 
-/*NoOpNotFound handles this case with default header values.
+/* NoOpNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type NoOpNotFound struct {
 func (o *NoOpNotFound) Error() string {
 	return fmt.Sprintf("[GET /schemas][%d] noOpNotFound  %+v", 404, o.Payload)
 }
-
 func (o *NoOpNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewNoOpDefault(code int) *NoOpDefault {
 	}
 }
 
-/*NoOpDefault handles this case with default header values.
+/* NoOpDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *NoOpDefault) Code() int {
 func (o *NoOpDefault) Error() string {
 	return fmt.Sprintf("[GET /schemas][%d] NoOp default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *NoOpDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

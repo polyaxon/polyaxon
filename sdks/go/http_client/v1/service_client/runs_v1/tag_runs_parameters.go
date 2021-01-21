@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewTagRunsParams creates a new TagRunsParams object
-// with the default values initialized.
+// NewTagRunsParams creates a new TagRunsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewTagRunsParams() *TagRunsParams {
-	var ()
 	return &TagRunsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewTagRunsParamsWithTimeout creates a new TagRunsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewTagRunsParamsWithTimeout(timeout time.Duration) *TagRunsParams {
-	var ()
 	return &TagRunsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewTagRunsParamsWithContext creates a new TagRunsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewTagRunsParamsWithContext(ctx context.Context) *TagRunsParams {
-	var ()
 	return &TagRunsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewTagRunsParamsWithHTTPClient creates a new TagRunsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewTagRunsParamsWithHTTPClient(client *http.Client) *TagRunsParams {
-	var ()
 	return &TagRunsParams{
 		HTTPClient: client,
 	}
 }
 
-/*TagRunsParams contains all the parameters to send to the API endpoint
-for the tag runs operation typically these are written to a http.Request
+/* TagRunsParams contains all the parameters to send to the API endpoint
+   for the tag runs operation.
+
+   Typically these are written to a http.Request.
 */
 type TagRunsParams struct {
 
-	/*Body
-	  Data
+	/* Body.
 
+	   Data
 	*/
 	Body *service_model.V1EntitiesTags
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
 
+	/* Project.
+
+	   Project under namesapce
 	*/
 	Project string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the tag runs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *TagRunsParams) WithDefaults() *TagRunsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the tag runs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *TagRunsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the tag runs params
@@ -170,7 +186,6 @@ func (o *TagRunsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regis
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

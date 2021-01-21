@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateModelVersionParams creates a new UpdateModelVersionParams object
-// with the default values initialized.
+// NewUpdateModelVersionParams creates a new UpdateModelVersionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateModelVersionParams() *UpdateModelVersionParams {
-	var ()
 	return &UpdateModelVersionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateModelVersionParamsWithTimeout creates a new UpdateModelVersionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateModelVersionParamsWithTimeout(timeout time.Duration) *UpdateModelVersionParams {
-	var ()
 	return &UpdateModelVersionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateModelVersionParamsWithContext creates a new UpdateModelVersionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateModelVersionParamsWithContext(ctx context.Context) *UpdateModelVersionParams {
-	var ()
 	return &UpdateModelVersionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateModelVersionParamsWithHTTPClient creates a new UpdateModelVersionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateModelVersionParamsWithHTTPClient(client *http.Client) *UpdateModelVersionParams {
-	var ()
 	return &UpdateModelVersionParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateModelVersionParams contains all the parameters to send to the API endpoint
-for the update model version operation typically these are written to a http.Request
+/* UpdateModelVersionParams contains all the parameters to send to the API endpoint
+   for the update model version operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateModelVersionParams struct {
 
-	/*Body
-	  Model version body
+	/* Body.
 
+	   Model version body
 	*/
 	Body *service_model.V1ModelVersion
-	/*Model
-	  Model name
 
+	/* Model.
+
+	   Model name
 	*/
 	Model string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*VersionName
-	  Optional component name, should be a valid fully qualified value: name[:version]
 
+	/* VersionName.
+
+	   Optional component name, should be a valid fully qualified value: name[:version]
 	*/
 	VersionName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateModelVersionParams) WithDefaults() *UpdateModelVersionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateModelVersionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update model version params
@@ -186,7 +203,6 @@ func (o *UpdateModelVersionParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

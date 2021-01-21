@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchTeamParams creates a new PatchTeamParams object
-// with the default values initialized.
+// NewPatchTeamParams creates a new PatchTeamParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchTeamParams() *PatchTeamParams {
-	var ()
 	return &PatchTeamParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchTeamParamsWithTimeout creates a new PatchTeamParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchTeamParamsWithTimeout(timeout time.Duration) *PatchTeamParams {
-	var ()
 	return &PatchTeamParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchTeamParamsWithContext creates a new PatchTeamParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchTeamParamsWithContext(ctx context.Context) *PatchTeamParams {
-	var ()
 	return &PatchTeamParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchTeamParamsWithHTTPClient creates a new PatchTeamParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchTeamParamsWithHTTPClient(client *http.Client) *PatchTeamParams {
-	var ()
 	return &PatchTeamParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchTeamParams contains all the parameters to send to the API endpoint
-for the patch team operation typically these are written to a http.Request
+/* PatchTeamParams contains all the parameters to send to the API endpoint
+   for the patch team operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchTeamParams struct {
 
-	/*Body
-	  Team body
+	/* Body.
 
+	   Team body
 	*/
 	Body *service_model.V1Team
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*TeamName
-	  Name
 
+	/* TeamName.
+
+	   Name
 	*/
 	TeamName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch team params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchTeamParams) WithDefaults() *PatchTeamParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch team params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchTeamParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch team params
@@ -170,7 +186,6 @@ func (o *PatchTeamParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

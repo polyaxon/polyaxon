@@ -78,7 +78,7 @@ func NewGetInstallationOK() *GetInstallationOK {
 	return &GetInstallationOK{}
 }
 
-/*GetInstallationOK handles this case with default header values.
+/* GetInstallationOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetInstallationOK struct {
 func (o *GetInstallationOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/installation][%d] getInstallationOK  %+v", 200, o.Payload)
 }
-
 func (o *GetInstallationOK) GetPayload() *service_model.V1Installation {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetInstallationNoContent() *GetInstallationNoContent {
 	return &GetInstallationNoContent{}
 }
 
-/*GetInstallationNoContent handles this case with default header values.
+/* GetInstallationNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetInstallationNoContent struct {
 func (o *GetInstallationNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/installation][%d] getInstallationNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetInstallationNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetInstallationForbidden() *GetInstallationForbidden {
 	return &GetInstallationForbidden{}
 }
 
-/*GetInstallationForbidden handles this case with default header values.
+/* GetInstallationForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetInstallationForbidden struct {
 func (o *GetInstallationForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/installation][%d] getInstallationForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetInstallationForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetInstallationNotFound() *GetInstallationNotFound {
 	return &GetInstallationNotFound{}
 }
 
-/*GetInstallationNotFound handles this case with default header values.
+/* GetInstallationNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetInstallationNotFound struct {
 func (o *GetInstallationNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/installation][%d] getInstallationNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetInstallationNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetInstallationDefault(code int) *GetInstallationDefault {
 	}
 }
 
-/*GetInstallationDefault handles this case with default header values.
+/* GetInstallationDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetInstallationDefault) Code() int {
 func (o *GetInstallationDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/installation][%d] GetInstallation default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetInstallationDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

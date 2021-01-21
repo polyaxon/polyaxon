@@ -32,56 +32,70 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateUserParams creates a new UpdateUserParams object
-// with the default values initialized.
+// NewUpdateUserParams creates a new UpdateUserParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateUserParams() *UpdateUserParams {
-	var ()
 	return &UpdateUserParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateUserParamsWithTimeout creates a new UpdateUserParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateUserParamsWithTimeout(timeout time.Duration) *UpdateUserParams {
-	var ()
 	return &UpdateUserParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateUserParamsWithContext creates a new UpdateUserParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateUserParamsWithContext(ctx context.Context) *UpdateUserParams {
-	var ()
 	return &UpdateUserParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateUserParamsWithHTTPClient creates a new UpdateUserParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateUserParamsWithHTTPClient(client *http.Client) *UpdateUserParams {
-	var ()
 	return &UpdateUserParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateUserParams contains all the parameters to send to the API endpoint
-for the update user operation typically these are written to a http.Request
+/* UpdateUserParams contains all the parameters to send to the API endpoint
+   for the update user operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateUserParams struct {
 
-	/*Body*/
+	// Body.
 	Body *service_model.V1User
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update user params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateUserParams) WithDefaults() *UpdateUserParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update user params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateUserParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update user params
@@ -135,7 +149,6 @@ func (o *UpdateUserParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

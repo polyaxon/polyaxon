@@ -78,7 +78,7 @@ func NewDeleteConnectionOK() *DeleteConnectionOK {
 	return &DeleteConnectionOK{}
 }
 
-/*DeleteConnectionOK handles this case with default header values.
+/* DeleteConnectionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteConnectionNoContent() *DeleteConnectionNoContent {
 	return &DeleteConnectionNoContent{}
 }
 
-/*DeleteConnectionNoContent handles this case with default header values.
+/* DeleteConnectionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteConnectionNoContent struct {
 func (o *DeleteConnectionNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/connections/{uuid}][%d] deleteConnectionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteConnectionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteConnectionForbidden() *DeleteConnectionForbidden {
 	return &DeleteConnectionForbidden{}
 }
 
-/*DeleteConnectionForbidden handles this case with default header values.
+/* DeleteConnectionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteConnectionForbidden struct {
 func (o *DeleteConnectionForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/connections/{uuid}][%d] deleteConnectionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteConnectionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteConnectionNotFound() *DeleteConnectionNotFound {
 	return &DeleteConnectionNotFound{}
 }
 
-/*DeleteConnectionNotFound handles this case with default header values.
+/* DeleteConnectionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteConnectionNotFound struct {
 func (o *DeleteConnectionNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/connections/{uuid}][%d] deleteConnectionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteConnectionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteConnectionDefault(code int) *DeleteConnectionDefault {
 	}
 }
 
-/*DeleteConnectionDefault handles this case with default header values.
+/* DeleteConnectionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteConnectionDefault) Code() int {
 func (o *DeleteConnectionDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/connections/{uuid}][%d] DeleteConnection default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteConnectionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

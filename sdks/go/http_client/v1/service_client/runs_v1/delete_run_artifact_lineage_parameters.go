@@ -30,79 +30,97 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteRunArtifactLineageParams creates a new DeleteRunArtifactLineageParams object
-// with the default values initialized.
+// NewDeleteRunArtifactLineageParams creates a new DeleteRunArtifactLineageParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteRunArtifactLineageParams() *DeleteRunArtifactLineageParams {
-	var ()
 	return &DeleteRunArtifactLineageParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteRunArtifactLineageParamsWithTimeout creates a new DeleteRunArtifactLineageParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteRunArtifactLineageParamsWithTimeout(timeout time.Duration) *DeleteRunArtifactLineageParams {
-	var ()
 	return &DeleteRunArtifactLineageParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteRunArtifactLineageParamsWithContext creates a new DeleteRunArtifactLineageParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteRunArtifactLineageParamsWithContext(ctx context.Context) *DeleteRunArtifactLineageParams {
-	var ()
 	return &DeleteRunArtifactLineageParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteRunArtifactLineageParamsWithHTTPClient creates a new DeleteRunArtifactLineageParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteRunArtifactLineageParamsWithHTTPClient(client *http.Client) *DeleteRunArtifactLineageParams {
-	var ()
 	return &DeleteRunArtifactLineageParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteRunArtifactLineageParams contains all the parameters to send to the API endpoint
-for the delete run artifact lineage operation typically these are written to a http.Request
+/* DeleteRunArtifactLineageParams contains all the parameters to send to the API endpoint
+   for the delete run artifact lineage operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteRunArtifactLineageParams struct {
 
-	/*Name
-	  Artifact name
+	/* Name.
 
+	   Artifact name
 	*/
 	Name string
-	/*Namespace
-	  namespace.
 
+	/* Namespace.
+
+	   namespace.
 	*/
 	Namespace *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete run artifact lineage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteRunArtifactLineageParams) WithDefaults() *DeleteRunArtifactLineageParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete run artifact lineage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteRunArtifactLineageParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete run artifact lineage params
@@ -210,16 +228,17 @@ func (o *DeleteRunArtifactLineageParams) WriteToRequest(r runtime.ClientRequest,
 
 		// query param namespace
 		var qrNamespace string
+
 		if o.Namespace != nil {
 			qrNamespace = *o.Namespace
 		}
 		qNamespace := qrNamespace
 		if qNamespace != "" {
+
 			if err := r.SetQueryParam("namespace", qNamespace); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner

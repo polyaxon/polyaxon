@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -72,7 +74,6 @@ func (m *V1Init) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Init) validateArtifacts(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Artifacts) { // not required
 		return nil
 	}
@@ -90,7 +91,6 @@ func (m *V1Init) validateArtifacts(formats strfmt.Registry) error {
 }
 
 func (m *V1Init) validateDockerfile(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Dockerfile) { // not required
 		return nil
 	}
@@ -108,13 +108,76 @@ func (m *V1Init) validateDockerfile(formats strfmt.Registry) error {
 }
 
 func (m *V1Init) validateGit(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Git) { // not required
 		return nil
 	}
 
 	if m.Git != nil {
 		if err := m.Git.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("git")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 init based on the context it is used
+func (m *V1Init) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateArtifacts(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateDockerfile(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateGit(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Init) contextValidateArtifacts(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Artifacts != nil {
+		if err := m.Artifacts.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("artifacts")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Init) contextValidateDockerfile(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Dockerfile != nil {
+		if err := m.Dockerfile.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dockerfile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Init) contextValidateGit(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Git != nil {
+		if err := m.Git.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("git")
 			}

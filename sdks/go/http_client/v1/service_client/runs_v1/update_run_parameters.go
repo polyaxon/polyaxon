@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateRunParams creates a new UpdateRunParams object
-// with the default values initialized.
+// NewUpdateRunParams creates a new UpdateRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateRunParams() *UpdateRunParams {
-	var ()
 	return &UpdateRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateRunParamsWithTimeout creates a new UpdateRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateRunParamsWithTimeout(timeout time.Duration) *UpdateRunParams {
-	var ()
 	return &UpdateRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateRunParamsWithContext creates a new UpdateRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateRunParamsWithContext(ctx context.Context) *UpdateRunParams {
-	var ()
 	return &UpdateRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateRunParamsWithHTTPClient creates a new UpdateRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateRunParamsWithHTTPClient(client *http.Client) *UpdateRunParams {
-	var ()
 	return &UpdateRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateRunParams contains all the parameters to send to the API endpoint
-for the update run operation typically these are written to a http.Request
+/* UpdateRunParams contains all the parameters to send to the API endpoint
+   for the update run operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateRunParams struct {
 
-	/*Body
-	  Run object
+	/* Body.
 
+	   Run object
 	*/
 	Body *service_model.V1Run
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*RunUUID
-	  UUID
 
+	/* RunUUID.
+
+	   UUID
 	*/
 	RunUUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateRunParams) WithDefaults() *UpdateRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update run params
@@ -186,7 +203,6 @@ func (o *UpdateRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewStopRunParams creates a new StopRunParams object
-// with the default values initialized.
+// NewStopRunParams creates a new StopRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewStopRunParams() *StopRunParams {
-	var ()
 	return &StopRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewStopRunParamsWithTimeout creates a new StopRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewStopRunParamsWithTimeout(timeout time.Duration) *StopRunParams {
-	var ()
 	return &StopRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewStopRunParamsWithContext creates a new StopRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewStopRunParamsWithContext(ctx context.Context) *StopRunParams {
-	var ()
 	return &StopRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewStopRunParamsWithHTTPClient creates a new StopRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewStopRunParamsWithHTTPClient(client *http.Client) *StopRunParams {
-	var ()
 	return &StopRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*StopRunParams contains all the parameters to send to the API endpoint
-for the stop run operation typically these are written to a http.Request
+/* StopRunParams contains all the parameters to send to the API endpoint
+   for the stop run operation.
+
+   Typically these are written to a http.Request.
 */
 type StopRunParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the stop run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *StopRunParams) WithDefaults() *StopRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the stop run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *StopRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the stop run params

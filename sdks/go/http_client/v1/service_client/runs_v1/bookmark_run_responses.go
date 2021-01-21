@@ -78,7 +78,7 @@ func NewBookmarkRunOK() *BookmarkRunOK {
 	return &BookmarkRunOK{}
 }
 
-/*BookmarkRunOK handles this case with default header values.
+/* BookmarkRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewBookmarkRunNoContent() *BookmarkRunNoContent {
 	return &BookmarkRunNoContent{}
 }
 
-/*BookmarkRunNoContent handles this case with default header values.
+/* BookmarkRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type BookmarkRunNoContent struct {
 func (o *BookmarkRunNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] bookmarkRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *BookmarkRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewBookmarkRunForbidden() *BookmarkRunForbidden {
 	return &BookmarkRunForbidden{}
 }
 
-/*BookmarkRunForbidden handles this case with default header values.
+/* BookmarkRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type BookmarkRunForbidden struct {
 func (o *BookmarkRunForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] bookmarkRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *BookmarkRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewBookmarkRunNotFound() *BookmarkRunNotFound {
 	return &BookmarkRunNotFound{}
 }
 
-/*BookmarkRunNotFound handles this case with default header values.
+/* BookmarkRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type BookmarkRunNotFound struct {
 func (o *BookmarkRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] bookmarkRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *BookmarkRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewBookmarkRunDefault(code int) *BookmarkRunDefault {
 	}
 }
 
-/*BookmarkRunDefault handles this case with default header values.
+/* BookmarkRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *BookmarkRunDefault) Code() int {
 func (o *BookmarkRunDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/bookmark][%d] BookmarkRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *BookmarkRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

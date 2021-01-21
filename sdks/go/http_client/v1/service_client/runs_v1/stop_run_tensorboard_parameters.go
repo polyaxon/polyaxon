@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewStopRunTensorboardParams creates a new StopRunTensorboardParams object
-// with the default values initialized.
+// NewStopRunTensorboardParams creates a new StopRunTensorboardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewStopRunTensorboardParams() *StopRunTensorboardParams {
-	var ()
 	return &StopRunTensorboardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewStopRunTensorboardParamsWithTimeout creates a new StopRunTensorboardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewStopRunTensorboardParamsWithTimeout(timeout time.Duration) *StopRunTensorboardParams {
-	var ()
 	return &StopRunTensorboardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewStopRunTensorboardParamsWithContext creates a new StopRunTensorboardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewStopRunTensorboardParamsWithContext(ctx context.Context) *StopRunTensorboardParams {
-	var ()
 	return &StopRunTensorboardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewStopRunTensorboardParamsWithHTTPClient creates a new StopRunTensorboardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewStopRunTensorboardParamsWithHTTPClient(client *http.Client) *StopRunTensorboardParams {
-	var ()
 	return &StopRunTensorboardParams{
 		HTTPClient: client,
 	}
 }
 
-/*StopRunTensorboardParams contains all the parameters to send to the API endpoint
-for the stop run tensorboard operation typically these are written to a http.Request
+/* StopRunTensorboardParams contains all the parameters to send to the API endpoint
+   for the stop run tensorboard operation.
+
+   Typically these are written to a http.Request.
 */
 type StopRunTensorboardParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the stop run tensorboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *StopRunTensorboardParams) WithDefaults() *StopRunTensorboardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the stop run tensorboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *StopRunTensorboardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the stop run tensorboard params

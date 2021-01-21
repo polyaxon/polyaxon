@@ -78,7 +78,7 @@ func NewGetRunSettingsOK() *GetRunSettingsOK {
 	return &GetRunSettingsOK{}
 }
 
-/*GetRunSettingsOK handles this case with default header values.
+/* GetRunSettingsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunSettingsOK struct {
 func (o *GetRunSettingsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] getRunSettingsOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunSettingsOK) GetPayload() *service_model.V1RunSettings {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunSettingsNoContent() *GetRunSettingsNoContent {
 	return &GetRunSettingsNoContent{}
 }
 
-/*GetRunSettingsNoContent handles this case with default header values.
+/* GetRunSettingsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunSettingsNoContent struct {
 func (o *GetRunSettingsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] getRunSettingsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunSettingsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunSettingsForbidden() *GetRunSettingsForbidden {
 	return &GetRunSettingsForbidden{}
 }
 
-/*GetRunSettingsForbidden handles this case with default header values.
+/* GetRunSettingsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunSettingsForbidden struct {
 func (o *GetRunSettingsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] getRunSettingsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunSettingsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunSettingsNotFound() *GetRunSettingsNotFound {
 	return &GetRunSettingsNotFound{}
 }
 
-/*GetRunSettingsNotFound handles this case with default header values.
+/* GetRunSettingsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunSettingsNotFound struct {
 func (o *GetRunSettingsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] getRunSettingsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunSettingsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunSettingsDefault(code int) *GetRunSettingsDefault {
 	}
 }
 
-/*GetRunSettingsDefault handles this case with default header values.
+/* GetRunSettingsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunSettingsDefault) Code() int {
 func (o *GetRunSettingsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/settings][%d] GetRunSettings default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunSettingsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

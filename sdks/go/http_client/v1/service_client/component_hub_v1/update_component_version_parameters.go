@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateComponentVersionParams creates a new UpdateComponentVersionParams object
-// with the default values initialized.
+// NewUpdateComponentVersionParams creates a new UpdateComponentVersionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateComponentVersionParams() *UpdateComponentVersionParams {
-	var ()
 	return &UpdateComponentVersionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateComponentVersionParamsWithTimeout creates a new UpdateComponentVersionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateComponentVersionParamsWithTimeout(timeout time.Duration) *UpdateComponentVersionParams {
-	var ()
 	return &UpdateComponentVersionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateComponentVersionParamsWithContext creates a new UpdateComponentVersionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateComponentVersionParamsWithContext(ctx context.Context) *UpdateComponentVersionParams {
-	var ()
 	return &UpdateComponentVersionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateComponentVersionParamsWithHTTPClient creates a new UpdateComponentVersionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateComponentVersionParamsWithHTTPClient(client *http.Client) *UpdateComponentVersionParams {
-	var ()
 	return &UpdateComponentVersionParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateComponentVersionParams contains all the parameters to send to the API endpoint
-for the update component version operation typically these are written to a http.Request
+/* UpdateComponentVersionParams contains all the parameters to send to the API endpoint
+   for the update component version operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateComponentVersionParams struct {
 
-	/*Body
-	  Component version body
+	/* Body.
 
+	   Component version body
 	*/
 	Body *service_model.V1ComponentVersion
-	/*Component
-	  Component name
 
+	/* Component.
+
+	   Component name
 	*/
 	Component string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*VersionName
-	  Optional component name, should be a valid fully qualified value: name[:version]
 
+	/* VersionName.
+
+	   Optional component name, should be a valid fully qualified value: name[:version]
 	*/
 	VersionName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update component version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateComponentVersionParams) WithDefaults() *UpdateComponentVersionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update component version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateComponentVersionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update component version params
@@ -186,7 +203,6 @@ func (o *UpdateComponentVersionParams) WriteToRequest(r runtime.ClientRequest, r
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

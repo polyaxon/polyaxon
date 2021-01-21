@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -80,7 +81,6 @@ func (m *V1Dag) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Dag) validateComponents(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Components) { // not required
 		return nil
 	}
@@ -105,7 +105,6 @@ func (m *V1Dag) validateComponents(formats strfmt.Registry) error {
 }
 
 func (m *V1Dag) validateEnvironment(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Environment) { // not required
 		return nil
 	}
@@ -123,7 +122,6 @@ func (m *V1Dag) validateEnvironment(formats strfmt.Registry) error {
 }
 
 func (m *V1Dag) validateOperations(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Operations) { // not required
 		return nil
 	}
@@ -135,6 +133,78 @@ func (m *V1Dag) validateOperations(formats strfmt.Registry) error {
 
 		if m.Operations[i] != nil {
 			if err := m.Operations[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("operations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 dag based on the context it is used
+func (m *V1Dag) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateComponents(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateEnvironment(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateOperations(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Dag) contextValidateComponents(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Components); i++ {
+
+		if m.Components[i] != nil {
+			if err := m.Components[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("components" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Dag) contextValidateEnvironment(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Environment != nil {
+		if err := m.Environment.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("environment")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Dag) contextValidateOperations(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Operations); i++ {
+
+		if m.Operations[i] != nil {
+			if err := m.Operations[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("operations" + "." + strconv.Itoa(i))
 				}

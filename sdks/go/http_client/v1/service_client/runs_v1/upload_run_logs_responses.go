@@ -59,7 +59,6 @@ func (o *UploadRunLogsReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return nil, result
-
 	default:
 		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
@@ -70,7 +69,7 @@ func NewUploadRunLogsOK() *UploadRunLogsOK {
 	return &UploadRunLogsOK{}
 }
 
-/*UploadRunLogsOK handles this case with default header values.
+/* UploadRunLogsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -91,7 +90,7 @@ func NewUploadRunLogsNoContent() *UploadRunLogsNoContent {
 	return &UploadRunLogsNoContent{}
 }
 
-/*UploadRunLogsNoContent handles this case with default header values.
+/* UploadRunLogsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -102,7 +101,6 @@ type UploadRunLogsNoContent struct {
 func (o *UploadRunLogsNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/logs/upload][%d] uploadRunLogsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UploadRunLogsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -122,7 +120,7 @@ func NewUploadRunLogsForbidden() *UploadRunLogsForbidden {
 	return &UploadRunLogsForbidden{}
 }
 
-/*UploadRunLogsForbidden handles this case with default header values.
+/* UploadRunLogsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -133,7 +131,6 @@ type UploadRunLogsForbidden struct {
 func (o *UploadRunLogsForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/logs/upload][%d] uploadRunLogsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UploadRunLogsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -153,7 +150,7 @@ func NewUploadRunLogsNotFound() *UploadRunLogsNotFound {
 	return &UploadRunLogsNotFound{}
 }
 
-/*UploadRunLogsNotFound handles this case with default header values.
+/* UploadRunLogsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -164,7 +161,6 @@ type UploadRunLogsNotFound struct {
 func (o *UploadRunLogsNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/logs/upload][%d] uploadRunLogsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UploadRunLogsNotFound) GetPayload() interface{} {
 	return o.Payload
 }

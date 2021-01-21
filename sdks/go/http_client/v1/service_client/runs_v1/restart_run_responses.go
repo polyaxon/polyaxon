@@ -78,7 +78,7 @@ func NewRestartRunOK() *RestartRunOK {
 	return &RestartRunOK{}
 }
 
-/*RestartRunOK handles this case with default header values.
+/* RestartRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type RestartRunOK struct {
 func (o *RestartRunOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart][%d] restartRunOK  %+v", 200, o.Payload)
 }
-
 func (o *RestartRunOK) GetPayload() *service_model.V1Run {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewRestartRunNoContent() *RestartRunNoContent {
 	return &RestartRunNoContent{}
 }
 
-/*RestartRunNoContent handles this case with default header values.
+/* RestartRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type RestartRunNoContent struct {
 func (o *RestartRunNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart][%d] restartRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *RestartRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewRestartRunForbidden() *RestartRunForbidden {
 	return &RestartRunForbidden{}
 }
 
-/*RestartRunForbidden handles this case with default header values.
+/* RestartRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type RestartRunForbidden struct {
 func (o *RestartRunForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart][%d] restartRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *RestartRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewRestartRunNotFound() *RestartRunNotFound {
 	return &RestartRunNotFound{}
 }
 
-/*RestartRunNotFound handles this case with default header values.
+/* RestartRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type RestartRunNotFound struct {
 func (o *RestartRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart][%d] restartRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *RestartRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewRestartRunDefault(code int) *RestartRunDefault {
 	}
 }
 
-/*RestartRunDefault handles this case with default header values.
+/* RestartRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *RestartRunDefault) Code() int {
 func (o *RestartRunDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.entity}/runs/{entity.uuid}/restart][%d] RestartRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *RestartRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewUpdateComponentVersionOK() *UpdateComponentVersionOK {
 	return &UpdateComponentVersionOK{}
 }
 
-/*UpdateComponentVersionOK handles this case with default header values.
+/* UpdateComponentVersionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateComponentVersionOK struct {
 func (o *UpdateComponentVersionOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] updateComponentVersionOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateComponentVersionOK) GetPayload() *service_model.V1ComponentVersion {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateComponentVersionNoContent() *UpdateComponentVersionNoContent {
 	return &UpdateComponentVersionNoContent{}
 }
 
-/*UpdateComponentVersionNoContent handles this case with default header values.
+/* UpdateComponentVersionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateComponentVersionNoContent struct {
 func (o *UpdateComponentVersionNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] updateComponentVersionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateComponentVersionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateComponentVersionForbidden() *UpdateComponentVersionForbidden {
 	return &UpdateComponentVersionForbidden{}
 }
 
-/*UpdateComponentVersionForbidden handles this case with default header values.
+/* UpdateComponentVersionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateComponentVersionForbidden struct {
 func (o *UpdateComponentVersionForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] updateComponentVersionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateComponentVersionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateComponentVersionNotFound() *UpdateComponentVersionNotFound {
 	return &UpdateComponentVersionNotFound{}
 }
 
-/*UpdateComponentVersionNotFound handles this case with default header values.
+/* UpdateComponentVersionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateComponentVersionNotFound struct {
 func (o *UpdateComponentVersionNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] updateComponentVersionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateComponentVersionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateComponentVersionDefault(code int) *UpdateComponentVersionDefault {
 	}
 }
 
-/*UpdateComponentVersionDefault handles this case with default header values.
+/* UpdateComponentVersionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateComponentVersionDefault) Code() int {
 func (o *UpdateComponentVersionDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] UpdateComponentVersion default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateComponentVersionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

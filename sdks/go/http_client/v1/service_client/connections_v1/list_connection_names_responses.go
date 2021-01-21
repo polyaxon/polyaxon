@@ -78,7 +78,7 @@ func NewListConnectionNamesOK() *ListConnectionNamesOK {
 	return &ListConnectionNamesOK{}
 }
 
-/*ListConnectionNamesOK handles this case with default header values.
+/* ListConnectionNamesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListConnectionNamesOK struct {
 func (o *ListConnectionNamesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/names][%d] listConnectionNamesOK  %+v", 200, o.Payload)
 }
-
 func (o *ListConnectionNamesOK) GetPayload() *service_model.V1ListConnectionsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListConnectionNamesNoContent() *ListConnectionNamesNoContent {
 	return &ListConnectionNamesNoContent{}
 }
 
-/*ListConnectionNamesNoContent handles this case with default header values.
+/* ListConnectionNamesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListConnectionNamesNoContent struct {
 func (o *ListConnectionNamesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/names][%d] listConnectionNamesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListConnectionNamesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListConnectionNamesForbidden() *ListConnectionNamesForbidden {
 	return &ListConnectionNamesForbidden{}
 }
 
-/*ListConnectionNamesForbidden handles this case with default header values.
+/* ListConnectionNamesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListConnectionNamesForbidden struct {
 func (o *ListConnectionNamesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/names][%d] listConnectionNamesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListConnectionNamesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListConnectionNamesNotFound() *ListConnectionNamesNotFound {
 	return &ListConnectionNamesNotFound{}
 }
 
-/*ListConnectionNamesNotFound handles this case with default header values.
+/* ListConnectionNamesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListConnectionNamesNotFound struct {
 func (o *ListConnectionNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/names][%d] listConnectionNamesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListConnectionNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListConnectionNamesDefault(code int) *ListConnectionNamesDefault {
 	}
 }
 
-/*ListConnectionNamesDefault handles this case with default header values.
+/* ListConnectionNamesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListConnectionNamesDefault) Code() int {
 func (o *ListConnectionNamesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/names][%d] ListConnectionNames default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListConnectionNamesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

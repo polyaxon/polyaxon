@@ -78,7 +78,7 @@ func NewUpdateProjectOK() *UpdateProjectOK {
 	return &UpdateProjectOK{}
 }
 
-/*UpdateProjectOK handles this case with default header values.
+/* UpdateProjectOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateProjectOK struct {
 func (o *UpdateProjectOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateProjectOK) GetPayload() *service_model.V1Project {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateProjectNoContent() *UpdateProjectNoContent {
 	return &UpdateProjectNoContent{}
 }
 
-/*UpdateProjectNoContent handles this case with default header values.
+/* UpdateProjectNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateProjectNoContent struct {
 func (o *UpdateProjectNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateProjectNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateProjectForbidden() *UpdateProjectForbidden {
 	return &UpdateProjectForbidden{}
 }
 
-/*UpdateProjectForbidden handles this case with default header values.
+/* UpdateProjectForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateProjectForbidden struct {
 func (o *UpdateProjectForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateProjectForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateProjectNotFound() *UpdateProjectNotFound {
 	return &UpdateProjectNotFound{}
 }
 
-/*UpdateProjectNotFound handles this case with default header values.
+/* UpdateProjectNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateProjectNotFound struct {
 func (o *UpdateProjectNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateProjectDefault(code int) *UpdateProjectDefault {
 	}
 }
 
-/*UpdateProjectDefault handles this case with default header values.
+/* UpdateProjectDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateProjectDefault) Code() int {
 func (o *UpdateProjectDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] UpdateProject default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateProjectDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

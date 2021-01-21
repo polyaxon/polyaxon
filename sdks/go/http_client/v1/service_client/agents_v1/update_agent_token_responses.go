@@ -78,7 +78,7 @@ func NewUpdateAgentTokenOK() *UpdateAgentTokenOK {
 	return &UpdateAgentTokenOK{}
 }
 
-/*UpdateAgentTokenOK handles this case with default header values.
+/* UpdateAgentTokenOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateAgentTokenOK struct {
 func (o *UpdateAgentTokenOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/token][%d] updateAgentTokenOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateAgentTokenOK) GetPayload() *service_model.V1Token {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateAgentTokenNoContent() *UpdateAgentTokenNoContent {
 	return &UpdateAgentTokenNoContent{}
 }
 
-/*UpdateAgentTokenNoContent handles this case with default header values.
+/* UpdateAgentTokenNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateAgentTokenNoContent struct {
 func (o *UpdateAgentTokenNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/token][%d] updateAgentTokenNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateAgentTokenNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateAgentTokenForbidden() *UpdateAgentTokenForbidden {
 	return &UpdateAgentTokenForbidden{}
 }
 
-/*UpdateAgentTokenForbidden handles this case with default header values.
+/* UpdateAgentTokenForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateAgentTokenForbidden struct {
 func (o *UpdateAgentTokenForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/token][%d] updateAgentTokenForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateAgentTokenForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateAgentTokenNotFound() *UpdateAgentTokenNotFound {
 	return &UpdateAgentTokenNotFound{}
 }
 
-/*UpdateAgentTokenNotFound handles this case with default header values.
+/* UpdateAgentTokenNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateAgentTokenNotFound struct {
 func (o *UpdateAgentTokenNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/token][%d] updateAgentTokenNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateAgentTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateAgentTokenDefault(code int) *UpdateAgentTokenDefault {
 	}
 }
 
-/*UpdateAgentTokenDefault handles this case with default header values.
+/* UpdateAgentTokenDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateAgentTokenDefault) Code() int {
 func (o *UpdateAgentTokenDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent}/token][%d] UpdateAgentToken default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateAgentTokenDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

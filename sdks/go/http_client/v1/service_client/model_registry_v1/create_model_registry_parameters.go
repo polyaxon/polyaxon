@@ -32,64 +32,79 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateModelRegistryParams creates a new CreateModelRegistryParams object
-// with the default values initialized.
+// NewCreateModelRegistryParams creates a new CreateModelRegistryParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateModelRegistryParams() *CreateModelRegistryParams {
-	var ()
 	return &CreateModelRegistryParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateModelRegistryParamsWithTimeout creates a new CreateModelRegistryParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateModelRegistryParamsWithTimeout(timeout time.Duration) *CreateModelRegistryParams {
-	var ()
 	return &CreateModelRegistryParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateModelRegistryParamsWithContext creates a new CreateModelRegistryParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateModelRegistryParamsWithContext(ctx context.Context) *CreateModelRegistryParams {
-	var ()
 	return &CreateModelRegistryParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateModelRegistryParamsWithHTTPClient creates a new CreateModelRegistryParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateModelRegistryParamsWithHTTPClient(client *http.Client) *CreateModelRegistryParams {
-	var ()
 	return &CreateModelRegistryParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateModelRegistryParams contains all the parameters to send to the API endpoint
-for the create model registry operation typically these are written to a http.Request
+/* CreateModelRegistryParams contains all the parameters to send to the API endpoint
+   for the create model registry operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateModelRegistryParams struct {
 
-	/*Body
-	  Model body
+	/* Body.
 
+	   Model body
 	*/
 	Body *service_model.V1ModelRegistry
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateModelRegistryParams) WithDefaults() *CreateModelRegistryParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateModelRegistryParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create model registry params
@@ -154,7 +169,6 @@ func (o *CreateModelRegistryParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

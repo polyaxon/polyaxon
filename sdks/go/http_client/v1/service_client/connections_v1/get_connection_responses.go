@@ -78,7 +78,7 @@ func NewGetConnectionOK() *GetConnectionOK {
 	return &GetConnectionOK{}
 }
 
-/*GetConnectionOK handles this case with default header values.
+/* GetConnectionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetConnectionOK struct {
 func (o *GetConnectionOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/{uuid}][%d] getConnectionOK  %+v", 200, o.Payload)
 }
-
 func (o *GetConnectionOK) GetPayload() *service_model.V1ConnectionResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetConnectionNoContent() *GetConnectionNoContent {
 	return &GetConnectionNoContent{}
 }
 
-/*GetConnectionNoContent handles this case with default header values.
+/* GetConnectionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetConnectionNoContent struct {
 func (o *GetConnectionNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/{uuid}][%d] getConnectionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetConnectionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetConnectionForbidden() *GetConnectionForbidden {
 	return &GetConnectionForbidden{}
 }
 
-/*GetConnectionForbidden handles this case with default header values.
+/* GetConnectionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetConnectionForbidden struct {
 func (o *GetConnectionForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/{uuid}][%d] getConnectionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetConnectionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetConnectionNotFound() *GetConnectionNotFound {
 	return &GetConnectionNotFound{}
 }
 
-/*GetConnectionNotFound handles this case with default header values.
+/* GetConnectionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetConnectionNotFound struct {
 func (o *GetConnectionNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/{uuid}][%d] getConnectionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetConnectionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetConnectionDefault(code int) *GetConnectionDefault {
 	}
 }
 
-/*GetConnectionDefault handles this case with default header values.
+/* GetConnectionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetConnectionDefault) Code() int {
 func (o *GetConnectionDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/connections/{uuid}][%d] GetConnection default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetConnectionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

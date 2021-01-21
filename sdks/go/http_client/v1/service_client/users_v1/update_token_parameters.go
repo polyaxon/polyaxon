@@ -32,64 +32,79 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateTokenParams creates a new UpdateTokenParams object
-// with the default values initialized.
+// NewUpdateTokenParams creates a new UpdateTokenParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateTokenParams() *UpdateTokenParams {
-	var ()
 	return &UpdateTokenParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateTokenParamsWithTimeout creates a new UpdateTokenParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateTokenParamsWithTimeout(timeout time.Duration) *UpdateTokenParams {
-	var ()
 	return &UpdateTokenParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateTokenParamsWithContext creates a new UpdateTokenParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateTokenParamsWithContext(ctx context.Context) *UpdateTokenParams {
-	var ()
 	return &UpdateTokenParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateTokenParamsWithHTTPClient creates a new UpdateTokenParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateTokenParamsWithHTTPClient(client *http.Client) *UpdateTokenParams {
-	var ()
 	return &UpdateTokenParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateTokenParams contains all the parameters to send to the API endpoint
-for the update token operation typically these are written to a http.Request
+/* UpdateTokenParams contains all the parameters to send to the API endpoint
+   for the update token operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateTokenParams struct {
 
-	/*Body
-	  Token body
+	/* Body.
 
+	   Token body
 	*/
 	Body *service_model.V1Token
-	/*TokenUUID
-	  UUID
 
+	/* TokenUUID.
+
+	   UUID
 	*/
 	TokenUUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update token params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateTokenParams) WithDefaults() *UpdateTokenParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update token params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateTokenParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update token params
@@ -154,7 +169,6 @@ func (o *UpdateTokenParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

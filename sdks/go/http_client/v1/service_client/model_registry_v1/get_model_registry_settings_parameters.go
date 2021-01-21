@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetModelRegistrySettingsParams creates a new GetModelRegistrySettingsParams object
-// with the default values initialized.
+// NewGetModelRegistrySettingsParams creates a new GetModelRegistrySettingsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetModelRegistrySettingsParams() *GetModelRegistrySettingsParams {
-	var ()
 	return &GetModelRegistrySettingsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetModelRegistrySettingsParamsWithTimeout creates a new GetModelRegistrySettingsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetModelRegistrySettingsParamsWithTimeout(timeout time.Duration) *GetModelRegistrySettingsParams {
-	var ()
 	return &GetModelRegistrySettingsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetModelRegistrySettingsParamsWithContext creates a new GetModelRegistrySettingsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetModelRegistrySettingsParamsWithContext(ctx context.Context) *GetModelRegistrySettingsParams {
-	var ()
 	return &GetModelRegistrySettingsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetModelRegistrySettingsParamsWithHTTPClient creates a new GetModelRegistrySettingsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetModelRegistrySettingsParamsWithHTTPClient(client *http.Client) *GetModelRegistrySettingsParams {
-	var ()
 	return &GetModelRegistrySettingsParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetModelRegistrySettingsParams contains all the parameters to send to the API endpoint
-for the get model registry settings operation typically these are written to a http.Request
+/* GetModelRegistrySettingsParams contains all the parameters to send to the API endpoint
+   for the get model registry settings operation.
+
+   Typically these are written to a http.Request.
 */
 type GetModelRegistrySettingsParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get model registry settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetModelRegistrySettingsParams) WithDefaults() *GetModelRegistrySettingsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get model registry settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetModelRegistrySettingsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get model registry settings params

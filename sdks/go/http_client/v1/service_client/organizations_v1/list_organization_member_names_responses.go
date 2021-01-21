@@ -78,7 +78,7 @@ func NewListOrganizationMemberNamesOK() *ListOrganizationMemberNamesOK {
 	return &ListOrganizationMemberNamesOK{}
 }
 
-/*ListOrganizationMemberNamesOK handles this case with default header values.
+/* ListOrganizationMemberNamesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListOrganizationMemberNamesOK struct {
 func (o *ListOrganizationMemberNamesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/names][%d] listOrganizationMemberNamesOK  %+v", 200, o.Payload)
 }
-
 func (o *ListOrganizationMemberNamesOK) GetPayload() *service_model.V1ListOrganizationMembersResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListOrganizationMemberNamesNoContent() *ListOrganizationMemberNamesNoCon
 	return &ListOrganizationMemberNamesNoContent{}
 }
 
-/*ListOrganizationMemberNamesNoContent handles this case with default header values.
+/* ListOrganizationMemberNamesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListOrganizationMemberNamesNoContent struct {
 func (o *ListOrganizationMemberNamesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/names][%d] listOrganizationMemberNamesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListOrganizationMemberNamesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListOrganizationMemberNamesForbidden() *ListOrganizationMemberNamesForbi
 	return &ListOrganizationMemberNamesForbidden{}
 }
 
-/*ListOrganizationMemberNamesForbidden handles this case with default header values.
+/* ListOrganizationMemberNamesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListOrganizationMemberNamesForbidden struct {
 func (o *ListOrganizationMemberNamesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/names][%d] listOrganizationMemberNamesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListOrganizationMemberNamesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListOrganizationMemberNamesNotFound() *ListOrganizationMemberNamesNotFou
 	return &ListOrganizationMemberNamesNotFound{}
 }
 
-/*ListOrganizationMemberNamesNotFound handles this case with default header values.
+/* ListOrganizationMemberNamesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListOrganizationMemberNamesNotFound struct {
 func (o *ListOrganizationMemberNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/names][%d] listOrganizationMemberNamesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListOrganizationMemberNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListOrganizationMemberNamesDefault(code int) *ListOrganizationMemberName
 	}
 }
 
-/*ListOrganizationMemberNamesDefault handles this case with default header values.
+/* ListOrganizationMemberNamesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListOrganizationMemberNamesDefault) Code() int {
 func (o *ListOrganizationMemberNamesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/members/names][%d] ListOrganizationMemberNames default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListOrganizationMemberNamesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

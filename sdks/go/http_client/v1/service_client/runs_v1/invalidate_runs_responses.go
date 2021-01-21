@@ -78,7 +78,7 @@ func NewInvalidateRunsOK() *InvalidateRunsOK {
 	return &InvalidateRunsOK{}
 }
 
-/*InvalidateRunsOK handles this case with default header values.
+/* InvalidateRunsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewInvalidateRunsNoContent() *InvalidateRunsNoContent {
 	return &InvalidateRunsNoContent{}
 }
 
-/*InvalidateRunsNoContent handles this case with default header values.
+/* InvalidateRunsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type InvalidateRunsNoContent struct {
 func (o *InvalidateRunsNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/invalidate][%d] invalidateRunsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *InvalidateRunsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewInvalidateRunsForbidden() *InvalidateRunsForbidden {
 	return &InvalidateRunsForbidden{}
 }
 
-/*InvalidateRunsForbidden handles this case with default header values.
+/* InvalidateRunsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type InvalidateRunsForbidden struct {
 func (o *InvalidateRunsForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/invalidate][%d] invalidateRunsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *InvalidateRunsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewInvalidateRunsNotFound() *InvalidateRunsNotFound {
 	return &InvalidateRunsNotFound{}
 }
 
-/*InvalidateRunsNotFound handles this case with default header values.
+/* InvalidateRunsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type InvalidateRunsNotFound struct {
 func (o *InvalidateRunsNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/invalidate][%d] invalidateRunsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *InvalidateRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewInvalidateRunsDefault(code int) *InvalidateRunsDefault {
 	}
 }
 
-/*InvalidateRunsDefault handles this case with default header values.
+/* InvalidateRunsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *InvalidateRunsDefault) Code() int {
 func (o *InvalidateRunsDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/invalidate][%d] InvalidateRuns default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *InvalidateRunsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

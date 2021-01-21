@@ -78,7 +78,7 @@ func NewDeleteModelRegistryOK() *DeleteModelRegistryOK {
 	return &DeleteModelRegistryOK{}
 }
 
-/*DeleteModelRegistryOK handles this case with default header values.
+/* DeleteModelRegistryOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteModelRegistryNoContent() *DeleteModelRegistryNoContent {
 	return &DeleteModelRegistryNoContent{}
 }
 
-/*DeleteModelRegistryNoContent handles this case with default header values.
+/* DeleteModelRegistryNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteModelRegistryNoContent struct {
 func (o *DeleteModelRegistryNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] deleteModelRegistryNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteModelRegistryNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteModelRegistryForbidden() *DeleteModelRegistryForbidden {
 	return &DeleteModelRegistryForbidden{}
 }
 
-/*DeleteModelRegistryForbidden handles this case with default header values.
+/* DeleteModelRegistryForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteModelRegistryForbidden struct {
 func (o *DeleteModelRegistryForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] deleteModelRegistryForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteModelRegistryForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteModelRegistryNotFound() *DeleteModelRegistryNotFound {
 	return &DeleteModelRegistryNotFound{}
 }
 
-/*DeleteModelRegistryNotFound handles this case with default header values.
+/* DeleteModelRegistryNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteModelRegistryNotFound struct {
 func (o *DeleteModelRegistryNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] deleteModelRegistryNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteModelRegistryNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteModelRegistryDefault(code int) *DeleteModelRegistryDefault {
 	}
 }
 
-/*DeleteModelRegistryDefault handles this case with default header values.
+/* DeleteModelRegistryDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteModelRegistryDefault) Code() int {
 func (o *DeleteModelRegistryDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry/{name}][%d] DeleteModelRegistry default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteModelRegistryDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

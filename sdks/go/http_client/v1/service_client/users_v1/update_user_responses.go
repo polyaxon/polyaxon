@@ -78,7 +78,7 @@ func NewUpdateUserOK() *UpdateUserOK {
 	return &UpdateUserOK{}
 }
 
-/*UpdateUserOK handles this case with default header values.
+/* UpdateUserOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateUserOK struct {
 func (o *UpdateUserOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users][%d] updateUserOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateUserOK) GetPayload() *service_model.V1User {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateUserNoContent() *UpdateUserNoContent {
 	return &UpdateUserNoContent{}
 }
 
-/*UpdateUserNoContent handles this case with default header values.
+/* UpdateUserNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateUserNoContent struct {
 func (o *UpdateUserNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users][%d] updateUserNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateUserNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateUserForbidden() *UpdateUserForbidden {
 	return &UpdateUserForbidden{}
 }
 
-/*UpdateUserForbidden handles this case with default header values.
+/* UpdateUserForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateUserForbidden struct {
 func (o *UpdateUserForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users][%d] updateUserForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateUserForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateUserNotFound() *UpdateUserNotFound {
 	return &UpdateUserNotFound{}
 }
 
-/*UpdateUserNotFound handles this case with default header values.
+/* UpdateUserNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateUserNotFound struct {
 func (o *UpdateUserNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users][%d] updateUserNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateUserNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateUserDefault(code int) *UpdateUserDefault {
 	}
 }
 
-/*UpdateUserDefault handles this case with default header values.
+/* UpdateUserDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateUserDefault) Code() int {
 func (o *UpdateUserDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/users][%d] UpdateUser default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateUserDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

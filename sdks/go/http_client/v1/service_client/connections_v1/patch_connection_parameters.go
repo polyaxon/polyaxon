@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchConnectionParams creates a new PatchConnectionParams object
-// with the default values initialized.
+// NewPatchConnectionParams creates a new PatchConnectionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchConnectionParams() *PatchConnectionParams {
-	var ()
 	return &PatchConnectionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchConnectionParamsWithTimeout creates a new PatchConnectionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchConnectionParamsWithTimeout(timeout time.Duration) *PatchConnectionParams {
-	var ()
 	return &PatchConnectionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchConnectionParamsWithContext creates a new PatchConnectionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchConnectionParamsWithContext(ctx context.Context) *PatchConnectionParams {
-	var ()
 	return &PatchConnectionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchConnectionParamsWithHTTPClient creates a new PatchConnectionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchConnectionParamsWithHTTPClient(client *http.Client) *PatchConnectionParams {
-	var ()
 	return &PatchConnectionParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchConnectionParams contains all the parameters to send to the API endpoint
-for the patch connection operation typically these are written to a http.Request
+/* PatchConnectionParams contains all the parameters to send to the API endpoint
+   for the patch connection operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchConnectionParams struct {
 
-	/*Body
-	  Connection body
+	/* Body.
 
+	   Connection body
 	*/
 	Body *service_model.V1ConnectionResponse
-	/*ConnectionUUID
-	  UUID
 
+	/* ConnectionUUID.
+
+	   UUID
 	*/
 	ConnectionUUID string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch connection params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchConnectionParams) WithDefaults() *PatchConnectionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch connection params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchConnectionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch connection params
@@ -170,7 +186,6 @@ func (o *PatchConnectionParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

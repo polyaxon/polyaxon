@@ -78,7 +78,7 @@ func NewPromoteProjectDashboardOK() *PromoteProjectDashboardOK {
 	return &PromoteProjectDashboardOK{}
 }
 
-/*PromoteProjectDashboardOK handles this case with default header values.
+/* PromoteProjectDashboardOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewPromoteProjectDashboardNoContent() *PromoteProjectDashboardNoContent {
 	return &PromoteProjectDashboardNoContent{}
 }
 
-/*PromoteProjectDashboardNoContent handles this case with default header values.
+/* PromoteProjectDashboardNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type PromoteProjectDashboardNoContent struct {
 func (o *PromoteProjectDashboardNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] promoteProjectDashboardNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PromoteProjectDashboardNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewPromoteProjectDashboardForbidden() *PromoteProjectDashboardForbidden {
 	return &PromoteProjectDashboardForbidden{}
 }
 
-/*PromoteProjectDashboardForbidden handles this case with default header values.
+/* PromoteProjectDashboardForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type PromoteProjectDashboardForbidden struct {
 func (o *PromoteProjectDashboardForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] promoteProjectDashboardForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PromoteProjectDashboardForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewPromoteProjectDashboardNotFound() *PromoteProjectDashboardNotFound {
 	return &PromoteProjectDashboardNotFound{}
 }
 
-/*PromoteProjectDashboardNotFound handles this case with default header values.
+/* PromoteProjectDashboardNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type PromoteProjectDashboardNotFound struct {
 func (o *PromoteProjectDashboardNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] promoteProjectDashboardNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PromoteProjectDashboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewPromoteProjectDashboardDefault(code int) *PromoteProjectDashboardDefault
 	}
 }
 
-/*PromoteProjectDashboardDefault handles this case with default header values.
+/* PromoteProjectDashboardDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *PromoteProjectDashboardDefault) Code() int {
 func (o *PromoteProjectDashboardDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/dashboards/{uuid}/promote][%d] PromoteProjectDashboard default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PromoteProjectDashboardDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

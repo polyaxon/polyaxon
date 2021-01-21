@@ -78,7 +78,7 @@ func NewStopRunsOK() *StopRunsOK {
 	return &StopRunsOK{}
 }
 
-/*StopRunsOK handles this case with default header values.
+/* StopRunsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewStopRunsNoContent() *StopRunsNoContent {
 	return &StopRunsNoContent{}
 }
 
-/*StopRunsNoContent handles this case with default header values.
+/* StopRunsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type StopRunsNoContent struct {
 func (o *StopRunsNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/stop][%d] stopRunsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *StopRunsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewStopRunsForbidden() *StopRunsForbidden {
 	return &StopRunsForbidden{}
 }
 
-/*StopRunsForbidden handles this case with default header values.
+/* StopRunsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type StopRunsForbidden struct {
 func (o *StopRunsForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/stop][%d] stopRunsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *StopRunsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewStopRunsNotFound() *StopRunsNotFound {
 	return &StopRunsNotFound{}
 }
 
-/*StopRunsNotFound handles this case with default header values.
+/* StopRunsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type StopRunsNotFound struct {
 func (o *StopRunsNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/stop][%d] stopRunsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *StopRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewStopRunsDefault(code int) *StopRunsDefault {
 	}
 }
 
-/*StopRunsDefault handles this case with default header values.
+/* StopRunsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *StopRunsDefault) Code() int {
 func (o *StopRunsDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/stop][%d] StopRuns default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *StopRunsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

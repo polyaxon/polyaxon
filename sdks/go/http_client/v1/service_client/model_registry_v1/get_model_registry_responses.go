@@ -78,7 +78,7 @@ func NewGetModelRegistryOK() *GetModelRegistryOK {
 	return &GetModelRegistryOK{}
 }
 
-/*GetModelRegistryOK handles this case with default header values.
+/* GetModelRegistryOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetModelRegistryOK struct {
 func (o *GetModelRegistryOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] getModelRegistryOK  %+v", 200, o.Payload)
 }
-
 func (o *GetModelRegistryOK) GetPayload() *service_model.V1ModelRegistry {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetModelRegistryNoContent() *GetModelRegistryNoContent {
 	return &GetModelRegistryNoContent{}
 }
 
-/*GetModelRegistryNoContent handles this case with default header values.
+/* GetModelRegistryNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetModelRegistryNoContent struct {
 func (o *GetModelRegistryNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] getModelRegistryNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetModelRegistryNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetModelRegistryForbidden() *GetModelRegistryForbidden {
 	return &GetModelRegistryForbidden{}
 }
 
-/*GetModelRegistryForbidden handles this case with default header values.
+/* GetModelRegistryForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetModelRegistryForbidden struct {
 func (o *GetModelRegistryForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] getModelRegistryForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetModelRegistryForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetModelRegistryNotFound() *GetModelRegistryNotFound {
 	return &GetModelRegistryNotFound{}
 }
 
-/*GetModelRegistryNotFound handles this case with default header values.
+/* GetModelRegistryNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetModelRegistryNotFound struct {
 func (o *GetModelRegistryNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] getModelRegistryNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetModelRegistryNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetModelRegistryDefault(code int) *GetModelRegistryDefault {
 	}
 }
 
-/*GetModelRegistryDefault handles this case with default header values.
+/* GetModelRegistryDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetModelRegistryDefault) Code() int {
 func (o *GetModelRegistryDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}][%d] GetModelRegistry default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetModelRegistryDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

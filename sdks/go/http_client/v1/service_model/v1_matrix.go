@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -91,7 +93,6 @@ func (m *V1Matrix) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Matrix) validateBayes(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Bayes) { // not required
 		return nil
 	}
@@ -109,7 +110,6 @@ func (m *V1Matrix) validateBayes(formats strfmt.Registry) error {
 }
 
 func (m *V1Matrix) validateGrid(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Grid) { // not required
 		return nil
 	}
@@ -127,7 +127,6 @@ func (m *V1Matrix) validateGrid(formats strfmt.Registry) error {
 }
 
 func (m *V1Matrix) validateHyperband(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Hyperband) { // not required
 		return nil
 	}
@@ -145,7 +144,6 @@ func (m *V1Matrix) validateHyperband(formats strfmt.Registry) error {
 }
 
 func (m *V1Matrix) validateHyperopt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Hyperopt) { // not required
 		return nil
 	}
@@ -163,7 +161,6 @@ func (m *V1Matrix) validateHyperopt(formats strfmt.Registry) error {
 }
 
 func (m *V1Matrix) validateIterative(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Iterative) { // not required
 		return nil
 	}
@@ -181,7 +178,6 @@ func (m *V1Matrix) validateIterative(formats strfmt.Registry) error {
 }
 
 func (m *V1Matrix) validateMapping(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Mapping) { // not required
 		return nil
 	}
@@ -199,13 +195,148 @@ func (m *V1Matrix) validateMapping(formats strfmt.Registry) error {
 }
 
 func (m *V1Matrix) validateRandom(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Random) { // not required
 		return nil
 	}
 
 	if m.Random != nil {
 		if err := m.Random.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("random")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 matrix based on the context it is used
+func (m *V1Matrix) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateBayes(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateGrid(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateHyperband(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateHyperopt(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateIterative(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateMapping(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRandom(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Matrix) contextValidateBayes(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Bayes != nil {
+		if err := m.Bayes.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("bayes")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Matrix) contextValidateGrid(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Grid != nil {
+		if err := m.Grid.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("grid")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Matrix) contextValidateHyperband(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Hyperband != nil {
+		if err := m.Hyperband.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("hyperband")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Matrix) contextValidateHyperopt(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Hyperopt != nil {
+		if err := m.Hyperopt.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("hyperopt")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Matrix) contextValidateIterative(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Iterative != nil {
+		if err := m.Iterative.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("iterative")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Matrix) contextValidateMapping(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Mapping != nil {
+		if err := m.Mapping.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("mapping")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Matrix) contextValidateRandom(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Random != nil {
+		if err := m.Random.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("random")
 			}

@@ -78,7 +78,7 @@ func NewUpdateComponentHubSettingsOK() *UpdateComponentHubSettingsOK {
 	return &UpdateComponentHubSettingsOK{}
 }
 
-/*UpdateComponentHubSettingsOK handles this case with default header values.
+/* UpdateComponentHubSettingsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateComponentHubSettingsOK struct {
 func (o *UpdateComponentHubSettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/settings][%d] updateComponentHubSettingsOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateComponentHubSettingsOK) GetPayload() *service_model.V1ComponentHubSettings {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateComponentHubSettingsNoContent() *UpdateComponentHubSettingsNoConte
 	return &UpdateComponentHubSettingsNoContent{}
 }
 
-/*UpdateComponentHubSettingsNoContent handles this case with default header values.
+/* UpdateComponentHubSettingsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateComponentHubSettingsNoContent struct {
 func (o *UpdateComponentHubSettingsNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/settings][%d] updateComponentHubSettingsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateComponentHubSettingsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateComponentHubSettingsForbidden() *UpdateComponentHubSettingsForbidd
 	return &UpdateComponentHubSettingsForbidden{}
 }
 
-/*UpdateComponentHubSettingsForbidden handles this case with default header values.
+/* UpdateComponentHubSettingsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateComponentHubSettingsForbidden struct {
 func (o *UpdateComponentHubSettingsForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/settings][%d] updateComponentHubSettingsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateComponentHubSettingsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateComponentHubSettingsNotFound() *UpdateComponentHubSettingsNotFound
 	return &UpdateComponentHubSettingsNotFound{}
 }
 
-/*UpdateComponentHubSettingsNotFound handles this case with default header values.
+/* UpdateComponentHubSettingsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateComponentHubSettingsNotFound struct {
 func (o *UpdateComponentHubSettingsNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/settings][%d] updateComponentHubSettingsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateComponentHubSettingsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateComponentHubSettingsDefault(code int) *UpdateComponentHubSettingsD
 	}
 }
 
-/*UpdateComponentHubSettingsDefault handles this case with default header values.
+/* UpdateComponentHubSettingsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateComponentHubSettingsDefault) Code() int {
 func (o *UpdateComponentHubSettingsDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/hub/{component}/settings][%d] UpdateComponentHubSettings default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateComponentHubSettingsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

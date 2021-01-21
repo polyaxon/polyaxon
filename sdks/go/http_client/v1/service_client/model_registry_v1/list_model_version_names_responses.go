@@ -78,7 +78,7 @@ func NewListModelVersionNamesOK() *ListModelVersionNamesOK {
 	return &ListModelVersionNamesOK{}
 }
 
-/*ListModelVersionNamesOK handles this case with default header values.
+/* ListModelVersionNamesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListModelVersionNamesOK struct {
 func (o *ListModelVersionNamesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/versions/names][%d] listModelVersionNamesOK  %+v", 200, o.Payload)
 }
-
 func (o *ListModelVersionNamesOK) GetPayload() *service_model.V1ListModelVersionsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListModelVersionNamesNoContent() *ListModelVersionNamesNoContent {
 	return &ListModelVersionNamesNoContent{}
 }
 
-/*ListModelVersionNamesNoContent handles this case with default header values.
+/* ListModelVersionNamesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListModelVersionNamesNoContent struct {
 func (o *ListModelVersionNamesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/versions/names][%d] listModelVersionNamesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListModelVersionNamesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListModelVersionNamesForbidden() *ListModelVersionNamesForbidden {
 	return &ListModelVersionNamesForbidden{}
 }
 
-/*ListModelVersionNamesForbidden handles this case with default header values.
+/* ListModelVersionNamesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListModelVersionNamesForbidden struct {
 func (o *ListModelVersionNamesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/versions/names][%d] listModelVersionNamesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListModelVersionNamesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListModelVersionNamesNotFound() *ListModelVersionNamesNotFound {
 	return &ListModelVersionNamesNotFound{}
 }
 
-/*ListModelVersionNamesNotFound handles this case with default header values.
+/* ListModelVersionNamesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListModelVersionNamesNotFound struct {
 func (o *ListModelVersionNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/versions/names][%d] listModelVersionNamesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListModelVersionNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListModelVersionNamesDefault(code int) *ListModelVersionNamesDefault {
 	}
 }
 
-/*ListModelVersionNamesDefault handles this case with default header values.
+/* ListModelVersionNamesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListModelVersionNamesDefault) Code() int {
 func (o *ListModelVersionNamesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/versions/names][%d] ListModelVersionNames default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListModelVersionNamesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewGetModelVersionStagesOK() *GetModelVersionStagesOK {
 	return &GetModelVersionStagesOK{}
 }
 
-/*GetModelVersionStagesOK handles this case with default header values.
+/* GetModelVersionStagesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetModelVersionStagesOK struct {
 func (o *GetModelVersionStagesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] getModelVersionStagesOK  %+v", 200, o.Payload)
 }
-
 func (o *GetModelVersionStagesOK) GetPayload() *service_model.V1Stage {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetModelVersionStagesNoContent() *GetModelVersionStagesNoContent {
 	return &GetModelVersionStagesNoContent{}
 }
 
-/*GetModelVersionStagesNoContent handles this case with default header values.
+/* GetModelVersionStagesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetModelVersionStagesNoContent struct {
 func (o *GetModelVersionStagesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] getModelVersionStagesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetModelVersionStagesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetModelVersionStagesForbidden() *GetModelVersionStagesForbidden {
 	return &GetModelVersionStagesForbidden{}
 }
 
-/*GetModelVersionStagesForbidden handles this case with default header values.
+/* GetModelVersionStagesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetModelVersionStagesForbidden struct {
 func (o *GetModelVersionStagesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] getModelVersionStagesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetModelVersionStagesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetModelVersionStagesNotFound() *GetModelVersionStagesNotFound {
 	return &GetModelVersionStagesNotFound{}
 }
 
-/*GetModelVersionStagesNotFound handles this case with default header values.
+/* GetModelVersionStagesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetModelVersionStagesNotFound struct {
 func (o *GetModelVersionStagesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] getModelVersionStagesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetModelVersionStagesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetModelVersionStagesDefault(code int) *GetModelVersionStagesDefault {
 	}
 }
 
-/*GetModelVersionStagesDefault handles this case with default header values.
+/* GetModelVersionStagesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetModelVersionStagesDefault) Code() int {
 func (o *GetModelVersionStagesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] GetModelVersionStages default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetModelVersionStagesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

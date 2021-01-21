@@ -78,7 +78,7 @@ func NewResetPasswordConfirmOK() *ResetPasswordConfirmOK {
 	return &ResetPasswordConfirmOK{}
 }
 
-/*ResetPasswordConfirmOK handles this case with default header values.
+/* ResetPasswordConfirmOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ResetPasswordConfirmOK struct {
 func (o *ResetPasswordConfirmOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password-confirm][%d] resetPasswordConfirmOK  %+v", 200, o.Payload)
 }
-
 func (o *ResetPasswordConfirmOK) GetPayload() *service_model.V1Auth {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewResetPasswordConfirmNoContent() *ResetPasswordConfirmNoContent {
 	return &ResetPasswordConfirmNoContent{}
 }
 
-/*ResetPasswordConfirmNoContent handles this case with default header values.
+/* ResetPasswordConfirmNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ResetPasswordConfirmNoContent struct {
 func (o *ResetPasswordConfirmNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password-confirm][%d] resetPasswordConfirmNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ResetPasswordConfirmNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewResetPasswordConfirmForbidden() *ResetPasswordConfirmForbidden {
 	return &ResetPasswordConfirmForbidden{}
 }
 
-/*ResetPasswordConfirmForbidden handles this case with default header values.
+/* ResetPasswordConfirmForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ResetPasswordConfirmForbidden struct {
 func (o *ResetPasswordConfirmForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password-confirm][%d] resetPasswordConfirmForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ResetPasswordConfirmForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewResetPasswordConfirmNotFound() *ResetPasswordConfirmNotFound {
 	return &ResetPasswordConfirmNotFound{}
 }
 
-/*ResetPasswordConfirmNotFound handles this case with default header values.
+/* ResetPasswordConfirmNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ResetPasswordConfirmNotFound struct {
 func (o *ResetPasswordConfirmNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password-confirm][%d] resetPasswordConfirmNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ResetPasswordConfirmNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewResetPasswordConfirmDefault(code int) *ResetPasswordConfirmDefault {
 	}
 }
 
-/*ResetPasswordConfirmDefault handles this case with default header values.
+/* ResetPasswordConfirmDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ResetPasswordConfirmDefault) Code() int {
 func (o *ResetPasswordConfirmDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/reset-password-confirm][%d] ResetPasswordConfirm default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ResetPasswordConfirmDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

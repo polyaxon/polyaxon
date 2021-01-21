@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewInvalidateRunsParams creates a new InvalidateRunsParams object
-// with the default values initialized.
+// NewInvalidateRunsParams creates a new InvalidateRunsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewInvalidateRunsParams() *InvalidateRunsParams {
-	var ()
 	return &InvalidateRunsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewInvalidateRunsParamsWithTimeout creates a new InvalidateRunsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewInvalidateRunsParamsWithTimeout(timeout time.Duration) *InvalidateRunsParams {
-	var ()
 	return &InvalidateRunsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewInvalidateRunsParamsWithContext creates a new InvalidateRunsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewInvalidateRunsParamsWithContext(ctx context.Context) *InvalidateRunsParams {
-	var ()
 	return &InvalidateRunsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewInvalidateRunsParamsWithHTTPClient creates a new InvalidateRunsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewInvalidateRunsParamsWithHTTPClient(client *http.Client) *InvalidateRunsParams {
-	var ()
 	return &InvalidateRunsParams{
 		HTTPClient: client,
 	}
 }
 
-/*InvalidateRunsParams contains all the parameters to send to the API endpoint
-for the invalidate runs operation typically these are written to a http.Request
+/* InvalidateRunsParams contains all the parameters to send to the API endpoint
+   for the invalidate runs operation.
+
+   Typically these are written to a http.Request.
 */
 type InvalidateRunsParams struct {
 
-	/*Body
-	  Uuids of the entities
+	/* Body.
 
+	   Uuids of the entities
 	*/
 	Body *service_model.V1Uuids
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
 
+	/* Project.
+
+	   Project under namesapce
 	*/
 	Project string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the invalidate runs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *InvalidateRunsParams) WithDefaults() *InvalidateRunsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the invalidate runs params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *InvalidateRunsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the invalidate runs params
@@ -170,7 +186,6 @@ func (o *InvalidateRunsParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

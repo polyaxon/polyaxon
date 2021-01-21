@@ -78,7 +78,7 @@ func NewUnbookmarkProjectOK() *UnbookmarkProjectOK {
 	return &UnbookmarkProjectOK{}
 }
 
-/*UnbookmarkProjectOK handles this case with default header values.
+/* UnbookmarkProjectOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewUnbookmarkProjectNoContent() *UnbookmarkProjectNoContent {
 	return &UnbookmarkProjectNoContent{}
 }
 
-/*UnbookmarkProjectNoContent handles this case with default header values.
+/* UnbookmarkProjectNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type UnbookmarkProjectNoContent struct {
 func (o *UnbookmarkProjectNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] unbookmarkProjectNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UnbookmarkProjectNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewUnbookmarkProjectForbidden() *UnbookmarkProjectForbidden {
 	return &UnbookmarkProjectForbidden{}
 }
 
-/*UnbookmarkProjectForbidden handles this case with default header values.
+/* UnbookmarkProjectForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type UnbookmarkProjectForbidden struct {
 func (o *UnbookmarkProjectForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] unbookmarkProjectForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UnbookmarkProjectForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewUnbookmarkProjectNotFound() *UnbookmarkProjectNotFound {
 	return &UnbookmarkProjectNotFound{}
 }
 
-/*UnbookmarkProjectNotFound handles this case with default header values.
+/* UnbookmarkProjectNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type UnbookmarkProjectNotFound struct {
 func (o *UnbookmarkProjectNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] unbookmarkProjectNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UnbookmarkProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewUnbookmarkProjectDefault(code int) *UnbookmarkProjectDefault {
 	}
 }
 
-/*UnbookmarkProjectDefault handles this case with default header values.
+/* UnbookmarkProjectDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *UnbookmarkProjectDefault) Code() int {
 func (o *UnbookmarkProjectDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/unbookmark][%d] UnbookmarkProject default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UnbookmarkProjectDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

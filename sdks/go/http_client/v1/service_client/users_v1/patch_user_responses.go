@@ -78,7 +78,7 @@ func NewPatchUserOK() *PatchUserOK {
 	return &PatchUserOK{}
 }
 
-/*PatchUserOK handles this case with default header values.
+/* PatchUserOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchUserOK struct {
 func (o *PatchUserOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users][%d] patchUserOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchUserOK) GetPayload() *service_model.V1User {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchUserNoContent() *PatchUserNoContent {
 	return &PatchUserNoContent{}
 }
 
-/*PatchUserNoContent handles this case with default header values.
+/* PatchUserNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchUserNoContent struct {
 func (o *PatchUserNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users][%d] patchUserNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchUserNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchUserForbidden() *PatchUserForbidden {
 	return &PatchUserForbidden{}
 }
 
-/*PatchUserForbidden handles this case with default header values.
+/* PatchUserForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchUserForbidden struct {
 func (o *PatchUserForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users][%d] patchUserForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchUserForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchUserNotFound() *PatchUserNotFound {
 	return &PatchUserNotFound{}
 }
 
-/*PatchUserNotFound handles this case with default header values.
+/* PatchUserNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchUserNotFound struct {
 func (o *PatchUserNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users][%d] patchUserNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchUserNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchUserDefault(code int) *PatchUserDefault {
 	}
 }
 
-/*PatchUserDefault handles this case with default header values.
+/* PatchUserDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchUserDefault) Code() int {
 func (o *PatchUserDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/users][%d] PatchUser default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchUserDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewArchiveRunOK() *ArchiveRunOK {
 	return &ArchiveRunOK{}
 }
 
-/*ArchiveRunOK handles this case with default header values.
+/* ArchiveRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewArchiveRunNoContent() *ArchiveRunNoContent {
 	return &ArchiveRunNoContent{}
 }
 
-/*ArchiveRunNoContent handles this case with default header values.
+/* ArchiveRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type ArchiveRunNoContent struct {
 func (o *ArchiveRunNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] archiveRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ArchiveRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewArchiveRunForbidden() *ArchiveRunForbidden {
 	return &ArchiveRunForbidden{}
 }
 
-/*ArchiveRunForbidden handles this case with default header values.
+/* ArchiveRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type ArchiveRunForbidden struct {
 func (o *ArchiveRunForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] archiveRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ArchiveRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewArchiveRunNotFound() *ArchiveRunNotFound {
 	return &ArchiveRunNotFound{}
 }
 
-/*ArchiveRunNotFound handles this case with default header values.
+/* ArchiveRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type ArchiveRunNotFound struct {
 func (o *ArchiveRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] archiveRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ArchiveRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewArchiveRunDefault(code int) *ArchiveRunDefault {
 	}
 }
 
-/*ArchiveRunDefault handles this case with default header values.
+/* ArchiveRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *ArchiveRunDefault) Code() int {
 func (o *ArchiveRunDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/archive][%d] ArchiveRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ArchiveRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

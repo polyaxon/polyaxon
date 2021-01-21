@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateProjectSearchParams creates a new CreateProjectSearchParams object
-// with the default values initialized.
+// NewCreateProjectSearchParams creates a new CreateProjectSearchParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateProjectSearchParams() *CreateProjectSearchParams {
-	var ()
 	return &CreateProjectSearchParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateProjectSearchParamsWithTimeout creates a new CreateProjectSearchParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateProjectSearchParamsWithTimeout(timeout time.Duration) *CreateProjectSearchParams {
-	var ()
 	return &CreateProjectSearchParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateProjectSearchParamsWithContext creates a new CreateProjectSearchParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateProjectSearchParamsWithContext(ctx context.Context) *CreateProjectSearchParams {
-	var ()
 	return &CreateProjectSearchParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateProjectSearchParamsWithHTTPClient creates a new CreateProjectSearchParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateProjectSearchParamsWithHTTPClient(client *http.Client) *CreateProjectSearchParams {
-	var ()
 	return &CreateProjectSearchParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateProjectSearchParams contains all the parameters to send to the API endpoint
-for the create project search operation typically these are written to a http.Request
+/* CreateProjectSearchParams contains all the parameters to send to the API endpoint
+   for the create project search operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateProjectSearchParams struct {
 
-	/*Body
-	  Search body
+	/* Body.
 
+	   Search body
 	*/
 	Body *service_model.V1Search
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
 
+	/* Project.
+
+	   Project under namesapce
 	*/
 	Project string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create project search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateProjectSearchParams) WithDefaults() *CreateProjectSearchParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create project search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateProjectSearchParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create project search params
@@ -170,7 +186,6 @@ func (o *CreateProjectSearchParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

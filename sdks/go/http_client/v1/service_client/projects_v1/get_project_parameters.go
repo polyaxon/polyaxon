@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetProjectParams creates a new GetProjectParams object
-// with the default values initialized.
+// NewGetProjectParams creates a new GetProjectParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetProjectParams() *GetProjectParams {
-	var ()
 	return &GetProjectParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetProjectParamsWithTimeout creates a new GetProjectParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetProjectParamsWithTimeout(timeout time.Duration) *GetProjectParams {
-	var ()
 	return &GetProjectParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetProjectParamsWithContext creates a new GetProjectParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetProjectParamsWithContext(ctx context.Context) *GetProjectParams {
-	var ()
 	return &GetProjectParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetProjectParamsWithHTTPClient creates a new GetProjectParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetProjectParamsWithHTTPClient(client *http.Client) *GetProjectParams {
-	var ()
 	return &GetProjectParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetProjectParams contains all the parameters to send to the API endpoint
-for the get project operation typically these are written to a http.Request
+/* GetProjectParams contains all the parameters to send to the API endpoint
+   for the get project operation.
+
+   Typically these are written to a http.Request.
 */
 type GetProjectParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get project params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetProjectParams) WithDefaults() *GetProjectParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get project params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetProjectParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get project params

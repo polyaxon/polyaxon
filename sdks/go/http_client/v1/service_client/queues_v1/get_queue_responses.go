@@ -78,7 +78,7 @@ func NewGetQueueOK() *GetQueueOK {
 	return &GetQueueOK{}
 }
 
-/*GetQueueOK handles this case with default header values.
+/* GetQueueOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetQueueOK struct {
 func (o *GetQueueOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] getQueueOK  %+v", 200, o.Payload)
 }
-
 func (o *GetQueueOK) GetPayload() *service_model.V1Queue {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetQueueNoContent() *GetQueueNoContent {
 	return &GetQueueNoContent{}
 }
 
-/*GetQueueNoContent handles this case with default header values.
+/* GetQueueNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetQueueNoContent struct {
 func (o *GetQueueNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] getQueueNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetQueueNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetQueueForbidden() *GetQueueForbidden {
 	return &GetQueueForbidden{}
 }
 
-/*GetQueueForbidden handles this case with default header values.
+/* GetQueueForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetQueueForbidden struct {
 func (o *GetQueueForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] getQueueForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetQueueForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetQueueNotFound() *GetQueueNotFound {
 	return &GetQueueNotFound{}
 }
 
-/*GetQueueNotFound handles this case with default header values.
+/* GetQueueNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetQueueNotFound struct {
 func (o *GetQueueNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] getQueueNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetQueueNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetQueueDefault(code int) *GetQueueDefault {
 	}
 }
 
-/*GetQueueDefault handles this case with default header values.
+/* GetQueueDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetQueueDefault) Code() int {
 func (o *GetQueueDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{entity}/queues/{uuid}][%d] GetQueue default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetQueueDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

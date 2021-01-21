@@ -32,56 +32,70 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchUserParams creates a new PatchUserParams object
-// with the default values initialized.
+// NewPatchUserParams creates a new PatchUserParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchUserParams() *PatchUserParams {
-	var ()
 	return &PatchUserParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchUserParamsWithTimeout creates a new PatchUserParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchUserParamsWithTimeout(timeout time.Duration) *PatchUserParams {
-	var ()
 	return &PatchUserParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchUserParamsWithContext creates a new PatchUserParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchUserParamsWithContext(ctx context.Context) *PatchUserParams {
-	var ()
 	return &PatchUserParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchUserParamsWithHTTPClient creates a new PatchUserParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchUserParamsWithHTTPClient(client *http.Client) *PatchUserParams {
-	var ()
 	return &PatchUserParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchUserParams contains all the parameters to send to the API endpoint
-for the patch user operation typically these are written to a http.Request
+/* PatchUserParams contains all the parameters to send to the API endpoint
+   for the patch user operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchUserParams struct {
 
-	/*Body*/
+	// Body.
 	Body *service_model.V1User
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch user params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchUserParams) WithDefaults() *PatchUserParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch user params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchUserParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch user params
@@ -135,7 +149,6 @@ func (o *PatchUserParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

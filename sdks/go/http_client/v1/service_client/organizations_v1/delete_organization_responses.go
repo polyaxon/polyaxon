@@ -78,7 +78,7 @@ func NewDeleteOrganizationOK() *DeleteOrganizationOK {
 	return &DeleteOrganizationOK{}
 }
 
-/*DeleteOrganizationOK handles this case with default header values.
+/* DeleteOrganizationOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteOrganizationNoContent() *DeleteOrganizationNoContent {
 	return &DeleteOrganizationNoContent{}
 }
 
-/*DeleteOrganizationNoContent handles this case with default header values.
+/* DeleteOrganizationNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteOrganizationNoContent struct {
 func (o *DeleteOrganizationNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] deleteOrganizationNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteOrganizationNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteOrganizationForbidden() *DeleteOrganizationForbidden {
 	return &DeleteOrganizationForbidden{}
 }
 
-/*DeleteOrganizationForbidden handles this case with default header values.
+/* DeleteOrganizationForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteOrganizationForbidden struct {
 func (o *DeleteOrganizationForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] deleteOrganizationForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteOrganizationForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteOrganizationNotFound() *DeleteOrganizationNotFound {
 	return &DeleteOrganizationNotFound{}
 }
 
-/*DeleteOrganizationNotFound handles this case with default header values.
+/* DeleteOrganizationNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteOrganizationNotFound struct {
 func (o *DeleteOrganizationNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] deleteOrganizationNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteOrganizationNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteOrganizationDefault(code int) *DeleteOrganizationDefault {
 	}
 }
 
-/*DeleteOrganizationDefault handles this case with default header values.
+/* DeleteOrganizationDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteOrganizationDefault) Code() int {
 func (o *DeleteOrganizationDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] DeleteOrganization default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteOrganizationDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

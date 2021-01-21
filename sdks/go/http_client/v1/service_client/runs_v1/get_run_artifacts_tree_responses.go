@@ -78,7 +78,7 @@ func NewGetRunArtifactsTreeOK() *GetRunArtifactsTreeOK {
 	return &GetRunArtifactsTreeOK{}
 }
 
-/*GetRunArtifactsTreeOK handles this case with default header values.
+/* GetRunArtifactsTreeOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunArtifactsTreeOK struct {
 func (o *GetRunArtifactsTreeOK) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunArtifactsTreeOK) GetPayload() *service_model.V1ArtifactTree {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunArtifactsTreeNoContent() *GetRunArtifactsTreeNoContent {
 	return &GetRunArtifactsTreeNoContent{}
 }
 
-/*GetRunArtifactsTreeNoContent handles this case with default header values.
+/* GetRunArtifactsTreeNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunArtifactsTreeNoContent struct {
 func (o *GetRunArtifactsTreeNoContent) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunArtifactsTreeNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunArtifactsTreeForbidden() *GetRunArtifactsTreeForbidden {
 	return &GetRunArtifactsTreeForbidden{}
 }
 
-/*GetRunArtifactsTreeForbidden handles this case with default header values.
+/* GetRunArtifactsTreeForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunArtifactsTreeForbidden struct {
 func (o *GetRunArtifactsTreeForbidden) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunArtifactsTreeForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunArtifactsTreeNotFound() *GetRunArtifactsTreeNotFound {
 	return &GetRunArtifactsTreeNotFound{}
 }
 
-/*GetRunArtifactsTreeNotFound handles this case with default header values.
+/* GetRunArtifactsTreeNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunArtifactsTreeNotFound struct {
 func (o *GetRunArtifactsTreeNotFound) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunArtifactsTreeNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunArtifactsTreeDefault(code int) *GetRunArtifactsTreeDefault {
 	}
 }
 
-/*GetRunArtifactsTreeDefault handles this case with default header values.
+/* GetRunArtifactsTreeDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunArtifactsTreeDefault) Code() int {
 func (o *GetRunArtifactsTreeDefault) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] GetRunArtifactsTree default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunArtifactsTreeDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

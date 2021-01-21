@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteOrganizationMemberParams creates a new DeleteOrganizationMemberParams object
-// with the default values initialized.
+// NewDeleteOrganizationMemberParams creates a new DeleteOrganizationMemberParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteOrganizationMemberParams() *DeleteOrganizationMemberParams {
-	var ()
 	return &DeleteOrganizationMemberParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteOrganizationMemberParamsWithTimeout creates a new DeleteOrganizationMemberParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteOrganizationMemberParamsWithTimeout(timeout time.Duration) *DeleteOrganizationMemberParams {
-	var ()
 	return &DeleteOrganizationMemberParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteOrganizationMemberParamsWithContext creates a new DeleteOrganizationMemberParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteOrganizationMemberParamsWithContext(ctx context.Context) *DeleteOrganizationMemberParams {
-	var ()
 	return &DeleteOrganizationMemberParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteOrganizationMemberParamsWithHTTPClient creates a new DeleteOrganizationMemberParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteOrganizationMemberParamsWithHTTPClient(client *http.Client) *DeleteOrganizationMemberParams {
-	var ()
 	return &DeleteOrganizationMemberParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteOrganizationMemberParams contains all the parameters to send to the API endpoint
-for the delete organization member operation typically these are written to a http.Request
+/* DeleteOrganizationMemberParams contains all the parameters to send to the API endpoint
+   for the delete organization member operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteOrganizationMemberParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete organization member params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteOrganizationMemberParams) WithDefaults() *DeleteOrganizationMemberParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete organization member params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteOrganizationMemberParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete organization member params

@@ -78,7 +78,7 @@ func NewGetModelRegistrySettingsOK() *GetModelRegistrySettingsOK {
 	return &GetModelRegistrySettingsOK{}
 }
 
-/*GetModelRegistrySettingsOK handles this case with default header values.
+/* GetModelRegistrySettingsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetModelRegistrySettingsOK struct {
 func (o *GetModelRegistrySettingsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/settings][%d] getModelRegistrySettingsOK  %+v", 200, o.Payload)
 }
-
 func (o *GetModelRegistrySettingsOK) GetPayload() *service_model.V1ModelRegistrySettings {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetModelRegistrySettingsNoContent() *GetModelRegistrySettingsNoContent {
 	return &GetModelRegistrySettingsNoContent{}
 }
 
-/*GetModelRegistrySettingsNoContent handles this case with default header values.
+/* GetModelRegistrySettingsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetModelRegistrySettingsNoContent struct {
 func (o *GetModelRegistrySettingsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/settings][%d] getModelRegistrySettingsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetModelRegistrySettingsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetModelRegistrySettingsForbidden() *GetModelRegistrySettingsForbidden {
 	return &GetModelRegistrySettingsForbidden{}
 }
 
-/*GetModelRegistrySettingsForbidden handles this case with default header values.
+/* GetModelRegistrySettingsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetModelRegistrySettingsForbidden struct {
 func (o *GetModelRegistrySettingsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/settings][%d] getModelRegistrySettingsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetModelRegistrySettingsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetModelRegistrySettingsNotFound() *GetModelRegistrySettingsNotFound {
 	return &GetModelRegistrySettingsNotFound{}
 }
 
-/*GetModelRegistrySettingsNotFound handles this case with default header values.
+/* GetModelRegistrySettingsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetModelRegistrySettingsNotFound struct {
 func (o *GetModelRegistrySettingsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/settings][%d] getModelRegistrySettingsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetModelRegistrySettingsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetModelRegistrySettingsDefault(code int) *GetModelRegistrySettingsDefau
 	}
 }
 
-/*GetModelRegistrySettingsDefault handles this case with default header values.
+/* GetModelRegistrySettingsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetModelRegistrySettingsDefault) Code() int {
 func (o *GetModelRegistrySettingsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{name}/settings][%d] GetModelRegistrySettings default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetModelRegistrySettingsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

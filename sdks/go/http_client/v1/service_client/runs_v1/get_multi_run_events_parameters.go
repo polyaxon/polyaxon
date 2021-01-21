@@ -31,94 +31,115 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewGetMultiRunEventsParams creates a new GetMultiRunEventsParams object
-// with the default values initialized.
+// NewGetMultiRunEventsParams creates a new GetMultiRunEventsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetMultiRunEventsParams() *GetMultiRunEventsParams {
-	var ()
 	return &GetMultiRunEventsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetMultiRunEventsParamsWithTimeout creates a new GetMultiRunEventsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetMultiRunEventsParamsWithTimeout(timeout time.Duration) *GetMultiRunEventsParams {
-	var ()
 	return &GetMultiRunEventsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetMultiRunEventsParamsWithContext creates a new GetMultiRunEventsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetMultiRunEventsParamsWithContext(ctx context.Context) *GetMultiRunEventsParams {
-	var ()
 	return &GetMultiRunEventsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetMultiRunEventsParamsWithHTTPClient creates a new GetMultiRunEventsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetMultiRunEventsParamsWithHTTPClient(client *http.Client) *GetMultiRunEventsParams {
-	var ()
 	return &GetMultiRunEventsParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetMultiRunEventsParams contains all the parameters to send to the API endpoint
-for the get multi run events operation typically these are written to a http.Request
+/* GetMultiRunEventsParams contains all the parameters to send to the API endpoint
+   for the get multi run events operation.
+
+   Typically these are written to a http.Request.
 */
 type GetMultiRunEventsParams struct {
 
-	/*Force
-	  Force query param.
+	/* Force.
 
+	   Force query param.
 	*/
 	Force *bool
-	/*Kind
-	  The artifact kind
 
+	/* Kind.
+
+	   The artifact kind
 	*/
 	Kind string
-	/*Names
-	  Names query param.
 
+	/* Names.
+
+	   Names query param.
 	*/
 	Names *string
-	/*Namespace
-	  namespace
 
+	/* Namespace.
+
+	   namespace
 	*/
 	Namespace string
-	/*Orient
-	  Orient query param.
 
+	/* Orient.
+
+	   Orient query param.
 	*/
 	Orient *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project where the run will be assigned
 
+	/* Project.
+
+	   Project where the run will be assigned
 	*/
 	Project string
-	/*Runs
-	  Runs query param.
 
+	/* Runs.
+
+	   Runs query param.
 	*/
 	Runs *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get multi run events params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetMultiRunEventsParams) WithDefaults() *GetMultiRunEventsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get multi run events params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetMultiRunEventsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get multi run events params
@@ -254,16 +275,17 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 
 		// query param force
 		var qrForce bool
+
 		if o.Force != nil {
 			qrForce = *o.Force
 		}
 		qForce := swag.FormatBool(qrForce)
 		if qForce != "" {
+
 			if err := r.SetQueryParam("force", qForce); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param kind
@@ -275,16 +297,17 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 
 		// query param names
 		var qrNames string
+
 		if o.Names != nil {
 			qrNames = *o.Names
 		}
 		qNames := qrNames
 		if qNames != "" {
+
 			if err := r.SetQueryParam("names", qNames); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param namespace
@@ -296,16 +319,17 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 
 		// query param orient
 		var qrOrient string
+
 		if o.Orient != nil {
 			qrOrient = *o.Orient
 		}
 		qOrient := qrOrient
 		if qOrient != "" {
+
 			if err := r.SetQueryParam("orient", qOrient); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner
@@ -322,16 +346,17 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 
 		// query param runs
 		var qrRuns string
+
 		if o.Runs != nil {
 			qrRuns = *o.Runs
 		}
 		qRuns := qrRuns
 		if qRuns != "" {
+
 			if err := r.SetQueryParam("runs", qRuns); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

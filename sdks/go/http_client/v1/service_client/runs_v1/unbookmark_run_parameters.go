@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewUnbookmarkRunParams creates a new UnbookmarkRunParams object
-// with the default values initialized.
+// NewUnbookmarkRunParams creates a new UnbookmarkRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUnbookmarkRunParams() *UnbookmarkRunParams {
-	var ()
 	return &UnbookmarkRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUnbookmarkRunParamsWithTimeout creates a new UnbookmarkRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUnbookmarkRunParamsWithTimeout(timeout time.Duration) *UnbookmarkRunParams {
-	var ()
 	return &UnbookmarkRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUnbookmarkRunParamsWithContext creates a new UnbookmarkRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUnbookmarkRunParamsWithContext(ctx context.Context) *UnbookmarkRunParams {
-	var ()
 	return &UnbookmarkRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUnbookmarkRunParamsWithHTTPClient creates a new UnbookmarkRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUnbookmarkRunParamsWithHTTPClient(client *http.Client) *UnbookmarkRunParams {
-	var ()
 	return &UnbookmarkRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*UnbookmarkRunParams contains all the parameters to send to the API endpoint
-for the unbookmark run operation typically these are written to a http.Request
+/* UnbookmarkRunParams contains all the parameters to send to the API endpoint
+   for the unbookmark run operation.
+
+   Typically these are written to a http.Request.
 */
 type UnbookmarkRunParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the unbookmark run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UnbookmarkRunParams) WithDefaults() *UnbookmarkRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the unbookmark run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UnbookmarkRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the unbookmark run params

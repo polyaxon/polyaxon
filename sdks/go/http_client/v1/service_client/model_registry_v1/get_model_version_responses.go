@@ -78,7 +78,7 @@ func NewGetModelVersionOK() *GetModelVersionOK {
 	return &GetModelVersionOK{}
 }
 
-/*GetModelVersionOK handles this case with default header values.
+/* GetModelVersionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetModelVersionOK struct {
 func (o *GetModelVersionOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}][%d] getModelVersionOK  %+v", 200, o.Payload)
 }
-
 func (o *GetModelVersionOK) GetPayload() *service_model.V1ModelVersion {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetModelVersionNoContent() *GetModelVersionNoContent {
 	return &GetModelVersionNoContent{}
 }
 
-/*GetModelVersionNoContent handles this case with default header values.
+/* GetModelVersionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetModelVersionNoContent struct {
 func (o *GetModelVersionNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}][%d] getModelVersionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetModelVersionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetModelVersionForbidden() *GetModelVersionForbidden {
 	return &GetModelVersionForbidden{}
 }
 
-/*GetModelVersionForbidden handles this case with default header values.
+/* GetModelVersionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetModelVersionForbidden struct {
 func (o *GetModelVersionForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}][%d] getModelVersionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetModelVersionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetModelVersionNotFound() *GetModelVersionNotFound {
 	return &GetModelVersionNotFound{}
 }
 
-/*GetModelVersionNotFound handles this case with default header values.
+/* GetModelVersionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetModelVersionNotFound struct {
 func (o *GetModelVersionNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}][%d] getModelVersionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetModelVersionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetModelVersionDefault(code int) *GetModelVersionDefault {
 	}
 }
 
-/*GetModelVersionDefault handles this case with default header values.
+/* GetModelVersionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetModelVersionDefault) Code() int {
 func (o *GetModelVersionDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry/{entity}/versions/{name}][%d] GetModelVersion default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetModelVersionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

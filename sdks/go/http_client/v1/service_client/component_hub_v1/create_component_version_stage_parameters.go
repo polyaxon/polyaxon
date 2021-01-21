@@ -32,71 +32,88 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateComponentVersionStageParams creates a new CreateComponentVersionStageParams object
-// with the default values initialized.
+// NewCreateComponentVersionStageParams creates a new CreateComponentVersionStageParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateComponentVersionStageParams() *CreateComponentVersionStageParams {
-	var ()
 	return &CreateComponentVersionStageParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateComponentVersionStageParamsWithTimeout creates a new CreateComponentVersionStageParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateComponentVersionStageParamsWithTimeout(timeout time.Duration) *CreateComponentVersionStageParams {
-	var ()
 	return &CreateComponentVersionStageParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateComponentVersionStageParamsWithContext creates a new CreateComponentVersionStageParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateComponentVersionStageParamsWithContext(ctx context.Context) *CreateComponentVersionStageParams {
-	var ()
 	return &CreateComponentVersionStageParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateComponentVersionStageParamsWithHTTPClient creates a new CreateComponentVersionStageParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateComponentVersionStageParamsWithHTTPClient(client *http.Client) *CreateComponentVersionStageParams {
-	var ()
 	return &CreateComponentVersionStageParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateComponentVersionStageParams contains all the parameters to send to the API endpoint
-for the create component version stage operation typically these are written to a http.Request
+/* CreateComponentVersionStageParams contains all the parameters to send to the API endpoint
+   for the create component version stage operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateComponentVersionStageParams struct {
 
-	/*Body*/
+	// Body.
 	Body *service_model.V1EntityStageBodyRequest
-	/*Entity
-	  Entity namespace
 
+	/* Entity.
+
+	   Entity namespace
 	*/
 	Entity string
-	/*Name
-	  Name of the version to apply the stage to
 
+	/* Name.
+
+	   Name of the version to apply the stage to
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create component version stage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateComponentVersionStageParams) WithDefaults() *CreateComponentVersionStageParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create component version stage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateComponentVersionStageParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create component version stage params
@@ -183,7 +200,6 @@ func (o *CreateComponentVersionStageParams) WriteToRequest(r runtime.ClientReque
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

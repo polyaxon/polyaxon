@@ -78,7 +78,7 @@ func NewPatchProjectSettingsOK() *PatchProjectSettingsOK {
 	return &PatchProjectSettingsOK{}
 }
 
-/*PatchProjectSettingsOK handles this case with default header values.
+/* PatchProjectSettingsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchProjectSettingsOK struct {
 func (o *PatchProjectSettingsOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/settings][%d] patchProjectSettingsOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchProjectSettingsOK) GetPayload() *service_model.V1ProjectSettings {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchProjectSettingsNoContent() *PatchProjectSettingsNoContent {
 	return &PatchProjectSettingsNoContent{}
 }
 
-/*PatchProjectSettingsNoContent handles this case with default header values.
+/* PatchProjectSettingsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchProjectSettingsNoContent struct {
 func (o *PatchProjectSettingsNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/settings][%d] patchProjectSettingsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchProjectSettingsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchProjectSettingsForbidden() *PatchProjectSettingsForbidden {
 	return &PatchProjectSettingsForbidden{}
 }
 
-/*PatchProjectSettingsForbidden handles this case with default header values.
+/* PatchProjectSettingsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchProjectSettingsForbidden struct {
 func (o *PatchProjectSettingsForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/settings][%d] patchProjectSettingsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchProjectSettingsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchProjectSettingsNotFound() *PatchProjectSettingsNotFound {
 	return &PatchProjectSettingsNotFound{}
 }
 
-/*PatchProjectSettingsNotFound handles this case with default header values.
+/* PatchProjectSettingsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchProjectSettingsNotFound struct {
 func (o *PatchProjectSettingsNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/settings][%d] patchProjectSettingsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchProjectSettingsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchProjectSettingsDefault(code int) *PatchProjectSettingsDefault {
 	}
 }
 
-/*PatchProjectSettingsDefault handles this case with default header values.
+/* PatchProjectSettingsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchProjectSettingsDefault) Code() int {
 func (o *PatchProjectSettingsDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/settings][%d] PatchProjectSettings default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchProjectSettingsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -31,89 +31,109 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewGetRunArtifactParams creates a new GetRunArtifactParams object
-// with the default values initialized.
+// NewGetRunArtifactParams creates a new GetRunArtifactParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetRunArtifactParams() *GetRunArtifactParams {
-	var ()
 	return &GetRunArtifactParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetRunArtifactParamsWithTimeout creates a new GetRunArtifactParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetRunArtifactParamsWithTimeout(timeout time.Duration) *GetRunArtifactParams {
-	var ()
 	return &GetRunArtifactParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetRunArtifactParamsWithContext creates a new GetRunArtifactParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetRunArtifactParamsWithContext(ctx context.Context) *GetRunArtifactParams {
-	var ()
 	return &GetRunArtifactParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetRunArtifactParamsWithHTTPClient creates a new GetRunArtifactParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetRunArtifactParamsWithHTTPClient(client *http.Client) *GetRunArtifactParams {
-	var ()
 	return &GetRunArtifactParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetRunArtifactParams contains all the parameters to send to the API endpoint
-for the get run artifact operation typically these are written to a http.Request
+/* GetRunArtifactParams contains all the parameters to send to the API endpoint
+   for the get run artifact operation.
+
+   Typically these are written to a http.Request.
 */
 type GetRunArtifactParams struct {
 
-	/*Force
-	  Whether to force reload.
+	/* Force.
 
+	   Whether to force reload.
 	*/
 	Force *bool
-	/*Namespace
-	  namespace
 
+	/* Namespace.
+
+	   namespace
 	*/
 	Namespace string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Path
-	  Artifact filepath.
 
+	/* Path.
+
+	   Artifact filepath.
 	*/
 	Path *string
-	/*Project
-	  Project where the experiement will be assigned
 
+	/* Project.
+
+	   Project where the experiement will be assigned
 	*/
 	Project string
-	/*Stream
-	  Whether to stream the file.
 
+	/* Stream.
+
+	   Whether to stream the file.
 	*/
 	Stream *bool
-	/*UUID
-	  Unique integer identifier of the entity
 
+	/* UUID.
+
+	   Unique integer identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get run artifact params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunArtifactParams) WithDefaults() *GetRunArtifactParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get run artifact params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunArtifactParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get run artifact params
@@ -238,16 +258,17 @@ func (o *GetRunArtifactParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 
 		// query param force
 		var qrForce bool
+
 		if o.Force != nil {
 			qrForce = *o.Force
 		}
 		qForce := swag.FormatBool(qrForce)
 		if qForce != "" {
+
 			if err := r.SetQueryParam("force", qForce); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param namespace
@@ -264,16 +285,17 @@ func (o *GetRunArtifactParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 
 		// query param path
 		var qrPath string
+
 		if o.Path != nil {
 			qrPath = *o.Path
 		}
 		qPath := qrPath
 		if qPath != "" {
+
 			if err := r.SetQueryParam("path", qPath); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param project
@@ -285,16 +307,17 @@ func (o *GetRunArtifactParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 
 		// query param stream
 		var qrStream bool
+
 		if o.Stream != nil {
 			qrStream = *o.Stream
 		}
 		qStream := swag.FormatBool(qrStream)
 		if qStream != "" {
+
 			if err := r.SetQueryParam("stream", qStream); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param uuid

@@ -78,7 +78,7 @@ func NewGetTeamOK() *GetTeamOK {
 	return &GetTeamOK{}
 }
 
-/*GetTeamOK handles this case with default header values.
+/* GetTeamOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetTeamOK struct {
 func (o *GetTeamOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] getTeamOK  %+v", 200, o.Payload)
 }
-
 func (o *GetTeamOK) GetPayload() *service_model.V1Team {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetTeamNoContent() *GetTeamNoContent {
 	return &GetTeamNoContent{}
 }
 
-/*GetTeamNoContent handles this case with default header values.
+/* GetTeamNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetTeamNoContent struct {
 func (o *GetTeamNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] getTeamNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetTeamNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetTeamForbidden() *GetTeamForbidden {
 	return &GetTeamForbidden{}
 }
 
-/*GetTeamForbidden handles this case with default header values.
+/* GetTeamForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetTeamForbidden struct {
 func (o *GetTeamForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] getTeamForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetTeamForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetTeamNotFound() *GetTeamNotFound {
 	return &GetTeamNotFound{}
 }
 
-/*GetTeamNotFound handles this case with default header values.
+/* GetTeamNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetTeamNotFound struct {
 func (o *GetTeamNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] getTeamNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetTeamNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetTeamDefault(code int) *GetTeamDefault {
 	}
 }
 
-/*GetTeamDefault handles this case with default header values.
+/* GetTeamDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetTeamDefault) Code() int {
 func (o *GetTeamDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{name}][%d] GetTeam default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetTeamDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

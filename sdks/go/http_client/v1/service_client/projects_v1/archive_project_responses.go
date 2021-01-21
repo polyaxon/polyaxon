@@ -78,7 +78,7 @@ func NewArchiveProjectOK() *ArchiveProjectOK {
 	return &ArchiveProjectOK{}
 }
 
-/*ArchiveProjectOK handles this case with default header values.
+/* ArchiveProjectOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewArchiveProjectNoContent() *ArchiveProjectNoContent {
 	return &ArchiveProjectNoContent{}
 }
 
-/*ArchiveProjectNoContent handles this case with default header values.
+/* ArchiveProjectNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type ArchiveProjectNoContent struct {
 func (o *ArchiveProjectNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/archive][%d] archiveProjectNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ArchiveProjectNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewArchiveProjectForbidden() *ArchiveProjectForbidden {
 	return &ArchiveProjectForbidden{}
 }
 
-/*ArchiveProjectForbidden handles this case with default header values.
+/* ArchiveProjectForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type ArchiveProjectForbidden struct {
 func (o *ArchiveProjectForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/archive][%d] archiveProjectForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ArchiveProjectForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewArchiveProjectNotFound() *ArchiveProjectNotFound {
 	return &ArchiveProjectNotFound{}
 }
 
-/*ArchiveProjectNotFound handles this case with default header values.
+/* ArchiveProjectNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type ArchiveProjectNotFound struct {
 func (o *ArchiveProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/archive][%d] archiveProjectNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ArchiveProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewArchiveProjectDefault(code int) *ArchiveProjectDefault {
 	}
 }
 
-/*ArchiveProjectDefault handles this case with default header values.
+/* ArchiveProjectDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *ArchiveProjectDefault) Code() int {
 func (o *ArchiveProjectDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/archive][%d] ArchiveProject default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ArchiveProjectDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

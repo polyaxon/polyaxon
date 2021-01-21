@@ -78,7 +78,7 @@ func NewDisableProjectCIOK() *DisableProjectCIOK {
 	return &DisableProjectCIOK{}
 }
 
-/*DisableProjectCIOK handles this case with default header values.
+/* DisableProjectCIOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDisableProjectCINoContent() *DisableProjectCINoContent {
 	return &DisableProjectCINoContent{}
 }
 
-/*DisableProjectCINoContent handles this case with default header values.
+/* DisableProjectCINoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DisableProjectCINoContent struct {
 func (o *DisableProjectCINoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] disableProjectCINoContent  %+v", 204, o.Payload)
 }
-
 func (o *DisableProjectCINoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDisableProjectCIForbidden() *DisableProjectCIForbidden {
 	return &DisableProjectCIForbidden{}
 }
 
-/*DisableProjectCIForbidden handles this case with default header values.
+/* DisableProjectCIForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DisableProjectCIForbidden struct {
 func (o *DisableProjectCIForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] disableProjectCIForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DisableProjectCIForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDisableProjectCINotFound() *DisableProjectCINotFound {
 	return &DisableProjectCINotFound{}
 }
 
-/*DisableProjectCINotFound handles this case with default header values.
+/* DisableProjectCINotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DisableProjectCINotFound struct {
 func (o *DisableProjectCINotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] disableProjectCINotFound  %+v", 404, o.Payload)
 }
-
 func (o *DisableProjectCINotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDisableProjectCIDefault(code int) *DisableProjectCIDefault {
 	}
 }
 
-/*DisableProjectCIDefault handles this case with default header values.
+/* DisableProjectCIDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DisableProjectCIDefault) Code() int {
 func (o *DisableProjectCIDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{name}/ci][%d] DisableProjectCI default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DisableProjectCIDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewGetRunResourcesOK() *GetRunResourcesOK {
 	return &GetRunResourcesOK{}
 }
 
-/*GetRunResourcesOK handles this case with default header values.
+/* GetRunResourcesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunResourcesOK struct {
 func (o *GetRunResourcesOK) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources][%d] getRunResourcesOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunResourcesOK) GetPayload() *service_model.V1EventsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunResourcesNoContent() *GetRunResourcesNoContent {
 	return &GetRunResourcesNoContent{}
 }
 
-/*GetRunResourcesNoContent handles this case with default header values.
+/* GetRunResourcesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunResourcesNoContent struct {
 func (o *GetRunResourcesNoContent) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources][%d] getRunResourcesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunResourcesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunResourcesForbidden() *GetRunResourcesForbidden {
 	return &GetRunResourcesForbidden{}
 }
 
-/*GetRunResourcesForbidden handles this case with default header values.
+/* GetRunResourcesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunResourcesForbidden struct {
 func (o *GetRunResourcesForbidden) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources][%d] getRunResourcesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunResourcesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunResourcesNotFound() *GetRunResourcesNotFound {
 	return &GetRunResourcesNotFound{}
 }
 
-/*GetRunResourcesNotFound handles this case with default header values.
+/* GetRunResourcesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunResourcesNotFound struct {
 func (o *GetRunResourcesNotFound) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources][%d] getRunResourcesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunResourcesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunResourcesDefault(code int) *GetRunResourcesDefault {
 	}
 }
 
-/*GetRunResourcesDefault handles this case with default header values.
+/* GetRunResourcesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunResourcesDefault) Code() int {
 func (o *GetRunResourcesDefault) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources][%d] GetRunResources default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunResourcesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

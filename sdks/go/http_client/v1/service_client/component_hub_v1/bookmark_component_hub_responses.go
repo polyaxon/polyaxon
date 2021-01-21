@@ -78,7 +78,7 @@ func NewBookmarkComponentHubOK() *BookmarkComponentHubOK {
 	return &BookmarkComponentHubOK{}
 }
 
-/*BookmarkComponentHubOK handles this case with default header values.
+/* BookmarkComponentHubOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewBookmarkComponentHubNoContent() *BookmarkComponentHubNoContent {
 	return &BookmarkComponentHubNoContent{}
 }
 
-/*BookmarkComponentHubNoContent handles this case with default header values.
+/* BookmarkComponentHubNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type BookmarkComponentHubNoContent struct {
 func (o *BookmarkComponentHubNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/bookmark][%d] bookmarkComponentHubNoContent  %+v", 204, o.Payload)
 }
-
 func (o *BookmarkComponentHubNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewBookmarkComponentHubForbidden() *BookmarkComponentHubForbidden {
 	return &BookmarkComponentHubForbidden{}
 }
 
-/*BookmarkComponentHubForbidden handles this case with default header values.
+/* BookmarkComponentHubForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type BookmarkComponentHubForbidden struct {
 func (o *BookmarkComponentHubForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/bookmark][%d] bookmarkComponentHubForbidden  %+v", 403, o.Payload)
 }
-
 func (o *BookmarkComponentHubForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewBookmarkComponentHubNotFound() *BookmarkComponentHubNotFound {
 	return &BookmarkComponentHubNotFound{}
 }
 
-/*BookmarkComponentHubNotFound handles this case with default header values.
+/* BookmarkComponentHubNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type BookmarkComponentHubNotFound struct {
 func (o *BookmarkComponentHubNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/bookmark][%d] bookmarkComponentHubNotFound  %+v", 404, o.Payload)
 }
-
 func (o *BookmarkComponentHubNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewBookmarkComponentHubDefault(code int) *BookmarkComponentHubDefault {
 	}
 }
 
-/*BookmarkComponentHubDefault handles this case with default header values.
+/* BookmarkComponentHubDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *BookmarkComponentHubDefault) Code() int {
 func (o *BookmarkComponentHubDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/bookmark][%d] BookmarkComponentHub default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *BookmarkComponentHubDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -120,7 +121,6 @@ func (m *V1Component) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Component) validateCache(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Cache) { // not required
 		return nil
 	}
@@ -138,7 +138,6 @@ func (m *V1Component) validateCache(formats strfmt.Registry) error {
 }
 
 func (m *V1Component) validateHooks(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Hooks) { // not required
 		return nil
 	}
@@ -163,7 +162,6 @@ func (m *V1Component) validateHooks(formats strfmt.Registry) error {
 }
 
 func (m *V1Component) validateInputs(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Inputs) { // not required
 		return nil
 	}
@@ -188,7 +186,6 @@ func (m *V1Component) validateInputs(formats strfmt.Registry) error {
 }
 
 func (m *V1Component) validateOutputs(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Outputs) { // not required
 		return nil
 	}
@@ -213,7 +210,6 @@ func (m *V1Component) validateOutputs(formats strfmt.Registry) error {
 }
 
 func (m *V1Component) validatePlugins(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Plugins) { // not required
 		return nil
 	}
@@ -231,7 +227,6 @@ func (m *V1Component) validatePlugins(formats strfmt.Registry) error {
 }
 
 func (m *V1Component) validateTemplate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Template) { // not required
 		return nil
 	}
@@ -249,13 +244,160 @@ func (m *V1Component) validateTemplate(formats strfmt.Registry) error {
 }
 
 func (m *V1Component) validateTermination(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Termination) { // not required
 		return nil
 	}
 
 	if m.Termination != nil {
 		if err := m.Termination.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("termination")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 component based on the context it is used
+func (m *V1Component) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCache(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateHooks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateInputs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateOutputs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePlugins(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTemplate(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTermination(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Component) contextValidateCache(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Cache != nil {
+		if err := m.Cache.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cache")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Component) contextValidateHooks(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Hooks); i++ {
+
+		if m.Hooks[i] != nil {
+			if err := m.Hooks[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("hooks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Component) contextValidateInputs(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Inputs); i++ {
+
+		if m.Inputs[i] != nil {
+			if err := m.Inputs[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("inputs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Component) contextValidateOutputs(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Outputs); i++ {
+
+		if m.Outputs[i] != nil {
+			if err := m.Outputs[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("outputs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1Component) contextValidatePlugins(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Plugins != nil {
+		if err := m.Plugins.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("plugins")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Component) contextValidateTemplate(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Template != nil {
+		if err := m.Template.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("template")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Component) contextValidateTermination(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Termination != nil {
+		if err := m.Termination.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("termination")
 			}

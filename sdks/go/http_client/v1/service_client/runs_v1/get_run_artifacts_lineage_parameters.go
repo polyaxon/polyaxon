@@ -31,89 +31,113 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewGetRunArtifactsLineageParams creates a new GetRunArtifactsLineageParams object
-// with the default values initialized.
+// NewGetRunArtifactsLineageParams creates a new GetRunArtifactsLineageParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetRunArtifactsLineageParams() *GetRunArtifactsLineageParams {
-	var ()
 	return &GetRunArtifactsLineageParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetRunArtifactsLineageParamsWithTimeout creates a new GetRunArtifactsLineageParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetRunArtifactsLineageParamsWithTimeout(timeout time.Duration) *GetRunArtifactsLineageParams {
-	var ()
 	return &GetRunArtifactsLineageParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetRunArtifactsLineageParamsWithContext creates a new GetRunArtifactsLineageParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetRunArtifactsLineageParamsWithContext(ctx context.Context) *GetRunArtifactsLineageParams {
-	var ()
 	return &GetRunArtifactsLineageParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetRunArtifactsLineageParamsWithHTTPClient creates a new GetRunArtifactsLineageParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetRunArtifactsLineageParamsWithHTTPClient(client *http.Client) *GetRunArtifactsLineageParams {
-	var ()
 	return &GetRunArtifactsLineageParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetRunArtifactsLineageParams contains all the parameters to send to the API endpoint
-for the get run artifacts lineage operation typically these are written to a http.Request
+/* GetRunArtifactsLineageParams contains all the parameters to send to the API endpoint
+   for the get run artifacts lineage operation.
+
+   Typically these are written to a http.Request.
 */
 type GetRunArtifactsLineageParams struct {
 
-	/*Entity
-	  Entity name under namesapce
+	/* Entity.
 
+	   Entity name under namesapce
 	*/
 	Entity string
-	/*Limit
-	  Limit size.
 
+	/* Limit.
+
+	   Limit size.
+
+	   Format: int32
 	*/
 	Limit *int32
-	/*Offset
-	  Pagination offset.
 
+	/* Offset.
+
+	   Pagination offset.
+
+	   Format: int32
 	*/
 	Offset *int32
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Query
-	  Query filter the search.
 
+	/* Query.
+
+	   Query filter the search.
 	*/
 	Query *string
-	/*Sort
-	  Sort to order the search.
 
+	/* Sort.
+
+	   Sort to order the search.
 	*/
 	Sort *string
-	/*UUID
-	  SubEntity uuid
 
+	/* UUID.
+
+	   SubEntity uuid
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get run artifacts lineage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunArtifactsLineageParams) WithDefaults() *GetRunArtifactsLineageParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get run artifacts lineage params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunArtifactsLineageParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get run artifacts lineage params
@@ -243,32 +267,34 @@ func (o *GetRunArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest, r
 
 		// query param limit
 		var qrLimit int32
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := swag.FormatInt32(qrLimit)
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Offset != nil {
 
 		// query param offset
 		var qrOffset int32
+
 		if o.Offset != nil {
 			qrOffset = *o.Offset
 		}
 		qOffset := swag.FormatInt32(qrOffset)
 		if qOffset != "" {
+
 			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner
@@ -280,32 +306,34 @@ func (o *GetRunArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest, r
 
 		// query param query
 		var qrQuery string
+
 		if o.Query != nil {
 			qrQuery = *o.Query
 		}
 		qQuery := qrQuery
 		if qQuery != "" {
+
 			if err := r.SetQueryParam("query", qQuery); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Sort != nil {
 
 		// query param sort
 		var qrSort string
+
 		if o.Sort != nil {
 			qrSort = *o.Sort
 		}
 		qSort := qrSort
 		if qSort != "" {
+
 			if err := r.SetQueryParam("sort", qSort); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param uuid

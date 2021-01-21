@@ -32,64 +32,79 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateComponentHubParams creates a new CreateComponentHubParams object
-// with the default values initialized.
+// NewCreateComponentHubParams creates a new CreateComponentHubParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateComponentHubParams() *CreateComponentHubParams {
-	var ()
 	return &CreateComponentHubParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateComponentHubParamsWithTimeout creates a new CreateComponentHubParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateComponentHubParamsWithTimeout(timeout time.Duration) *CreateComponentHubParams {
-	var ()
 	return &CreateComponentHubParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateComponentHubParamsWithContext creates a new CreateComponentHubParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateComponentHubParamsWithContext(ctx context.Context) *CreateComponentHubParams {
-	var ()
 	return &CreateComponentHubParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateComponentHubParamsWithHTTPClient creates a new CreateComponentHubParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateComponentHubParamsWithHTTPClient(client *http.Client) *CreateComponentHubParams {
-	var ()
 	return &CreateComponentHubParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateComponentHubParams contains all the parameters to send to the API endpoint
-for the create component hub operation typically these are written to a http.Request
+/* CreateComponentHubParams contains all the parameters to send to the API endpoint
+   for the create component hub operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateComponentHubParams struct {
 
-	/*Body
-	  Component body
+	/* Body.
 
+	   Component body
 	*/
 	Body *service_model.V1ComponentHub
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create component hub params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateComponentHubParams) WithDefaults() *CreateComponentHubParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create component hub params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateComponentHubParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create component hub params
@@ -154,7 +169,6 @@ func (o *CreateComponentHubParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

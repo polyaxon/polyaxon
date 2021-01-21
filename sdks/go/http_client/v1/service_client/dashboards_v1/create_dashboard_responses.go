@@ -78,7 +78,7 @@ func NewCreateDashboardOK() *CreateDashboardOK {
 	return &CreateDashboardOK{}
 }
 
-/*CreateDashboardOK handles this case with default header values.
+/* CreateDashboardOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateDashboardOK struct {
 func (o *CreateDashboardOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/dashboards][%d] createDashboardOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateDashboardOK) GetPayload() *service_model.V1Dashboard {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateDashboardNoContent() *CreateDashboardNoContent {
 	return &CreateDashboardNoContent{}
 }
 
-/*CreateDashboardNoContent handles this case with default header values.
+/* CreateDashboardNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateDashboardNoContent struct {
 func (o *CreateDashboardNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/dashboards][%d] createDashboardNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateDashboardNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateDashboardForbidden() *CreateDashboardForbidden {
 	return &CreateDashboardForbidden{}
 }
 
-/*CreateDashboardForbidden handles this case with default header values.
+/* CreateDashboardForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateDashboardForbidden struct {
 func (o *CreateDashboardForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/dashboards][%d] createDashboardForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateDashboardForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateDashboardNotFound() *CreateDashboardNotFound {
 	return &CreateDashboardNotFound{}
 }
 
-/*CreateDashboardNotFound handles this case with default header values.
+/* CreateDashboardNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateDashboardNotFound struct {
 func (o *CreateDashboardNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/dashboards][%d] createDashboardNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateDashboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateDashboardDefault(code int) *CreateDashboardDefault {
 	}
 }
 
-/*CreateDashboardDefault handles this case with default header values.
+/* CreateDashboardDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateDashboardDefault) Code() int {
 func (o *CreateDashboardDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/dashboards][%d] CreateDashboard default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateDashboardDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

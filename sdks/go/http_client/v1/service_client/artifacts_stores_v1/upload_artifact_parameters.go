@@ -31,79 +31,97 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewUploadArtifactParams creates a new UploadArtifactParams object
-// with the default values initialized.
+// NewUploadArtifactParams creates a new UploadArtifactParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUploadArtifactParams() *UploadArtifactParams {
-	var ()
 	return &UploadArtifactParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUploadArtifactParamsWithTimeout creates a new UploadArtifactParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUploadArtifactParamsWithTimeout(timeout time.Duration) *UploadArtifactParams {
-	var ()
 	return &UploadArtifactParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUploadArtifactParamsWithContext creates a new UploadArtifactParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUploadArtifactParamsWithContext(ctx context.Context) *UploadArtifactParams {
-	var ()
 	return &UploadArtifactParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUploadArtifactParamsWithHTTPClient creates a new UploadArtifactParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUploadArtifactParamsWithHTTPClient(client *http.Client) *UploadArtifactParams {
-	var ()
 	return &UploadArtifactParams{
 		HTTPClient: client,
 	}
 }
 
-/*UploadArtifactParams contains all the parameters to send to the API endpoint
-for the upload artifact operation typically these are written to a http.Request
+/* UploadArtifactParams contains all the parameters to send to the API endpoint
+   for the upload artifact operation.
+
+   Typically these are written to a http.Request.
 */
 type UploadArtifactParams struct {
 
-	/*Overwrite
-	  File path query params.
+	/* Overwrite.
 
+	   File path query params.
 	*/
 	Overwrite *bool
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Path
-	  File path query params.
 
+	/* Path.
+
+	   File path query params.
 	*/
 	Path *string
-	/*Uploadfile
-	  The file to upload.
 
+	/* Uploadfile.
+
+	   The file to upload.
 	*/
 	Uploadfile runtime.NamedReadCloser
-	/*UUID
-	  Unique integer identifier of the entity
 
+	/* UUID.
+
+	   Unique integer identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the upload artifact params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UploadArtifactParams) WithDefaults() *UploadArtifactParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the upload artifact params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UploadArtifactParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the upload artifact params
@@ -206,16 +224,17 @@ func (o *UploadArtifactParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 
 		// query param overwrite
 		var qrOverwrite bool
+
 		if o.Overwrite != nil {
 			qrOverwrite = *o.Overwrite
 		}
 		qOverwrite := swag.FormatBool(qrOverwrite)
 		if qOverwrite != "" {
+
 			if err := r.SetQueryParam("overwrite", qOverwrite); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner
@@ -227,18 +246,18 @@ func (o *UploadArtifactParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 
 		// query param path
 		var qrPath string
+
 		if o.Path != nil {
 			qrPath = *o.Path
 		}
 		qPath := qrPath
 		if qPath != "" {
+
 			if err := r.SetQueryParam("path", qPath); err != nil {
 				return err
 			}
 		}
-
 	}
-
 	// form file param uploadfile
 	if err := r.SetFileParam("uploadfile", o.Uploadfile); err != nil {
 		return err

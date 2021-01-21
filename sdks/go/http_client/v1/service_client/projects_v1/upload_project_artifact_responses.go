@@ -59,7 +59,6 @@ func (o *UploadProjectArtifactReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
-
 	default:
 		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
@@ -70,7 +69,7 @@ func NewUploadProjectArtifactOK() *UploadProjectArtifactOK {
 	return &UploadProjectArtifactOK{}
 }
 
-/*UploadProjectArtifactOK handles this case with default header values.
+/* UploadProjectArtifactOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -91,7 +90,7 @@ func NewUploadProjectArtifactNoContent() *UploadProjectArtifactNoContent {
 	return &UploadProjectArtifactNoContent{}
 }
 
-/*UploadProjectArtifactNoContent handles this case with default header values.
+/* UploadProjectArtifactNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -102,7 +101,6 @@ type UploadProjectArtifactNoContent struct {
 func (o *UploadProjectArtifactNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/artifacts/{uuid}/upload][%d] uploadProjectArtifactNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UploadProjectArtifactNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -122,7 +120,7 @@ func NewUploadProjectArtifactForbidden() *UploadProjectArtifactForbidden {
 	return &UploadProjectArtifactForbidden{}
 }
 
-/*UploadProjectArtifactForbidden handles this case with default header values.
+/* UploadProjectArtifactForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -133,7 +131,6 @@ type UploadProjectArtifactForbidden struct {
 func (o *UploadProjectArtifactForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/artifacts/{uuid}/upload][%d] uploadProjectArtifactForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UploadProjectArtifactForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -153,7 +150,7 @@ func NewUploadProjectArtifactNotFound() *UploadProjectArtifactNotFound {
 	return &UploadProjectArtifactNotFound{}
 }
 
-/*UploadProjectArtifactNotFound handles this case with default header values.
+/* UploadProjectArtifactNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -164,7 +161,6 @@ type UploadProjectArtifactNotFound struct {
 func (o *UploadProjectArtifactNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/artifacts/{uuid}/upload][%d] uploadProjectArtifactNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UploadProjectArtifactNotFound) GetPayload() interface{} {
 	return o.Payload
 }

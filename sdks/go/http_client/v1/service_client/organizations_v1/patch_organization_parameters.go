@@ -32,64 +32,79 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchOrganizationParams creates a new PatchOrganizationParams object
-// with the default values initialized.
+// NewPatchOrganizationParams creates a new PatchOrganizationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchOrganizationParams() *PatchOrganizationParams {
-	var ()
 	return &PatchOrganizationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchOrganizationParamsWithTimeout creates a new PatchOrganizationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchOrganizationParamsWithTimeout(timeout time.Duration) *PatchOrganizationParams {
-	var ()
 	return &PatchOrganizationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchOrganizationParamsWithContext creates a new PatchOrganizationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchOrganizationParamsWithContext(ctx context.Context) *PatchOrganizationParams {
-	var ()
 	return &PatchOrganizationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchOrganizationParamsWithHTTPClient creates a new PatchOrganizationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchOrganizationParamsWithHTTPClient(client *http.Client) *PatchOrganizationParams {
-	var ()
 	return &PatchOrganizationParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchOrganizationParams contains all the parameters to send to the API endpoint
-for the patch organization operation typically these are written to a http.Request
+/* PatchOrganizationParams contains all the parameters to send to the API endpoint
+   for the patch organization operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchOrganizationParams struct {
 
-	/*Body
-	  Organization body
+	/* Body.
 
+	   Organization body
 	*/
 	Body *service_model.V1Organization
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch organization params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchOrganizationParams) WithDefaults() *PatchOrganizationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch organization params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchOrganizationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch organization params
@@ -154,7 +169,6 @@ func (o *PatchOrganizationParams) WriteToRequest(r runtime.ClientRequest, reg st
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

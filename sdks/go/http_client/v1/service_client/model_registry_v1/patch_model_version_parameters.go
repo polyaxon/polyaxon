@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchModelVersionParams creates a new PatchModelVersionParams object
-// with the default values initialized.
+// NewPatchModelVersionParams creates a new PatchModelVersionParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchModelVersionParams() *PatchModelVersionParams {
-	var ()
 	return &PatchModelVersionParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchModelVersionParamsWithTimeout creates a new PatchModelVersionParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchModelVersionParamsWithTimeout(timeout time.Duration) *PatchModelVersionParams {
-	var ()
 	return &PatchModelVersionParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchModelVersionParamsWithContext creates a new PatchModelVersionParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchModelVersionParamsWithContext(ctx context.Context) *PatchModelVersionParams {
-	var ()
 	return &PatchModelVersionParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchModelVersionParamsWithHTTPClient creates a new PatchModelVersionParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchModelVersionParamsWithHTTPClient(client *http.Client) *PatchModelVersionParams {
-	var ()
 	return &PatchModelVersionParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchModelVersionParams contains all the parameters to send to the API endpoint
-for the patch model version operation typically these are written to a http.Request
+/* PatchModelVersionParams contains all the parameters to send to the API endpoint
+   for the patch model version operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchModelVersionParams struct {
 
-	/*Body
-	  Model version body
+	/* Body.
 
+	   Model version body
 	*/
 	Body *service_model.V1ModelVersion
-	/*Model
-	  Model name
 
+	/* Model.
+
+	   Model name
 	*/
 	Model string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*VersionName
-	  Optional component name, should be a valid fully qualified value: name[:version]
 
+	/* VersionName.
+
+	   Optional component name, should be a valid fully qualified value: name[:version]
 	*/
 	VersionName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchModelVersionParams) WithDefaults() *PatchModelVersionParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch model version params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchModelVersionParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch model version params
@@ -186,7 +203,6 @@ func (o *PatchModelVersionParams) WriteToRequest(r runtime.ClientRequest, reg st
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

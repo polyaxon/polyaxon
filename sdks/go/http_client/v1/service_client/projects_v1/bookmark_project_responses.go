@@ -78,7 +78,7 @@ func NewBookmarkProjectOK() *BookmarkProjectOK {
 	return &BookmarkProjectOK{}
 }
 
-/*BookmarkProjectOK handles this case with default header values.
+/* BookmarkProjectOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewBookmarkProjectNoContent() *BookmarkProjectNoContent {
 	return &BookmarkProjectNoContent{}
 }
 
-/*BookmarkProjectNoContent handles this case with default header values.
+/* BookmarkProjectNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type BookmarkProjectNoContent struct {
 func (o *BookmarkProjectNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] bookmarkProjectNoContent  %+v", 204, o.Payload)
 }
-
 func (o *BookmarkProjectNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewBookmarkProjectForbidden() *BookmarkProjectForbidden {
 	return &BookmarkProjectForbidden{}
 }
 
-/*BookmarkProjectForbidden handles this case with default header values.
+/* BookmarkProjectForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type BookmarkProjectForbidden struct {
 func (o *BookmarkProjectForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] bookmarkProjectForbidden  %+v", 403, o.Payload)
 }
-
 func (o *BookmarkProjectForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewBookmarkProjectNotFound() *BookmarkProjectNotFound {
 	return &BookmarkProjectNotFound{}
 }
 
-/*BookmarkProjectNotFound handles this case with default header values.
+/* BookmarkProjectNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type BookmarkProjectNotFound struct {
 func (o *BookmarkProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] bookmarkProjectNotFound  %+v", 404, o.Payload)
 }
-
 func (o *BookmarkProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewBookmarkProjectDefault(code int) *BookmarkProjectDefault {
 	}
 }
 
-/*BookmarkProjectDefault handles this case with default header values.
+/* BookmarkProjectDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *BookmarkProjectDefault) Code() int {
 func (o *BookmarkProjectDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{name}/bookmark][%d] BookmarkProject default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *BookmarkProjectDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

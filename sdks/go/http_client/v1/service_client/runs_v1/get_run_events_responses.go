@@ -78,7 +78,7 @@ func NewGetRunEventsOK() *GetRunEventsOK {
 	return &GetRunEventsOK{}
 }
 
-/*GetRunEventsOK handles this case with default header values.
+/* GetRunEventsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunEventsOK struct {
 func (o *GetRunEventsOK) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}][%d] getRunEventsOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunEventsOK) GetPayload() *service_model.V1EventsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunEventsNoContent() *GetRunEventsNoContent {
 	return &GetRunEventsNoContent{}
 }
 
-/*GetRunEventsNoContent handles this case with default header values.
+/* GetRunEventsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunEventsNoContent struct {
 func (o *GetRunEventsNoContent) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}][%d] getRunEventsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunEventsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunEventsForbidden() *GetRunEventsForbidden {
 	return &GetRunEventsForbidden{}
 }
 
-/*GetRunEventsForbidden handles this case with default header values.
+/* GetRunEventsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunEventsForbidden struct {
 func (o *GetRunEventsForbidden) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}][%d] getRunEventsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunEventsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunEventsNotFound() *GetRunEventsNotFound {
 	return &GetRunEventsNotFound{}
 }
 
-/*GetRunEventsNotFound handles this case with default header values.
+/* GetRunEventsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunEventsNotFound struct {
 func (o *GetRunEventsNotFound) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}][%d] getRunEventsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunEventsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunEventsDefault(code int) *GetRunEventsDefault {
 	}
 }
 
-/*GetRunEventsDefault handles this case with default header values.
+/* GetRunEventsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunEventsDefault) Code() int {
 func (o *GetRunEventsDefault) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}][%d] GetRunEvents default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunEventsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

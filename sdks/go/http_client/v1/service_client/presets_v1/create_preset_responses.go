@@ -78,7 +78,7 @@ func NewCreatePresetOK() *CreatePresetOK {
 	return &CreatePresetOK{}
 }
 
-/*CreatePresetOK handles this case with default header values.
+/* CreatePresetOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreatePresetOK struct {
 func (o *CreatePresetOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/presets][%d] createPresetOK  %+v", 200, o.Payload)
 }
-
 func (o *CreatePresetOK) GetPayload() *service_model.V1Preset {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreatePresetNoContent() *CreatePresetNoContent {
 	return &CreatePresetNoContent{}
 }
 
-/*CreatePresetNoContent handles this case with default header values.
+/* CreatePresetNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreatePresetNoContent struct {
 func (o *CreatePresetNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/presets][%d] createPresetNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreatePresetNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreatePresetForbidden() *CreatePresetForbidden {
 	return &CreatePresetForbidden{}
 }
 
-/*CreatePresetForbidden handles this case with default header values.
+/* CreatePresetForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreatePresetForbidden struct {
 func (o *CreatePresetForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/presets][%d] createPresetForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreatePresetForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreatePresetNotFound() *CreatePresetNotFound {
 	return &CreatePresetNotFound{}
 }
 
-/*CreatePresetNotFound handles this case with default header values.
+/* CreatePresetNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreatePresetNotFound struct {
 func (o *CreatePresetNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/presets][%d] createPresetNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreatePresetNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreatePresetDefault(code int) *CreatePresetDefault {
 	}
 }
 
-/*CreatePresetDefault handles this case with default header values.
+/* CreatePresetDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreatePresetDefault) Code() int {
 func (o *CreatePresetDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/presets][%d] CreatePreset default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreatePresetDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

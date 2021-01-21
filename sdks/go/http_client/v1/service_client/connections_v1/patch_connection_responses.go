@@ -78,7 +78,7 @@ func NewPatchConnectionOK() *PatchConnectionOK {
 	return &PatchConnectionOK{}
 }
 
-/*PatchConnectionOK handles this case with default header values.
+/* PatchConnectionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchConnectionOK struct {
 func (o *PatchConnectionOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] patchConnectionOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchConnectionOK) GetPayload() *service_model.V1ConnectionResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchConnectionNoContent() *PatchConnectionNoContent {
 	return &PatchConnectionNoContent{}
 }
 
-/*PatchConnectionNoContent handles this case with default header values.
+/* PatchConnectionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchConnectionNoContent struct {
 func (o *PatchConnectionNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] patchConnectionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchConnectionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchConnectionForbidden() *PatchConnectionForbidden {
 	return &PatchConnectionForbidden{}
 }
 
-/*PatchConnectionForbidden handles this case with default header values.
+/* PatchConnectionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchConnectionForbidden struct {
 func (o *PatchConnectionForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] patchConnectionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchConnectionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchConnectionNotFound() *PatchConnectionNotFound {
 	return &PatchConnectionNotFound{}
 }
 
-/*PatchConnectionNotFound handles this case with default header values.
+/* PatchConnectionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchConnectionNotFound struct {
 func (o *PatchConnectionNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] patchConnectionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchConnectionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchConnectionDefault(code int) *PatchConnectionDefault {
 	}
 }
 
-/*PatchConnectionDefault handles this case with default header values.
+/* PatchConnectionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchConnectionDefault) Code() int {
 func (o *PatchConnectionDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] PatchConnection default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchConnectionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

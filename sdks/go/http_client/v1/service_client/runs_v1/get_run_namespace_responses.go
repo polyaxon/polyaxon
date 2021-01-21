@@ -78,7 +78,7 @@ func NewGetRunNamespaceOK() *GetRunNamespaceOK {
 	return &GetRunNamespaceOK{}
 }
 
-/*GetRunNamespaceOK handles this case with default header values.
+/* GetRunNamespaceOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunNamespaceOK struct {
 func (o *GetRunNamespaceOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] getRunNamespaceOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunNamespaceOK) GetPayload() *service_model.V1RunSettings {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunNamespaceNoContent() *GetRunNamespaceNoContent {
 	return &GetRunNamespaceNoContent{}
 }
 
-/*GetRunNamespaceNoContent handles this case with default header values.
+/* GetRunNamespaceNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunNamespaceNoContent struct {
 func (o *GetRunNamespaceNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] getRunNamespaceNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunNamespaceNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunNamespaceForbidden() *GetRunNamespaceForbidden {
 	return &GetRunNamespaceForbidden{}
 }
 
-/*GetRunNamespaceForbidden handles this case with default header values.
+/* GetRunNamespaceForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunNamespaceForbidden struct {
 func (o *GetRunNamespaceForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] getRunNamespaceForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunNamespaceForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunNamespaceNotFound() *GetRunNamespaceNotFound {
 	return &GetRunNamespaceNotFound{}
 }
 
-/*GetRunNamespaceNotFound handles this case with default header values.
+/* GetRunNamespaceNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunNamespaceNotFound struct {
 func (o *GetRunNamespaceNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] getRunNamespaceNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunNamespaceNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunNamespaceDefault(code int) *GetRunNamespaceDefault {
 	}
 }
 
-/*GetRunNamespaceDefault handles this case with default header values.
+/* GetRunNamespaceDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunNamespaceDefault) Code() int {
 func (o *GetRunNamespaceDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/namespace][%d] GetRunNamespace default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunNamespaceDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

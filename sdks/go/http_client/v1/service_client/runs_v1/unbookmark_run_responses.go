@@ -78,7 +78,7 @@ func NewUnbookmarkRunOK() *UnbookmarkRunOK {
 	return &UnbookmarkRunOK{}
 }
 
-/*UnbookmarkRunOK handles this case with default header values.
+/* UnbookmarkRunOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewUnbookmarkRunNoContent() *UnbookmarkRunNoContent {
 	return &UnbookmarkRunNoContent{}
 }
 
-/*UnbookmarkRunNoContent handles this case with default header values.
+/* UnbookmarkRunNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type UnbookmarkRunNoContent struct {
 func (o *UnbookmarkRunNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] unbookmarkRunNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UnbookmarkRunNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewUnbookmarkRunForbidden() *UnbookmarkRunForbidden {
 	return &UnbookmarkRunForbidden{}
 }
 
-/*UnbookmarkRunForbidden handles this case with default header values.
+/* UnbookmarkRunForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type UnbookmarkRunForbidden struct {
 func (o *UnbookmarkRunForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] unbookmarkRunForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UnbookmarkRunForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewUnbookmarkRunNotFound() *UnbookmarkRunNotFound {
 	return &UnbookmarkRunNotFound{}
 }
 
-/*UnbookmarkRunNotFound handles this case with default header values.
+/* UnbookmarkRunNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type UnbookmarkRunNotFound struct {
 func (o *UnbookmarkRunNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] unbookmarkRunNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UnbookmarkRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewUnbookmarkRunDefault(code int) *UnbookmarkRunDefault {
 	}
 }
 
-/*UnbookmarkRunDefault handles this case with default header values.
+/* UnbookmarkRunDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *UnbookmarkRunDefault) Code() int {
 func (o *UnbookmarkRunDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{entity}/runs/{uuid}/unbookmark][%d] UnbookmarkRun default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UnbookmarkRunDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

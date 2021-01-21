@@ -78,7 +78,7 @@ func NewPatchComponentVersionOK() *PatchComponentVersionOK {
 	return &PatchComponentVersionOK{}
 }
 
-/*PatchComponentVersionOK handles this case with default header values.
+/* PatchComponentVersionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchComponentVersionOK struct {
 func (o *PatchComponentVersionOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] patchComponentVersionOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchComponentVersionOK) GetPayload() *service_model.V1ComponentVersion {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchComponentVersionNoContent() *PatchComponentVersionNoContent {
 	return &PatchComponentVersionNoContent{}
 }
 
-/*PatchComponentVersionNoContent handles this case with default header values.
+/* PatchComponentVersionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchComponentVersionNoContent struct {
 func (o *PatchComponentVersionNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] patchComponentVersionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchComponentVersionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchComponentVersionForbidden() *PatchComponentVersionForbidden {
 	return &PatchComponentVersionForbidden{}
 }
 
-/*PatchComponentVersionForbidden handles this case with default header values.
+/* PatchComponentVersionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchComponentVersionForbidden struct {
 func (o *PatchComponentVersionForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] patchComponentVersionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchComponentVersionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchComponentVersionNotFound() *PatchComponentVersionNotFound {
 	return &PatchComponentVersionNotFound{}
 }
 
-/*PatchComponentVersionNotFound handles this case with default header values.
+/* PatchComponentVersionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchComponentVersionNotFound struct {
 func (o *PatchComponentVersionNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] patchComponentVersionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchComponentVersionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchComponentVersionDefault(code int) *PatchComponentVersionDefault {
 	}
 }
 
-/*PatchComponentVersionDefault handles this case with default header values.
+/* PatchComponentVersionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchComponentVersionDefault) Code() int {
 func (o *PatchComponentVersionDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/hub/{component}/versions/{version.name}][%d] PatchComponentVersion default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchComponentVersionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

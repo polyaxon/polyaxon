@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewRestartRunParams creates a new RestartRunParams object
-// with the default values initialized.
+// NewRestartRunParams creates a new RestartRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewRestartRunParams() *RestartRunParams {
-	var ()
 	return &RestartRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewRestartRunParamsWithTimeout creates a new RestartRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewRestartRunParamsWithTimeout(timeout time.Duration) *RestartRunParams {
-	var ()
 	return &RestartRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewRestartRunParamsWithContext creates a new RestartRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewRestartRunParamsWithContext(ctx context.Context) *RestartRunParams {
-	var ()
 	return &RestartRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewRestartRunParamsWithHTTPClient creates a new RestartRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewRestartRunParamsWithHTTPClient(client *http.Client) *RestartRunParams {
-	var ()
 	return &RestartRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*RestartRunParams contains all the parameters to send to the API endpoint
-for the restart run operation typically these are written to a http.Request
+/* RestartRunParams contains all the parameters to send to the API endpoint
+   for the restart run operation.
+
+   Typically these are written to a http.Request.
 */
 type RestartRunParams struct {
 
-	/*Body
-	  Run object
+	/* Body.
 
+	   Run object
 	*/
 	Body *service_model.V1Run
-	/*EntityEntity
-	  Entity: project name, hub name, registry name, ...
 
+	/* EntityEntity.
+
+	   Entity: project name, hub name, registry name, ...
 	*/
 	EntityEntity string
-	/*EntityOwner
-	  Owner of the namespace
 
+	/* EntityOwner.
+
+	   Owner of the namespace
 	*/
 	EntityOwner string
-	/*EntityUUID
-	  Uuid identifier of the sub-entity
 
+	/* EntityUUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	EntityUUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the restart run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RestartRunParams) WithDefaults() *RestartRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the restart run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RestartRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the restart run params
@@ -186,7 +203,6 @@ func (o *RestartRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

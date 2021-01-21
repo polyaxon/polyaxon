@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetModelVersionStagesParams creates a new GetModelVersionStagesParams object
-// with the default values initialized.
+// NewGetModelVersionStagesParams creates a new GetModelVersionStagesParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetModelVersionStagesParams() *GetModelVersionStagesParams {
-	var ()
 	return &GetModelVersionStagesParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetModelVersionStagesParamsWithTimeout creates a new GetModelVersionStagesParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetModelVersionStagesParamsWithTimeout(timeout time.Duration) *GetModelVersionStagesParams {
-	var ()
 	return &GetModelVersionStagesParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetModelVersionStagesParamsWithContext creates a new GetModelVersionStagesParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetModelVersionStagesParamsWithContext(ctx context.Context) *GetModelVersionStagesParams {
-	var ()
 	return &GetModelVersionStagesParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetModelVersionStagesParamsWithHTTPClient creates a new GetModelVersionStagesParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetModelVersionStagesParamsWithHTTPClient(client *http.Client) *GetModelVersionStagesParams {
-	var ()
 	return &GetModelVersionStagesParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetModelVersionStagesParams contains all the parameters to send to the API endpoint
-for the get model version stages operation typically these are written to a http.Request
+/* GetModelVersionStagesParams contains all the parameters to send to the API endpoint
+   for the get model version stages operation.
+
+   Typically these are written to a http.Request.
 */
 type GetModelVersionStagesParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Name
-	  Sub-entity name
 
+	/* Name.
+
+	   Sub-entity name
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get model version stages params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetModelVersionStagesParams) WithDefaults() *GetModelVersionStagesParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get model version stages params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetModelVersionStagesParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get model version stages params

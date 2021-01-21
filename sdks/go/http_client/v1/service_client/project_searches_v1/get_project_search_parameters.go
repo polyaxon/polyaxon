@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetProjectSearchParams creates a new GetProjectSearchParams object
-// with the default values initialized.
+// NewGetProjectSearchParams creates a new GetProjectSearchParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetProjectSearchParams() *GetProjectSearchParams {
-	var ()
 	return &GetProjectSearchParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetProjectSearchParamsWithTimeout creates a new GetProjectSearchParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetProjectSearchParamsWithTimeout(timeout time.Duration) *GetProjectSearchParams {
-	var ()
 	return &GetProjectSearchParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetProjectSearchParamsWithContext creates a new GetProjectSearchParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetProjectSearchParamsWithContext(ctx context.Context) *GetProjectSearchParams {
-	var ()
 	return &GetProjectSearchParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetProjectSearchParamsWithHTTPClient creates a new GetProjectSearchParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetProjectSearchParamsWithHTTPClient(client *http.Client) *GetProjectSearchParams {
-	var ()
 	return &GetProjectSearchParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetProjectSearchParams contains all the parameters to send to the API endpoint
-for the get project search operation typically these are written to a http.Request
+/* GetProjectSearchParams contains all the parameters to send to the API endpoint
+   for the get project search operation.
+
+   Typically these are written to a http.Request.
 */
 type GetProjectSearchParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get project search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetProjectSearchParams) WithDefaults() *GetProjectSearchParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get project search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetProjectSearchParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get project search params

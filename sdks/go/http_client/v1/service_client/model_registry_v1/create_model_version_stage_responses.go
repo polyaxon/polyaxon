@@ -78,7 +78,7 @@ func NewCreateModelVersionStageOK() *CreateModelVersionStageOK {
 	return &CreateModelVersionStageOK{}
 }
 
-/*CreateModelVersionStageOK handles this case with default header values.
+/* CreateModelVersionStageOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateModelVersionStageOK struct {
 func (o *CreateModelVersionStageOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] createModelVersionStageOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateModelVersionStageOK) GetPayload() *service_model.V1Stage {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateModelVersionStageNoContent() *CreateModelVersionStageNoContent {
 	return &CreateModelVersionStageNoContent{}
 }
 
-/*CreateModelVersionStageNoContent handles this case with default header values.
+/* CreateModelVersionStageNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateModelVersionStageNoContent struct {
 func (o *CreateModelVersionStageNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] createModelVersionStageNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateModelVersionStageNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateModelVersionStageForbidden() *CreateModelVersionStageForbidden {
 	return &CreateModelVersionStageForbidden{}
 }
 
-/*CreateModelVersionStageForbidden handles this case with default header values.
+/* CreateModelVersionStageForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateModelVersionStageForbidden struct {
 func (o *CreateModelVersionStageForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] createModelVersionStageForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateModelVersionStageForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateModelVersionStageNotFound() *CreateModelVersionStageNotFound {
 	return &CreateModelVersionStageNotFound{}
 }
 
-/*CreateModelVersionStageNotFound handles this case with default header values.
+/* CreateModelVersionStageNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateModelVersionStageNotFound struct {
 func (o *CreateModelVersionStageNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] createModelVersionStageNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateModelVersionStageNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateModelVersionStageDefault(code int) *CreateModelVersionStageDefault
 	}
 }
 
-/*CreateModelVersionStageDefault handles this case with default header values.
+/* CreateModelVersionStageDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateModelVersionStageDefault) Code() int {
 func (o *CreateModelVersionStageDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{entity}/versions/{name}/stages][%d] CreateModelVersionStage default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateModelVersionStageDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteSearchParams creates a new DeleteSearchParams object
-// with the default values initialized.
+// NewDeleteSearchParams creates a new DeleteSearchParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteSearchParams() *DeleteSearchParams {
-	var ()
 	return &DeleteSearchParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteSearchParamsWithTimeout creates a new DeleteSearchParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteSearchParamsWithTimeout(timeout time.Duration) *DeleteSearchParams {
-	var ()
 	return &DeleteSearchParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteSearchParamsWithContext creates a new DeleteSearchParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteSearchParamsWithContext(ctx context.Context) *DeleteSearchParams {
-	var ()
 	return &DeleteSearchParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteSearchParamsWithHTTPClient creates a new DeleteSearchParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteSearchParamsWithHTTPClient(client *http.Client) *DeleteSearchParams {
-	var ()
 	return &DeleteSearchParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteSearchParams contains all the parameters to send to the API endpoint
-for the delete search operation typically these are written to a http.Request
+/* DeleteSearchParams contains all the parameters to send to the API endpoint
+   for the delete search operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteSearchParams struct {
 
-	/*Owner
-	  Owner of the namespace
+	/* Owner.
 
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteSearchParams) WithDefaults() *DeleteSearchParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete search params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteSearchParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete search params

@@ -78,7 +78,7 @@ func NewDeleteComponentHubOK() *DeleteComponentHubOK {
 	return &DeleteComponentHubOK{}
 }
 
-/*DeleteComponentHubOK handles this case with default header values.
+/* DeleteComponentHubOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteComponentHubNoContent() *DeleteComponentHubNoContent {
 	return &DeleteComponentHubNoContent{}
 }
 
-/*DeleteComponentHubNoContent handles this case with default header values.
+/* DeleteComponentHubNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteComponentHubNoContent struct {
 func (o *DeleteComponentHubNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] deleteComponentHubNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteComponentHubNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteComponentHubForbidden() *DeleteComponentHubForbidden {
 	return &DeleteComponentHubForbidden{}
 }
 
-/*DeleteComponentHubForbidden handles this case with default header values.
+/* DeleteComponentHubForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteComponentHubForbidden struct {
 func (o *DeleteComponentHubForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] deleteComponentHubForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteComponentHubForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteComponentHubNotFound() *DeleteComponentHubNotFound {
 	return &DeleteComponentHubNotFound{}
 }
 
-/*DeleteComponentHubNotFound handles this case with default header values.
+/* DeleteComponentHubNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteComponentHubNotFound struct {
 func (o *DeleteComponentHubNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] deleteComponentHubNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteComponentHubNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteComponentHubDefault(code int) *DeleteComponentHubDefault {
 	}
 }
 
-/*DeleteComponentHubDefault handles this case with default header values.
+/* DeleteComponentHubDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteComponentHubDefault) Code() int {
 func (o *DeleteComponentHubDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/hub/{name}][%d] DeleteComponentHub default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteComponentHubDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

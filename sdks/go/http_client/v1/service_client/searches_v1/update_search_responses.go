@@ -78,7 +78,7 @@ func NewUpdateSearchOK() *UpdateSearchOK {
 	return &UpdateSearchOK{}
 }
 
-/*UpdateSearchOK handles this case with default header values.
+/* UpdateSearchOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type UpdateSearchOK struct {
 func (o *UpdateSearchOK) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/searches/{search.uuid}][%d] updateSearchOK  %+v", 200, o.Payload)
 }
-
 func (o *UpdateSearchOK) GetPayload() *service_model.V1Search {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewUpdateSearchNoContent() *UpdateSearchNoContent {
 	return &UpdateSearchNoContent{}
 }
 
-/*UpdateSearchNoContent handles this case with default header values.
+/* UpdateSearchNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type UpdateSearchNoContent struct {
 func (o *UpdateSearchNoContent) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/searches/{search.uuid}][%d] updateSearchNoContent  %+v", 204, o.Payload)
 }
-
 func (o *UpdateSearchNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewUpdateSearchForbidden() *UpdateSearchForbidden {
 	return &UpdateSearchForbidden{}
 }
 
-/*UpdateSearchForbidden handles this case with default header values.
+/* UpdateSearchForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type UpdateSearchForbidden struct {
 func (o *UpdateSearchForbidden) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/searches/{search.uuid}][%d] updateSearchForbidden  %+v", 403, o.Payload)
 }
-
 func (o *UpdateSearchForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewUpdateSearchNotFound() *UpdateSearchNotFound {
 	return &UpdateSearchNotFound{}
 }
 
-/*UpdateSearchNotFound handles this case with default header values.
+/* UpdateSearchNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type UpdateSearchNotFound struct {
 func (o *UpdateSearchNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/searches/{search.uuid}][%d] updateSearchNotFound  %+v", 404, o.Payload)
 }
-
 func (o *UpdateSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewUpdateSearchDefault(code int) *UpdateSearchDefault {
 	}
 }
 
-/*UpdateSearchDefault handles this case with default header values.
+/* UpdateSearchDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *UpdateSearchDefault) Code() int {
 func (o *UpdateSearchDefault) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/searches/{search.uuid}][%d] UpdateSearch default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *UpdateSearchDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

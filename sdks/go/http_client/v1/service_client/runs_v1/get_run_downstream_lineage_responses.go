@@ -78,7 +78,7 @@ func NewGetRunDownstreamLineageOK() *GetRunDownstreamLineageOK {
 	return &GetRunDownstreamLineageOK{}
 }
 
-/*GetRunDownstreamLineageOK handles this case with default header values.
+/* GetRunDownstreamLineageOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetRunDownstreamLineageOK struct {
 func (o *GetRunDownstreamLineageOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream][%d] getRunDownstreamLineageOK  %+v", 200, o.Payload)
 }
-
 func (o *GetRunDownstreamLineageOK) GetPayload() *service_model.V1ListRunEdgesResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetRunDownstreamLineageNoContent() *GetRunDownstreamLineageNoContent {
 	return &GetRunDownstreamLineageNoContent{}
 }
 
-/*GetRunDownstreamLineageNoContent handles this case with default header values.
+/* GetRunDownstreamLineageNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetRunDownstreamLineageNoContent struct {
 func (o *GetRunDownstreamLineageNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream][%d] getRunDownstreamLineageNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetRunDownstreamLineageNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetRunDownstreamLineageForbidden() *GetRunDownstreamLineageForbidden {
 	return &GetRunDownstreamLineageForbidden{}
 }
 
-/*GetRunDownstreamLineageForbidden handles this case with default header values.
+/* GetRunDownstreamLineageForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetRunDownstreamLineageForbidden struct {
 func (o *GetRunDownstreamLineageForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream][%d] getRunDownstreamLineageForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetRunDownstreamLineageForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetRunDownstreamLineageNotFound() *GetRunDownstreamLineageNotFound {
 	return &GetRunDownstreamLineageNotFound{}
 }
 
-/*GetRunDownstreamLineageNotFound handles this case with default header values.
+/* GetRunDownstreamLineageNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetRunDownstreamLineageNotFound struct {
 func (o *GetRunDownstreamLineageNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream][%d] getRunDownstreamLineageNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetRunDownstreamLineageNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetRunDownstreamLineageDefault(code int) *GetRunDownstreamLineageDefault
 	}
 }
 
-/*GetRunDownstreamLineageDefault handles this case with default header values.
+/* GetRunDownstreamLineageDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetRunDownstreamLineageDefault) Code() int {
 func (o *GetRunDownstreamLineageDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{entity}/runs/{uuid}/lineage/downstream][%d] GetRunDownstreamLineage default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetRunDownstreamLineageDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

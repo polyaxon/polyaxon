@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetProjectSettingsParams creates a new GetProjectSettingsParams object
-// with the default values initialized.
+// NewGetProjectSettingsParams creates a new GetProjectSettingsParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetProjectSettingsParams() *GetProjectSettingsParams {
-	var ()
 	return &GetProjectSettingsParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetProjectSettingsParamsWithTimeout creates a new GetProjectSettingsParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetProjectSettingsParamsWithTimeout(timeout time.Duration) *GetProjectSettingsParams {
-	var ()
 	return &GetProjectSettingsParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetProjectSettingsParamsWithContext creates a new GetProjectSettingsParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetProjectSettingsParamsWithContext(ctx context.Context) *GetProjectSettingsParams {
-	var ()
 	return &GetProjectSettingsParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetProjectSettingsParamsWithHTTPClient creates a new GetProjectSettingsParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetProjectSettingsParamsWithHTTPClient(client *http.Client) *GetProjectSettingsParams {
-	var ()
 	return &GetProjectSettingsParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetProjectSettingsParams contains all the parameters to send to the API endpoint
-for the get project settings operation typically these are written to a http.Request
+/* GetProjectSettingsParams contains all the parameters to send to the API endpoint
+   for the get project settings operation.
+
+   Typically these are written to a http.Request.
 */
 type GetProjectSettingsParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get project settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetProjectSettingsParams) WithDefaults() *GetProjectSettingsParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get project settings params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetProjectSettingsParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get project settings params

@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewApproveRunParams creates a new ApproveRunParams object
-// with the default values initialized.
+// NewApproveRunParams creates a new ApproveRunParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewApproveRunParams() *ApproveRunParams {
-	var ()
 	return &ApproveRunParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewApproveRunParamsWithTimeout creates a new ApproveRunParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewApproveRunParamsWithTimeout(timeout time.Duration) *ApproveRunParams {
-	var ()
 	return &ApproveRunParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewApproveRunParamsWithContext creates a new ApproveRunParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewApproveRunParamsWithContext(ctx context.Context) *ApproveRunParams {
-	var ()
 	return &ApproveRunParams{
-
 		Context: ctx,
 	}
 }
 
 // NewApproveRunParamsWithHTTPClient creates a new ApproveRunParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewApproveRunParamsWithHTTPClient(client *http.Client) *ApproveRunParams {
-	var ()
 	return &ApproveRunParams{
 		HTTPClient: client,
 	}
 }
 
-/*ApproveRunParams contains all the parameters to send to the API endpoint
-for the approve run operation typically these are written to a http.Request
+/* ApproveRunParams contains all the parameters to send to the API endpoint
+   for the approve run operation.
+
+   Typically these are written to a http.Request.
 */
 type ApproveRunParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the approve run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ApproveRunParams) WithDefaults() *ApproveRunParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the approve run params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ApproveRunParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the approve run params

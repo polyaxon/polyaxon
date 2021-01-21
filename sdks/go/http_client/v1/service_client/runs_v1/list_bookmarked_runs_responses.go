@@ -78,7 +78,7 @@ func NewListBookmarkedRunsOK() *ListBookmarkedRunsOK {
 	return &ListBookmarkedRunsOK{}
 }
 
-/*ListBookmarkedRunsOK handles this case with default header values.
+/* ListBookmarkedRunsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListBookmarkedRunsOK struct {
 func (o *ListBookmarkedRunsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/runs][%d] listBookmarkedRunsOK  %+v", 200, o.Payload)
 }
-
 func (o *ListBookmarkedRunsOK) GetPayload() *service_model.V1ListBookmarksResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListBookmarkedRunsNoContent() *ListBookmarkedRunsNoContent {
 	return &ListBookmarkedRunsNoContent{}
 }
 
-/*ListBookmarkedRunsNoContent handles this case with default header values.
+/* ListBookmarkedRunsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListBookmarkedRunsNoContent struct {
 func (o *ListBookmarkedRunsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/runs][%d] listBookmarkedRunsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListBookmarkedRunsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListBookmarkedRunsForbidden() *ListBookmarkedRunsForbidden {
 	return &ListBookmarkedRunsForbidden{}
 }
 
-/*ListBookmarkedRunsForbidden handles this case with default header values.
+/* ListBookmarkedRunsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListBookmarkedRunsForbidden struct {
 func (o *ListBookmarkedRunsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/runs][%d] listBookmarkedRunsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListBookmarkedRunsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListBookmarkedRunsNotFound() *ListBookmarkedRunsNotFound {
 	return &ListBookmarkedRunsNotFound{}
 }
 
-/*ListBookmarkedRunsNotFound handles this case with default header values.
+/* ListBookmarkedRunsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListBookmarkedRunsNotFound struct {
 func (o *ListBookmarkedRunsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/runs][%d] listBookmarkedRunsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListBookmarkedRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListBookmarkedRunsDefault(code int) *ListBookmarkedRunsDefault {
 	}
 }
 
-/*ListBookmarkedRunsDefault handles this case with default header values.
+/* ListBookmarkedRunsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListBookmarkedRunsDefault) Code() int {
 func (o *ListBookmarkedRunsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/runs][%d] ListBookmarkedRuns default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListBookmarkedRunsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -32,64 +32,79 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewOrganizationPlanParams creates a new OrganizationPlanParams object
-// with the default values initialized.
+// NewOrganizationPlanParams creates a new OrganizationPlanParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewOrganizationPlanParams() *OrganizationPlanParams {
-	var ()
 	return &OrganizationPlanParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewOrganizationPlanParamsWithTimeout creates a new OrganizationPlanParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewOrganizationPlanParamsWithTimeout(timeout time.Duration) *OrganizationPlanParams {
-	var ()
 	return &OrganizationPlanParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewOrganizationPlanParamsWithContext creates a new OrganizationPlanParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewOrganizationPlanParamsWithContext(ctx context.Context) *OrganizationPlanParams {
-	var ()
 	return &OrganizationPlanParams{
-
 		Context: ctx,
 	}
 }
 
 // NewOrganizationPlanParamsWithHTTPClient creates a new OrganizationPlanParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewOrganizationPlanParamsWithHTTPClient(client *http.Client) *OrganizationPlanParams {
-	var ()
 	return &OrganizationPlanParams{
 		HTTPClient: client,
 	}
 }
 
-/*OrganizationPlanParams contains all the parameters to send to the API endpoint
-for the organization plan operation typically these are written to a http.Request
+/* OrganizationPlanParams contains all the parameters to send to the API endpoint
+   for the organization plan operation.
+
+   Typically these are written to a http.Request.
 */
 type OrganizationPlanParams struct {
 
-	/*Body
-	  Organization body
+	/* Body.
 
+	   Organization body
 	*/
 	Body *service_model.V1Organization
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the organization plan params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *OrganizationPlanParams) WithDefaults() *OrganizationPlanParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the organization plan params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *OrganizationPlanParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the organization plan params
@@ -154,7 +169,6 @@ func (o *OrganizationPlanParams) WriteToRequest(r runtime.ClientRequest, reg str
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

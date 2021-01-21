@@ -78,7 +78,7 @@ func NewApproveRunsOK() *ApproveRunsOK {
 	return &ApproveRunsOK{}
 }
 
-/*ApproveRunsOK handles this case with default header values.
+/* ApproveRunsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewApproveRunsNoContent() *ApproveRunsNoContent {
 	return &ApproveRunsNoContent{}
 }
 
-/*ApproveRunsNoContent handles this case with default header values.
+/* ApproveRunsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type ApproveRunsNoContent struct {
 func (o *ApproveRunsNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/approve][%d] approveRunsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ApproveRunsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewApproveRunsForbidden() *ApproveRunsForbidden {
 	return &ApproveRunsForbidden{}
 }
 
-/*ApproveRunsForbidden handles this case with default header values.
+/* ApproveRunsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type ApproveRunsForbidden struct {
 func (o *ApproveRunsForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/approve][%d] approveRunsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ApproveRunsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewApproveRunsNotFound() *ApproveRunsNotFound {
 	return &ApproveRunsNotFound{}
 }
 
-/*ApproveRunsNotFound handles this case with default header values.
+/* ApproveRunsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type ApproveRunsNotFound struct {
 func (o *ApproveRunsNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/approve][%d] approveRunsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ApproveRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewApproveRunsDefault(code int) *ApproveRunsDefault {
 	}
 }
 
-/*ApproveRunsDefault handles this case with default header values.
+/* ApproveRunsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *ApproveRunsDefault) Code() int {
 func (o *ApproveRunsDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/approve][%d] ApproveRuns default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ApproveRunsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

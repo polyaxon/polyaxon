@@ -78,7 +78,7 @@ func NewCreateRunStatusOK() *CreateRunStatusOK {
 	return &CreateRunStatusOK{}
 }
 
-/*CreateRunStatusOK handles this case with default header values.
+/* CreateRunStatusOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateRunStatusOK struct {
 func (o *CreateRunStatusOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] createRunStatusOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateRunStatusOK) GetPayload() *service_model.V1Status {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateRunStatusNoContent() *CreateRunStatusNoContent {
 	return &CreateRunStatusNoContent{}
 }
 
-/*CreateRunStatusNoContent handles this case with default header values.
+/* CreateRunStatusNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateRunStatusNoContent struct {
 func (o *CreateRunStatusNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] createRunStatusNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateRunStatusNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateRunStatusForbidden() *CreateRunStatusForbidden {
 	return &CreateRunStatusForbidden{}
 }
 
-/*CreateRunStatusForbidden handles this case with default header values.
+/* CreateRunStatusForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateRunStatusForbidden struct {
 func (o *CreateRunStatusForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] createRunStatusForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateRunStatusForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateRunStatusNotFound() *CreateRunStatusNotFound {
 	return &CreateRunStatusNotFound{}
 }
 
-/*CreateRunStatusNotFound handles this case with default header values.
+/* CreateRunStatusNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateRunStatusNotFound struct {
 func (o *CreateRunStatusNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] createRunStatusNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateRunStatusNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateRunStatusDefault(code int) *CreateRunStatusDefault {
 	}
 }
 
-/*CreateRunStatusDefault handles this case with default header values.
+/* CreateRunStatusDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateRunStatusDefault) Code() int {
 func (o *CreateRunStatusDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] CreateRunStatus default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateRunStatusDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewRestoreComponentHubOK() *RestoreComponentHubOK {
 	return &RestoreComponentHubOK{}
 }
 
-/*RestoreComponentHubOK handles this case with default header values.
+/* RestoreComponentHubOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewRestoreComponentHubNoContent() *RestoreComponentHubNoContent {
 	return &RestoreComponentHubNoContent{}
 }
 
-/*RestoreComponentHubNoContent handles this case with default header values.
+/* RestoreComponentHubNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type RestoreComponentHubNoContent struct {
 func (o *RestoreComponentHubNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/restore][%d] restoreComponentHubNoContent  %+v", 204, o.Payload)
 }
-
 func (o *RestoreComponentHubNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewRestoreComponentHubForbidden() *RestoreComponentHubForbidden {
 	return &RestoreComponentHubForbidden{}
 }
 
-/*RestoreComponentHubForbidden handles this case with default header values.
+/* RestoreComponentHubForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type RestoreComponentHubForbidden struct {
 func (o *RestoreComponentHubForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/restore][%d] restoreComponentHubForbidden  %+v", 403, o.Payload)
 }
-
 func (o *RestoreComponentHubForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewRestoreComponentHubNotFound() *RestoreComponentHubNotFound {
 	return &RestoreComponentHubNotFound{}
 }
 
-/*RestoreComponentHubNotFound handles this case with default header values.
+/* RestoreComponentHubNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type RestoreComponentHubNotFound struct {
 func (o *RestoreComponentHubNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/restore][%d] restoreComponentHubNotFound  %+v", 404, o.Payload)
 }
-
 func (o *RestoreComponentHubNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewRestoreComponentHubDefault(code int) *RestoreComponentHubDefault {
 	}
 }
 
-/*RestoreComponentHubDefault handles this case with default header values.
+/* RestoreComponentHubDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *RestoreComponentHubDefault) Code() int {
 func (o *RestoreComponentHubDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/hub/{name}/restore][%d] RestoreComponentHub default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *RestoreComponentHubDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

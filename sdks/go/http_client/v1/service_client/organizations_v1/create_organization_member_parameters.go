@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewCreateOrganizationMemberParams creates a new CreateOrganizationMemberParams object
-// with the default values initialized.
+// NewCreateOrganizationMemberParams creates a new CreateOrganizationMemberParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateOrganizationMemberParams() *CreateOrganizationMemberParams {
-	var ()
 	return &CreateOrganizationMemberParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateOrganizationMemberParamsWithTimeout creates a new CreateOrganizationMemberParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateOrganizationMemberParamsWithTimeout(timeout time.Duration) *CreateOrganizationMemberParams {
-	var ()
 	return &CreateOrganizationMemberParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateOrganizationMemberParamsWithContext creates a new CreateOrganizationMemberParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateOrganizationMemberParamsWithContext(ctx context.Context) *CreateOrganizationMemberParams {
-	var ()
 	return &CreateOrganizationMemberParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateOrganizationMemberParamsWithHTTPClient creates a new CreateOrganizationMemberParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateOrganizationMemberParamsWithHTTPClient(client *http.Client) *CreateOrganizationMemberParams {
-	var ()
 	return &CreateOrganizationMemberParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateOrganizationMemberParams contains all the parameters to send to the API endpoint
-for the create organization member operation typically these are written to a http.Request
+/* CreateOrganizationMemberParams contains all the parameters to send to the API endpoint
+   for the create organization member operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateOrganizationMemberParams struct {
 
-	/*Body
-	  Organization body
+	/* Body.
 
+	   Organization body
 	*/
 	Body *service_model.V1OrganizationMember
-	/*Email
-	  Optional email.
 
+	/* Email.
+
+	   Optional email.
 	*/
 	Email *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create organization member params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateOrganizationMemberParams) WithDefaults() *CreateOrganizationMemberParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create organization member params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateOrganizationMemberParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create organization member params
@@ -170,7 +186,6 @@ func (o *CreateOrganizationMemberParams) WriteToRequest(r runtime.ClientRequest,
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
@@ -181,16 +196,17 @@ func (o *CreateOrganizationMemberParams) WriteToRequest(r runtime.ClientRequest,
 
 		// query param email
 		var qrEmail string
+
 		if o.Email != nil {
 			qrEmail = *o.Email
 		}
 		qEmail := qrEmail
 		if qEmail != "" {
+
 			if err := r.SetQueryParam("email", qEmail); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner

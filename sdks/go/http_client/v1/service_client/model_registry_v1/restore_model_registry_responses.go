@@ -78,7 +78,7 @@ func NewRestoreModelRegistryOK() *RestoreModelRegistryOK {
 	return &RestoreModelRegistryOK{}
 }
 
-/*RestoreModelRegistryOK handles this case with default header values.
+/* RestoreModelRegistryOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewRestoreModelRegistryNoContent() *RestoreModelRegistryNoContent {
 	return &RestoreModelRegistryNoContent{}
 }
 
-/*RestoreModelRegistryNoContent handles this case with default header values.
+/* RestoreModelRegistryNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type RestoreModelRegistryNoContent struct {
 func (o *RestoreModelRegistryNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/restore][%d] restoreModelRegistryNoContent  %+v", 204, o.Payload)
 }
-
 func (o *RestoreModelRegistryNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewRestoreModelRegistryForbidden() *RestoreModelRegistryForbidden {
 	return &RestoreModelRegistryForbidden{}
 }
 
-/*RestoreModelRegistryForbidden handles this case with default header values.
+/* RestoreModelRegistryForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type RestoreModelRegistryForbidden struct {
 func (o *RestoreModelRegistryForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/restore][%d] restoreModelRegistryForbidden  %+v", 403, o.Payload)
 }
-
 func (o *RestoreModelRegistryForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewRestoreModelRegistryNotFound() *RestoreModelRegistryNotFound {
 	return &RestoreModelRegistryNotFound{}
 }
 
-/*RestoreModelRegistryNotFound handles this case with default header values.
+/* RestoreModelRegistryNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type RestoreModelRegistryNotFound struct {
 func (o *RestoreModelRegistryNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/restore][%d] restoreModelRegistryNotFound  %+v", 404, o.Payload)
 }
-
 func (o *RestoreModelRegistryNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewRestoreModelRegistryDefault(code int) *RestoreModelRegistryDefault {
 	}
 }
 
-/*RestoreModelRegistryDefault handles this case with default header values.
+/* RestoreModelRegistryDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *RestoreModelRegistryDefault) Code() int {
 func (o *RestoreModelRegistryDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/{name}/restore][%d] RestoreModelRegistry default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *RestoreModelRegistryDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

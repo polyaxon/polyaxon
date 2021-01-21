@@ -78,7 +78,7 @@ func NewCreateAgentOK() *CreateAgentOK {
 	return &CreateAgentOK{}
 }
 
-/*CreateAgentOK handles this case with default header values.
+/* CreateAgentOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateAgentOK struct {
 func (o *CreateAgentOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] createAgentOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateAgentOK) GetPayload() *service_model.V1Agent {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateAgentNoContent() *CreateAgentNoContent {
 	return &CreateAgentNoContent{}
 }
 
-/*CreateAgentNoContent handles this case with default header values.
+/* CreateAgentNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateAgentNoContent struct {
 func (o *CreateAgentNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] createAgentNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateAgentNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateAgentForbidden() *CreateAgentForbidden {
 	return &CreateAgentForbidden{}
 }
 
-/*CreateAgentForbidden handles this case with default header values.
+/* CreateAgentForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateAgentForbidden struct {
 func (o *CreateAgentForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] createAgentForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateAgentForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateAgentNotFound() *CreateAgentNotFound {
 	return &CreateAgentNotFound{}
 }
 
-/*CreateAgentNotFound handles this case with default header values.
+/* CreateAgentNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateAgentNotFound struct {
 func (o *CreateAgentNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] createAgentNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateAgentNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateAgentDefault(code int) *CreateAgentDefault {
 	}
 }
 
-/*CreateAgentDefault handles this case with default header values.
+/* CreateAgentDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateAgentDefault) Code() int {
 func (o *CreateAgentDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] CreateAgent default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateAgentDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

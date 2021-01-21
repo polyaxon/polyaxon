@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeletePresetParams creates a new DeletePresetParams object
-// with the default values initialized.
+// NewDeletePresetParams creates a new DeletePresetParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeletePresetParams() *DeletePresetParams {
-	var ()
 	return &DeletePresetParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeletePresetParamsWithTimeout creates a new DeletePresetParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeletePresetParamsWithTimeout(timeout time.Duration) *DeletePresetParams {
-	var ()
 	return &DeletePresetParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeletePresetParamsWithContext creates a new DeletePresetParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeletePresetParamsWithContext(ctx context.Context) *DeletePresetParams {
-	var ()
 	return &DeletePresetParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeletePresetParamsWithHTTPClient creates a new DeletePresetParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeletePresetParamsWithHTTPClient(client *http.Client) *DeletePresetParams {
-	var ()
 	return &DeletePresetParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeletePresetParams contains all the parameters to send to the API endpoint
-for the delete preset operation typically these are written to a http.Request
+/* DeletePresetParams contains all the parameters to send to the API endpoint
+   for the delete preset operation.
+
+   Typically these are written to a http.Request.
 */
 type DeletePresetParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity *string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete preset params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeletePresetParams) WithDefaults() *DeletePresetParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete preset params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeletePresetParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete preset params
@@ -173,16 +189,17 @@ func (o *DeletePresetParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 
 		// query param entity
 		var qrEntity string
+
 		if o.Entity != nil {
 			qrEntity = *o.Entity
 		}
 		qEntity := qrEntity
 		if qEntity != "" {
+
 			if err := r.SetQueryParam("entity", qEntity); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param owner

@@ -78,7 +78,7 @@ func NewPatchModelRegistryOK() *PatchModelRegistryOK {
 	return &PatchModelRegistryOK{}
 }
 
-/*PatchModelRegistryOK handles this case with default header values.
+/* PatchModelRegistryOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchModelRegistryOK struct {
 func (o *PatchModelRegistryOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] patchModelRegistryOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchModelRegistryOK) GetPayload() *service_model.V1ModelRegistry {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchModelRegistryNoContent() *PatchModelRegistryNoContent {
 	return &PatchModelRegistryNoContent{}
 }
 
-/*PatchModelRegistryNoContent handles this case with default header values.
+/* PatchModelRegistryNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchModelRegistryNoContent struct {
 func (o *PatchModelRegistryNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] patchModelRegistryNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchModelRegistryNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchModelRegistryForbidden() *PatchModelRegistryForbidden {
 	return &PatchModelRegistryForbidden{}
 }
 
-/*PatchModelRegistryForbidden handles this case with default header values.
+/* PatchModelRegistryForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchModelRegistryForbidden struct {
 func (o *PatchModelRegistryForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] patchModelRegistryForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchModelRegistryForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchModelRegistryNotFound() *PatchModelRegistryNotFound {
 	return &PatchModelRegistryNotFound{}
 }
 
-/*PatchModelRegistryNotFound handles this case with default header values.
+/* PatchModelRegistryNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchModelRegistryNotFound struct {
 func (o *PatchModelRegistryNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] patchModelRegistryNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchModelRegistryNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchModelRegistryDefault(code int) *PatchModelRegistryDefault {
 	}
 }
 
-/*PatchModelRegistryDefault handles this case with default header values.
+/* PatchModelRegistryDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchModelRegistryDefault) Code() int {
 func (o *PatchModelRegistryDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model.name}][%d] PatchModelRegistry default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchModelRegistryDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

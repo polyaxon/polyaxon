@@ -78,7 +78,7 @@ func NewStartRunTensorboardOK() *StartRunTensorboardOK {
 	return &StartRunTensorboardOK{}
 }
 
-/*StartRunTensorboardOK handles this case with default header values.
+/* StartRunTensorboardOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewStartRunTensorboardNoContent() *StartRunTensorboardNoContent {
 	return &StartRunTensorboardNoContent{}
 }
 
-/*StartRunTensorboardNoContent handles this case with default header values.
+/* StartRunTensorboardNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type StartRunTensorboardNoContent struct {
 func (o *StartRunTensorboardNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardNoContent  %+v", 204, o.Payload)
 }
-
 func (o *StartRunTensorboardNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewStartRunTensorboardForbidden() *StartRunTensorboardForbidden {
 	return &StartRunTensorboardForbidden{}
 }
 
-/*StartRunTensorboardForbidden handles this case with default header values.
+/* StartRunTensorboardForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type StartRunTensorboardForbidden struct {
 func (o *StartRunTensorboardForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardForbidden  %+v", 403, o.Payload)
 }
-
 func (o *StartRunTensorboardForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewStartRunTensorboardNotFound() *StartRunTensorboardNotFound {
 	return &StartRunTensorboardNotFound{}
 }
 
-/*StartRunTensorboardNotFound handles this case with default header values.
+/* StartRunTensorboardNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type StartRunTensorboardNotFound struct {
 func (o *StartRunTensorboardNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardNotFound  %+v", 404, o.Payload)
 }
-
 func (o *StartRunTensorboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewStartRunTensorboardDefault(code int) *StartRunTensorboardDefault {
 	}
 }
 
-/*StartRunTensorboardDefault handles this case with default header values.
+/* StartRunTensorboardDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *StartRunTensorboardDefault) Code() int {
 func (o *StartRunTensorboardDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{entity}/runs/{uuid}/tensorboard/start][%d] StartRunTensorboard default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *StartRunTensorboardDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

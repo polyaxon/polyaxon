@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -93,7 +95,6 @@ func (m *V1Token) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Token) validateCreatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreatedAt) { // not required
 		return nil
 	}
@@ -106,7 +107,6 @@ func (m *V1Token) validateCreatedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Token) validateExpiresAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpiresAt) { // not required
 		return nil
 	}
@@ -119,7 +119,6 @@ func (m *V1Token) validateExpiresAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Token) validateStartedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StartedAt) { // not required
 		return nil
 	}
@@ -132,7 +131,6 @@ func (m *V1Token) validateStartedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1Token) validateUpdatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UpdatedAt) { // not required
 		return nil
 	}
@@ -141,6 +139,11 @@ func (m *V1Token) validateUpdatedAt(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this v1 token based on context it is used
+func (m *V1Token) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

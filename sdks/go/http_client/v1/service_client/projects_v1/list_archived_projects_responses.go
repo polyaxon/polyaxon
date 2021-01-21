@@ -78,7 +78,7 @@ func NewListArchivedProjectsOK() *ListArchivedProjectsOK {
 	return &ListArchivedProjectsOK{}
 }
 
-/*ListArchivedProjectsOK handles this case with default header values.
+/* ListArchivedProjectsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListArchivedProjectsOK struct {
 func (o *ListArchivedProjectsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsOK  %+v", 200, o.Payload)
 }
-
 func (o *ListArchivedProjectsOK) GetPayload() *service_model.V1ListProjectsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListArchivedProjectsNoContent() *ListArchivedProjectsNoContent {
 	return &ListArchivedProjectsNoContent{}
 }
 
-/*ListArchivedProjectsNoContent handles this case with default header values.
+/* ListArchivedProjectsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListArchivedProjectsNoContent struct {
 func (o *ListArchivedProjectsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListArchivedProjectsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListArchivedProjectsForbidden() *ListArchivedProjectsForbidden {
 	return &ListArchivedProjectsForbidden{}
 }
 
-/*ListArchivedProjectsForbidden handles this case with default header values.
+/* ListArchivedProjectsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListArchivedProjectsForbidden struct {
 func (o *ListArchivedProjectsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListArchivedProjectsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListArchivedProjectsNotFound() *ListArchivedProjectsNotFound {
 	return &ListArchivedProjectsNotFound{}
 }
 
-/*ListArchivedProjectsNotFound handles this case with default header values.
+/* ListArchivedProjectsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListArchivedProjectsNotFound struct {
 func (o *ListArchivedProjectsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListArchivedProjectsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListArchivedProjectsDefault(code int) *ListArchivedProjectsDefault {
 	}
 }
 
-/*ListArchivedProjectsDefault handles this case with default header values.
+/* ListArchivedProjectsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListArchivedProjectsDefault) Code() int {
 func (o *ListArchivedProjectsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] ListArchivedProjects default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListArchivedProjectsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

@@ -78,7 +78,7 @@ func NewLoginOK() *LoginOK {
 	return &LoginOK{}
 }
 
-/*LoginOK handles this case with default header values.
+/* LoginOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type LoginOK struct {
 func (o *LoginOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/token][%d] loginOK  %+v", 200, o.Payload)
 }
-
 func (o *LoginOK) GetPayload() *service_model.V1Auth {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewLoginNoContent() *LoginNoContent {
 	return &LoginNoContent{}
 }
 
-/*LoginNoContent handles this case with default header values.
+/* LoginNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type LoginNoContent struct {
 func (o *LoginNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/token][%d] loginNoContent  %+v", 204, o.Payload)
 }
-
 func (o *LoginNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewLoginForbidden() *LoginForbidden {
 	return &LoginForbidden{}
 }
 
-/*LoginForbidden handles this case with default header values.
+/* LoginForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type LoginForbidden struct {
 func (o *LoginForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/token][%d] loginForbidden  %+v", 403, o.Payload)
 }
-
 func (o *LoginForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewLoginNotFound() *LoginNotFound {
 	return &LoginNotFound{}
 }
 
-/*LoginNotFound handles this case with default header values.
+/* LoginNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type LoginNotFound struct {
 func (o *LoginNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/token][%d] loginNotFound  %+v", 404, o.Payload)
 }
-
 func (o *LoginNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewLoginDefault(code int) *LoginDefault {
 	}
 }
 
-/*LoginDefault handles this case with default header values.
+/* LoginDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *LoginDefault) Code() int {
 func (o *LoginDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/auth/token][%d] Login default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *LoginDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

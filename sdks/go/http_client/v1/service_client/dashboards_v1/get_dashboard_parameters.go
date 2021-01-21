@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetDashboardParams creates a new GetDashboardParams object
-// with the default values initialized.
+// NewGetDashboardParams creates a new GetDashboardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetDashboardParams() *GetDashboardParams {
-	var ()
 	return &GetDashboardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetDashboardParamsWithTimeout creates a new GetDashboardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetDashboardParamsWithTimeout(timeout time.Duration) *GetDashboardParams {
-	var ()
 	return &GetDashboardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetDashboardParamsWithContext creates a new GetDashboardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetDashboardParamsWithContext(ctx context.Context) *GetDashboardParams {
-	var ()
 	return &GetDashboardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetDashboardParamsWithHTTPClient creates a new GetDashboardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetDashboardParamsWithHTTPClient(client *http.Client) *GetDashboardParams {
-	var ()
 	return &GetDashboardParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetDashboardParams contains all the parameters to send to the API endpoint
-for the get dashboard operation typically these are written to a http.Request
+/* GetDashboardParams contains all the parameters to send to the API endpoint
+   for the get dashboard operation.
+
+   Typically these are written to a http.Request.
 */
 type GetDashboardParams struct {
 
-	/*Owner
-	  Owner of the namespace
+	/* Owner.
 
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the entity
 
+	/* UUID.
+
+	   Uuid identifier of the entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetDashboardParams) WithDefaults() *GetDashboardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetDashboardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get dashboard params

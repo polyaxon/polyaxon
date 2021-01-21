@@ -78,7 +78,7 @@ func NewCreateRunArtifactsLineageOK() *CreateRunArtifactsLineageOK {
 	return &CreateRunArtifactsLineageOK{}
 }
 
-/*CreateRunArtifactsLineageOK handles this case with default header values.
+/* CreateRunArtifactsLineageOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewCreateRunArtifactsLineageNoContent() *CreateRunArtifactsLineageNoContent
 	return &CreateRunArtifactsLineageNoContent{}
 }
 
-/*CreateRunArtifactsLineageNoContent handles this case with default header values.
+/* CreateRunArtifactsLineageNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type CreateRunArtifactsLineageNoContent struct {
 func (o *CreateRunArtifactsLineageNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts][%d] createRunArtifactsLineageNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateRunArtifactsLineageNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewCreateRunArtifactsLineageForbidden() *CreateRunArtifactsLineageForbidden
 	return &CreateRunArtifactsLineageForbidden{}
 }
 
-/*CreateRunArtifactsLineageForbidden handles this case with default header values.
+/* CreateRunArtifactsLineageForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type CreateRunArtifactsLineageForbidden struct {
 func (o *CreateRunArtifactsLineageForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts][%d] createRunArtifactsLineageForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateRunArtifactsLineageForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewCreateRunArtifactsLineageNotFound() *CreateRunArtifactsLineageNotFound {
 	return &CreateRunArtifactsLineageNotFound{}
 }
 
-/*CreateRunArtifactsLineageNotFound handles this case with default header values.
+/* CreateRunArtifactsLineageNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type CreateRunArtifactsLineageNotFound struct {
 func (o *CreateRunArtifactsLineageNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts][%d] createRunArtifactsLineageNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateRunArtifactsLineageNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewCreateRunArtifactsLineageDefault(code int) *CreateRunArtifactsLineageDef
 	}
 }
 
-/*CreateRunArtifactsLineageDefault handles this case with default header values.
+/* CreateRunArtifactsLineageDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *CreateRunArtifactsLineageDefault) Code() int {
 func (o *CreateRunArtifactsLineageDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/lineage/artifacts][%d] CreateRunArtifactsLineage default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateRunArtifactsLineageDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

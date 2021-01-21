@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateDashboardParams creates a new UpdateDashboardParams object
-// with the default values initialized.
+// NewUpdateDashboardParams creates a new UpdateDashboardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateDashboardParams() *UpdateDashboardParams {
-	var ()
 	return &UpdateDashboardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateDashboardParamsWithTimeout creates a new UpdateDashboardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateDashboardParamsWithTimeout(timeout time.Duration) *UpdateDashboardParams {
-	var ()
 	return &UpdateDashboardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateDashboardParamsWithContext creates a new UpdateDashboardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateDashboardParamsWithContext(ctx context.Context) *UpdateDashboardParams {
-	var ()
 	return &UpdateDashboardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateDashboardParamsWithHTTPClient creates a new UpdateDashboardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateDashboardParamsWithHTTPClient(client *http.Client) *UpdateDashboardParams {
-	var ()
 	return &UpdateDashboardParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateDashboardParams contains all the parameters to send to the API endpoint
-for the update dashboard operation typically these are written to a http.Request
+/* UpdateDashboardParams contains all the parameters to send to the API endpoint
+   for the update dashboard operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateDashboardParams struct {
 
-	/*Body
-	  Dashboard body
+	/* Body.
 
+	   Dashboard body
 	*/
 	Body *service_model.V1Dashboard
-	/*DashboardUUID
-	  UUID
 
+	/* DashboardUUID.
+
+	   UUID
 	*/
 	DashboardUUID string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateDashboardParams) WithDefaults() *UpdateDashboardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateDashboardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update dashboard params
@@ -170,7 +186,6 @@ func (o *UpdateDashboardParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

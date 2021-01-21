@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetRunStatusesParams creates a new GetRunStatusesParams object
-// with the default values initialized.
+// NewGetRunStatusesParams creates a new GetRunStatusesParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetRunStatusesParams() *GetRunStatusesParams {
-	var ()
 	return &GetRunStatusesParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetRunStatusesParamsWithTimeout creates a new GetRunStatusesParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetRunStatusesParamsWithTimeout(timeout time.Duration) *GetRunStatusesParams {
-	var ()
 	return &GetRunStatusesParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetRunStatusesParamsWithContext creates a new GetRunStatusesParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetRunStatusesParamsWithContext(ctx context.Context) *GetRunStatusesParams {
-	var ()
 	return &GetRunStatusesParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetRunStatusesParamsWithHTTPClient creates a new GetRunStatusesParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetRunStatusesParamsWithHTTPClient(client *http.Client) *GetRunStatusesParams {
-	var ()
 	return &GetRunStatusesParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetRunStatusesParams contains all the parameters to send to the API endpoint
-for the get run statuses operation typically these are written to a http.Request
+/* GetRunStatusesParams contains all the parameters to send to the API endpoint
+   for the get run statuses operation.
+
+   Typically these are written to a http.Request.
 */
 type GetRunStatusesParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get run statuses params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunStatusesParams) WithDefaults() *GetRunStatusesParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get run statuses params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetRunStatusesParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get run statuses params

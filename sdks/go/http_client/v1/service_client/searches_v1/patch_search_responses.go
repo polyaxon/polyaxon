@@ -78,7 +78,7 @@ func NewPatchSearchOK() *PatchSearchOK {
 	return &PatchSearchOK{}
 }
 
-/*PatchSearchOK handles this case with default header values.
+/* PatchSearchOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchSearchOK struct {
 func (o *PatchSearchOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/searches/{search.uuid}][%d] patchSearchOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchSearchOK) GetPayload() *service_model.V1Search {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchSearchNoContent() *PatchSearchNoContent {
 	return &PatchSearchNoContent{}
 }
 
-/*PatchSearchNoContent handles this case with default header values.
+/* PatchSearchNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchSearchNoContent struct {
 func (o *PatchSearchNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/searches/{search.uuid}][%d] patchSearchNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchSearchNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchSearchForbidden() *PatchSearchForbidden {
 	return &PatchSearchForbidden{}
 }
 
-/*PatchSearchForbidden handles this case with default header values.
+/* PatchSearchForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchSearchForbidden struct {
 func (o *PatchSearchForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/searches/{search.uuid}][%d] patchSearchForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchSearchForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchSearchNotFound() *PatchSearchNotFound {
 	return &PatchSearchNotFound{}
 }
 
-/*PatchSearchNotFound handles this case with default header values.
+/* PatchSearchNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchSearchNotFound struct {
 func (o *PatchSearchNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/searches/{search.uuid}][%d] patchSearchNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchSearchDefault(code int) *PatchSearchDefault {
 	}
 }
 
-/*PatchSearchDefault handles this case with default header values.
+/* PatchSearchDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchSearchDefault) Code() int {
 func (o *PatchSearchDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/searches/{search.uuid}][%d] PatchSearch default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchSearchDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

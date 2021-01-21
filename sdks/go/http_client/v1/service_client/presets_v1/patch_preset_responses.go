@@ -78,7 +78,7 @@ func NewPatchPresetOK() *PatchPresetOK {
 	return &PatchPresetOK{}
 }
 
-/*PatchPresetOK handles this case with default header values.
+/* PatchPresetOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchPresetOK struct {
 func (o *PatchPresetOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/presets/{preset.uuid}][%d] patchPresetOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchPresetOK) GetPayload() *service_model.V1Preset {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchPresetNoContent() *PatchPresetNoContent {
 	return &PatchPresetNoContent{}
 }
 
-/*PatchPresetNoContent handles this case with default header values.
+/* PatchPresetNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchPresetNoContent struct {
 func (o *PatchPresetNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/presets/{preset.uuid}][%d] patchPresetNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchPresetNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchPresetForbidden() *PatchPresetForbidden {
 	return &PatchPresetForbidden{}
 }
 
-/*PatchPresetForbidden handles this case with default header values.
+/* PatchPresetForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchPresetForbidden struct {
 func (o *PatchPresetForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/presets/{preset.uuid}][%d] patchPresetForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchPresetForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchPresetNotFound() *PatchPresetNotFound {
 	return &PatchPresetNotFound{}
 }
 
-/*PatchPresetNotFound handles this case with default header values.
+/* PatchPresetNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchPresetNotFound struct {
 func (o *PatchPresetNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/presets/{preset.uuid}][%d] patchPresetNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchPresetNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchPresetDefault(code int) *PatchPresetDefault {
 	}
 }
 
-/*PatchPresetDefault handles this case with default header values.
+/* PatchPresetDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchPresetDefault) Code() int {
 func (o *PatchPresetDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/presets/{preset.uuid}][%d] PatchPreset default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchPresetDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

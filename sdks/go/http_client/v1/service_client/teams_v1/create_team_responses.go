@@ -78,7 +78,7 @@ func NewCreateTeamOK() *CreateTeamOK {
 	return &CreateTeamOK{}
 }
 
-/*CreateTeamOK handles this case with default header values.
+/* CreateTeamOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateTeamOK struct {
 func (o *CreateTeamOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] createTeamOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateTeamOK) GetPayload() *service_model.V1Team {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateTeamNoContent() *CreateTeamNoContent {
 	return &CreateTeamNoContent{}
 }
 
-/*CreateTeamNoContent handles this case with default header values.
+/* CreateTeamNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateTeamNoContent struct {
 func (o *CreateTeamNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] createTeamNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateTeamNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateTeamForbidden() *CreateTeamForbidden {
 	return &CreateTeamForbidden{}
 }
 
-/*CreateTeamForbidden handles this case with default header values.
+/* CreateTeamForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateTeamForbidden struct {
 func (o *CreateTeamForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] createTeamForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateTeamForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateTeamNotFound() *CreateTeamNotFound {
 	return &CreateTeamNotFound{}
 }
 
-/*CreateTeamNotFound handles this case with default header values.
+/* CreateTeamNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateTeamNotFound struct {
 func (o *CreateTeamNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] createTeamNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateTeamNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateTeamDefault(code int) *CreateTeamDefault {
 	}
 }
 
-/*CreateTeamDefault handles this case with default header values.
+/* CreateTeamDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateTeamDefault) Code() int {
 func (o *CreateTeamDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] CreateTeam default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateTeamDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

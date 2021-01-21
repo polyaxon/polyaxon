@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewPromoteProjectDashboardParams creates a new PromoteProjectDashboardParams object
-// with the default values initialized.
+// NewPromoteProjectDashboardParams creates a new PromoteProjectDashboardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPromoteProjectDashboardParams() *PromoteProjectDashboardParams {
-	var ()
 	return &PromoteProjectDashboardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPromoteProjectDashboardParamsWithTimeout creates a new PromoteProjectDashboardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPromoteProjectDashboardParamsWithTimeout(timeout time.Duration) *PromoteProjectDashboardParams {
-	var ()
 	return &PromoteProjectDashboardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPromoteProjectDashboardParamsWithContext creates a new PromoteProjectDashboardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPromoteProjectDashboardParamsWithContext(ctx context.Context) *PromoteProjectDashboardParams {
-	var ()
 	return &PromoteProjectDashboardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPromoteProjectDashboardParamsWithHTTPClient creates a new PromoteProjectDashboardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPromoteProjectDashboardParamsWithHTTPClient(client *http.Client) *PromoteProjectDashboardParams {
-	var ()
 	return &PromoteProjectDashboardParams{
 		HTTPClient: client,
 	}
 }
 
-/*PromoteProjectDashboardParams contains all the parameters to send to the API endpoint
-for the promote project dashboard operation typically these are written to a http.Request
+/* PromoteProjectDashboardParams contains all the parameters to send to the API endpoint
+   for the promote project dashboard operation.
+
+   Typically these are written to a http.Request.
 */
 type PromoteProjectDashboardParams struct {
 
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
+	/* Entity.
 
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the promote project dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PromoteProjectDashboardParams) WithDefaults() *PromoteProjectDashboardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the promote project dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PromoteProjectDashboardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the promote project dashboard params

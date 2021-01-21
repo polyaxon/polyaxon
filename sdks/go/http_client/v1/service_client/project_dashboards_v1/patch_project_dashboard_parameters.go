@@ -32,74 +32,91 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchProjectDashboardParams creates a new PatchProjectDashboardParams object
-// with the default values initialized.
+// NewPatchProjectDashboardParams creates a new PatchProjectDashboardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchProjectDashboardParams() *PatchProjectDashboardParams {
-	var ()
 	return &PatchProjectDashboardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchProjectDashboardParamsWithTimeout creates a new PatchProjectDashboardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchProjectDashboardParamsWithTimeout(timeout time.Duration) *PatchProjectDashboardParams {
-	var ()
 	return &PatchProjectDashboardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchProjectDashboardParamsWithContext creates a new PatchProjectDashboardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchProjectDashboardParamsWithContext(ctx context.Context) *PatchProjectDashboardParams {
-	var ()
 	return &PatchProjectDashboardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchProjectDashboardParamsWithHTTPClient creates a new PatchProjectDashboardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchProjectDashboardParamsWithHTTPClient(client *http.Client) *PatchProjectDashboardParams {
-	var ()
 	return &PatchProjectDashboardParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchProjectDashboardParams contains all the parameters to send to the API endpoint
-for the patch project dashboard operation typically these are written to a http.Request
+/* PatchProjectDashboardParams contains all the parameters to send to the API endpoint
+   for the patch project dashboard operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchProjectDashboardParams struct {
 
-	/*Body
-	  Dashboard body
+	/* Body.
 
+	   Dashboard body
 	*/
 	Body *service_model.V1Dashboard
-	/*DashboardUUID
-	  UUID
 
+	/* DashboardUUID.
+
+	   UUID
 	*/
 	DashboardUUID string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
 
+	/* Project.
+
+	   Project under namesapce
 	*/
 	Project string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch project dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchProjectDashboardParams) WithDefaults() *PatchProjectDashboardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch project dashboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchProjectDashboardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch project dashboard params
@@ -186,7 +203,6 @@ func (o *PatchProjectDashboardParams) WriteToRequest(r runtime.ClientRequest, re
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

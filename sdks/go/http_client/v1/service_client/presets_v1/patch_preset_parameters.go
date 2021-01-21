@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchPresetParams creates a new PatchPresetParams object
-// with the default values initialized.
+// NewPatchPresetParams creates a new PatchPresetParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchPresetParams() *PatchPresetParams {
-	var ()
 	return &PatchPresetParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchPresetParamsWithTimeout creates a new PatchPresetParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchPresetParamsWithTimeout(timeout time.Duration) *PatchPresetParams {
-	var ()
 	return &PatchPresetParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchPresetParamsWithContext creates a new PatchPresetParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchPresetParamsWithContext(ctx context.Context) *PatchPresetParams {
-	var ()
 	return &PatchPresetParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchPresetParamsWithHTTPClient creates a new PatchPresetParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchPresetParamsWithHTTPClient(client *http.Client) *PatchPresetParams {
-	var ()
 	return &PatchPresetParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchPresetParams contains all the parameters to send to the API endpoint
-for the patch preset operation typically these are written to a http.Request
+/* PatchPresetParams contains all the parameters to send to the API endpoint
+   for the patch preset operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchPresetParams struct {
 
-	/*Body
-	  Preset body
+	/* Body.
 
+	   Preset body
 	*/
 	Body *service_model.V1Preset
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*PresetUUID
-	  UUID
 
+	/* PresetUUID.
+
+	   UUID
 	*/
 	PresetUUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch preset params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchPresetParams) WithDefaults() *PatchPresetParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch preset params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchPresetParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch preset params
@@ -170,7 +186,6 @@ func (o *PatchPresetParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

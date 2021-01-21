@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateAgentTokenParams creates a new UpdateAgentTokenParams object
-// with the default values initialized.
+// NewUpdateAgentTokenParams creates a new UpdateAgentTokenParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateAgentTokenParams() *UpdateAgentTokenParams {
-	var ()
 	return &UpdateAgentTokenParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateAgentTokenParamsWithTimeout creates a new UpdateAgentTokenParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateAgentTokenParamsWithTimeout(timeout time.Duration) *UpdateAgentTokenParams {
-	var ()
 	return &UpdateAgentTokenParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateAgentTokenParamsWithContext creates a new UpdateAgentTokenParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateAgentTokenParamsWithContext(ctx context.Context) *UpdateAgentTokenParams {
-	var ()
 	return &UpdateAgentTokenParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateAgentTokenParamsWithHTTPClient creates a new UpdateAgentTokenParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateAgentTokenParamsWithHTTPClient(client *http.Client) *UpdateAgentTokenParams {
-	var ()
 	return &UpdateAgentTokenParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateAgentTokenParams contains all the parameters to send to the API endpoint
-for the update agent token operation typically these are written to a http.Request
+/* UpdateAgentTokenParams contains all the parameters to send to the API endpoint
+   for the update agent token operation.
+
+   Typically these are written to a http.Request.
 */
 type UpdateAgentTokenParams struct {
 
-	/*Agent
-	  Agent
+	/* Agent.
 
+	   Agent
 	*/
 	Agent string
-	/*Body
-	  Token body
 
+	/* Body.
+
+	   Token body
 	*/
 	Body *service_model.V1Token
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update agent token params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateAgentTokenParams) WithDefaults() *UpdateAgentTokenParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update agent token params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateAgentTokenParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update agent token params
@@ -175,7 +191,6 @@ func (o *UpdateAgentTokenParams) WriteToRequest(r runtime.ClientRequest, reg str
 	if err := r.SetPathParam("agent", o.Agent); err != nil {
 		return err
 	}
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

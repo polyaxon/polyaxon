@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewRestoreModelRegistryParams creates a new RestoreModelRegistryParams object
-// with the default values initialized.
+// NewRestoreModelRegistryParams creates a new RestoreModelRegistryParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewRestoreModelRegistryParams() *RestoreModelRegistryParams {
-	var ()
 	return &RestoreModelRegistryParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewRestoreModelRegistryParamsWithTimeout creates a new RestoreModelRegistryParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewRestoreModelRegistryParamsWithTimeout(timeout time.Duration) *RestoreModelRegistryParams {
-	var ()
 	return &RestoreModelRegistryParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewRestoreModelRegistryParamsWithContext creates a new RestoreModelRegistryParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewRestoreModelRegistryParamsWithContext(ctx context.Context) *RestoreModelRegistryParams {
-	var ()
 	return &RestoreModelRegistryParams{
-
 		Context: ctx,
 	}
 }
 
 // NewRestoreModelRegistryParamsWithHTTPClient creates a new RestoreModelRegistryParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewRestoreModelRegistryParamsWithHTTPClient(client *http.Client) *RestoreModelRegistryParams {
-	var ()
 	return &RestoreModelRegistryParams{
 		HTTPClient: client,
 	}
 }
 
-/*RestoreModelRegistryParams contains all the parameters to send to the API endpoint
-for the restore model registry operation typically these are written to a http.Request
+/* RestoreModelRegistryParams contains all the parameters to send to the API endpoint
+   for the restore model registry operation.
+
+   Typically these are written to a http.Request.
 */
 type RestoreModelRegistryParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the restore model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RestoreModelRegistryParams) WithDefaults() *RestoreModelRegistryParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the restore model registry params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RestoreModelRegistryParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the restore model registry params

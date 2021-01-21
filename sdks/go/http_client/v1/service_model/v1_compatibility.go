@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -70,7 +72,6 @@ func (m *V1Compatibility) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Compatibility) validateAgent(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Agent) { // not required
 		return nil
 	}
@@ -88,7 +89,6 @@ func (m *V1Compatibility) validateAgent(formats strfmt.Registry) error {
 }
 
 func (m *V1Compatibility) validateCli(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Cli) { // not required
 		return nil
 	}
@@ -106,7 +106,6 @@ func (m *V1Compatibility) validateCli(formats strfmt.Registry) error {
 }
 
 func (m *V1Compatibility) validatePlatform(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Platform) { // not required
 		return nil
 	}
@@ -124,13 +123,94 @@ func (m *V1Compatibility) validatePlatform(formats strfmt.Registry) error {
 }
 
 func (m *V1Compatibility) validateUI(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UI) { // not required
 		return nil
 	}
 
 	if m.UI != nil {
 		if err := m.UI.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ui")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 compatibility based on the context it is used
+func (m *V1Compatibility) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAgent(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateCli(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePlatform(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateUI(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Compatibility) contextValidateAgent(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Agent != nil {
+		if err := m.Agent.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("agent")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Compatibility) contextValidateCli(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Cli != nil {
+		if err := m.Cli.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cli")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Compatibility) contextValidatePlatform(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Platform != nil {
+		if err := m.Platform.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("platform")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Compatibility) contextValidateUI(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.UI != nil {
+		if err := m.UI.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ui")
 			}

@@ -78,7 +78,7 @@ func NewGetSearchOK() *GetSearchOK {
 	return &GetSearchOK{}
 }
 
-/*GetSearchOK handles this case with default header values.
+/* GetSearchOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type GetSearchOK struct {
 func (o *GetSearchOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/searches/{uuid}][%d] getSearchOK  %+v", 200, o.Payload)
 }
-
 func (o *GetSearchOK) GetPayload() *service_model.V1Search {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewGetSearchNoContent() *GetSearchNoContent {
 	return &GetSearchNoContent{}
 }
 
-/*GetSearchNoContent handles this case with default header values.
+/* GetSearchNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type GetSearchNoContent struct {
 func (o *GetSearchNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/searches/{uuid}][%d] getSearchNoContent  %+v", 204, o.Payload)
 }
-
 func (o *GetSearchNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewGetSearchForbidden() *GetSearchForbidden {
 	return &GetSearchForbidden{}
 }
 
-/*GetSearchForbidden handles this case with default header values.
+/* GetSearchForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type GetSearchForbidden struct {
 func (o *GetSearchForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/searches/{uuid}][%d] getSearchForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GetSearchForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewGetSearchNotFound() *GetSearchNotFound {
 	return &GetSearchNotFound{}
 }
 
-/*GetSearchNotFound handles this case with default header values.
+/* GetSearchNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type GetSearchNotFound struct {
 func (o *GetSearchNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/searches/{uuid}][%d] getSearchNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GetSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewGetSearchDefault(code int) *GetSearchDefault {
 	}
 }
 
-/*GetSearchDefault handles this case with default header values.
+/* GetSearchDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *GetSearchDefault) Code() int {
 func (o *GetSearchDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/searches/{uuid}][%d] GetSearch default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *GetSearchDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

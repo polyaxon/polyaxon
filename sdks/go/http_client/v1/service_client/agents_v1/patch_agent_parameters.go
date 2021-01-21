@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchAgentParams creates a new PatchAgentParams object
-// with the default values initialized.
+// NewPatchAgentParams creates a new PatchAgentParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchAgentParams() *PatchAgentParams {
-	var ()
 	return &PatchAgentParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchAgentParamsWithTimeout creates a new PatchAgentParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchAgentParamsWithTimeout(timeout time.Duration) *PatchAgentParams {
-	var ()
 	return &PatchAgentParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchAgentParamsWithContext creates a new PatchAgentParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchAgentParamsWithContext(ctx context.Context) *PatchAgentParams {
-	var ()
 	return &PatchAgentParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchAgentParamsWithHTTPClient creates a new PatchAgentParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchAgentParamsWithHTTPClient(client *http.Client) *PatchAgentParams {
-	var ()
 	return &PatchAgentParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchAgentParams contains all the parameters to send to the API endpoint
-for the patch agent operation typically these are written to a http.Request
+/* PatchAgentParams contains all the parameters to send to the API endpoint
+   for the patch agent operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchAgentParams struct {
 
-	/*AgentUUID
-	  UUID
+	/* AgentUUID.
 
+	   UUID
 	*/
 	AgentUUID string
-	/*Body
-	  Agent body
 
+	/* Body.
+
+	   Agent body
 	*/
 	Body *service_model.V1Agent
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch agent params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchAgentParams) WithDefaults() *PatchAgentParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch agent params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchAgentParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch agent params
@@ -175,7 +191,6 @@ func (o *PatchAgentParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 	if err := r.SetPathParam("agent.uuid", o.AgentUUID); err != nil {
 		return err
 	}
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

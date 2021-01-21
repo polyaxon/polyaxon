@@ -78,7 +78,7 @@ func NewDeleteTeamMemberOK() *DeleteTeamMemberOK {
 	return &DeleteTeamMemberOK{}
 }
 
-/*DeleteTeamMemberOK handles this case with default header values.
+/* DeleteTeamMemberOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -99,7 +99,7 @@ func NewDeleteTeamMemberNoContent() *DeleteTeamMemberNoContent {
 	return &DeleteTeamMemberNoContent{}
 }
 
-/*DeleteTeamMemberNoContent handles this case with default header values.
+/* DeleteTeamMemberNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -110,7 +110,6 @@ type DeleteTeamMemberNoContent struct {
 func (o *DeleteTeamMemberNoContent) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] deleteTeamMemberNoContent  %+v", 204, o.Payload)
 }
-
 func (o *DeleteTeamMemberNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -130,7 +129,7 @@ func NewDeleteTeamMemberForbidden() *DeleteTeamMemberForbidden {
 	return &DeleteTeamMemberForbidden{}
 }
 
-/*DeleteTeamMemberForbidden handles this case with default header values.
+/* DeleteTeamMemberForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -141,7 +140,6 @@ type DeleteTeamMemberForbidden struct {
 func (o *DeleteTeamMemberForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] deleteTeamMemberForbidden  %+v", 403, o.Payload)
 }
-
 func (o *DeleteTeamMemberForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -161,7 +159,7 @@ func NewDeleteTeamMemberNotFound() *DeleteTeamMemberNotFound {
 	return &DeleteTeamMemberNotFound{}
 }
 
-/*DeleteTeamMemberNotFound handles this case with default header values.
+/* DeleteTeamMemberNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -172,7 +170,6 @@ type DeleteTeamMemberNotFound struct {
 func (o *DeleteTeamMemberNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] deleteTeamMemberNotFound  %+v", 404, o.Payload)
 }
-
 func (o *DeleteTeamMemberNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -194,7 +191,7 @@ func NewDeleteTeamMemberDefault(code int) *DeleteTeamMemberDefault {
 	}
 }
 
-/*DeleteTeamMemberDefault handles this case with default header values.
+/* DeleteTeamMemberDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -212,7 +209,6 @@ func (o *DeleteTeamMemberDefault) Code() int {
 func (o *DeleteTeamMemberDefault) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/teams/{team}/members/{user}][%d] DeleteTeamMember default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *DeleteTeamMemberDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

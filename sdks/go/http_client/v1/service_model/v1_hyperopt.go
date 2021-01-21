@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -31,7 +33,7 @@ import (
 type V1Hyperopt struct {
 
 	// Algorithm to use from the hyperopt library
-	Algorithm V1HyperoptAlgorithms `json:"algorithm,omitempty"`
+	Algorithm *V1HyperoptAlgorithms `json:"algorithm,omitempty"`
 
 	// Number of concurrent runs
 	Concurrency int32 `json:"concurrency,omitempty"`
@@ -73,16 +75,45 @@ func (m *V1Hyperopt) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1Hyperopt) validateAlgorithm(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Algorithm) { // not required
 		return nil
 	}
 
-	if err := m.Algorithm.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("algorithm")
+	if m.Algorithm != nil {
+		if err := m.Algorithm.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("algorithm")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 hyperopt based on the context it is used
+func (m *V1Hyperopt) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAlgorithm(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Hyperopt) contextValidateAlgorithm(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Algorithm != nil {
+		if err := m.Algorithm.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("algorithm")
+			}
+			return err
+		}
 	}
 
 	return nil

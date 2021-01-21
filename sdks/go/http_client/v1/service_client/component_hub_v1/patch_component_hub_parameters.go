@@ -32,69 +32,85 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewPatchComponentHubParams creates a new PatchComponentHubParams object
-// with the default values initialized.
+// NewPatchComponentHubParams creates a new PatchComponentHubParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewPatchComponentHubParams() *PatchComponentHubParams {
-	var ()
 	return &PatchComponentHubParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewPatchComponentHubParamsWithTimeout creates a new PatchComponentHubParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewPatchComponentHubParamsWithTimeout(timeout time.Duration) *PatchComponentHubParams {
-	var ()
 	return &PatchComponentHubParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewPatchComponentHubParamsWithContext creates a new PatchComponentHubParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewPatchComponentHubParamsWithContext(ctx context.Context) *PatchComponentHubParams {
-	var ()
 	return &PatchComponentHubParams{
-
 		Context: ctx,
 	}
 }
 
 // NewPatchComponentHubParamsWithHTTPClient creates a new PatchComponentHubParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewPatchComponentHubParamsWithHTTPClient(client *http.Client) *PatchComponentHubParams {
-	var ()
 	return &PatchComponentHubParams{
 		HTTPClient: client,
 	}
 }
 
-/*PatchComponentHubParams contains all the parameters to send to the API endpoint
-for the patch component hub operation typically these are written to a http.Request
+/* PatchComponentHubParams contains all the parameters to send to the API endpoint
+   for the patch component hub operation.
+
+   Typically these are written to a http.Request.
 */
 type PatchComponentHubParams struct {
 
-	/*Body
-	  Component body
+	/* Body.
 
+	   Component body
 	*/
 	Body *service_model.V1ComponentHub
-	/*ComponentName
-	  Optional component name, should be a valid fully qualified value: name[:version]
 
+	/* ComponentName.
+
+	   Optional component name, should be a valid fully qualified value: name[:version]
 	*/
 	ComponentName string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the patch component hub params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchComponentHubParams) WithDefaults() *PatchComponentHubParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the patch component hub params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *PatchComponentHubParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the patch component hub params
@@ -170,7 +186,6 @@ func (o *PatchComponentHubParams) WriteToRequest(r runtime.ClientRequest, reg st
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

@@ -78,7 +78,7 @@ func NewListComponentHubsOK() *ListComponentHubsOK {
 	return &ListComponentHubsOK{}
 }
 
-/*ListComponentHubsOK handles this case with default header values.
+/* ListComponentHubsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListComponentHubsOK struct {
 func (o *ListComponentHubsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] listComponentHubsOK  %+v", 200, o.Payload)
 }
-
 func (o *ListComponentHubsOK) GetPayload() *service_model.V1ListComponentHubsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListComponentHubsNoContent() *ListComponentHubsNoContent {
 	return &ListComponentHubsNoContent{}
 }
 
-/*ListComponentHubsNoContent handles this case with default header values.
+/* ListComponentHubsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListComponentHubsNoContent struct {
 func (o *ListComponentHubsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] listComponentHubsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListComponentHubsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListComponentHubsForbidden() *ListComponentHubsForbidden {
 	return &ListComponentHubsForbidden{}
 }
 
-/*ListComponentHubsForbidden handles this case with default header values.
+/* ListComponentHubsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListComponentHubsForbidden struct {
 func (o *ListComponentHubsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] listComponentHubsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListComponentHubsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListComponentHubsNotFound() *ListComponentHubsNotFound {
 	return &ListComponentHubsNotFound{}
 }
 
-/*ListComponentHubsNotFound handles this case with default header values.
+/* ListComponentHubsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListComponentHubsNotFound struct {
 func (o *ListComponentHubsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] listComponentHubsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListComponentHubsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListComponentHubsDefault(code int) *ListComponentHubsDefault {
 	}
 }
 
-/*ListComponentHubsDefault handles this case with default header values.
+/* ListComponentHubsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListComponentHubsDefault) Code() int {
 func (o *ListComponentHubsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/hub/list][%d] ListComponentHubs default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListComponentHubsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

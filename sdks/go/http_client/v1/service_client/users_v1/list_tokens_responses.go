@@ -78,7 +78,7 @@ func NewListTokensOK() *ListTokensOK {
 	return &ListTokensOK{}
 }
 
-/*ListTokensOK handles this case with default header values.
+/* ListTokensOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListTokensOK struct {
 func (o *ListTokensOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens][%d] listTokensOK  %+v", 200, o.Payload)
 }
-
 func (o *ListTokensOK) GetPayload() *service_model.V1ListTokenResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListTokensNoContent() *ListTokensNoContent {
 	return &ListTokensNoContent{}
 }
 
-/*ListTokensNoContent handles this case with default header values.
+/* ListTokensNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListTokensNoContent struct {
 func (o *ListTokensNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens][%d] listTokensNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListTokensNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListTokensForbidden() *ListTokensForbidden {
 	return &ListTokensForbidden{}
 }
 
-/*ListTokensForbidden handles this case with default header values.
+/* ListTokensForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListTokensForbidden struct {
 func (o *ListTokensForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens][%d] listTokensForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListTokensForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListTokensNotFound() *ListTokensNotFound {
 	return &ListTokensNotFound{}
 }
 
-/*ListTokensNotFound handles this case with default header values.
+/* ListTokensNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListTokensNotFound struct {
 func (o *ListTokensNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens][%d] listTokensNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListTokensNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListTokensDefault(code int) *ListTokensDefault {
 	}
 }
 
-/*ListTokensDefault handles this case with default header values.
+/* ListTokensDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListTokensDefault) Code() int {
 func (o *ListTokensDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users/tokens][%d] ListTokens default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListTokensDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

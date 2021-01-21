@@ -78,7 +78,7 @@ func NewPatchModelVersionOK() *PatchModelVersionOK {
 	return &PatchModelVersionOK{}
 }
 
-/*PatchModelVersionOK handles this case with default header values.
+/* PatchModelVersionOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchModelVersionOK struct {
 func (o *PatchModelVersionOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] patchModelVersionOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchModelVersionOK) GetPayload() *service_model.V1ModelVersion {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchModelVersionNoContent() *PatchModelVersionNoContent {
 	return &PatchModelVersionNoContent{}
 }
 
-/*PatchModelVersionNoContent handles this case with default header values.
+/* PatchModelVersionNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchModelVersionNoContent struct {
 func (o *PatchModelVersionNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] patchModelVersionNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchModelVersionNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchModelVersionForbidden() *PatchModelVersionForbidden {
 	return &PatchModelVersionForbidden{}
 }
 
-/*PatchModelVersionForbidden handles this case with default header values.
+/* PatchModelVersionForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchModelVersionForbidden struct {
 func (o *PatchModelVersionForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] patchModelVersionForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchModelVersionForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchModelVersionNotFound() *PatchModelVersionNotFound {
 	return &PatchModelVersionNotFound{}
 }
 
-/*PatchModelVersionNotFound handles this case with default header values.
+/* PatchModelVersionNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchModelVersionNotFound struct {
 func (o *PatchModelVersionNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] patchModelVersionNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchModelVersionNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchModelVersionDefault(code int) *PatchModelVersionDefault {
 	}
 }
 
-/*PatchModelVersionDefault handles this case with default header values.
+/* PatchModelVersionDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchModelVersionDefault) Code() int {
 func (o *PatchModelVersionDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry/{model}/versions/{version.name}][%d] PatchModelVersion default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchModelVersionDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

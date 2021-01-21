@@ -78,7 +78,7 @@ func NewListDashboardsOK() *ListDashboardsOK {
 	return &ListDashboardsOK{}
 }
 
-/*ListDashboardsOK handles this case with default header values.
+/* ListDashboardsOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListDashboardsOK struct {
 func (o *ListDashboardsOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/dashboards][%d] listDashboardsOK  %+v", 200, o.Payload)
 }
-
 func (o *ListDashboardsOK) GetPayload() *service_model.V1ListDashboardsResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListDashboardsNoContent() *ListDashboardsNoContent {
 	return &ListDashboardsNoContent{}
 }
 
-/*ListDashboardsNoContent handles this case with default header values.
+/* ListDashboardsNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListDashboardsNoContent struct {
 func (o *ListDashboardsNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/dashboards][%d] listDashboardsNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListDashboardsNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListDashboardsForbidden() *ListDashboardsForbidden {
 	return &ListDashboardsForbidden{}
 }
 
-/*ListDashboardsForbidden handles this case with default header values.
+/* ListDashboardsForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListDashboardsForbidden struct {
 func (o *ListDashboardsForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/dashboards][%d] listDashboardsForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListDashboardsForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListDashboardsNotFound() *ListDashboardsNotFound {
 	return &ListDashboardsNotFound{}
 }
 
-/*ListDashboardsNotFound handles this case with default header values.
+/* ListDashboardsNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListDashboardsNotFound struct {
 func (o *ListDashboardsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/dashboards][%d] listDashboardsNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListDashboardsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListDashboardsDefault(code int) *ListDashboardsDefault {
 	}
 }
 
-/*ListDashboardsDefault handles this case with default header values.
+/* ListDashboardsDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListDashboardsDefault) Code() int {
 func (o *ListDashboardsDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/dashboards][%d] ListDashboards default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListDashboardsDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

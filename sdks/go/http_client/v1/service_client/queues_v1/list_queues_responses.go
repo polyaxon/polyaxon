@@ -78,7 +78,7 @@ func NewListQueuesOK() *ListQueuesOK {
 	return &ListQueuesOK{}
 }
 
-/*ListQueuesOK handles this case with default header values.
+/* ListQueuesOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type ListQueuesOK struct {
 func (o *ListQueuesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{name}/queues][%d] listQueuesOK  %+v", 200, o.Payload)
 }
-
 func (o *ListQueuesOK) GetPayload() *service_model.V1ListQueuesResponse {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewListQueuesNoContent() *ListQueuesNoContent {
 	return &ListQueuesNoContent{}
 }
 
-/*ListQueuesNoContent handles this case with default header values.
+/* ListQueuesNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type ListQueuesNoContent struct {
 func (o *ListQueuesNoContent) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{name}/queues][%d] listQueuesNoContent  %+v", 204, o.Payload)
 }
-
 func (o *ListQueuesNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewListQueuesForbidden() *ListQueuesForbidden {
 	return &ListQueuesForbidden{}
 }
 
-/*ListQueuesForbidden handles this case with default header values.
+/* ListQueuesForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type ListQueuesForbidden struct {
 func (o *ListQueuesForbidden) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{name}/queues][%d] listQueuesForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ListQueuesForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewListQueuesNotFound() *ListQueuesNotFound {
 	return &ListQueuesNotFound{}
 }
 
-/*ListQueuesNotFound handles this case with default header values.
+/* ListQueuesNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type ListQueuesNotFound struct {
 func (o *ListQueuesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{name}/queues][%d] listQueuesNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ListQueuesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewListQueuesDefault(code int) *ListQueuesDefault {
 	}
 }
 
-/*ListQueuesDefault handles this case with default header values.
+/* ListQueuesDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *ListQueuesDefault) Code() int {
 func (o *ListQueuesDefault) Error() string {
 	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{name}/queues][%d] ListQueues default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *ListQueuesDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

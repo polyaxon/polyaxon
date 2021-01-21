@@ -30,69 +30,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteTeamMemberParams creates a new DeleteTeamMemberParams object
-// with the default values initialized.
+// NewDeleteTeamMemberParams creates a new DeleteTeamMemberParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteTeamMemberParams() *DeleteTeamMemberParams {
-	var ()
 	return &DeleteTeamMemberParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteTeamMemberParamsWithTimeout creates a new DeleteTeamMemberParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteTeamMemberParamsWithTimeout(timeout time.Duration) *DeleteTeamMemberParams {
-	var ()
 	return &DeleteTeamMemberParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteTeamMemberParamsWithContext creates a new DeleteTeamMemberParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteTeamMemberParamsWithContext(ctx context.Context) *DeleteTeamMemberParams {
-	var ()
 	return &DeleteTeamMemberParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteTeamMemberParamsWithHTTPClient creates a new DeleteTeamMemberParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteTeamMemberParamsWithHTTPClient(client *http.Client) *DeleteTeamMemberParams {
-	var ()
 	return &DeleteTeamMemberParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteTeamMemberParams contains all the parameters to send to the API endpoint
-for the delete team member operation typically these are written to a http.Request
+/* DeleteTeamMemberParams contains all the parameters to send to the API endpoint
+   for the delete team member operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteTeamMemberParams struct {
 
-	/*Owner
-	  Owner of the namespace
+	/* Owner.
 
+	   Owner of the namespace
 	*/
 	Owner string
-	/*Team
-	  Team under namesapce
 
+	/* Team.
+
+	   Team under namesapce
 	*/
 	Team string
-	/*User
-	  Member under team
 
+	/* User.
+
+	   Member under team
 	*/
 	User string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete team member params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteTeamMemberParams) WithDefaults() *DeleteTeamMemberParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete team member params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteTeamMemberParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete team member params

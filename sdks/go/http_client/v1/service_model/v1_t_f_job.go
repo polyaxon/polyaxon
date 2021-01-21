@@ -20,6 +20,8 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -34,7 +36,7 @@ type V1TFJob struct {
 	Chief *V1KFReplica `json:"chief,omitempty"`
 
 	// optional clean pod policy section
-	CleanPodPolicy V1CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
+	CleanPodPolicy *V1CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
 
 	// Optional evaluator replica definition
 	Evaluator *V1KFReplica `json:"evaluator,omitempty"`
@@ -80,7 +82,6 @@ func (m *V1TFJob) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1TFJob) validateChief(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Chief) { // not required
 		return nil
 	}
@@ -98,23 +99,23 @@ func (m *V1TFJob) validateChief(formats strfmt.Registry) error {
 }
 
 func (m *V1TFJob) validateCleanPodPolicy(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CleanPodPolicy) { // not required
 		return nil
 	}
 
-	if err := m.CleanPodPolicy.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("cleanPodPolicy")
+	if m.CleanPodPolicy != nil {
+		if err := m.CleanPodPolicy.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cleanPodPolicy")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1TFJob) validateEvaluator(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Evaluator) { // not required
 		return nil
 	}
@@ -132,7 +133,6 @@ func (m *V1TFJob) validateEvaluator(formats strfmt.Registry) error {
 }
 
 func (m *V1TFJob) validatePs(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Ps) { // not required
 		return nil
 	}
@@ -150,13 +150,112 @@ func (m *V1TFJob) validatePs(formats strfmt.Registry) error {
 }
 
 func (m *V1TFJob) validateWorker(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Worker) { // not required
 		return nil
 	}
 
 	if m.Worker != nil {
 		if err := m.Worker.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("worker")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 t f job based on the context it is used
+func (m *V1TFJob) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateChief(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateCleanPodPolicy(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateEvaluator(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateWorker(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1TFJob) contextValidateChief(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Chief != nil {
+		if err := m.Chief.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("chief")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1TFJob) contextValidateCleanPodPolicy(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CleanPodPolicy != nil {
+		if err := m.CleanPodPolicy.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cleanPodPolicy")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1TFJob) contextValidateEvaluator(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Evaluator != nil {
+		if err := m.Evaluator.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("evaluator")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1TFJob) contextValidatePs(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Ps != nil {
+		if err := m.Ps.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ps")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1TFJob) contextValidateWorker(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Worker != nil {
+		if err := m.Worker.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("worker")
 			}

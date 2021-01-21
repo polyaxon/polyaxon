@@ -32,71 +32,88 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
-// NewStartRunTensorboardParams creates a new StartRunTensorboardParams object
-// with the default values initialized.
+// NewStartRunTensorboardParams creates a new StartRunTensorboardParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewStartRunTensorboardParams() *StartRunTensorboardParams {
-	var ()
 	return &StartRunTensorboardParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewStartRunTensorboardParamsWithTimeout creates a new StartRunTensorboardParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewStartRunTensorboardParamsWithTimeout(timeout time.Duration) *StartRunTensorboardParams {
-	var ()
 	return &StartRunTensorboardParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewStartRunTensorboardParamsWithContext creates a new StartRunTensorboardParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewStartRunTensorboardParamsWithContext(ctx context.Context) *StartRunTensorboardParams {
-	var ()
 	return &StartRunTensorboardParams{
-
 		Context: ctx,
 	}
 }
 
 // NewStartRunTensorboardParamsWithHTTPClient creates a new StartRunTensorboardParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewStartRunTensorboardParamsWithHTTPClient(client *http.Client) *StartRunTensorboardParams {
-	var ()
 	return &StartRunTensorboardParams{
 		HTTPClient: client,
 	}
 }
 
-/*StartRunTensorboardParams contains all the parameters to send to the API endpoint
-for the start run tensorboard operation typically these are written to a http.Request
+/* StartRunTensorboardParams contains all the parameters to send to the API endpoint
+   for the start run tensorboard operation.
+
+   Typically these are written to a http.Request.
 */
 type StartRunTensorboardParams struct {
 
-	/*Body*/
+	// Body.
 	Body *service_model.V1OwnerSubEntityResourceRequestByUID
-	/*Entity
-	  Entity: project name, hub name, registry name, ...
 
+	/* Entity.
+
+	   Entity: project name, hub name, registry name, ...
 	*/
 	Entity string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
-	/*UUID
-	  Uuid identifier of the sub-entity
 
+	/* UUID.
+
+	   Uuid identifier of the sub-entity
 	*/
 	UUID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the start run tensorboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *StartRunTensorboardParams) WithDefaults() *StartRunTensorboardParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the start run tensorboard params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *StartRunTensorboardParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the start run tensorboard params
@@ -183,7 +200,6 @@ func (o *StartRunTensorboardParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

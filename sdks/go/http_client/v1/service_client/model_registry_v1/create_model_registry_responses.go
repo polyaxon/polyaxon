@@ -78,7 +78,7 @@ func NewCreateModelRegistryOK() *CreateModelRegistryOK {
 	return &CreateModelRegistryOK{}
 }
 
-/*CreateModelRegistryOK handles this case with default header values.
+/* CreateModelRegistryOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type CreateModelRegistryOK struct {
 func (o *CreateModelRegistryOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] createModelRegistryOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateModelRegistryOK) GetPayload() *service_model.V1ModelRegistry {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewCreateModelRegistryNoContent() *CreateModelRegistryNoContent {
 	return &CreateModelRegistryNoContent{}
 }
 
-/*CreateModelRegistryNoContent handles this case with default header values.
+/* CreateModelRegistryNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type CreateModelRegistryNoContent struct {
 func (o *CreateModelRegistryNoContent) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] createModelRegistryNoContent  %+v", 204, o.Payload)
 }
-
 func (o *CreateModelRegistryNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewCreateModelRegistryForbidden() *CreateModelRegistryForbidden {
 	return &CreateModelRegistryForbidden{}
 }
 
-/*CreateModelRegistryForbidden handles this case with default header values.
+/* CreateModelRegistryForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type CreateModelRegistryForbidden struct {
 func (o *CreateModelRegistryForbidden) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] createModelRegistryForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CreateModelRegistryForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewCreateModelRegistryNotFound() *CreateModelRegistryNotFound {
 	return &CreateModelRegistryNotFound{}
 }
 
-/*CreateModelRegistryNotFound handles this case with default header values.
+/* CreateModelRegistryNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type CreateModelRegistryNotFound struct {
 func (o *CreateModelRegistryNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] createModelRegistryNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CreateModelRegistryNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewCreateModelRegistryDefault(code int) *CreateModelRegistryDefault {
 	}
 }
 
-/*CreateModelRegistryDefault handles this case with default header values.
+/* CreateModelRegistryDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *CreateModelRegistryDefault) Code() int {
 func (o *CreateModelRegistryDefault) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry/create][%d] CreateModelRegistry default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *CreateModelRegistryDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

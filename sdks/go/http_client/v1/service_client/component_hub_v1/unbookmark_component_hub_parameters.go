@@ -30,64 +30,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewUnbookmarkComponentHubParams creates a new UnbookmarkComponentHubParams object
-// with the default values initialized.
+// NewUnbookmarkComponentHubParams creates a new UnbookmarkComponentHubParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUnbookmarkComponentHubParams() *UnbookmarkComponentHubParams {
-	var ()
 	return &UnbookmarkComponentHubParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUnbookmarkComponentHubParamsWithTimeout creates a new UnbookmarkComponentHubParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUnbookmarkComponentHubParamsWithTimeout(timeout time.Duration) *UnbookmarkComponentHubParams {
-	var ()
 	return &UnbookmarkComponentHubParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUnbookmarkComponentHubParamsWithContext creates a new UnbookmarkComponentHubParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUnbookmarkComponentHubParamsWithContext(ctx context.Context) *UnbookmarkComponentHubParams {
-	var ()
 	return &UnbookmarkComponentHubParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUnbookmarkComponentHubParamsWithHTTPClient creates a new UnbookmarkComponentHubParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUnbookmarkComponentHubParamsWithHTTPClient(client *http.Client) *UnbookmarkComponentHubParams {
-	var ()
 	return &UnbookmarkComponentHubParams{
 		HTTPClient: client,
 	}
 }
 
-/*UnbookmarkComponentHubParams contains all the parameters to send to the API endpoint
-for the unbookmark component hub operation typically these are written to a http.Request
+/* UnbookmarkComponentHubParams contains all the parameters to send to the API endpoint
+   for the unbookmark component hub operation.
+
+   Typically these are written to a http.Request.
 */
 type UnbookmarkComponentHubParams struct {
 
-	/*Name
-	  Component under namesapce
+	/* Name.
 
+	   Component under namesapce
 	*/
 	Name string
-	/*Owner
-	  Owner of the namespace
 
+	/* Owner.
+
+	   Owner of the namespace
 	*/
 	Owner string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the unbookmark component hub params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UnbookmarkComponentHubParams) WithDefaults() *UnbookmarkComponentHubParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the unbookmark component hub params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UnbookmarkComponentHubParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the unbookmark component hub params

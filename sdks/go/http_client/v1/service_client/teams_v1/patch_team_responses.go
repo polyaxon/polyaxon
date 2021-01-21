@@ -78,7 +78,7 @@ func NewPatchTeamOK() *PatchTeamOK {
 	return &PatchTeamOK{}
 }
 
-/*PatchTeamOK handles this case with default header values.
+/* PatchTeamOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -89,7 +89,6 @@ type PatchTeamOK struct {
 func (o *PatchTeamOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] patchTeamOK  %+v", 200, o.Payload)
 }
-
 func (o *PatchTeamOK) GetPayload() *service_model.V1Team {
 	return o.Payload
 }
@@ -111,7 +110,7 @@ func NewPatchTeamNoContent() *PatchTeamNoContent {
 	return &PatchTeamNoContent{}
 }
 
-/*PatchTeamNoContent handles this case with default header values.
+/* PatchTeamNoContent describes a response with status code 204, with default header values.
 
 No content.
 */
@@ -122,7 +121,6 @@ type PatchTeamNoContent struct {
 func (o *PatchTeamNoContent) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] patchTeamNoContent  %+v", 204, o.Payload)
 }
-
 func (o *PatchTeamNoContent) GetPayload() interface{} {
 	return o.Payload
 }
@@ -142,7 +140,7 @@ func NewPatchTeamForbidden() *PatchTeamForbidden {
 	return &PatchTeamForbidden{}
 }
 
-/*PatchTeamForbidden handles this case with default header values.
+/* PatchTeamForbidden describes a response with status code 403, with default header values.
 
 You don't have permission to access the resource.
 */
@@ -153,7 +151,6 @@ type PatchTeamForbidden struct {
 func (o *PatchTeamForbidden) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] patchTeamForbidden  %+v", 403, o.Payload)
 }
-
 func (o *PatchTeamForbidden) GetPayload() interface{} {
 	return o.Payload
 }
@@ -173,7 +170,7 @@ func NewPatchTeamNotFound() *PatchTeamNotFound {
 	return &PatchTeamNotFound{}
 }
 
-/*PatchTeamNotFound handles this case with default header values.
+/* PatchTeamNotFound describes a response with status code 404, with default header values.
 
 Resource does not exist.
 */
@@ -184,7 +181,6 @@ type PatchTeamNotFound struct {
 func (o *PatchTeamNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] patchTeamNotFound  %+v", 404, o.Payload)
 }
-
 func (o *PatchTeamNotFound) GetPayload() interface{} {
 	return o.Payload
 }
@@ -206,7 +202,7 @@ func NewPatchTeamDefault(code int) *PatchTeamDefault {
 	}
 }
 
-/*PatchTeamDefault handles this case with default header values.
+/* PatchTeamDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -224,7 +220,6 @@ func (o *PatchTeamDefault) Code() int {
 func (o *PatchTeamDefault) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] PatchTeam default  %+v", o._statusCode, o.Payload)
 }
-
 func (o *PatchTeamDefault) GetPayload() *service_model.RuntimeError {
 	return o.Payload
 }

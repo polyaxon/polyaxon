@@ -20,6 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -50,7 +51,7 @@ type V1ComponentVersion struct {
 	Name string `json:"name,omitempty"`
 
 	// Optional latest stage of this entity
-	Stage V1Stages `json:"stage,omitempty"`
+	Stage *V1Stages `json:"stage,omitempty"`
 
 	// The status conditions timeline
 	StageConditions []*V1StageCondition `json:"stage_conditions"`
@@ -93,7 +94,6 @@ func (m *V1ComponentVersion) Validate(formats strfmt.Registry) error {
 }
 
 func (m *V1ComponentVersion) validateCreatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreatedAt) { // not required
 		return nil
 	}
@@ -106,23 +106,23 @@ func (m *V1ComponentVersion) validateCreatedAt(formats strfmt.Registry) error {
 }
 
 func (m *V1ComponentVersion) validateStage(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Stage) { // not required
 		return nil
 	}
 
-	if err := m.Stage.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("stage")
+	if m.Stage != nil {
+		if err := m.Stage.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("stage")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
 }
 
 func (m *V1ComponentVersion) validateStageConditions(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StageConditions) { // not required
 		return nil
 	}
@@ -147,13 +147,62 @@ func (m *V1ComponentVersion) validateStageConditions(formats strfmt.Registry) er
 }
 
 func (m *V1ComponentVersion) validateUpdatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UpdatedAt) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("updated_at", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this v1 component version based on the context it is used
+func (m *V1ComponentVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateStage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStageConditions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1ComponentVersion) contextValidateStage(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Stage != nil {
+		if err := m.Stage.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("stage")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1ComponentVersion) contextValidateStageConditions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.StageConditions); i++ {
+
+		if m.StageConditions[i] != nil {
+			if err := m.StageConditions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("stage_conditions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
