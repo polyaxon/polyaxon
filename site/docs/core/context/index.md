@@ -69,7 +69,7 @@ This is information is available first and can be used immediately in all areas 
 > **Note**: It's very important to note that when `globals.*` is used in a param section with `ref`, 
 it will not correspond anymore to the current run, but will be resolved from the reference defined in the `param.ref`.
 
-> **Note**: Please check the [context globals section](/docs/context/globals/) for more details.
+> **Note**: Please check the [context globals section](/docs/core/context/globals/) for more details.
 
 
 ### Params
@@ -104,13 +104,13 @@ in which case the value is just a merged [ArtifactsType](/docs/core/specificatio
 After resolving the joins, all resulting values will be available in the context, and the compiler moves to the last params section, params defined in the matrix section 
 ([Optimization](/docs/automation/optimization-engine/) or [MApping](/docs/automation/mapping/)).
 
-> **Note**: Please check the [context params section](/docs/context/params/) for more details.
+> **Note**: Please check the [context params section](/docs/core/context/params/) for more details.
 
 ### Connections
 
 Finally, if the main container requests a connection or if an init container requests a connection, and if that connection has a schema, it will be available in the context.
 
-> **Note**: Please check the [context connections section](/docs/context/connections/) for more details.
+> **Note**: Please check the [context connections section](/docs/core/context/connections/) for more details.
 
 ## Distributed jobs
 
