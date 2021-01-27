@@ -1,8 +1,14 @@
 version: 1.1
 kind: component
 name: simple-experiment
-description: Minimum information to run this TF.Keras example
+description: Runs a tensorboard as a post-success hook
 tags: [examples]
+hooks:
+- trigger: succeeded
+  hubRef: acme/tensorboard
+  connection: slack-notification
+  params:
+    uuid: {value: "{{ globals.uuid }}"}
 run:
   kind: job
   init:
@@ -11,4 +17,4 @@ run:
     image: polyaxon/polyaxon-quick-start
     workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
     command: [python3, model.py]
-
+    args: ["--epochs=1"]

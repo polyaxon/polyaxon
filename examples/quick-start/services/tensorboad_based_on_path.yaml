@@ -1,0 +1,8 @@
+version: 1.1
+kind: operation
+hubRef: tensorboard:path
+params:
+  path:
+    value: "/path/to/tensorboard"
+runPatch:
+  connections: [default-artifacts-store]

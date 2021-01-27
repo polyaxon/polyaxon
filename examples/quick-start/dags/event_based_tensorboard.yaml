@@ -1,0 +1,25 @@
+version: 1.1
+kind: component
+name: experiment-with-tensorboard
+description: runs a tensorboard as soon as an experiment starts running
+run:
+  kind: dag
+  operations:
+  - name: experiment
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml"
+    params:
+      learning_rate:
+        value: 0.005
+      epochs:
+        value: 10
+  - name: tensorboard
+    hubRef: acme/tensorboard
+    termination:
+      timeout: 3600
+    params:
+      uuid:
+        ref: ops.experiment
+        value: globals.uuid
+    events:
+      - ref: ops.experiment
+        kinds: [run_status_running]

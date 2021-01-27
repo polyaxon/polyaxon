@@ -41,6 +41,8 @@
       link: /docs/intro/how-tos/mounting-configmaps/
     - title: Handling Termination
       link: /docs/intro/how-tos/handling-termination/
+    - title: Start runs with different names
+      link: run-with-different-names
   - group: Features & Architecture
     items:
     - title: Features

@@ -2,10 +2,12 @@ version: 1.1
 kind: operation
 matrix:
   kind: grid
+  concurrency: 2
+  numRuns: 10
   params:
     learning_rate:
       kind: linspace
-      value: 0.001:0.1:2
+      value: 0.001:0.1:5
     dropout:
       kind: choice
       value: [0.25, 0.3]
@@ -15,4 +17,4 @@ matrix:
     epochs:
       kind: choice
       value: [5, 10]
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml

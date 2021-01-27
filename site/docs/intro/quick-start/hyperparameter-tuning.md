@@ -32,7 +32,7 @@ pip install "polyaxon[numpy]"
 
 ## Grid search
 
-Let's run another polyaxonfile `hyperparams_grid.yml`, which contains a hyperparameter tuning definition with grid seach algorithm, this is the content of the file:
+Let's run another polyaxonfile `hyperparams_grid.yaml`, which contains a hyperparameter tuning definition with grid seach algorithm, this is the content of the file:
 
 ```yaml
 version: 1.1
@@ -52,7 +52,7 @@ matrix:
     epochs:
       kind: choice
       value: [5, 10]
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
 This is an operation based on the same component.
@@ -66,7 +66,7 @@ Polyaxon will generate multiple operations based on the search space, and it wil
 Starting a hyperparameter tuning is similar to any other operation:
 
 ```bash
-$ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/automation/hyperparams_grid.yml --eager
+$ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_grid.yaml --eager
 ```
 
 If you don't provide the `--eager` flag Polyaxon will:
@@ -77,7 +77,7 @@ If you don't provide the `--eager` flag Polyaxon will:
 
 ## Random search
 
-The `hyperparams_random.yml` polyaxonfile is similar to the grid search polyaxonfile, the only difference is that it defines a random search matrix section:
+The `hyperparams_random.yaml` polyaxonfile is similar to the grid search polyaxonfile, the only difference is that it defines a random search matrix section:
 
 ```yaml
 version: 1.1
@@ -98,13 +98,13 @@ matrix:
     epochs:
       kind: choice
       value: [5, 10]
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
 To run this polyaxonfile:
 
 ```bash
-$ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/automation/hyperparams_random.yml --eager
+$ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/hyperparams_random.yaml --eager
 ```
 
 Random search also provides access to the continuous distributions in addition to the discrete distributions.
@@ -118,7 +118,7 @@ Mapping is how you can provide a predefined space.
 
 Mapping can be also used to parallelize a job for fetching data, or loading information from a source to a destination concurrently.
 
-The `mapping.yml` polyaxonfile defines all the values that we want to use for running our component:
+The `mapping.yaml` polyaxonfile defines all the values that we want to use for running our component:
 
 ```yaml
 version: 1.1
@@ -134,13 +134,13 @@ matrix:
     dropout: 0.5
     conv_activation: sigmoid
     epochs: 5
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
 Starting a mapping is also similar to any other operation:
 
 ```bash
-$ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/automation/mapping.yml --eager
+$ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/optimization/mapping.yaml --eager
 ```
 
 > For more details check the [mapping reference](/docs/automation/mapping/)

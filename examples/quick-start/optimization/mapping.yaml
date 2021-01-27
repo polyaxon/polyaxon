@@ -11,4 +11,4 @@ matrix:
     dropout: 0.5
     conv_activation: sigmoid
     epochs: 5
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml

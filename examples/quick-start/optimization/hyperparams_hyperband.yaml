@@ -22,4 +22,4 @@ matrix:
     conv_activation:
       kind: pchoice
       value: [[relu, 0.1], [sigmoid, 0.8]]
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml

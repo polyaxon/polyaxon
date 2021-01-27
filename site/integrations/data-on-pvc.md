@@ -28,7 +28,7 @@ You need to define or create a PVC in the same namespace as Polyaxon CE or Polya
 Under the same namespace where you are deploying Polyaxon, e.g. `polyaxon`, create a PVC using kubectl
 
 ```bash
-kubectl create -f data-pvc.yml -n polyaxon
+kubectl create -f data-pvc.yaml -n polyaxon
 ```
 
 > **Tip**: Please visit the Kubernetes documentation to learn about [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).

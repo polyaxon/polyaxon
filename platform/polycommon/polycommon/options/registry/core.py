@@ -14,10 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf import settings
-
 from polyaxon import types
-from polycommon.options.cache import LONG_CACHE_TTL
 from polycommon.options.option import Option, OptionScope, OptionStores
 
 LOGGING = "LOGGING"
@@ -129,11 +126,10 @@ class HealthCheckWorkerTimeout(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    store = OptionStores(settings.STORE_OPTION)
+    store = OptionStores.SETTINGS
     typing = types.INT
     default = 4
     options = None
-    cache_ttl = LONG_CACHE_TTL
 
 
 class SchedulerEnabled(Option):

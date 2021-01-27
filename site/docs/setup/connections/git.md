@@ -90,6 +90,16 @@ params:
       git: {url: https://new.com}
 ```
 
+Passing flags:
+
+```yaml
+params:
+  kind: job
+  init:
+    - connection: "repo-test"
+      git: {flags: [--experimental-fetch, --depth 1, --recurse-submodules]}
+```
+
 ### Example using the connection inside the main container
 
 ```yaml

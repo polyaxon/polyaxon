@@ -19,12 +19,14 @@ import sys
 import click
 
 from polyaxon import settings
+from polyaxon.api import POLYAXON_CLOUD_HOST
 from polyaxon.logger import clean_outputs
 from polyaxon.utils.http_utils import clean_host
 
 
-def get_dashboard_url(base: str = "ui", subpath: str = "") -> str:
-    dashboard_url = "{}/{}/".format(clean_host(settings.CLIENT_CONFIG.host), base)
+def get_dashboard_url(base: str = "ui", subpath: str = "", use_cloud: bool = False) -> str:
+    host = POLYAXON_CLOUD_HOST if use_cloud else clean_host(settings.CLIENT_CONFIG.host)
+    dashboard_url = "{}/{}/".format(host, base)
     if subpath:
         return "{}{}/".format(dashboard_url, subpath.rstrip("/"))
     return dashboard_url

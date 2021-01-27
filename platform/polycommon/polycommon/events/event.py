@@ -261,3 +261,7 @@ class Event:
 
 class ActorEvent(Event):
     actor = True
+
+
+class ActorTopEntityEvent(ActorEvent):
+    entity_uuid = "uuid"

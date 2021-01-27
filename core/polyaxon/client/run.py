@@ -590,10 +590,11 @@ class RunClient:
     ):
         """Waits for the run's last status to meet a condition.
 
-        If statuses is passed the it will wait for the condition:
+        If a list of statuses is passed, it will wait for the condition:
          * last status is one of the statuses passed.
 
-        Otherwise, it will wait until the user interrupts the function or reaches a final status.
+        Otherwise, it will wait until the user interrupts the function or
+        when the run reaches a final status.
 
         N.B. if you want to watch the statuses and and receive the status/conditions,
         please use `watch_statuses` instead which yields the results.
@@ -884,7 +885,7 @@ class RunClient:
         """Return the artifacts tree based on the path.
 
         Args:
-            path: str, the relative path of the artifact to return.
+            path: str, the relative path of the artifact tree to return.
 
         Returns:
             V1ArtifactTree.

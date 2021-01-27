@@ -6,7 +6,7 @@ info:
     url: https://github.com/polyaxon/polyaxon
   description: Polyaxon SDKs and REST API specification.
   title: Polyaxon SDKs and REST API specification.
-  version: 1.5.3
+  version: 1.5.4
 servers:
 - url: /
 security:
@@ -966,6 +966,73 @@ paths:
       - OrganizationsV1
       x-codegen-request-body-name: body
       x-contentType: application/json
+      x-accepts: application/json
+  /api/v1/orgs/{owner}/activities:
+    get:
+      operationId: GetOrganizationActivities
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListActivitiesResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get organization activities
+      tags:
+      - OrganizationsV1
       x-accepts: application/json
   /api/v1/orgs/{owner}/agents:
     get:
@@ -7353,6 +7420,79 @@ paths:
       tags:
       - ComponentHubV1
       x-accepts: application/json
+  /api/v1/{owner}/hub/{name}/activities:
+    get:
+      operationId: GetComponentHubActivities
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity managing the resource
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListActivitiesResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get hub activities
+      tags:
+      - ComponentHubV1
+      x-accepts: application/json
   /api/v1/{owner}/hub/{name}/archive:
     post:
       operationId: ArchiveComponentHub
@@ -8877,6 +9017,79 @@ paths:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
       summary: Get registry model
+      tags:
+      - ModelRegistryV1
+      x-accepts: application/json
+  /api/v1/{owner}/registry/{name}/activities:
+    get:
+      operationId: GetModelRegistryActivities
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity managing the resource
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListActivitiesResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get model activities
       tags:
       - ModelRegistryV1
       x-accepts: application/json
@@ -11100,6 +11313,79 @@ paths:
       tags:
       - ProjectsV1
       x-accepts: application/json
+  /api/v1/{owner}/{name}/activities:
+    get:
+      operationId: GetProjectActivities
+      parameters:
+      - description: Owner of the namespace
+        in: path
+        name: owner
+        required: true
+        schema:
+          type: string
+      - description: Entity managing the resource
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Pagination offset.
+        in: query
+        name: offset
+        schema:
+          format: int32
+          type: integer
+      - description: Limit size.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+      - description: Sort to order the search.
+        in: query
+        name: sort
+        schema:
+          type: string
+      - description: Query filter the search.
+        in: query
+        name: query
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListActivitiesResponse'
+          description: A successful response.
+        "204":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: No content.
+        "403":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: You don't have permission to access the resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Resource does not exist.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runtimeError'
+          description: An unexpected error response.
+      summary: Get project activities
+      tags:
+      - ProjectsV1
+      x-accepts: application/json
   /api/v1/{owner}/{name}/archive:
     post:
       operationId: ArchiveProject
@@ -11917,7 +12203,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/runtimeError'
           description: An unexpected error response.
-      summary: Get run stats
+      summary: Get project stats
       tags:
       - ProjectsV1
       x-accepts: application/json
@@ -14760,6 +15046,44 @@ components:
           items:
             $ref: '#/components/schemas/protobufAny'
           type: array
+      type: object
+    v1Activity:
+      example:
+        actor: actor
+        owner: owner
+        event_action: event_action
+        object_name: object_name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        object_uuid: object_uuid
+        object_parent: object_parent
+        event_subject: event_subject
+      properties:
+        actor:
+          title: Actor
+          type: string
+        owner:
+          title: Owner
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        event_action:
+          title: Event action
+          type: string
+        event_subject:
+          title: Event subject
+          type: string
+        object_name:
+          title: Object name
+          type: string
+        object_uuid:
+          title: Object uuid
+          type: string
+        object_parent:
+          title: Object parent
+          type: string
+      title: Activity specification
       type: object
     v1Affinity:
       title: Placeholder for Affinity
@@ -19131,6 +19455,46 @@ components:
           title: Placeholder for Container
           type: object
       title: Distributed Replica specification
+      type: object
+    v1ListActivitiesResponse:
+      example:
+        next: next
+        previous: previous
+        count: 0
+        results:
+        - actor: actor
+          owner: owner
+          event_action: event_action
+          object_name: object_name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          object_uuid: object_uuid
+          object_parent: object_parent
+          event_subject: event_subject
+        - actor: actor
+          owner: owner
+          event_action: event_action
+          object_name: object_name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          object_uuid: object_uuid
+          object_parent: object_parent
+          event_subject: event_subject
+      properties:
+        count:
+          format: int32
+          title: Count of the entities
+          type: integer
+        results:
+          items:
+            $ref: '#/components/schemas/v1Activity'
+          title: List of all entities
+          type: array
+        previous:
+          title: Previous page
+          type: string
+        next:
+          title: Next page
+          type: string
+      title: Contains list activities
       type: object
     v1ListAgentsResponse:
       example:

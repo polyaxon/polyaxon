@@ -28,7 +28,7 @@ It also comes with built-in support for distributed jobs, parallel executions, a
 
 DAGs are one of the runtimes supported by Polyaxon.
 
-The file `dag.yml` contains a DAG definition, it automates the journey we built manually in this tutorial:
+The file `dag.yaml` contains a DAG definition, it automates the journey we built manually in this tutorial:
 
 ```yaml
 version: 1.1
@@ -55,7 +55,7 @@ run:
           - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
           langEnv: 'en_US.UTF-8'
   - name: experiment
-    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml"
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml"
     dependencies: [build]
     params:
       learning_rate:
@@ -63,7 +63,7 @@ run:
       epochs:
         value: 10
   - name: tune
-    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml"
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml"
     params:
       upstream_loss:
         ref: ops.experiment
@@ -118,7 +118,7 @@ finally, it will run a container to print the best 5 models.
 The DAG itself is parameterized, we can pass different values for `max_loss` and `top`.
 
 ```bash
-$ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/automation/dag.yml -P loss=0.002 -P top=10
+$ polyaxon run --url https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/dags/dag.yaml -P loss=0.002 -P top=10
 ```
 
 A DAG definition is also managed internally by a pipeline, which means you can also leverage all

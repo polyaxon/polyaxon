@@ -55,6 +55,8 @@ type ClientService interface {
 
 	GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectOK, *GetProjectNoContent, error)
 
+	GetProjectActivities(params *GetProjectActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectActivitiesOK, *GetProjectActivitiesNoContent, error)
+
 	GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error)
 
 	GetProjectStats(params *GetProjectStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectStatsOK, *GetProjectStatsNoContent, error)
@@ -337,6 +339,42 @@ func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAut
 }
 
 /*
+  GetProjectActivities gets project activities
+*/
+func (a *Client) GetProjectActivities(params *GetProjectActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectActivitiesOK, *GetProjectActivitiesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetProjectActivitiesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetProjectActivities",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{name}/activities",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetProjectActivitiesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetProjectActivitiesOK:
+		return value, nil, nil
+	case *GetProjectActivitiesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetProjectActivitiesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetProjectSettings gets project settings
 */
 func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error) {
@@ -373,7 +411,7 @@ func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo r
 }
 
 /*
-  GetProjectStats gets run stats
+  GetProjectStats gets project stats
 */
 func (a *Client) GetProjectStats(params *GetProjectStatsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectStatsOK, *GetProjectStatsNoContent, error) {
 	// TODO: Validate the params before sending

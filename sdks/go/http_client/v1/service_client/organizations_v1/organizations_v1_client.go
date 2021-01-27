@@ -51,6 +51,8 @@ type ClientService interface {
 
 	GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationOK, *GetOrganizationNoContent, error)
 
+	GetOrganizationActivities(params *GetOrganizationActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationActivitiesOK, *GetOrganizationActivitiesNoContent, error)
+
 	GetOrganizationInvitation(params *GetOrganizationInvitationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationInvitationOK, *GetOrganizationInvitationNoContent, error)
 
 	GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error)
@@ -301,6 +303,42 @@ func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetOrganizationDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetOrganizationActivities gets organization activities
+*/
+func (a *Client) GetOrganizationActivities(params *GetOrganizationActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationActivitiesOK, *GetOrganizationActivitiesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationActivitiesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetOrganizationActivities",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/activities",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetOrganizationActivitiesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetOrganizationActivitiesOK:
+		return value, nil, nil
+	case *GetOrganizationActivitiesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetOrganizationActivitiesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

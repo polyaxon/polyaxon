@@ -32,7 +32,7 @@ git clone https://github.com/polyaxon/polyaxon-quick-start.git
 
 ## Check the polyaxonfile for the local integration
 
-Under the path `local-integration` there's a single polyaxonfile which we will use for this example, it's the same as the `simple.yml` file that we used before under `automation`,
+Under the path `local-integration` there's a single polyaxonfile which we will use for this example, it's the same as the `simple.yaml` file that we used before under `experimentation`,
 the only difference is that this version does not include an init section.
 
 ```yaml
@@ -71,10 +71,10 @@ For instance to make the upload optimized and fast you should not upload your `.
 
 In the previous section of this tutorial we were using a hard-coded git initializer, which requires a git push and a connection to handle the pull if the repo is private.
  
-In this section we will upload the local code instead, before submitting an operation:
+In this section we will upload the local code instead before submitting an operation:
 
 ```bash
-polyaxon run -f local-integration/simple.yml -u
+polyaxon run -f local-integration/simple.yaml -u
 ```
 
 This will tell Polyaxon to upload anything from the current path, while respecting the `.polyaxonignore` pattern, before starting the experiment.
@@ -85,7 +85,7 @@ If you want to upload the code, or any artifacts, to a different path other than
 for instance to use `code` you should do the following:
 
  * Change the `workingDir: "{{ globals.run_artifacts_path }}/code"` in the polyaxonfile
- * Run the upload command with a specific path: `polyaxon run -f local-integration/simple.yml -u-to code`
+ * Run the upload command with a specific path: `polyaxon run -f local-integration/simple.yaml -u-to code`
  
 If your local folder is large, and several subpaths are not necessary, you can also use `-u-from/--upload-from`.
 
@@ -100,7 +100,7 @@ This command is helpful if you need to upload some artifacts or some code, or re
 
 ## Understanding the upload and run process
 
-The previous command `polyaxon run -f local-integration/simple.yml -u` uses a flag [is_approved](/docs/core/specification/operation/#isapproved) that provides human validation before starting an experiment.
+The previous command `polyaxon run -f local-integration/simple.yaml -u` uses a flag [is_approved](/docs/core/specification/operation/#isapproved) that provides human validation before starting an experiment.
 This flag allows Polyaxon to create and compile an experiments or a job, and put it on hold until a human intervenes and validates it.
 In our case we are just using this process to put the experiment on hold while waiting for the upload to finish, but the flag itself has more use-cases,
 especially if you have an automated process that schedules jobs and you need to validate them before allocating resources to run them. 

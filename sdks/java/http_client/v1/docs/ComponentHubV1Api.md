@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**deleteComponentHub**](ComponentHubV1Api.md#deleteComponentHub) | **DELETE** /api/v1/{owner}/hub/{name} | Delete hub component
 [**deleteComponentVersion**](ComponentHubV1Api.md#deleteComponentVersion) | **DELETE** /api/v1/{owner}/hub/{entity}/versions/{name} | Delete component version
 [**getComponentHub**](ComponentHubV1Api.md#getComponentHub) | **GET** /api/v1/{owner}/hub/{name} | Get hub component
+[**getComponentHubActivities**](ComponentHubV1Api.md#getComponentHubActivities) | **GET** /api/v1/{owner}/hub/{name}/activities | Get hub activities
 [**getComponentHubSettings**](ComponentHubV1Api.md#getComponentHubSettings) | **GET** /api/v1/{owner}/hub/{name}/settings | Get hub component settings
 [**getComponentVersion**](ComponentHubV1Api.md#getComponentVersion) | **GET** /api/v1/{owner}/hub/{entity}/versions/{name} | Get component version
 [**getComponentVersionStages**](ComponentHubV1Api.md#getComponentVersionStages) | **GET** /api/v1/{owner}/hub/{entity}/versions/{name}/stages | Get component version stages
@@ -599,6 +600,87 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ComponentHub**](V1ComponentHub.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**204** | No content. |  -  |
+**403** | You don&#39;t have permission to access the resource. |  -  |
+**404** | Resource does not exist. |  -  |
+**0** | An unexpected error response. |  -  |
+
+<a name="getComponentHubActivities"></a>
+# **getComponentHubActivities**
+> V1ListActivitiesResponse getComponentHubActivities(owner, name, offset, limit, sort, query)
+
+Get hub activities
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ComponentHubV1Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: ApiKey
+    ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+    ApiKey.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKey.setApiKeyPrefix("Token");
+
+    ComponentHubV1Api apiInstance = new ComponentHubV1Api(defaultClient);
+    String owner = "owner_example"; // String | Owner of the namespace
+    String name = "name_example"; // String | Entity managing the resource
+    Integer offset = 56; // Integer | Pagination offset.
+    Integer limit = 56; // Integer | Limit size.
+    String sort = "sort_example"; // String | Sort to order the search.
+    String query = "query_example"; // String | Query filter the search.
+    try {
+      V1ListActivitiesResponse result = apiInstance.getComponentHubActivities(owner, name, offset, limit, sort, query);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ComponentHubV1Api#getComponentHubActivities");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **name** | **String**| Entity managing the resource |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search. | [optional]
+
+### Return type
+
+[**V1ListActivitiesResponse**](V1ListActivitiesResponse.md)
 
 ### Authorization
 

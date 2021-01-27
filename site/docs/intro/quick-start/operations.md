@@ -22,13 +22,13 @@ In this sections we will look at what happened when we run a component w/o param
 Let's first run this polyaxonfile:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yml
+$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/operation.yaml
 ```
 
 > For more details about this command please run `polyaxon run --help`,
 or check the [command reference](/docs/core/cli/run/)
 
-This file `operation.yml` also creates a new run, but its content does not include a component, it includes an operation.
+This file `operation.yaml` also creates a new run, but its content does not include a component, it includes an operation.
 
 ```yaml
 version: 1.1
@@ -36,7 +36,7 @@ kind: operation
 params:
   optimizer: {value: sgd}
   epochs: {value: 1}
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
 An operation just defines how to run a component, running this file does not require passing params using the CLI because they are defined in the polyaxonfile.
@@ -64,7 +64,7 @@ runPatch:
     resources:
       limits:
         nvidia.com/gpu: 1
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
 Using the operation we will keep the options to use other resources or no resources at all, you can also patch the environment, init, sidecars ...
@@ -79,7 +79,7 @@ Since operations don't define a runtime, they need to reference components to ru
 Operations can reference components in several ways:
 
  * `urlRef`: This is what we used earlier to resolve the component to run, basically Polyaxon will fetch the content of the component based on a url.
- * `pathRef`: If we were to clone the repo we could replace the `urlRef` with a simple `pathRef: ./typed.yml` since both files are on the same folder.
+ * `pathRef`: If we were to clone the repo we could replace the `urlRef` with a simple `pathRef: ./typed.yaml` since both files are on the same folder.
  * `hubRef`: This is similar to what we did for running Tensorboard with the `--hub` argument, in fact the CLI just injects this option using that flag.
  * `component`: It's possible to pass the component inline directly inside the operation, this use case is generally useful when running DAGs.
 

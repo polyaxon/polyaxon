@@ -58,7 +58,7 @@ gcloud --project "polyaxon-test" compute instances describe polyaxon-nfs-vm --zo
 
 ## Create a PVC with the correct ip addresses
 
-Create `data-pvc.yml` containing the following PVS definition:
+Create `data-pvc.yaml` containing the following PVS definition:
 
 ```yaml
 apiVersion: v1
@@ -94,7 +94,7 @@ spec:
 Under the same namespace where you are deploying Polyaxon, e.g. `polyaxon`, create the PVC using kubectl
 
 ```bash
-kubectl create -f data-pvc.yml -n polyaxon
+kubectl create -f data-pvc.yaml -n polyaxon
 ```
 
 ## Use the PVC as an artifacts store in Polyaxon

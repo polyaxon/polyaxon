@@ -9,4 +9,3 @@ run:
     image: polyaxon/polyaxon-quick-start
     workingDir: "{{ globals.run_artifacts_path }}/uploads"
     command: [python3, model.py]
-

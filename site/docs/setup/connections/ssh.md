@@ -86,6 +86,20 @@ params:
       git: {url: git@another.com:second-org/repo2.git}
 ```
 
+Passing flags:
+
+```yaml
+params:
+  kind: job
+  init:
+    - connection: "ssh-git-connection"
+      git: {url: https://new.com/org/repo1}
+    - connection: "ssh-git-connection"
+      git:
+        url: git@another.com:second-org/repo2.git
+        flags: [--experimental-fetch, --depth 1, --recurse-submodules]
+```
+
 ### Example using the connection inside the main container
 
 It's often useful to use an ssh connection to pull an push code changes when running an interactive ide, e.g. VSCode, Notebooks, ...

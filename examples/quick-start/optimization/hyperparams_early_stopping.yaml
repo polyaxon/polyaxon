@@ -23,4 +23,4 @@ matrix:
       optimization: maximize
 params:
   epochs: {value: 5}
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml

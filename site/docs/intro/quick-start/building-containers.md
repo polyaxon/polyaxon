@@ -77,5 +77,5 @@ polyaxon admin upgrade -f config.yaml
 To run the operation:
 
 ```bash
-polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/helpers/build.yaml -l
+polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/build-containers/build_operation.yaml -l
 ```

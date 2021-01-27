@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.5.3
+- API version: 1.5.4
 
 Polyaxon SDKs and REST API specification.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>1.5.3</version>
+  <version>1.5.4</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.5.3"
+compile "org.openapitools:openapi-java-client:1.5.4"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.5.3.jar`
+* `target/openapi-java-client-1.5.4.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -143,6 +143,7 @@ Class | Method | HTTP request | Description
 *ComponentHubV1Api* | [**deleteComponentHub**](docs/ComponentHubV1Api.md#deleteComponentHub) | **DELETE** /api/v1/{owner}/hub/{name} | Delete hub component
 *ComponentHubV1Api* | [**deleteComponentVersion**](docs/ComponentHubV1Api.md#deleteComponentVersion) | **DELETE** /api/v1/{owner}/hub/{entity}/versions/{name} | Delete component version
 *ComponentHubV1Api* | [**getComponentHub**](docs/ComponentHubV1Api.md#getComponentHub) | **GET** /api/v1/{owner}/hub/{name} | Get hub component
+*ComponentHubV1Api* | [**getComponentHubActivities**](docs/ComponentHubV1Api.md#getComponentHubActivities) | **GET** /api/v1/{owner}/hub/{name}/activities | Get hub activities
 *ComponentHubV1Api* | [**getComponentHubSettings**](docs/ComponentHubV1Api.md#getComponentHubSettings) | **GET** /api/v1/{owner}/hub/{name}/settings | Get hub component settings
 *ComponentHubV1Api* | [**getComponentVersion**](docs/ComponentHubV1Api.md#getComponentVersion) | **GET** /api/v1/{owner}/hub/{entity}/versions/{name} | Get component version
 *ComponentHubV1Api* | [**getComponentVersionStages**](docs/ComponentHubV1Api.md#getComponentVersionStages) | **GET** /api/v1/{owner}/hub/{entity}/versions/{name}/stages | Get component version stages
@@ -180,6 +181,7 @@ Class | Method | HTTP request | Description
 *ModelRegistryV1Api* | [**deleteModelRegistry**](docs/ModelRegistryV1Api.md#deleteModelRegistry) | **DELETE** /api/v1/{owner}/registry/{name} | Delete registry model
 *ModelRegistryV1Api* | [**deleteModelVersion**](docs/ModelRegistryV1Api.md#deleteModelVersion) | **DELETE** /api/v1/{owner}/registry/{entity}/versions/{name} | Delete model version
 *ModelRegistryV1Api* | [**getModelRegistry**](docs/ModelRegistryV1Api.md#getModelRegistry) | **GET** /api/v1/{owner}/registry/{name} | Get registry model
+*ModelRegistryV1Api* | [**getModelRegistryActivities**](docs/ModelRegistryV1Api.md#getModelRegistryActivities) | **GET** /api/v1/{owner}/registry/{name}/activities | Get model activities
 *ModelRegistryV1Api* | [**getModelRegistrySettings**](docs/ModelRegistryV1Api.md#getModelRegistrySettings) | **GET** /api/v1/{owner}/registry/{name}/settings | Get registry model settings
 *ModelRegistryV1Api* | [**getModelVersion**](docs/ModelRegistryV1Api.md#getModelVersion) | **GET** /api/v1/{owner}/registry/{entity}/versions/{name} | Get model version
 *ModelRegistryV1Api* | [**getModelVersionStages**](docs/ModelRegistryV1Api.md#getModelVersionStages) | **GET** /api/v1/{owner}/registry/{entity}/versions/{name}/stages | Get model version stages
@@ -201,6 +203,7 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**deleteOrganizationInvitation**](docs/OrganizationsV1Api.md#deleteOrganizationInvitation) | **DELETE** /api/v1/orgs/{owner}/invitations | Delete organization invitation details
 *OrganizationsV1Api* | [**deleteOrganizationMember**](docs/OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{name} | Delete organization member details
 *OrganizationsV1Api* | [**getOrganization**](docs/OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Get organization
+*OrganizationsV1Api* | [**getOrganizationActivities**](docs/OrganizationsV1Api.md#getOrganizationActivities) | **GET** /api/v1/orgs/{owner}/activities | Get organization activities
 *OrganizationsV1Api* | [**getOrganizationInvitation**](docs/OrganizationsV1Api.md#getOrganizationInvitation) | **GET** /api/v1/orgs/{owner}/invitations | Get organization invitation details
 *OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{name} | Get organization member details
 *OrganizationsV1Api* | [**getOrganizationSettings**](docs/OrganizationsV1Api.md#getOrganizationSettings) | **GET** /api/v1/orgs/{owner}/settings | Get organization settings
@@ -248,8 +251,9 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{name}/ci | Disbale project CI
 *ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{name}/ci | Enable project CI
 *ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{name} | Get project
+*ProjectsV1Api* | [**getProjectActivities**](docs/ProjectsV1Api.md#getProjectActivities) | **GET** /api/v1/{owner}/{name}/activities | Get project activities
 *ProjectsV1Api* | [**getProjectSettings**](docs/ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{name}/settings | Get Project settings
-*ProjectsV1Api* | [**getProjectStats**](docs/ProjectsV1Api.md#getProjectStats) | **GET** /api/v1/{owner}/{name}/stats | Get run stats
+*ProjectsV1Api* | [**getProjectStats**](docs/ProjectsV1Api.md#getProjectStats) | **GET** /api/v1/{owner}/{name}/stats | Get project stats
 *ProjectsV1Api* | [**listArchivedProjects**](docs/ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
 *ProjectsV1Api* | [**listBookmarkedProjects**](docs/ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
 *ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
@@ -368,6 +372,7 @@ Class | Method | HTTP request | Description
  - [ProtobufNullValue](docs/ProtobufNullValue.md)
  - [RuntimeError](docs/RuntimeError.md)
  - [SparkDeployMode](docs/SparkDeployMode.md)
+ - [V1Activity](docs/V1Activity.md)
  - [V1Agent](docs/V1Agent.md)
  - [V1AgentStateResponse](docs/V1AgentStateResponse.md)
  - [V1AgentStatusBodyRequest](docs/V1AgentStatusBodyRequest.md)
@@ -466,6 +471,7 @@ Class | Method | HTTP request | Description
  - [V1K8sResourceSchema](docs/V1K8sResourceSchema.md)
  - [V1K8sResourceType](docs/V1K8sResourceType.md)
  - [V1KFReplica](docs/V1KFReplica.md)
+ - [V1ListActivitiesResponse](docs/V1ListActivitiesResponse.md)
  - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
  - [V1ListBookmarksResponse](docs/V1ListBookmarksResponse.md)
  - [V1ListComponentHubsResponse](docs/V1ListComponentHubsResponse.md)

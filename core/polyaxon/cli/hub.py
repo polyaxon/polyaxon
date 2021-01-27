@@ -18,6 +18,7 @@ import sys
 
 import click
 
+from polyaxon.schemas.cli.client_config import ClientConfig
 from polyaxon_sdk import V1ComponentHub, V1ComponentVersion
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -31,11 +32,12 @@ from polyaxon.cli.options import (
 )
 from polyaxon.cli.utils import get_entity_details
 from polyaxon.client import PolyaxonClient
-from polyaxon.constants import DEFAULT_HUB
+from polyaxon.constants import DEFAULT_HUB, NO_AUTH
 from polyaxon.env_vars.getters import get_component_info
 from polyaxon.exceptions import PolyaxonException
 from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile import get_specification
+from polyaxon import settings
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -45,6 +47,13 @@ from polyaxon.utils.formatting import (
 )
 from polyaxon.utils.query_params import get_query_params
 from polyaxon.utils.validation import validate_tags
+
+
+def get_current_or_public_client():
+    if settings.CLI_CONFIG.is_ce:
+        return PolyaxonClient(config=ClientConfig(), token=NO_AUTH)
+
+    return PolyaxonClient()
 
 
 def get_specification_details(specification):
@@ -327,7 +336,7 @@ def ls(owner, component, query, sort, limit, offset):
     def list_versions():
         component_info = "<owner: {}> <component: {}>".format(owner, component_hub)
         try:
-            polyaxon_client = PolyaxonClient()
+            polyaxon_client = get_current_or_public_client()
             params = get_query_params(
                 limit=limit, offset=offset, query=query, sort=sort
             )
@@ -368,7 +377,7 @@ def ls(owner, component, query, sort, limit, offset):
 
     def list_components():
         try:
-            polyaxon_client = PolyaxonClient()
+            polyaxon_client = get_current_or_public_client()
             params = get_query_params(
                 limit=limit, offset=offset, query=query, sort=sort
             )
@@ -434,7 +443,7 @@ def get(component, version):
     owner, component_hub, component_version, is_version = get_info(component, version)
 
     try:
-        polyaxon_client = PolyaxonClient()
+        polyaxon_client = get_current_or_public_client()
         if is_version:
             response = polyaxon_client.component_hub_v1.get_component_version(
                 owner, component_hub, component_version
@@ -614,7 +623,7 @@ def dashboard(component, version, yes, url):
         else "{}/hub/{}".format(owner, component_hub)
     )
 
-    hub_url = get_dashboard_url(subpath=subpath)
+    hub_url = get_dashboard_url(subpath=subpath, use_cloud=settings.CLI_CONFIG.is_ce)
     if url:
         Printer.print_header("The dashboard is available at: {}".format(hub_url))
         sys.exit(0)

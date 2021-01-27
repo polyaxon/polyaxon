@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**deleteModelRegistry**](ModelRegistryV1Api.md#deleteModelRegistry) | **DELETE** /api/v1/{owner}/registry/{name} | Delete registry model
 [**deleteModelVersion**](ModelRegistryV1Api.md#deleteModelVersion) | **DELETE** /api/v1/{owner}/registry/{entity}/versions/{name} | Delete model version
 [**getModelRegistry**](ModelRegistryV1Api.md#getModelRegistry) | **GET** /api/v1/{owner}/registry/{name} | Get registry model
+[**getModelRegistryActivities**](ModelRegistryV1Api.md#getModelRegistryActivities) | **GET** /api/v1/{owner}/registry/{name}/activities | Get model activities
 [**getModelRegistrySettings**](ModelRegistryV1Api.md#getModelRegistrySettings) | **GET** /api/v1/{owner}/registry/{name}/settings | Get registry model settings
 [**getModelVersion**](ModelRegistryV1Api.md#getModelVersion) | **GET** /api/v1/{owner}/registry/{entity}/versions/{name} | Get model version
 [**getModelVersionStages**](ModelRegistryV1Api.md#getModelVersionStages) | **GET** /api/v1/{owner}/registry/{entity}/versions/{name}/stages | Get model version stages
@@ -437,6 +438,67 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ModelRegistry**](V1ModelRegistry.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## getModelRegistryActivities
+
+> V1ListActivitiesResponse getModelRegistryActivities(owner, name, opts)
+
+Get model activities
+
+### Example
+
+```javascript
+import PolyaxonSdk from 'polyaxon-sdk';
+let defaultClient = PolyaxonSdk.ApiClient.instance;
+// Configure API key authorization: ApiKey
+let ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+let apiInstance = new PolyaxonSdk.ModelRegistryV1Api();
+let owner = "owner_example"; // String | Owner of the namespace
+let name = "name_example"; // String | Entity managing the resource
+let opts = {
+  'offset': 56, // Number | Pagination offset.
+  'limit': 56, // Number | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search.
+};
+apiInstance.getModelRegistryActivities(owner, name, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **name** | **String**| Entity managing the resource | 
+ **offset** | **Number**| Pagination offset. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search. | [optional] 
+
+### Return type
+
+[**V1ListActivitiesResponse**](V1ListActivitiesResponse.md)
 
 ### Authorization
 

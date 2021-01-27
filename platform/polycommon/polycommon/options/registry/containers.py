@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf import settings
-
 from polyaxon import types
 from polyaxon.auxiliaries import (
     V1PolyaxonInitContainer,
@@ -24,20 +22,18 @@ from polyaxon.auxiliaries import (
     get_default_sidecar_container,
 )
 from polycommon.options import option_namespaces, option_subjects
-from polycommon.options.cache import MID_FREQUENT_CACHE_TTL
 from polycommon.options.option import (
-    NAMESPACE_DB_OPTION_MARKER,
     Option,
     OptionScope,
     OptionStores,
 )
 
-INIT_CONTAINER = "{}{}{}".format(
-    option_namespaces.INIT, NAMESPACE_DB_OPTION_MARKER, option_subjects.CONTAINER
+INIT_CONTAINER = "{}_{}".format(
+    option_namespaces.INIT, option_subjects.CONTAINER
 )
 
-SIDECAR_CONTAINER = "{}{}{}".format(
-    option_namespaces.SIDECARS, NAMESPACE_DB_OPTION_MARKER, option_subjects.CONTAINER
+SIDECAR_CONTAINER = "{}_{}".format(
+    option_namespaces.SIDECARS, option_subjects.CONTAINER
 )
 
 OPTIONS = {SIDECAR_CONTAINER, INIT_CONTAINER}
@@ -51,9 +47,8 @@ class PolyaxonInitContainer(Option):
     is_optional = True
     is_list = False
     typing = types.STR
-    store = OptionStores(settings.STORE_OPTION)
+    store = OptionStores.SETTINGS
     options = None
-    cache_ttl = MID_FREQUENT_CACHE_TTL
 
     @staticmethod
     def get_default_value():
@@ -75,9 +70,8 @@ class PolyaxonSidecarContainer(Option):
     is_optional = True
     is_list = False
     typing = types.DICT
-    store = OptionStores(settings.STORE_OPTION)
+    store = OptionStores.SETTINGS
     options = None
-    cache_ttl = MID_FREQUENT_CACHE_TTL
 
     @staticmethod
     def get_default_value():

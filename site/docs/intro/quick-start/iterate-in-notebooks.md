@@ -29,7 +29,7 @@ Notebooks are great for interactively writing and debugging your code and visual
 
 ## Start a notebook
 
-Starting a notebook is similar to running any other Polyaxon components, i.e. you need to define Polyaxonfile or use a public component.
+Starting a notebook is similar to running any other Polyaxon components, i.e. we need to define Polyaxonfile or use a public component.
 
 Let's run one of the public notebook components:
 
@@ -40,7 +40,7 @@ $ polyaxon run --hub jupyterlab:tensorflow -w
 > For more details about this command please run `polyaxon run --help`,
 or check the [command reference](/docs/core/cli/run/)
 
-Since the notebook is created with a Polyaxonfile, it can be customized in the same way as any other job, e.g. instead of just executing `polyaxon run`
+Since the notebook is created with a Polyaxonfile, it can be customized the same way as any other job, e.g. instead of just executing `polyaxon run`
 we can create an operation to customize the resources, request GPUs ... in case the component itself is limiting, users can create their own component:
 
 ```yaml
@@ -62,7 +62,7 @@ runPatch:
 
 ## Stop a notebook
 
-You stop a notebook the same way you stop any other operation, run the following command in your terminal:
+We stop a notebook the same way we stop any other operation, run the following command in your terminal:
 
 If the operation is cached
 
@@ -100,7 +100,7 @@ grid_search_config = V1GridSearch(
 
 suggestions = GridSearchManager(grid_search_config).get_suggestions()
 for suggestion in suggestions:
-    client.create_from_url(url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml", params=suggestion)
+    client.create_from_url(url="https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml", params=suggestion)
 ```
 
 

@@ -9,7 +9,7 @@ run:
       connection: "{{connections['foo']['key']}}"
   container:
     image: continuumio/miniconda3
-    workingDir: '{{ globals.artifacts_path }}/polyaxon-quick-start'
+    workingDir: '{{ globals.artifacts_path }}/repo'
     command:
       - python
     args:

@@ -67,7 +67,7 @@ for hosting the project and the Polyaxonfile manifests, similar results can be a
 Let's run a first experiment
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yml -l
+$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
 ```
 
 > For more details about this command please run `polyaxon run --help`,

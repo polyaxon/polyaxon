@@ -29,4 +29,4 @@ matrix:
     epochs:
       kind: choice
       value: [1, 2, 3]
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml

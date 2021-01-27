@@ -1,0 +1,15 @@
+version: 1.1
+kind: operation
+hubRef: jupyterlab:scipy
+runPatch:
+ container:
+   resources:
+    cpu:
+     requests: 4
+     limits: 8
+    nvidia.com/gpu:
+     requests: 1
+     limits: 1
+    memory:
+     requests: 8Gi
+     limits: 32Gi

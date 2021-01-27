@@ -1,36 +1,22 @@
 version: 1.1
 kind: component
 name: automated-process
-description: runs an experiment, if the loss is higher than max_loss start a hyperparameter tuning process, and then print the best models
+description: This is a similar dag as in dags/dag, the only difference is that in this dag we use a join
 inputs:
 - {name: max_loss, type: float, value: 0.01, isOptional: true, description: "max loss to start a tuning job."}
 - {name: top, type: int, value: 5, isOptional: true, description: "top jobs."}
 run:
   kind: dag
   operations:
-  - name: build
-    hubRef: dokerizer
-    params:
-      destination:
-        connection: docker-connection
-        value: polyaxon/polyaxon-quick-start
-    runPatch:
-      init:
-      - dockerfile:
-          image: "tensorflow/tensorflow:2.2.0"
-          run:
-          - 'pip3 install --no-cache-dir -U polyaxon["s3","gcs","azure","polyboard","polytune"]'
-          langEnv: 'en_US.UTF-8'
   - name: experiment
-    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml"
-    dependencies: [build]
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml"
     params:
       learning_rate:
         value: 0.005
       epochs:
         value: 10
   - name: tune
-    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml"
+    urlRef: "https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml"
     params:
       upstream_loss:
         ref: ops.experiment
@@ -61,6 +47,15 @@ run:
   - name: best_model
     dependencies: [experiment, tune]
     trigger: all_done
+    joins:
+    - query: "metrics.accuracy:>0.9, project.name:{{ globals.project_name }}, kind: job"
+      sort: "-metrics.accuracy"
+      limit: "{{ top }}"
+      params:
+        uuids: {value: "globals.uuid", contextOnly: true}
+        learning_rates: {value: "inputs.learning_rate", contextOnly: true}
+        accuracies: {value: "outputs.accuracy", contextOnly: true}
+        losses: {value: "outputs.loss", contextOnly: true}
     params:
       top:
         ref: dag
@@ -74,5 +69,5 @@ run:
         container:
           image: polyaxon/polyaxon-quick-start
           workingDir: "{{ globals.artifacts_path }}/polyaxon-quick-start"
-          command: [python3, best_models.py]
-          args: ["--project={{ globals.project_name }}", "--top={{ top }}"]
+          command: ["/bin/bash", "-c"]
+          args: ["echo {{ accuracies }}; echo {{ losses }}; echo {{ uuids }}"]

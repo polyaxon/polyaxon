@@ -55,6 +55,8 @@ type ClientService interface {
 
 	GetModelRegistry(params *GetModelRegistryParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryOK, *GetModelRegistryNoContent, error)
 
+	GetModelRegistryActivities(params *GetModelRegistryActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryActivitiesOK, *GetModelRegistryActivitiesNoContent, error)
+
 	GetModelRegistrySettings(params *GetModelRegistrySettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistrySettingsOK, *GetModelRegistrySettingsNoContent, error)
 
 	GetModelVersion(params *GetModelVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelVersionOK, *GetModelVersionNoContent, error)
@@ -373,6 +375,42 @@ func (a *Client) GetModelRegistry(params *GetModelRegistryParams, authInfo runti
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetModelRegistryDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetModelRegistryActivities gets model activities
+*/
+func (a *Client) GetModelRegistryActivities(params *GetModelRegistryActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetModelRegistryActivitiesOK, *GetModelRegistryActivitiesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetModelRegistryActivitiesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetModelRegistryActivities",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/registry/{name}/activities",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetModelRegistryActivitiesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetModelRegistryActivitiesOK:
+		return value, nil, nil
+	case *GetModelRegistryActivitiesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetModelRegistryActivitiesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

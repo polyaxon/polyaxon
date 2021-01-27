@@ -1,0 +1,64 @@
+/**
+ * Copyright 2018-2021 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Activity specification
+message Activity {
+    // Actor
+    string actor = 1;
+
+    // Owner
+    string owner = 2;
+
+    // Created at
+    google.protobuf.Timestamp created_at = 3;
+
+    // Event action
+    string event_action = 4;
+
+    // Event subject
+    string event_subject = 5;
+
+    // Object name
+    string object_name = 6;
+
+    // Object uuid
+    string object_uuid = 7;
+
+    // Object parent
+    string object_parent = 8;
+}
+
+
+ // Contains list activities
+ message ListActivitiesResponse{
+  // Count of the entities
+  int32 count = 1;
+
+  // List of all entities
+  repeated Activity results = 2;
+
+  // Previous page
+  string previous = 3;
+
+  // Next page
+  string next = 4;
+}

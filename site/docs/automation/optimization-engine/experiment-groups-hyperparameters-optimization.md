@@ -23,12 +23,12 @@ and you uploaded your code consisting of a single file `train.py` that accepts 2
 If you want to run this code with different learning rate  `lr` values,
 you can use the [matrix section](/references/yaml-specification/hptuning/#matrix) to declare the values you want to run.
 
-## Updating the polyaxonfile.yml with a matrix
+## Updating the polyaxonfile.yaml with a matrix
 
-The first thing you need to do is to update the default `polyaxonfile.yml` that was generated.
+The first thing you need to do is to update the default `polyaxonfile.yaml` that was generated.
 
 You need to set the required information, for example, if the code requires `tensorflow` and `sklearn`,
-the polyaxonfile.yml `build` section could look something like this
+the polyaxonfile.yaml `build` section could look something like this
 
 ```yaml
 ...
@@ -46,12 +46,12 @@ This declares a section to run our `train.py` file by passing two values, the `l
 
 > For more details about the `run section` check the [run section reference](/references/yaml-specification/run/)
 
-Now you need to declare these values, and for that you will add 2 more sections to the polyaxonfile.yml
+Now you need to declare these values, and for that you will add 2 more sections to the polyaxonfile.yaml
 
  * A [params section](/references/yaml-specification/params/), to declare a constant value for `batch_size`
  * A [hptuning section](/references/yaml-specification/hptuning/) with [matrix subsection](/references/yaml-specification/hptuning/#matrix), to declare the values for `lr`
 
-The new `polyaxonfile.yml` after the update
+The new `polyaxonfile.yaml` after the update
 
 ```yaml
 
@@ -107,7 +107,7 @@ You can check all the options available in the [matrix section reference](/refer
 To make sure that the Polyaxon file is valid, and creates multiple values for `lr`, we can run the following
 
 ```bash
-$ polyaxon check -f polyaxonfile.yml --definition
+$ polyaxon check -f polyaxonfile.yaml --definition
 
 Polyaxonfile valid
 
@@ -152,17 +152,17 @@ will schedule your experiments sequentially and explore the space with the [grid
 Now imagine we have enough resources on our cluster to run experiments in parallel.
 And we want to run 2 experiments concurrently, and explore the space [randomly](/references/polyaxon-optimization-engine/random-search/) instead of sequentially.
 
-Although we can modify the `polyaxonfile.yml` to include this new section,
+Although we can modify the `polyaxonfile.yaml` to include this new section,
 we will do something different this time and override this value with a new file, same way you would do with `docker/docker-compose`.
 
-Create a new file, let's call it polyaxonfile_override.yml
+Create a new file, let's call it polyaxonfile_override.yaml
 
 > You can call your Polyaxonfiles anything you want.
-By default, Polyaxon commands look for files called `polyaxonfile.yml`.
+By default, Polyaxon commands look for files called `polyaxonfile.yaml`.
 If you call your files differently or want to override values, you need to use the option `-f`
 
 ```bash
-$ vi polyaxonfile_override.yml
+$ vi polyaxonfile_override.yaml
 ```
 
 And past the following hptuning section.
@@ -179,7 +179,7 @@ hptuning:
 If we run again the `check` command with `-def` or `--definition` option, we will get
 
 ```bash
-polyaxon check -f polyaxonfile.yml -f polyaxonfile_override.yml -x
+polyaxon check -f polyaxonfile.yaml -f polyaxonfile_override.yaml -x
 
 This Polyaxon specification has experiment group with the following definition:
 --------------------  -----------------
@@ -193,7 +193,7 @@ Experiment to create  5
 Let's run our new version
 
 ```bash
-$  polyaxon run -f polyaxonfile.yml -f polyaxonfile_override.yml
+$  polyaxon run -f polyaxonfile.yaml -f polyaxonfile_override.yaml
 
 Creating an experiment group with 5 experiments.
 

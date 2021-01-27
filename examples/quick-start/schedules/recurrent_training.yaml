@@ -1,0 +1,12 @@
+version: 1.1
+kind: operation
+name: every-60-minute
+schedule:
+  kind: interval
+  frequency: 3600
+  dependsOnPast: true
+params:
+  optimizer: {value: sgd}
+  epochs: {value: 1}
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
+

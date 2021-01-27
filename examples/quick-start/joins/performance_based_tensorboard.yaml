@@ -1,0 +1,27 @@
+version: 1.1
+kind: operation
+name: compare-top-experiments
+joins:
+- query: "metrics.loss:<0.1, project.name:{{ globals.project_name }}"
+  sort: "metrics.loss"
+  limit: "{{ top }}"
+  params:
+    tensorboards: {value: "globals.uuid", contextOnly: true}
+component:
+  inputs:
+  - {name: top, type: int, value: 5, isOptional: true, description: "top jobs."}
+  run:
+    kind: service
+    ports:
+    - 6006
+    init:
+    - artifacts: {dirs: "{{tensorboards | list}}"}
+    container:
+      image: tensorflow/tensorflow:2.2.0
+      command:
+      - tensorboard
+      args:
+      - '--logdir={{globals.artifacts_path}}'
+      - '--port={{globals.ports[0]}}'
+      - '--path_prefix={{globals.base_url}}'
+      - '--host=0.0.0.0'

@@ -55,6 +55,8 @@ type ClientService interface {
 
 	GetComponentHub(params *GetComponentHubParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubOK, *GetComponentHubNoContent, error)
 
+	GetComponentHubActivities(params *GetComponentHubActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubActivitiesOK, *GetComponentHubActivitiesNoContent, error)
+
 	GetComponentHubSettings(params *GetComponentHubSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubSettingsOK, *GetComponentHubSettingsNoContent, error)
 
 	GetComponentVersion(params *GetComponentVersionParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentVersionOK, *GetComponentVersionNoContent, error)
@@ -373,6 +375,42 @@ func (a *Client) GetComponentHub(params *GetComponentHubParams, authInfo runtime
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetComponentHubDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetComponentHubActivities gets hub activities
+*/
+func (a *Client) GetComponentHubActivities(params *GetComponentHubActivitiesParams, authInfo runtime.ClientAuthInfoWriter) (*GetComponentHubActivitiesOK, *GetComponentHubActivitiesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetComponentHubActivitiesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetComponentHubActivities",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/hub/{name}/activities",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetComponentHubActivitiesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetComponentHubActivitiesOK:
+		return value, nil, nil
+	case *GetComponentHubActivitiesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetComponentHubActivitiesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

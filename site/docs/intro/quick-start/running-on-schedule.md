@@ -21,7 +21,7 @@ Polyaxon provides an abstraction to put operations on a [schedule](/docs/automat
 
 Schedules operate at the operation level, and similar to the matrix section, they create a pipeline to follow the scheduling of a component or an operation.
 
-The file `schedule.yml` contains an operation definition with a schedule attached:
+The file `schedules/recurrent_training.yaml` contains an operation definition with a schedule attached:
 
 ```yaml
 version: 1.1
@@ -33,14 +33,28 @@ schedule:
 params:
   optimizer: {value: sgd}
   epochs: {value: 1}
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml
 ```
 
 This schedule is of kind `cron`, and it will start an experiment every monday. 
 If you need to start date this schedule at a specific date you can set the `startAt` field, and to provide a stopping condition you can provide `endAt` or `maxRuns`.
 
 It's also possible to put the complete [DAG](/docs/intro/quick-start/automation/) that we created in the previous guide on schedule, similarly to this operation, 
-you can add a valid schedule section, this way, not only you automate the journey of creating, training, and validating a model, but also you do it continuously.
+you can add a valid schedule section, this way, not only you automate the journey of creating, training, and validating a model, but also you do it continuously, 
+the file `schedules/recurrent_dag.yaml` contains an example of such operation:
+
+```yaml
+version: 1.1
+kind: operation
+name: every-monday-check
+schedule:
+  kind: cron
+  cron: "0 0 * * MON"
+params:
+  optimizer: { value: sgd }
+  epochs: { value: 1 }
+pathRef: ../dags/dag.yaml
+```
 
 ## Learn More
 

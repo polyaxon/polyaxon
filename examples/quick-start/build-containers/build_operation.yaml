@@ -17,4 +17,4 @@ hubRef: kaniko
 template:
   enabled: true
   description: "This polyaxonfile requires a valid connection, e.g. `docker-connection`"
-  fields: ["destination.connection", "destination.name"]
+  fields: ["destination.connection", "destination.value"]

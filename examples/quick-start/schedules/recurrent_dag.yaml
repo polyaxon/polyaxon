@@ -7,4 +7,4 @@ schedule:
 params:
   optimizer: { value: sgd }
   epochs: { value: 1 }
-urlRef: https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml
+pathRef: ../dags/dag.yaml

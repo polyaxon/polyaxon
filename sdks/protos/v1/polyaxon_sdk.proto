@@ -23,6 +23,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
+import "v1/api/activities.proto";
 import "v1/api/agent.proto";
 import "v1/api/bookmarks.proto";
 import "v1/api/connection.proto";
@@ -49,7 +50,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-        version: "1.5.3";
+        version: "1.5.4";
         contact:{
             name:"Polyaxon sdk";
             url:"https://github.com/polyaxon/polyaxon";
@@ -575,10 +576,17 @@ service ProjectsV1 {
     };
   }
 
-  // Get run stats
+  // Get project stats
   rpc GetProjectStats(OwnerEntityStatsRequest) returns (google.protobuf.Struct) {
     option (google.api.http) = {
       get: "/api/v1/{owner}/{name}/stats"
+    };
+  }
+
+  // Get project activities
+  rpc GetProjectActivities(OwnerEntityResourceListRequestByName) returns (ListActivitiesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/{name}/activities"
     };
   }
 
@@ -1007,6 +1015,13 @@ service ModelRegistryV1 {
     };
   }
 
+  // Get model activities
+  rpc GetModelRegistryActivities(OwnerEntityResourceListRequestByName) returns (ListActivitiesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/registry/{name}/activities"
+    };
+  }
+
   // Create model version
   rpc CreateModelVersion(ModelVersionBodyRequest) returns (ModelVersion) {
     option (google.api.http) = {
@@ -1177,6 +1192,13 @@ service ComponentHubV1 {
     option (google.api.http) = {
       patch: "/api/v1/{owner}/hub/{component}/settings"
       body: "settings"
+    };
+  }
+
+  // Get hub activities
+  rpc GetComponentHubActivities(OwnerEntityResourceListRequestByName) returns (ListActivitiesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/{owner}/hub/{name}/activities"
     };
   }
 
@@ -1675,6 +1697,13 @@ service OrganizationsV1 {
   rpc GetOrganizationStats(OwnerStatsRequest) returns (google.protobuf.Struct) {
     option (google.api.http) = {
       get: "/api/v1/orgs/{owner}/stats"
+    };
+  }
+
+  // Get organization activities
+  rpc GetOrganizationActivities(OwnerResourceListRequest) returns (ListActivitiesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/orgs/{owner}/activities"
     };
   }
 

@@ -19,7 +19,7 @@ If you did not see the previous section of this tutorial, please visit [this lin
 Before creating new experiments, let's first try to understand what happened when we executed this command:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yml -l
+$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/simple.yaml -l
 ```
 
 ## The run command
@@ -30,7 +30,7 @@ The run command consumes configuration files, also called Polyaxonfile, from dif
 
  * From local files using the `-f` flag:
     * `polyaxon run -f path/to/polyaxonfile.yaml`
-    * `polyaxon run -f path/to/polyaxonfile.yml -f path/to/polyaxonfile_override.yml`
+    * `polyaxon run -f path/to/polyaxonfile.yaml -f path/to/polyaxonfile_override.yaml`
  * From local Python files using `--python-module` or `-pm` flag:
     * `polyaxon run -pm path/to/pythonfile.py` in this case Polyaxon will look for a variable `main` which will contain your component.
     * `polyaxon run -pm path/to/pythonfile.py:component-name` if you have multiple components in your Python file you can specify which one to run.
@@ -39,12 +39,12 @@ The run command consumes configuration files, also called Polyaxonfile, from dif
  * From a registry `--hub` flag:
     * `polyaxon run --hub=tensorboard:single-run` this is the command we used to run the Tensorboard.
       Oftentimes, components can be reusable and generic, some of these components are distributed in a public registry.
-      Polyaxon also provides a managed registry integrated with the auth, access management, and team management, please check [Component Hub docs](/docs/management/component-hub/).
+      Polyaxon also provides a managed registry integrated with our auth, access management, and team management abstraction. Please check [Component Hub docs](/docs/management/component-hub/).
 
 
 ## Understanding the Polyaxonfile
 
-The Polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/Typescript,
+Polyaxonfile is a specification that validates the content of Yaml/Python, and partially Golang/Java/Typescript,
 files to check that they can be compiled and executed by Polyaxon.
 
 Let's first look at the content of the url:
@@ -97,7 +97,7 @@ In a nutshell, what Polyaxon provides is a simple way to schedule and run contai
 
 Polyaxon schedules your logic in containers. The container section exposes all information of the [Kubernetes container specification](https://kubernetes.io/docs/concepts/containers/).
 
-The container section provides several options, the most important options are:
+The container section provides several options, the most important ones are:
 
 - **command and args**:
 
@@ -271,16 +271,18 @@ The required input is just for demonstration, if we try to run this component wi
 We need to pass an `epochs` param:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml -P epochs=10 -l
+$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P epochs=10 -l
 ```
 
-> The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
+The outputs on the other hand have a delayed validation by default, since we will populate the results during the run.
 If you want to validate an output eagerly, you need to set `delayValidation: false`.
 
 > You don't have to define outputs or inputs, and you can still log information during the run,
 for instance we defined 2 outputs, but our program will log 4 results (val_loss and val_accuracy as well)
 
 When you run this experiment you will notice that Polyaxon will populate the inputs section in the dashboard automatically.
+
+> An important thing to notice is that we use `"--epochs={{ epochs }}"` to expose the param to our program/command, this can be exposed by using `"{{ params.epochs.as_arg }}"` as well.
 
 ## List the operations
 
@@ -300,8 +302,6 @@ $ polyaxon ops ls -p quick-start
 
 ## Check the logs
 
-Check the experiment logs
-
 If the operation is cached you can run:
 
 ```bash
@@ -319,7 +319,7 @@ $ polyaxon ops logs -p quick-start -uuid UUID
 We can start another run based on the same component, but this time we will pass some more params to modify the default inputs' values:
 
 ```bash
-$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yml -P lr=0.005 -P epochs=8
+$ polyaxon run --url=https://raw.githubusercontent.com/polyaxon/polyaxon-quick-start/master/experimentation/typed.yaml -P lr=0.005 -P epochs=8
 ```
 
 

@@ -16,7 +16,7 @@ inputs:
 - {name: epochs, type: int}
 outputs:
 - {name: loss, type: float}
-- {name: validation, type: float}
+- {name: accuracy, type: float}
 
 run:
   kind: job

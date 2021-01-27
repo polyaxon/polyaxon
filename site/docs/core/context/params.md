@@ -76,7 +76,7 @@ name: build
 params:
   destination:
     connection: docker-connection
-    value: polyaxon-quick-start:dev
+    value: "image:tag"
 ...
 ```
 

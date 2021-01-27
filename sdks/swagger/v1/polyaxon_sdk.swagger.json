@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.5.3",
+    "version": "1.5.4",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -980,6 +980,80 @@
             "schema": {
               "$ref": "#/definitions/v1Organization"
             }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/activities": {
+      "get": {
+        "summary": "Get organization activities",
+        "operationId": "GetOrganizationActivities",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListActivitiesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -7548,6 +7622,87 @@
         ]
       }
     },
+    "/api/v1/{owner}/hub/{name}/activities": {
+      "get": {
+        "summary": "Get hub activities",
+        "operationId": "GetComponentHubActivities",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListActivitiesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Entity managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ComponentHubV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/hub/{name}/archive": {
       "post": {
         "summary": "Archive hub component",
@@ -9105,6 +9260,87 @@
             "description": "Component under namesapce",
             "in": "path",
             "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ModelRegistryV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/registry/{name}/activities": {
+      "get": {
+        "summary": "Get model activities",
+        "operationId": "GetModelRegistryActivities",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListActivitiesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Entity managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -11437,6 +11673,87 @@
         ]
       }
     },
+    "/api/v1/{owner}/{name}/activities": {
+      "get": {
+        "summary": "Get project activities",
+        "operationId": "GetProjectActivities",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListActivitiesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Entity managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{name}/archive": {
       "post": {
         "summary": "Archive project",
@@ -12214,7 +12531,7 @@
     },
     "/api/v1/{owner}/{name}/stats": {
       "get": {
-        "summary": "Get run stats",
+        "summary": "Get project stats",
         "operationId": "GetProjectStats",
         "responses": {
           "200": {
@@ -15146,6 +15463,45 @@
         }
       }
     },
+    "v1Activity": {
+      "type": "object",
+      "properties": {
+        "actor": {
+          "type": "string",
+          "title": "Actor"
+        },
+        "owner": {
+          "type": "string",
+          "title": "Owner"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created at"
+        },
+        "event_action": {
+          "type": "string",
+          "title": "Event action"
+        },
+        "event_subject": {
+          "type": "string",
+          "title": "Event subject"
+        },
+        "object_name": {
+          "type": "string",
+          "title": "Object name"
+        },
+        "object_uuid": {
+          "type": "string",
+          "title": "Object uuid"
+        },
+        "object_parent": {
+          "type": "string",
+          "title": "Object parent"
+        }
+      },
+      "title": "Activity specification"
+    },
     "v1Affinity": {
       "type": "object",
       "title": "Placeholder for Affinity"
@@ -17958,6 +18314,32 @@
         }
       },
       "title": "Distributed Replica specification"
+    },
+    "v1ListActivitiesResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Activity"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list activities"
     },
     "v1ListAgentsResponse": {
       "type": "object",

@@ -566,7 +566,7 @@ class TestPolyaxonfiles(BaseTestCase):
             "container": {
                 "image": "continuumio/miniconda3",
                 "command": ["python"],
-                "workingDir": "{{ globals.artifacts_path }}/polyaxon-quick-start",
+                "workingDir": "{{ globals.artifacts_path }}/repo",
                 "args": ["-c \"print('Tweet tweet')\""],
                 "name": "polyaxon-main",
             },
@@ -587,7 +587,7 @@ class TestPolyaxonfiles(BaseTestCase):
             "container": {
                 "image": "continuumio/miniconda3",
                 "command": ["python"],
-                "workingDir": "/plx-context/artifacts/polyaxon-quick-start",
+                "workingDir": "/plx-context/artifacts/repo",
                 "args": ["-c \"print('Tweet tweet')\""],
                 "name": "polyaxon-main",
             },
