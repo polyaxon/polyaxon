@@ -11,13 +11,19 @@ tags:
 sidebar: "management"
 ---
 
-## Management UI
+## Organizations Management UI
 
  * Managing organizations, teams, members, projects.
  * Managing agents and queues.
  * Setting permissions and authorizations.
  * Monitoring agents and runs.
  * Profiling runs and connections' access.
+
+## Projects Management UI
+
+ * Managing project access and restrictions.
+ * Organizing and monitoring runs.
+ * Auditing activities and profiling workloads.
 
 ## Runs dashboard
 

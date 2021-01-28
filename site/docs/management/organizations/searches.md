@@ -1,6 +1,6 @@
 ---
 title: "Searches"
-sub_link: "ui/searches"
+sub_link: "organizations/searches"
 meta_title: "Polyaxon management tools and UI - Searches"
 meta_description: "Saved searches let you save and describe search queries, for your experiments, jobs, and builds."
 visibility: public

@@ -62,7 +62,7 @@ In Polyaxon UI you can get an starter deployment config:
 
 ![agent-deployment](../../../../content/images/dashboard/agents/deployment.png)
 
-> To manage agents please check the [management section](/docs/management/ui/agents/)
+> To manage agents please check the [management section](/docs/management/organizations/agents/)
 
 ## Install Polyaxon Agent
 
@@ -187,7 +187,7 @@ Or
 
 `helm del --purge polyaxon`
 
-You can also delete the [agent from the dashboard](/docs/management/ui/agents/).
+You can also delete the [agent from the dashboard](/docs/management/organizations/agents/).
 
 ### Delete the namespace
 

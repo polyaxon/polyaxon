@@ -302,7 +302,7 @@ class V1Operation(BaseOp, TemplateMixinConfig, polyaxon_sdk.V1Operation):
 
     ### presets
 
-    The [presets](/docs/management/ui/presets/) to use for this operation run,
+    The [presets](/docs/management/organizations/presets/) to use for this operation run,
     if provided, it will override the component's presets otherwise
     the presets of the component will be used if it exists.
 

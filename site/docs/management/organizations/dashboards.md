@@ -1,6 +1,6 @@
 ---
 title: "Dashboards"
-sub_link: "ui/dashboards"
+sub_link: "organizations/dashboards"
 meta_title: "Polyaxon management UI - Agents"
 meta_description: "Saved dashboards let you save and describe dashboards and widgets."
 tags:

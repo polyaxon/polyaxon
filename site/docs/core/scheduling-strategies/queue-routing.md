@@ -38,7 +38,7 @@ Each agent can manage multiple queues to prioritize which operations the agent s
 
 > To deploy an agent please check the [agent setup page](/docs/setup/agent/)
 
-> To manage agents please check the [management section](/docs/management/ui/agents/)
+> To manage agents please check the [management section](/docs/management/organizations/agents/)
 
 ### Queues
 
@@ -51,7 +51,7 @@ In that case, if a queue is created with the default configuration it will be us
 
  * Priority: By default, each queue is created with the highest priority, unless the user sets a priority level [-1, ...].
 
-> To manage queues please check the [management section](/docs/management/ui/queues/)
+> To manage queues please check the [management section](/docs/management/organizations/queues/)
 
 ## Queueing
 

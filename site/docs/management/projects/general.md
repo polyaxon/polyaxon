@@ -1,6 +1,6 @@
 ---
 title: "Projects"
-sub_link: "ui/projects"
+sub_link: "projects/general"
 meta_title: "Projects in Polyaxon - Management UI"
 meta_description: "A Project in Polyaxon is very similar to a project in GitHub, it aims at organizing your efforts to solve a specific problem."
 tags:
@@ -9,9 +9,6 @@ tags:
     - management
 sidebar: "management"
 ---
-
-A `Project` in Polyaxon is very similar to a project in GitHub,
-it aims at organizing your efforts to solve a specific problem.
 
 ## Create a new project
 
@@ -41,23 +38,3 @@ To create projects with the UI
 Every project can manage jobs, services, dags, and matrix executions.
 
 ![project-overview](../../../../content/images/dashboard/projects/overview.png)
-
-## Project settings
-
-The project settings page provides several tabs to manage accessible members, teams, presets, connections, ...
-
-![project-settings-select](../../../../content/images/dashboard/projects/settings-select.png)
-
-The general settings page lets you change the project's details
-
-![project-settings](../../../../content/images/dashboard/projects/settings.png)
-
-
-## Default settings
-
-By default, when a project is created, it will be accessible to all the organization's members following their roles on the organization level.
-In order to restrict teams, connections, profiles, ..., you need to manually define the resources and teams that can access using the settings tabs.
-
-Example restricting teams access
-
-![project-teams-settings](../../../../content/images/dashboard/projects/teams-settings.png)

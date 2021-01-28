@@ -1,6 +1,6 @@
 ---
 title: "Queues"
-sub_link: "ui/queues"
+sub_link: "organizations/queues"
 meta_title: "Polyaxon management tools and UI - Queues"
 meta_description: "Polyaxon manage, queue, route, prioritize, and throttle operations."
 tags:

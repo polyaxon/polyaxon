@@ -3,30 +3,40 @@
     items:
     - title: Overview
       link: /docs/management/
-  - group: Management UI
+  - group: Organizations
     items:
     - title: Overview
-      link: /docs/management/ui/
+      link: /docs/management/organizations/
     - title: Organizations
-      link: /docs/management/ui/organizations/
+      link: /docs/management/organizations/general/
     - title: Teams
-      link: /docs/management/ui/teams/
+      link: /docs/management/organizations/teams/
     - title: Agents
-      link: /docs/management/ui/agents/
+      link: /docs/management/organizations/agents/
     - title: Queues
-      link: /docs/management/ui/queues/
+      link: /docs/management/organizations/queues/
     - title: Presets
-      link: /docs/management/ui/presets/
-    - title: Projects
-      link: /docs/management/ui/projects/
+      link: /docs/management/organizations/presets/
     - title: Searches
-      link: /docs/management/ui/searches/
+      link: /docs/management/organizations/searches/
     - title: Dashboards
-      link: /docs/management/ui/dashboards/
+      link: /docs/management/organizations/dashboards/
     - title: Connections
-      link: /docs/management/ui/connections/
+      link: /docs/management/organizations/connections/
     - title: Users
-      link: /docs/management/ui/users/
+      link: /docs/management/organizations/users/
+    - title: Anaylitcs
+      link: /docs/management/organizations/analytics/
+    - title: Activities
+      link: /docs/management/organizations/activities/
+  - group: Projects
+    items:
+    - title: Overview
+      link: /docs/management/projects/
+    - title: Project Info
+      link: /docs/management/projects/general/
+    - title: Settings & Restrictions
+      link: /docs/management/projects/settings/
   - group: Runs Dashboard
     items:
     - title: Overview

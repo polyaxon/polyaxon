@@ -135,4 +135,4 @@ such preset will be applied to all operations in the organization or project whe
 
 Users can just reference the presets in their [operations specification](/docs/core/specification/operation/#presets) or using the CLI/Client `polyaxon run ... --presets=preset1,preset2`
 
-In order to create and manage scheduling presets, please check the [management section for more details](/docs/management/ui/presets/)
+In order to create and manage scheduling presets, please check the [management section for more details](/docs/management/organizations/presets/)

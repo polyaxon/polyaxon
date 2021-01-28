@@ -1,6 +1,6 @@
 ---
 title: "Organizations"
-sub_link: "ui/organizations"
+sub_link: "organizations/general"
 meta_title: "Polyaxon management tools and UI - Organizations"
 meta_description: "Organizations are an entity where businesses can collaborate across many projects at once."
 tags:

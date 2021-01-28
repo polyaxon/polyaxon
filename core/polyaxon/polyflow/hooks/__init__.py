@@ -167,7 +167,7 @@ class V1Hook(BaseConfig, polyaxon_sdk.V1Hook):
 
     ### presets
 
-    The [presets](/docs/management/ui/presets/) to use for the hook operation,
+    The [presets](/docs/management/organizations/presets/) to use for the hook operation,
     if provided, it will override the component's presets otherwise
     the presets of the component will be used if available.
 

@@ -1,6 +1,6 @@
 ---
 title: "Presets"
-sub_link: "ui/presets"
+sub_link: "organizations/presets"
 meta_title: "Polyaxon management tools and UI - Presets"
 meta_description: "Scheduling presets is a feature for injecting certain information into operations at compilation time to preset configuration for node scheduling,
 queue routing, resources requirements and definition, connections, and access level control."

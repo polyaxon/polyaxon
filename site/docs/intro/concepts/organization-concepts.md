@@ -21,20 +21,20 @@ with more details in pages dedicated to each concept.
 
 A `User` is the entity that creates projects, starts experiments, creates jobs and pipelines, manages teams and clusters.
 
-<blockquote class="light">Please refer to <a href="/docs/management/ui/users/">management/users</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/management/organizations/users/">management/users</a> for more details.</blockquote>
 
 ### Organization
 
 An `Organization` is the entity that enables several users to collaborate across many projects at once.
 Owners and admins can manage member access to the organization's data and projects with sophisticated security and administrative features.
 
-<blockquote class="light">Please refer to <a href="/docs/management/ui/organizations/">management/organizations</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/management/organizations/organizations/">management/organizations</a> for more details.</blockquote>
 
 ### Team
 
 A `Team` provides a way to manage groups of users, their access roles, and resources quotas and permissions.
 
-<blockquote class="light">Please refer to <a href="/docs/management/ui/teams/">management/teams</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/management/organizations/teams/">management/teams</a> for more details.</blockquote>
 
 ### Project
 
@@ -42,7 +42,7 @@ A `Project` in Polyaxon is very similar to a project in GitHub,
 it aims at organizing your efforts to solve a specific problem.
 A project consists of a name and a description, access to several connections and data, and components to execute.
 
-<blockquote class="light">Please refer to <a href="/docs/management/ui/projects/">management/projects</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/management/organizations/projects/">management/projects</a> for more details.</blockquote>
 
 ### Model Registry
 
