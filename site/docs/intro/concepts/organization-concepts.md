@@ -42,7 +42,7 @@ A `Project` in Polyaxon is very similar to a project in GitHub,
 it aims at organizing your efforts to solve a specific problem.
 A project consists of a name and a description, access to several connections and data, and components to execute.
 
-<blockquote class="light">Please refer to <a href="/docs/management/organizations/projects/">management/projects</a> for more details.</blockquote>
+<blockquote class="light">Please refer to <a href="/docs/management/projects/general/">management/projects</a> for more details.</blockquote>
 
 ### Model Registry
 
