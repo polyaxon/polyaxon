@@ -16,7 +16,7 @@ httpretty==1.0.5
 moto==1.3.16
 google-compute-engine==2.8.13
 
-kubernetes_asyncio==11.3.0
+kubernetes_asyncio==12.0.1
 starlette==0.14.1
 aiofiles==0.6.0
 uvicorn==0.13.3
