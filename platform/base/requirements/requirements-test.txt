@@ -1,4 +1,4 @@
-execnet==1.7.1
+execnet==1.8.0
 factory-boy==2.12.0
 responses==0.10.15
 pylint-django==0.7.2
