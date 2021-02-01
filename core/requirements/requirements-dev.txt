@@ -4,7 +4,7 @@ docker==4.4.1
 GitPython==3.1.12
 
 numpy>=1.15.2
-scikit-learn==0.23.2
+scikit-learn==0.24.1
 hyperopt==0.2.4
 
 azure-storage-blob==12.4.0
