@@ -1,5 +1,5 @@
 execnet==1.8.0
-factory-boy==2.12.0
+factory-boy==3.2.0
 responses==0.10.15
 pylint-django==0.7.2
 pytest-cov==2.5.1
