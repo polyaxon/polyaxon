@@ -59,6 +59,8 @@ api:
   image: ...
 scheduler:
   image: ...
+compiler:
+  image: ...
 worker:
   image: ...
 beat:
@@ -97,6 +99,8 @@ scheduler:
 Some services are only available to Polyaxon control plane:
 
 ```yaml
+compiler:
+  enabled: true
 worker:
   enabled: true
 beat:

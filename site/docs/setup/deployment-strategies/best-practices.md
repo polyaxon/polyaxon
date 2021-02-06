@@ -3,7 +3,7 @@ title: "Deployment Best Practices"
 sub_link: "deployment-strategies/best-practices"
 title_link: "Deployment Best Practices"
 meta_title: "Deployment Best Practices"
-meta_description: "Deploying Polyaxon can be hard, not only because it requires using Kubernetes a tool that is not yet fully used by several teams, but also because it is a stateful application."
+meta_description: "Deploying Polyaxon can be hard, not only because it requires using Kubernetes a tool that is hard to manage and maintain, but also because it is a stateful application. In this guide, we will try to go through several aspects of Polyaxon deployment that we think any user trying to use Polyaxon in production mode should think about."
 tags:
     - setup
     - kubernetes
@@ -47,8 +47,8 @@ Stateful applications are very hard to set up correctly on a Kubernetes cluster,
 
 We also recommend users to take snapshots and backups before going through a migration, this is particularly important if an upgrade contains DB or Data migrations.
 
-> **Note**: We strongly recommend that you do not deploy a production database using this chart. Although The provided database can persist data if configured, 
- you might encounter an issue in the future if we upgrade the dependency requirements or the version of the database image.
+> **Note**: We strongly recommend that you do not deploy a production database using this chart. Although the provided database can persist data if configured, 
+ you might encounter an issue in the future if we upgrade the dependency requirements or the version of the database image changes.
 
 ## Other components high availability
 
