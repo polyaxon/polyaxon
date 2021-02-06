@@ -77,3 +77,12 @@ worker:
 ```
 
 This will create 2 replicas for the scheduler, with 10 concurrent processes each.
+
+## Operator
+
+Increasing the operator's concurrent reconciles
+
+```yaml
+operator:
+  maxConcurrentReconciles: 8
+```

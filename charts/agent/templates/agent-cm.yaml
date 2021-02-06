@@ -34,8 +34,8 @@ data:
   POLYAXON_AGENT_SECRET_NAME: {{ template "polyaxon.fullname" . }}-agent-secret
   {{- end }}
   {{- end }}
-  {{- if .Values.operators.maxConcurrentReconciales }}
-  POLYAXON_MAX_CONCURRENT_RECONCILES: {{ .Values.operators.maxConcurrentReconciales }}
+  {{- if .Values.operators.maxConcurrentReconciles }}
+  POLYAXON_MAX_CONCURRENT_RECONCILES: {{ .Values.operators.maxConcurrentReconciles }}
   {{- end }}
   {{- if .Values.operators.tfjob }}
   POLYAXON_TFJOB_ENABLED: "true"
