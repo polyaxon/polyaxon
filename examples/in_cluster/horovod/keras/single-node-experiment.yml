@@ -1,0 +1,24 @@
+---
+version: 1.1
+kind: component
+name: single-node-horovod-keras
+
+inputs:
+  - name: gpus
+    isOptional: true
+    type: int
+    value: 2
+
+run:
+  kind: job
+  init:
+    - git: {"url": "https://github.com/polyaxon/polyaxon-examples"}
+  container:
+      image: polyaxon/polyaxon-horvod-examples
+      workingDir: "{{ globals.artifacts_path }}/polyaxon-examples/in_cluster/horovod/keras"
+      resources:
+          limits:
+            nvidia.com/gpu: "{{ gpus }}"
+      command: ["horovodrun", "-np", "{{ gpus }}", "-H", "localhost:{{ gpus }}", "python", "-u", "mnist.py"]
+      imagePullPolicy: "Always"
+
